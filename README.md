@@ -59,7 +59,7 @@ mvn clean package
 ```
 
 Then manually install the following JARs:
-- `target/com.laserfiche.api.client.core-1.0.0.jar`
+- `target/com.laserfiche.api.client-1.0.0.jar`
 - `target/lib/*.jar`
 
 ## Getting Started
