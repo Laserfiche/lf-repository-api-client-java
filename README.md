@@ -38,7 +38,7 @@ Add this dependency to your project's POM:
 ```
 <dependency>
   <groupId>io.swagger</groupId>
-  <artifactId>com.laserfiche.api.client.core</artifactId>
+  <artifactId>com.laserfiche.api.client</artifactId>
   <version>1.0.0</version>
   <scope>compile</scope>
 </dependency>
