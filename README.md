@@ -19,11 +19,15 @@ Building the API client library requires:
 ## Installation
 To install the API client library to your local Maven repository, simply execute:
 
-`mvn clean install`
+```
+mvn clean install
+```
 
 To deploy it to a remote Maven repository instead, configure the settings of the repository and execute:
 
-`mvn clean deploy`
+```
+mvn clean deploy
+```
 
 Refer to the [OSSRH Guide](https://central.sonatype.org/publish/publish-guide/) for more information.
 
