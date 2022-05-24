@@ -104,6 +104,11 @@ public class TokenApiExample {
 }
 ```
 
+# Documentation for Models
+- [APIServerException](https://github.com/Laserfiche/lf-repository-api-client-java/blob/1.x/docs/APIServerException.md)
+- [AcceptedOperation](https://github.com/Laserfiche/lf-repository-api-client-java/blob/1.x/docs/AcceptedOperation.md)
+- [AdvancedSearchRequest](https://github.com/Laserfiche/lf-repository-api-client-java/blob/1.x/docs/AdvancedSearchRequest.md)
+- [Attribute](https://github.com/Laserfiche/lf-repository-api-client-java/blob/1.x/docs/Attribute.md)
 
 
 
