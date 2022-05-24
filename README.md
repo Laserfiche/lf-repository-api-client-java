@@ -65,7 +65,7 @@ Then manually install the following JARs:
 ## Getting Started
 Please follow the [installation](https://github.com/Laserfiche/lf-api-client-core-java#installation) instructions and execute the following Java code:
 
-```
+```java
 import com.laserfiche.api.client.*;
 import com.laserfiche.api.client.auth.*;
 import com.laserfiche.api.client.model.*;
