@@ -31,7 +31,7 @@ Refer to the [OSSRH Guide](https://central.sonatype.org/publish/publish-guide/) 
 
 Add this dependency to your project's POM:
 
-`
+```
 <dependency>
   <groupId>io.swagger</groupId>
   <artifactId>com.laserfiche.api.client.core</artifactId>
@@ -39,4 +39,4 @@ Add this dependency to your project's POM:
   <scope>compile</scope>
 </dependency>
 
-`
+```
