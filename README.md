@@ -15,3 +15,14 @@ Building the API client library requires:
 
 1. Java 1.7+
 2. Maven/Gradle
+
+## Installation
+To install the API client library to your local Maven repository, simply execute:
+
+`mvn clean install`
+
+To deploy it to a remote Maven repository instead, configure the settings of the repository and execute:
+
+`mvn clean deploy`
+
+Refer to the OSSRH Guide for more information.
