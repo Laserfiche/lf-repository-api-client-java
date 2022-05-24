@@ -38,5 +38,4 @@ Add this dependency to your project's POM:
   <version>1.0.0</version>
   <scope>compile</scope>
 </dependency>
-
 ```
