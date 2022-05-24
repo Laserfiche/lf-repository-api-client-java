@@ -26,3 +26,17 @@ To deploy it to a remote Maven repository instead, configure the settings of the
 `mvn clean deploy`
 
 Refer to the [OSSRH Guide](https://central.sonatype.org/publish/publish-guide/) for more information.
+
+### Maven users
+
+Add this dependency to your project's POM:
+
+`
+<dependency>
+  <groupId>io.swagger</groupId>
+  <artifactId>com.laserfiche.api.client.core</artifactId>
+  <version>1.0.0</version>
+  <scope>compile</scope>
+</dependency>
+
+`
