@@ -1,8 +1,8 @@
 # com.laserfiche.api.client
 Laserfiche Repository API
 
-API version: 1.0.0
-Build date: 2022-05-20T17:24:07.137-04:00[America/New_York]
+- API version: 1.0.0
+  - Build date: 2022-05-20T17:24:07.137-04:00[America/New_York]
 An ASP.NET Core web API for Laserfiche Repository API Server
 
 Build# : 4f7a879120e1a11fb1d3772c18859787d28d355b_.20220404.1
