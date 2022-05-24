@@ -50,3 +50,73 @@ Add this dependency to your project's build file:
 ```
 compile "io.swagger:com.laserfiche.api.client:1.0.0"
 ```
+
+### Others
+At first generate the JAR by executing:
+
+```
+mvn clean package
+```
+
+Then manually install the following JARs:
+- `target/com.laserfiche.api.client.core-1.0.0.jar`
+- `target/lib/*.jar`
+
+## Getting Started
+Please follow the [installation](https://github.com/Laserfiche/lf-api-client-core-java#installation) instructions and execute the following Java code:
+
+```
+import com.laserfiche.api.client.*;
+import com.laserfiche.api.client.auth.*;
+import com.laserfiche.api.client.model.*;
+import com.laserfiche.api.client.oauth.TokenApi;
+
+import java.io.File;
+import java.util.*;
+
+public class TokenApiExample {
+
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+        // Configure HTTP basic authorization: Basic Authorization
+        HttpBasicAuth Basic Authorization = (HttpBasicAuth) defaultClient.getAuthentication("Basic Authorization");
+        Basic Authorization.setUsername("YOUR USERNAME");
+        Basic Authorization.setPassword("YOUR PASSWORD");
+
+        TokenApi apiInstance = new TokenApi();
+        Object clientId = null; // Object | 
+        String grantType = "grantType_example"; // String | 
+        Object code = null; // Object | 
+        Object redirectUri = null; // Object | 
+        Object scope = null; // Object | 
+        Object refreshToken = null; // Object | 
+        Object codeVerifier = null; // Object | 
+        String authorization = "authorization_example"; // String | 
+        try {
+            GetAccessTokenResponse result = apiInstance.tokenGetAccessToken(clientId, grantType, code, redirectUri, scope, refreshToken, codeVerifier, authorization);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling TokenApi#tokenGetAccessToken");
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
