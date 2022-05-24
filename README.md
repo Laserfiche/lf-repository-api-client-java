@@ -25,4 +25,4 @@ To deploy it to a remote Maven repository instead, configure the settings of the
 
 `mvn clean deploy`
 
-Refer to the OSSRH Guide for more information.
+Refer to the [OSSRH Guide](https://central.sonatype.org/publish/publish-guide/) for more information.
