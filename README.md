@@ -43,3 +43,10 @@ Add this dependency to your project's POM:
   <scope>compile</scope>
 </dependency>
 ```
+
+### Gradle users
+Add this dependency to your project's build file:
+
+```
+compile "io.swagger:com.laserfiche.api.client:1.0.0"
+```
