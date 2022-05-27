@@ -111,6 +111,7 @@ You can find the documentation for each model in the [docs folder](https://githu
 Authentication schemes defined for the API:
 
 **Authorization**
+
 **Basic Authorization**
 - **Type:** HTTP basic authentication
 
