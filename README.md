@@ -105,11 +105,19 @@ public class TokenApiExample {
 ```
 
 # Documentation for Models
-- [APIServerException](https://github.com/Laserfiche/lf-repository-api-client-java/blob/1.x/docs/APIServerException.md)
-- [AcceptedOperation](https://github.com/Laserfiche/lf-repository-api-client-java/blob/1.x/docs/AcceptedOperation.md)
-- [AdvancedSearchRequest](https://github.com/Laserfiche/lf-repository-api-client-java/blob/1.x/docs/AdvancedSearchRequest.md)
-- [Attribute](https://github.com/Laserfiche/lf-repository-api-client-java/blob/1.x/docs/Attribute.md)
+You can find the documentation for each model in the [docs folder](https://github.com/Laserfiche/lf-repository-api-client-java/tree/1.x/docs)
 
+# Documentation for Authorization
+Authentication schemes defined for the API:
+
+# Authorization
+# Basic Authorization
+- **Type:** HTTP basic authentication
+
+# Recommendation
+It's recommended to create an instance of `ApiClient` per thread in a multithreaded environment to avoid any potential issues.
+
+# Author
 
 
 
