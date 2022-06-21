@@ -144,30 +144,6 @@
     </plugins>
   </build>
 
-  <profiles>
-    <profile>
-      <id>sign-artifacts</id>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-gpg-plugin</artifactId>
-            <version>1.5</version>
-            <executions>
-              <execution>
-                <id>sign-artifacts</id>
-                <phase>verify</phase>
-                <goals>
-                  <goal>sign</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-  </profiles>
-
   <dependencies>
     <dependency>
       <groupId>io.swagger.core.v3</groupId>
@@ -204,6 +180,11 @@
       <artifactId>threetenbp</artifactId>
       <version>${threetenbp-version}</version>
     </dependency>
+    <dependency>
+      <groupId>com.laserfiche</groupId>
+      <artifactId>com.laserfiche.api.client.core</artifactId>
+      <version>1.0.0</version>
+    </dependency>
 
     
 
@@ -217,7 +198,7 @@
   </dependencies>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <java.version>1.7</java.version>
+    <java.version>1.8</java.version>
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <maven.compiler.target>${java.version}</maven.compiler.target>
     <gson-fire-version>1.8.0</gson-fire-version>
