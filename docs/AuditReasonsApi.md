@@ -4,7 +4,7 @@ All URIs are relative to *https://api.a.clouddev.laserfiche.com/repository*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**getAuditReasons**](AuditReasonsApi.md#getAuditReasons) | **GET** /v1/Repositories/{repoId}/AuditReasons | Get the audit reasons associated with the authenticated user.
+[**getAuditReasons**](AuditReasonsApi.md#getAuditReasons) | **GET** v2-alpha/Repositories/{repoId}/AuditReasons | Get the audit reasons associated with the authenticated user.
 
 <a name="getAuditReasons"></a>
 # **getAuditReasons**
@@ -17,11 +17,11 @@ Get the audit reasons associated with the authenticated user.
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.AuditReasonsApi;
+//import com.laserfiche.repository.api.ApiClient;
+//import com.laserfiche.repository.api.ApiException;
+//import com.laserfiche.repository.api.Configuration;
+//import com.laserfiche.repository.api.auth.*;
+//import com.laserfiche.repository.api.client.AuditReasonsApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 

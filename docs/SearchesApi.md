@@ -4,11 +4,11 @@ All URIs are relative to *https://api.a.clouddev.laserfiche.com/repository*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**cancelOrCloseSearch**](SearchesApi.md#cancelOrCloseSearch) | **DELETE** /v1/Repositories/{repoId}/Searches/{searchToken} | Cancel or close an advanced search.
-[**createSearchOperation**](SearchesApi.md#createSearchOperation) | **POST** /v1/Repositories/{repoId}/Searches | Run a search in the specified repository.
-[**getSearchContextHits**](SearchesApi.md#getSearchContextHits) | **GET** /v1/Repositories/{repoId}/Searches/{searchToken}/Results/{rowNumber}/ContextHits | 
-[**getSearchResults**](SearchesApi.md#getSearchResults) | **GET** /v1/Repositories/{repoId}/Searches/{searchToken}/Results | Get the search results listing of a search.
-[**getSearchStatus**](SearchesApi.md#getSearchStatus) | **GET** /v1/Repositories/{repoId}/Searches/{searchToken} | Get the status of a search using a token.
+[**cancelOrCloseSearch**](SearchesApi.md#cancelOrCloseSearch) | **DELETE** v2-alpha/Repositories/{repoId}/Searches/{searchToken} | Cancel or close an advanced search.
+[**createSearchOperation**](SearchesApi.md#createSearchOperation) | **POST** v2-alpha/Repositories/{repoId}/Searches | Run a search in the specified repository.
+[**getSearchContextHits**](SearchesApi.md#getSearchContextHits) | **GET** v2-alpha/Repositories/{repoId}/Searches/{searchToken}/Results/{rowNumber}/ContextHits | 
+[**getSearchResults**](SearchesApi.md#getSearchResults) | **GET** v2-alpha/Repositories/{repoId}/Searches/{searchToken}/Results | Get the search results listing of a search.
+[**getSearchStatus**](SearchesApi.md#getSearchStatus) | **GET** v2-alpha/Repositories/{repoId}/Searches/{searchToken} | Get the status of a search using a token.
 
 <a name="cancelOrCloseSearch"></a>
 # **cancelOrCloseSearch**
@@ -21,11 +21,11 @@ Cancel or close an advanced search.
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.SearchesApi;
+//import com.laserfiche.repository.api.ApiClient;
+//import com.laserfiche.repository.api.ApiException;
+//import com.laserfiche.repository.api.Configuration;
+//import com.laserfiche.repository.api.auth.*;
+//import com.laserfiche.repository.api.client.SearchesApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 
@@ -78,11 +78,11 @@ Run a search in the specified repository.
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.SearchesApi;
+//import com.laserfiche.repository.api.ApiClient;
+//import com.laserfiche.repository.api.ApiException;
+//import com.laserfiche.repository.api.Configuration;
+//import com.laserfiche.repository.api.auth.*;
+//import com.laserfiche.repository.api.client.SearchesApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 
@@ -130,16 +130,16 @@ Name | Type | Description  | Notes
 
 
 
-- Returns the context hits associated with a search result entry. - Given a searchToken, and rowNumber associated with a search entry in the listing, return the context hits for that entry. - Default page size: 150. Allowed OData query options: Select | Count | OrderBy | Skip | Top | SkipToken | Prefer.
+- Returns the context hits associated with a search result entry. - Given a searchToken, and rowNumber associated with a search entry in the listing, return the context hits for that entry. - Default page size: 100. Allowed OData query options: Select | Count | OrderBy | Skip | Top | SkipToken | Prefer.
 
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.SearchesApi;
+//import com.laserfiche.repository.api.ApiClient;
+//import com.laserfiche.repository.api.ApiException;
+//import com.laserfiche.repository.api.Configuration;
+//import com.laserfiche.repository.api.auth.*;
+//import com.laserfiche.repository.api.client.SearchesApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 
@@ -197,7 +197,7 @@ Name | Type | Description  | Notes
 
 <a name="getSearchResults"></a>
 # **getSearchResults**
-> ODataValueContextOfIListOfODataGetSearchResults getSearchResults(repoId, searchToken, groupByEntryType, refresh, fields, formatFields, prefer, culture, $select, $orderby, $top, $skip, $count)
+> ODataValueContextOfIListOfEntry getSearchResults(repoId, searchToken, groupByEntryType, refresh, fields, formatFields, prefer, culture, $select, $orderby, $top, $skip, $count)
 
 Get the search results listing of a search.
 
@@ -206,11 +206,11 @@ Get the search results listing of a search.
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.SearchesApi;
+//import com.laserfiche.repository.api.ApiClient;
+//import com.laserfiche.repository.api.ApiException;
+//import com.laserfiche.repository.api.Configuration;
+//import com.laserfiche.repository.api.auth.*;
+//import com.laserfiche.repository.api.client.SearchesApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 
@@ -235,7 +235,7 @@ Integer $top = 56; // Integer | Limits the number of items returned from a colle
 Integer $skip = 56; // Integer | Excludes the specified number of items of the queried collection from the result.
 Boolean $count = true; // Boolean | Indicates whether the total count of items within a collection are returned in the result.
 try {
-    ODataValueContextOfIListOfODataGetSearchResults result = apiInstance.getSearchResults(repoId, searchToken, groupByEntryType, refresh, fields, formatFields, prefer, culture, $select, $orderby, $top, $skip, $count);
+    ODataValueContextOfIListOfEntry result = apiInstance.getSearchResults(repoId, searchToken, groupByEntryType, refresh, fields, formatFields, prefer, culture, $select, $orderby, $top, $skip, $count);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling SearchesApi#getSearchResults");
@@ -263,7 +263,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ODataValueContextOfIListOfODataGetSearchResults**](ODataValueContextOfIListOfODataGetSearchResults.md)
+[**ODataValueContextOfIListOfEntry**](ODataValueContextOfIListOfEntry.md)
 
 ### Authorization
 
@@ -285,11 +285,11 @@ Get the status of a search using a token.
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.SearchesApi;
+//import com.laserfiche.repository.api.ApiClient;
+//import com.laserfiche.repository.api.ApiException;
+//import com.laserfiche.repository.api.Configuration;
+//import com.laserfiche.repository.api.auth.*;
+//import com.laserfiche.repository.api.client.SearchesApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 

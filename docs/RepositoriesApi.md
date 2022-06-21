@@ -4,7 +4,7 @@ All URIs are relative to *https://api.a.clouddev.laserfiche.com/repository*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**getRepositoryList**](RepositoriesApi.md#getRepositoryList) | **GET** /v1/Repositories | 
+[**getRepositoryList**](RepositoriesApi.md#getRepositoryList) | **GET** v2-alpha/Repositories | 
 
 <a name="getRepositoryList"></a>
 # **getRepositoryList**
@@ -17,11 +17,11 @@ Method | HTTP request | Description
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.RepositoriesApi;
+//import com.laserfiche.repository.api.ApiClient;
+//import com.laserfiche.repository.api.ApiException;
+//import com.laserfiche.repository.api.Configuration;
+//import com.laserfiche.repository.api.auth.*;
+//import com.laserfiche.repository.api.client.RepositoriesApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 

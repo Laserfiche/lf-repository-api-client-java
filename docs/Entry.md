@@ -19,3 +19,4 @@ Name | Type | Description | Notes
 **templateFieldNames** | **List&lt;String&gt;** | The names of the fields assigned to the template assigned to this entry. |  [optional]
 **volumeName** | **String** | The name of the volume that this entry is associated with. |  [optional]
 **rowNumber** | **Integer** | Row number assigned to this entry in the listing. |  [optional]
+**fields** | [**List&lt;EntryFieldValue&gt;**](EntryFieldValue.md) | The fields assigned to this entry. |  [optional]

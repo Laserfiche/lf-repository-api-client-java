@@ -4,8 +4,8 @@ All URIs are relative to *https://api.a.clouddev.laserfiche.com/repository*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**getTrusteeAttributeKeyValuePairs**](AttributesApi.md#getTrusteeAttributeKeyValuePairs) | **GET** /v1/Repositories/{repoId}/Attributes | Get the attribute key value pairs associated with the authenticated user.
-[**getTrusteeAttributeValueByKey**](AttributesApi.md#getTrusteeAttributeValueByKey) | **GET** /v1/Repositories/{repoId}/Attributes/{attributeKey} | Get an attribute object by key associated with the authenticated user.
+[**getTrusteeAttributeKeyValuePairs**](AttributesApi.md#getTrusteeAttributeKeyValuePairs) | **GET** v2-alpha/Repositories/{repoId}/Attributes | Get the attribute key value pairs associated with the authenticated user.
+[**getTrusteeAttributeValueByKey**](AttributesApi.md#getTrusteeAttributeValueByKey) | **GET** v2-alpha/Repositories/{repoId}/Attributes/{attributeKey} | Get an attribute object by key associated with the authenticated user.
 
 <a name="getTrusteeAttributeKeyValuePairs"></a>
 # **getTrusteeAttributeKeyValuePairs**
@@ -18,11 +18,11 @@ Get the attribute key value pairs associated with the authenticated user.
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.AttributesApi;
+//import com.laserfiche.repository.api.ApiClient;
+//import com.laserfiche.repository.api.ApiException;
+//import com.laserfiche.repository.api.Configuration;
+//import com.laserfiche.repository.api.auth.*;
+//import com.laserfiche.repository.api.client.AttributesApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 
@@ -87,11 +87,11 @@ Get an attribute object by key associated with the authenticated user.
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.AttributesApi;
+//import com.laserfiche.repository.api.ApiClient;
+//import com.laserfiche.repository.api.ApiException;
+//import com.laserfiche.repository.api.Configuration;
+//import com.laserfiche.repository.api.auth.*;
+//import com.laserfiche.repository.api.client.AttributesApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 

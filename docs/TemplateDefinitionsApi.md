@@ -4,10 +4,10 @@ All URIs are relative to *https://api.a.clouddev.laserfiche.com/repository*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**getTemplateDefinitionById**](TemplateDefinitionsApi.md#getTemplateDefinitionById) | **GET** /v1/Repositories/{repoId}/TemplateDefinitions/{templateId} | 
-[**getTemplateDefinitions**](TemplateDefinitionsApi.md#getTemplateDefinitions) | **GET** /v1/Repositories/{repoId}/TemplateDefinitions | 
-[**getTemplateFieldDefinitions**](TemplateDefinitionsApi.md#getTemplateFieldDefinitions) | **GET** /v1/Repositories/{repoId}/TemplateDefinitions/{templateId}/fields | 
-[**getTemplateFieldDefinitionsByTemplateName**](TemplateDefinitionsApi.md#getTemplateFieldDefinitionsByTemplateName) | **GET** /v1/Repositories/{repoId}/TemplateDefinitions/Fields | 
+[**getTemplateDefinitionById**](TemplateDefinitionsApi.md#getTemplateDefinitionById) | **GET** v2-alpha/Repositories/{repoId}/TemplateDefinitions/{templateId} | 
+[**getTemplateDefinitions**](TemplateDefinitionsApi.md#getTemplateDefinitions) | **GET** v2-alpha/Repositories/{repoId}/TemplateDefinitions | 
+[**getTemplateFieldDefinitions**](TemplateDefinitionsApi.md#getTemplateFieldDefinitions) | **GET** v2-alpha/Repositories/{repoId}/TemplateDefinitions/{templateId}/fields | 
+[**getTemplateFieldDefinitionsByTemplateName**](TemplateDefinitionsApi.md#getTemplateFieldDefinitionsByTemplateName) | **GET** v2-alpha/Repositories/{repoId}/TemplateDefinitions/Fields | 
 
 <a name="getTemplateDefinitionById"></a>
 # **getTemplateDefinitionById**
@@ -20,11 +20,11 @@ Method | HTTP request | Description
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.TemplateDefinitionsApi;
+//import com.laserfiche.repository.api.ApiClient;
+//import com.laserfiche.repository.api.ApiException;
+//import com.laserfiche.repository.api.Configuration;
+//import com.laserfiche.repository.api.auth.*;
+//import com.laserfiche.repository.api.client.TemplateDefinitionsApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 
@@ -81,11 +81,11 @@ Name | Type | Description  | Notes
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.TemplateDefinitionsApi;
+//import com.laserfiche.repository.api.ApiClient;
+//import com.laserfiche.repository.api.ApiException;
+//import com.laserfiche.repository.api.Configuration;
+//import com.laserfiche.repository.api.auth.*;
+//import com.laserfiche.repository.api.client.TemplateDefinitionsApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 
@@ -152,11 +152,11 @@ Name | Type | Description  | Notes
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.TemplateDefinitionsApi;
+//import com.laserfiche.repository.api.ApiClient;
+//import com.laserfiche.repository.api.ApiException;
+//import com.laserfiche.repository.api.Configuration;
+//import com.laserfiche.repository.api.auth.*;
+//import com.laserfiche.repository.api.client.TemplateDefinitionsApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 
@@ -223,11 +223,11 @@ Name | Type | Description  | Notes
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.TemplateDefinitionsApi;
+//import com.laserfiche.repository.api.ApiClient;
+//import com.laserfiche.repository.api.ApiException;
+//import com.laserfiche.repository.api.Configuration;
+//import com.laserfiche.repository.api.auth.*;
+//import com.laserfiche.repository.api.client.TemplateDefinitionsApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 

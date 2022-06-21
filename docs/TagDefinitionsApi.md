@@ -4,8 +4,8 @@ All URIs are relative to *https://api.a.clouddev.laserfiche.com/repository*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**getTagDefinitionById**](TagDefinitionsApi.md#getTagDefinitionById) | **GET** /v1/Repositories/{repoId}/TagDefinitions/{tagId} | 
-[**getTagDefinitions**](TagDefinitionsApi.md#getTagDefinitions) | **GET** /v1/Repositories/{repoId}/TagDefinitions | 
+[**getTagDefinitionById**](TagDefinitionsApi.md#getTagDefinitionById) | **GET** v2-alpha/Repositories/{repoId}/TagDefinitions/{tagId} | 
+[**getTagDefinitions**](TagDefinitionsApi.md#getTagDefinitions) | **GET** v2-alpha/Repositories/{repoId}/TagDefinitions | 
 
 <a name="getTagDefinitionById"></a>
 # **getTagDefinitionById**
@@ -18,11 +18,11 @@ Method | HTTP request | Description
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.TagDefinitionsApi;
+//import com.laserfiche.repository.api.ApiClient;
+//import com.laserfiche.repository.api.ApiException;
+//import com.laserfiche.repository.api.Configuration;
+//import com.laserfiche.repository.api.auth.*;
+//import com.laserfiche.repository.api.client.TagDefinitionsApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 
@@ -79,11 +79,11 @@ Name | Type | Description  | Notes
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.TagDefinitionsApi;
+//import com.laserfiche.repository.api.ApiClient;
+//import com.laserfiche.repository.api.ApiException;
+//import com.laserfiche.repository.api.Configuration;
+//import com.laserfiche.repository.api.auth.*;
+//import com.laserfiche.repository.api.client.TagDefinitionsApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 

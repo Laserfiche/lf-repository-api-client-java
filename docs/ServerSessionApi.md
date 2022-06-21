@@ -4,9 +4,9 @@ All URIs are relative to *https://api.a.clouddev.laserfiche.com/repository*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createServerSession**](ServerSessionApi.md#createServerSession) | **POST** /v1/Repositories/{repoId}/ServerSession/Create | 
-[**invalidateServerSession**](ServerSessionApi.md#invalidateServerSession) | **POST** /v1/Repositories/{repoId}/ServerSession/Invalidate | 
-[**refreshServerSession**](ServerSessionApi.md#refreshServerSession) | **POST** /v1/Repositories/{repoId}/ServerSession/Refresh | 
+[**createServerSession**](ServerSessionApi.md#createServerSession) | **POST** v2-alpha/Repositories/{repoId}/ServerSession/Create | 
+[**invalidateServerSession**](ServerSessionApi.md#invalidateServerSession) | **POST** v2-alpha/Repositories/{repoId}/ServerSession/Invalidate | 
+[**refreshServerSession**](ServerSessionApi.md#refreshServerSession) | **POST** v2-alpha/Repositories/{repoId}/ServerSession/Refresh | 
 
 <a name="createServerSession"></a>
 # **createServerSession**
@@ -14,16 +14,16 @@ Method | HTTP request | Description
 
 
 
-- Creates the server session to be used with later requests.
+- Deprecated. This function is a no-op, always returns 200.
 
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.ServerSessionApi;
+//import com.laserfiche.repository.api.ApiClient;
+//import com.laserfiche.repository.api.ApiException;
+//import com.laserfiche.repository.api.Configuration;
+//import com.laserfiche.repository.api.auth.*;
+//import com.laserfiche.repository.api.client.ServerSessionApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 
@@ -74,11 +74,11 @@ Name | Type | Description  | Notes
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.ServerSessionApi;
+//import com.laserfiche.repository.api.ApiClient;
+//import com.laserfiche.repository.api.ApiException;
+//import com.laserfiche.repository.api.Configuration;
+//import com.laserfiche.repository.api.auth.*;
+//import com.laserfiche.repository.api.client.ServerSessionApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 
@@ -129,11 +129,11 @@ Name | Type | Description  | Notes
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.ServerSessionApi;
+//import com.laserfiche.repository.api.ApiClient;
+//import com.laserfiche.repository.api.ApiException;
+//import com.laserfiche.repository.api.Configuration;
+//import com.laserfiche.repository.api.auth.*;
+//import com.laserfiche.repository.api.client.ServerSessionApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 

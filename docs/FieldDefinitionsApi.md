@@ -4,8 +4,8 @@ All URIs are relative to *https://api.a.clouddev.laserfiche.com/repository*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**getFieldDefinitionById**](FieldDefinitionsApi.md#getFieldDefinitionById) | **GET** /v1/Repositories/{repoId}/FieldDefinitions/{fieldDefinitionId} | 
-[**getFieldDefinitions**](FieldDefinitionsApi.md#getFieldDefinitions) | **GET** /v1/Repositories/{repoId}/FieldDefinitions | 
+[**getFieldDefinitionById**](FieldDefinitionsApi.md#getFieldDefinitionById) | **GET** v2-alpha/Repositories/{repoId}/FieldDefinitions/{fieldDefinitionId} | 
+[**getFieldDefinitions**](FieldDefinitionsApi.md#getFieldDefinitions) | **GET** v2-alpha/Repositories/{repoId}/FieldDefinitions | 
 
 <a name="getFieldDefinitionById"></a>
 # **getFieldDefinitionById**
@@ -18,11 +18,11 @@ Method | HTTP request | Description
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.FieldDefinitionsApi;
+//import com.laserfiche.repository.api.ApiClient;
+//import com.laserfiche.repository.api.ApiException;
+//import com.laserfiche.repository.api.Configuration;
+//import com.laserfiche.repository.api.auth.*;
+//import com.laserfiche.repository.api.client.FieldDefinitionsApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 
@@ -79,11 +79,11 @@ Name | Type | Description  | Notes
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.FieldDefinitionsApi;
+//import com.laserfiche.repository.api.ApiClient;
+//import com.laserfiche.repository.api.ApiException;
+//import com.laserfiche.repository.api.Configuration;
+//import com.laserfiche.repository.api.auth.*;
+//import com.laserfiche.repository.api.client.FieldDefinitionsApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 

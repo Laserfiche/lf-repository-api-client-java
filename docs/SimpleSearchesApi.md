@@ -4,11 +4,11 @@ All URIs are relative to *https://api.a.clouddev.laserfiche.com/repository*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createSimpleSearchOperation**](SimpleSearchesApi.md#createSimpleSearchOperation) | **POST** /v1/Repositories/{repoId}/SimpleSearches | 
+[**createSimpleSearchOperation**](SimpleSearchesApi.md#createSimpleSearchOperation) | **POST** v2-alpha/Repositories/{repoId}/SimpleSearches | 
 
 <a name="createSimpleSearchOperation"></a>
 # **createSimpleSearchOperation**
-> ODataValueOfIListOfODataGetEntryChildren createSimpleSearchOperation(repoId, body, fields, formatFields, culture, $select, $orderby, $count)
+> ODataValueOfIListOfEntry createSimpleSearchOperation(repoId, body, fields, formatFields, culture, $select, $orderby, $count)
 
 
 
@@ -17,11 +17,11 @@ Method | HTTP request | Description
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.SimpleSearchesApi;
+//import com.laserfiche.repository.api.ApiClient;
+//import com.laserfiche.repository.api.ApiException;
+//import com.laserfiche.repository.api.Configuration;
+//import com.laserfiche.repository.api.auth.*;
+//import com.laserfiche.repository.api.client.SimpleSearchesApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 
@@ -41,7 +41,7 @@ String $select = "$select_example"; // String | Limits the properties returned i
 String $orderby = "$orderby_example"; // String | Specifies the order in which items are returned. The maximum number of expressions is 5.
 Boolean $count = true; // Boolean | Indicates whether the total count of items within a collection are returned in the result.
 try {
-    ODataValueOfIListOfODataGetEntryChildren result = apiInstance.createSimpleSearchOperation(repoId, body, fields, formatFields, culture, $select, $orderby, $count);
+    ODataValueOfIListOfEntry result = apiInstance.createSimpleSearchOperation(repoId, body, fields, formatFields, culture, $select, $orderby, $count);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling SimpleSearchesApi#createSimpleSearchOperation");
@@ -64,7 +64,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ODataValueOfIListOfODataGetEntryChildren**](ODataValueOfIListOfODataGetEntryChildren.md)
+[**ODataValueOfIListOfEntry**](ODataValueOfIListOfEntry.md)
 
 ### Authorization
 

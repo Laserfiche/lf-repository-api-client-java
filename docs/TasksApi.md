@@ -4,12 +4,12 @@ All URIs are relative to *https://api.a.clouddev.laserfiche.com/repository*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**cancelOperation**](TasksApi.md#cancelOperation) | **DELETE** /v1/Repositories/{repoId}/Tasks/{operationToken} | 
-[**getOperationStatusAndProgress**](TasksApi.md#getOperationStatusAndProgress) | **GET** /v1/Repositories/{repoId}/Tasks/{operationToken} | 
+[**cancelOperation**](TasksApi.md#cancelOperation) | **DELETE** v2-alpha/Repositories/{repoId}/Tasks/{operationToken} | 
+[**getOperationStatusAndProgress**](TasksApi.md#getOperationStatusAndProgress) | **GET** v2-alpha/Repositories/{repoId}/Tasks/{operationToken} | 
 
 <a name="cancelOperation"></a>
 # **cancelOperation**
-> cancelOperation(repoId, operationToken)
+> Void cancelOperation(repoId, operationToken)
 
 
 
@@ -18,11 +18,11 @@ Method | HTTP request | Description
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.TasksApi;
+//import com.laserfiche.repository.api.ApiClient;
+//import com.laserfiche.repository.api.ApiException;
+//import com.laserfiche.repository.api.Configuration;
+//import com.laserfiche.repository.api.auth.*;
+//import com.laserfiche.repository.api.client.TasksApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 
@@ -33,10 +33,11 @@ OAuth2 Authorization Code Flow.setAccessToken("YOUR ACCESS TOKEN");
 
 
 TasksApi apiInstance = new TasksApi();
-String repoId = "repoId_example"; // String | The requested repository ID.
-String operationToken = "operationToken_example"; // String | The operation token 
+String repoId = "repoId_example"; // String | The requested repository ID
+String operationToken = "operationToken_example"; // String | The operation token
 try {
-    apiInstance.cancelOperation(repoId, operationToken);
+    Void result = apiInstance.cancelOperation(repoId, operationToken);
+    System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling TasksApi#cancelOperation");
     e.printStackTrace();
@@ -47,12 +48,12 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **repoId** | **String**| The requested repository ID. |
- **operationToken** | **String**| The operation token  |
+ **repoId** | **String**| The requested repository ID |
+ **operationToken** | **String**| The operation token |
 
 ### Return type
 
-null (empty response body)
+[**Void**](.md)
 
 ### Authorization
 
@@ -74,11 +75,11 @@ null (empty response body)
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.TasksApi;
+//import com.laserfiche.repository.api.ApiClient;
+//import com.laserfiche.repository.api.ApiException;
+//import com.laserfiche.repository.api.Configuration;
+//import com.laserfiche.repository.api.auth.*;
+//import com.laserfiche.repository.api.client.TasksApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 
@@ -89,8 +90,8 @@ OAuth2 Authorization Code Flow.setAccessToken("YOUR ACCESS TOKEN");
 
 
 TasksApi apiInstance = new TasksApi();
-String repoId = "repoId_example"; // String | The requested repository ID.
-String operationToken = "operationToken_example"; // String | The operation token.
+String repoId = "repoId_example"; // String | The requested repository ID
+String operationToken = "operationToken_example"; // String | The operation token
 try {
     OperationProgress result = apiInstance.getOperationStatusAndProgress(repoId, operationToken);
     System.out.println(result);
@@ -104,8 +105,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **repoId** | **String**| The requested repository ID. |
- **operationToken** | **String**| The operation token. |
+ **repoId** | **String**| The requested repository ID |
+ **operationToken** | **String**| The operation token |
 
 ### Return type
 

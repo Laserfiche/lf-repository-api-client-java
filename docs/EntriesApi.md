@@ -4,27 +4,28 @@ All URIs are relative to *https://api.a.clouddev.laserfiche.com/repository*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**assignEntryLinks**](EntriesApi.md#assignEntryLinks) | **PUT** /v1/Repositories/{repoId}/Entries/{entryId}/links | 
-[**assignFieldValues**](EntriesApi.md#assignFieldValues) | **PUT** /v1/Repositories/{repoId}/Entries/{entryId}/fields | 
-[**assignTags**](EntriesApi.md#assignTags) | **PUT** /v1/Repositories/{repoId}/Entries/{entryId}/tags | 
-[**copyEntryAsync**](EntriesApi.md#copyEntryAsync) | **POST** /v1/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Folder/CopyAsync | 
-[**createOrCopyEntry**](EntriesApi.md#createOrCopyEntry) | **POST** /v1/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Folder/children | 
-[**deleteAssignedTemplate**](EntriesApi.md#deleteAssignedTemplate) | **DELETE** /v1/Repositories/{repoId}/Entries/{entryId}/template | 
-[**deleteDocument**](EntriesApi.md#deleteDocument) | **DELETE** /v1/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Document/edoc | 
-[**deleteEntryInfo**](EntriesApi.md#deleteEntryInfo) | **DELETE** /v1/Repositories/{repoId}/Entries/{entryId} | 
-[**deletePages**](EntriesApi.md#deletePages) | **DELETE** /v1/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Document/pages | 
-[**exportDocument**](EntriesApi.md#exportDocument) | **GET** /v1/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Document/edoc | 
-[**exportDocumentWithAuditReason**](EntriesApi.md#exportDocumentWithAuditReason) | **POST** /v1/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Document/GetEdocWithAuditReason | 
-[**getDocumentContentType**](EntriesApi.md#getDocumentContentType) | **HEAD** /v1/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Document/edoc | 
-[**getDynamicFieldValues**](EntriesApi.md#getDynamicFieldValues) | **POST** /v1/Repositories/{repoId}/Entries/{entryId}/fields/GetDynamicFieldLogicValue | 
-[**getEntry**](EntriesApi.md#getEntry) | **GET** /v1/Repositories/{repoId}/Entries/{entryId} | 
-[**getEntryListing**](EntriesApi.md#getEntryListing) | **GET** /v1/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Folder/children | 
-[**getFieldValues**](EntriesApi.md#getFieldValues) | **GET** /v1/Repositories/{repoId}/Entries/{entryId}/fields | 
-[**getLinkValuesFromEntry**](EntriesApi.md#getLinkValuesFromEntry) | **GET** /v1/Repositories/{repoId}/Entries/{entryId}/links | 
-[**getTagsAssignedToEntry**](EntriesApi.md#getTagsAssignedToEntry) | **GET** /v1/Repositories/{repoId}/Entries/{entryId}/tags | 
-[**importDocument**](EntriesApi.md#importDocument) | **POST** /v1/Repositories/{repoId}/Entries/{parentEntryId}/{fileName} | 
-[**moveOrRenameDocument**](EntriesApi.md#moveOrRenameDocument) | **PATCH** /v1/Repositories/{repoId}/Entries/{entryId} | 
-[**writeTemplateValueToEntry**](EntriesApi.md#writeTemplateValueToEntry) | **PUT** /v1/Repositories/{repoId}/Entries/{entryId}/template | 
+[**assignEntryLinks**](EntriesApi.md#assignEntryLinks) | **PUT** v2-alpha/Repositories/{repoId}/Entries/{entryId}/links | 
+[**assignFieldValues**](EntriesApi.md#assignFieldValues) | **PUT** v2-alpha/Repositories/{repoId}/Entries/{entryId}/fields | 
+[**assignTags**](EntriesApi.md#assignTags) | **PUT** v2-alpha/Repositories/{repoId}/Entries/{entryId}/tags | 
+[**copyEntryAsync**](EntriesApi.md#copyEntryAsync) | **POST** v2-alpha/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Folder/CopyAsync | 
+[**createOrCopyEntry**](EntriesApi.md#createOrCopyEntry) | **POST** v2-alpha/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Folder/children | 
+[**deleteAssignedTemplate**](EntriesApi.md#deleteAssignedTemplate) | **DELETE** v2-alpha/Repositories/{repoId}/Entries/{entryId}/template | 
+[**deleteDocument**](EntriesApi.md#deleteDocument) | **DELETE** v2-alpha/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Document/edoc | 
+[**deleteEntryInfo**](EntriesApi.md#deleteEntryInfo) | **DELETE** v2-alpha/Repositories/{repoId}/Entries/{entryId} | 
+[**deletePages**](EntriesApi.md#deletePages) | **DELETE** v2-alpha/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Document/pages | 
+[**exportDocument**](EntriesApi.md#exportDocument) | **GET** v2-alpha/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Document/edoc | 
+[**exportDocumentWithAuditReason**](EntriesApi.md#exportDocumentWithAuditReason) | **POST** v2-alpha/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Document/GetEdocWithAuditReason | 
+[**getDocumentContentType**](EntriesApi.md#getDocumentContentType) | **HEAD** v2-alpha/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Document/edoc | 
+[**getDynamicFieldValues**](EntriesApi.md#getDynamicFieldValues) | **POST** v2-alpha/Repositories/{repoId}/Entries/{entryId}/fields/GetDynamicFieldLogicValue | 
+[**getEntry**](EntriesApi.md#getEntry) | **GET** v2-alpha/Repositories/{repoId}/Entries/{entryId} | 
+[**getEntryListing**](EntriesApi.md#getEntryListing) | **GET** v2-alpha/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Folder/children | 
+[**getFieldValues**](EntriesApi.md#getFieldValues) | **GET** v2-alpha/Repositories/{repoId}/Entries/{entryId}/fields | 
+[**getLinkValuesFromEntry**](EntriesApi.md#getLinkValuesFromEntry) | **GET** v2-alpha/Repositories/{repoId}/Entries/{entryId}/links | 
+[**getTagsAssignedToEntry**](EntriesApi.md#getTagsAssignedToEntry) | **GET** v2-alpha/Repositories/{repoId}/Entries/{entryId}/tags | 
+[**moveOrRenameDocument**](EntriesApi.md#moveOrRenameDocument) | **PATCH** v2-alpha/Repositories/{repoId}/Entries/{entryId} | 
+[**simpleExport**](EntriesApi.md#simpleExport) | **POST** v2-alpha/Repositories/{repoId}/Entries/{entryId}/Export | 
+[**simpleImport**](EntriesApi.md#simpleImport) | **POST** v2-alpha/Repositories/{repoId}/Entries/{parentEntryId}/Import | 
+[**writeTemplateValueToEntry**](EntriesApi.md#writeTemplateValueToEntry) | **PUT** v2-alpha/Repositories/{repoId}/Entries/{entryId}/template | 
 
 <a name="assignEntryLinks"></a>
 # **assignEntryLinks**
@@ -37,11 +38,11 @@ Method | HTTP request | Description
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.EntriesApi;
+//import com.laserfiche.repository.api.ApiClient;
+//import com.laserfiche.repository.api.ApiException;
+//import com.laserfiche.repository.api.Configuration;
+//import com.laserfiche.repository.api.auth.*;
+//import com.laserfiche.repository.api.client.EntriesApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 
@@ -96,11 +97,11 @@ Name | Type | Description  | Notes
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.EntriesApi;
+//import com.laserfiche.repository.api.ApiClient;
+//import com.laserfiche.repository.api.ApiException;
+//import com.laserfiche.repository.api.Configuration;
+//import com.laserfiche.repository.api.auth.*;
+//import com.laserfiche.repository.api.client.EntriesApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 
@@ -157,11 +158,11 @@ Name | Type | Description  | Notes
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.EntriesApi;
+//import com.laserfiche.repository.api.ApiClient;
+//import com.laserfiche.repository.api.ApiException;
+//import com.laserfiche.repository.api.Configuration;
+//import com.laserfiche.repository.api.auth.*;
+//import com.laserfiche.repository.api.client.EntriesApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 
@@ -216,11 +217,11 @@ Name | Type | Description  | Notes
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.EntriesApi;
+//import com.laserfiche.repository.api.ApiClient;
+//import com.laserfiche.repository.api.ApiException;
+//import com.laserfiche.repository.api.Configuration;
+//import com.laserfiche.repository.api.auth.*;
+//import com.laserfiche.repository.api.client.EntriesApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 
@@ -279,11 +280,11 @@ Name | Type | Description  | Notes
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.EntriesApi;
+//import com.laserfiche.repository.api.ApiClient;
+//import com.laserfiche.repository.api.ApiException;
+//import com.laserfiche.repository.api.Configuration;
+//import com.laserfiche.repository.api.auth.*;
+//import com.laserfiche.repository.api.client.EntriesApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 
@@ -342,11 +343,11 @@ Name | Type | Description  | Notes
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.EntriesApi;
+//import com.laserfiche.repository.api.ApiClient;
+//import com.laserfiche.repository.api.ApiException;
+//import com.laserfiche.repository.api.Configuration;
+//import com.laserfiche.repository.api.auth.*;
+//import com.laserfiche.repository.api.client.EntriesApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 
@@ -399,11 +400,11 @@ Name | Type | Description  | Notes
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.EntriesApi;
+//import com.laserfiche.repository.api.ApiClient;
+//import com.laserfiche.repository.api.ApiException;
+//import com.laserfiche.repository.api.Configuration;
+//import com.laserfiche.repository.api.auth.*;
+//import com.laserfiche.repository.api.client.EntriesApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 
@@ -456,11 +457,11 @@ Name | Type | Description  | Notes
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.EntriesApi;
+//import com.laserfiche.repository.api.ApiClient;
+//import com.laserfiche.repository.api.ApiException;
+//import com.laserfiche.repository.api.Configuration;
+//import com.laserfiche.repository.api.auth.*;
+//import com.laserfiche.repository.api.client.EntriesApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 
@@ -515,11 +516,11 @@ Name | Type | Description  | Notes
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.EntriesApi;
+//import com.laserfiche.repository.api.ApiClient;
+//import com.laserfiche.repository.api.ApiException;
+//import com.laserfiche.repository.api.Configuration;
+//import com.laserfiche.repository.api.auth.*;
+//import com.laserfiche.repository.api.client.EntriesApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 
@@ -574,11 +575,11 @@ Name | Type | Description  | Notes
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.EntriesApi;
+//import com.laserfiche.repository.api.ApiClient;
+//import com.laserfiche.repository.api.ApiException;
+//import com.laserfiche.repository.api.Configuration;
+//import com.laserfiche.repository.api.auth.*;
+//import com.laserfiche.repository.api.client.EntriesApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 
@@ -633,11 +634,11 @@ Name | Type | Description  | Notes
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.EntriesApi;
+//import com.laserfiche.repository.api.ApiClient;
+//import com.laserfiche.repository.api.ApiException;
+//import com.laserfiche.repository.api.Configuration;
+//import com.laserfiche.repository.api.auth.*;
+//import com.laserfiche.repository.api.client.EntriesApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 
@@ -685,7 +686,7 @@ Name | Type | Description  | Notes
 
 <a name="getDocumentContentType"></a>
 # **getDocumentContentType**
-> getDocumentContentType(repoId, entryId)
+> Void getDocumentContentType(repoId, entryId)
 
 
 
@@ -694,11 +695,11 @@ Name | Type | Description  | Notes
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.EntriesApi;
+//import com.laserfiche.repository.api.ApiClient;
+//import com.laserfiche.repository.api.ApiException;
+//import com.laserfiche.repository.api.Configuration;
+//import com.laserfiche.repository.api.auth.*;
+//import com.laserfiche.repository.api.client.EntriesApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 
@@ -712,7 +713,8 @@ EntriesApi apiInstance = new EntriesApi();
 String repoId = "repoId_example"; // String | The requested repository ID.
 Integer entryId = 56; // Integer | The requested document ID.
 try {
-    apiInstance.getDocumentContentType(repoId, entryId);
+    Void result = apiInstance.getDocumentContentType(repoId, entryId);
+    System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling EntriesApi#getDocumentContentType");
     e.printStackTrace();
@@ -728,7 +730,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+[**Void**](.md)
 
 ### Authorization
 
@@ -750,11 +752,11 @@ null (empty response body)
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.EntriesApi;
+//import com.laserfiche.repository.api.ApiClient;
+//import com.laserfiche.repository.api.ApiException;
+//import com.laserfiche.repository.api.Configuration;
+//import com.laserfiche.repository.api.auth.*;
+//import com.laserfiche.repository.api.client.EntriesApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 
@@ -809,11 +811,11 @@ Name | Type | Description  | Notes
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.EntriesApi;
+//import com.laserfiche.repository.api.ApiClient;
+//import com.laserfiche.repository.api.ApiException;
+//import com.laserfiche.repository.api.Configuration;
+//import com.laserfiche.repository.api.auth.*;
+//import com.laserfiche.repository.api.client.EntriesApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 
@@ -859,7 +861,7 @@ Name | Type | Description  | Notes
 
 <a name="getEntryListing"></a>
 # **getEntryListing**
-> ODataValueContextOfIListOfODataGetEntryChildren getEntryListing(repoId, entryId, groupByEntryType, fields, formatFields, prefer, culture, $select, $orderby, $top, $skip, $count)
+> ODataValueContextOfIListOfEntry getEntryListing(repoId, entryId, groupByEntryType, fields, formatFields, prefer, culture, $select, $orderby, $top, $skip, $count)
 
 
 
@@ -868,11 +870,11 @@ Name | Type | Description  | Notes
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.EntriesApi;
+//import com.laserfiche.repository.api.ApiClient;
+//import com.laserfiche.repository.api.ApiException;
+//import com.laserfiche.repository.api.Configuration;
+//import com.laserfiche.repository.api.auth.*;
+//import com.laserfiche.repository.api.client.EntriesApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 
@@ -896,7 +898,7 @@ Integer $top = 56; // Integer | Limits the number of items returned from a colle
 Integer $skip = 56; // Integer | Excludes the specified number of items of the queried collection from the result.
 Boolean $count = true; // Boolean | Indicates whether the total count of items within a collection are returned in the result.
 try {
-    ODataValueContextOfIListOfODataGetEntryChildren result = apiInstance.getEntryListing(repoId, entryId, groupByEntryType, fields, formatFields, prefer, culture, $select, $orderby, $top, $skip, $count);
+    ODataValueContextOfIListOfEntry result = apiInstance.getEntryListing(repoId, entryId, groupByEntryType, fields, formatFields, prefer, culture, $select, $orderby, $top, $skip, $count);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling EntriesApi#getEntryListing");
@@ -923,7 +925,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ODataValueContextOfIListOfODataGetEntryChildren**](ODataValueContextOfIListOfODataGetEntryChildren.md)
+[**ODataValueContextOfIListOfEntry**](ODataValueContextOfIListOfEntry.md)
 
 ### Authorization
 
@@ -945,11 +947,11 @@ Name | Type | Description  | Notes
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.EntriesApi;
+//import com.laserfiche.repository.api.ApiClient;
+//import com.laserfiche.repository.api.ApiException;
+//import com.laserfiche.repository.api.Configuration;
+//import com.laserfiche.repository.api.auth.*;
+//import com.laserfiche.repository.api.client.EntriesApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 
@@ -1018,11 +1020,11 @@ Name | Type | Description  | Notes
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.EntriesApi;
+//import com.laserfiche.repository.api.ApiClient;
+//import com.laserfiche.repository.api.ApiException;
+//import com.laserfiche.repository.api.Configuration;
+//import com.laserfiche.repository.api.auth.*;
+//import com.laserfiche.repository.api.client.EntriesApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 
@@ -1087,11 +1089,11 @@ Name | Type | Description  | Notes
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.EntriesApi;
+//import com.laserfiche.repository.api.ApiClient;
+//import com.laserfiche.repository.api.ApiException;
+//import com.laserfiche.repository.api.Configuration;
+//import com.laserfiche.repository.api.auth.*;
+//import com.laserfiche.repository.api.client.EntriesApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 
@@ -1145,73 +1147,6 @@ Name | Type | Description  | Notes
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
-<a name="importDocument"></a>
-# **importDocument**
-> CreateEntryResult importDocument(repoId, parentEntryId, fileName, electronicDocument, request, autoRename, culture)
-
-
-
-- Creates a new document in the specified folder. - Optionally sets metadata and electronic document component. - Optional parameter: autoRename (default false). If an entry already exists with the given name, the entry will be automatically renamed. With this route, partial success is possible. The response returns multiple operation (entryCreate operation, setEdoc operation, setLinks operation, etc..) objects, which contain information about any errors that may have occurred during the creation. As long as the entryCreate operation succeeds, the entry will be created, even if all other operations fail.
-
-### Example
-```java
-// Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.EntriesApi;
-
-ApiClient defaultClient = Configuration.getDefaultApiClient();
-
-
-// Configure OAuth2 access token for authorization: OAuth2 Authorization Code Flow
-OAuth OAuth2 Authorization Code Flow = (OAuth) defaultClient.getAuthentication("OAuth2 Authorization Code Flow");
-OAuth2 Authorization Code Flow.setAccessToken("YOUR ACCESS TOKEN");
-
-
-EntriesApi apiInstance = new EntriesApi();
-String repoId = "repoId_example"; // String | The requested repository ID.
-Integer parentEntryId = 56; // Integer | The entry ID of the folder that the document will be created in.
-String fileName = "fileName_example"; // String | The created document's file name.
-File electronicDocument = new File("electronicDocument_example"); // File | 
-PostEntryWithEdocMetadataRequest request = new PostEntryWithEdocMetadataRequest(); // PostEntryWithEdocMetadataRequest | 
-Boolean autoRename = true; // Boolean | An optional query parameter used to indicate if the new document should be automatically             renamed if an entry already exists with the given name in the folder. The default value is false.
-String culture = ""; // String | An optional query parameter used to indicate the locale that should be used.             The value should be a standard language tag.
-try {
-    CreateEntryResult result = apiInstance.importDocument(repoId, parentEntryId, fileName, electronicDocument, request, autoRename, culture);
-    System.out.println(result);
-} catch (ApiException e) {
-    System.err.println("Exception when calling EntriesApi#importDocument");
-    e.printStackTrace();
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **repoId** | **String**| The requested repository ID. |
- **parentEntryId** | **Integer**| The entry ID of the folder that the document will be created in. |
- **fileName** | **String**| The created document&#x27;s file name. |
- **electronicDocument** | **File**|  | [optional]
- **request** | [**PostEntryWithEdocMetadataRequest**](.md)|  | [optional]
- **autoRename** | **Boolean**| An optional query parameter used to indicate if the new document should be automatically             renamed if an entry already exists with the given name in the folder. The default value is false. | [optional]
- **culture** | **String**| An optional query parameter used to indicate the locale that should be used.             The value should be a standard language tag. | [optional]
-
-### Return type
-
-[**CreateEntryResult**](CreateEntryResult.md)
-
-### Authorization
-
-[Authorization](../README.md#Authorization)[OAuth2 Authorization Code Flow](../README.md#OAuth2 Authorization Code Flow)[OAuth2 Client Credentials Flow](../README.md#OAuth2 Client Credentials Flow)
-
-### HTTP request headers
-
- - **Content-Type**: multipart/form-data
- - **Accept**: application/json
-
 <a name="moveOrRenameDocument"></a>
 # **moveOrRenameDocument**
 > Entry moveOrRenameDocument(repoId, entryId, body, autoRename, culture)
@@ -1223,11 +1158,11 @@ Name | Type | Description  | Notes
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.EntriesApi;
+//import com.laserfiche.repository.api.ApiClient;
+//import com.laserfiche.repository.api.ApiException;
+//import com.laserfiche.repository.api.Configuration;
+//import com.laserfiche.repository.api.auth.*;
+//import com.laserfiche.repository.api.client.EntriesApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 
@@ -1277,6 +1212,134 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+<a name="simpleExport"></a>
+# **simpleExport**
+> ODataValueOfString simpleExport(part, repoId, entryId, body, format, pageRange)
+
+
+
+- Export an entry. - Provide an entry ID, part, format, page range, and audit event and export the entry part as the provided format. - This operation is a &#x27;simple operation&#x27;. For more functionality, refer to the non-simple export route.
+
+### Example
+```java
+// Import classes:
+//import com.laserfiche.repository.api.ApiClient;
+//import com.laserfiche.repository.api.ApiException;
+//import com.laserfiche.repository.api.Configuration;
+//import com.laserfiche.repository.api.auth.*;
+//import com.laserfiche.repository.api.client.EntriesApi;
+
+ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+
+// Configure OAuth2 access token for authorization: OAuth2 Authorization Code Flow
+OAuth OAuth2 Authorization Code Flow = (OAuth) defaultClient.getAuthentication("OAuth2 Authorization Code Flow");
+OAuth2 Authorization Code Flow.setAccessToken("YOUR ACCESS TOKEN");
+
+
+EntriesApi apiInstance = new EntriesApi();
+Part part = new Part(); // Part | Specifies which 'part' of the document to export. Options include: Edoc, Pages and Text.
+String repoId = "repoId_example"; // String | The requested repository ID.
+Integer entryId = 56; // Integer | The ID of entry to export.
+ExportRequestBody body = new ExportRequestBody(); // ExportRequestBody | The body of the export request.
+Format format = new Format(); // Format | Specifies the format to export as. This value is ignored when part=Edoc or Text. Options include: TIFF, PNG, PDF and JPEG. The default value is TIFF.
+String pageRange = "pageRange_example"; // String | A comma seperated range of pages to include. This value is ignored when part=Edoc. Ex: 1,3,4 or 1-3,5-7,9.
+try {
+    ODataValueOfString result = apiInstance.simpleExport(part, repoId, entryId, body, format, pageRange);
+    System.out.println(result);
+} catch (ApiException e) {
+    System.err.println("Exception when calling EntriesApi#simpleExport");
+    e.printStackTrace();
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **part** | [**Part**](.md)| Specifies which &#x27;part&#x27; of the document to export. Options include: Edoc, Pages and Text. |
+ **repoId** | **String**| The requested repository ID. |
+ **entryId** | **Integer**| The ID of entry to export. |
+ **body** | [**ExportRequestBody**](ExportRequestBody.md)| The body of the export request. | [optional]
+ **format** | [**Format**](.md)| Specifies the format to export as. This value is ignored when part&#x3D;Edoc or Text. Options include: TIFF, PNG, PDF and JPEG. The default value is TIFF. | [optional]
+ **pageRange** | **String**| A comma seperated range of pages to include. This value is ignored when part&#x3D;Edoc. Ex: 1,3,4 or 1-3,5-7,9. | [optional]
+
+### Return type
+
+[**ODataValueOfString**](ODataValueOfString.md)
+
+### Authorization
+
+[Authorization](../README.md#Authorization)[OAuth2 Authorization Code Flow](../README.md#OAuth2 Authorization Code Flow)[OAuth2 Client Credentials Flow](../README.md#OAuth2 Client Credentials Flow)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+<a name="simpleImport"></a>
+# **simpleImport**
+> SimpleImportResult simpleImport(repoId, parentEntryId, file, request, culture)
+
+
+
+- Import a new document in the specified folder with file (no more than 100Mb). - Optionally sets metadata. - With this route, partial success is possible. The response returns error message, which contain information about any errors that may have occurred during the import. As long as the documentLink returned, the entry is created, even if other steps fail.
+
+### Example
+```java
+// Import classes:
+//import com.laserfiche.repository.api.ApiClient;
+//import com.laserfiche.repository.api.ApiException;
+//import com.laserfiche.repository.api.Configuration;
+//import com.laserfiche.repository.api.auth.*;
+//import com.laserfiche.repository.api.client.EntriesApi;
+
+ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+
+// Configure OAuth2 access token for authorization: OAuth2 Authorization Code Flow
+OAuth OAuth2 Authorization Code Flow = (OAuth) defaultClient.getAuthentication("OAuth2 Authorization Code Flow");
+OAuth2 Authorization Code Flow.setAccessToken("YOUR ACCESS TOKEN");
+
+
+EntriesApi apiInstance = new EntriesApi();
+String repoId = "repoId_example"; // String | The requested repository ID.
+Integer parentEntryId = 56; // Integer | The entry ID of the folder that the document will be created in.
+File file = new File("file_example"); // File | 
+SimpleImportRequest request = new SimpleImportRequest(); // SimpleImportRequest | 
+String culture = ""; // String | An optional query parameter used to indicate the locale that should be used.             The value should be a standard language tag.
+try {
+    SimpleImportResult result = apiInstance.simpleImport(repoId, parentEntryId, file, request, culture);
+    System.out.println(result);
+} catch (ApiException e) {
+    System.err.println("Exception when calling EntriesApi#simpleImport");
+    e.printStackTrace();
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **repoId** | **String**| The requested repository ID. |
+ **parentEntryId** | **Integer**| The entry ID of the folder that the document will be created in. |
+ **file** | **File**|  | [optional]
+ **request** | [**SimpleImportRequest**](.md)|  | [optional]
+ **culture** | **String**| An optional query parameter used to indicate the locale that should be used.             The value should be a standard language tag. | [optional]
+
+### Return type
+
+[**SimpleImportResult**](SimpleImportResult.md)
+
+### Authorization
+
+[Authorization](../README.md#Authorization)[OAuth2 Authorization Code Flow](../README.md#OAuth2 Authorization Code Flow)[OAuth2 Client Credentials Flow](../README.md#OAuth2 Client Credentials Flow)
+
+### HTTP request headers
+
+ - **Content-Type**: multipart/form-data
+ - **Accept**: application/json
+
 <a name="writeTemplateValueToEntry"></a>
 # **writeTemplateValueToEntry**
 > Entry writeTemplateValueToEntry(repoId, entryId, body, culture)
@@ -1288,11 +1351,11 @@ Name | Type | Description  | Notes
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.EntriesApi;
+//import com.laserfiche.repository.api.ApiClient;
+//import com.laserfiche.repository.api.ApiException;
+//import com.laserfiche.repository.api.Configuration;
+//import com.laserfiche.repository.api.auth.*;
+//import com.laserfiche.repository.api.client.EntriesApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 
