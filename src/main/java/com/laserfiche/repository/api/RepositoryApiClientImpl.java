@@ -23,7 +23,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
     private TemplateDefinitionsApi templateDefinitionsApi;
 
     protected RepositoryApiClientImpl(String servicePrincipalKey, AccessKey accessKey, String baseUrlDebug) {
-        String baseUrl = baseUrlDebug != null ? baseUrlDebug : accessKey.getDomain() + "repository/";
+        String baseUrl = baseUrlDebug != null ? baseUrlDebug : "https://" + accessKey.getDomain() + "/repository/";
 
         okBuilder = new OkHttpClient.Builder();
         okBuilder.addInterceptor(new OAuthInterceptor(servicePrincipalKey, accessKey));
@@ -51,7 +51,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
 
     @Override
     public AttributesApi getAttributesClient() {
-        if (attributesApi != null) {
+        if (attributesApi == null) {
             attributesApi = createClient(AttributesApi.class);
         }
         return attributesApi;
@@ -59,7 +59,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
 
     @Override
     public AuditReasonsApi getAuditReasonsClient() {
-        if (auditReasonsApi != null) {
+        if (auditReasonsApi == null) {
             auditReasonsApi = createClient(AuditReasonsApi.class);
         }
         return auditReasonsApi;
@@ -67,7 +67,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
 
     @Override
     public EntriesApi getEntriesClient() {
-        if (entriesApi != null) {
+        if (entriesApi == null) {
             entriesApi = createClient(EntriesApi.class);
         }
         return entriesApi;
@@ -75,7 +75,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
 
     @Override
     public FieldDefinitionsApi getFieldDefinitionsClient() {
-        if (fieldDefinitionsApi != null) {
+        if (fieldDefinitionsApi == null) {
             fieldDefinitionsApi = createClient(FieldDefinitionsApi.class);
         }
         return fieldDefinitionsApi;
@@ -83,7 +83,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
 
     @Override
     public RepositoriesApi getRepositoryClient() {
-        if (repositoriesApi != null) {
+        if (repositoriesApi == null) {
             repositoriesApi = createClient(RepositoriesApi.class);
         }
         return repositoriesApi;
@@ -91,7 +91,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
 
     @Override
     public SearchesApi getSearchesClient() {
-        if (searchesApi != null) {
+        if (searchesApi == null) {
             searchesApi = createClient(SearchesApi.class);
         }
         return searchesApi;
@@ -99,7 +99,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
 
     @Override
     public ServerSessionApi getServerSessionClient() {
-        if (serverSessionApi != null) {
+        if (serverSessionApi == null) {
             serverSessionApi = createClient(ServerSessionApi.class);
         }
         return serverSessionApi;
@@ -107,7 +107,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
 
     @Override
     public SimpleSearchesApi getSimpleSearchesClient() {
-        if (simpleSearchesApi != null) {
+        if (simpleSearchesApi == null) {
             simpleSearchesApi = createClient(SimpleSearchesApi.class);
         }
         return simpleSearchesApi;
@@ -115,7 +115,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
 
     @Override
     public TagDefinitionsApi getTagDefinitionsClient() {
-        if (tagDefinitionsApi != null) {
+        if (tagDefinitionsApi == null) {
             tagDefinitionsApi = createClient(TagDefinitionsApi.class);
         }
         return tagDefinitionsApi;
@@ -123,7 +123,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
 
     @Override
     public TasksApi getTasksClient() {
-        if (tasksApi != null) {
+        if (tasksApi == null) {
             tasksApi = createClient(TasksApi.class);
         }
         return tasksApi;
@@ -131,7 +131,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
 
     @Override
     public TemplateDefinitionsApi getTemplateDefinitionClient() {
-        if (templateDefinitionsApi != null) {
+        if (templateDefinitionsApi == null) {
             templateDefinitionsApi = createClient(TemplateDefinitionsApi.class);
         }
         return templateDefinitionsApi;
