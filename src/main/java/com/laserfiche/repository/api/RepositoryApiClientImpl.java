@@ -1,7 +1,5 @@
 package com.laserfiche.repository.api;
 
-import com.laserfiche.api.client.httphandlers.HttpRequestHandler;
-import com.laserfiche.api.client.httphandlers.OAuthClientCredentialsHandler;
 import com.laserfiche.api.client.model.AccessKey;
 import com.laserfiche.repository.api.client.*;
 import okhttp3.OkHttpClient;
@@ -9,12 +7,8 @@ import retrofit2.Retrofit;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class RepositoryApiClientImpl implements RepositoryApiClient {
-    private final HttpRequestHandler oauthHandler;
     private final Retrofit.Builder clientBuilder;
     private final OkHttpClient.Builder okBuilder;
-    private final AccessKey accesskey;
-    private final String servicePrincipalKey;
-    private final JSON json;
 
     private AttributesApi attributesApi;
     private AuditReasonsApi auditReasonsApi;
@@ -29,15 +23,11 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
     private TemplateDefinitionsApi templateDefinitionsApi;
 
     protected RepositoryApiClientImpl(String servicePrincipalKey, AccessKey accessKey, String baseUrlDebug) {
-        json = new JSON();
-
-        this.oauthHandler = new OAuthClientCredentialsHandler(servicePrincipalKey, accessKey);
-        this.accesskey = accessKey;
-        this.servicePrincipalKey = servicePrincipalKey;
-
         String baseUrl = baseUrlDebug != null ? baseUrlDebug : accessKey.getDomain() + "repository/";
 
         okBuilder = new OkHttpClient.Builder();
+        okBuilder.addInterceptor(new OAuthInterceptor(servicePrincipalKey, accessKey));
+        JSON json = new JSON();
         clientBuilder = new Retrofit
                 .Builder()
                 .baseUrl(baseUrl)
