@@ -14,6 +14,7 @@ import java.util.Base64;
 public class BaseTest {
     protected static String spKey;
     protected static AccessKey accessKey;
+    protected static String repoId;
     protected static RepositoryApiClient repositoryApiClient;
 
     @BeforeAll
@@ -34,6 +35,7 @@ public class BaseTest {
 
         accessKey = gson.fromJson(accessKeyStr, AccessKey.class);
         spKey = dotenv.get("SERVICE_PRINCIPAL_KEY");
+        repoId = dotenv.get("REPOSITORY_ID");
         repositoryApiClient = RepositoryApiClientImpl.CreateFromAccessKey(spKey, accessKey);
     }
 
