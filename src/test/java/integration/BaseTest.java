@@ -3,6 +3,8 @@ package integration;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.laserfiche.api.client.model.AccessKey;
+import com.laserfiche.repository.api.RepositoryApiClient;
+import com.laserfiche.repository.api.RepositoryApiClientImpl;
 import com.nimbusds.jose.jwk.JWK;
 import io.github.cdimascio.dotenv.Dotenv;
 import org.junit.jupiter.api.BeforeAll;
@@ -12,6 +14,7 @@ import java.util.Base64;
 public class BaseTest {
     protected static String spKey;
     protected static AccessKey accessKey;
+    protected static RepositoryApiClient repositoryApiClient;
 
     @BeforeAll
     public static void setUp() {
@@ -31,6 +34,7 @@ public class BaseTest {
 
         accessKey = gson.fromJson(accessKeyStr, AccessKey.class);
         spKey = dotenv.get("SERVICE_PRINCIPAL_KEY");
+        repositoryApiClient = RepositoryApiClientImpl.CreateFromAccessKey(spKey, accessKey);
     }
 
     private static String decodeBase64(String encoded) {
