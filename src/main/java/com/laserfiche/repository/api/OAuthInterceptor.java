@@ -10,7 +10,6 @@ import okhttp3.Response;
 
 import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 
 public class OAuthInterceptor implements Interceptor {
     private final OAuthClientCredentialsHandler oauthHandler;
@@ -24,11 +23,7 @@ public class OAuthInterceptor implements Interceptor {
         okhttp3.Request originalRequest = chain.request();
         Request customRequest = new RequestImpl();
         CompletableFuture<BeforeSendResult> future = oauthHandler.beforeSendAsync(customRequest);
-        try {
-            future.get(); // We are blocked by the HTTP handler
-        } catch (InterruptedException | ExecutionException e) {
-            throw new RuntimeException(e);
-        }
+        future.join(); // We are blocked by the HTTP handler
         okhttp3.Request newRequest = originalRequest.newBuilder()
                 .addHeader("Authorization", customRequest.headers().get("Authorization"))
                 .build();
