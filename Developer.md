@@ -26,7 +26,7 @@ Before you can build and test the Java Client Core Library, you must install and
 - In order to rebuild the project after adding a new library, open the maven panel on the side and click reload project
 
 ## How to run the tests locally
-- All the unit/integration tests are in the src/main/test/ directory of this project
+- All the unit/integration tests are in the src/test/ directory of this project
 - In order to run the tests, right click the test file or test directory of your choice and click run Tests in <Test directory or File>
 - You should be able to see the test results in the terminal after running those tests
 - ***If you are using an older version of IntelliJ, there terminal will not show any thrown exceptions***
