@@ -23,7 +23,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
     private TemplateDefinitionsApi templateDefinitionsApi;
 
     protected RepositoryApiClientImpl(String servicePrincipalKey, AccessKey accessKey, String baseUrlDebug) {
-        String baseUrl = baseUrlDebug != null ? baseUrlDebug : "https://" + accessKey.getDomain() + "/repository/";
+        String baseUrl = baseUrlDebug != null ? baseUrlDebug : "https://api." + accessKey.getDomain() + "/repository/";
 
         okBuilder = new OkHttpClient.Builder();
         okBuilder.addInterceptor(new OAuthInterceptor(servicePrincipalKey, accessKey));
