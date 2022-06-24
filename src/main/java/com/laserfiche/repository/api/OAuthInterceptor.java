@@ -24,9 +24,9 @@ public class OAuthInterceptor implements Interceptor {
         Request customRequest = new RequestImpl();
         CompletableFuture<BeforeSendResult> future = oauthHandler.beforeSendAsync(customRequest);
         future.join(); // We are blocked by the HTTP handler
-        okhttp3.Request newRequest = originalRequest.newBuilder()
+        okhttp3.Request requestWithAuth = originalRequest.newBuilder()
                 .addHeader("Authorization", customRequest.headers().get("Authorization"))
                 .build();
-        return chain.proceed(newRequest);
+        return chain.proceed(requestWithAuth);
     }
 }
