@@ -18,6 +18,6 @@ public class EntryApiTest extends BaseTest {
         Call<Entry> call = entriesClient.getEntry(repoId, 1, null);
         Response<Entry> entry = call.execute();
 
-        assertNotNull(entry);
+        assertNotNull(entry.body());
     }
 }
