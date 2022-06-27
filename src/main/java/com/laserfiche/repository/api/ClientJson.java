@@ -97,7 +97,11 @@ public class ClientJson {
             if (element == null) {
                 throw new IllegalArgumentException(String.format("The JSON object doesn't contain required field: %s", odataType));
             }
-            String type = element.getAsString();
+
+            String typeComponentStr = element.getAsString();
+            String[] typeComponents = typeComponentStr.split("\\.");
+            String type = typeComponents[typeComponents.length - 1];
+
             Class<T> classToDeserialize = typeSelectableClasses.get(type);
             if (classToDeserialize == null) {
                 throw new RuntimeException(String.format("Cannot find class: %s", type));
