@@ -27,7 +27,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
 
         okBuilder = new OkHttpClient.Builder();
         okBuilder.addInterceptor(new OAuthInterceptor(servicePrincipalKey, accessKey));
-        JSON json = new JSON();
+        ClientJson json = new ClientJson();
         clientBuilder = new Retrofit
                 .Builder()
                 .baseUrl(baseUrl)
