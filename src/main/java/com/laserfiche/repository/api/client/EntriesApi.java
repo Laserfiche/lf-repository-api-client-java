@@ -268,6 +268,7 @@ public interface EntriesApi {
 
   /**
    *
+   * - Returns the children entries of a folder in the repository.
    * @param url Full next link URL returned by the backend.
    * @param prefer May contain maxpagesize information.
    * @return CompletableFuture&lt;ODataValueContextOfIListOfEntry&gt;
@@ -296,6 +297,16 @@ public interface EntriesApi {
   );
 
   /**
+   *
+   * - Returns the fields assigned to an entry.
+   * @param url Full next link URL returned by the backend.
+   * @param prefer May contain maxpagesize information.
+   * @return CompletableFuture&lt;ODataValueContextOfIListOfFieldValue&gt;
+   */
+  @GET
+  CompletableFuture<ODataValueContextOfIListOfFieldValue> getFieldValuesPaginate(@Url String url, @retrofit2.http.Header("Prefer") String prefer);
+
+  /**
    * 
    * - Get the links assigned to an entry. - Provide an entry ID, and get a paged listing of links assigned to that entry. - Default page size: 100. Allowed OData query options: Select | Count | OrderBy | Skip | Top | SkipToken | Prefer.
    * @param repoId The requested repository ID. (required)
@@ -314,6 +325,16 @@ public interface EntriesApi {
   );
 
   /**
+   *
+   * - Get the links assigned to an entry.
+   * @param url Full next link URL returned by the backend.
+   * @param prefer May contain maxpagesize information.
+   * @return CompletableFuture&lt;ODataValueContextOfIListOfWEntryLinkInfo&gt;
+   */
+  @GET
+  CompletableFuture<ODataValueContextOfIListOfWEntryLinkInfo> getLinkValuesFromEntryPaginate(@Url String url, @retrofit2.http.Header("Prefer") String prefer);
+
+  /**
    * 
    * - Get the tags assigned to an entry. - Provide an entry ID, and get a paged listing of tags assigned to that entry. - Default page size: 100. Allowed OData query options: Select | Count | OrderBy | Skip | Top | SkipToken | Prefer.
    * @param repoId The requested repository ID. (required)
@@ -330,6 +351,16 @@ public interface EntriesApi {
   CompletableFuture<ODataValueContextOfIListOfWTagInfo> getTagsAssignedToEntry(
     @retrofit2.http.Path("repoId") String repoId, @retrofit2.http.Path("entryId") Integer entryId, @retrofit2.http.Header("Prefer") String prefer, @retrofit2.http.Query("$select") String $select, @retrofit2.http.Query("$orderby") String $orderby, @retrofit2.http.Query("$top") Integer $top, @retrofit2.http.Query("$skip") Integer $skip, @retrofit2.http.Query("$count") Boolean $count
   );
+
+  /**
+   *
+   * - Get the tags assigned to an entry.
+   * @param url Full next link URL returned by the backend.
+   * @param prefer May contain maxpagesize information.
+   * @return CompletableFuture&lt;ODataValueContextOfIListOfWTagInfo&gt;
+   */
+  @GET
+  CompletableFuture<ODataValueContextOfIListOfEntry> getTagsAssignedToEntryPaginate(@Url String url, @retrofit2.http.Header("Prefer") String prefer);
 
   /**
    * 
