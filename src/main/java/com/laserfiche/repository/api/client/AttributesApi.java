@@ -1,5 +1,6 @@
 package com.laserfiche.repository.api.client;
 
+import com.laserfiche.repository.api.client.model.ODataValueContextOfIListOfEntry;
 import retrofit2.http.*;
 import com.laserfiche.repository.api.client.model.Attribute;
 import com.laserfiche.repository.api.client.model.ODataValueContextOfListOfAttribute;
@@ -23,6 +24,16 @@ public interface AttributesApi {
   CompletableFuture<ODataValueContextOfListOfAttribute> getTrusteeAttributeKeyValuePairs(
     @retrofit2.http.Path("repoId") String repoId, @retrofit2.http.Query("everyone") Boolean everyone, @retrofit2.http.Header("Prefer") String prefer, @retrofit2.http.Query("$select") String $select, @retrofit2.http.Query("$orderby") String $orderby, @retrofit2.http.Query("$top") Integer $top, @retrofit2.http.Query("$skip") Integer $skip, @retrofit2.http.Query("$count") Boolean $count
   );
+
+  /**
+   * Get the attribute key value pairs associated with the authenticated user.
+   * - Returns the attribute key value pairs associated with the authenticated user.
+   * @param url Full next link URL returned by the backend.
+   * @param prefer May contain maxpagesize information.
+   * @return CompletableFuture&lt;ODataValueContextOfListOfAttribute&gt;
+   */
+  @GET
+  CompletableFuture<ODataValueContextOfIListOfEntry> getTrusteeAttributeKeyValuePairsPaginate(@Url String url, @retrofit2.http.Header("Prefer") String prefer);
 
   /**
    * Get an attribute object by key associated with the authenticated user.
