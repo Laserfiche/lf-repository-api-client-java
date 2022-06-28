@@ -10,7 +10,7 @@ import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class EntryApiTest extends BaseTest {
+public class EntriesApiTest extends BaseTest {
 
     @Test
     public void getEntry_Success() throws IOException {
