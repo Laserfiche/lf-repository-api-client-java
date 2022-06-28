@@ -1,5 +1,6 @@
 package com.laserfiche.repository.api.client;
 
+import com.laserfiche.repository.api.client.model.ODataValueContextOfIListOfEntry;
 import retrofit2.http.*;
 import com.laserfiche.repository.api.client.model.ODataValueContextOfIListOfTemplateFieldInfo;
 import com.laserfiche.repository.api.client.model.ODataValueContextOfIListOfWTemplateInfo;
@@ -41,6 +42,15 @@ public interface TemplateDefinitionsApi {
   );
 
   /**
+   * - Returns all template definitions (including field definitions) in the repository.
+   * @param url Full next link URL returned by the backend.
+   * @param prefer May contain maxpagesize information.
+   * @return CompletableFuture&lt;ODataValueContextOfIListOfWTemplateInfo&gt;
+   */
+  @GET
+  CompletableFuture<ODataValueContextOfIListOfWTemplateInfo> getTemplateDefinitionsPaginate(@Url String url, @retrofit2.http.Header("Prefer") String prefer);
+
+  /**
    * 
    * - Returns the field definitions assigned to a template definition. - Provide a template definition ID, and get a paged listing of the field definitions assigned to that template.  - Default page size: 100. Allowed OData query options: Select | Count | OrderBy | Skip | Top | SkipToken | Prefer.
    * @param repoId The requested repository ID. (required)
@@ -60,6 +70,16 @@ public interface TemplateDefinitionsApi {
   );
 
   /**
+   *
+   * - Returns the field definitions assigned to a template definition.
+   * @param url Full next link URL returned by the backend.
+   * @param prefer May contain maxpagesize information.
+   * @return CompletableFuture&lt;ODataValueContextOfIListOfTemplateFieldInfo&gt;
+   */
+  @GET
+  CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo> getTemplateFieldDefinitionsPaginate(@Url String url, @retrofit2.http.Header("Prefer") String prefer);
+
+  /**
    * 
    * - Returns the field definitions assigned to a template definition. - Provide a template definition name, and get a paged listing of the field definitions assigned to that template.  - Default page size: 100. Allowed OData query options: Select | Count | OrderBy | Skip | Top | SkipToken | Prefer.
    * @param repoId The requested repository ID. (required)
@@ -77,5 +97,14 @@ public interface TemplateDefinitionsApi {
   CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo> getTemplateFieldDefinitionsByTemplateName(
     @retrofit2.http.Path("repoId") String repoId, @retrofit2.http.Query("templateName") String templateName, @retrofit2.http.Header("Prefer") String prefer, @retrofit2.http.Query("culture") String culture, @retrofit2.http.Query("$select") String $select, @retrofit2.http.Query("$orderby") String $orderby, @retrofit2.http.Query("$top") Integer $top, @retrofit2.http.Query("$skip") Integer $skip, @retrofit2.http.Query("$count") Boolean $count
   );
+
+  /**
+   * - Returns the field definitions assigned to a template definition.
+   * @param url Full next link URL returned by the backend.
+   * @param prefer May contain maxpagesize information.
+   * @return CompletableFuture&lt;ODataValueContextOfIListOfTemplateFieldInfo&gt;
+   */
+  @GET
+  CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo> getTemplateFieldDefinitionsByTemplateNamePaginate(@Url String url, @retrofit2.http.Header("Prefer") String prefer);
 
 }
