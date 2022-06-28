@@ -14,10 +14,10 @@ public class AttributesApiTest extends BaseTest {
 
     @Test
     public void getTrusteeAttributeKeyValuePairs_Success() throws IOException {
-        AttributesApi attributesClient = repositoryApiClient.getAttributesClient();
-        Call<ODataValueContextOfListOfAttribute> call = attributesClient.getTrusteeAttributeKeyValuePairs(repoId, true, null, null, null, null, null, false);
-        Response<ODataValueContextOfListOfAttribute> attributePairs = call.execute();
+        AttributesApi client = repositoryApiClient.getAttributesClient();
+        Call<ODataValueContextOfListOfAttribute> call = client.getTrusteeAttributeKeyValuePairs(repoId, true, null, null, null, null, null, false);
+        Response<ODataValueContextOfListOfAttribute> response = call.execute();
 
-        assertNotNull(attributePairs.body());
+        assertNotNull(response.body());
     }
 }

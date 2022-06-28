@@ -15,19 +15,19 @@ public class EntriesApiTest extends BaseTest {
 
     @Test
     public void getEntry_Success() throws IOException {
-        EntriesApi entriesClient = repositoryApiClient.getEntriesClient();
-        Call<Entry> call = entriesClient.getEntry(repoId, 1, null);
-        Response<Entry> entry = call.execute();
+        EntriesApi client = repositoryApiClient.getEntriesClient();
+        Call<Entry> call = client.getEntry(repoId, 1, null);
+        Response<Entry> response = call.execute();
 
-        assertNotNull(entry.body());
+        assertNotNull(response.body());
     }
 
     @Test
     public void getFieldValues_Success() throws IOException {
         EntriesApi entriesClient = repositoryApiClient.getEntriesClient();
         Call<ODataValueContextOfIListOfFieldValue> call = entriesClient.getFieldValues(repoId, 1, null, null, null, null, null, null, null, false);
-        Response<ODataValueContextOfIListOfFieldValue> entry = call.execute();
+        Response<ODataValueContextOfIListOfFieldValue> response = call.execute();
 
-        assertNotNull(entry.body());
+        assertNotNull(response.body());
     }
 }

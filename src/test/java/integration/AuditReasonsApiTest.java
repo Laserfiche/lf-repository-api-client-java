@@ -13,10 +13,10 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 public class AuditReasonsApiTest extends BaseTest {
     @Test
     public void getAuditReasons_Success() throws IOException {
-        AuditReasonsApi auditReasonsClient = repositoryApiClient.getAuditReasonsClient();
-        Call<AuditReasons> call = auditReasonsClient.getAuditReasons(repoId);
-        Response<AuditReasons> auditReason = call.execute();
+        AuditReasonsApi client = repositoryApiClient.getAuditReasonsClient();
+        Call<AuditReasons> call = client.getAuditReasons(repoId);
+        Response<AuditReasons> response = call.execute();
 
-        assertNotNull(auditReason.body());
+        assertNotNull(response.body());
     }
 }

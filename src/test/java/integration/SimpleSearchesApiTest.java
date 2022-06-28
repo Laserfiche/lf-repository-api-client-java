@@ -14,10 +14,10 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 public class SimpleSearchesApiTest extends BaseTest {
     @Test
     public void createSimpleSearchOperation_Success() throws IOException {
-        SimpleSearchesApi simpleSearchesClient = repositoryApiClient.getSimpleSearchesClient();
+        SimpleSearchesApi client = repositoryApiClient.getSimpleSearchesClient();
         SimpleSearchRequest searchRequest = new SimpleSearchRequest();
         searchRequest.setSearchCommand("({LF:Basic ~= \"search text\", option=\"DFANLT\"})");
-        Call<ODataValueOfIListOfEntry> call = simpleSearchesClient.createSimpleSearchOperation(repoId, searchRequest, null, null, null, null, null, false);
+        Call<ODataValueOfIListOfEntry> call = client.createSimpleSearchOperation(repoId, searchRequest, null, null, null, null, null, false);
         Response<ODataValueOfIListOfEntry> response = call.execute();
 
         assertNotNull(response.body());

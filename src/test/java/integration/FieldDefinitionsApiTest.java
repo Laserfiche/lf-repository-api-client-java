@@ -14,19 +14,19 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 public class FieldDefinitionsApiTest extends BaseTest {
     @Test
     public void getFieldDefinitionById_Success() throws IOException {
-        FieldDefinitionsApi fieldDefinitionsClient = repositoryApiClient.getFieldDefinitionsClient();
-        Call<WFieldInfo> call = fieldDefinitionsClient.getFieldDefinitionById(repoId, 261, null, null);
-        Response<WFieldInfo> fieldDefinition = call.execute();
+        FieldDefinitionsApi client = repositoryApiClient.getFieldDefinitionsClient();
+        Call<WFieldInfo> call = client.getFieldDefinitionById(repoId, 261, null, null);
+        Response<WFieldInfo> response = call.execute();
 
-        assertNotNull(fieldDefinition.body());
+        assertNotNull(response.body());
     }
 
     @Test
     public void getFieldDefinitions_Success() throws IOException {
-        FieldDefinitionsApi fieldDefinitionsClient = repositoryApiClient.getFieldDefinitionsClient();
-        Call<ODataValueContextOfIListOfWFieldInfo> call = fieldDefinitionsClient.getFieldDefinitions(repoId, null, null, null, null, null, null, false);
-        Response<ODataValueContextOfIListOfWFieldInfo> fieldDefinitions = call.execute();
+        FieldDefinitionsApi client = repositoryApiClient.getFieldDefinitionsClient();
+        Call<ODataValueContextOfIListOfWFieldInfo> call = client.getFieldDefinitions(repoId, null, null, null, null, null, null, false);
+        Response<ODataValueContextOfIListOfWFieldInfo> response = call.execute();
 
-        assertNotNull(fieldDefinitions.body());
+        assertNotNull(response.body());
     }
 }

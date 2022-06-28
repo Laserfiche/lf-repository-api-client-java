@@ -1,7 +1,6 @@
 package integration;
 
 import com.laserfiche.repository.api.client.TemplateDefinitionsApi;
-import com.laserfiche.repository.api.client.model.ODataValueContextOfIListOfTemplateFieldInfo;
 import com.laserfiche.repository.api.client.model.ODataValueContextOfIListOfWTemplateInfo;
 import org.junit.jupiter.api.Test;
 import retrofit2.Call;
