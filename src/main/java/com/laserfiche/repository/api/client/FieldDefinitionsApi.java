@@ -1,5 +1,6 @@
 package com.laserfiche.repository.api.client;
 
+import com.laserfiche.repository.api.client.model.ODataValueContextOfIListOfEntry;
 import retrofit2.http.*;
 import com.laserfiche.repository.api.client.model.ODataValueContextOfIListOfWFieldInfo;
 import com.laserfiche.repository.api.client.model.WFieldInfo;
@@ -37,5 +38,15 @@ public interface FieldDefinitionsApi {
   CompletableFuture<ODataValueContextOfIListOfWFieldInfo> getFieldDefinitions(
     @retrofit2.http.Path("repoId") String repoId, @retrofit2.http.Header("Prefer") String prefer, @retrofit2.http.Query("culture") String culture, @retrofit2.http.Query("$select") String $select, @retrofit2.http.Query("$orderby") String $orderby, @retrofit2.http.Query("$top") Integer $top, @retrofit2.http.Query("$skip") Integer $skip, @retrofit2.http.Query("$count") Boolean $count
   );
+
+  /**
+   *
+   * - Returns a paged listing of field definitions available in the specified repository.
+   * @param url Full next link URL returned by the backend.
+   * @param prefer May contain maxpagesize information.
+   * @return CompletableFuture&lt;ODataValueContextOfIListOfWFieldInfo&gt;
+   */
+  @GET
+  CompletableFuture<ODataValueContextOfIListOfWFieldInfo> getFieldDefinitionsPaginate(@Url String url, @retrofit2.http.Header("Prefer") String prefer);
 
 }
