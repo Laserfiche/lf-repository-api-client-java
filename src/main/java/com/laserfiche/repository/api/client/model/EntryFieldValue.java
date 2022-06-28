@@ -37,7 +37,7 @@ public class EntryFieldValue {
   private List<Map<String, Object>> values = null;
 
   @SerializedName("fieldType")
-  private OneOfEntryFieldValueFieldType fieldType = null;
+  private WFieldType fieldType = null;
 
   @SerializedName("fieldId")
   private Integer fieldId = null;
@@ -95,7 +95,7 @@ public class EntryFieldValue {
     this.values = values;
   }
 
-  public EntryFieldValue fieldType(OneOfEntryFieldValueFieldType fieldType) {
+  public EntryFieldValue fieldType(WFieldType fieldType) {
     this.fieldType = fieldType;
     return this;
   }
@@ -105,11 +105,11 @@ public class EntryFieldValue {
    * @return fieldType
   **/
   @Schema(description = "The type of the field. The possible field types are listed below.")
-  public OneOfEntryFieldValueFieldType getFieldType() {
+  public WFieldType getFieldType() {
     return fieldType;
   }
 
-  public void setFieldType(OneOfEntryFieldValueFieldType fieldType) {
+  public void setFieldType(WFieldType fieldType) {
     this.fieldType = fieldType;
   }
 

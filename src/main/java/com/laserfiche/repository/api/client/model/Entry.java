@@ -56,7 +56,7 @@ public class Entry {
   private OffsetDateTime lastModifiedTime = null;
 
   @SerializedName("entryType")
-  private OneOfEntryEntryType entryType = null;
+  private EntryType entryType = null;
 
   @SerializedName("isContainer")
   private Boolean isContainer = null;
@@ -226,7 +226,7 @@ public class Entry {
     this.lastModifiedTime = lastModifiedTime;
   }
 
-  public Entry entryType(OneOfEntryEntryType entryType) {
+  public Entry entryType(EntryType entryType) {
     this.entryType = entryType;
     return this;
   }
@@ -236,11 +236,11 @@ public class Entry {
    * @return entryType
   **/
   @Schema(description = "The type of the entry.")
-  public OneOfEntryEntryType getEntryType() {
+  public EntryType getEntryType() {
     return entryType;
   }
 
-  public void setEntryType(OneOfEntryEntryType entryType) {
+  public void setEntryType(EntryType entryType) {
     this.entryType = entryType;
   }
 

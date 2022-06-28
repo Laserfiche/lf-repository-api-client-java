@@ -34,7 +34,7 @@ public class ExportRequestBody {
   private String comment = "";
 
   @SerializedName("additionalOptions")
-  private OneOfExportRequestBodyAdditionalOptions additionalOptions = null;
+  private SimpleExportAdditionalOptions additionalOptions = null;
 
   public ExportRequestBody auditReasonId(Integer auditReasonId) {
     this.auditReasonId = auditReasonId;
@@ -72,7 +72,7 @@ public class ExportRequestBody {
     this.comment = comment;
   }
 
-  public ExportRequestBody additionalOptions(OneOfExportRequestBodyAdditionalOptions additionalOptions) {
+  public ExportRequestBody additionalOptions(SimpleExportAdditionalOptions additionalOptions) {
     this.additionalOptions = additionalOptions;
     return this;
   }
@@ -82,11 +82,11 @@ public class ExportRequestBody {
    * @return additionalOptions
   **/
   @Schema(description = "The additional export options. Some of these options are applicable when part=Pages and some when part=Pages or part=Text.")
-  public OneOfExportRequestBodyAdditionalOptions getAdditionalOptions() {
+  public SimpleExportAdditionalOptions getAdditionalOptions() {
     return additionalOptions;
   }
 
-  public void setAdditionalOptions(OneOfExportRequestBodyAdditionalOptions additionalOptions) {
+  public void setAdditionalOptions(SimpleExportAdditionalOptions additionalOptions) {
     this.additionalOptions = additionalOptions;
   }
 
