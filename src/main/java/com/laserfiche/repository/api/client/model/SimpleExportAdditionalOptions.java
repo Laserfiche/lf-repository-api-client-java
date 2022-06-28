@@ -13,20 +13,16 @@
 package com.laserfiche.repository.api.client.model;
 
 import java.util.Objects;
-import java.util.Arrays;
-import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
+
 import com.google.gson.annotations.SerializedName;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
 import io.swagger.v3.oas.annotations.media.Schema;
-import java.io.IOException;
+
 /**
  * SimpleExportAdditionalOptions
  */
 
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-06-21T09:31:30.649462900-04:00[America/New_York]")
-public class SimpleExportAdditionalOptions implements OneOfExportRequestBodyAdditionalOptions {
+public class SimpleExportAdditionalOptions {
   @SerializedName("jpegCompression")
   private Integer jpegCompression = 70;
 
@@ -49,7 +45,7 @@ public class SimpleExportAdditionalOptions implements OneOfExportRequestBodyAddi
   private String exportTextRedactChar = "X";
 
   @SerializedName("watermark")
-  private OneOfSimpleExportAdditionalOptionsWatermark watermark = null;
+  private SimpleExportWatermark watermark = null;
 
   public SimpleExportAdditionalOptions jpegCompression(Integer jpegCompression) {
     this.jpegCompression = jpegCompression;
@@ -177,7 +173,7 @@ public class SimpleExportAdditionalOptions implements OneOfExportRequestBodyAddi
     this.exportTextRedactChar = exportTextRedactChar;
   }
 
-  public SimpleExportAdditionalOptions watermark(OneOfSimpleExportAdditionalOptionsWatermark watermark) {
+  public SimpleExportAdditionalOptions watermark(SimpleExportWatermark watermark) {
     this.watermark = watermark;
     return this;
   }
@@ -187,11 +183,11 @@ public class SimpleExportAdditionalOptions implements OneOfExportRequestBodyAddi
    * @return watermark
   **/
   @Schema(description = "The watermark element added to the pages when Part=Pages.")
-  public OneOfSimpleExportAdditionalOptionsWatermark getWatermark() {
+  public SimpleExportWatermark getWatermark() {
     return watermark;
   }
 
-  public void setWatermark(OneOfSimpleExportAdditionalOptionsWatermark watermark) {
+  public void setWatermark(SimpleExportWatermark watermark) {
     this.watermark = watermark;
   }
 

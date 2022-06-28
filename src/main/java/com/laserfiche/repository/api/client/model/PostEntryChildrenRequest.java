@@ -31,7 +31,7 @@ public class PostEntryChildrenRequest {
   private String name = null;
 
   @SerializedName("entryType")
-  private OneOfPostEntryChildrenRequestEntryType entryType = null;
+  private PostEntryChildrenEntryType entryType = null;
 
   @SerializedName("targetId")
   private Integer targetId = null;
@@ -57,7 +57,7 @@ public class PostEntryChildrenRequest {
     this.name = name;
   }
 
-  public PostEntryChildrenRequest entryType(OneOfPostEntryChildrenRequestEntryType entryType) {
+  public PostEntryChildrenRequest entryType(PostEntryChildrenEntryType entryType) {
     this.entryType = entryType;
     return this;
   }
@@ -67,11 +67,11 @@ public class PostEntryChildrenRequest {
    * @return entryType
   **/
   @Schema(description = "The type of the entry.")
-  public OneOfPostEntryChildrenRequestEntryType getEntryType() {
+  public PostEntryChildrenEntryType getEntryType() {
     return entryType;
   }
 
-  public void setEntryType(OneOfPostEntryChildrenRequestEntryType entryType) {
+  public void setEntryType(PostEntryChildrenEntryType entryType) {
     this.entryType = entryType;
   }
 

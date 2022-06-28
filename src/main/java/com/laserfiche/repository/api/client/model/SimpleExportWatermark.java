@@ -13,25 +13,21 @@
 package com.laserfiche.repository.api.client.model;
 
 import java.util.Objects;
-import java.util.Arrays;
-import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
+
 import com.google.gson.annotations.SerializedName;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
 import io.swagger.v3.oas.annotations.media.Schema;
-import java.io.IOException;
+
 /**
  * SimpleExportWatermark
  */
 
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-06-21T09:31:30.649462900-04:00[America/New_York]")
-public class SimpleExportWatermark implements OneOfSimpleExportAdditionalOptionsWatermark {
+public class SimpleExportWatermark {
   @SerializedName("watermarkText")
   private String watermarkText = "";
 
   @SerializedName("watermarkPosition")
-  private OneOfSimpleExportWatermarkWatermarkPosition watermarkPosition = null;
+  private WatermarkPosition watermarkPosition = null;
 
   @SerializedName("watermarkRotationAngle")
   private Integer watermarkRotationAngle = 0;
@@ -57,7 +53,7 @@ public class SimpleExportWatermark implements OneOfSimpleExportAdditionalOptions
     this.watermarkText = watermarkText;
   }
 
-  public SimpleExportWatermark watermarkPosition(OneOfSimpleExportWatermarkWatermarkPosition watermarkPosition) {
+  public SimpleExportWatermark watermarkPosition(WatermarkPosition watermarkPosition) {
     this.watermarkPosition = watermarkPosition;
     return this;
   }
@@ -67,11 +63,11 @@ public class SimpleExportWatermark implements OneOfSimpleExportAdditionalOptions
    * @return watermarkPosition
   **/
   @Schema(description = "The position of the watermark.")
-  public OneOfSimpleExportWatermarkWatermarkPosition getWatermarkPosition() {
+  public WatermarkPosition getWatermarkPosition() {
     return watermarkPosition;
   }
 
-  public void setWatermarkPosition(OneOfSimpleExportWatermarkWatermarkPosition watermarkPosition) {
+  public void setWatermarkPosition(WatermarkPosition watermarkPosition) {
     this.watermarkPosition = watermarkPosition;
   }
 

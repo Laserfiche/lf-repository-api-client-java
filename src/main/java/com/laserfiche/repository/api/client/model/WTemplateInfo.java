@@ -40,7 +40,7 @@ public class WTemplateInfo {
   private String description = null;
 
   @SerializedName("color")
-  private OneOfWTemplateInfoColor color = null;
+  private LFColor color = null;
 
   @SerializedName("fieldCount")
   private Integer fieldCount = null;
@@ -117,7 +117,7 @@ public class WTemplateInfo {
     this.description = description;
   }
 
-  public WTemplateInfo color(OneOfWTemplateInfoColor color) {
+  public WTemplateInfo color(LFColor color) {
     this.color = color;
     return this;
   }
@@ -127,11 +127,11 @@ public class WTemplateInfo {
    * @return color
   **/
   @Schema(description = "The color assigned to the template definition.")
-  public OneOfWTemplateInfoColor getColor() {
+  public LFColor getColor() {
     return color;
   }
 
-  public void setColor(OneOfWTemplateInfoColor color) {
+  public void setColor(LFColor color) {
     this.color = color;
   }
 

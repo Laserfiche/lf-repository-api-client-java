@@ -13,20 +13,16 @@
 package com.laserfiche.repository.api.client.model;
 
 import java.util.Objects;
-import java.util.Arrays;
-import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
+
 import com.google.gson.annotations.SerializedName;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
 import io.swagger.v3.oas.annotations.media.Schema;
-import java.io.IOException;
+
 /**
  * Watermark
  */
 
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-06-21T09:31:30.649462900-04:00[America/New_York]")
-public class Watermark implements OneOfWTagInfoWatermark {
+public class Watermark {
   @SerializedName("watermarkText")
   private String watermarkText = null;
 
@@ -34,7 +30,7 @@ public class Watermark implements OneOfWTagInfoWatermark {
   private Integer watermarkTextSize = null;
 
   @SerializedName("watermarkPosition")
-  private OneOfWatermarkWatermarkPosition watermarkPosition = null;
+  private WatermarkPosition watermarkPosition = null;
 
   @SerializedName("watermarkRotationAngle")
   private Integer watermarkRotationAngle = null;
@@ -81,7 +77,7 @@ public class Watermark implements OneOfWTagInfoWatermark {
     this.watermarkTextSize = watermarkTextSize;
   }
 
-  public Watermark watermarkPosition(OneOfWatermarkWatermarkPosition watermarkPosition) {
+  public Watermark watermarkPosition(WatermarkPosition watermarkPosition) {
     this.watermarkPosition = watermarkPosition;
     return this;
   }
@@ -91,11 +87,11 @@ public class Watermark implements OneOfWTagInfoWatermark {
    * @return watermarkPosition
   **/
   @Schema(description = "The position of the watermark on the page.")
-  public OneOfWatermarkWatermarkPosition getWatermarkPosition() {
+  public WatermarkPosition getWatermarkPosition() {
     return watermarkPosition;
   }
 
-  public void setWatermarkPosition(OneOfWatermarkWatermarkPosition watermarkPosition) {
+  public void setWatermarkPosition(WatermarkPosition watermarkPosition) {
     this.watermarkPosition = watermarkPosition;
   }
 

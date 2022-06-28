@@ -31,7 +31,7 @@ public class AdvancedSearchRequest {
   private String searchCommand = null;
 
   @SerializedName("fuzzyType")
-  private OneOfAdvancedSearchRequestFuzzyType fuzzyType = null;
+  private FuzzyType fuzzyType = null;
 
   @SerializedName("fuzzyFactor")
   private Integer fuzzyFactor = null;
@@ -54,7 +54,7 @@ public class AdvancedSearchRequest {
     this.searchCommand = searchCommand;
   }
 
-  public AdvancedSearchRequest fuzzyType(OneOfAdvancedSearchRequestFuzzyType fuzzyType) {
+  public AdvancedSearchRequest fuzzyType(FuzzyType fuzzyType) {
     this.fuzzyType = fuzzyType;
     return this;
   }
@@ -64,11 +64,11 @@ public class AdvancedSearchRequest {
    * @return fuzzyType
   **/
   @Schema(description = "Fuzzy type (None, Percentage, or NumberOfLetters)")
-  public OneOfAdvancedSearchRequestFuzzyType getFuzzyType() {
+  public FuzzyType getFuzzyType() {
     return fuzzyType;
   }
 
-  public void setFuzzyType(OneOfAdvancedSearchRequestFuzzyType fuzzyType) {
+  public void setFuzzyType(FuzzyType fuzzyType) {
     this.fuzzyType = fuzzyType;
   }
 

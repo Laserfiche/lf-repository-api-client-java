@@ -43,7 +43,7 @@ public class WTagInfo {
   private Boolean isSecure = null;
 
   @SerializedName("watermark")
-  private OneOfWTagInfoWatermark watermark = null;
+  private Watermark watermark = null;
 
   public WTagInfo id(Integer id) {
     this.id = id;
@@ -135,7 +135,7 @@ public class WTagInfo {
     this.isSecure = isSecure;
   }
 
-  public WTagInfo watermark(OneOfWTagInfoWatermark watermark) {
+  public WTagInfo watermark(Watermark watermark) {
     this.watermark = watermark;
     return this;
   }
@@ -145,11 +145,11 @@ public class WTagInfo {
    * @return watermark
   **/
   @Schema(description = "The watermark properties associated with the tag definition.")
-  public OneOfWTagInfoWatermark getWatermark() {
+  public Watermark getWatermark() {
     return watermark;
   }
 
-  public void setWatermark(OneOfWTagInfoWatermark watermark) {
+  public void setWatermark(Watermark watermark) {
     this.watermark = watermark;
   }
 

@@ -42,7 +42,7 @@ public class WFieldInfo {
   private String description = null;
 
   @SerializedName("fieldType")
-  private OneOfWFieldInfoFieldType fieldType = null;
+  private WFieldType fieldType = null;
 
   @SerializedName("length")
   private Integer length = null;
@@ -66,7 +66,7 @@ public class WFieldInfo {
   private List<String> listValues = null;
 
   @SerializedName("format")
-  private OneOfWFieldInfoFormat format = null;
+  private WFieldFormat format = null;
 
   @SerializedName("currency")
   private String currency = null;
@@ -146,7 +146,7 @@ public class WFieldInfo {
     this.description = description;
   }
 
-  public WFieldInfo fieldType(OneOfWFieldInfoFieldType fieldType) {
+  public WFieldInfo fieldType(WFieldType fieldType) {
     this.fieldType = fieldType;
     return this;
   }
@@ -156,11 +156,11 @@ public class WFieldInfo {
    * @return fieldType
   **/
   @Schema(description = "The type of the field.")
-  public OneOfWFieldInfoFieldType getFieldType() {
+  public WFieldType getFieldType() {
     return fieldType;
   }
 
-  public void setFieldType(OneOfWFieldInfoFieldType fieldType) {
+  public void setFieldType(WFieldType fieldType) {
     this.fieldType = fieldType;
   }
 
@@ -298,7 +298,7 @@ public class WFieldInfo {
     this.listValues = listValues;
   }
 
-  public WFieldInfo format(OneOfWFieldInfoFormat format) {
+  public WFieldInfo format(WFieldFormat format) {
     this.format = format;
     return this;
   }
@@ -308,11 +308,11 @@ public class WFieldInfo {
    * @return format
   **/
   @Schema(description = "The display format of the represented field.")
-  public OneOfWFieldInfoFormat getFormat() {
+  public WFieldFormat getFormat() {
     return format;
   }
 
-  public void setFormat(OneOfWFieldInfoFormat format) {
+  public void setFormat(WFieldFormat format) {
     this.format = format;
   }
 
