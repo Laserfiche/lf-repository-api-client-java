@@ -1,13 +1,7 @@
 package com.laserfiche.repository.api.client;
 
-import com.laserfiche.repository.api.CollectionFormats.*;
-
-import retrofit2.Call;
 import retrofit2.http.*;
-
 import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
-
 import com.laserfiche.repository.api.client.model.AcceptedOperation;
 import com.laserfiche.repository.api.client.model.CopyAsyncRequest;
 import com.laserfiche.repository.api.client.model.DeleteEntryWithAuditReason;
@@ -36,11 +30,9 @@ import com.laserfiche.repository.api.client.model.PutTagRequest;
 import com.laserfiche.repository.api.client.model.PutTemplateRequest;
 import com.laserfiche.repository.api.client.model.SimpleImportRequest;
 import com.laserfiche.repository.api.client.model.SimpleImportResult;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 public interface EntriesApi {
   /**
@@ -55,7 +47,7 @@ public interface EntriesApi {
     "Content-Type:application/json"
   })
   @PUT("v2-alpha/Repositories/{repoId}/Entries/{entryId}/links")
-  Call<ODataValueOfIListOfWEntryLinkInfo> assignEntryLinks(
+  CompletableFuture<ODataValueOfIListOfWEntryLinkInfo> assignEntryLinks(
     @retrofit2.http.Path("repoId") String repoId, @retrofit2.http.Path("entryId") Integer entryId, @retrofit2.http.Body List<PutLinksRequest> body
   );
 
@@ -72,7 +64,7 @@ public interface EntriesApi {
     "Content-Type:application/json"
   })
   @PUT("v2-alpha/Repositories/{repoId}/Entries/{entryId}/fields")
-  Call<ODataValueOfIListOfFieldValue> assignFieldValues(
+  CompletableFuture<ODataValueOfIListOfFieldValue> assignFieldValues(
     @retrofit2.http.Path("repoId") String repoId, @retrofit2.http.Path("entryId") Integer entryId, @retrofit2.http.Body Map<String, FieldToUpdate> body, @retrofit2.http.Query("culture") String culture
   );
 
@@ -88,7 +80,7 @@ public interface EntriesApi {
     "Content-Type:application/json"
   })
   @PUT("v2-alpha/Repositories/{repoId}/Entries/{entryId}/tags")
-  Call<ODataValueOfIListOfWTagInfo> assignTags(
+  CompletableFuture<ODataValueOfIListOfWTagInfo> assignTags(
     @retrofit2.http.Path("repoId") String repoId, @retrofit2.http.Path("entryId") Integer entryId, @retrofit2.http.Body PutTagRequest body
   );
 
@@ -106,7 +98,7 @@ public interface EntriesApi {
     "Content-Type:application/json"
   })
   @POST("v2-alpha/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Folder/CopyAsync")
-  Call<AcceptedOperation> copyEntryAsync(
+  CompletableFuture<AcceptedOperation> copyEntryAsync(
     @retrofit2.http.Path("repoId") String repoId, @retrofit2.http.Path("entryId") Integer entryId, @retrofit2.http.Body CopyAsyncRequest body, @retrofit2.http.Query("autoRename") Boolean autoRename, @retrofit2.http.Query("culture") String culture
   );
 
@@ -124,7 +116,7 @@ public interface EntriesApi {
     "Content-Type:application/json"
   })
   @POST("v2-alpha/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Folder/children")
-  Call<Entry> createOrCopyEntry(
+  CompletableFuture<Entry> createOrCopyEntry(
     @retrofit2.http.Path("repoId") String repoId, @retrofit2.http.Path("entryId") Integer entryId, @retrofit2.http.Body PostEntryChildrenRequest body, @retrofit2.http.Query("autoRename") Boolean autoRename, @retrofit2.http.Query("culture") String culture
   );
 
@@ -136,7 +128,7 @@ public interface EntriesApi {
    * @return Call&lt;Entry&gt;
    */
   @DELETE("v2-alpha/Repositories/{repoId}/Entries/{entryId}/template")
-  Call<Entry> deleteAssignedTemplate(
+  CompletableFuture<Entry> deleteAssignedTemplate(
     @retrofit2.http.Path("repoId") String repoId, @retrofit2.http.Path("entryId") Integer entryId
   );
 
@@ -148,7 +140,7 @@ public interface EntriesApi {
    * @return Call&lt;ODataValueOfBoolean&gt;
    */
   @DELETE("v2-alpha/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Document/edoc")
-  Call<ODataValueOfBoolean> deleteDocument(
+  CompletableFuture<ODataValueOfBoolean> deleteDocument(
     @retrofit2.http.Path("repoId") String repoId, @retrofit2.http.Path("entryId") Integer entryId
   );
 
@@ -164,7 +156,7 @@ public interface EntriesApi {
     "Content-Type:application/json"
   })
   @DELETE("v2-alpha/Repositories/{repoId}/Entries/{entryId}")
-  Call<AcceptedOperation> deleteEntryInfo(
+  CompletableFuture<AcceptedOperation> deleteEntryInfo(
     @retrofit2.http.Path("repoId") String repoId, @retrofit2.http.Path("entryId") Integer entryId, @retrofit2.http.Body DeleteEntryWithAuditReason body
   );
 
@@ -177,7 +169,7 @@ public interface EntriesApi {
    * @return Call&lt;ODataValueOfBoolean&gt;
    */
   @DELETE("v2-alpha/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Document/pages")
-  Call<ODataValueOfBoolean> deletePages(
+  CompletableFuture<ODataValueOfBoolean> deletePages(
     @retrofit2.http.Path("repoId") String repoId, @retrofit2.http.Path("entryId") Integer entryId, @retrofit2.http.Query("pageRange") String pageRange
   );
 
@@ -190,7 +182,7 @@ public interface EntriesApi {
    * @return Call&lt;File&gt;
    */
   @GET("v2-alpha/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Document/edoc")
-  Call<File> exportDocument(
+  CompletableFuture<File> exportDocument(
     @retrofit2.http.Path("repoId") String repoId, @retrofit2.http.Path("entryId") Integer entryId, @retrofit2.http.Header("Range") String range
   );
 
@@ -207,7 +199,7 @@ public interface EntriesApi {
     "Content-Type:application/json"
   })
   @POST("v2-alpha/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Document/GetEdocWithAuditReason")
-  Call<File> exportDocumentWithAuditReason(
+  CompletableFuture<File> exportDocumentWithAuditReason(
     @retrofit2.http.Path("repoId") String repoId, @retrofit2.http.Path("entryId") Integer entryId, @retrofit2.http.Body GetEdocWithAuditReasonRequest body, @retrofit2.http.Header("Range") String range
   );
 
@@ -219,7 +211,7 @@ public interface EntriesApi {
    * @return Call&lt;Void&gt;
    */
   @HEAD("v2-alpha/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Document/edoc")
-  Call<Void> getDocumentContentType(
+  CompletableFuture<Void> getDocumentContentType(
     @retrofit2.http.Path("repoId") String repoId, @retrofit2.http.Path("entryId") Integer entryId
   );
 
@@ -235,7 +227,7 @@ public interface EntriesApi {
     "Content-Type:application/json"
   })
   @POST("v2-alpha/Repositories/{repoId}/Entries/{entryId}/fields/GetDynamicFieldLogicValue")
-  Call<Map<String, List<String>>> getDynamicFieldValues(
+  CompletableFuture<Map<String, List<String>>> getDynamicFieldValues(
     @retrofit2.http.Path("repoId") String repoId, @retrofit2.http.Path("entryId") Integer entryId, @retrofit2.http.Body GetDynamicFieldLogicValueRequest body
   );
 
@@ -248,7 +240,7 @@ public interface EntriesApi {
    * @return Call&lt;Entry&gt;
    */
   @GET("v2-alpha/Repositories/{repoId}/Entries/{entryId}")
-  Call<Entry> getEntry(
+  CompletableFuture<Entry> getEntry(
     @retrofit2.http.Path("repoId") String repoId, @retrofit2.http.Path("entryId") Integer entryId, @retrofit2.http.Query("$select") String $select
   );
 
@@ -270,7 +262,7 @@ public interface EntriesApi {
    * @return Call&lt;ODataValueContextOfIListOfEntry&gt;
    */
   @GET("v2-alpha/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Folder/children")
-  Call<ODataValueContextOfIListOfEntry> getEntryListing(
+  CompletableFuture<ODataValueContextOfIListOfEntry> getEntryListing(
     @retrofit2.http.Path("repoId") String repoId, @retrofit2.http.Path("entryId") Integer entryId, @retrofit2.http.Query("groupByEntryType") Boolean groupByEntryType, @retrofit2.http.Query("fields") List<String> fields, @retrofit2.http.Query("formatFields") Boolean formatFields, @retrofit2.http.Header("Prefer") String prefer, @retrofit2.http.Query("culture") String culture, @retrofit2.http.Query("$select") String $select, @retrofit2.http.Query("$orderby") String $orderby, @retrofit2.http.Query("$top") Integer $top, @retrofit2.http.Query("$skip") Integer $skip, @retrofit2.http.Query("$count") Boolean $count
   );
 
@@ -290,7 +282,7 @@ public interface EntriesApi {
    * @return Call&lt;ODataValueContextOfIListOfFieldValue&gt;
    */
   @GET("v2-alpha/Repositories/{repoId}/Entries/{entryId}/fields")
-  Call<ODataValueContextOfIListOfFieldValue> getFieldValues(
+  CompletableFuture<ODataValueContextOfIListOfFieldValue> getFieldValues(
     @retrofit2.http.Path("repoId") String repoId, @retrofit2.http.Path("entryId") Integer entryId, @retrofit2.http.Header("Prefer") String prefer, @retrofit2.http.Query("formatValue") Boolean formatValue, @retrofit2.http.Query("culture") String culture, @retrofit2.http.Query("$select") String $select, @retrofit2.http.Query("$orderby") String $orderby, @retrofit2.http.Query("$top") Integer $top, @retrofit2.http.Query("$skip") Integer $skip, @retrofit2.http.Query("$count") Boolean $count
   );
 
@@ -308,7 +300,7 @@ public interface EntriesApi {
    * @return Call&lt;ODataValueContextOfIListOfWEntryLinkInfo&gt;
    */
   @GET("v2-alpha/Repositories/{repoId}/Entries/{entryId}/links")
-  Call<ODataValueContextOfIListOfWEntryLinkInfo> getLinkValuesFromEntry(
+  CompletableFuture<ODataValueContextOfIListOfWEntryLinkInfo> getLinkValuesFromEntry(
     @retrofit2.http.Path("repoId") String repoId, @retrofit2.http.Path("entryId") Integer entryId, @retrofit2.http.Header("Prefer") String prefer, @retrofit2.http.Query("$select") String $select, @retrofit2.http.Query("$orderby") String $orderby, @retrofit2.http.Query("$top") Integer $top, @retrofit2.http.Query("$skip") Integer $skip, @retrofit2.http.Query("$count") Boolean $count
   );
 
@@ -326,7 +318,7 @@ public interface EntriesApi {
    * @return Call&lt;ODataValueContextOfIListOfWTagInfo&gt;
    */
   @GET("v2-alpha/Repositories/{repoId}/Entries/{entryId}/tags")
-  Call<ODataValueContextOfIListOfWTagInfo> getTagsAssignedToEntry(
+  CompletableFuture<ODataValueContextOfIListOfWTagInfo> getTagsAssignedToEntry(
     @retrofit2.http.Path("repoId") String repoId, @retrofit2.http.Path("entryId") Integer entryId, @retrofit2.http.Header("Prefer") String prefer, @retrofit2.http.Query("$select") String $select, @retrofit2.http.Query("$orderby") String $orderby, @retrofit2.http.Query("$top") Integer $top, @retrofit2.http.Query("$skip") Integer $skip, @retrofit2.http.Query("$count") Boolean $count
   );
 
@@ -345,7 +337,7 @@ public interface EntriesApi {
     "Content-Type:application/json"
   })
   @PATCH("v2-alpha/Repositories/{repoId}/Entries/{entryId}")
-  Call<Entry> moveOrRenameDocument(
+  CompletableFuture<Entry> moveOrRenameDocument(
     @retrofit2.http.Path("repoId") String repoId, @retrofit2.http.Path("entryId") Integer entryId, @retrofit2.http.Body PatchEntryRequest body, @retrofit2.http.Query("autoRename") Boolean autoRename, @retrofit2.http.Query("culture") String culture
   );
 
@@ -364,7 +356,7 @@ public interface EntriesApi {
     "Content-Type:application/json"
   })
   @POST("v2-alpha/Repositories/{repoId}/Entries/{entryId}/Export")
-  Call<ODataValueOfString> simpleExport(
+  CompletableFuture<ODataValueOfString> simpleExport(
     @retrofit2.http.Query("part") Part part, @retrofit2.http.Path("repoId") String repoId, @retrofit2.http.Path("entryId") Integer entryId, @retrofit2.http.Body ExportRequestBody body, @retrofit2.http.Query("format") Format format, @retrofit2.http.Query("pageRange") String pageRange
   );
 
@@ -380,7 +372,7 @@ public interface EntriesApi {
    */
   @retrofit2.http.Multipart
   @POST("v2-alpha/Repositories/{repoId}/Entries/{parentEntryId}/Import")
-  Call<SimpleImportResult> simpleImport(
+  CompletableFuture<SimpleImportResult> simpleImport(
     @retrofit2.http.Path("repoId") String repoId, @retrofit2.http.Path("parentEntryId") Integer parentEntryId, @retrofit2.http.Part("file\"; filename=\"file") RequestBody file, @retrofit2.http.Part("request") SimpleImportRequest request, @retrofit2.http.Query("culture") String culture
   );
 
@@ -397,7 +389,7 @@ public interface EntriesApi {
     "Content-Type:application/json"
   })
   @PUT("v2-alpha/Repositories/{repoId}/Entries/{entryId}/template")
-  Call<Entry> writeTemplateValueToEntry(
+  CompletableFuture<Entry> writeTemplateValueToEntry(
     @retrofit2.http.Path("repoId") String repoId, @retrofit2.http.Path("entryId") Integer entryId, @retrofit2.http.Body PutTemplateRequest body, @retrofit2.http.Query("culture") String culture
   );
 

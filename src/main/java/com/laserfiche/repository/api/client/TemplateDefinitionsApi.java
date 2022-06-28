@@ -1,22 +1,10 @@
 package com.laserfiche.repository.api.client;
 
-import com.laserfiche.repository.api.CollectionFormats.*;
-
-import retrofit2.Call;
 import retrofit2.http.*;
-
-import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
-
 import com.laserfiche.repository.api.client.model.ODataValueContextOfIListOfTemplateFieldInfo;
 import com.laserfiche.repository.api.client.model.ODataValueContextOfIListOfWTemplateInfo;
-import com.laserfiche.repository.api.client.model.ProblemDetails;
 import com.laserfiche.repository.api.client.model.WTemplateInfo;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 public interface TemplateDefinitionsApi {
   /**
@@ -29,7 +17,7 @@ public interface TemplateDefinitionsApi {
    * @return Call&lt;WTemplateInfo&gt;
    */
   @GET("v2-alpha/Repositories/{repoId}/TemplateDefinitions/{templateId}")
-  Call<WTemplateInfo> getTemplateDefinitionById(
+  CompletableFuture<WTemplateInfo> getTemplateDefinitionById(
     @retrofit2.http.Path("repoId") String repoId, @retrofit2.http.Path("templateId") Integer templateId, @retrofit2.http.Query("culture") String culture, @retrofit2.http.Query("$select") String $select
   );
 
@@ -48,7 +36,7 @@ public interface TemplateDefinitionsApi {
    * @return Call&lt;ODataValueContextOfIListOfWTemplateInfo&gt;
    */
   @GET("v2-alpha/Repositories/{repoId}/TemplateDefinitions")
-  Call<ODataValueContextOfIListOfWTemplateInfo> getTemplateDefinitions(
+  CompletableFuture<ODataValueContextOfIListOfWTemplateInfo> getTemplateDefinitions(
     @retrofit2.http.Path("repoId") String repoId, @retrofit2.http.Query("templateName") String templateName, @retrofit2.http.Header("Prefer") String prefer, @retrofit2.http.Query("culture") String culture, @retrofit2.http.Query("$select") String $select, @retrofit2.http.Query("$orderby") String $orderby, @retrofit2.http.Query("$top") Integer $top, @retrofit2.http.Query("$skip") Integer $skip, @retrofit2.http.Query("$count") Boolean $count
   );
 
@@ -67,7 +55,7 @@ public interface TemplateDefinitionsApi {
    * @return Call&lt;ODataValueContextOfIListOfTemplateFieldInfo&gt;
    */
   @GET("v2-alpha/Repositories/{repoId}/TemplateDefinitions/{templateId}/fields")
-  Call<ODataValueContextOfIListOfTemplateFieldInfo> getTemplateFieldDefinitions(
+  CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo> getTemplateFieldDefinitions(
     @retrofit2.http.Path("repoId") String repoId, @retrofit2.http.Path("templateId") Integer templateId, @retrofit2.http.Header("Prefer") String prefer, @retrofit2.http.Query("culture") String culture, @retrofit2.http.Query("$select") String $select, @retrofit2.http.Query("$orderby") String $orderby, @retrofit2.http.Query("$top") Integer $top, @retrofit2.http.Query("$skip") Integer $skip, @retrofit2.http.Query("$count") Boolean $count
   );
 
@@ -86,7 +74,7 @@ public interface TemplateDefinitionsApi {
    * @return Call&lt;ODataValueContextOfIListOfTemplateFieldInfo&gt;
    */
   @GET("v2-alpha/Repositories/{repoId}/TemplateDefinitions/Fields")
-  Call<ODataValueContextOfIListOfTemplateFieldInfo> getTemplateFieldDefinitionsByTemplateName(
+  CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo> getTemplateFieldDefinitionsByTemplateName(
     @retrofit2.http.Path("repoId") String repoId, @retrofit2.http.Query("templateName") String templateName, @retrofit2.http.Header("Prefer") String prefer, @retrofit2.http.Query("culture") String culture, @retrofit2.http.Query("$select") String $select, @retrofit2.http.Query("$orderby") String $orderby, @retrofit2.http.Query("$top") Integer $top, @retrofit2.http.Query("$skip") Integer $skip, @retrofit2.http.Query("$count") Boolean $count
   );
 

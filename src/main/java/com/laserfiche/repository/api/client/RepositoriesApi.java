@@ -1,20 +1,9 @@
 package com.laserfiche.repository.api.client;
 
-import com.laserfiche.repository.api.CollectionFormats.*;
-
-import retrofit2.Call;
 import retrofit2.http.*;
-
-import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
-
-import com.laserfiche.repository.api.client.model.ProblemDetails;
 import com.laserfiche.repository.api.client.model.RepositoryInfo;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 public interface RepositoriesApi {
   /**
@@ -23,7 +12,5 @@ public interface RepositoriesApi {
    * @return Call&lt;List&lt;RepositoryInfo&gt;&gt;
    */
   @GET("v2-alpha/Repositories")
-  Call<List<RepositoryInfo>> getRepositoryList();
-    
-
+  CompletableFuture<List<RepositoryInfo>> getRepositoryList();
 }

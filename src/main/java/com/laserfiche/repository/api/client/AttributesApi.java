@@ -1,21 +1,9 @@
 package com.laserfiche.repository.api.client;
 
-import com.laserfiche.repository.api.CollectionFormats.*;
-
-import retrofit2.Call;
 import retrofit2.http.*;
-
-import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
-
 import com.laserfiche.repository.api.client.model.Attribute;
 import com.laserfiche.repository.api.client.model.ODataValueContextOfListOfAttribute;
-import com.laserfiche.repository.api.client.model.ProblemDetails;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 public interface AttributesApi {
   /**
@@ -32,7 +20,7 @@ public interface AttributesApi {
    * @return Call&lt;ODataValueContextOfListOfAttribute&gt;
    */
   @GET("v2-alpha/Repositories/{repoId}/Attributes")
-  Call<ODataValueContextOfListOfAttribute> getTrusteeAttributeKeyValuePairs(
+  CompletableFuture<ODataValueContextOfListOfAttribute> getTrusteeAttributeKeyValuePairs(
     @retrofit2.http.Path("repoId") String repoId, @retrofit2.http.Query("everyone") Boolean everyone, @retrofit2.http.Header("Prefer") String prefer, @retrofit2.http.Query("$select") String $select, @retrofit2.http.Query("$orderby") String $orderby, @retrofit2.http.Query("$top") Integer $top, @retrofit2.http.Query("$skip") Integer $skip, @retrofit2.http.Query("$count") Boolean $count
   );
 
@@ -45,7 +33,7 @@ public interface AttributesApi {
    * @return Call&lt;Attribute&gt;
    */
   @GET("v2-alpha/Repositories/{repoId}/Attributes/{attributeKey}")
-  Call<Attribute> getTrusteeAttributeValueByKey(
+  CompletableFuture<Attribute> getTrusteeAttributeValueByKey(
     @retrofit2.http.Path("repoId") String repoId, @retrofit2.http.Path("attributeKey") String attributeKey, @retrofit2.http.Query("everyone") Boolean everyone
   );
 

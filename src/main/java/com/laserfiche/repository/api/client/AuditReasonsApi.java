@@ -1,20 +1,8 @@
 package com.laserfiche.repository.api.client;
 
-import com.laserfiche.repository.api.CollectionFormats.*;
-
-import retrofit2.Call;
 import retrofit2.http.*;
-
-import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
-
 import com.laserfiche.repository.api.client.model.AuditReasons;
-import com.laserfiche.repository.api.client.model.ProblemDetails;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 public interface AuditReasonsApi {
   /**
@@ -24,7 +12,7 @@ public interface AuditReasonsApi {
    * @return Call&lt;AuditReasons&gt;
    */
   @GET("v2-alpha/Repositories/{repoId}/AuditReasons")
-  Call<AuditReasons> getAuditReasons(
+  CompletableFuture<AuditReasons> getAuditReasons(
     @retrofit2.http.Path("repoId") String repoId
   );
 

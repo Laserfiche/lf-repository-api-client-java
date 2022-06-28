@@ -3,21 +3,20 @@ package integration;
 import com.laserfiche.repository.api.client.RepositoriesApi;
 import com.laserfiche.repository.api.client.model.RepositoryInfo;
 import org.junit.jupiter.api.Test;
-import retrofit2.Call;
-import retrofit2.Response;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class RepositoriesApiTest extends BaseTest {
     @Test
-    public void getRepositoryList_Success() throws IOException {
+    public void getRepositoryList_Success() {
         RepositoriesApi client = repositoryApiClient.getRepositoryClient();
-        Call<List<RepositoryInfo>> call = client.getRepositoryList();
-        Response<List<RepositoryInfo>> response = call.execute();
+        CompletableFuture<List<RepositoryInfo>> future = client.getRepositoryList();
+        List<RepositoryInfo> repositoryInfoList = future.join();
 
-        assertNotNull(response.body());
+        assertNotNull(repositoryInfoList);
     }
 }

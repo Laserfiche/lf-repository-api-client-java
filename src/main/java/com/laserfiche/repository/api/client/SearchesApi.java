@@ -1,25 +1,14 @@
 package com.laserfiche.repository.api.client;
 
-import com.laserfiche.repository.api.CollectionFormats.*;
-
-import retrofit2.Call;
 import retrofit2.http.*;
-
-import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
-
 import com.laserfiche.repository.api.client.model.AcceptedOperation;
 import com.laserfiche.repository.api.client.model.AdvancedSearchRequest;
 import com.laserfiche.repository.api.client.model.ODataValueContextOfIListOfContextHit;
 import com.laserfiche.repository.api.client.model.ODataValueContextOfIListOfEntry;
 import com.laserfiche.repository.api.client.model.ODataValueOfBoolean;
 import com.laserfiche.repository.api.client.model.OperationProgress;
-import com.laserfiche.repository.api.client.model.ProblemDetails;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 public interface SearchesApi {
   /**
@@ -30,7 +19,7 @@ public interface SearchesApi {
    * @return Call&lt;ODataValueOfBoolean&gt;
    */
   @DELETE("v2-alpha/Repositories/{repoId}/Searches/{searchToken}")
-  Call<ODataValueOfBoolean> cancelOrCloseSearch(
+  CompletableFuture<ODataValueOfBoolean> cancelOrCloseSearch(
     @retrofit2.http.Path("repoId") String repoId, @retrofit2.http.Path("searchToken") String searchToken
   );
 
@@ -45,7 +34,7 @@ public interface SearchesApi {
     "Content-Type:application/json"
   })
   @POST("v2-alpha/Repositories/{repoId}/Searches")
-  Call<AcceptedOperation> createSearchOperation(
+  CompletableFuture<AcceptedOperation> createSearchOperation(
     @retrofit2.http.Path("repoId") String repoId, @retrofit2.http.Body AdvancedSearchRequest body
   );
 
@@ -64,7 +53,7 @@ public interface SearchesApi {
    * @return Call&lt;ODataValueContextOfIListOfContextHit&gt;
    */
   @GET("v2-alpha/Repositories/{repoId}/Searches/{searchToken}/Results/{rowNumber}/ContextHits")
-  Call<ODataValueContextOfIListOfContextHit> getSearchContextHits(
+  CompletableFuture<ODataValueContextOfIListOfContextHit> getSearchContextHits(
     @retrofit2.http.Path("repoId") String repoId, @retrofit2.http.Path("searchToken") String searchToken, @retrofit2.http.Path("rowNumber") Integer rowNumber, @retrofit2.http.Header("Prefer") String prefer, @retrofit2.http.Query("$select") String $select, @retrofit2.http.Query("$orderby") String $orderby, @retrofit2.http.Query("$top") Integer $top, @retrofit2.http.Query("$skip") Integer $skip, @retrofit2.http.Query("$count") Boolean $count
   );
 
@@ -87,7 +76,7 @@ public interface SearchesApi {
    * @return Call&lt;ODataValueContextOfIListOfEntry&gt;
    */
   @GET("v2-alpha/Repositories/{repoId}/Searches/{searchToken}/Results")
-  Call<ODataValueContextOfIListOfEntry> getSearchResults(
+  CompletableFuture<ODataValueContextOfIListOfEntry> getSearchResults(
     @retrofit2.http.Path("repoId") String repoId, @retrofit2.http.Path("searchToken") String searchToken, @retrofit2.http.Query("groupByEntryType") Boolean groupByEntryType, @retrofit2.http.Query("refresh") Boolean refresh, @retrofit2.http.Query("fields") List<String> fields, @retrofit2.http.Query("formatFields") Boolean formatFields, @retrofit2.http.Header("Prefer") String prefer, @retrofit2.http.Query("culture") String culture, @retrofit2.http.Query("$select") String $select, @retrofit2.http.Query("$orderby") String $orderby, @retrofit2.http.Query("$top") Integer $top, @retrofit2.http.Query("$skip") Integer $skip, @retrofit2.http.Query("$count") Boolean $count
   );
 
@@ -99,7 +88,7 @@ public interface SearchesApi {
    * @return Call&lt;OperationProgress&gt;
    */
   @GET("v2-alpha/Repositories/{repoId}/Searches/{searchToken}")
-  Call<OperationProgress> getSearchStatus(
+  CompletableFuture<OperationProgress> getSearchStatus(
     @retrofit2.http.Path("repoId") String repoId, @retrofit2.http.Path("searchToken") String searchToken
   );
 

@@ -1,21 +1,9 @@
 package com.laserfiche.repository.api.client;
 
-import com.laserfiche.repository.api.CollectionFormats.*;
-
-import retrofit2.Call;
 import retrofit2.http.*;
-
-import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
-
 import com.laserfiche.repository.api.client.model.ODataValueOfBoolean;
 import com.laserfiche.repository.api.client.model.ODataValueOfDateTime;
-import com.laserfiche.repository.api.client.model.ProblemDetails;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 public interface ServerSessionApi {
   /**
@@ -25,7 +13,7 @@ public interface ServerSessionApi {
    * @return Call&lt;ODataValueOfBoolean&gt;
    */
   @POST("v2-alpha/Repositories/{repoId}/ServerSession/Create")
-  Call<ODataValueOfBoolean> createServerSession(
+  CompletableFuture<ODataValueOfBoolean> createServerSession(
     @retrofit2.http.Path("repoId") String repoId
   );
 
@@ -36,7 +24,7 @@ public interface ServerSessionApi {
    * @return Call&lt;ODataValueOfBoolean&gt;
    */
   @POST("v2-alpha/Repositories/{repoId}/ServerSession/Invalidate")
-  Call<ODataValueOfBoolean> invalidateServerSession(
+  CompletableFuture<ODataValueOfBoolean> invalidateServerSession(
     @retrofit2.http.Path("repoId") String repoId
   );
 
@@ -47,7 +35,7 @@ public interface ServerSessionApi {
    * @return Call&lt;ODataValueOfDateTime&gt;
    */
   @POST("v2-alpha/Repositories/{repoId}/ServerSession/Refresh")
-  Call<ODataValueOfDateTime> refreshServerSession(
+  CompletableFuture<ODataValueOfDateTime> refreshServerSession(
     @retrofit2.http.Path("repoId") String repoId
   );
 

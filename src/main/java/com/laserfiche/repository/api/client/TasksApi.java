@@ -1,20 +1,8 @@
 package com.laserfiche.repository.api.client;
 
-import com.laserfiche.repository.api.CollectionFormats.*;
-
-import retrofit2.Call;
 import retrofit2.http.*;
-
-import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
-
 import com.laserfiche.repository.api.client.model.OperationProgress;
-import com.laserfiche.repository.api.client.model.ProblemDetails;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 public interface TasksApi {
   /**
@@ -25,7 +13,7 @@ public interface TasksApi {
    * @return Call&lt;Void&gt;
    */
   @DELETE("v2-alpha/Repositories/{repoId}/Tasks/{operationToken}")
-  Call<Void> cancelOperation(
+  CompletableFuture<Void> cancelOperation(
     @retrofit2.http.Path("repoId") String repoId, @retrofit2.http.Path("operationToken") String operationToken
   );
 
@@ -37,7 +25,7 @@ public interface TasksApi {
    * @return Call&lt;OperationProgress&gt;
    */
   @GET("v2-alpha/Repositories/{repoId}/Tasks/{operationToken}")
-  Call<OperationProgress> getOperationStatusAndProgress(
+  CompletableFuture<OperationProgress> getOperationStatusAndProgress(
     @retrofit2.http.Path("repoId") String repoId, @retrofit2.http.Path("operationToken") String operationToken
   );
 

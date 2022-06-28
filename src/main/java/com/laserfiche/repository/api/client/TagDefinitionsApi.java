@@ -1,21 +1,9 @@
 package com.laserfiche.repository.api.client;
 
-import com.laserfiche.repository.api.CollectionFormats.*;
-
-import retrofit2.Call;
 import retrofit2.http.*;
-
-import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
-
 import com.laserfiche.repository.api.client.model.ODataValueContextOfIListOfWTagInfo;
-import com.laserfiche.repository.api.client.model.ProblemDetails;
 import com.laserfiche.repository.api.client.model.WTagInfo;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 public interface TagDefinitionsApi {
   /**
@@ -28,7 +16,7 @@ public interface TagDefinitionsApi {
    * @return Call&lt;WTagInfo&gt;
    */
   @GET("v2-alpha/Repositories/{repoId}/TagDefinitions/{tagId}")
-  Call<WTagInfo> getTagDefinitionById(
+  CompletableFuture<WTagInfo> getTagDefinitionById(
     @retrofit2.http.Path("repoId") String repoId, @retrofit2.http.Path("tagId") Integer tagId, @retrofit2.http.Query("culture") String culture, @retrofit2.http.Query("$select") String $select
   );
 
@@ -46,7 +34,7 @@ public interface TagDefinitionsApi {
    * @return Call&lt;ODataValueContextOfIListOfWTagInfo&gt;
    */
   @GET("v2-alpha/Repositories/{repoId}/TagDefinitions")
-  Call<ODataValueContextOfIListOfWTagInfo> getTagDefinitions(
+  CompletableFuture<ODataValueContextOfIListOfWTagInfo> getTagDefinitions(
     @retrofit2.http.Path("repoId") String repoId, @retrofit2.http.Header("Prefer") String prefer, @retrofit2.http.Query("culture") String culture, @retrofit2.http.Query("$select") String $select, @retrofit2.http.Query("$orderby") String $orderby, @retrofit2.http.Query("$top") Integer $top, @retrofit2.http.Query("$skip") Integer $skip, @retrofit2.http.Query("$count") Boolean $count
   );
 

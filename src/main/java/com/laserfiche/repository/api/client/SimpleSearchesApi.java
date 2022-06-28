@@ -1,21 +1,10 @@
 package com.laserfiche.repository.api.client;
 
-import com.laserfiche.repository.api.CollectionFormats.*;
-
-import retrofit2.Call;
 import retrofit2.http.*;
-
-import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
-
 import com.laserfiche.repository.api.client.model.ODataValueOfIListOfEntry;
-import com.laserfiche.repository.api.client.model.ProblemDetails;
 import com.laserfiche.repository.api.client.model.SimpleSearchRequest;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 public interface SimpleSearchesApi {
   /**
@@ -35,7 +24,7 @@ public interface SimpleSearchesApi {
     "Content-Type:application/json"
   })
   @POST("v2-alpha/Repositories/{repoId}/SimpleSearches")
-  Call<ODataValueOfIListOfEntry> createSimpleSearchOperation(
+  CompletableFuture<ODataValueOfIListOfEntry> createSimpleSearchOperation(
     @retrofit2.http.Path("repoId") String repoId, @retrofit2.http.Body SimpleSearchRequest body, @retrofit2.http.Query("fields") List<String> fields, @retrofit2.http.Query("formatFields") Boolean formatFields, @retrofit2.http.Query("culture") String culture, @retrofit2.http.Query("$select") String $select, @retrofit2.http.Query("$orderby") String $orderby, @retrofit2.http.Query("$count") Boolean $count
   );
 

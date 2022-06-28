@@ -4,29 +4,28 @@ import com.laserfiche.repository.api.client.FieldDefinitionsApi;
 import com.laserfiche.repository.api.client.model.ODataValueContextOfIListOfWFieldInfo;
 import com.laserfiche.repository.api.client.model.WFieldInfo;
 import org.junit.jupiter.api.Test;
-import retrofit2.Call;
-import retrofit2.Response;
 
 import java.io.IOException;
+import java.util.concurrent.CompletableFuture;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class FieldDefinitionsApiTest extends BaseTest {
     @Test
-    public void getFieldDefinitionById_Success() throws IOException {
+    public void getFieldDefinitionById_Success() {
         FieldDefinitionsApi client = repositoryApiClient.getFieldDefinitionsClient();
-        Call<WFieldInfo> call = client.getFieldDefinitionById(repoId, 261, null, null);
-        Response<WFieldInfo> response = call.execute();
+        CompletableFuture<WFieldInfo> future = client.getFieldDefinitionById(repoId, 261, null, null);
+        WFieldInfo fieldInfo = future.join();
 
-        assertNotNull(response.body());
+        assertNotNull(fieldInfo);
     }
 
     @Test
-    public void getFieldDefinitions_Success() throws IOException {
+    public void getFieldDefinitions_Success() {
         FieldDefinitionsApi client = repositoryApiClient.getFieldDefinitionsClient();
-        Call<ODataValueContextOfIListOfWFieldInfo> call = client.getFieldDefinitions(repoId, null, null, null, null, null, null, false);
-        Response<ODataValueContextOfIListOfWFieldInfo> response = call.execute();
+        CompletableFuture<ODataValueContextOfIListOfWFieldInfo> future = client.getFieldDefinitions(repoId, null, null, null, null, null, null, false);
+        ODataValueContextOfIListOfWFieldInfo fieldInfoList = future.join();
 
-        assertNotNull(response.body());
+        assertNotNull(fieldInfoList);
     }
 }
