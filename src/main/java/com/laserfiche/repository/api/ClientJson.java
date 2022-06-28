@@ -34,8 +34,11 @@ public class ClientJson {
     static class RepositoryApiReturnTypeSelector<T> implements TypeSelector<T> {
         private final Map<String, Class> typeSelectableClasses;
 
+        private Class<T> type;
+
         public RepositoryApiReturnTypeSelector(Class<T> type) {
             typeSelectableClasses = new HashMap<>();
+            this.type = type;
 
             if (type == EntryFieldValue.class) {
                 typeSelectableClasses.put("EntryFieldValue", EntryFieldValue.class);
@@ -55,7 +58,8 @@ public class ClientJson {
             String odataType = "@odata.type";
             JsonElement element = jsonElement.getAsJsonObject().get(odataType);
             if (element == null) {
-                throw new IllegalArgumentException(String.format("The JSON object doesn't contain required field: %s", odataType));
+                // If there's no odata type, we default to the base type.
+                return this.type;
             }
 
             String typeComponentStr = element.getAsString();
