@@ -17,7 +17,7 @@ public interface AttributesApi {
    * @param $top Limits the number of items returned from a collection. (optional)
    * @param $skip Excludes the specified number of items of the queried collection from the result. (optional)
    * @param $count Indicates whether the total count of items within a collection are returned in the result. (optional)
-   * @return Call&lt;ODataValueContextOfListOfAttribute&gt;
+   * @return CompletableFuture&lt;ODataValueContextOfListOfAttribute&gt;
    */
   @GET("v2-alpha/Repositories/{repoId}/Attributes")
   CompletableFuture<ODataValueContextOfListOfAttribute> getTrusteeAttributeKeyValuePairs(
@@ -30,7 +30,7 @@ public interface AttributesApi {
    * @param repoId The requested repository ID. (required)
    * @param attributeKey The requested attribute key. (required)
    * @param everyone Boolean value that indicates whether to return attributes associated with everyone or the currently authenticated user. (optional)
-   * @return Call&lt;Attribute&gt;
+   * @return CompletableFuture&lt;Attribute&gt;
    */
   @GET("v2-alpha/Repositories/{repoId}/Attributes/{attributeKey}")
   CompletableFuture<Attribute> getTrusteeAttributeValueByKey(

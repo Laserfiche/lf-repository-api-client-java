@@ -14,7 +14,7 @@ public interface TemplateDefinitionsApi {
    * @param templateId The requested template definition ID. (required)
    * @param culture An optional query parameter used to indicate the locale that should be used for formatting.             The value should be a standard language tag. (optional)
    * @param $select Limits the properties returned in the result. (optional)
-   * @return Call&lt;WTemplateInfo&gt;
+   * @return CompletableFuture&lt;WTemplateInfo&gt;
    */
   @GET("v2-alpha/Repositories/{repoId}/TemplateDefinitions/{templateId}")
   CompletableFuture<WTemplateInfo> getTemplateDefinitionById(
@@ -33,7 +33,7 @@ public interface TemplateDefinitionsApi {
    * @param $top Limits the number of items returned from a collection. (optional)
    * @param $skip Excludes the specified number of items of the queried collection from the result. (optional)
    * @param $count Indicates whether the total count of items within a collection are returned in the result. (optional)
-   * @return Call&lt;ODataValueContextOfIListOfWTemplateInfo&gt;
+   * @return CompletableFuture&lt;ODataValueContextOfIListOfWTemplateInfo&gt;
    */
   @GET("v2-alpha/Repositories/{repoId}/TemplateDefinitions")
   CompletableFuture<ODataValueContextOfIListOfWTemplateInfo> getTemplateDefinitions(
@@ -52,7 +52,7 @@ public interface TemplateDefinitionsApi {
    * @param $top Limits the number of items returned from a collection. (optional)
    * @param $skip Excludes the specified number of items of the queried collection from the result. (optional)
    * @param $count Indicates whether the total count of items within a collection are returned in the result. (optional)
-   * @return Call&lt;ODataValueContextOfIListOfTemplateFieldInfo&gt;
+   * @return CompletableFuture&lt;ODataValueContextOfIListOfTemplateFieldInfo&gt;
    */
   @GET("v2-alpha/Repositories/{repoId}/TemplateDefinitions/{templateId}/fields")
   CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo> getTemplateFieldDefinitions(
@@ -71,7 +71,7 @@ public interface TemplateDefinitionsApi {
    * @param $top Limits the number of items returned from a collection. (optional)
    * @param $skip Excludes the specified number of items of the queried collection from the result. (optional)
    * @param $count Indicates whether the total count of items within a collection are returned in the result. (optional)
-   * @return Call&lt;ODataValueContextOfIListOfTemplateFieldInfo&gt;
+   * @return CompletableFuture&lt;ODataValueContextOfIListOfTemplateFieldInfo&gt;
    */
   @GET("v2-alpha/Repositories/{repoId}/TemplateDefinitions/Fields")
   CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo> getTemplateFieldDefinitionsByTemplateName(

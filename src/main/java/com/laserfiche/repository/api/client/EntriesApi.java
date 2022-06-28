@@ -259,7 +259,7 @@ public interface EntriesApi {
    * @param $top Limits the number of items returned from a collection. (optional)
    * @param $skip Excludes the specified number of items of the queried collection from the result. (optional)
    * @param $count Indicates whether the total count of items within a collection are returned in the result. (optional)
-   * @return Call&lt;ODataValueContextOfIListOfEntry&gt;
+   * @return CompletableFuture&lt;ODataValueContextOfIListOfEntry&gt;
    */
   @GET("v2-alpha/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Folder/children")
   CompletableFuture<ODataValueContextOfIListOfEntry> getEntryListing(
@@ -287,7 +287,7 @@ public interface EntriesApi {
    * @param $top Limits the number of items returned from a collection. (optional)
    * @param $skip Excludes the specified number of items of the queried collection from the result. (optional)
    * @param $count Indicates whether the total count of items within a collection are returned in the result. (optional)
-   * @return Call&lt;ODataValueContextOfIListOfFieldValue&gt;
+   * @return CompletableFuture&lt;ODataValueContextOfIListOfFieldValue&gt;
    */
   @GET("v2-alpha/Repositories/{repoId}/Entries/{entryId}/fields")
   CompletableFuture<ODataValueContextOfIListOfFieldValue> getFieldValues(
@@ -305,7 +305,7 @@ public interface EntriesApi {
    * @param $top Limits the number of items returned from a collection. (optional)
    * @param $skip Excludes the specified number of items of the queried collection from the result. (optional)
    * @param $count Indicates whether the total count of items within a collection are returned in the result. (optional)
-   * @return Call&lt;ODataValueContextOfIListOfWEntryLinkInfo&gt;
+   * @return CompletableFuture&lt;ODataValueContextOfIListOfWEntryLinkInfo&gt;
    */
   @GET("v2-alpha/Repositories/{repoId}/Entries/{entryId}/links")
   CompletableFuture<ODataValueContextOfIListOfWEntryLinkInfo> getLinkValuesFromEntry(
@@ -323,7 +323,7 @@ public interface EntriesApi {
    * @param $top Limits the number of items returned from a collection. (optional)
    * @param $skip Excludes the specified number of items of the queried collection from the result. (optional)
    * @param $count Indicates whether the total count of items within a collection are returned in the result. (optional)
-   * @return Call&lt;ODataValueContextOfIListOfWTagInfo&gt;
+   * @return CompletableFuture&lt;ODataValueContextOfIListOfWTagInfo&gt;
    */
   @GET("v2-alpha/Repositories/{repoId}/Entries/{entryId}/tags")
   CompletableFuture<ODataValueContextOfIListOfWTagInfo> getTagsAssignedToEntry(
@@ -339,7 +339,7 @@ public interface EntriesApi {
             the entry will be renamed to. (optional)
    * @param autoRename An optional query parameter used to indicate if the entry should be automatically             renamed if another entry already exists with the same name in the folder. The default value is false. (optional)
    * @param culture An optional query parameter used to indicate the locale that should be used.             The value should be a standard language tag. (optional)
-   * @return Call&lt;Entry&gt;
+   * @return CompletableFuture&lt;Entry&gt;
    */
   @Headers({
     "Content-Type:application/json"
@@ -358,7 +358,7 @@ public interface EntriesApi {
    * @param body The body of the export request. (optional)
    * @param format Specifies the format to export as. This value is ignored when part&#x3D;Edoc or Text. Options include: TIFF, PNG, PDF and JPEG. The default value is TIFF. (optional)
    * @param pageRange A comma seperated range of pages to include. This value is ignored when part&#x3D;Edoc. Ex: 1,3,4 or 1-3,5-7,9. (optional)
-   * @return Call&lt;ODataValueOfString&gt;
+   * @return CompletableFuture&lt;ODataValueOfString&gt;
    */
   @Headers({
     "Content-Type:application/json"
@@ -376,7 +376,7 @@ public interface EntriesApi {
    * @param file  (optional)
    * @param request  (optional)
    * @param culture An optional query parameter used to indicate the locale that should be used.             The value should be a standard language tag. (optional)
-   * @return Call&lt;SimpleImportResult&gt;
+   * @return CompletableFuture&lt;SimpleImportResult&gt;
    */
   @retrofit2.http.Multipart
   @POST("v2-alpha/Repositories/{repoId}/Entries/{parentEntryId}/Import")
@@ -391,7 +391,7 @@ public interface EntriesApi {
    * @param entryId The ID of entry that will have its template updated. (required)
    * @param body The template and template fields that will be assigned to the entry. (optional)
    * @param culture An optional query parameter used to indicate the locale that should be used.             The value should be a standard language tag. (optional)
-   * @return Call&lt;Entry&gt;
+   * @return CompletableFuture&lt;Entry&gt;
    */
   @Headers({
     "Content-Type:application/json"

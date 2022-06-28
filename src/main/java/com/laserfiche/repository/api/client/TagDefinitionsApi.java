@@ -13,7 +13,7 @@ public interface TagDefinitionsApi {
    * @param tagId The requested tag definition ID. (required)
    * @param culture An optional query parameter used to indicate the locale that should be used for formatting.             The value should be a standard language tag. (optional)
    * @param $select Limits the properties returned in the result. (optional)
-   * @return Call&lt;WTagInfo&gt;
+   * @return CompletableFuture&lt;WTagInfo&gt;
    */
   @GET("v2-alpha/Repositories/{repoId}/TagDefinitions/{tagId}")
   CompletableFuture<WTagInfo> getTagDefinitionById(
@@ -31,7 +31,7 @@ public interface TagDefinitionsApi {
    * @param $top Limits the number of items returned from a collection. (optional)
    * @param $skip Excludes the specified number of items of the queried collection from the result. (optional)
    * @param $count Indicates whether the total count of items within a collection are returned in the result. (optional)
-   * @return Call&lt;ODataValueContextOfIListOfWTagInfo&gt;
+   * @return CompletableFuture&lt;ODataValueContextOfIListOfWTagInfo&gt;
    */
   @GET("v2-alpha/Repositories/{repoId}/TagDefinitions")
   CompletableFuture<ODataValueContextOfIListOfWTagInfo> getTagDefinitions(

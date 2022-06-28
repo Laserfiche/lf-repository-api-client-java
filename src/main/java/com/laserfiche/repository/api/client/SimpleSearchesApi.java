@@ -18,7 +18,7 @@ public interface SimpleSearchesApi {
    * @param $select Limits the properties returned in the result. (optional)
    * @param $orderby Specifies the order in which items are returned. The maximum number of expressions is 5. (optional)
    * @param $count Indicates whether the total count of items within a collection are returned in the result. (optional)
-   * @return Call&lt;ODataValueOfIListOfEntry&gt;
+   * @return CompletableFuture&lt;ODataValueOfIListOfEntry&gt;
    */
   @Headers({
     "Content-Type:application/json"

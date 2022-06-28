@@ -16,7 +16,7 @@ public interface SearchesApi {
    * - Cancels a currently running search. - Closes a completed search.
    * @param repoId The requested repository ID. (required)
    * @param searchToken The requested searchToken. (required)
-   * @return Call&lt;ODataValueOfBoolean&gt;
+   * @return CompletableFuture&lt;ODataValueOfBoolean&gt;
    */
   @DELETE("v2-alpha/Repositories/{repoId}/Searches/{searchToken}")
   CompletableFuture<ODataValueOfBoolean> cancelOrCloseSearch(
@@ -28,7 +28,7 @@ public interface SearchesApi {
    * - Runs a search operation on the repository. - Optional body parameters: FuzzyType: (default none), which can be used to determine what is considered a match by number of letters or percentage. FuzzyFactor: integer value that determines the degree to which a search will be considered a match (integer value for NumberOfLetters, or int value representing a percentage). The status for search operations must be checked via the Search specific status checking route.         
    * @param repoId The requested repository ID. (required)
    * @param body The Laserfiche search command to run, optionally include fuzzy search settings. (optional)
-   * @return Call&lt;AcceptedOperation&gt;
+   * @return CompletableFuture&lt;AcceptedOperation&gt;
    */
   @Headers({
     "Content-Type:application/json"
@@ -50,7 +50,7 @@ public interface SearchesApi {
    * @param $top Limits the number of items returned from a collection. (optional)
    * @param $skip Excludes the specified number of items of the queried collection from the result. (optional)
    * @param $count Indicates whether the total count of items within a collection are returned in the result. (optional)
-   * @return Call&lt;ODataValueContextOfIListOfContextHit&gt;
+   * @return CompletableFuture&lt;ODataValueContextOfIListOfContextHit&gt;
    */
   @GET("v2-alpha/Repositories/{repoId}/Searches/{searchToken}/Results/{rowNumber}/ContextHits")
   CompletableFuture<ODataValueContextOfIListOfContextHit> getSearchContextHits(
@@ -73,7 +73,7 @@ public interface SearchesApi {
    * @param $top Limits the number of items returned from a collection. (optional)
    * @param $skip Excludes the specified number of items of the queried collection from the result. (optional)
    * @param $count Indicates whether the total count of items within a collection are returned in the result. (optional)
-   * @return Call&lt;ODataValueContextOfIListOfEntry&gt;
+   * @return CompletableFuture&lt;ODataValueContextOfIListOfEntry&gt;
    */
   @GET("v2-alpha/Repositories/{repoId}/Searches/{searchToken}/Results")
   CompletableFuture<ODataValueContextOfIListOfEntry> getSearchResults(
@@ -85,7 +85,7 @@ public interface SearchesApi {
    * - Returns search status. - Provide a token (returned in the create search asynchronous route), and get the search status, progress, and any errors that may have occurred. When the search is completed, the Location header can be inspected as a link to the search results. - OperationStatus can be one of the following : NotStarted, InProgress, Completed, Failed, or Canceled.
    * @param repoId The requested repository ID. (required)
    * @param searchToken The requested searchToken. (required)
-   * @return Call&lt;OperationProgress&gt;
+   * @return CompletableFuture&lt;OperationProgress&gt;
    */
   @GET("v2-alpha/Repositories/{repoId}/Searches/{searchToken}")
   CompletableFuture<OperationProgress> getSearchStatus(

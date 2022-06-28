@@ -13,7 +13,7 @@ public interface FieldDefinitionsApi {
    * @param fieldDefinitionId The requested field definition ID. (required)
    * @param culture An optional query parameter used to indicate the locale that should be used for formatting.             The value should be a standard language tag. (optional)
    * @param $select Limits the properties returned in the result. (optional)
-   * @return Call&lt;WFieldInfo&gt;
+   * @return CompletableFuture&lt;WFieldInfo&gt;
    */
   @GET("v2-alpha/Repositories/{repoId}/FieldDefinitions/{fieldDefinitionId}")
   CompletableFuture<WFieldInfo> getFieldDefinitionById(
@@ -31,7 +31,7 @@ public interface FieldDefinitionsApi {
    * @param $top Limits the number of items returned from a collection. (optional)
    * @param $skip Excludes the specified number of items of the queried collection from the result. (optional)
    * @param $count Indicates whether the total count of items within a collection are returned in the result. (optional)
-   * @return Call&lt;ODataValueContextOfIListOfWFieldInfo&gt;
+   * @return CompletableFuture&lt;ODataValueContextOfIListOfWFieldInfo&gt;
    */
   @GET("v2-alpha/Repositories/{repoId}/FieldDefinitions")
   CompletableFuture<ODataValueContextOfIListOfWFieldInfo> getFieldDefinitions(

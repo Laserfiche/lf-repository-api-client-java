@@ -9,7 +9,7 @@ public interface RepositoriesApi {
   /**
    * 
    * - Get the repository resource list that current user has access to.
-   * @return Call&lt;List&lt;RepositoryInfo&gt;&gt;
+   * @return CompletableFuture&lt;List&lt;RepositoryInfo&gt;&gt;
    */
   @GET("v2-alpha/Repositories")
   CompletableFuture<List<RepositoryInfo>> getRepositoryList();
