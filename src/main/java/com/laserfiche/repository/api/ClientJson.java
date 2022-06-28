@@ -18,8 +18,7 @@ public class ClientJson {
     public ClientJson() {
         GsonFireBuilder fireBuilder = new GsonFireBuilder()
                 .registerTypeSelector(Entry.class, new RepositoryApiReturnTypeSelector<>(Entry.class))
-                .registerTypeSelector(EntryFieldValue.class, new RepositoryApiReturnTypeSelector<>(EntryFieldValue.class))
-                .registerTypeSelector(WFieldInfo.class, new RepositoryApiReturnTypeSelector<>(WFieldInfo.class));
+                .registerTypeSelector(EntryFieldValue.class, new RepositoryApiReturnTypeSelector<>(EntryFieldValue.class));
         gson = fireBuilder.createGsonBuilder()
                 .registerTypeAdapter(Date.class, new JSON.DateTypeAdapter())
                 .registerTypeAdapter(java.sql.Date.class, new JSON.SqlDateTypeAdapter())
@@ -38,10 +37,7 @@ public class ClientJson {
         public RepositoryApiReturnTypeSelector(Class<T> type) {
             typeSelectableClasses = new HashMap<>();
 
-            if (type == WFieldInfo.class) {
-                typeSelectableClasses.put("WFieldInfo", WFieldInfo.class);
-                typeSelectableClasses.put("TemplateFieldInfo", TemplateFieldInfo.class);
-            } else if (type == EntryFieldValue.class) {
+            if (type == EntryFieldValue.class) {
                 typeSelectableClasses.put("EntryFieldValue", EntryFieldValue.class);
                 typeSelectableClasses.put("FieldValue", FieldValue.class);
             } else if (type == Entry.class) {
