@@ -1,5 +1,6 @@
 package com.laserfiche.repository.api.client;
 
+import com.laserfiche.repository.api.client.model.ODataValueContextOfIListOfEntry;
 import retrofit2.http.*;
 import com.laserfiche.repository.api.client.model.ODataValueContextOfIListOfWTagInfo;
 import com.laserfiche.repository.api.client.model.WTagInfo;
@@ -37,5 +38,14 @@ public interface TagDefinitionsApi {
   CompletableFuture<ODataValueContextOfIListOfWTagInfo> getTagDefinitions(
     @retrofit2.http.Path("repoId") String repoId, @retrofit2.http.Header("Prefer") String prefer, @retrofit2.http.Query("culture") String culture, @retrofit2.http.Query("$select") String $select, @retrofit2.http.Query("$orderby") String $orderby, @retrofit2.http.Query("$top") Integer $top, @retrofit2.http.Query("$skip") Integer $skip, @retrofit2.http.Query("$count") Boolean $count
   );
+
+  /**
+   * - Returns all tag definitions in the repository.
+   * @param url Full next link URL returned by the backend.
+   * @param prefer May contain maxpagesize information.
+   * @return CompletableFuture&lt;ODataValueContextOfIListOfWTagInfo&gt;
+   */
+  @GET
+  CompletableFuture<ODataValueContextOfIListOfWTagInfo> getTagDefinitionsPaginate(@Url String url, @retrofit2.http.Header("Prefer") String prefer);
 
 }
