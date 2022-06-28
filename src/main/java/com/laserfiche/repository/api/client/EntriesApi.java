@@ -272,7 +272,8 @@ public interface EntriesApi {
    * @param prefer May contain maxpagesize information.
    * @return CompletableFuture&lt;ODataValueContextOfIListOfEntry&gt;
    */
-  CompletableFuture<ODataValueContextOfIListOfEntry> getEntryListingNextLink(@Url String url, @retrofit2.http.Header("Prefer") String prefer);
+  @GET
+  CompletableFuture<ODataValueContextOfIListOfEntry> getEntryListingPaginate(@Url String url, @retrofit2.http.Header("Prefer") String prefer);
 
   /**
    * 
