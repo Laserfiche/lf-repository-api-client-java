@@ -267,6 +267,14 @@ public interface EntriesApi {
   );
 
   /**
+   *
+   * @param url Full next link URL returned by the backend.
+   * @param prefer May contain maxpagesize information.
+   * @return CompletableFuture&lt;ODataValueContextOfIListOfEntry&gt;
+   */
+  CompletableFuture<ODataValueContextOfIListOfEntry> getEntryListingNextLink(@Url String url, @retrofit2.http.Header("Prefer") String prefer);
+
+  /**
    * 
    * - Returns the fields assigned to an entry. - Provide an entry ID, and get a paged listing of all fields assigned to that entry. - Default page size: 100. Allowed OData query options: Select | Count | OrderBy | Skip | Top | SkipToken | Prefer.
    * @param repoId The requested repository ID. (required)
