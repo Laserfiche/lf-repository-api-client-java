@@ -4,7 +4,6 @@ import com.laserfiche.repository.api.client.RepositoriesApi;
 import com.laserfiche.repository.api.client.model.RepositoryInfo;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 

@@ -4,7 +4,6 @@ import com.laserfiche.repository.api.client.AttributesApi;
 import com.laserfiche.repository.api.client.model.ODataValueContextOfListOfAttribute;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
