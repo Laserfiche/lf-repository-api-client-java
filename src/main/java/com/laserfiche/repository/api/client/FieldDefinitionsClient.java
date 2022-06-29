@@ -1,6 +1,7 @@
 package com.laserfiche.repository.api.client;
 
 import com.laserfiche.repository.api.client.model.ODataValueContextOfIListOfWFieldInfo;
+import com.laserfiche.repository.api.client.model.ODataValueContextOfListOfAttribute;
 import com.laserfiche.repository.api.client.model.WFieldInfo;
 import retrofit2.http.GET;
 
@@ -41,5 +42,15 @@ public class FieldDefinitionsClient {
      */
     CompletableFuture<ODataValueContextOfIListOfWFieldInfo> getFieldDefinitions(String repoId, String prefer, String culture, String $select, String $orderby, Integer $top, Integer $skip, Boolean $count) {
         return client.getFieldDefinitions(repoId, prefer, culture, $select, $orderby, $top, $skip, $count);
+    }
+
+    /**
+     * - Returns a paged listing of field definitions available in the specified repository.
+     * @param nextLink Full next link URL returned by the backend.
+     * @param maxPageSize The maximum number of items returned by the backend.
+     * @return CompletableFuture&lt;ODataValueContextOfIListOfWFieldInfo&gt;
+     */
+    CompletableFuture<ODataValueContextOfIListOfWFieldInfo> getFieldDefinitionsNextLink(String nextLink, int maxPageSize) {
+        return client.getFieldDefinitionsPaginate(nextLink, String.format("maxpagesize={%d}", maxPageSize));
     }
 }
