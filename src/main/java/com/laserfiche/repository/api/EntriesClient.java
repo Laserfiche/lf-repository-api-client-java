@@ -217,7 +217,7 @@ public class EntriesClient {
      * @return CompletableFuture&lt;ODataValueContextOfIListOfEntry&gt;
      */
     public CompletableFuture<ODataValueContextOfIListOfEntry> getEntryListingNextLink(String nextLink, int maxPageSize) {
-        return client.getEntryListingPaginate(nextLink, String.format("maxpagezie=%d", maxPageSize));
+        return client.getEntryListingPaginate(nextLink, String.format("maxpagesize=%d", maxPageSize));
     }
 
     /**
