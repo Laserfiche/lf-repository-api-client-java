@@ -12,10 +12,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ClientJson {
+public class RepositoryApiDeserializer {
     Gson gson;
 
-    public ClientJson() {
+    public RepositoryApiDeserializer() {
         GsonFireBuilder fireBuilder = new GsonFireBuilder()
                 .registerTypeSelector(Entry.class, new RepositoryApiReturnTypeSelector<>(Entry.class))
                 .registerTypeSelector(EntryFieldValue.class, new RepositoryApiReturnTypeSelector<>(EntryFieldValue.class));
@@ -34,7 +34,7 @@ public class ClientJson {
     static class RepositoryApiReturnTypeSelector<T> implements TypeSelector<T> {
         private final Map<String, Class> typeSelectableClasses;
 
-        private Class<T> type;
+        private final Class<T> type;
 
         public RepositoryApiReturnTypeSelector(Class<T> type) {
             typeSelectableClasses = new HashMap<>();

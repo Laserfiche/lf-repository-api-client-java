@@ -6,8 +6,6 @@ import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
-import java.lang.reflect.InvocationTargetException;
-
 public class RepositoryApiClientImpl implements RepositoryApiClient {
     private final Retrofit.Builder clientBuilder;
     private final OkHttpClient.Builder okBuilder;
@@ -28,7 +26,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
 
         okBuilder = new OkHttpClient.Builder();
         okBuilder.addInterceptor(new OAuthInterceptor(servicePrincipalKey, accessKey));
-        ClientJson json = new ClientJson();
+        RepositoryApiDeserializer json = new RepositoryApiDeserializer();
         clientBuilder = new Retrofit
                 .Builder()
                 .baseUrl(baseUrl)
