@@ -1,6 +1,6 @@
 package integration;
 
-import com.laserfiche.repository.api.client.TagDefinitionsApi;
+import com.laserfiche.repository.api.TagDefinitionsClient;
 import com.laserfiche.repository.api.client.model.ODataValueContextOfIListOfWTagInfo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,9 +10,10 @@ import java.util.concurrent.CompletableFuture;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class TagDefinitionsApiTest extends BaseTest {
-    TagDefinitionsApi client;
+    TagDefinitionsClient client;
 
     private final String preferMaxPageSize1 = "maxpagesize=1";
+    private final int maxPageSize = 1;
 
     @BeforeEach
     public void PerTestSetup() {
@@ -37,7 +38,7 @@ public class TagDefinitionsApiTest extends BaseTest {
 
         String nextLink = tagInfoList.getAtOdataNextLink();
 
-        CompletableFuture<ODataValueContextOfIListOfWTagInfo> newFuture = client.getTagDefinitionsPaginate(nextLink, preferMaxPageSize1);
+        CompletableFuture<ODataValueContextOfIListOfWTagInfo> newFuture = client.getTagDefinitionsNextLink(nextLink, maxPageSize);
         ODataValueContextOfIListOfWTagInfo newTagInfoList = newFuture.join();
 
         assertNotNull(newTagInfoList);

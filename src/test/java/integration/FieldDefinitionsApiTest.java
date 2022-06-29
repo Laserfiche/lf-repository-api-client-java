@@ -1,6 +1,6 @@
 package integration;
 
-import com.laserfiche.repository.api.client.FieldDefinitionsApi;
+import com.laserfiche.repository.api.FieldDefinitionsClient;
 import com.laserfiche.repository.api.client.model.ODataValueContextOfIListOfWFieldInfo;
 import com.laserfiche.repository.api.client.model.WFieldInfo;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,9 +11,10 @@ import java.util.concurrent.CompletableFuture;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class FieldDefinitionsApiTest extends BaseTest {
-    FieldDefinitionsApi client;
+    FieldDefinitionsClient client;
 
     private final String preferMaxPageSize1 = "maxpagesize=1";
+    private final int maxPageSize = 1;
 
     @BeforeEach
     public void PerTestSetup() {
@@ -46,7 +47,7 @@ public class FieldDefinitionsApiTest extends BaseTest {
 
         String nextLink = fieldInfoList.getAtOdataNextLink();
 
-        CompletableFuture<ODataValueContextOfIListOfWFieldInfo> newFuture = client.getFieldDefinitionsPaginate(nextLink, preferMaxPageSize1);
+        CompletableFuture<ODataValueContextOfIListOfWFieldInfo> newFuture = client.getFieldDefinitionsNextLink(nextLink, maxPageSize);
         ODataValueContextOfIListOfWFieldInfo newFieldInfoList = newFuture.join();
 
         assertNotNull(newFieldInfoList);

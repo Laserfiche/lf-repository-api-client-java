@@ -1,6 +1,6 @@
 package integration;
 
-import com.laserfiche.repository.api.client.EntriesApi;
+import com.laserfiche.repository.api.EntriesClient;
 import com.laserfiche.repository.api.client.model.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,9 +10,10 @@ import java.util.concurrent.CompletableFuture;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class EntriesApiTest extends BaseTest {
-    EntriesApi client;
+    EntriesClient client;
 
     private final String preferMaxPageSize1 = "maxpagesize=1";
+    private final int maxPageSize = 1;
 
     @BeforeEach
     public void PerTestSetup() {
@@ -45,7 +46,7 @@ public class EntriesApiTest extends BaseTest {
 
         String nextLink = entryList.getAtOdataNextLink();
 
-        CompletableFuture<ODataValueContextOfIListOfEntry> newFuture = client.getEntryListingPaginate(nextLink, preferMaxPageSize1);
+        CompletableFuture<ODataValueContextOfIListOfEntry> newFuture = client.getEntryListingNextLink(nextLink, maxPageSize);
         ODataValueContextOfIListOfEntry newEntryList = newFuture.join();
 
         assertNotNull(newEntryList);
@@ -69,7 +70,7 @@ public class EntriesApiTest extends BaseTest {
 
         String nextLink = fieldValueList.getAtOdataNextLink();
 
-        CompletableFuture<ODataValueContextOfIListOfFieldValue> newFuture = client.getFieldValuesPaginate(nextLink, preferMaxPageSize1);
+        CompletableFuture<ODataValueContextOfIListOfFieldValue> newFuture = client.getFieldValuesNextLink(nextLink, maxPageSize);
         ODataValueContextOfIListOfFieldValue newFieldValueList = newFuture.join();
 
         assertNotNull(newFieldValueList);
@@ -93,7 +94,7 @@ public class EntriesApiTest extends BaseTest {
 
         String nextLink = linkInfoList.getAtOdataNextLink();
 
-        CompletableFuture<ODataValueContextOfIListOfWEntryLinkInfo> newFuture = client.getLinkValuesFromEntryPaginate(nextLink, preferMaxPageSize1);
+        CompletableFuture<ODataValueContextOfIListOfWEntryLinkInfo> newFuture = client.getLinkValuesFromEntryNextLink(nextLink, maxPageSize);
         ODataValueContextOfIListOfWEntryLinkInfo newLinkInfoList = newFuture.join();
 
         assertNotNull(newLinkInfoList);
@@ -117,7 +118,7 @@ public class EntriesApiTest extends BaseTest {
 
         String nextLink = tagInfoList.getAtOdataNextLink();
 
-        CompletableFuture<ODataValueContextOfIListOfWTagInfo> newFuture = client.getTagsAssignedToEntryPaginate(nextLink, preferMaxPageSize1);
+        CompletableFuture<ODataValueContextOfIListOfWTagInfo> newFuture = client.getTagsAssignedToEntryNextLink(nextLink, maxPageSize);
         ODataValueContextOfIListOfWTagInfo newTagInfoList = newFuture.join();
 
         assertNotNull(newTagInfoList);

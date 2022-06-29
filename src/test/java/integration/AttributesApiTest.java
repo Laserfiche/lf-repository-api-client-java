@@ -1,6 +1,6 @@
 package integration;
 
-import com.laserfiche.repository.api.client.AttributesApi;
+import com.laserfiche.repository.api.AttributesClient;
 import com.laserfiche.repository.api.client.model.ODataValueContextOfListOfAttribute;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,9 +10,10 @@ import java.util.concurrent.CompletableFuture;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class AttributesApiTest extends BaseTest {
-    AttributesApi client;
+    AttributesClient client;
 
     private final String preferMaxPageSize1 = "maxpagesize=1";
+    private final int maxPageSize = 1;
 
     @BeforeEach
     public void PerTestSetup() {
@@ -37,7 +38,7 @@ public class AttributesApiTest extends BaseTest {
 
         String nextLink = attributeList.getAtOdataNextLink();
 
-        CompletableFuture<ODataValueContextOfListOfAttribute> newFuture = client.getTrusteeAttributeKeyValuePairsPaginate(nextLink, preferMaxPageSize1);
+        CompletableFuture<ODataValueContextOfListOfAttribute> newFuture = client.getTrusteeAttributeKeyValuePairsNextLink(nextLink, maxPageSize);
         ODataValueContextOfListOfAttribute newAttributeList = newFuture.join();
 
         assertNotNull(newAttributeList);
