@@ -33,7 +33,7 @@ public interface AttributesApi {
    * @return CompletableFuture&lt;ODataValueContextOfListOfAttribute&gt;
    */
   @GET
-  CompletableFuture<ODataValueContextOfIListOfEntry> getTrusteeAttributeKeyValuePairsPaginate(@Url String url, @retrofit2.http.Header("Prefer") String prefer);
+  CompletableFuture<ODataValueContextOfListOfAttribute> getTrusteeAttributeKeyValuePairsPaginate(@Url String url, @retrofit2.http.Header("Prefer") String prefer);
 
   /**
    * Get an attribute object by key associated with the authenticated user.
