@@ -11,15 +11,25 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
     private final OkHttpClient.Builder okBuilder;
 
     private AttributesApi attributesApi;
+    private AttributesClient attributesClient;
     private AuditReasonsApi auditReasonsApi;
+    private AuditReasonsClient auditReasonsClient;
     private EntriesApi entriesApi;
+    private EntriesClient entriesClient;
     private FieldDefinitionsApi fieldDefinitionsApi;
+    private FieldDefinitionsClient fieldDefinitionsClient;
     private RepositoriesApi repositoriesApi;
+    private RepositoriesClient repositoriesClient;
     private SearchesApi searchesApi;
+    private SearchesClient searchesClient;
     private SimpleSearchesApi simpleSearchesApi;
+    private SimpleSearchesClient simpleSearchesClient;
     private TagDefinitionsApi tagDefinitionsApi;
+    private TagDefinitionsClient tagDefinitionsClient;
     private TasksApi tasksApi;
+    private TasksClient tasksClient;
     private TemplateDefinitionsApi templateDefinitionsApi;
+    private TemplateDefinitionsClient templateDefinitionsClient;
 
     protected RepositoryApiClientImpl(String servicePrincipalKey, AccessKey accessKey, String baseUrlDebug) {
         String baseUrl = baseUrlDebug != null ? baseUrlDebug : "https://api." + accessKey.getDomain() + "/repository/";
@@ -50,6 +60,9 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
 
     @Override
     public AttributesApi getAttributesClient() {
+        if (attributesClient == null) {
+            attributesClient = new AttributesClient();
+        }
         if (attributesApi == null) {
             attributesApi = createClient(AttributesApi.class);
         }
