@@ -2,7 +2,6 @@ package com.laserfiche.repository.api.client;
 
 import com.laserfiche.repository.api.client.model.ODataValueContextOfIListOfWTagInfo;
 import com.laserfiche.repository.api.client.model.WTagInfo;
-import retrofit2.http.GET;
 
 import java.util.concurrent.CompletableFuture;
 

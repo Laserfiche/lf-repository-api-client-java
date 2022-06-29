@@ -3,9 +3,6 @@ package com.laserfiche.repository.api.client;
 import com.laserfiche.repository.api.client.model.ODataValueContextOfIListOfTemplateFieldInfo;
 import com.laserfiche.repository.api.client.model.ODataValueContextOfIListOfWTemplateInfo;
 import com.laserfiche.repository.api.client.model.WTemplateInfo;
-import org.mockito.internal.stubbing.answers.Returns;
-import retrofit2.http.GET;
-import retrofit2.http.Url;
 
 import java.util.concurrent.CompletableFuture;
 
