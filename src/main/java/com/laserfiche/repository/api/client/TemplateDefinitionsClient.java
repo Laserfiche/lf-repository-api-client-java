@@ -3,6 +3,7 @@ package com.laserfiche.repository.api.client;
 import com.laserfiche.repository.api.client.model.ODataValueContextOfIListOfTemplateFieldInfo;
 import com.laserfiche.repository.api.client.model.ODataValueContextOfIListOfWTemplateInfo;
 import com.laserfiche.repository.api.client.model.WTemplateInfo;
+import retrofit2.http.Url;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -45,6 +46,16 @@ public class TemplateDefinitionsClient {
     }
 
     /**
+     * - Returns all template definitions (including field definitions) in the repository.
+     * @param nextLink Full next link URL returned by the backend.
+     * @param maxPageSize Maximum number of items returned by the backend.
+     * @return CompletableFuture&lt;ODataValueContextOfIListOfWTemplateInfo&gt;
+     */
+    CompletableFuture<ODataValueContextOfIListOfWTemplateInfo> getTemplateDefinitionsPaginate(String nextLink, int maxPageSize) {
+        return client.getTemplateDefinitionsPaginate(nextLink, String.format("maxpagesize=%d", maxPageSize));
+    }
+
+    /**
      *
      * - Returns the field definitions assigned to a template definition. - Provide a template definition ID, and get a paged listing of the field definitions assigned to that template.  - Default page size: 100. Allowed OData query options: Select | Count | OrderBy | Skip | Top | SkipToken | Prefer.
      * @param repoId The requested repository ID. (required)
@@ -64,6 +75,17 @@ public class TemplateDefinitionsClient {
 
     /**
      *
+     * - Returns the field definitions assigned to a template definition.
+     * @param nextLink Full next link URL returned by the backend.
+     * @param maxPageSize Maximum number of items returned by the backend.
+     * @return CompletableFuture&lt;ODataValueContextOfIListOfTemplateFieldInfo&gt;
+     */
+    CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo> getTemplateFieldDefinitionsPaginate(String nextLink, int maxPageSize) {
+        return client.getTemplateFieldDefinitionsPaginate(nextLink, String.format("maxpagesize=%d", maxPageSize));
+    }
+
+    /**
+     *
      * - Returns the field definitions assigned to a template definition. - Provide a template definition name, and get a paged listing of the field definitions assigned to that template.  - Default page size: 100. Allowed OData query options: Select | Count | OrderBy | Skip | Top | SkipToken | Prefer.
      * @param repoId The requested repository ID. (required)
      * @param templateName A required query parameter for the requested template name. (required)
@@ -78,5 +100,15 @@ public class TemplateDefinitionsClient {
      */
     public CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo> getTemplateFieldDefinitionsByTemplateName(String repoId, String templateName, String prefer, String culture, String $select, String $orderby, Integer $top, Integer $skip, Boolean $count) {
         return client.getTemplateFieldDefinitionsByTemplateName(repoId, templateName, prefer, culture, $select, $orderby, $top, $skip, $count);
+    }
+
+    /**
+     * - Returns the field definitions assigned to a template definition.
+     * @param nextLink Full next link URL returned by the backend.
+     * @param maxPageSize Maximum number of items returned by the backend.
+     * @return CompletableFuture&lt;ODataValueContextOfIListOfTemplateFieldInfo&gt;
+     */
+    CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo> getTemplateFieldDefinitionsByTemplateNamePaginate(String nextLink, int maxPageSize) {
+        return client.getTemplateFieldDefinitionsByTemplateNamePaginate(nextLink, String.format("maxpagesize=%d", maxPageSize));
     }
 }
