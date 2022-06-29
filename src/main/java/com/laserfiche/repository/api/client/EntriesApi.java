@@ -360,7 +360,7 @@ public interface EntriesApi {
    * @return CompletableFuture&lt;ODataValueContextOfIListOfWTagInfo&gt;
    */
   @GET
-  CompletableFuture<ODataValueContextOfIListOfEntry> getTagsAssignedToEntryPaginate(@Url String url, @retrofit2.http.Header("Prefer") String prefer);
+  CompletableFuture<ODataValueContextOfIListOfWTagInfo> getTagsAssignedToEntryPaginate(@Url String url, @retrofit2.http.Header("Prefer") String prefer);
 
   /**
    * 
