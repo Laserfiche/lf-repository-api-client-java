@@ -27,4 +27,18 @@ public class AttributesClient {
     public CompletableFuture<ODataValueContextOfListOfAttribute> getTrusteeAttributeKeyValuePairs(String repoId, Boolean everyone, String prefer, String $select, String $orderby, Integer $top, Integer $skip, Boolean $count) {
         return client.getTrusteeAttributeKeyValuePairs(repoId, everyone, prefer, $select, $orderby, $top, $skip, $count);
     }
+
+    /**
+     * Get an attribute object by key associated with the authenticated user.
+     * - Returns the attribute associated with the key. Alternatively, return the attribute associated with the key within
+     *  \&quot;Everyone\&quot; group. - Optional query parameters: everyone (bool, default false). When true, the server
+     * only searches for the attribute value with the given key upon the authenticated users attributes. If false, only
+     * the authenticated users attributes will be queried.
+     * @param nextLink Full URL to get the rest of the collection of data.
+     * @param maxPageSize The maximum number of items to retrieve.
+     * @return CompletableFuture&lt;Attribute&gt;
+     */
+    CompletableFuture<ODataValueContextOfListOfAttribute> getTrusteeAttributeKeyValuePairsNextLink(String nextLink, int maxPageSize) {
+        return client.getTrusteeAttributeKeyValuePairsPaginate(nextLink, String.format("maxpagesize={%d}", maxPageSize));
+    }
 }
