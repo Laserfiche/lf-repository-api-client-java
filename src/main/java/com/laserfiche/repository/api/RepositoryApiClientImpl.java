@@ -16,7 +16,6 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
     private FieldDefinitionsApi fieldDefinitionsApi;
     private RepositoriesApi repositoriesApi;
     private SearchesApi searchesApi;
-    private ServerSessionApi serverSessionApi;
     private SimpleSearchesApi simpleSearchesApi;
     private TagDefinitionsApi tagDefinitionsApi;
     private TasksApi tasksApi;
@@ -95,14 +94,6 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
             searchesApi = createClient(SearchesApi.class);
         }
         return searchesApi;
-    }
-
-    @Override
-    public ServerSessionApi getServerSessionClient() {
-        if (serverSessionApi == null) {
-            serverSessionApi = createClient(ServerSessionApi.class);
-        }
-        return serverSessionApi;
     }
 
     @Override
