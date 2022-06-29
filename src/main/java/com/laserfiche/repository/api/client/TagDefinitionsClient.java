@@ -2,6 +2,7 @@ package com.laserfiche.repository.api.client;
 
 import com.laserfiche.repository.api.client.model.ODataValueContextOfIListOfWTagInfo;
 import com.laserfiche.repository.api.client.model.WTagInfo;
+import retrofit2.http.Url;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -40,5 +41,15 @@ public class TagDefinitionsClient {
      */
     public CompletableFuture<ODataValueContextOfIListOfWTagInfo> getTagDefinitions(String repoId, String prefer, String culture, String $select, String $orderby, Integer $top, Integer $skip, Boolean $count) {
         return client.getTagDefinitions(repoId, prefer, culture, $select, $orderby, $top, $skip, $count);
+    }
+
+    /**
+     * - Returns all tag definitions in the repository.
+     * @param nextLink Full next link URL returned by the backend.
+     * @param maxPageSize Maximum number of items returned by the backend.
+     * @return CompletableFuture&lt;ODataValueContextOfIListOfWTagInfo&gt;
+     */
+    public CompletableFuture<ODataValueContextOfIListOfWTagInfo> getTagDefinitionsPaginate(String nextLink, int maxPageSize) {
+        return client.getTagDefinitionsPaginate(nextLink, String.format("maxpagesize=%d", maxPageSize));
     }
 }
