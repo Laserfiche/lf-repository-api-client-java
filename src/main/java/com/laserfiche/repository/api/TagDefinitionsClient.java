@@ -1,5 +1,6 @@
-package com.laserfiche.repository.api.client;
+package com.laserfiche.repository.api;
 
+import com.laserfiche.repository.api.client.TagDefinitionsApi;
 import com.laserfiche.repository.api.client.model.ODataValueContextOfIListOfWTagInfo;
 import com.laserfiche.repository.api.client.model.WTagInfo;
 import retrofit2.http.Url;

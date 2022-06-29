@@ -1,5 +1,6 @@
-package com.laserfiche.repository.api.client;
+package com.laserfiche.repository.api;
 
+import com.laserfiche.repository.api.client.EntriesApi;
 import com.laserfiche.repository.api.client.model.*;
 import com.laserfiche.repository.api.client.model.Part;
 import okhttp3.RequestBody;

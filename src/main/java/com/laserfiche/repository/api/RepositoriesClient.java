@@ -1,5 +1,6 @@
-package com.laserfiche.repository.api.client;
+package com.laserfiche.repository.api;
 
+import com.laserfiche.repository.api.client.RepositoriesApi;
 import com.laserfiche.repository.api.client.model.RepositoryInfo;
 import retrofit2.http.GET;
 

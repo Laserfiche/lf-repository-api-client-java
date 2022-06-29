@@ -1,5 +1,6 @@
-package com.laserfiche.repository.api.client;
+package com.laserfiche.repository.api;
 
+import com.laserfiche.repository.api.client.TasksApi;
 import com.laserfiche.repository.api.client.model.OperationProgress;
 
 import java.util.concurrent.CompletableFuture;

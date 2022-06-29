@@ -1,5 +1,6 @@
-package com.laserfiche.repository.api.client;
+package com.laserfiche.repository.api;
 
+import com.laserfiche.repository.api.client.AttributesApi;
 import com.laserfiche.repository.api.client.model.ODataValueContextOfListOfAttribute;
 
 import java.util.concurrent.CompletableFuture;

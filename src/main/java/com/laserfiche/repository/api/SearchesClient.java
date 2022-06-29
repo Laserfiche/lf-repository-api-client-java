@@ -1,5 +1,6 @@
-package com.laserfiche.repository.api.client;
+package com.laserfiche.repository.api;
 
+import com.laserfiche.repository.api.client.SearchesApi;
 import com.laserfiche.repository.api.client.model.*;
 
 import java.util.List;

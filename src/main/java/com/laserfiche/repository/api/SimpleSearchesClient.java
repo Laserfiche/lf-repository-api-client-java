@@ -1,5 +1,6 @@
-package com.laserfiche.repository.api.client;
+package com.laserfiche.repository.api;
 
+import com.laserfiche.repository.api.client.SimpleSearchesApi;
 import com.laserfiche.repository.api.client.model.ODataValueOfIListOfEntry;
 import com.laserfiche.repository.api.client.model.SimpleSearchRequest;
 

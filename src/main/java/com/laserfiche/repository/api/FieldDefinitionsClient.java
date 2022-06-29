@@ -1,5 +1,6 @@
-package com.laserfiche.repository.api.client;
+package com.laserfiche.repository.api;
 
+import com.laserfiche.repository.api.client.FieldDefinitionsApi;
 import com.laserfiche.repository.api.client.model.ODataValueContextOfIListOfWFieldInfo;
 import com.laserfiche.repository.api.client.model.ODataValueContextOfListOfAttribute;
 import com.laserfiche.repository.api.client.model.WFieldInfo;
@@ -8,7 +9,7 @@ import retrofit2.http.GET;
 import java.util.concurrent.CompletableFuture;
 
 public class FieldDefinitionsClient {
-    private  FieldDefinitionsApi client;
+    private FieldDefinitionsApi client;
 
     protected void setClient(FieldDefinitionsApi client) {
         this.client = client;
