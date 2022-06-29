@@ -24,7 +24,6 @@ import com.laserfiche.repository.api.client.model.ODataValueOfString;
 import com.laserfiche.repository.api.client.model.Part;
 import com.laserfiche.repository.api.client.model.PatchEntryRequest;
 import com.laserfiche.repository.api.client.model.PostEntryChildrenRequest;
-import com.laserfiche.repository.api.client.model.ProblemDetails;
 import com.laserfiche.repository.api.client.model.PutLinksRequest;
 import com.laserfiche.repository.api.client.model.PutTagRequest;
 import com.laserfiche.repository.api.client.model.PutTemplateRequest;

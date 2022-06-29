@@ -1,6 +1,5 @@
 package com.laserfiche.repository.api.client;
 
-import com.laserfiche.repository.api.client.model.ODataValueContextOfIListOfEntry;
 import retrofit2.http.*;
 import com.laserfiche.repository.api.client.model.Attribute;
 import com.laserfiche.repository.api.client.model.ODataValueContextOfListOfAttribute;
