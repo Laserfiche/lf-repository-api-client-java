@@ -38,7 +38,7 @@ public class FieldDefinitionsApiTest extends BaseTest {
     }
 
     @Test
-    public void getFieldDefinitionsPaginate_Success() {
+    public void getFieldDefinitionsNextLink_Success() {
         CompletableFuture<ODataValueContextOfIListOfWFieldInfo> future = client.getFieldDefinitions(repoId, preferMaxPageSize1, null, null, null, null, null, false);
         ODataValueContextOfIListOfWFieldInfo fieldInfoList = future.join();
 

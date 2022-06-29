@@ -29,7 +29,7 @@ public class AttributesApiTest extends BaseTest {
     }
 
     @Test
-    public void getTrusteeAttributeKeyValuePairsPaginate_Success() {
+    public void getTrusteeAttributeKeyValuePairsNextLink_Success() {
         CompletableFuture<ODataValueContextOfListOfAttribute> future = client.getTrusteeAttributeKeyValuePairs(repoId, true, preferMaxPageSize1, null, null, null, null, false);
         ODataValueContextOfListOfAttribute attributeList = future.join();
 

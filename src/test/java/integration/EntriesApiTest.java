@@ -37,7 +37,7 @@ public class EntriesApiTest extends BaseTest {
     }
 
     @Test
-    public void getEntryListingPaginate_Success() {
+    public void getEntryListingNextLink_Success() {
         CompletableFuture<ODataValueContextOfIListOfEntry> future = client.getEntryListing(repoId, 1, false, null, false, preferMaxPageSize1, null, null, null, null, null, false);
         ODataValueContextOfIListOfEntry entryList = future.join();
 
@@ -61,7 +61,7 @@ public class EntriesApiTest extends BaseTest {
     }
 
     @Test
-    public void getFieldValuesPaginate_Success() {
+    public void getFieldValuesNextLink_Success() {
         CompletableFuture<ODataValueContextOfIListOfFieldValue> future = client.getFieldValues(repoId, 1, preferMaxPageSize1, null, null, null, null, null, null, false);
         ODataValueContextOfIListOfFieldValue fieldValueList = future.join();
 
@@ -85,7 +85,7 @@ public class EntriesApiTest extends BaseTest {
     }
 
     @Test
-    public void getLinkValuesFromEntryPaginate_Success() {
+    public void getLinkValuesFromEntryNextLink_Success() {
         CompletableFuture<ODataValueContextOfIListOfWEntryLinkInfo> future = client.getLinkValuesFromEntry(repoId, 28370, preferMaxPageSize1, null, null, null, null, false);
         ODataValueContextOfIListOfWEntryLinkInfo linkInfoList = future.join();
 
@@ -109,7 +109,7 @@ public class EntriesApiTest extends BaseTest {
     }
 
     @Test
-    public void getTagsAssignedToEntryPaginate_Success() {
+    public void getTagsAssignedToEntryNextLink_Success() {
         CompletableFuture<ODataValueContextOfIListOfWTagInfo> future = client.getTagsAssignedToEntry(repoId, 28370, preferMaxPageSize1, null,null, null, null, false);
         ODataValueContextOfIListOfWTagInfo tagInfoList = future.join();
 

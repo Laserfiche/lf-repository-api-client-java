@@ -29,7 +29,7 @@ public class TagDefinitionsApiTest extends BaseTest {
     }
 
     @Test
-    public void getTagDefinitionsPaginate_Success() {
+    public void getTagDefinitionsNextLink_Success() {
         CompletableFuture<ODataValueContextOfIListOfWTagInfo> future = client.getTagDefinitions(repoId, preferMaxPageSize1, null, null, null, null, null, false);
         ODataValueContextOfIListOfWTagInfo tagInfoList = future.join();
 
