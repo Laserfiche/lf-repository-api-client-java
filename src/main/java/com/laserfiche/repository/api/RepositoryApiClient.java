@@ -1,7 +1,5 @@
 package com.laserfiche.repository.api;
 
-import com.laserfiche.repository.api.client.*;
-
 /**
  * The Laserfiche Repository API client.
  */
@@ -9,50 +7,50 @@ public interface RepositoryApiClient {
     /**
      * @return The Laserfiche Repository Attributes API client.
      */
-    AttributesApi getAttributesClient();
+    AttributesClient getAttributesClient();
 
     /**
      * @return The Laserfiche Repository Audit Reasons API client.
      */
-    AuditReasonsApi getAuditReasonsClient();
+    AuditReasonsClient getAuditReasonsClient();
 
     /**
      * @return The Laserfiche Repository Entries API client.
      */
-    EntriesApi getEntriesClient();
+    EntriesClient getEntriesClient();
 
     /**
      * @return The Laserfiche Repository Field Definitions API client.
      */
-    FieldDefinitionsApi getFieldDefinitionsClient();
+    FieldDefinitionsClient getFieldDefinitionsClient();
 
     /**
      * @return The Laserfiche Repository Repositories API client.
      */
-    RepositoriesApi getRepositoryClient();
+    RepositoriesClient getRepositoryClient();
 
     /**
      * @return The Laserfiche Repository Searches API client.
      */
-    SearchesApi getSearchesClient();
+    SearchesClient getSearchesClient();
 
     /**
      * @return The Laserfiche Repository Simple Searches API client.
      */
-    SimpleSearchesApi getSimpleSearchesClient();
+    SimpleSearchesClient getSimpleSearchesClient();
 
     /**
      * @return The Laserfiche Repository Tag Definitions API client.
      */
-    TagDefinitionsApi getTagDefinitionsClient();
+    TagDefinitionsClient getTagDefinitionsClient();
 
     /**
      * @return The Laserfiche Repository Tasks API client.
      */
-    TasksApi getTasksClient();
+    TasksClient getTasksClient();
 
     /**
      * @return The Laserfiche Repository Template Definitions API client.
      */
-    TemplateDefinitionsApi getTemplateDefinitionClient();
+    TemplateDefinitionsClient getTemplateDefinitionClient();
 }

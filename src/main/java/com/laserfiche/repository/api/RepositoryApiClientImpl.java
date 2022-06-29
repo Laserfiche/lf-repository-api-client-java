@@ -6,29 +6,21 @@ import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
+import java.lang.reflect.InvocationTargetException;
+
 public class RepositoryApiClientImpl implements RepositoryApiClient {
     private final Retrofit.Builder clientBuilder;
     private final OkHttpClient.Builder okBuilder;
 
-    private AttributesApi attributesApi;
     private AttributesClient attributesClient;
-    private AuditReasonsApi auditReasonsApi;
     private AuditReasonsClient auditReasonsClient;
-    private EntriesApi entriesApi;
     private EntriesClient entriesClient;
-    private FieldDefinitionsApi fieldDefinitionsApi;
     private FieldDefinitionsClient fieldDefinitionsClient;
-    private RepositoriesApi repositoriesApi;
     private RepositoriesClient repositoriesClient;
-    private SearchesApi searchesApi;
     private SearchesClient searchesClient;
-    private SimpleSearchesApi simpleSearchesApi;
     private SimpleSearchesClient simpleSearchesClient;
-    private TagDefinitionsApi tagDefinitionsApi;
     private TagDefinitionsClient tagDefinitionsClient;
-    private TasksApi tasksApi;
     private TasksClient tasksClient;
-    private TemplateDefinitionsApi templateDefinitionsApi;
     private TemplateDefinitionsClient templateDefinitionsClient;
 
     protected RepositoryApiClientImpl(String servicePrincipalKey, AccessKey accessKey, String baseUrlDebug) {
@@ -59,85 +51,92 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
     }
 
     @Override
-    public AttributesApi getAttributesClient() {
+    public AttributesClient getAttributesClient() {
         if (attributesClient == null) {
             attributesClient = new AttributesClient();
+            attributesClient.setClient(createClient(AttributesApi.class));
         }
-        if (attributesApi == null) {
-            attributesApi = createClient(AttributesApi.class);
-        }
-        return attributesApi;
+        return attributesClient;
     }
 
     @Override
-    public AuditReasonsApi getAuditReasonsClient() {
-        if (auditReasonsApi == null) {
-            auditReasonsApi = createClient(AuditReasonsApi.class);
+    public AuditReasonsClient getAuditReasonsClient() {
+        if (auditReasonsClient == null) {
+            auditReasonsClient = new AuditReasonsClient();
+            auditReasonsClient.setClient(createClient(AuditReasonsApi.class));
         }
-        return auditReasonsApi;
+        return auditReasonsClient;
     }
 
     @Override
-    public EntriesApi getEntriesClient() {
-        if (entriesApi == null) {
-            entriesApi = createClient(EntriesApi.class);
+    public EntriesClient getEntriesClient() {
+        if (entriesClient == null) {
+            entriesClient = new EntriesClient();
+            entriesClient.setClient(createClient(EntriesApi.class));
         }
-        return entriesApi;
+        return entriesClient;
     }
 
     @Override
-    public FieldDefinitionsApi getFieldDefinitionsClient() {
-        if (fieldDefinitionsApi == null) {
-            fieldDefinitionsApi = createClient(FieldDefinitionsApi.class);
+    public FieldDefinitionsClient getFieldDefinitionsClient() {
+        if (fieldDefinitionsClient == null) {
+            fieldDefinitionsClient = new FieldDefinitionsClient();
+            fieldDefinitionsClient.setClient(createClient(FieldDefinitionsApi.class));
         }
-        return fieldDefinitionsApi;
+        return fieldDefinitionsClient;
     }
 
     @Override
-    public RepositoriesApi getRepositoryClient() {
-        if (repositoriesApi == null) {
-            repositoriesApi = createClient(RepositoriesApi.class);
+    public RepositoriesClient getRepositoryClient() {
+        if (repositoriesClient == null) {
+            repositoriesClient = new RepositoriesClient();
+            repositoriesClient.setClient(createClient(RepositoriesApi.class));
         }
-        return repositoriesApi;
+        return repositoriesClient;
     }
 
     @Override
-    public SearchesApi getSearchesClient() {
-        if (searchesApi == null) {
-            searchesApi = createClient(SearchesApi.class);
+    public SearchesClient getSearchesClient() {
+        if (searchesClient == null) {
+            searchesClient = new SearchesClient();
+            searchesClient.setClient(createClient(SearchesApi.class));
         }
-        return searchesApi;
+        return searchesClient;
     }
 
     @Override
-    public SimpleSearchesApi getSimpleSearchesClient() {
-        if (simpleSearchesApi == null) {
-            simpleSearchesApi = createClient(SimpleSearchesApi.class);
+    public SimpleSearchesClient getSimpleSearchesClient() {
+        if (simpleSearchesClient == null) {
+            simpleSearchesClient = new SimpleSearchesClient();
+            simpleSearchesClient.setClient(createClient(SimpleSearchesApi.class));
         }
-        return simpleSearchesApi;
+        return simpleSearchesClient;
     }
 
     @Override
-    public TagDefinitionsApi getTagDefinitionsClient() {
-        if (tagDefinitionsApi == null) {
-            tagDefinitionsApi = createClient(TagDefinitionsApi.class);
+    public TagDefinitionsClient getTagDefinitionsClient() {
+        if (tagDefinitionsClient == null) {
+            tagDefinitionsClient = new TagDefinitionsClient();
+            tagDefinitionsClient.setClient(createClient(TagDefinitionsApi.class));
         }
-        return tagDefinitionsApi;
+        return tagDefinitionsClient;
     }
 
     @Override
-    public TasksApi getTasksClient() {
-        if (tasksApi == null) {
-            tasksApi = createClient(TasksApi.class);
+    public TasksClient getTasksClient() {
+        if (tasksClient == null) {
+            tasksClient = new TasksClient();
+            tasksClient.setClient(createClient(TasksApi.class));
         }
-        return tasksApi;
+        return tasksClient;
     }
 
     @Override
-    public TemplateDefinitionsApi getTemplateDefinitionClient() {
-        if (templateDefinitionsApi == null) {
-            templateDefinitionsApi = createClient(TemplateDefinitionsApi.class);
+    public TemplateDefinitionsClient getTemplateDefinitionClient() {
+        if (templateDefinitionsClient == null) {
+            templateDefinitionsClient = new TemplateDefinitionsClient();
+            templateDefinitionsClient.setClient(createClient(TemplateDefinitionsApi.class));
         }
-        return templateDefinitionsApi;
+        return templateDefinitionsClient;
     }
 }
