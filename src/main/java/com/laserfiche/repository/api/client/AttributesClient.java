@@ -38,7 +38,7 @@ public class AttributesClient {
      * @param maxPageSize The maximum number of items to retrieve.
      * @return CompletableFuture&lt;Attribute&gt;
      */
-    CompletableFuture<ODataValueContextOfListOfAttribute> getTrusteeAttributeKeyValuePairsNextLink(String nextLink, int maxPageSize) {
+    public CompletableFuture<ODataValueContextOfListOfAttribute> getTrusteeAttributeKeyValuePairsNextLink(String nextLink, int maxPageSize) {
         return client.getTrusteeAttributeKeyValuePairsPaginate(nextLink, String.format("maxpagesize={%d}", maxPageSize));
     }
 }

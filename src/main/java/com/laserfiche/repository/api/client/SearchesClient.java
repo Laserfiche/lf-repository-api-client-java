@@ -19,7 +19,7 @@ public class SearchesClient {
      * @param searchToken The requested searchToken. (required)
      * @return CompletableFuture&lt;ODataValueOfBoolean&gt;
      */
-    CompletableFuture<ODataValueOfBoolean> cancelOrCloseSearch(String repoId, String searchToken) {
+    public CompletableFuture<ODataValueOfBoolean> cancelOrCloseSearch(String repoId, String searchToken) {
         return client.cancelOrCloseSearch(repoId, searchToken);
     }
 
@@ -30,7 +30,7 @@ public class SearchesClient {
      * @param body The Laserfiche search command to run, optionally include fuzzy search settings. (optional)
      * @return CompletableFuture&lt;AcceptedOperation&gt;
      */
-    CompletableFuture<AcceptedOperation> createSearchOperation(String repoId, AdvancedSearchRequest body) {
+    public CompletableFuture<AcceptedOperation> createSearchOperation(String repoId, AdvancedSearchRequest body) {
         return client.createSearchOperation(repoId, body);
     }
 
@@ -48,8 +48,18 @@ public class SearchesClient {
      * @param $count Indicates whether the total count of items within a collection are returned in the result. (optional)
      * @return CompletableFuture&lt;ODataValueContextOfIListOfContextHit&gt;
      */
-    CompletableFuture<ODataValueContextOfIListOfContextHit> getSearchContextHits(String repoId, String searchToken, Integer rowNumber, String prefer, String $select, String $orderby, Integer $top, Integer $skip, Boolean $count) {
+    public CompletableFuture<ODataValueContextOfIListOfContextHit> getSearchContextHits(String repoId, String searchToken, Integer rowNumber, String prefer, String $select, String $orderby, Integer $top, Integer $skip, Boolean $count) {
         return client.getSearchContextHits(repoId, searchToken, rowNumber, prefer, $select, $orderby, $top, $skip, $count);
+    }
+
+    /**
+     * - Returns the context hits associated with a search result entry.
+     * @param nextLink Full next link URL returned by the backend.
+     * @param maxPageSize Maximum number of items returned by the backend.
+     * @return CompletableFuture&lt;ODataValueContextOfIListOfContextHit&gt;
+     */
+    public CompletableFuture<ODataValueContextOfIListOfContextHit> getSearchContextHitsNextLink(String nextLink, int maxPageSize) {
+        return client.getSearchContextHitsPaginate(nextLink, String.format("maxpagesize=%d", maxPageSize));
     }
 
     /**
@@ -70,8 +80,19 @@ public class SearchesClient {
      * @param $count Indicates whether the total count of items within a collection are returned in the result. (optional)
      * @return CompletableFuture&lt;ODataValueContextOfIListOfEntry&gt;
      */
-    CompletableFuture<ODataValueContextOfIListOfEntry> getSearchResults(String repoId, String searchToken, Boolean groupByEntryType, Boolean refresh, List<String> fields, Boolean formatFields, String prefer, String culture, String $select, String $orderby, Integer $top, Integer $skip, Boolean $count) {
+    public CompletableFuture<ODataValueContextOfIListOfEntry> getSearchResults(String repoId, String searchToken, Boolean groupByEntryType, Boolean refresh, List<String> fields, Boolean formatFields, String prefer, String culture, String $select, String $orderby, Integer $top, Integer $skip, Boolean $count) {
         return client.getSearchResults(repoId, searchToken, groupByEntryType, refresh, fields, formatFields, prefer, culture, $select, $orderby, $top, $skip, $count);
+    }
+
+    /**
+     * Get the search results listing of a search.
+     * - Returns a search result listing if the search is completed.
+     * @param nextLink Full next link URL returned by the backend.
+     * @param maxPageSize Maximum number of items returned by the backend.
+     * @return CompletableFuture&lt;ODataValueContextOfIListOfEntry&gt;
+     */
+    public CompletableFuture<ODataValueContextOfIListOfEntry> getSearchResultsNextLink(String nextLink, int maxPageSize) {
+        return client.getSearchResultsPaginate(nextLink, String.format("maxpagesize=%d", maxPageSize));
     }
 
     /**
@@ -81,7 +102,7 @@ public class SearchesClient {
      * @param searchToken The requested searchToken. (required)
      * @return CompletableFuture&lt;OperationProgress&gt;
      */
-    CompletableFuture<OperationProgress> getSearchStatus(String repoId, String searchToken) {
+    public CompletableFuture<OperationProgress> getSearchStatus(String repoId, String searchToken) {
         return client.getSearchStatus(repoId, searchToken);
     }
 }

@@ -18,7 +18,7 @@ public class RepositoriesClient {
      * - Get the repository resource list that current user has access to.
      * @return CompletableFuture&lt;List&lt;RepositoryInfo&gt;&gt;
      */
-    CompletableFuture<List<RepositoryInfo>> getRepositoryList() {
+    public CompletableFuture<List<RepositoryInfo>> getRepositoryList() {
         return client.getRepositoryList();
     }
 }

@@ -18,7 +18,7 @@ public class TasksClient {
      * @param operationToken The operation token (required)
      * @return CompletableFuture&lt;Void&gt;
      */
-    CompletableFuture<Void> cancelOperation(String repoId, String operationToken) {
+    public CompletableFuture<Void> cancelOperation(String repoId, String operationToken) {
         return client.cancelOperation(repoId, operationToken);
     }
 
@@ -29,7 +29,7 @@ public class TasksClient {
      * @param operationToken The operation token (required)
      * @return CompletableFuture&lt;OperationProgress&gt;
      */
-    CompletableFuture<OperationProgress> getOperationStatusAndProgress(String repoId, String operationToken) {
+    public CompletableFuture<OperationProgress> getOperationStatusAndProgress(String repoId, String operationToken) {
         return client.getOperationStatusAndProgress(repoId, operationToken);
     }
 }

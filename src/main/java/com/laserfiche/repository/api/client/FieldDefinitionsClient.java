@@ -23,7 +23,7 @@ public class FieldDefinitionsClient {
      * @param $select Limits the properties returned in the result. (optional)
      * @return CompletableFuture&lt;WFieldInfo&gt;
      */
-    CompletableFuture<WFieldInfo> getFieldDefinitionById(String repoId, Integer fieldDefinitionId, String culture, String $select) {
+    public CompletableFuture<WFieldInfo> getFieldDefinitionById(String repoId, Integer fieldDefinitionId, String culture, String $select) {
         return client.getFieldDefinitionById(repoId, fieldDefinitionId, culture, $select);
     }
 
@@ -40,7 +40,7 @@ public class FieldDefinitionsClient {
      * @param $count Indicates whether the total count of items within a collection are returned in the result. (optional)
      * @return CompletableFuture&lt;ODataValueContextOfIListOfWFieldInfo&gt;
      */
-    CompletableFuture<ODataValueContextOfIListOfWFieldInfo> getFieldDefinitions(String repoId, String prefer, String culture, String $select, String $orderby, Integer $top, Integer $skip, Boolean $count) {
+    public CompletableFuture<ODataValueContextOfIListOfWFieldInfo> getFieldDefinitions(String repoId, String prefer, String culture, String $select, String $orderby, Integer $top, Integer $skip, Boolean $count) {
         return client.getFieldDefinitions(repoId, prefer, culture, $select, $orderby, $top, $skip, $count);
     }
 
@@ -50,7 +50,7 @@ public class FieldDefinitionsClient {
      * @param maxPageSize The maximum number of items returned by the backend.
      * @return CompletableFuture&lt;ODataValueContextOfIListOfWFieldInfo&gt;
      */
-    CompletableFuture<ODataValueContextOfIListOfWFieldInfo> getFieldDefinitionsNextLink(String nextLink, int maxPageSize) {
+    public CompletableFuture<ODataValueContextOfIListOfWFieldInfo> getFieldDefinitionsNextLink(String nextLink, int maxPageSize) {
         return client.getFieldDefinitionsPaginate(nextLink, String.format("maxpagesize={%d}", maxPageSize));
     }
 }

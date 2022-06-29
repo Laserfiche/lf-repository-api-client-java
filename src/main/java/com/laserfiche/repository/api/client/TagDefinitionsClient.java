@@ -38,7 +38,7 @@ public class TagDefinitionsClient {
      * @param $count Indicates whether the total count of items within a collection are returned in the result. (optional)
      * @return CompletableFuture&lt;ODataValueContextOfIListOfWTagInfo&gt;
      */
-    CompletableFuture<ODataValueContextOfIListOfWTagInfo> getTagDefinitions(String repoId, String prefer, String culture, String $select, String $orderby, Integer $top, Integer $skip, Boolean $count) {
+    public CompletableFuture<ODataValueContextOfIListOfWTagInfo> getTagDefinitions(String repoId, String prefer, String culture, String $select, String $orderby, Integer $top, Integer $skip, Boolean $count) {
         return client.getTagDefinitions(repoId, prefer, culture, $select, $orderby, $top, $skip, $count);
     }
 }

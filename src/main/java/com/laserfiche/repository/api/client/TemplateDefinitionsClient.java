@@ -22,7 +22,7 @@ public class TemplateDefinitionsClient {
      * @param $select Limits the properties returned in the result. (optional)
      * @return CompletableFuture&lt;WTemplateInfo&gt;
      */
-    CompletableFuture<WTemplateInfo> getTemplateDefinitionById(String repoId, Integer templateId, String culture, String $select) {
+    public CompletableFuture<WTemplateInfo> getTemplateDefinitionById(String repoId, Integer templateId, String culture, String $select) {
         return client.getTemplateDefinitionById(repoId, templateId, culture, $select);
     }
 
@@ -40,7 +40,7 @@ public class TemplateDefinitionsClient {
      * @param $count Indicates whether the total count of items within a collection are returned in the result. (optional)
      * @return CompletableFuture&lt;ODataValueContextOfIListOfWTemplateInfo&gt;
      */
-    CompletableFuture<ODataValueContextOfIListOfWTemplateInfo> getTemplateDefinitions(String repoId, String templateName, String prefer, String culture, String $select, String $orderby, Integer $top, Integer $skip, Boolean $count) {
+    public CompletableFuture<ODataValueContextOfIListOfWTemplateInfo> getTemplateDefinitions(String repoId, String templateName, String prefer, String culture, String $select, String $orderby, Integer $top, Integer $skip, Boolean $count) {
         return client.getTemplateDefinitions(repoId, templateName, prefer, culture, $select, $orderby, $top, $skip, $count);
     }
 
@@ -58,7 +58,7 @@ public class TemplateDefinitionsClient {
      * @param $count Indicates whether the total count of items within a collection are returned in the result. (optional)
      * @return CompletableFuture&lt;ODataValueContextOfIListOfTemplateFieldInfo&gt;
      */
-    CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo> getTemplateFieldDefinitions(String repoId, Integer templateId, String prefer, String culture, String $select, String $orderby, Integer $top, Integer $skip, Boolean $count) {
+    public CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo> getTemplateFieldDefinitions(String repoId, Integer templateId, String prefer, String culture, String $select, String $orderby, Integer $top, Integer $skip, Boolean $count) {
         return client.getTemplateFieldDefinitions(repoId, templateId, prefer, culture, $select, $orderby, $top, $skip, $count);
     }
 
@@ -76,7 +76,7 @@ public class TemplateDefinitionsClient {
      * @param $count Indicates whether the total count of items within a collection are returned in the result. (optional)
      * @return CompletableFuture&lt;ODataValueContextOfIListOfTemplateFieldInfo&gt;
      */
-    CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo> getTemplateFieldDefinitionsByTemplateName(String repoId, String templateName, String prefer, String culture, String $select, String $orderby, Integer $top, Integer $skip, Boolean $count) {
+    public CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo> getTemplateFieldDefinitionsByTemplateName(String repoId, String templateName, String prefer, String culture, String $select, String $orderby, Integer $top, Integer $skip, Boolean $count) {
         return client.getTemplateFieldDefinitionsByTemplateName(repoId, templateName, prefer, culture, $select, $orderby, $top, $skip, $count);
     }
 }

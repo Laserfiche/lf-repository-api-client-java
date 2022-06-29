@@ -26,7 +26,7 @@ public class SimpleSearchesClient {
      * @param $count Indicates whether the total count of items within a collection are returned in the result. (optional)
      * @return CompletableFuture&lt;ODataValueOfIListOfEntry&gt;
      */
-    CompletableFuture<ODataValueOfIListOfEntry> createSimpleSearchOperation(String repoId, SimpleSearchRequest body, List<String> fields, Boolean formatFields, String culture, String $select, String $orderby, Boolean $count) {
+    public CompletableFuture<ODataValueOfIListOfEntry> createSimpleSearchOperation(String repoId, SimpleSearchRequest body, List<String> fields, Boolean formatFields, String culture, String $select, String $orderby, Boolean $count) {
         return client.createSimpleSearchOperation(repoId, body, fields, formatFields, culture, $select, $orderby, $count);
     }
 }
