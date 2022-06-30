@@ -217,6 +217,40 @@ public class EntriesClient extends BaseClient<EntriesApi> {
 
     /**
      *
+     * - Returns the children entries of a folder in the repository. - Provide an entry ID (must be a folder), and get a paged listing of entries in that folder. Used as a way of navigating through the repository. - Default page size: 100. Allowed OData query options: Select | Count | OrderBy | Skip | Top | SkipToken | Prefer. OData $OrderBy syntax should follow: \&quot;PropertyName direction,PropertyName2 direction\&quot;. Sort order can be either value \&quot;asc\&quot; or \&quot;desc\&quot;. Optional query parameters: groupByOrderType (bool). This query parameter decides if results are returned in groups based on their entry type. Entries returned in the listing are not automatically converted to their subtype (Folder, Shortcut, Document), so clients who want model-specific information should request it via the GET entry by ID route. - Optionally returns field values for the entries in the folder. Each field name needs to be specified in the request. Maximum limit of 10 field names. - If field values are requested, only the first value is returned if it is a multi value field. - Null or Empty field values should not be used to determine if a field is assigned to the entry.
+     * @param callback A lambda that will be called each time new data is retrieved. Returns false to stop receiving more data; returns true to be called again if there's more data.
+     * @param repoId The requested repository ID. (required)
+     * @param entryId The folder ID. (required)
+     * @param groupByEntryType An optional query parameter used to indicate if the result should be grouped by entry type or not. (optional)
+     * @param fields Optional array of field names. Field values corresponding to the given field names will be returned for each entry.  (optional)
+     * @param formatFields Boolean for if field values should be formatted. Only applicable if Fields are specified. (optional)
+     * @param prefer An optional OData header. Can be used to set the maximum page size using odata.maxpagesize. (optional)
+     * @param culture An optional query parameter used to indicate the locale that should be used for formatting.             The value should be a standard language tag. The formatFields query parameter must be set to true, otherwise             culture will not be used for formatting. (optional)
+     * @param $select Limits the properties returned in the result. (optional)
+     * @param $orderby Specifies the order in which items are returned. The maximum number of expressions is 5. (optional)
+     * @param $top Limits the number of items returned from a collection. (optional)
+     * @param $skip Excludes the specified number of items of the queried collection from the result. (optional)
+     * @param $count Indicates whether the total count of items within a collection are returned in the result. (optional)
+     * @param maxPageSize Indicates the maximum number of items to return.
+     */
+    public void getEntryListingForEach(ForEachCallBack<CompletableFuture<ODataValueContextOfIListOfEntry>> callback, String repoId, Integer entryId, Boolean groupByEntryType, List<String> fields, Boolean formatFields, String prefer, String culture, String $select, String $orderby, Integer $top, Integer $skip, Boolean $count, Integer maxPageSize) {
+        // Initial request
+        CompletableFuture<ODataValueContextOfIListOfEntry> future = getEntryListing(repoId, entryId, groupByEntryType, fields, formatFields, prefer, culture, $select, $orderby, $top, $skip, $count, maxPageSize);
+        // Subsequent request based on return value of callback
+        while (callback.apply(future)) {
+            future = future.thenCompose(dataFromLastRequest -> {
+                String nextLink = dataFromLastRequest.getAtOdataNextLink();
+                if (nextLink == null) {
+                    // We are at the end of the data stream
+                    return CompletableFuture.completedFuture(null);
+                }
+                return getEntryListingNextLink(nextLink, maxPageSize);
+            });
+        }
+    }
+
+    /**
+     *
      * - Returns the fields assigned to an entry. - Provide an entry ID, and get a paged listing of all fields assigned to that entry. - Default page size: 100. Allowed OData query options: Select | Count | OrderBy | Skip | Top | SkipToken | Prefer.
      * @param repoId The requested repository ID. (required)
      * @param entryId The requested entry ID. (required)
@@ -244,6 +278,38 @@ public class EntriesClient extends BaseClient<EntriesApi> {
      */
     public CompletableFuture<ODataValueContextOfIListOfFieldValue> getFieldValuesNextLink(String nextLink, Integer maxPageSize) {
         return client.getFieldValuesPaginate(nextLink, mergeMaxPageSizeIntoPrefer(maxPageSize, null));
+    }
+
+    /**
+     *
+     * - Returns the fields assigned to an entry. - Provide an entry ID, and get a paged listing of all fields assigned to that entry. - Default page size: 100. Allowed OData query options: Select | Count | OrderBy | Skip | Top | SkipToken | Prefer.
+     * @param callback A lambda that will be called each time new data is retrieved. Returns false to stop receiving more data; returns true to be called again if there's more data.
+     * @param repoId The requested repository ID. (required)
+     * @param entryId The requested entry ID. (required)
+     * @param prefer An optional OData header. Can be used to set the maximum page size using odata.maxpagesize. (optional)
+     * @param formatValue An optional query parameter used to indicate if the field values should be formatted.             The default value is false. (optional, default to false)
+     * @param culture An optional query parameter used to indicate the locale that should be used for formatting.             The value should be a standard language tag. The formatValue query parameter must be set to true, otherwise             culture will not be used for formatting. (optional)
+     * @param $select Limits the properties returned in the result. (optional)
+     * @param $orderby Specifies the order in which items are returned. The maximum number of expressions is 5. (optional)
+     * @param $top Limits the number of items returned from a collection. (optional)
+     * @param $skip Excludes the specified number of items of the queried collection from the result. (optional)
+     * @param $count Indicates whether the total count of items within a collection are returned in the result. (optional)
+     * @param maxPageSize Indicates the maximum number of items to return.
+     */
+    public void getFieldValuesForEach(ForEachCallBack<CompletableFuture<ODataValueContextOfIListOfFieldValue>> callback, String repoId, Integer entryId, String prefer, Boolean formatValue, String culture, String $select, String $orderby, Integer $top, Integer $skip, Boolean $count, Integer maxPageSize) {
+        // Initial request
+        CompletableFuture<ODataValueContextOfIListOfFieldValue> future = getFieldValues(repoId, entryId, prefer, formatValue, culture, $select, $orderby, $top, $skip, $count, maxPageSize);
+        // Subsequent request based on return value of callback
+        while (callback.apply(future)) {
+            future = future.thenCompose(dataFromLastRequest -> {
+                String nextLink = dataFromLastRequest.getAtOdataNextLink();
+                if (nextLink == null) {
+                    // We are at the end of the data stream
+                    return CompletableFuture.completedFuture(null);
+                }
+                return getFieldValuesNextLink(nextLink, maxPageSize);
+            });
+        }
     }
 
     /**
@@ -277,6 +343,36 @@ public class EntriesClient extends BaseClient<EntriesApi> {
 
     /**
      *
+     * - Get the links assigned to an entry. - Provide an entry ID, and get a paged listing of links assigned to that entry. - Default page size: 100. Allowed OData query options: Select | Count | OrderBy | Skip | Top | SkipToken | Prefer.*
+     * @param callback A lambda that will be called each time new data is retrieved. Returns false to stop receiving more data; returns true to be called again if there's more data.
+     * @param repoId The requested repository ID. (required)
+     * @param entryId The requested entry ID. (required)
+     * @param prefer An optional odata header. Can be used to set the maximum page size using odata.maxpagesize. (optional)
+     * @param $select Limits the properties returned in the result. (optional)
+     * @param $orderby Specifies the order in which items are returned. The maximum number of expressions is 5. (optional)
+     * @param $top Limits the number of items returned from a collection. (optional)
+     * @param $skip Excludes the specified number of items of the queried collection from the result. (optional)
+     * @param $count Indicates whether the total count of items within a collection are returned in the result. (optional)
+     * @param maxPageSize Indicates the maximum number of items to return.
+     */
+    public void getLinkValuesFromEntryForEach(ForEachCallBack<CompletableFuture<ODataValueContextOfIListOfWEntryLinkInfo>> callback, String repoId, Integer entryId, String prefer, String $select, String $orderby, Integer $top, Integer $skip, Boolean $count, Integer maxPageSize) {
+        // Initial request
+        CompletableFuture<ODataValueContextOfIListOfWEntryLinkInfo> future = getLinkValuesFromEntry(repoId, entryId, prefer, $select, $orderby, $top, $skip, $count, maxPageSize);
+        // Subsequent request based on return value of callback
+        while (callback.apply(future)) {
+            future = future.thenCompose(dataFromLastRequest -> {
+                String nextLink = dataFromLastRequest.getAtOdataNextLink();
+                if (nextLink == null) {
+                    // We are at the end of the data stream
+                    return CompletableFuture.completedFuture(null);
+                }
+                return getLinkValuesFromEntryNextLink(nextLink, maxPageSize);
+            });
+        }
+    }
+
+    /**
+     *
      * - Get the tags assigned to an entry. - Provide an entry ID, and get a paged listing of tags assigned to that entry. - Default page size: 100. Allowed OData query options: Select | Count | OrderBy | Skip | Top | SkipToken | Prefer.
      * @param repoId The requested repository ID. (required)
      * @param entryId The requested entry ID. (required)
@@ -302,6 +398,36 @@ public class EntriesClient extends BaseClient<EntriesApi> {
      */
     public CompletableFuture<ODataValueContextOfIListOfWTagInfo> getTagsAssignedToEntryNextLink(String nextLink, Integer maxPageSize) {
         return client.getTagsAssignedToEntryPaginate(nextLink, mergeMaxPageSizeIntoPrefer(maxPageSize, null));
+    }
+
+    /**
+     *
+     * - Get the tags assigned to an entry. - Provide an entry ID, and get a paged listing of tags assigned to that entry. - Default page size: 100. Allowed OData query options: Select | Count | OrderBy | Skip | Top | SkipToken | Prefer.
+     * @param callback A lambda that will be called each time new data is retrieved. Returns false to stop receiving more data; returns true to be called again if there's more data.
+     * @param repoId The requested repository ID. (required)
+     * @param entryId The requested entry ID. (required)
+     * @param prefer An optional OData header. Can be used to set the maximum page size using odata.maxpagesize. (optional)
+     * @param $select Limits the properties returned in the result. (optional)
+     * @param $orderby Specifies the order in which items are returned. The maximum number of expressions is 5. (optional)
+     * @param $top Limits the number of items returned from a collection. (optional)
+     * @param $skip Excludes the specified number of items of the queried collection from the result. (optional)
+     * @param $count Indicates whether the total count of items within a collection are returned in the result. (optional)
+     * @param maxPageSize Indicates the maximum number of items to return.
+     */
+    public void getTagsAssignedToEntryForEach(ForEachCallBack<CompletableFuture<ODataValueContextOfIListOfWTagInfo>> callback, String repoId, Integer entryId, String prefer, String $select, String $orderby, Integer $top, Integer $skip, Boolean $count, Integer maxPageSize) {
+        // Initial request
+        CompletableFuture<ODataValueContextOfIListOfWTagInfo> future = getTagsAssignedToEntry(repoId, entryId, prefer, $select, $orderby, $top, $skip, $count, maxPageSize);
+        // Subsequent request based on return value of callback
+        while (callback.apply(future)) {
+            future = future.thenCompose(dataFromLastRequest -> {
+                String nextLink = dataFromLastRequest.getAtOdataNextLink();
+                if (nextLink == null) {
+                    // We are at the end of the data stream
+                    return CompletableFuture.completedFuture(null);
+                }
+                return getTagsAssignedToEntryNextLink(nextLink, maxPageSize);
+            });
+        }
     }
 
     /**
