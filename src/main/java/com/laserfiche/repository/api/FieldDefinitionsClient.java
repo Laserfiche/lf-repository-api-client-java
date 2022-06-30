@@ -51,7 +51,7 @@ public class FieldDefinitionsClient {
      * @param maxPageSize The maximum number of items returned by the backend.
      * @return CompletableFuture&lt;ODataValueContextOfIListOfWFieldInfo&gt;
      */
-    public CompletableFuture<ODataValueContextOfIListOfWFieldInfo> getFieldDefinitionsNextLink(String nextLink, int maxPageSize) {
+    public CompletableFuture<ODataValueContextOfIListOfWFieldInfo> getFieldDefinitionsNextLink(String nextLink, Integer maxPageSize) {
         return client.getFieldDefinitionsPaginate(nextLink, String.format("maxpagesize=%d", maxPageSize));
     }
 }

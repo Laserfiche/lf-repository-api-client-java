@@ -52,7 +52,7 @@ public class TemplateDefinitionsClient {
      * @param maxPageSize Maximum number of items returned by the backend.
      * @return CompletableFuture&lt;ODataValueContextOfIListOfWTemplateInfo&gt;
      */
-    CompletableFuture<ODataValueContextOfIListOfWTemplateInfo> getTemplateDefinitionsPaginate(String nextLink, int maxPageSize) {
+    CompletableFuture<ODataValueContextOfIListOfWTemplateInfo> getTemplateDefinitionsPaginate(String nextLink, Integer maxPageSize) {
         return client.getTemplateDefinitionsPaginate(nextLink, String.format("maxpagesize=%d", maxPageSize));
     }
 
@@ -81,7 +81,7 @@ public class TemplateDefinitionsClient {
      * @param maxPageSize Maximum number of items returned by the backend.
      * @return CompletableFuture&lt;ODataValueContextOfIListOfTemplateFieldInfo&gt;
      */
-    CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo> getTemplateFieldDefinitionsPaginate(String nextLink, int maxPageSize) {
+    CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo> getTemplateFieldDefinitionsPaginate(String nextLink, Integer maxPageSize) {
         return client.getTemplateFieldDefinitionsPaginate(nextLink, String.format("maxpagesize=%d", maxPageSize));
     }
 
@@ -109,7 +109,7 @@ public class TemplateDefinitionsClient {
      * @param maxPageSize Maximum number of items returned by the backend.
      * @return CompletableFuture&lt;ODataValueContextOfIListOfTemplateFieldInfo&gt;
      */
-    CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo> getTemplateFieldDefinitionsByTemplateNamePaginate(String nextLink, int maxPageSize) {
+    CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo> getTemplateFieldDefinitionsByTemplateNamePaginate(String nextLink, Integer maxPageSize) {
         return client.getTemplateFieldDefinitionsByTemplateNamePaginate(nextLink, String.format("maxpagesize=%d", maxPageSize));
     }
 }

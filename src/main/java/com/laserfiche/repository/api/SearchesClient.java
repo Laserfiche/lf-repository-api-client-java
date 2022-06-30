@@ -59,7 +59,7 @@ public class SearchesClient {
      * @param maxPageSize Maximum number of items returned by the backend.
      * @return CompletableFuture&lt;ODataValueContextOfIListOfContextHit&gt;
      */
-    public CompletableFuture<ODataValueContextOfIListOfContextHit> getSearchContextHitsNextLink(String nextLink, int maxPageSize) {
+    public CompletableFuture<ODataValueContextOfIListOfContextHit> getSearchContextHitsNextLink(String nextLink, Integer maxPageSize) {
         return client.getSearchContextHitsPaginate(nextLink, String.format("maxpagesize=%d", maxPageSize));
     }
 
@@ -92,7 +92,7 @@ public class SearchesClient {
      * @param maxPageSize Maximum number of items returned by the backend.
      * @return CompletableFuture&lt;ODataValueContextOfIListOfEntry&gt;
      */
-    public CompletableFuture<ODataValueContextOfIListOfEntry> getSearchResultsNextLink(String nextLink, int maxPageSize) {
+    public CompletableFuture<ODataValueContextOfIListOfEntry> getSearchResultsNextLink(String nextLink, Integer maxPageSize) {
         return client.getSearchResultsPaginate(nextLink, String.format("maxpagesize=%d", maxPageSize));
     }
 

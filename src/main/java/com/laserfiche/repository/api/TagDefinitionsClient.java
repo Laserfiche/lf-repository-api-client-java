@@ -50,7 +50,7 @@ public class TagDefinitionsClient {
      * @param maxPageSize Maximum number of items returned by the backend.
      * @return CompletableFuture&lt;ODataValueContextOfIListOfWTagInfo&gt;
      */
-    public CompletableFuture<ODataValueContextOfIListOfWTagInfo> getTagDefinitionsNextLink(String nextLink, int maxPageSize) {
+    public CompletableFuture<ODataValueContextOfIListOfWTagInfo> getTagDefinitionsNextLink(String nextLink, Integer maxPageSize) {
         return client.getTagDefinitionsPaginate(nextLink, String.format("maxpagesize=%d", maxPageSize));
     }
 }
