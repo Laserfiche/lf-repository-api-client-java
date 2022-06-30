@@ -2,7 +2,6 @@ package com.laserfiche.repository.api;
 
 import com.laserfiche.repository.api.client.TagDefinitionsApi;
 import com.laserfiche.repository.api.client.model.ODataValueContextOfIListOfWTagInfo;
-import com.laserfiche.repository.api.client.model.ODataValueContextOfListOfAttribute;
 import com.laserfiche.repository.api.client.model.WTagInfo;
 
 import java.util.concurrent.CompletableFuture;
