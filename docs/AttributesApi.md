@@ -22,7 +22,7 @@ Get the attribute key value pairs associated with the authenticated user.
 //import com.laserfiche.repository.api.ApiException;
 //import com.laserfiche.repository.api.Configuration;
 //import com.laserfiche.repository.api.auth.*;
-//import com.laserfiche.repository.api.client.AttributesApi;
+//import com.laserfiche.repository.api.clients.impl.AttributesApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 
@@ -91,7 +91,7 @@ Get an attribute object by key associated with the authenticated user.
 //import com.laserfiche.repository.api.ApiException;
 //import com.laserfiche.repository.api.Configuration;
 //import com.laserfiche.repository.api.auth.*;
-//import com.laserfiche.repository.api.client.AttributesApi;
+//import com.laserfiche.repository.api.clients.impl.AttributesApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 

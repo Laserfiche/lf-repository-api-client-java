@@ -42,7 +42,7 @@ Method | HTTP request | Description
 //import com.laserfiche.repository.api.ApiException;
 //import com.laserfiche.repository.api.Configuration;
 //import com.laserfiche.repository.api.auth.*;
-//import com.laserfiche.repository.api.client.EntriesApi;
+//import com.laserfiche.repository.api.clients.impl.EntriesApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 
@@ -101,7 +101,7 @@ Name | Type | Description  | Notes
 //import com.laserfiche.repository.api.ApiException;
 //import com.laserfiche.repository.api.Configuration;
 //import com.laserfiche.repository.api.auth.*;
-//import com.laserfiche.repository.api.client.EntriesApi;
+//import com.laserfiche.repository.api.clients.impl.EntriesApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 
@@ -162,7 +162,7 @@ Name | Type | Description  | Notes
 //import com.laserfiche.repository.api.ApiException;
 //import com.laserfiche.repository.api.Configuration;
 //import com.laserfiche.repository.api.auth.*;
-//import com.laserfiche.repository.api.client.EntriesApi;
+//import com.laserfiche.repository.api.clients.impl.EntriesApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 
@@ -221,7 +221,7 @@ Name | Type | Description  | Notes
 //import com.laserfiche.repository.api.ApiException;
 //import com.laserfiche.repository.api.Configuration;
 //import com.laserfiche.repository.api.auth.*;
-//import com.laserfiche.repository.api.client.EntriesApi;
+//import com.laserfiche.repository.api.clients.impl.EntriesApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 
@@ -284,7 +284,7 @@ Name | Type | Description  | Notes
 //import com.laserfiche.repository.api.ApiException;
 //import com.laserfiche.repository.api.Configuration;
 //import com.laserfiche.repository.api.auth.*;
-//import com.laserfiche.repository.api.client.EntriesApi;
+//import com.laserfiche.repository.api.clients.impl.EntriesApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 
@@ -347,7 +347,7 @@ Name | Type | Description  | Notes
 //import com.laserfiche.repository.api.ApiException;
 //import com.laserfiche.repository.api.Configuration;
 //import com.laserfiche.repository.api.auth.*;
-//import com.laserfiche.repository.api.client.EntriesApi;
+//import com.laserfiche.repository.api.clients.impl.EntriesApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 
@@ -404,7 +404,7 @@ Name | Type | Description  | Notes
 //import com.laserfiche.repository.api.ApiException;
 //import com.laserfiche.repository.api.Configuration;
 //import com.laserfiche.repository.api.auth.*;
-//import com.laserfiche.repository.api.client.EntriesApi;
+//import com.laserfiche.repository.api.clients.impl.EntriesApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 
@@ -461,7 +461,7 @@ Name | Type | Description  | Notes
 //import com.laserfiche.repository.api.ApiException;
 //import com.laserfiche.repository.api.Configuration;
 //import com.laserfiche.repository.api.auth.*;
-//import com.laserfiche.repository.api.client.EntriesApi;
+//import com.laserfiche.repository.api.clients.impl.EntriesApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 
@@ -520,7 +520,7 @@ Name | Type | Description  | Notes
 //import com.laserfiche.repository.api.ApiException;
 //import com.laserfiche.repository.api.Configuration;
 //import com.laserfiche.repository.api.auth.*;
-//import com.laserfiche.repository.api.client.EntriesApi;
+//import com.laserfiche.repository.api.clients.impl.EntriesApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 
@@ -579,7 +579,7 @@ Name | Type | Description  | Notes
 //import com.laserfiche.repository.api.ApiException;
 //import com.laserfiche.repository.api.Configuration;
 //import com.laserfiche.repository.api.auth.*;
-//import com.laserfiche.repository.api.client.EntriesApi;
+//import com.laserfiche.repository.api.clients.impl.EntriesApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 
@@ -638,7 +638,7 @@ Name | Type | Description  | Notes
 //import com.laserfiche.repository.api.ApiException;
 //import com.laserfiche.repository.api.Configuration;
 //import com.laserfiche.repository.api.auth.*;
-//import com.laserfiche.repository.api.client.EntriesApi;
+//import com.laserfiche.repository.api.clients.impl.EntriesApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 
@@ -699,7 +699,7 @@ Name | Type | Description  | Notes
 //import com.laserfiche.repository.api.ApiException;
 //import com.laserfiche.repository.api.Configuration;
 //import com.laserfiche.repository.api.auth.*;
-//import com.laserfiche.repository.api.client.EntriesApi;
+//import com.laserfiche.repository.api.clients.impl.EntriesApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 
@@ -756,7 +756,7 @@ Name | Type | Description  | Notes
 //import com.laserfiche.repository.api.ApiException;
 //import com.laserfiche.repository.api.Configuration;
 //import com.laserfiche.repository.api.auth.*;
-//import com.laserfiche.repository.api.client.EntriesApi;
+//import com.laserfiche.repository.api.clients.impl.EntriesApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 
@@ -815,7 +815,7 @@ Name | Type | Description  | Notes
 //import com.laserfiche.repository.api.ApiException;
 //import com.laserfiche.repository.api.Configuration;
 //import com.laserfiche.repository.api.auth.*;
-//import com.laserfiche.repository.api.client.EntriesApi;
+//import com.laserfiche.repository.api.clients.impl.EntriesApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 
@@ -874,7 +874,7 @@ Name | Type | Description  | Notes
 //import com.laserfiche.repository.api.ApiException;
 //import com.laserfiche.repository.api.Configuration;
 //import com.laserfiche.repository.api.auth.*;
-//import com.laserfiche.repository.api.client.EntriesApi;
+//import com.laserfiche.repository.api.clients.impl.EntriesApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 
@@ -951,7 +951,7 @@ Name | Type | Description  | Notes
 //import com.laserfiche.repository.api.ApiException;
 //import com.laserfiche.repository.api.Configuration;
 //import com.laserfiche.repository.api.auth.*;
-//import com.laserfiche.repository.api.client.EntriesApi;
+//import com.laserfiche.repository.api.clients.impl.EntriesApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 
@@ -1024,7 +1024,7 @@ Name | Type | Description  | Notes
 //import com.laserfiche.repository.api.ApiException;
 //import com.laserfiche.repository.api.Configuration;
 //import com.laserfiche.repository.api.auth.*;
-//import com.laserfiche.repository.api.client.EntriesApi;
+//import com.laserfiche.repository.api.clients.impl.EntriesApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 
@@ -1093,7 +1093,7 @@ Name | Type | Description  | Notes
 //import com.laserfiche.repository.api.ApiException;
 //import com.laserfiche.repository.api.Configuration;
 //import com.laserfiche.repository.api.auth.*;
-//import com.laserfiche.repository.api.client.EntriesApi;
+//import com.laserfiche.repository.api.clients.impl.EntriesApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 
@@ -1162,7 +1162,7 @@ Name | Type | Description  | Notes
 //import com.laserfiche.repository.api.ApiException;
 //import com.laserfiche.repository.api.Configuration;
 //import com.laserfiche.repository.api.auth.*;
-//import com.laserfiche.repository.api.client.EntriesApi;
+//import com.laserfiche.repository.api.clients.impl.EntriesApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 
@@ -1227,7 +1227,7 @@ Name | Type | Description  | Notes
 //import com.laserfiche.repository.api.ApiException;
 //import com.laserfiche.repository.api.Configuration;
 //import com.laserfiche.repository.api.auth.*;
-//import com.laserfiche.repository.api.client.EntriesApi;
+//import com.laserfiche.repository.api.clients.impl.EntriesApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 
@@ -1292,7 +1292,7 @@ Name | Type | Description  | Notes
 //import com.laserfiche.repository.api.ApiException;
 //import com.laserfiche.repository.api.Configuration;
 //import com.laserfiche.repository.api.auth.*;
-//import com.laserfiche.repository.api.client.EntriesApi;
+//import com.laserfiche.repository.api.clients.impl.EntriesApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 
@@ -1355,7 +1355,7 @@ Name | Type | Description  | Notes
 //import com.laserfiche.repository.api.ApiException;
 //import com.laserfiche.repository.api.Configuration;
 //import com.laserfiche.repository.api.auth.*;
-//import com.laserfiche.repository.api.client.EntriesApi;
+//import com.laserfiche.repository.api.clients.impl.EntriesApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 

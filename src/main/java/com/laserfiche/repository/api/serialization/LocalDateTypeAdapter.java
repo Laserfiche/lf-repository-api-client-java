@@ -11,7 +11,7 @@ import java.io.IOException;
 /**
  * Gson TypeAdapter for JSR310 LocalDate type
  */
-public class LocalDateTypeAdapter extends TypeAdapter<LocalDate> {
+class LocalDateTypeAdapter extends TypeAdapter<LocalDate> {
 
     private DateTimeFormatter formatter;
 

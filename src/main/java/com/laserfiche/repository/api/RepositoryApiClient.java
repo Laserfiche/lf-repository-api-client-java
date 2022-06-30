@@ -1,5 +1,7 @@
 package com.laserfiche.repository.api;
 
+import com.laserfiche.repository.api.clients.*;
+
 /**
  * The Laserfiche Repository API client.
  */

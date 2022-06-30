@@ -1,7 +1,7 @@
 package integration;
 
-import com.laserfiche.repository.api.RepositoriesClient;
-import com.laserfiche.repository.api.client.model.RepositoryInfo;
+import com.laserfiche.repository.api.clients.RepositoriesClient;
+import com.laserfiche.repository.api.clients.impl.model.RepositoryInfo;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

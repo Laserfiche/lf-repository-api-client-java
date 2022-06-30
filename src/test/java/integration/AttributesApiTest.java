@@ -1,12 +1,11 @@
 package integration;
 
-import com.laserfiche.repository.api.AttributesClient;
-import com.laserfiche.repository.api.client.model.ODataValueContextOfListOfAttribute;
+import com.laserfiche.repository.api.clients.AttributesClient;
+import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfListOfAttribute;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 

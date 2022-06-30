@@ -17,7 +17,7 @@ import java.text.ParsePosition;
  * If the dateFormat is null, a simple "yyyy-MM-dd" format will be used
  * (more efficient than SimpleDateFormat).
  */
-public class SqlDateTypeAdapter extends TypeAdapter<Date> {
+class SqlDateTypeAdapter extends TypeAdapter<Date> {
 
     private DateFormat dateFormat;
 

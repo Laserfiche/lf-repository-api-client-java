@@ -1,8 +1,8 @@
 package integration;
 
-import com.laserfiche.repository.api.FieldDefinitionsClient;
-import com.laserfiche.repository.api.client.model.ODataValueContextOfIListOfWFieldInfo;
-import com.laserfiche.repository.api.client.model.WFieldInfo;
+import com.laserfiche.repository.api.clients.FieldDefinitionsClient;
+import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfWFieldInfo;
+import com.laserfiche.repository.api.clients.impl.model.WFieldInfo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

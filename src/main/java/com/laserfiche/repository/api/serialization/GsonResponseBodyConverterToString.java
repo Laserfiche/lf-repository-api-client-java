@@ -13,7 +13,7 @@ import java.lang.reflect.Type;
  * when the deserialization fails due to JsonParseException and the
  * expected type is String, then just return the body string.
  */
-public class GsonResponseBodyConverterToString<T> implements Converter<ResponseBody, T> {
+class GsonResponseBodyConverterToString<T> implements Converter<ResponseBody, T> {
     private final Gson gson;
     private final Type type;
 

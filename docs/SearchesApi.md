@@ -25,7 +25,7 @@ Cancel or close an advanced search.
 //import com.laserfiche.repository.api.ApiException;
 //import com.laserfiche.repository.api.Configuration;
 //import com.laserfiche.repository.api.auth.*;
-//import com.laserfiche.repository.api.client.SearchesApi;
+//import com.laserfiche.repository.api.clients.impl.SearchesApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 
@@ -82,7 +82,7 @@ Run a search in the specified repository.
 //import com.laserfiche.repository.api.ApiException;
 //import com.laserfiche.repository.api.Configuration;
 //import com.laserfiche.repository.api.auth.*;
-//import com.laserfiche.repository.api.client.SearchesApi;
+//import com.laserfiche.repository.api.clients.impl.SearchesApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 
@@ -139,7 +139,7 @@ Name | Type | Description  | Notes
 //import com.laserfiche.repository.api.ApiException;
 //import com.laserfiche.repository.api.Configuration;
 //import com.laserfiche.repository.api.auth.*;
-//import com.laserfiche.repository.api.client.SearchesApi;
+//import com.laserfiche.repository.api.clients.impl.SearchesApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 
@@ -210,7 +210,7 @@ Get the search results listing of a search.
 //import com.laserfiche.repository.api.ApiException;
 //import com.laserfiche.repository.api.Configuration;
 //import com.laserfiche.repository.api.auth.*;
-//import com.laserfiche.repository.api.client.SearchesApi;
+//import com.laserfiche.repository.api.clients.impl.SearchesApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 
@@ -289,7 +289,7 @@ Get the status of a search using a token.
 //import com.laserfiche.repository.api.ApiException;
 //import com.laserfiche.repository.api.Configuration;
 //import com.laserfiche.repository.api.auth.*;
-//import com.laserfiche.repository.api.client.SearchesApi;
+//import com.laserfiche.repository.api.clients.impl.SearchesApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 

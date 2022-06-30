@@ -1,7 +1,7 @@
 package com.laserfiche.repository.api.serialization;
 
 import com.google.gson.JsonElement;
-import com.laserfiche.repository.api.client.model.*;
+import com.laserfiche.repository.api.clients.impl.model.*;
 import io.gsonfire.TypeSelector;
 
 import java.util.HashMap;

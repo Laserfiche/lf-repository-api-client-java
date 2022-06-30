@@ -22,7 +22,7 @@ Method | HTTP request | Description
 //import com.laserfiche.repository.api.ApiException;
 //import com.laserfiche.repository.api.Configuration;
 //import com.laserfiche.repository.api.auth.*;
-//import com.laserfiche.repository.api.client.TagDefinitionsApi;
+//import com.laserfiche.repository.api.clients.impl.TagDefinitionsApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 
@@ -83,7 +83,7 @@ Name | Type | Description  | Notes
 //import com.laserfiche.repository.api.ApiException;
 //import com.laserfiche.repository.api.Configuration;
 //import com.laserfiche.repository.api.auth.*;
-//import com.laserfiche.repository.api.client.TagDefinitionsApi;
+//import com.laserfiche.repository.api.clients.impl.TagDefinitionsApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 

@@ -1,7 +1,7 @@
 package integration;
 
-import com.laserfiche.repository.api.AuditReasonsClient;
-import com.laserfiche.repository.api.client.model.AuditReasons;
+import com.laserfiche.repository.api.clients.AuditReasonsClient;
+import com.laserfiche.repository.api.clients.impl.model.AuditReasons;
 import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.CompletableFuture;

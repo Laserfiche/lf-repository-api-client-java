@@ -21,7 +21,7 @@ Get the audit reasons associated with the authenticated user.
 //import com.laserfiche.repository.api.ApiException;
 //import com.laserfiche.repository.api.Configuration;
 //import com.laserfiche.repository.api.auth.*;
-//import com.laserfiche.repository.api.client.AuditReasonsApi;
+//import com.laserfiche.repository.api.clients.impl.AuditReasonsApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 

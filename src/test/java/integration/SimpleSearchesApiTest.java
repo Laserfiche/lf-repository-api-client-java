@@ -1,8 +1,8 @@
 package integration;
 
-import com.laserfiche.repository.api.SimpleSearchesClient;
-import com.laserfiche.repository.api.client.model.ODataValueOfIListOfEntry;
-import com.laserfiche.repository.api.client.model.SimpleSearchRequest;
+import com.laserfiche.repository.api.clients.SimpleSearchesClient;
+import com.laserfiche.repository.api.clients.impl.model.ODataValueOfIListOfEntry;
+import com.laserfiche.repository.api.clients.impl.model.SimpleSearchRequest;
 import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.CompletableFuture;

@@ -11,7 +11,7 @@ import java.io.IOException;
 /**
  * Gson TypeAdapter for JSR310 OffsetDateTime type
  */
-public class OffsetDateTimeTypeAdapter extends TypeAdapter<OffsetDateTime> {
+class OffsetDateTimeTypeAdapter extends TypeAdapter<OffsetDateTime> {
 
     private DateTimeFormatter formatter;
 

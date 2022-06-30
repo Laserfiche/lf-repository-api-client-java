@@ -16,7 +16,7 @@ import java.util.Date;
  * Gson TypeAdapter for java.util.Date type
  * If the dateFormat is null, ISO8601Utils will be used.
  */
-public class DateTypeAdapter extends TypeAdapter<Date> {
+class DateTypeAdapter extends TypeAdapter<Date> {
 
     private DateFormat dateFormat;
 

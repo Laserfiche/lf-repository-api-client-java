@@ -1,7 +1,7 @@
 package integration;
 
-import com.laserfiche.repository.api.TemplateDefinitionsClient;
-import com.laserfiche.repository.api.client.model.ODataValueContextOfIListOfWTemplateInfo;
+import com.laserfiche.repository.api.clients.TemplateDefinitionsClient;
+import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfWTemplateInfo;
 import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.CompletableFuture;
