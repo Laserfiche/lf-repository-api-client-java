@@ -22,7 +22,7 @@ public class TagDefinitionsApiTest extends BaseTest {
 
     @Test
     public void getTagDefinitions_Success() {
-        CompletableFuture<ODataValueContextOfIListOfWTagInfo> future = client.getTagDefinitions(repoId, null, null, null, null, null, null, false);
+        CompletableFuture<ODataValueContextOfIListOfWTagInfo> future = client.getTagDefinitions(repoId, null, null, null, null, null, null, false, null);
         ODataValueContextOfIListOfWTagInfo tagInfoList = future.join();
 
         assertNotNull(tagInfoList);
@@ -30,7 +30,7 @@ public class TagDefinitionsApiTest extends BaseTest {
 
     @Test
     public void getTagDefinitionsNextLink_Success() {
-        CompletableFuture<ODataValueContextOfIListOfWTagInfo> future = client.getTagDefinitions(repoId, preferMaxPageSize1, null, null, null, null, null, false);
+        CompletableFuture<ODataValueContextOfIListOfWTagInfo> future = client.getTagDefinitions(repoId, preferMaxPageSize1, null, null, null, null, null, false, null);
         ODataValueContextOfIListOfWTagInfo tagInfoList = future.join();
 
         assertNotNull(tagInfoList);

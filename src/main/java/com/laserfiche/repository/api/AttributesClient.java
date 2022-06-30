@@ -5,13 +5,7 @@ import com.laserfiche.repository.api.client.model.ODataValueContextOfListOfAttri
 
 import java.util.concurrent.CompletableFuture;
 
-public class AttributesClient {
-    private AttributesApi client;
-
-    protected void setClient(AttributesApi client) {
-        this.client = client;
-    }
-
+public class AttributesClient extends BaseClient<AttributesApi> {
     /**
      * Get the attribute key value pairs associated with the authenticated user.
      * - Returns the attribute key value pairs associated with the authenticated user. Alternatively, return only the attribute key value pairs that are associated with the \&quot;Everyone\&quot; group. - Attribute keys can be used with subsequent calls to get specific attribute values. - Default page size: 100. Allowed OData query options: Select, Count, OrderBy, Skip, Top, SkipToken, Prefer. Optional query parameters: everyone (bool, default false). When true, this route does not return the attributes that are tied to the currently authenticated user, but rather the attributes assigned to the \&quot;Everyone\&quot; group. Note when this is true, the response does not include both the \&quot;Everyone\&quot; groups attribute and the currently authenticated user, but only the \&quot;Everyone\&quot; groups.
@@ -23,10 +17,11 @@ public class AttributesClient {
      * @param $top Limits the number of items returned from a collection. (optional)
      * @param $skip Excludes the specified number of items of the queried collection from the result. (optional)
      * @param $count Indicates whether the total count of items within a collection are returned in the result. (optional)
+     * @param maxPageSize Indicates the maximum number of items to return.
      * @return CompletableFuture&lt;ODataValueContextOfListOfAttribute&gt;
      */
-    public CompletableFuture<ODataValueContextOfListOfAttribute> getTrusteeAttributeKeyValuePairs(String repoId, Boolean everyone, String prefer, String $select, String $orderby, Integer $top, Integer $skip, Boolean $count) {
-        return client.getTrusteeAttributeKeyValuePairs(repoId, everyone, prefer, $select, $orderby, $top, $skip, $count);
+    public CompletableFuture<ODataValueContextOfListOfAttribute> getTrusteeAttributeKeyValuePairs(String repoId, Boolean everyone, String prefer, String $select, String $orderby, Integer $top, Integer $skip, Boolean $count, Integer maxPageSize) {
+        return client.getTrusteeAttributeKeyValuePairs(repoId, everyone, mergeMaxPageSizeIntoPrefer(maxPageSize, prefer), $select, $orderby, $top, $skip, $count);
     }
 
     /**
@@ -39,7 +34,23 @@ public class AttributesClient {
      * @param maxPageSize The maximum number of items to retrieve.
      * @return CompletableFuture&lt;Attribute&gt;
      */
-    public CompletableFuture<ODataValueContextOfListOfAttribute> getTrusteeAttributeKeyValuePairsNextLink(String nextLink, int maxPageSize) {
-        return client.getTrusteeAttributeKeyValuePairsPaginate(nextLink, String.format("maxpagesize={%d}", maxPageSize));
+    public CompletableFuture<ODataValueContextOfListOfAttribute> getTrusteeAttributeKeyValuePairsNextLink(String nextLink, Integer maxPageSize) {
+        return client.getTrusteeAttributeKeyValuePairsPaginate(nextLink, String.format("maxpagesize=%d", maxPageSize));
+    }
+
+    public void getTrusteeAttributeKeyValuePairsForEach(ForEachCallBack<CompletableFuture<ODataValueContextOfListOfAttribute>> callback, String repoId, Boolean everyone, String prefer, String $select, String $orderby, Integer $top, Integer $skip, Boolean $count, Integer maxPageSize) {
+        // Initial request
+        CompletableFuture<ODataValueContextOfListOfAttribute> future = getTrusteeAttributeKeyValuePairs(repoId, everyone, prefer, $select, $orderby, $top, $skip, $count, maxPageSize);
+        // Subsequent request based on return value of callback
+        while (callback.apply(future)) {
+            future = future.thenCompose(dataFromLastRequest -> {
+                String nextLink = dataFromLastRequest.getAtOdataNextLink();
+                if (nextLink == null) {
+                    // We are at the end of the data stream
+                    return CompletableFuture.completedFuture(null);
+                }
+                return getTrusteeAttributeKeyValuePairsNextLink(nextLink, maxPageSize);
+            });
+        }
     }
 }

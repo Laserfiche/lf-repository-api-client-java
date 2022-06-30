@@ -31,7 +31,7 @@ public class FieldDefinitionsApiTest extends BaseTest {
 
     @Test
     public void getFieldDefinitions_Success() {
-        CompletableFuture<ODataValueContextOfIListOfWFieldInfo> future = client.getFieldDefinitions(repoId, null, null, null, null, null, null, false);
+        CompletableFuture<ODataValueContextOfIListOfWFieldInfo> future = client.getFieldDefinitions(repoId, null, null, null, null, null, null, false, null);
         ODataValueContextOfIListOfWFieldInfo fieldInfoList = future.join();
 
         assertNotNull(fieldInfoList);
@@ -39,7 +39,7 @@ public class FieldDefinitionsApiTest extends BaseTest {
 
     @Test
     public void getFieldDefinitionsNextLink_Success() {
-        CompletableFuture<ODataValueContextOfIListOfWFieldInfo> future = client.getFieldDefinitions(repoId, preferMaxPageSize1, null, null, null, null, null, false);
+        CompletableFuture<ODataValueContextOfIListOfWFieldInfo> future = client.getFieldDefinitions(repoId, preferMaxPageSize1, null, null, null, null, null, false, null);
         ODataValueContextOfIListOfWFieldInfo fieldInfoList = future.join();
 
         assertNotNull(fieldInfoList);

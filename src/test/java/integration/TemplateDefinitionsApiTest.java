@@ -12,7 +12,7 @@ public class TemplateDefinitionsApiTest extends BaseTest {
     @Test
     public void getTemplateDefinitions_Success() {
         TemplateDefinitionsClient client = repositoryApiClient.getTemplateDefinitionClient();
-        CompletableFuture<ODataValueContextOfIListOfWTemplateInfo> future = client.getTemplateDefinitions(repoId, null, null, null, null, null, null, null, false);
+        CompletableFuture<ODataValueContextOfIListOfWTemplateInfo> future = client.getTemplateDefinitions(repoId, null, null, null, null, null, null, null, false, null);
         ODataValueContextOfIListOfWTemplateInfo templateInfoList = future.join();
 
         assertNotNull(templateInfoList);
