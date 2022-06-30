@@ -13,7 +13,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 public class FieldDefinitionsApiTest extends BaseTest {
     FieldDefinitionsClient client;
 
-    private final String preferMaxPageSize1 = "maxpagesize=1";
     private final int maxPageSize = 1;
 
     @BeforeEach
@@ -39,7 +38,7 @@ public class FieldDefinitionsApiTest extends BaseTest {
 
     @Test
     public void getFieldDefinitionsNextLink_Success() {
-        CompletableFuture<ODataValueContextOfIListOfWFieldInfo> future = client.getFieldDefinitions(repoId, preferMaxPageSize1, null, null, null, null, null, false, null);
+        CompletableFuture<ODataValueContextOfIListOfWFieldInfo> future = client.getFieldDefinitions(repoId, null, null, null, null, null, null, false, maxPageSize);
         ODataValueContextOfIListOfWFieldInfo fieldInfoList = future.join();
 
         assertNotNull(fieldInfoList);

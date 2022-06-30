@@ -12,7 +12,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 public class EntriesApiTest extends BaseTest {
     EntriesClient client;
 
-    private final String preferMaxPageSize1 = "maxpagesize=1";
     private final int maxPageSize = 1;
 
     @BeforeEach
@@ -38,7 +37,7 @@ public class EntriesApiTest extends BaseTest {
 
     @Test
     public void getEntryListingNextLink_Success() {
-        CompletableFuture<ODataValueContextOfIListOfEntry> future = client.getEntryListing(repoId, 1, false, null, false, preferMaxPageSize1, null, null, null, null, null, false, null);
+        CompletableFuture<ODataValueContextOfIListOfEntry> future = client.getEntryListing(repoId, 1, false, null, false, null, null, null, null, null, null, false, maxPageSize);
         ODataValueContextOfIListOfEntry entryList = future.join();
 
         assertNotNull(entryList);
@@ -62,7 +61,7 @@ public class EntriesApiTest extends BaseTest {
 
     @Test
     public void getFieldValuesNextLink_Success() {
-        CompletableFuture<ODataValueContextOfIListOfFieldValue> future = client.getFieldValues(repoId, 1, preferMaxPageSize1, null, null, null, null, null, null, false, null);
+        CompletableFuture<ODataValueContextOfIListOfFieldValue> future = client.getFieldValues(repoId, 1, null, null, null, null, null, null, null, false, maxPageSize);
         ODataValueContextOfIListOfFieldValue fieldValueList = future.join();
 
         assertNotNull(fieldValueList);
@@ -86,7 +85,7 @@ public class EntriesApiTest extends BaseTest {
 
     @Test
     public void getLinkValuesFromEntryNextLink_Success() {
-        CompletableFuture<ODataValueContextOfIListOfWEntryLinkInfo> future = client.getLinkValuesFromEntry(repoId, 28370, preferMaxPageSize1, null, null, null, null, false, null);
+        CompletableFuture<ODataValueContextOfIListOfWEntryLinkInfo> future = client.getLinkValuesFromEntry(repoId, 28370, null, null, null, null, null, false, maxPageSize);
         ODataValueContextOfIListOfWEntryLinkInfo linkInfoList = future.join();
 
         assertNotNull(linkInfoList);
@@ -110,7 +109,7 @@ public class EntriesApiTest extends BaseTest {
 
     @Test
     public void getTagsAssignedToEntryNextLink_Success() {
-        CompletableFuture<ODataValueContextOfIListOfWTagInfo> future = client.getTagsAssignedToEntry(repoId, 28370, preferMaxPageSize1, null,null, null, null, false, null);
+        CompletableFuture<ODataValueContextOfIListOfWTagInfo> future = client.getTagsAssignedToEntry(repoId, 28370, null, null,null, null, null, false, maxPageSize);
         ODataValueContextOfIListOfWTagInfo tagInfoList = future.join();
 
         assertNotNull(tagInfoList);

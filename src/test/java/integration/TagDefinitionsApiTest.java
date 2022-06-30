@@ -12,7 +12,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 public class TagDefinitionsApiTest extends BaseTest {
     TagDefinitionsClient client;
 
-    private final String preferMaxPageSize1 = "maxpagesize=1";
     private final int maxPageSize = 1;
 
     @BeforeEach
@@ -30,7 +29,7 @@ public class TagDefinitionsApiTest extends BaseTest {
 
     @Test
     public void getTagDefinitionsNextLink_Success() {
-        CompletableFuture<ODataValueContextOfIListOfWTagInfo> future = client.getTagDefinitions(repoId, preferMaxPageSize1, null, null, null, null, null, false, null);
+        CompletableFuture<ODataValueContextOfIListOfWTagInfo> future = client.getTagDefinitions(repoId, null, null, null, null, null, null, false, maxPageSize);
         ODataValueContextOfIListOfWTagInfo tagInfoList = future.join();
 
         assertNotNull(tagInfoList);
