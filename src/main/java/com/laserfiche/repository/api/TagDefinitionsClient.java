@@ -45,6 +45,6 @@ public class TagDefinitionsClient extends BaseClient<TagDefinitionsApi> {
      * @return CompletableFuture&lt;ODataValueContextOfIListOfWTagInfo&gt;
      */
     public CompletableFuture<ODataValueContextOfIListOfWTagInfo> getTagDefinitionsNextLink(String nextLink, Integer maxPageSize) {
-        return client.getTagDefinitionsPaginate(nextLink, String.format("maxpagesize=%d", maxPageSize));
+        return client.getTagDefinitionsPaginate(nextLink, mergeMaxPageSizeIntoPrefer(maxPageSize, null));
     }
 }

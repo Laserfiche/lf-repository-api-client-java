@@ -35,7 +35,7 @@ public class AttributesClient extends BaseClient<AttributesApi> {
      * @return CompletableFuture&lt;Attribute&gt;
      */
     public CompletableFuture<ODataValueContextOfListOfAttribute> getTrusteeAttributeKeyValuePairsNextLink(String nextLink, Integer maxPageSize) {
-        return client.getTrusteeAttributeKeyValuePairsPaginate(nextLink, String.format("maxpagesize=%d", maxPageSize));
+        return client.getTrusteeAttributeKeyValuePairsPaginate(nextLink, mergeMaxPageSizeIntoPrefer(maxPageSize, null));
     }
 
     public void getTrusteeAttributeKeyValuePairsForEach(ForEachCallBack<CompletableFuture<ODataValueContextOfListOfAttribute>> callback, String repoId, Boolean everyone, String prefer, String $select, String $orderby, Integer $top, Integer $skip, Boolean $count, Integer maxPageSize) {

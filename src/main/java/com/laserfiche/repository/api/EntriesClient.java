@@ -212,7 +212,7 @@ public class EntriesClient extends BaseClient<EntriesApi> {
      * @return CompletableFuture&lt;ODataValueContextOfIListOfEntry&gt;
      */
     public CompletableFuture<ODataValueContextOfIListOfEntry> getEntryListingNextLink(String nextLink, Integer maxPageSize) {
-        return client.getEntryListingPaginate(nextLink, String.format("maxpagesize=%d", maxPageSize));
+        return client.getEntryListingPaginate(nextLink, mergeMaxPageSizeIntoPrefer(maxPageSize, null));
     }
 
     /**
@@ -243,7 +243,7 @@ public class EntriesClient extends BaseClient<EntriesApi> {
      * @return CompletableFuture&lt;ODataValueContextOfIListOfFieldValue&gt;
      */
     public CompletableFuture<ODataValueContextOfIListOfFieldValue> getFieldValuesNextLink(String nextLink, Integer maxPageSize) {
-        return client.getFieldValuesPaginate(nextLink, String.format("maxpagezie=%d", maxPageSize));
+        return client.getFieldValuesPaginate(nextLink, mergeMaxPageSizeIntoPrefer(maxPageSize, null));
     }
 
     /**
@@ -272,7 +272,7 @@ public class EntriesClient extends BaseClient<EntriesApi> {
      * @return CompletableFuture&lt;ODataValueContextOfIListOfWEntryLinkInfo&gt;
      */
     public CompletableFuture<ODataValueContextOfIListOfWEntryLinkInfo> getLinkValuesFromEntryNextLink(String nextLink, Integer maxPageSize) {
-        return client.getLinkValuesFromEntryPaginate(nextLink, String.format("maxpagezie=%d", maxPageSize));
+        return client.getLinkValuesFromEntryPaginate(nextLink, mergeMaxPageSizeIntoPrefer(maxPageSize, null));
     }
 
     /**
@@ -301,7 +301,7 @@ public class EntriesClient extends BaseClient<EntriesApi> {
      * @return CompletableFuture&lt;ODataValueContextOfIListOfWTagInfo&gt;
      */
     public CompletableFuture<ODataValueContextOfIListOfWTagInfo> getTagsAssignedToEntryNextLink(String nextLink, Integer maxPageSize) {
-        return client.getTagsAssignedToEntryPaginate(nextLink, String.format("maxpagezie=%d", maxPageSize));
+        return client.getTagsAssignedToEntryPaginate(nextLink, mergeMaxPageSizeIntoPrefer(maxPageSize, null));
     }
 
     /**

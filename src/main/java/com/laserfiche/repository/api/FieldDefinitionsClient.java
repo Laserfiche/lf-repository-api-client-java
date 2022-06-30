@@ -51,6 +51,6 @@ public class FieldDefinitionsClient extends BaseClient<FieldDefinitionsApi> {
      * @return CompletableFuture&lt;ODataValueContextOfIListOfWFieldInfo&gt;
      */
     public CompletableFuture<ODataValueContextOfIListOfWFieldInfo> getFieldDefinitionsNextLink(String nextLink, Integer maxPageSize) {
-        return client.getFieldDefinitionsPaginate(nextLink, String.format("maxpagesize=%d", maxPageSize));
+        return client.getFieldDefinitionsPaginate(nextLink, mergeMaxPageSizeIntoPrefer(maxPageSize, null));
     }
 }

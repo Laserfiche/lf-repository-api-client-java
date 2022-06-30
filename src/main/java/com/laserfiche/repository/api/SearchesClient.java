@@ -55,7 +55,7 @@ public class SearchesClient extends BaseClient<SearchesApi> {
      * @return CompletableFuture&lt;ODataValueContextOfIListOfContextHit&gt;
      */
     public CompletableFuture<ODataValueContextOfIListOfContextHit> getSearchContextHitsNextLink(String nextLink, Integer maxPageSize) {
-        return client.getSearchContextHitsPaginate(nextLink, String.format("maxpagesize=%d", maxPageSize));
+        return client.getSearchContextHitsPaginate(nextLink, mergeMaxPageSizeIntoPrefer(maxPageSize, null));
     }
 
     /**
@@ -89,7 +89,7 @@ public class SearchesClient extends BaseClient<SearchesApi> {
      * @return CompletableFuture&lt;ODataValueContextOfIListOfEntry&gt;
      */
     public CompletableFuture<ODataValueContextOfIListOfEntry> getSearchResultsNextLink(String nextLink, Integer maxPageSize) {
-        return client.getSearchResultsPaginate(nextLink, String.format("maxpagesize=%d", maxPageSize));
+        return client.getSearchResultsPaginate(nextLink, mergeMaxPageSizeIntoPrefer(maxPageSize, null));
     }
 
     /**
