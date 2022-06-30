@@ -2,7 +2,6 @@ package integration;
 
 import com.laserfiche.repository.api.FieldDefinitionsClient;
 import com.laserfiche.repository.api.client.model.ODataValueContextOfIListOfWFieldInfo;
-import com.laserfiche.repository.api.client.model.ODataValueContextOfListOfAttribute;
 import com.laserfiche.repository.api.client.model.WFieldInfo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -57,11 +56,11 @@ public class FieldDefinitionsApiTest extends BaseTest {
     public void getFieldDefinitionsForEach_Success() {
         client.getFieldDefinitionsForEach((future -> {
             assertNotNull(future);
-            ODataValueContextOfIListOfWFieldInfo attributeList = future.join();
-            if (attributeList != null) {
-                assertNotNull(attributeList.getValue());
+            ODataValueContextOfIListOfWFieldInfo definitionList = future.join();
+            if (definitionList != null) {
+                assertNotNull(definitionList.getValue());
             }
-            return attributeList != null; // Stop asking if there's no data.
+            return definitionList != null; // Stop asking if there's no data.
         }), repoId, null, null, null, null, null, null, false, maxPageSize);
     }
 }

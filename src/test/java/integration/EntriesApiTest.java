@@ -91,11 +91,11 @@ public class EntriesApiTest extends BaseTest {
     public void getFieldValuesForEach_Success() {
         client.getFieldValuesForEach((future -> {
             assertNotNull(future);
-            ODataValueContextOfIListOfFieldValue attributeList = future.join();
-            if (attributeList != null) {
-                assertNotNull(attributeList.getValue());
+            ODataValueContextOfIListOfFieldValue fieldValueList = future.join();
+            if (fieldValueList != null) {
+                assertNotNull(fieldValueList.getValue());
             }
-            return attributeList != null; // Stop asking if there's no data.
+            return fieldValueList != null; // Stop asking if there's no data.
         }), repoId, 1, null, null, null, null, null, null, null, false, maxPageSize);
     }
 
@@ -127,11 +127,11 @@ public class EntriesApiTest extends BaseTest {
     public void getLinkValuesFromEntryForEach_Success() {
         client.getLinkValuesFromEntryForEach((future -> {
             assertNotNull(future);
-            ODataValueContextOfIListOfWEntryLinkInfo attributeList = future.join();
-            if (attributeList != null) {
-                assertNotNull(attributeList.getValue());
+            ODataValueContextOfIListOfWEntryLinkInfo linkValueList = future.join();
+            if (linkValueList != null) {
+                assertNotNull(linkValueList.getValue());
             }
-            return attributeList != null; // Stop asking if there's no data.
+            return linkValueList != null; // Stop asking if there's no data.
         }), repoId, 28370, null, null, null, null, null, false, maxPageSize);
     }
 
@@ -163,11 +163,11 @@ public class EntriesApiTest extends BaseTest {
     public void getTagsAssignedToEntryForEach_Success() {
         client.getTagsAssignedToEntryForEach((future -> {
             assertNotNull(future);
-            ODataValueContextOfIListOfWTagInfo attributeList = future.join();
-            if (attributeList != null) {
-                assertNotNull(attributeList.getValue());
+            ODataValueContextOfIListOfWTagInfo tagList = future.join();
+            if (tagList != null) {
+                assertNotNull(tagList.getValue());
             }
-            return attributeList != null; // Stop asking if there's no data.
+            return tagList != null; // Stop asking if there's no data.
         }), repoId, 28370, null, null,null, null, null, false, maxPageSize);
     }
 }

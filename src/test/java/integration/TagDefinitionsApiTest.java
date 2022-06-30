@@ -2,6 +2,7 @@ package integration;
 
 import com.laserfiche.repository.api.TagDefinitionsClient;
 import com.laserfiche.repository.api.client.model.ODataValueContextOfIListOfWTagInfo;
+import com.laserfiche.repository.api.client.model.ODataValueContextOfListOfAttribute;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -41,5 +42,17 @@ public class TagDefinitionsApiTest extends BaseTest {
         ODataValueContextOfIListOfWTagInfo newTagInfoList = newFuture.join();
 
         assertNotNull(newTagInfoList);
+    }
+
+    @Test
+    public void getTagDefinitionsForEach_Success() {
+        client.getTrusteeAttributeKeyValuePairsForEach((future -> {
+            assertNotNull(future);
+            ODataValueContextOfIListOfWTagInfo tagList = future.join();
+            if (tagList != null) {
+                assertNotNull(tagList.getValue());
+            }
+            return tagList != null; // Stop asking if there's no data.
+        }), repoId, null, null, null, null, null, null, false, maxPageSize);
     }
 }
