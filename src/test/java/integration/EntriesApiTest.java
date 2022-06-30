@@ -52,6 +52,18 @@ public class EntriesApiTest extends BaseTest {
     }
 
     @Test
+    public void getEntryListingForEach_Success() {
+        client.getEntryListingForEach((future -> {
+            assertNotNull(future);
+            ODataValueContextOfIListOfEntry entryList = future.join();
+            if (entryList != null) {
+                assertNotNull(entryList.getValue());
+            }
+            return entryList != null; // Stop asking if there's no data.
+        }), repoId, 1, false, null, false, null, null, null, null, null, null, false, maxPageSize);
+    }
+
+    @Test
     public void getFieldValues_Success() {
         CompletableFuture<ODataValueContextOfIListOfFieldValue> future = client.getFieldValues(repoId, 1, null, null, null, null, null, null, null, false, null);
         ODataValueContextOfIListOfFieldValue fieldValueList = future.join();
@@ -73,6 +85,18 @@ public class EntriesApiTest extends BaseTest {
         ODataValueContextOfIListOfFieldValue newFieldValueList = newFuture.join();
 
         assertNotNull(newFieldValueList);
+    }
+
+    @Test
+    public void getFieldValuesForEach_Success() {
+        client.getFieldValuesForEach((future -> {
+            assertNotNull(future);
+            ODataValueContextOfIListOfFieldValue attributeList = future.join();
+            if (attributeList != null) {
+                assertNotNull(attributeList.getValue());
+            }
+            return attributeList != null; // Stop asking if there's no data.
+        }), repoId, 1, null, null, null, null, null, null, null, false, maxPageSize);
     }
 
     @Test
@@ -100,6 +124,18 @@ public class EntriesApiTest extends BaseTest {
     }
 
     @Test
+    public void getLinkValuesFromEntryForEach_Success() {
+        client.getLinkValuesFromEntryForEach((future -> {
+            assertNotNull(future);
+            ODataValueContextOfIListOfWEntryLinkInfo attributeList = future.join();
+            if (attributeList != null) {
+                assertNotNull(attributeList.getValue());
+            }
+            return attributeList != null; // Stop asking if there's no data.
+        }), repoId, 28370, null, null, null, null, null, false, maxPageSize);
+    }
+
+    @Test
     public void getTagsAssignedToEntry_Success() {
         CompletableFuture<ODataValueContextOfIListOfWTagInfo> future = client.getTagsAssignedToEntry(repoId, 1, null, null,null, null, null, false, null);
         ODataValueContextOfIListOfWTagInfo tagInfoList = future.join();
@@ -121,5 +157,17 @@ public class EntriesApiTest extends BaseTest {
         ODataValueContextOfIListOfWTagInfo newTagInfoList = newFuture.join();
 
         assertNotNull(newTagInfoList);
+    }
+
+    @Test
+    public void getTagsAssignedToEntryForEach_Success() {
+        client.getTagsAssignedToEntryForEach((future -> {
+            assertNotNull(future);
+            ODataValueContextOfIListOfWTagInfo attributeList = future.join();
+            if (attributeList != null) {
+                assertNotNull(attributeList.getValue());
+            }
+            return attributeList != null; // Stop asking if there's no data.
+        }), repoId, 28370, null, null,null, null, null, false, maxPageSize);
     }
 }
