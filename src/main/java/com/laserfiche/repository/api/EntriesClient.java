@@ -197,10 +197,11 @@ public class EntriesClient extends BaseClient<EntriesApi> {
      * @param $top Limits the number of items returned from a collection. (optional)
      * @param $skip Excludes the specified number of items of the queried collection from the result. (optional)
      * @param $count Indicates whether the total count of items within a collection are returned in the result. (optional)
+     * @param maxPageSize Indicates the maximum number of items to return.
      * @return CompletableFuture&lt;ODataValueContextOfIListOfEntry&gt;
      */
-    public CompletableFuture<ODataValueContextOfIListOfEntry> getEntryListing(String repoId, Integer entryId, Boolean groupByEntryType, List<String> fields, Boolean formatFields, String prefer, String culture, String $select, String $orderby, Integer $top, Integer $skip, Boolean $count) {
-        return client.getEntryListing(repoId, entryId, groupByEntryType, fields, formatFields, prefer, culture, $select, $orderby, $top, $skip, $count);
+    public CompletableFuture<ODataValueContextOfIListOfEntry> getEntryListing(String repoId, Integer entryId, Boolean groupByEntryType, List<String> fields, Boolean formatFields, String prefer, String culture, String $select, String $orderby, Integer $top, Integer $skip, Boolean $count, Integer maxPageSize) {
+        return client.getEntryListing(repoId, entryId, groupByEntryType, fields, formatFields, mergeMaxPageSizeIntoPrefer(maxPageSize, prefer), culture, $select, $orderby, $top, $skip, $count);
     }
 
     /**
@@ -227,10 +228,11 @@ public class EntriesClient extends BaseClient<EntriesApi> {
      * @param $top Limits the number of items returned from a collection. (optional)
      * @param $skip Excludes the specified number of items of the queried collection from the result. (optional)
      * @param $count Indicates whether the total count of items within a collection are returned in the result. (optional)
+     * @param maxPageSize Indicates the maximum number of items to return.
      * @return CompletableFuture&lt;ODataValueContextOfIListOfFieldValue&gt;
      */
-    public CompletableFuture<ODataValueContextOfIListOfFieldValue> getFieldValues(String repoId, Integer entryId, String prefer, Boolean formatValue, String culture, String $select, String $orderby, Integer $top, Integer $skip, Boolean $count) {
-        return client.getFieldValues(repoId, entryId, prefer, formatValue, culture, $select, $orderby, $top, $skip, $count);
+    public CompletableFuture<ODataValueContextOfIListOfFieldValue> getFieldValues(String repoId, Integer entryId, String prefer, Boolean formatValue, String culture, String $select, String $orderby, Integer $top, Integer $skip, Boolean $count, Integer maxPageSize) {
+        return client.getFieldValues(repoId, entryId, mergeMaxPageSizeIntoPrefer(maxPageSize, prefer), formatValue, culture, $select, $orderby, $top, $skip, $count);
     }
 
     /**
@@ -255,10 +257,11 @@ public class EntriesClient extends BaseClient<EntriesApi> {
      * @param $top Limits the number of items returned from a collection. (optional)
      * @param $skip Excludes the specified number of items of the queried collection from the result. (optional)
      * @param $count Indicates whether the total count of items within a collection are returned in the result. (optional)
+     * @param maxPageSize Indicates the maximum number of items to return.
      * @return CompletableFuture&lt;ODataValueContextOfIListOfWEntryLinkInfo&gt;
      */
-    public CompletableFuture<ODataValueContextOfIListOfWEntryLinkInfo> getLinkValuesFromEntry(String repoId, Integer entryId, String prefer, String $select, String $orderby, Integer $top, Integer $skip, Boolean $count) {
-        return client.getLinkValuesFromEntry(repoId, entryId, prefer, $select, $orderby, $top, $skip, $count);
+    public CompletableFuture<ODataValueContextOfIListOfWEntryLinkInfo> getLinkValuesFromEntry(String repoId, Integer entryId, String prefer, String $select, String $orderby, Integer $top, Integer $skip, Boolean $count, Integer maxPageSize) {
+        return client.getLinkValuesFromEntry(repoId, entryId, mergeMaxPageSizeIntoPrefer(maxPageSize, prefer), $select, $orderby, $top, $skip, $count);
     }
 
     /**
@@ -283,10 +286,11 @@ public class EntriesClient extends BaseClient<EntriesApi> {
      * @param $top Limits the number of items returned from a collection. (optional)
      * @param $skip Excludes the specified number of items of the queried collection from the result. (optional)
      * @param $count Indicates whether the total count of items within a collection are returned in the result. (optional)
+     * @param maxPageSize Indicates the maximum number of items to return.
      * @return CompletableFuture&lt;ODataValueContextOfIListOfWTagInfo&gt;
      */
-    public CompletableFuture<ODataValueContextOfIListOfWTagInfo> getTagsAssignedToEntry(String repoId, Integer entryId, String prefer, String $select, String $orderby, Integer $top, Integer $skip, Boolean $count) {
-        return client.getTagsAssignedToEntry(repoId, entryId, prefer, $select, $orderby, $top, $skip, $count);
+    public CompletableFuture<ODataValueContextOfIListOfWTagInfo> getTagsAssignedToEntry(String repoId, Integer entryId, String prefer, String $select, String $orderby, Integer $top, Integer $skip, Boolean $count, Integer maxPageSize) {
+        return client.getTagsAssignedToEntry(repoId, entryId, mergeMaxPageSizeIntoPrefer(maxPageSize, prefer), $select, $orderby, $top, $skip, $count);
     }
 
     /**

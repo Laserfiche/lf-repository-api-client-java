@@ -41,10 +41,11 @@ public class SearchesClient extends BaseClient<SearchesApi> {
      * @param $top Limits the number of items returned from a collection. (optional)
      * @param $skip Excludes the specified number of items of the queried collection from the result. (optional)
      * @param $count Indicates whether the total count of items within a collection are returned in the result. (optional)
+     * @param maxPageSize Indicates the maximum number of items to return.
      * @return CompletableFuture&lt;ODataValueContextOfIListOfContextHit&gt;
      */
-    public CompletableFuture<ODataValueContextOfIListOfContextHit> getSearchContextHits(String repoId, String searchToken, Integer rowNumber, String prefer, String $select, String $orderby, Integer $top, Integer $skip, Boolean $count) {
-        return client.getSearchContextHits(repoId, searchToken, rowNumber, prefer, $select, $orderby, $top, $skip, $count);
+    public CompletableFuture<ODataValueContextOfIListOfContextHit> getSearchContextHits(String repoId, String searchToken, Integer rowNumber, String prefer, String $select, String $orderby, Integer $top, Integer $skip, Boolean $count, Integer maxPageSize) {
+        return client.getSearchContextHits(repoId, searchToken, rowNumber, mergeMaxPageSizeIntoPrefer(maxPageSize, prefer), $select, $orderby, $top, $skip, $count);
     }
 
     /**
@@ -73,10 +74,11 @@ public class SearchesClient extends BaseClient<SearchesApi> {
      * @param $top Limits the number of items returned from a collection. (optional)
      * @param $skip Excludes the specified number of items of the queried collection from the result. (optional)
      * @param $count Indicates whether the total count of items within a collection are returned in the result. (optional)
+     * @param maxPageSize Indicates the maximum number of items to return.
      * @return CompletableFuture&lt;ODataValueContextOfIListOfEntry&gt;
      */
-    public CompletableFuture<ODataValueContextOfIListOfEntry> getSearchResults(String repoId, String searchToken, Boolean groupByEntryType, Boolean refresh, List<String> fields, Boolean formatFields, String prefer, String culture, String $select, String $orderby, Integer $top, Integer $skip, Boolean $count) {
-        return client.getSearchResults(repoId, searchToken, groupByEntryType, refresh, fields, formatFields, prefer, culture, $select, $orderby, $top, $skip, $count);
+    public CompletableFuture<ODataValueContextOfIListOfEntry> getSearchResults(String repoId, String searchToken, Boolean groupByEntryType, Boolean refresh, List<String> fields, Boolean formatFields, String prefer, String culture, String $select, String $orderby, Integer $top, Integer $skip, Boolean $count, Integer maxPageSize) {
+        return client.getSearchResults(repoId, searchToken, groupByEntryType, refresh, fields, formatFields, mergeMaxPageSizeIntoPrefer(maxPageSize, prefer), culture, $select, $orderby, $top, $skip, $count);
     }
 
     /**

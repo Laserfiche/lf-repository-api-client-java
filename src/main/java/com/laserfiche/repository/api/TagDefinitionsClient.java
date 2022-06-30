@@ -31,10 +31,11 @@ public class TagDefinitionsClient extends BaseClient<TagDefinitionsApi> {
      * @param $top Limits the number of items returned from a collection. (optional)
      * @param $skip Excludes the specified number of items of the queried collection from the result. (optional)
      * @param $count Indicates whether the total count of items within a collection are returned in the result. (optional)
+     * @param maxPageSize Indicates the maximum number of items to return.
      * @return CompletableFuture&lt;ODataValueContextOfIListOfWTagInfo&gt;
      */
-    public CompletableFuture<ODataValueContextOfIListOfWTagInfo> getTagDefinitions(String repoId, String prefer, String culture, String $select, String $orderby, Integer $top, Integer $skip, Boolean $count) {
-        return client.getTagDefinitions(repoId, prefer, culture, $select, $orderby, $top, $skip, $count);
+    public CompletableFuture<ODataValueContextOfIListOfWTagInfo> getTagDefinitions(String repoId, String prefer, String culture, String $select, String $orderby, Integer $top, Integer $skip, Boolean $count, Integer maxPageSize) {
+        return client.getTagDefinitions(repoId, mergeMaxPageSizeIntoPrefer(maxPageSize, prefer), culture, $select, $orderby, $top, $skip, $count);
     }
 
     /**
