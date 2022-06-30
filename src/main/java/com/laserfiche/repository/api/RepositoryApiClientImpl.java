@@ -2,6 +2,7 @@ package com.laserfiche.repository.api;
 
 import com.laserfiche.api.client.model.AccessKey;
 import com.laserfiche.repository.api.client.*;
+import com.laserfiche.repository.api.serialization.GsonCustomConverterFactory;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
