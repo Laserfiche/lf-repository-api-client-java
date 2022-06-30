@@ -38,6 +38,19 @@ public class AttributesClient extends BaseClient<AttributesApi> {
         return client.getTrusteeAttributeKeyValuePairsPaginate(nextLink, mergeMaxPageSizeIntoPrefer(maxPageSize, null));
     }
 
+    /**
+     * Get an attribute object by key associated with the authenticated user.
+     * @param callback A lambda that will be called each time new data is retrieved. Returns false to stop receiving more data; returns true to be called again if there's more data.
+     * @param repoId The requested repository ID. (required)
+     * @param everyone Boolean value that indicates whether to return attributes key value pairs associated with everyone or the currently authenticated user. (optional)
+     * @param prefer An optional OData header. Can be used to set the maximum page size using odata.maxpagesize. (optional)
+     * @param $select Limits the properties returned in the result. (optional)
+     * @param $orderby Specifies the order in which items are returned. The maximum number of expressions is 5. (optional)
+     * @param $top Limits the number of items returned from a collection. (optional)
+     * @param $skip Excludes the specified number of items of the queried collection from the result. (optional)
+     * @param $count Indicates whether the total count of items within a collection are returned in the result. (optional)
+     * @param maxPageSize Indicates the maximum number of items to return.
+     */
     public void getTrusteeAttributeKeyValuePairsForEach(ForEachCallBack<CompletableFuture<ODataValueContextOfListOfAttribute>> callback, String repoId, Boolean everyone, String prefer, String $select, String $orderby, Integer $top, Integer $skip, Boolean $count, Integer maxPageSize) {
         // Initial request
         CompletableFuture<ODataValueContextOfListOfAttribute> future = getTrusteeAttributeKeyValuePairs(repoId, everyone, prefer, $select, $orderby, $top, $skip, $count, maxPageSize);
