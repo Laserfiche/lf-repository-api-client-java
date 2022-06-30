@@ -68,7 +68,7 @@ public class FieldDefinitionsClient extends BaseClient<FieldDefinitionsApi> {
      * @param $count Indicates whether the total count of items within a collection are returned in the result. (optional)
      * @param maxPageSize Indicates the maximum number of items to return.
      */
-    public void getTrusteeAttributeKeyValuePairsForEach(ForEachCallBack<CompletableFuture<ODataValueContextOfIListOfWFieldInfo>> callback, String repoId, String prefer, String culture, String $select, String $orderby, Integer $top, Integer $skip, Boolean $count, Integer maxPageSize) {
+    public void getFieldDefinitionsForEach(ForEachCallBack<CompletableFuture<ODataValueContextOfIListOfWFieldInfo>> callback, String repoId, String prefer, String culture, String $select, String $orderby, Integer $top, Integer $skip, Boolean $count, Integer maxPageSize) {
         // Initial request
         CompletableFuture<ODataValueContextOfIListOfWFieldInfo> future = getFieldDefinitions(repoId, prefer, culture, $select, $orderby, $top, $skip, $count, maxPageSize);
         // Subsequent request based on return value of callback
