@@ -3,17 +3,10 @@ package com.laserfiche.repository.api;
 import com.laserfiche.repository.api.client.TagDefinitionsApi;
 import com.laserfiche.repository.api.client.model.ODataValueContextOfIListOfWTagInfo;
 import com.laserfiche.repository.api.client.model.WTagInfo;
-import retrofit2.http.Url;
 
 import java.util.concurrent.CompletableFuture;
 
-public class TagDefinitionsClient {
-    private TagDefinitionsApi client;
-
-    protected void setClient(TagDefinitionsApi client) {
-        this.client = client;
-    }
-
+public class TagDefinitionsClient extends BaseClient<TagDefinitionsApi> {
     /**
      *
      * - Returns a single tag definition. - Provide a tag definition ID, and get the single tag definition associated with that ID. Useful when another route provides a minimal amount of details, and more information about the specific tag is needed. - Allowed OData query options: Select

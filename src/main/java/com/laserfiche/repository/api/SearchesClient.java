@@ -6,13 +6,7 @@ import com.laserfiche.repository.api.client.model.*;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-public class SearchesClient {
-    private SearchesApi client;
-
-    protected void setClient(SearchesApi client) {
-        this.client = client;
-    }
-
+public class SearchesClient extends BaseClient<SearchesApi> {
     /**
      * Cancel or close an advanced search.
      * - Cancels a currently running search. - Closes a completed search.

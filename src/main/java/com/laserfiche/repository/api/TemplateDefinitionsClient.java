@@ -4,17 +4,10 @@ import com.laserfiche.repository.api.client.TemplateDefinitionsApi;
 import com.laserfiche.repository.api.client.model.ODataValueContextOfIListOfTemplateFieldInfo;
 import com.laserfiche.repository.api.client.model.ODataValueContextOfIListOfWTemplateInfo;
 import com.laserfiche.repository.api.client.model.WTemplateInfo;
-import retrofit2.http.Url;
 
 import java.util.concurrent.CompletableFuture;
 
-public class TemplateDefinitionsClient {
-    private TemplateDefinitionsApi client;
-
-    protected void setClient(TemplateDefinitionsApi client) {
-        this.client = client;
-    }
-
+public class TemplateDefinitionsClient extends BaseClient<TemplateDefinitionsApi> {
     /**
      *
      * - Returns a single template definition (including field definitions, if relevant). - Provide a template definition ID, and get the single template definition associated with that ID. Useful when a route provides a minimal amount of details, and more information about the specific template is needed. - Allowed OData query options: Select
