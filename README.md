@@ -1,38 +1,18 @@
-# com.laserfiche.repository.api.client
+# Laserfiche Repository API Client Maven
 
-## Requirements
+Use the Laserfiche Repository API to access data in a Laserfiche repository. Import or export files, modify the repository folder structure, read and modify templates and field values, and more.
 
-Building the API client library requires [Maven](https://maven.apache.org/) to be installed.
+Documentation [Laserfiche Repository API](https://developer.laserfiche.com/libraries.html).
 
-## Installation & Usage
+## How to contribute
 
-To install the API client library to your local Maven repository, simply execute:
+Technically you could use any editors you like. But it's more convenient if you are using either IntelliJ or Eclipse. Here is a few useful commands for building and testing the app.
 
-```shell
-mvn install
-```
+### Generate the repository client
 
-To deploy it to a remote Maven repository instead, configure the settings of the repository and execute:
+1. Download the `swagger-code-gen` command line tool. The repo for that library can be found [here](https://search.maven.org/search?q=a:swagger-codegen-cli).
+2. From the root directory of this Git repository, run the command `java -jar swagger-codegen-cli-3.0.34.jar generate -i lf-APIServer.json -l java --artifact-id com.laserfiche.api.client  --api-package com.laserfiche.api.client.apiserver --model-package com.laserfiche.api.client.model`
 
-```shell
-mvn deploy
-```
+### Build, Test, and Package
 
-Refer to the [official documentation](https://maven.apache.org/plugins/maven-deploy-plugin/usage.html) for more information.
-
-After the client library is installed/deployed, you can use it in your Maven project by adding the following to your *pom.xml*:
-
-```xml
-<dependency>
-    <groupId>io.swagger</groupId>
-    <artifactId>com.laserfiche.repository.api.client</artifactId>
-    <version>1.0.0</version>
-    <scope>compile</scope>
-</dependency>
-
-```
-
-## Author
-
-
-
+See the `./workflow/main.yml`.
