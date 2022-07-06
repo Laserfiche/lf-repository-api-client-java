@@ -15,4 +15,4 @@ The project is built using Maven. Any text editor or IDE that can work with Mave
 
 ### Build, Test, and Package
 
-Since we use Maven, any Mavan command should work properly. You can also take a look at the workflow file (`./workflow/main.yml`) for quick reference.
+Since we use Maven, any Maven command should work properly. You can also take a look at the workflow file (`./workflow/main.yml`) for quick reference.
