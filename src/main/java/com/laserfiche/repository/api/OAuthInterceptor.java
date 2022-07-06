@@ -27,6 +27,7 @@ public class OAuthInterceptor implements Interceptor {
         okhttp3.Request requestWithAuth = originalRequest.newBuilder()
                 .addHeader("Authorization", customRequest.headers().get("Authorization"))
                 .build();
-        return chain.proceed(requestWithAuth);
+        Response rep = chain.proceed(requestWithAuth);
+        return rep;
     }
 }
