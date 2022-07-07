@@ -40,11 +40,11 @@ public class RepositoryApiReturnTypeSelector<T> implements TypeSelector<T> {
 
         String typeComponentStr = element.getAsString();
         String[] typeComponents = typeComponentStr.split("\\.");
-        String type = typeComponents[typeComponents.length - 1];
-        Class<T> classToDeserializeTo = typeSelectableClasses.get(type);
+        String typeName = typeComponents[typeComponents.length - 1];
+        Class<T> classToDeserializeTo = typeSelectableClasses.get(typeName);
 
         if (classToDeserializeTo == null) {
-            throw new RuntimeException(String.format("Cannot find class: %s", type));
+            throw new RuntimeException(String.format("Cannot find class: %s", typeName));
         }
         return classToDeserializeTo;
     }
