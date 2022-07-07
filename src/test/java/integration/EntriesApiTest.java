@@ -9,7 +9,7 @@ import java.util.concurrent.CompletableFuture;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class EntriesApiTest extends BaseTest {
+class EntriesApiTest extends BaseTest {
     EntriesClient client;
 
     private final int maxPageSize = 1;
@@ -20,7 +20,7 @@ public class EntriesApiTest extends BaseTest {
     }
 
     @Test
-    public void getEntry_Success() {
+    void getEntry_Success() {
         CompletableFuture<Entry> future = client.getEntry(repoId, 1, null);
         Entry entry = future.join();
 
@@ -28,7 +28,7 @@ public class EntriesApiTest extends BaseTest {
     }
 
     @Test
-    public void getEntryListing_Success() {
+    void getEntryListing_Success() {
         CompletableFuture<ODataValueContextOfIListOfEntry> future = client.getEntryListing(repoId, 1, false, null, false, null, null, null, null, null, null, false, null);
         ODataValueContextOfIListOfEntry entryList = future.join();
 
@@ -36,7 +36,7 @@ public class EntriesApiTest extends BaseTest {
     }
 
     @Test
-    public void getEntryListingNextLink_Success() {
+    void getEntryListingNextLink_Success() {
         CompletableFuture<ODataValueContextOfIListOfEntry> future = client.getEntryListing(repoId, 1, false, null, false, null, null, null, null, null, null, false, maxPageSize);
         ODataValueContextOfIListOfEntry entryList = future.join();
 
@@ -52,7 +52,7 @@ public class EntriesApiTest extends BaseTest {
     }
 
     @Test
-    public void getEntryListingForEach_Success() {
+    void getEntryListingForEach_Success() {
         client.getEntryListingForEach((future -> {
             assertNotNull(future);
             ODataValueContextOfIListOfEntry entryList = future.join();
@@ -64,7 +64,7 @@ public class EntriesApiTest extends BaseTest {
     }
 
     @Test
-    public void getFieldValues_Success() {
+    void getFieldValues_Success() {
         CompletableFuture<ODataValueContextOfIListOfFieldValue> future = client.getFieldValues(repoId, 1, null, null, null, null, null, null, null, false, null);
         ODataValueContextOfIListOfFieldValue fieldValueList = future.join();
 
@@ -72,7 +72,7 @@ public class EntriesApiTest extends BaseTest {
     }
 
     @Test
-    public void getFieldValuesNextLink_Success() {
+    void getFieldValuesNextLink_Success() {
         CompletableFuture<ODataValueContextOfIListOfFieldValue> future = client.getFieldValues(repoId, 1, null, null, null, null, null, null, null, false, maxPageSize);
         ODataValueContextOfIListOfFieldValue fieldValueList = future.join();
 
@@ -88,7 +88,7 @@ public class EntriesApiTest extends BaseTest {
     }
 
     @Test
-    public void getFieldValuesForEach_Success() {
+    void getFieldValuesForEach_Success() {
         client.getFieldValuesForEach((future -> {
             assertNotNull(future);
             ODataValueContextOfIListOfFieldValue fieldValueList = future.join();
@@ -100,7 +100,7 @@ public class EntriesApiTest extends BaseTest {
     }
 
     @Test
-    public void getLinkValuesFromEntry_Success() {
+    void getLinkValuesFromEntry_Success() {
         CompletableFuture<ODataValueContextOfIListOfWEntryLinkInfo> future = client.getLinkValuesFromEntry(repoId, 28370, null, null, null, null, null, false, null);
         ODataValueContextOfIListOfWEntryLinkInfo linkInfoList = future.join();
 
@@ -108,7 +108,7 @@ public class EntriesApiTest extends BaseTest {
     }
 
     @Test
-    public void getLinkValuesFromEntryNextLink_Success() {
+    void getLinkValuesFromEntryNextLink_Success() {
         CompletableFuture<ODataValueContextOfIListOfWEntryLinkInfo> future = client.getLinkValuesFromEntry(repoId, 28370, null, null, null, null, null, false, maxPageSize);
         ODataValueContextOfIListOfWEntryLinkInfo linkInfoList = future.join();
 
@@ -124,7 +124,7 @@ public class EntriesApiTest extends BaseTest {
     }
 
     @Test
-    public void getLinkValuesFromEntryForEach_Success() {
+    void getLinkValuesFromEntryForEach_Success() {
         client.getLinkValuesFromEntryForEach((future -> {
             assertNotNull(future);
             ODataValueContextOfIListOfWEntryLinkInfo linkValueList = future.join();
@@ -136,7 +136,7 @@ public class EntriesApiTest extends BaseTest {
     }
 
     @Test
-    public void getTagsAssignedToEntry_Success() {
+    void getTagsAssignedToEntry_Success() {
         CompletableFuture<ODataValueContextOfIListOfWTagInfo> future = client.getTagsAssignedToEntry(repoId, 1, null, null,null, null, null, false, null);
         ODataValueContextOfIListOfWTagInfo tagInfoList = future.join();
 
@@ -144,7 +144,7 @@ public class EntriesApiTest extends BaseTest {
     }
 
     @Test
-    public void getTagsAssignedToEntryNextLink_Success() {
+    void getTagsAssignedToEntryNextLink_Success() {
         CompletableFuture<ODataValueContextOfIListOfWTagInfo> future = client.getTagsAssignedToEntry(repoId, 28370, null, null,null, null, null, false, maxPageSize);
         ODataValueContextOfIListOfWTagInfo tagInfoList = future.join();
 
@@ -160,7 +160,7 @@ public class EntriesApiTest extends BaseTest {
     }
 
     @Test
-    public void getTagsAssignedToEntryForEach_Success() {
+    void getTagsAssignedToEntryForEach_Success() {
         client.getTagsAssignedToEntryForEach((future -> {
             assertNotNull(future);
             ODataValueContextOfIListOfWTagInfo tagList = future.join();

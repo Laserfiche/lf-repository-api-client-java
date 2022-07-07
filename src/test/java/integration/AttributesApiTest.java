@@ -9,18 +9,18 @@ import java.util.concurrent.CompletableFuture;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class AttributesApiTest extends BaseTest {
+class AttributesApiTest extends BaseTest {
     AttributesClient client;
 
     private final int maxPageSize = 1;
 
     @BeforeEach
-    public void PerTestSetup() {
+    void PerTestSetup() {
         client = repositoryApiClient.getAttributesClient();
     }
 
     @Test
-    public void getTrusteeAttributeKeyValuePairs_Success() {
+    void getTrusteeAttributeKeyValuePairs_Success() {
         CompletableFuture<ODataValueContextOfListOfAttribute> future = client.getTrusteeAttributeKeyValuePairs(repoId, true, null, null, null, null, null, false, null);
         ODataValueContextOfListOfAttribute attributeList = future.join();
 
@@ -28,7 +28,7 @@ public class AttributesApiTest extends BaseTest {
     }
 
     @Test
-    public void getTrusteeAttributeKeyValuePairsNextLink_Success() {
+    void getTrusteeAttributeKeyValuePairsNextLink_Success() {
         CompletableFuture<ODataValueContextOfListOfAttribute> future = client.getTrusteeAttributeKeyValuePairs(repoId, true, null, null, null, null, null, false, maxPageSize);
         ODataValueContextOfListOfAttribute attributeList = future.join();
 
@@ -44,7 +44,7 @@ public class AttributesApiTest extends BaseTest {
     }
 
     @Test
-    public void getTrusteeAttributeKeyValuePairsForEach_Success() {
+    void getTrusteeAttributeKeyValuePairsForEach_Success() {
         client.getTrusteeAttributeKeyValuePairsForEach((future -> {
             assertNotNull(future);
             ODataValueContextOfListOfAttribute attributeList = future.join();
