@@ -9,18 +9,18 @@ import java.util.concurrent.CompletableFuture;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class TagDefinitionsApiTest extends BaseTest {
+class TagDefinitionsApiTest extends BaseTest {
     TagDefinitionsClient client;
 
     private final int maxPageSize = 1;
 
     @BeforeEach
-    public void PerTestSetup() {
+    void PerTestSetup() {
         client = repositoryApiClient.getTagDefinitionsClient();
     }
 
     @Test
-    public void getTagDefinitions_Success() {
+    void getTagDefinitions_Success() {
         CompletableFuture<ODataValueContextOfIListOfWTagInfo> future = client.getTagDefinitions(repoId, null, null, null, null, null, null, false, null);
         ODataValueContextOfIListOfWTagInfo tagInfoList = future.join();
 
@@ -28,7 +28,7 @@ public class TagDefinitionsApiTest extends BaseTest {
     }
 
     @Test
-    public void getTagDefinitionsNextLink_Success() {
+    void getTagDefinitionsNextLink_Success() {
         CompletableFuture<ODataValueContextOfIListOfWTagInfo> future = client.getTagDefinitions(repoId, null, null, null, null, null, null, false, maxPageSize);
         ODataValueContextOfIListOfWTagInfo tagInfoList = future.join();
 
@@ -44,7 +44,7 @@ public class TagDefinitionsApiTest extends BaseTest {
     }
 
     @Test
-    public void getTagDefinitionsForEach_Success() {
+    void getTagDefinitionsForEach_Success() {
         client.getTrusteeAttributeKeyValuePairsForEach((future -> {
             assertNotNull(future);
             ODataValueContextOfIListOfWTagInfo tagList = future.join();

@@ -9,9 +9,9 @@ import java.util.concurrent.CompletableFuture;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class SimpleSearchesApiTest extends BaseTest {
+class SimpleSearchesApiTest extends BaseTest {
     @Test
-    public void createSimpleSearchOperation_Success() {
+    void createSimpleSearchOperation_Success() {
         SimpleSearchesClient client = repositoryApiClient.getSimpleSearchesClient();
         SimpleSearchRequest searchRequest = new SimpleSearchRequest();
         searchRequest.setSearchCommand("({LF:Basic ~= \"search text\", option=\"DFANLT\"})");
