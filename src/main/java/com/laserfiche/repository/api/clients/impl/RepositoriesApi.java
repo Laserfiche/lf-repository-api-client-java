@@ -11,6 +11,6 @@ public interface RepositoriesApi {
    * - Get the repository resource list that current user has access to.
    * @return CompletableFuture&lt;List&lt;RepositoryInfo&gt;&gt;
    */
-  @GET("v2-alpha/Repositories")
+  @GET("v1/Repositories")
   CompletableFuture<List<RepositoryInfo>> getRepositoryList();
 }
