@@ -4,6 +4,7 @@ import com.laserfiche.repository.api.BaseClient;
 import com.laserfiche.repository.api.clients.impl.LinkDefinitionsApi;
 import com.laserfiche.repository.api.clients.impl.model.EntryLinkTypeInfo;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfEntryLinkTypeInfo;
+import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfWFieldInfo;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -34,5 +35,15 @@ public class LinkDefinitionsClient extends BaseClient<LinkDefinitionsApi> {
      */
     public CompletableFuture<ODataValueContextOfIListOfEntryLinkTypeInfo> getLinkDefinitions(String repoId, String prefer, String select, String orderby, Integer top, Integer skip, Boolean count) {
         return client.getLinkDefinitions(repoId, prefer, select, orderby, top, skip, count);
+    }
+
+    /**
+     * - Returns the link definitions associated with a repository.
+     * @param nextLink Full next link URL returned by the backend.
+     * @param maxPageSize The maximum number of items returned by the backend.
+     * @return CompletableFuture&lt;ODataValueContextOfIListOfWFieldInfo&gt;
+     */
+    public CompletableFuture<ODataValueContextOfIListOfEntryLinkTypeInfo> getLinkDefinitionsNextLink(String nextLink, Integer maxPageSize) {
+        return client.getLinkDefinitionsPaginate(nextLink, mergeMaxPageSizeIntoPrefer(maxPageSize, null));
     }
 }
