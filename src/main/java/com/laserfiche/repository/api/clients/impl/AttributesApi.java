@@ -19,7 +19,7 @@ public interface AttributesApi {
    * @param $count Indicates whether the total count of items within a collection are returned in the result. (optional)
    * @return CompletableFuture&lt;ODataValueContextOfListOfAttribute&gt;
    */
-  @GET("v2-alpha/Repositories/{repoId}/Attributes")
+  @GET("v1/Repositories/{repoId}/Attributes")
   CompletableFuture<ODataValueContextOfListOfAttribute> getTrusteeAttributeKeyValuePairs(
     @retrofit2.http.Path("repoId") String repoId, @retrofit2.http.Query("everyone") Boolean everyone, @retrofit2.http.Header("Prefer") String prefer, @retrofit2.http.Query("$select") String $select, @retrofit2.http.Query("$orderby") String $orderby, @retrofit2.http.Query("$top") Integer $top, @retrofit2.http.Query("$skip") Integer $skip, @retrofit2.http.Query("$count") Boolean $count
   );
@@ -42,7 +42,7 @@ public interface AttributesApi {
    * @param everyone Boolean value that indicates whether to return attributes associated with everyone or the currently authenticated user. (optional)
    * @return CompletableFuture&lt;Attribute&gt;
    */
-  @GET("v2-alpha/Repositories/{repoId}/Attributes/{attributeKey}")
+  @GET("v1/Repositories/{repoId}/Attributes/{attributeKey}")
   CompletableFuture<Attribute> getTrusteeAttributeValueByKey(
     @retrofit2.http.Path("repoId") String repoId, @retrofit2.http.Path("attributeKey") String attributeKey, @retrofit2.http.Query("everyone") Boolean everyone
   );
