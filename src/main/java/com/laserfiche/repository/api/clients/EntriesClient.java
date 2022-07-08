@@ -449,35 +449,6 @@ public class EntriesClient extends BaseClient<EntriesApi> {
 
     /**
      *
-     * - Export an entry. - Provide an entry ID, part, format, page range, and audit event and export the entry part as the provided format. - This operation is a &#x27;simple operation&#x27;. For more functionality, refer to the non-simple export route.
-     * @param part Specifies which &#x27;part&#x27; of the document to export. Options include: Edoc, Pages and Text. (required)
-     * @param repoId The requested repository ID. (required)
-     * @param entryId The ID of entry to export. (required)
-     * @param body The body of the export request. (optional)
-     * @param format Specifies the format to export as. This value is ignored when part&#x3D;Edoc or Text. Options include: TIFF, PNG, PDF and JPEG. The default value is TIFF. (optional)
-     * @param pageRange A comma seperated range of pages to include. This value is ignored when part&#x3D;Edoc. Ex: 1,3,4 or 1-3,5-7,9. (optional)
-     * @return CompletableFuture&lt;ODataValueOfString&gt;
-     */
-    public CompletableFuture<ODataValueOfString> simpleExport(Part part, String repoId, Integer entryId, ExportRequestBody body, Format format, String pageRange) {
-        return client.simpleExport(part, repoId, entryId, body, format, pageRange);
-    }
-
-    /**
-     *
-     * - Import a new document in the specified folder with file (no more than 100Mb). - Optionally sets metadata. - With this route, partial success is possible. The response returns error message, which contain information about any errors that may have occurred during the import. As long as the documentLink returned, the entry is created, even if other steps fail.
-     * @param repoId The requested repository ID. (required)
-     * @param parentEntryId The entry ID of the folder that the document will be created in. (required)
-     * @param file  (optional)
-     * @param request  (optional)
-     * @param culture An optional query parameter used to indicate the locale that should be used.             The value should be a standard language tag. (optional)
-     * @return CompletableFuture&lt;SimpleImportResult&gt;
-     */
-    public CompletableFuture<SimpleImportResult> simpleImport(String repoId, Integer parentEntryId, RequestBody file, SimpleImportRequest request, String culture) {
-        return client.simpleImport(repoId, parentEntryId, file, request, culture);
-    }
-
-    /**
-     *
      * - Assign a template to an entry. - Provide an entry ID, template name, and a list of template fields to assign to that entry. - Only template values will be modified. Any existing independent fields on the entry will not be modified, nor will they be added if included in the request. The only modification to fields will only occur on templated fields. If the previously assigned template includes common template fields as the newly assigned template, the common field values will not be modified.
      * @param repoId The requested repository ID. (required)
      * @param entryId The ID of entry that will have its template updated. (required)
