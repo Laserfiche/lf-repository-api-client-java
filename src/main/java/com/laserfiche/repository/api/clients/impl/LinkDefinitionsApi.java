@@ -2,6 +2,7 @@ package com.laserfiche.repository.api.clients.impl;
 
 import com.laserfiche.repository.api.clients.impl.model.EntryLinkTypeInfo;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfEntryLinkTypeInfo;
+import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfWFieldInfo;
 import retrofit2.http.*;
 
 import java.util.concurrent.CompletableFuture;
@@ -37,4 +38,13 @@ public interface LinkDefinitionsApi {
     @retrofit2.http.Path("repoId") String repoId, @retrofit2.http.Header("Prefer") String prefer, @retrofit2.http.Query("$select") String $select, @retrofit2.http.Query("$orderby") String $orderby, @retrofit2.http.Query("$top") Integer $top, @retrofit2.http.Query("$skip") Integer $skip, @retrofit2.http.Query("$count") Boolean $count
   );
 
+  /**
+   *
+   * - Returns the link definitions associated with a repository.
+   * @param url Full next link URL returned by the backend.
+   * @param prefer May contain maxpagesize information.
+   * @return CompletableFuture&lt;ODataValueContextOfIListOfEntryLinkTypeInfo&gt;
+   */
+  @GET
+  CompletableFuture<ODataValueContextOfIListOfEntryLinkTypeInfo> getLinkDefinitionsPaginate(@Url String url, @retrofit2.http.Header("Prefer") String prefer);
 }
