@@ -10,7 +10,7 @@ import java.util.concurrent.CompletableFuture;
 public interface LinkDefinitionsApi {
   /**
    * Returns a single link definition object.
-   * - Returns a single field definition associated with the specified ID. - Provide a link type ID and get the associated link definition. Useful when a route provides a minimal amount of details and more information about the specific link definition is needed. - Allowed OData query options: Select
+   * - Returns a single link definition associated with the specified ID. - Provide a link type ID and get the associated link definition. Useful when a route provides a minimal amount of details and more information about the specific link definition is needed. - Allowed OData query options: Select
    * @param repoId The requested repository ID. (required)
    * @param linkTypeId The requested link type ID. (required)
    * @param $select Limits the properties returned in the result. (optional)
