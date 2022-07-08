@@ -337,7 +337,7 @@ public interface EntriesApi {
    * @param request  (optional)
    * @param autoRename An optional query parameter used to indicate if the new document should be automatically             renamed if an entry already exists with the given name in the folder. The default value is false. (optional)
    * @param culture An optional query parameter used to indicate the locale that should be used.             The value should be a standard language tag. (optional)
-   * @return Call&lt;CreateEntryResult&gt;
+   * @return CompletableFuture&lt;CreateEntryResult&gt;
    */
   @retrofit2.http.Multipart
   @POST("v1/Repositories/{repoId}/Entries/{parentEntryId}/{fileName}")
