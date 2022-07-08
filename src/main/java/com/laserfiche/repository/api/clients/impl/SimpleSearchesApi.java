@@ -23,7 +23,7 @@ public interface SimpleSearchesApi {
   @Headers({
     "Content-Type:application/json"
   })
-  @POST("v2-alpha/Repositories/{repoId}/SimpleSearches")
+  @POST("v1/Repositories/{repoId}/SimpleSearches")
   CompletableFuture<ODataValueOfIListOfEntry> createSimpleSearchOperation(
     @retrofit2.http.Path("repoId") String repoId, @retrofit2.http.Body SimpleSearchRequest body, @retrofit2.http.Query("fields") List<String> fields, @retrofit2.http.Query("formatFields") Boolean formatFields, @retrofit2.http.Query("culture") String culture, @retrofit2.http.Query("$select") String $select, @retrofit2.http.Query("$orderby") String $orderby, @retrofit2.http.Query("$count") Boolean $count
   );
