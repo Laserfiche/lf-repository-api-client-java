@@ -12,7 +12,7 @@ public interface TasksApi {
    * @param operationToken The operation token (required)
    * @return CompletableFuture&lt;Void&gt;
    */
-  @DELETE("v2-alpha/Repositories/{repoId}/Tasks/{operationToken}")
+  @DELETE("v1/Repositories/{repoId}/Tasks/{operationToken}")
   CompletableFuture<Void> cancelOperation(
     @retrofit2.http.Path("repoId") String repoId, @retrofit2.http.Path("operationToken") String operationToken
   );
@@ -24,7 +24,7 @@ public interface TasksApi {
    * @param operationToken The operation token (required)
    * @return CompletableFuture&lt;OperationProgress&gt;
    */
-  @GET("v2-alpha/Repositories/{repoId}/Tasks/{operationToken}")
+  @GET("v1/Repositories/{repoId}/Tasks/{operationToken}")
   CompletableFuture<OperationProgress> getOperationStatusAndProgress(
     @retrofit2.http.Path("repoId") String repoId, @retrofit2.http.Path("operationToken") String operationToken
   );
