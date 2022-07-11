@@ -16,7 +16,7 @@ public interface TemplateDefinitionsApi {
    * @param $select Limits the properties returned in the result. (optional)
    * @return CompletableFuture&lt;WTemplateInfo&gt;
    */
-  @GET("v2-alpha/Repositories/{repoId}/TemplateDefinitions/{templateId}")
+  @GET("v1/Repositories/{repoId}/TemplateDefinitions/{templateId}")
   CompletableFuture<WTemplateInfo> getTemplateDefinitionById(
     @retrofit2.http.Path("repoId") String repoId, @retrofit2.http.Path("templateId") Integer templateId, @retrofit2.http.Query("culture") String culture, @retrofit2.http.Query("$select") String $select
   );
@@ -35,7 +35,7 @@ public interface TemplateDefinitionsApi {
    * @param $count Indicates whether the total count of items within a collection are returned in the result. (optional)
    * @return CompletableFuture&lt;ODataValueContextOfIListOfWTemplateInfo&gt;
    */
-  @GET("v2-alpha/Repositories/{repoId}/TemplateDefinitions")
+  @GET("v1/Repositories/{repoId}/TemplateDefinitions")
   CompletableFuture<ODataValueContextOfIListOfWTemplateInfo> getTemplateDefinitions(
     @retrofit2.http.Path("repoId") String repoId, @retrofit2.http.Query("templateName") String templateName, @retrofit2.http.Header("Prefer") String prefer, @retrofit2.http.Query("culture") String culture, @retrofit2.http.Query("$select") String $select, @retrofit2.http.Query("$orderby") String $orderby, @retrofit2.http.Query("$top") Integer $top, @retrofit2.http.Query("$skip") Integer $skip, @retrofit2.http.Query("$count") Boolean $count
   );
@@ -63,7 +63,7 @@ public interface TemplateDefinitionsApi {
    * @param $count Indicates whether the total count of items within a collection are returned in the result. (optional)
    * @return CompletableFuture&lt;ODataValueContextOfIListOfTemplateFieldInfo&gt;
    */
-  @GET("v2-alpha/Repositories/{repoId}/TemplateDefinitions/{templateId}/fields")
+  @GET("v1/Repositories/{repoId}/TemplateDefinitions/{templateId}/fields")
   CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo> getTemplateFieldDefinitions(
     @retrofit2.http.Path("repoId") String repoId, @retrofit2.http.Path("templateId") Integer templateId, @retrofit2.http.Header("Prefer") String prefer, @retrofit2.http.Query("culture") String culture, @retrofit2.http.Query("$select") String $select, @retrofit2.http.Query("$orderby") String $orderby, @retrofit2.http.Query("$top") Integer $top, @retrofit2.http.Query("$skip") Integer $skip, @retrofit2.http.Query("$count") Boolean $count
   );
@@ -92,7 +92,7 @@ public interface TemplateDefinitionsApi {
    * @param $count Indicates whether the total count of items within a collection are returned in the result. (optional)
    * @return CompletableFuture&lt;ODataValueContextOfIListOfTemplateFieldInfo&gt;
    */
-  @GET("v2-alpha/Repositories/{repoId}/TemplateDefinitions/Fields")
+  @GET("v1/Repositories/{repoId}/TemplateDefinitions/Fields")
   CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo> getTemplateFieldDefinitionsByTemplateName(
     @retrofit2.http.Path("repoId") String repoId, @retrofit2.http.Query("templateName") String templateName, @retrofit2.http.Header("Prefer") String prefer, @retrofit2.http.Query("culture") String culture, @retrofit2.http.Query("$select") String $select, @retrofit2.http.Query("$orderby") String $orderby, @retrofit2.http.Query("$top") Integer $top, @retrofit2.http.Query("$skip") Integer $skip, @retrofit2.http.Query("$count") Boolean $count
   );

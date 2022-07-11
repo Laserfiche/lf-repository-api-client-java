@@ -15,7 +15,7 @@ public interface FieldDefinitionsApi {
    * @param $select Limits the properties returned in the result. (optional)
    * @return CompletableFuture&lt;WFieldInfo&gt;
    */
-  @GET("v2-alpha/Repositories/{repoId}/FieldDefinitions/{fieldDefinitionId}")
+  @GET("v1/Repositories/{repoId}/FieldDefinitions/{fieldDefinitionId}")
   CompletableFuture<WFieldInfo> getFieldDefinitionById(
     @retrofit2.http.Path("repoId") String repoId, @retrofit2.http.Path("fieldDefinitionId") Integer fieldDefinitionId, @retrofit2.http.Query("culture") String culture, @retrofit2.http.Query("$select") String $select
   );
@@ -33,7 +33,7 @@ public interface FieldDefinitionsApi {
    * @param $count Indicates whether the total count of items within a collection are returned in the result. (optional)
    * @return CompletableFuture&lt;ODataValueContextOfIListOfWFieldInfo&gt;
    */
-  @GET("v2-alpha/Repositories/{repoId}/FieldDefinitions")
+  @GET("v1/Repositories/{repoId}/FieldDefinitions")
   CompletableFuture<ODataValueContextOfIListOfWFieldInfo> getFieldDefinitions(
     @retrofit2.http.Path("repoId") String repoId, @retrofit2.http.Header("Prefer") String prefer, @retrofit2.http.Query("culture") String culture, @retrofit2.http.Query("$select") String $select, @retrofit2.http.Query("$orderby") String $orderby, @retrofit2.http.Query("$top") Integer $top, @retrofit2.http.Query("$skip") Integer $skip, @retrofit2.http.Query("$count") Boolean $count
   );
