@@ -11,7 +11,7 @@ public interface AuditReasonsApi {
    * @param repoId The requested repository ID. (required)
    * @return CompletableFuture&lt;AuditReasons&gt;
    */
-  @GET("v2-alpha/Repositories/{repoId}/AuditReasons")
+  @GET("v1/Repositories/{repoId}/AuditReasons")
   CompletableFuture<AuditReasons> getAuditReasons(
     @retrofit2.http.Path("repoId") String repoId
   );
