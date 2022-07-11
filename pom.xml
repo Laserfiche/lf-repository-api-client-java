@@ -34,6 +34,20 @@
     </developer>
   </developers>
 
+  <repositories>
+    <repository>
+      <id>sonatypeSnapshots</id>
+      <name>Sonatype Snapshots</name>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+      <url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>
+    </repository>
+  </repositories>
+
   <build>
     <plugins>
       <plugin>
