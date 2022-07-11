@@ -4,7 +4,6 @@ import com.laserfiche.repository.api.BaseClient;
 import com.laserfiche.repository.api.ForEachCallBack;
 import com.laserfiche.repository.api.clients.impl.EntriesApi;
 import com.laserfiche.repository.api.clients.impl.model.*;
-import com.laserfiche.repository.api.clients.impl.model.Part;
 import okhttp3.RequestBody;
 
 import java.io.File;
