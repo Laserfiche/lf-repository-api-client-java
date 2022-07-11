@@ -2,6 +2,7 @@ package integration;
 
 import com.laserfiche.repository.api.clients.AttributesClient;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfListOfAttribute;
+import com.laserfiche.repository.api.clients.impl.model.Attribute;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -25,6 +26,16 @@ class AttributesApiTest extends BaseTest {
         ODataValueContextOfListOfAttribute attributeList = future.join();
 
         assertNotNull(attributeList);
+    }
+
+    @Test
+    void getAttributeValueByKey_Success() {
+        CompletableFuture<ODataValueContextOfListOfAttribute> future = client.getTrusteeAttributeKeyValuePairs(repoId, true, null, null, null, null, null, false, null);
+        ODataValueContextOfListOfAttribute attributeList = future.join();
+        assertNotNull(attributeList);
+        CompletableFuture<Attribute> newFuture = client.getTrusteeAttributeValueByKey(repoId, attributeList.getValue().get(0).getKey(), true);
+        Attribute attributeObj = newFuture.join();
+        assertNotNull(attributeObj);
     }
 
     @Test

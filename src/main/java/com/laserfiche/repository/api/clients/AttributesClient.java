@@ -3,6 +3,7 @@ package com.laserfiche.repository.api.clients;
 import com.laserfiche.repository.api.BaseClient;
 import com.laserfiche.repository.api.ForEachCallBack;
 import com.laserfiche.repository.api.clients.impl.AttributesApi;
+import com.laserfiche.repository.api.clients.impl.model.Attribute;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfListOfAttribute;
 
 import java.util.concurrent.CompletableFuture;
@@ -28,13 +29,25 @@ public class AttributesClient extends BaseClient<AttributesApi> {
 
     /**
      * Get an attribute object by key associated with the authenticated user.
+     * - Returns the attribute associated with the key. Alternatively, return the attribute associated with the key within \&quot;Everyone\&quot; group. - Optional query parameters: everyone (bool, default false). When true, the server only searches for the attribute value with the given key upon the authenticated users attributes. If false, only the authenticated users attributes will be queried.
+     * @param repoId The requested repository ID. (required)
+     * @param attributeKey The requested attribute key. (required)
+     * @param everyone Boolean value that indicates whether to return attributes associated with everyone or the currently authenticated user. (optional)
+     * @return CompletableFuture&lt;Attribute&gt;
+     */
+    public CompletableFuture<Attribute> getTrusteeAttributeValueByKey(String repoId, String attributeKey, Boolean everyone){
+        return client.getTrusteeAttributeValueByKey(repoId, attributeKey, everyone);
+    }
+
+    /**
+     * Get an attribute object by key associated with the authenticated user.
      * - Returns the attribute associated with the key. Alternatively, return the attribute associated with the key within
      *  \&quot;Everyone\&quot; group. - Optional query parameters: everyone (bool, default false). When true, the server
      * only searches for the attribute value with the given key upon the authenticated users attributes. If false, only
      * the authenticated users attributes will be queried.
      * @param nextLink Full URL to get the rest of the collection of data.
      * @param maxPageSize The maximum number of items to retrieve.
-     * @return CompletableFuture&lt;Attribute&gt;
+     * @return CompletableFuture&lt;ODataValueContextOfListOfAttribute&gt;
      */
     public CompletableFuture<ODataValueContextOfListOfAttribute> getTrusteeAttributeKeyValuePairsNextLink(String nextLink, Integer maxPageSize) {
         return client.getTrusteeAttributeKeyValuePairsPaginate(nextLink, mergeMaxPageSizeIntoPrefer(maxPageSize, null));

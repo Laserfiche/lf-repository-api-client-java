@@ -101,7 +101,7 @@ class EntriesApiTest extends BaseTest {
 
     @Test
     void getLinkValuesFromEntry_Success() {
-        CompletableFuture<ODataValueContextOfIListOfWEntryLinkInfo> future = client.getLinkValuesFromEntry(repoId, 28370, null, null, null, null, null, false, null);
+        CompletableFuture<ODataValueContextOfIListOfWEntryLinkInfo> future = client.getLinkValuesFromEntry(repoId, 1, null, null, null, null, null, false, null);
         ODataValueContextOfIListOfWEntryLinkInfo linkInfoList = future.join();
 
         assertNotNull(linkInfoList);
@@ -109,7 +109,7 @@ class EntriesApiTest extends BaseTest {
 
     @Test
     void getLinkValuesFromEntryNextLink_Success() {
-        CompletableFuture<ODataValueContextOfIListOfWEntryLinkInfo> future = client.getLinkValuesFromEntry(repoId, 28370, null, null, null, null, null, false, maxPageSize);
+        CompletableFuture<ODataValueContextOfIListOfWEntryLinkInfo> future = client.getLinkValuesFromEntry(repoId, 1, null, null, null, null, null, false, maxPageSize);
         ODataValueContextOfIListOfWEntryLinkInfo linkInfoList = future.join();
 
         assertNotNull(linkInfoList);
@@ -132,12 +132,12 @@ class EntriesApiTest extends BaseTest {
                 assertNotNull(linkValueList.getValue());
             }
             return linkValueList != null; // Stop asking if there's no data.
-        }), repoId, 28370, null, null, null, null, null, false, maxPageSize);
+        }), repoId, 1, null, null, null, null, null, false, maxPageSize);
     }
 
     @Test
     void getTagsAssignedToEntry_Success() {
-        CompletableFuture<ODataValueContextOfIListOfWTagInfo> future = client.getTagsAssignedToEntry(repoId, 1, null, null,null, null, null, false, null);
+        CompletableFuture<ODataValueContextOfIListOfWTagInfo> future = client.getTagsAssignedToEntry(repoId, 1, null, null, null, null, null, false, null);
         ODataValueContextOfIListOfWTagInfo tagInfoList = future.join();
 
         assertNotNull(tagInfoList);
@@ -145,7 +145,7 @@ class EntriesApiTest extends BaseTest {
 
     @Test
     void getTagsAssignedToEntryNextLink_Success() {
-        CompletableFuture<ODataValueContextOfIListOfWTagInfo> future = client.getTagsAssignedToEntry(repoId, 28370, null, null,null, null, null, false, maxPageSize);
+        CompletableFuture<ODataValueContextOfIListOfWTagInfo> future = client.getTagsAssignedToEntry(repoId, 1, null, null, null, null, null, false, maxPageSize);
         ODataValueContextOfIListOfWTagInfo tagInfoList = future.join();
 
         assertNotNull(tagInfoList);
@@ -168,6 +168,6 @@ class EntriesApiTest extends BaseTest {
                 assertNotNull(tagList.getValue());
             }
             return tagList != null; // Stop asking if there's no data.
-        }), repoId, 28370, null, null,null, null, null, false, maxPageSize);
+        }), repoId, 1, null, null, null, null, null, false, maxPageSize);
     }
 }

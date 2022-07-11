@@ -18,7 +18,7 @@ public class TagDefinitionsClient extends BaseClient<TagDefinitionsApi> {
      * @param select Limits the properties returned in the result. (optional)
      * @return CompletableFuture&lt;WTagInfo&gt;
      */
-    CompletableFuture<WTagInfo> getTagDefinitionById(String repoId, Integer tagId, String culture, String select) {
+    public CompletableFuture<WTagInfo> getTagDefinitionById(String repoId, Integer tagId, String culture, String select) {
         return client.getTagDefinitionById(repoId, tagId, culture, select);
     }
 
