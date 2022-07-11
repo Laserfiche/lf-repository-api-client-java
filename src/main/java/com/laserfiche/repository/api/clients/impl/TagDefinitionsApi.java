@@ -15,7 +15,7 @@ public interface TagDefinitionsApi {
    * @param $select Limits the properties returned in the result. (optional)
    * @return CompletableFuture&lt;WTagInfo&gt;
    */
-  @GET("v2-alpha/Repositories/{repoId}/TagDefinitions/{tagId}")
+  @GET("v1/Repositories/{repoId}/TagDefinitions/{tagId}")
   CompletableFuture<WTagInfo> getTagDefinitionById(
     @retrofit2.http.Path("repoId") String repoId, @retrofit2.http.Path("tagId") Integer tagId, @retrofit2.http.Query("culture") String culture, @retrofit2.http.Query("$select") String $select
   );
@@ -33,7 +33,7 @@ public interface TagDefinitionsApi {
    * @param $count Indicates whether the total count of items within a collection are returned in the result. (optional)
    * @return CompletableFuture&lt;ODataValueContextOfIListOfWTagInfo&gt;
    */
-  @GET("v2-alpha/Repositories/{repoId}/TagDefinitions")
+  @GET("v1/Repositories/{repoId}/TagDefinitions")
   CompletableFuture<ODataValueContextOfIListOfWTagInfo> getTagDefinitions(
     @retrofit2.http.Path("repoId") String repoId, @retrofit2.http.Header("Prefer") String prefer, @retrofit2.http.Query("culture") String culture, @retrofit2.http.Query("$select") String $select, @retrofit2.http.Query("$orderby") String $orderby, @retrofit2.http.Query("$top") Integer $top, @retrofit2.http.Query("$skip") Integer $skip, @retrofit2.http.Query("$count") Boolean $count
   );

@@ -4,7 +4,6 @@ import com.laserfiche.repository.api.BaseClient;
 import com.laserfiche.repository.api.ForEachCallBack;
 import com.laserfiche.repository.api.clients.impl.EntriesApi;
 import com.laserfiche.repository.api.clients.impl.model.*;
-import com.laserfiche.repository.api.clients.impl.model.Part;
 import okhttp3.RequestBody;
 
 import java.io.File;
@@ -392,6 +391,22 @@ public class EntriesClient extends BaseClient<EntriesApi> {
     }
 
     /**
+     * Creates a new document in a folder.
+     * - Creates a new document in the specified folder. - Optionally sets metadata and electronic document component. - Optional parameter: autoRename (default false). If an entry already exists with the given name, the entry will be automatically renamed. With this route, partial success is possible. The response returns multiple operation (entryCreate operation, setEdoc operation, setLinks operation, etc..) objects, which contain information about any errors that may have occurred during the creation. As long as the entryCreate operation succeeds, the entry will be created, even if all other operations fail.
+     * @param repoId The requested repository ID. (required)
+     * @param parentEntryId The entry ID of the folder that the document will be created in. (required)
+     * @param fileName The created document&#x27;s file name. (required)
+     * @param electronicDocument  (optional)
+     * @param request  (optional)
+     * @param autoRename An optional query parameter used to indicate if the new document should be automatically             renamed if an entry already exists with the given name in the folder. The default value is false. (optional)
+     * @param culture An optional query parameter used to indicate the locale that should be used.             The value should be a standard language tag. (optional)
+     * @return CompletableFuture&lt;CreateEntryResult&gt;
+     */
+    CompletableFuture<CreateEntryResult> importDocument(String repoId, Integer parentEntryId, String fileName, RequestBody electronicDocument, PostEntryWithEdocMetadataRequest request, Boolean autoRename, String culture) {
+        return client.importDocument(repoId, parentEntryId, fileName, electronicDocument, request, autoRename, culture);
+    }
+
+    /**
      *
      * - Get the tags assigned to an entry.
      * @param nextLink Full next link URL returned by the backend.
@@ -445,35 +460,6 @@ public class EntriesClient extends BaseClient<EntriesApi> {
      */
     public CompletableFuture<Entry> moveOrRenameDocument(String repoId, Integer entryId, PatchEntryRequest body, Boolean autoRename, String culture) {
         return client.moveOrRenameDocument(repoId, entryId, body, autoRename, culture);
-    }
-
-    /**
-     *
-     * - Export an entry. - Provide an entry ID, part, format, page range, and audit event and export the entry part as the provided format. - This operation is a &#x27;simple operation&#x27;. For more functionality, refer to the non-simple export route.
-     * @param part Specifies which &#x27;part&#x27; of the document to export. Options include: Edoc, Pages and Text. (required)
-     * @param repoId The requested repository ID. (required)
-     * @param entryId The ID of entry to export. (required)
-     * @param body The body of the export request. (optional)
-     * @param format Specifies the format to export as. This value is ignored when part&#x3D;Edoc or Text. Options include: TIFF, PNG, PDF and JPEG. The default value is TIFF. (optional)
-     * @param pageRange A comma seperated range of pages to include. This value is ignored when part&#x3D;Edoc. Ex: 1,3,4 or 1-3,5-7,9. (optional)
-     * @return CompletableFuture&lt;ODataValueOfString&gt;
-     */
-    public CompletableFuture<ODataValueOfString> simpleExport(Part part, String repoId, Integer entryId, ExportRequestBody body, Format format, String pageRange) {
-        return client.simpleExport(part, repoId, entryId, body, format, pageRange);
-    }
-
-    /**
-     *
-     * - Import a new document in the specified folder with file (no more than 100Mb). - Optionally sets metadata. - With this route, partial success is possible. The response returns error message, which contain information about any errors that may have occurred during the import. As long as the documentLink returned, the entry is created, even if other steps fail.
-     * @param repoId The requested repository ID. (required)
-     * @param parentEntryId The entry ID of the folder that the document will be created in. (required)
-     * @param file  (optional)
-     * @param request  (optional)
-     * @param culture An optional query parameter used to indicate the locale that should be used.             The value should be a standard language tag. (optional)
-     * @return CompletableFuture&lt;SimpleImportResult&gt;
-     */
-    public CompletableFuture<SimpleImportResult> simpleImport(String repoId, Integer parentEntryId, RequestBody file, SimpleImportRequest request, String culture) {
-        return client.simpleImport(repoId, parentEntryId, file, request, culture);
     }
 
     /**
