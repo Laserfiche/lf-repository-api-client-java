@@ -12,6 +12,7 @@
 
 package com.laserfiche.repository.api.clients.impl.model;
 
+import java.time.OffsetDateTime;
 import java.util.Objects;
 
 import com.google.gson.annotations.SerializedName;
@@ -42,6 +43,12 @@ public class OperationProgress {
 
   @SerializedName("redirectUri")
   private String redirectUri = null;
+
+  @SerializedName("startTimestamp")
+  private OffsetDateTime startTimestamp = null;
+
+  @SerializedName("statusTimestamp")
+  private OffsetDateTime statusTimestamp = null;
 
   public OperationProgress operationToken(String operationToken) {
     this.operationToken = operationToken;
