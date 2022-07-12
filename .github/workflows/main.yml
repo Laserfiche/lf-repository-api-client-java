@@ -35,6 +35,12 @@ jobs:
         REPOSITORY_ID:  ${{ secrets.DEV_CA_PUBLIC_USE_REPOSITORY_ID_1 }}
       run: mvn test
 
+    - name: Publish Test Results
+      uses: EnricoMi/publish-unit-test-result-action@v1
+      if: always()
+      with:
+        files: "test-results/**/*.xml"
+
   build-documentation:
 
     runs-on: ubuntu-latest
