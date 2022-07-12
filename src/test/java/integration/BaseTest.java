@@ -27,7 +27,7 @@ public class BaseTest {
     public static void setUp() {
         spKey = System.getenv("SERVICE_PRINCIPAL_KEY");
         String accessKeyBase64 = System.getenv("ACCESS_KEY");
-        String repoId = System.getenv("REPOSITORY_ID");
+        repoId = System.getenv("REPOSITORY_ID");
         if (spKey == null && accessKeyBase64 == null && repoId == null) {
             // Load environment variables
             Dotenv dotenv = Dotenv
