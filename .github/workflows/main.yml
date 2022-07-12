@@ -18,16 +18,16 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    
+
     - name: Set up JDK 8
       uses: actions/setup-java@v3
       with:
         java-version: '8'
         distribution: 'temurin'
-        
+
     - name: Build with Maven
       run: mvn -B package -Dmaven.test.skip=true --file pom.xml
-      
+
     - name: Run tests
       env:
         ACCESS_KEY: ${{ secrets.DEV_CA_PUBLIC_USE_INTEGRATION_TEST_ACCESS_KEY }}
@@ -60,7 +60,7 @@ jobs:
 
     - name: Generate Javadoc
       run: mvn javadoc:javadoc
-      
+
     - name: Move javadoc files to temporary directory
       run: mv ${{ github.workspace }}/target/site/ ${{ github.workspace }}/docs_temp/${{ github.ref_name }}
 
@@ -73,6 +73,36 @@ jobs:
 
     - name: Delete temporary directory
       run: rm -r ./docs_temp
+
+  publish-documentation:
+
+    runs-on: ubuntu-latest
+    environment: documentation
+    if: ${{ github.run_attempt != 1 }}
+    needs: [ build-n-test, build-documentation ] # wait for build to finish
+
+    steps:
+      - name: Create temporary directory
+        run: mkdir -p ./docs_temp/${{ github.ref_name }}/html/
+
+      - name: Download a Build Artifact
+        uses: actions/download-artifact@v3.0.0
+        with:
+          name: documentation-artifact
+          path: ${{ github.workspace }}/docs_temp/${{ github.ref_name }}/html/
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-west-2 # Use your bucket region here
+
+      - name: Upload docs to S3 bucket
+        run: aws s3 sync ./docs_temp/${{ github.ref_name }}/html/ s3://apiserver-publish-client-library-docs/${{ github.event.repository.name }}/docs/${{ github.ref_name }} --delete
+
+      - name: Delete temporary directory
+        run: rm -r ./docs_temp/${{ github.ref_name }}/html/
 
 
 
