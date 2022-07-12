@@ -52,7 +52,7 @@ class EntriesApiTest extends BaseTest {
         assertNotNull(newEntryList);
     }
 
-    @Ignore @Test
+    @Test
     void getEntryListingForEachTest_Success() {
         client.getEntryListingForEach((future -> {
             assertNotNull(future);

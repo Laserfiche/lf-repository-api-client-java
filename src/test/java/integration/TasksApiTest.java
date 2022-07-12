@@ -41,9 +41,9 @@ public class TasksApiTest extends BaseTest {
         String token = result.join().getToken();
         assertNotNull(token);
         TimeUnit.SECONDS.sleep(5);
-        CompletableFuture<OperationProgress> operationProgress = client.getOperationStatusAndProgress(repoId, token);
-        assertNotNull(operationProgress);
-        Assertions.assertSame(operationProgress.join().getStatus(), OperationStatus.COMPLETED);
-        Assertions.assertSame(operationProgress.join().getPercentComplete(), 100);
+        CompletableFuture<OperationProgress> operationProgressResponse = client.getOperationStatusAndProgress(repoId, token);
+        assertNotNull(operationProgressResponse);
+        Assertions.assertSame(operationProgressResponse.join().getStatus(), OperationStatus.COMPLETED);
+        Assertions.assertSame(operationProgressResponse.join().getPercentComplete(), 100);
     }
 }

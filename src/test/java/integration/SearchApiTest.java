@@ -84,7 +84,6 @@ public class SearchApiTest extends BaseTest {
         ), repoId, searchToken, null, null, null, null, null, null, null, null, null, null, null, maxPageSizeForEach);
     }
 
-    @Ignore
     @Test
     void getSearchContextHitsForEach_Success() throws InterruptedException {
         AdvancedSearchRequest searchRequest = new AdvancedSearchRequest();
@@ -120,7 +119,7 @@ public class SearchApiTest extends BaseTest {
         assertNotNull(searchToken);
         TimeUnit.SECONDS.sleep(5);
         CompletableFuture<OperationProgress> searchStatusResponse = client.getSearchStatus(repoId, searchToken);
-        assertNotNull(searchStatusResponse.join());
+        assertNotNull(searchStatusResponse);
     }
 
     @Test
