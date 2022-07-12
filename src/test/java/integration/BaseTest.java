@@ -25,23 +25,27 @@ public class BaseTest {
 
     @BeforeAll
     public static void setUp() {
-        // Load environment variables
-        Dotenv dotenv = Dotenv
-                .configure()
-                .filename(".env")
-                .load();
-
+        spKey = System.getenv("SERVICE_PRINCIPAL_KEY");
+        String accessKeyBase64 = System.getenv("ACCESS_KEY");
+        String repoId = System.getenv("REPOSITORY_ID");
+        if (spKey == null && accessKeyBase64 == null && repoId == null) {
+            // Load environment variables
+            Dotenv dotenv = Dotenv
+                    .configure()
+                    .filename(".env")
+                    .load();
+            accessKeyBase64 = dotenv.get("ACCESS_KEY");
+            spKey = dotenv.get("SERVICE_PRINCIPAL_KEY");
+            repoId = dotenv.get("REPOSITORY_ID");
+        }
         // Read env variables
         Gson gson = new GsonBuilder().registerTypeAdapter(JWK.class, new JwkDeserializer()).create();
 
-        String accessKeyBase64 = dotenv.get("ACCESS_KEY");
         String accessKeyStr = decodeBase64(accessKeyBase64);
         // Gson doesn't escape forward slash https://github.com/google/gson/issues/356
         accessKeyStr = accessKeyStr.replace("\\\"", "\"");
 
         accessKey = gson.fromJson(accessKeyStr, AccessKey.class);
-        spKey = dotenv.get("SERVICE_PRINCIPAL_KEY");
-        repoId = dotenv.get("REPOSITORY_ID");
         repositoryApiClient = RepositoryApiClientImpl.CreateFromAccessKey(spKey, accessKey);
     }
 
