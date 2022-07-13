@@ -1,7 +1,9 @@
 package com.laserfiche.repository.api.clients.impl;
 
-import retrofit2.http.*;
 import com.laserfiche.repository.api.clients.impl.model.OperationProgress;
+import retrofit2.http.DELETE;
+import retrofit2.http.GET;
+
 import java.util.concurrent.CompletableFuture;
 
 public interface TasksApi {

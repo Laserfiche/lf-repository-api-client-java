@@ -2,8 +2,8 @@ package com.laserfiche.repository.api.clients.impl;
 
 import com.laserfiche.repository.api.clients.impl.model.EntryLinkTypeInfo;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfEntryLinkTypeInfo;
-import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfWFieldInfo;
-import retrofit2.http.*;
+import retrofit2.http.GET;
+import retrofit2.http.Url;
 
 import java.util.concurrent.CompletableFuture;
 

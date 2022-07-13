@@ -5,9 +5,8 @@ import com.laserfiche.api.client.httphandlers.RequestImpl;
 import com.laserfiche.api.client.model.AccessKey;
 import com.laserfiche.repository.api.clients.*;
 import com.laserfiche.repository.api.clients.impl.*;
-import com.laserfiche.repository.api.serialization.RepositoryApiDeserializer;
 import com.laserfiche.repository.api.serialization.GsonCustomConverterFactory;
-import okhttp3.Interceptor;
+
 import okhttp3.OkHttpClient;
 import okhttp3.Response;
 import retrofit2.Retrofit;

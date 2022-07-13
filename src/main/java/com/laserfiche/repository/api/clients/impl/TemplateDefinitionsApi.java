@@ -1,9 +1,11 @@
 package com.laserfiche.repository.api.clients.impl;
 
-import retrofit2.http.*;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfTemplateFieldInfo;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfWTemplateInfo;
 import com.laserfiche.repository.api.clients.impl.model.WTemplateInfo;
+import retrofit2.http.GET;
+import retrofit2.http.Url;
+
 import java.util.concurrent.CompletableFuture;
 
 public interface TemplateDefinitionsApi {
