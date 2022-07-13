@@ -226,12 +226,12 @@ class EntriesApiTest extends BaseTest {
         BufferedSink writer = Okio.buffer(Okio.sink(file));
         electronicDocument.writeTo(writer);
 
-        CompletableFuture<CreateEntryResult> importDocumentResponse = client.importDocument(repoId, 1, "test.pdf", electronicDocument, request, true, null);
+        CompletableFuture<CreateEntryResult> importDocumentResponse = client.importDocument(repoId, 1, fileName, electronicDocument, request, true, null);
         CreateEntryOperations operations = importDocumentResponse.join().getOperations();
         assertNotNull(operations);
-        assertTrue(operations.getEntryCreate().getExceptions().size() != 0);
+        assertTrue(operations.getEntryCreate().getExceptions().size() == 0);
         assertTrue(!operations.getEntryCreate().getEntryId().equals(0));
-        assertTrue(operations.getSetEdoc().getExceptions().size() != 0);
+        assertTrue(operations.getSetEdoc().getExceptions().size() == 0);
         assertTrue(importDocumentResponse.join().getDocumentLink() != null);
 
     }
