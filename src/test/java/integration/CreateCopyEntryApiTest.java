@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
@@ -155,5 +156,25 @@ public class CreateCopyEntryApiTest extends BaseTest {
         assertTrue(movedEntryResponse.join().getId().equals(childFolder.join().getId()));
         assertTrue(movedEntryResponse.join().getParentId().equals(parentFolder.join().getId()));
         assertTrue(movedEntryResponse.join().getName().equals(request.getName()));
+    }
+
+    @Test
+    void setLinks_Success() {
+        RepositoryApiClient client2 = repositoryApiClient;
+        CompletableFuture<Entry> sourceEntry = createEntry(client2, "RepositoryApiClientIntegrationTest Java SetLinks Source", 1, true);
+        createdEntries.add(sourceEntry.join());
+        CompletableFuture<Entry> targetEntry = createEntry(client2, "RepositoryApiClientIntegrationTest Java SetLinks Target", 1, true);
+        createdEntries.add(targetEntry.join());
+        PutLinksRequest putLinks = new PutLinksRequest();
+        putLinks.setTargetId(targetEntry.join().getId());
+        putLinks.setLinkTypeId(1);
+        List<PutLinksRequest> request = new ArrayList<PutLinksRequest>();
+        request.add(putLinks);
+        CompletableFuture<ODataValueOfIListOfWEntryLinkInfo> assignEntryLinksResponse = client.assignEntryLinks(repoId, sourceEntry.join().getId(), request);
+        List<WEntryLinkInfo> links = assignEntryLinksResponse.join().getValue();
+        assertNotNull(links);
+        assertTrue(request.size() == links.size());
+        assertTrue(sourceEntry.join().getId().equals(links.get(0).getSourceId()));
+        assertTrue(targetEntry.join().getId().equals(links.get(0).getTargetId()));
     }
 }
