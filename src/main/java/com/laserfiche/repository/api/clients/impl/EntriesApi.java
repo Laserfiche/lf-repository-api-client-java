@@ -130,7 +130,8 @@ public interface EntriesApi {
   @Headers({
     "Content-Type:application/json"
   })
-  @DELETE("v1/Repositories/{repoId}/Entries/{entryId}")
+
+  @HTTP(method="DELETE", path="v2-alpha/Repositories/{repoId}/Entries/{entryId}", hasBody = true)
   CompletableFuture<AcceptedOperation> deleteEntryInfo(
     @retrofit2.http.Path("repoId") String repoId, @retrofit2.http.Path("entryId") Integer entryId, @retrofit2.http.Body DeleteEntryWithAuditReason body
   );

@@ -22,7 +22,7 @@ class FieldDefinitionsApiTest extends BaseTest {
 
     @Test
     void getFieldDefinitionById_Success() {
-        CompletableFuture<WFieldInfo> future = client.getFieldDefinitionById(repoId, 261, null, null);
+        CompletableFuture<WFieldInfo> future = client.getFieldDefinitionById(repoId, 1, null, null);
         WFieldInfo fieldInfo = future.join();
 
         assertNotNull(fieldInfo);

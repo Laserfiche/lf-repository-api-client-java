@@ -1,22 +1,38 @@
 package integration;
 
+import com.laserfiche.repository.api.RepositoryApiClient;
 import com.laserfiche.repository.api.clients.EntriesClient;
 import com.laserfiche.repository.api.clients.impl.model.*;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
+import okio.BufferedSink;
+import okio.Okio;
+import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class EntriesApiTest extends BaseTest {
     EntriesClient client;
 
     private final int maxPageSize = 1;
 
+    RepositoryApiClient createEntryClient;
+
+
     @BeforeEach
     public void PerTestSetup() {
         client = repositoryApiClient.getEntriesClient();
+        createEntryClient = repositoryApiClient;
     }
 
     @Test
@@ -31,7 +47,6 @@ class EntriesApiTest extends BaseTest {
     void getEntryListing_Success() {
         CompletableFuture<ODataValueContextOfIListOfEntry> future = client.getEntryListing(repoId, 1, false, null, false, null, null, null, null, null, null, false, null);
         ODataValueContextOfIListOfEntry entryList = future.join();
-
         assertNotNull(entryList);
     }
 
@@ -52,7 +67,7 @@ class EntriesApiTest extends BaseTest {
     }
 
     @Test
-    void getEntryListingForEach_Success() {
+    void getEntryListingForEachTest_Success() {
         client.getEntryListingForEach((future -> {
             assertNotNull(future);
             ODataValueContextOfIListOfEntry entryList = future.join();
@@ -60,7 +75,7 @@ class EntriesApiTest extends BaseTest {
                 assertNotNull(entryList.getValue());
             }
             return entryList != null; // Stop asking if there's no data.
-        }), repoId, 1, false, null, false, null, null, null, null, null, null, false, maxPageSize);
+        }), repoId, 571, false, null, false, null, null, null, null, null, null, false, maxPageSize);
     }
 
     @Test
@@ -101,7 +116,7 @@ class EntriesApiTest extends BaseTest {
 
     @Test
     void getLinkValuesFromEntry_Success() {
-        CompletableFuture<ODataValueContextOfIListOfWEntryLinkInfo> future = client.getLinkValuesFromEntry(repoId, 28370, null, null, null, null, null, false, null);
+        CompletableFuture<ODataValueContextOfIListOfWEntryLinkInfo> future = client.getLinkValuesFromEntry(repoId, 1, null, null, null, null, null, false, null);
         ODataValueContextOfIListOfWEntryLinkInfo linkInfoList = future.join();
 
         assertNotNull(linkInfoList);
@@ -109,7 +124,7 @@ class EntriesApiTest extends BaseTest {
 
     @Test
     void getLinkValuesFromEntryNextLink_Success() {
-        CompletableFuture<ODataValueContextOfIListOfWEntryLinkInfo> future = client.getLinkValuesFromEntry(repoId, 28370, null, null, null, null, null, false, maxPageSize);
+        CompletableFuture<ODataValueContextOfIListOfWEntryLinkInfo> future = client.getLinkValuesFromEntry(repoId, 1, null, null, null, null, null, false, maxPageSize);
         ODataValueContextOfIListOfWEntryLinkInfo linkInfoList = future.join();
 
         assertNotNull(linkInfoList);
@@ -132,12 +147,21 @@ class EntriesApiTest extends BaseTest {
                 assertNotNull(linkValueList.getValue());
             }
             return linkValueList != null; // Stop asking if there's no data.
-        }), repoId, 28370, null, null, null, null, null, false, maxPageSize);
+        }), repoId, 1, null, null, null, null, null, false, maxPageSize);
+    }
+
+    @Test
+    void deleteEntry_Success() {
+        CompletableFuture<Entry> deleteEntry = createEntry(createEntryClient, "RepositoryApiClientIntegrationTest Java DeleteFolder", 1, true);
+        DeleteEntryWithAuditReason body = new DeleteEntryWithAuditReason();
+        CompletableFuture<AcceptedOperation> deleteEntryResponse = client.deleteEntryInfo(repoId, deleteEntry.join().getId(), body);
+        String token = deleteEntryResponse.join().getToken();
+        assertNotNull(token);
     }
 
     @Test
     void getTagsAssignedToEntry_Success() {
-        CompletableFuture<ODataValueContextOfIListOfWTagInfo> future = client.getTagsAssignedToEntry(repoId, 1, null, null,null, null, null, false, null);
+        CompletableFuture<ODataValueContextOfIListOfWTagInfo> future = client.getTagsAssignedToEntry(repoId, 1, null, null, null, null, null, false, null);
         ODataValueContextOfIListOfWTagInfo tagInfoList = future.join();
 
         assertNotNull(tagInfoList);
@@ -145,7 +169,7 @@ class EntriesApiTest extends BaseTest {
 
     @Test
     void getTagsAssignedToEntryNextLink_Success() {
-        CompletableFuture<ODataValueContextOfIListOfWTagInfo> future = client.getTagsAssignedToEntry(repoId, 28370, null, null,null, null, null, false, maxPageSize);
+        CompletableFuture<ODataValueContextOfIListOfWTagInfo> future = client.getTagsAssignedToEntry(repoId, 1, null, null, null, null, null, false, maxPageSize);
         ODataValueContextOfIListOfWTagInfo tagInfoList = future.join();
 
         assertNotNull(tagInfoList);
@@ -168,6 +192,47 @@ class EntriesApiTest extends BaseTest {
                 assertNotNull(tagList.getValue());
             }
             return tagList != null; // Stop asking if there's no data.
-        }), repoId, 28370, null, null,null, null, null, false, maxPageSize);
+        }), repoId, 1, null, null, null, null, null, false, maxPageSize);
+    }
+
+    @Test
+    void getDynamicFieldsEntry_Success() {
+        CompletableFuture<ODataValueContextOfIListOfWTemplateInfo> templateDefinitionsResponse = repositoryApiClient.getTemplateDefinitionClient().getTemplateDefinitions(repoId, null, null, null, null, null, null, null, null, null);
+        List<WTemplateInfo> templateDefinitions = templateDefinitionsResponse.join().getValue();
+        assertNotNull(templateDefinitions);
+        assertTrue(templateDefinitions.size() > 0);
+        GetDynamicFieldLogicValueRequest request = new GetDynamicFieldLogicValueRequest();
+        request.setTemplateId(templateDefinitions.get(0).getId());
+        CompletableFuture<Map<String, List<String>>> dynamicFieldValueResponse = client.getDynamicFieldValues(repoId, 1, request);
+        assertNotNull(dynamicFieldValueResponse.join());
+    }
+
+    @Test
+    void importDocument_Success() throws IOException {
+        String fileName = "RepositoryApiClientIntegrationTest Java ImportDocument";
+        PostEntryWithEdocMetadataRequest request = new PostEntryWithEdocMetadataRequest();
+        RequestBody electronicDocument = new RequestBody() {
+            @Override
+            public MediaType contentType() {
+                return null;
+            }
+
+            @Override
+            public void writeTo(BufferedSink bufferedSink) throws IOException {
+
+            }
+        };
+        File file = new File("test.pdf");
+        BufferedSink writer = Okio.buffer(Okio.sink(file));
+        electronicDocument.writeTo(writer);
+
+        CompletableFuture<CreateEntryResult> importDocumentResponse = client.importDocument(repoId, 1, fileName, electronicDocument, request, true, null);
+        CreateEntryOperations operations = importDocumentResponse.join().getOperations();
+        assertNotNull(operations);
+        assertTrue(operations.getEntryCreate().getExceptions().size() == 0);
+        assertTrue(!operations.getEntryCreate().getEntryId().equals(0));
+        assertTrue(operations.getSetEdoc().getExceptions().size() == 0);
+        assertTrue(importDocumentResponse.join().getDocumentLink() != null);
+
     }
 }
