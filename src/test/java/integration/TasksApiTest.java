@@ -15,17 +15,17 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class TasksApiTest extends BaseTest {
     TasksClient client;
-    RepositoryApiClient client2;
+    RepositoryApiClient createEntryClient;
 
     @BeforeEach
     void PerTestSetup() {
         client = repositoryApiClient.getTasksClient();
-        client2 = repositoryApiClient;
+        createEntryClient = repositoryApiClient;
     }
 
     @Test
     void cancelOperation_Success() throws InterruptedException {
-        CompletableFuture<Entry> deleteEntry = createEntry(client2, "RepositoryApiClientIntegrationTest Java CancelOperation", 1, true);
+        CompletableFuture<Entry> deleteEntry = createEntry(createEntryClient, "RepositoryApiClientIntegrationTest Java CancelOperation", 1, true);
         DeleteEntryWithAuditReason body = new DeleteEntryWithAuditReason();
         CompletableFuture<AcceptedOperation> result = repositoryApiClient.getEntriesClient().deleteEntryInfo(repoId, deleteEntry.join().getId(), body);
         String token = result.join().getToken();
@@ -37,9 +37,9 @@ public class TasksApiTest extends BaseTest {
     @Test
     @Disabled("Exception Thrown")
     void getOperationStatus_Success() throws InterruptedException {
-        CompletableFuture<Entry> deleteEntry = createEntry(client2, "RepositoryApiClientIntegrationTest Java GetOperationStatus", 1, true);
+        CompletableFuture<Entry> deleteEntry = createEntry(createEntryClient, "RepositoryApiClientIntegrationTest Java GetOperationStatus", 1, true);
         DeleteEntryWithAuditReason body = new DeleteEntryWithAuditReason();
-        CompletableFuture<AcceptedOperation> result = repositoryApiClient.getEntriesClient().deleteEntryInfo(repoId,deleteEntry.join().getId(),body);
+        CompletableFuture<AcceptedOperation> result = repositoryApiClient.getEntriesClient().deleteEntryInfo(repoId, deleteEntry.join().getId(), body);
         String token = result.join().getToken();
         assertNotNull(token);
         TimeUnit.SECONDS.sleep(5);

@@ -22,9 +22,12 @@ public class CreateCopyEntryApiTest extends BaseTest {
     List<Entry> createdEntries = new ArrayList<Entry>();
     EntriesClient client;
 
+    RepositoryApiClient createEntryClient;
+
     @BeforeEach
     public void PerTestSetup() {
         client = repositoryApiClient.getEntriesClient();
+        createEntryClient = repositoryApiClient;
     }
 
     @AfterEach
@@ -85,8 +88,7 @@ public class CreateCopyEntryApiTest extends BaseTest {
     @Disabled("Test is failing: Weird exception is being thrown")
     void createCopyEntryCopyEntry_Success() throws InterruptedException {
         String testFolderName = "RepositoryApiClientIntegrationTest Java CreateCopyEntry_CopyEntry_test_folder";
-        RepositoryApiClient client2 = repositoryApiClient;
-        CompletableFuture<Entry> testFolder = createEntry(client2, testFolderName, 1, true);
+        CompletableFuture<Entry> testFolder = createEntry(createEntryClient, testFolderName, 1, true);
         String newEntryName = "RepositoryApiClientIntegrationTest Java CreateFolder";
         PostEntryChildrenRequest request = new PostEntryChildrenRequest();
         request.setEntryType(PostEntryChildrenEntryType.FOLDER);
@@ -143,10 +145,9 @@ public class CreateCopyEntryApiTest extends BaseTest {
 
     @Test
     void moveAndRenameEntry_Success() {
-        RepositoryApiClient client2 = repositoryApiClient;
-        CompletableFuture<Entry> parentFolder = createEntry(client2, "RepositoryApiClientIntegrationTest Java ParentFolder", 1, true);
+        CompletableFuture<Entry> parentFolder = createEntry(createEntryClient, "RepositoryApiClientIntegrationTest Java ParentFolder", 1, true);
         createdEntries.add(parentFolder.join());
-        CompletableFuture<Entry> childFolder = createEntry(client2, "RepositoryApiClientIntegrationTest Java ChildFolder", 1, true);
+        CompletableFuture<Entry> childFolder = createEntry(createEntryClient, "RepositoryApiClientIntegrationTest Java ChildFolder", 1, true);
         createdEntries.add(childFolder.join());
         PatchEntryRequest request = new PatchEntryRequest();
         request.setParentId(parentFolder.join().getId());
@@ -160,10 +161,9 @@ public class CreateCopyEntryApiTest extends BaseTest {
 
     @Test
     void setLinks_Success() {
-        RepositoryApiClient client2 = repositoryApiClient;
-        CompletableFuture<Entry> sourceEntry = createEntry(client2, "RepositoryApiClientIntegrationTest Java SetLinks Source", 1, true);
+        CompletableFuture<Entry> sourceEntry = createEntry(createEntryClient, "RepositoryApiClientIntegrationTest Java SetLinks Source", 1, true);
         createdEntries.add(sourceEntry.join());
-        CompletableFuture<Entry> targetEntry = createEntry(client2, "RepositoryApiClientIntegrationTest Java SetLinks Target", 1, true);
+        CompletableFuture<Entry> targetEntry = createEntry(createEntryClient, "RepositoryApiClientIntegrationTest Java SetLinks Target", 1, true);
         createdEntries.add(targetEntry.join());
         PutLinksRequest putLinks = new PutLinksRequest();
         putLinks.setTargetId(targetEntry.join().getId());

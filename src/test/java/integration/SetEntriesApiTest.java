@@ -1,8 +1,6 @@
 package integration;
 
 import com.laserfiche.repository.api.RepositoryApiClient;
-import com.laserfiche.repository.api.clients.EntriesClient;
-import com.laserfiche.repository.api.clients.TagDefinitionsClient;
 import com.laserfiche.repository.api.clients.impl.model.*;
 import org.junit.jupiter.api.*;
 
@@ -15,6 +13,8 @@ import java.util.concurrent.ExecutionException;
 
 public class SetEntriesApiTest extends BaseTest {
     RepositoryApiClient client = repositoryApiClient;
+
+    RepositoryApiClient createEntryClient = repositoryApiClient;
 
     CompletableFuture<Entry> entry = null;
 
@@ -115,8 +115,7 @@ public class SetEntriesApiTest extends BaseTest {
         assertNotNull(template);
         PutTemplateRequest request = new PutTemplateRequest();
         request.setTemplateName(template.getName());
-        RepositoryApiClient client2 = repositoryApiClient;
-        entry = createEntry(client2, "RepositoryApiClientIntegrationTest Java DeleteTemplate", 1, true);
+        entry = createEntry(createEntryClient, "RepositoryApiClientIntegrationTest Java DeleteTemplate", 1, true);
         CompletableFuture<Entry> writeTemplateValueToEntryResponse = client.getEntriesClient().writeTemplateValueToEntry(repoId, entry.join().getId(), request, null);
         assertNotNull(writeTemplateValueToEntryResponse);
         assertTrue(writeTemplateValueToEntryResponse.join().getTemplateName().equals(template.getName()));
