@@ -1,13 +1,19 @@
 package com.laserfiche.repository.api;
 
+import com.laserfiche.api.client.httphandlers.Request;
+import com.laserfiche.api.client.httphandlers.RequestImpl;
 import com.laserfiche.api.client.model.AccessKey;
 import com.laserfiche.repository.api.clients.*;
 import com.laserfiche.repository.api.clients.impl.*;
 import com.laserfiche.repository.api.serialization.RepositoryApiDeserializer;
 import com.laserfiche.repository.api.serialization.GsonCustomConverterFactory;
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
+
+import java.io.IOException;
 
 public class RepositoryApiClientImpl implements RepositoryApiClient {
     private final Retrofit.Builder clientBuilder;
@@ -29,6 +35,18 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
 
         okBuilder = new OkHttpClient.Builder();
         okBuilder.addInterceptor(new OAuthInterceptor(servicePrincipalKey, accessKey));
+        okBuilder.networkInterceptors().add(new Interceptor() {
+            @Override
+            public Response intercept(Chain chain) throws IOException {
+                okhttp3.Request originalRequest = chain.request();
+                Request customRequest = new RequestImpl();
+                okhttp3.Request requestWithAuth = originalRequest.newBuilder()
+                        .addHeader("Authorization", customRequest.headers().get("Authorization"))
+                        .addHeader("LoadTest", "true")
+                        .build();
+                return chain.proceed(requestWithAuth);
+            }
+        });
         RepositoryApiDeserializer json = new RepositoryApiDeserializer();
         clientBuilder = new Retrofit
                 .Builder()
