@@ -1,19 +1,26 @@
 package integration;
 
+import com.laserfiche.repository.api.RepositoryApiClient;
 import com.laserfiche.repository.api.clients.EntriesClient;
 import com.laserfiche.repository.api.clients.impl.model.*;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
+import okio.BufferedSink;
 import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class EntriesApiTest extends BaseTest {
     EntriesClient client;
 
     private final int maxPageSize = 1;
+
 
     @BeforeEach
     public void PerTestSetup() {
@@ -32,7 +39,6 @@ class EntriesApiTest extends BaseTest {
     void getEntryListing_Success() {
         CompletableFuture<ODataValueContextOfIListOfEntry> future = client.getEntryListing(repoId, 1, false, null, false, null, null, null, null, null, null, false, null);
         ODataValueContextOfIListOfEntry entryList = future.join();
-
         assertNotNull(entryList);
     }
 
@@ -134,6 +140,16 @@ class EntriesApiTest extends BaseTest {
             }
             return linkValueList != null; // Stop asking if there's no data.
         }), repoId, 1, null, null, null, null, null, false, maxPageSize);
+    }
+
+    @Test
+    void deleteEntry_Success() {
+        RepositoryApiClient client2 = repositoryApiClient;
+        CompletableFuture<Entry> deleteEntry = createEntry(client2, "RepositoryApiClientIntegrationTest Java DeleteFolder", 1, true);
+        DeleteEntryWithAuditReason body = new DeleteEntryWithAuditReason();
+        CompletableFuture<AcceptedOperation> deleteEntryResponse = client.deleteEntryInfo(repoId, deleteEntry.join().getId(), body);
+        String token = deleteEntryResponse.join().getToken();
+        assertNotNull(token);
     }
 
     @Test

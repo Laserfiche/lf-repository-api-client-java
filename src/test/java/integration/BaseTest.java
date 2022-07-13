@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 
 import java.util.Base64;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
@@ -64,5 +65,14 @@ public class BaseTest {
         Assertions.assertSame(entry.getParentId(), parentEntryId);
         Assertions.assertSame(entry.getEntryType(), EntryType.FOLDER);
         return newEntry;
+    }
+
+    public static CompletableFuture<Boolean> allFalse(List<TemplateFieldInfo> arr) {
+        for (int i = 0; i < arr.size(); i++) {
+            if (arr.get(i).isIsRequired()) {
+                return CompletableFuture.supplyAsync(() -> false);
+            }
+        }
+        return CompletableFuture.supplyAsync(() -> true);
     }
 }

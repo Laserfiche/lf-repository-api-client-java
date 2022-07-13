@@ -402,7 +402,7 @@ public class EntriesClient extends BaseClient<EntriesApi> {
      * @param culture An optional query parameter used to indicate the locale that should be used.             The value should be a standard language tag. (optional)
      * @return CompletableFuture&lt;CreateEntryResult&gt;
      */
-    CompletableFuture<CreateEntryResult> importDocument(String repoId, Integer parentEntryId, String fileName, RequestBody electronicDocument, PostEntryWithEdocMetadataRequest request, Boolean autoRename, String culture) {
+    public CompletableFuture<CreateEntryResult> importDocument(String repoId, Integer parentEntryId, String fileName, RequestBody electronicDocument, PostEntryWithEdocMetadataRequest request, Boolean autoRename, String culture) {
         return client.importDocument(repoId, parentEntryId, fileName, electronicDocument, request, autoRename, culture);
     }
 
