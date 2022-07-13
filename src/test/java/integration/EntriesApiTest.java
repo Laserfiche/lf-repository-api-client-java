@@ -11,6 +11,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -186,5 +188,17 @@ class EntriesApiTest extends BaseTest {
             }
             return tagList != null; // Stop asking if there's no data.
         }), repoId, 1, null, null, null, null, null, false, maxPageSize);
+    }
+
+    @Test
+    void getDynamicFieldsEntry_Success() {
+        CompletableFuture<ODataValueContextOfIListOfWTemplateInfo> templateDefinitionsResponse = repositoryApiClient.getTemplateDefinitionClient().getTemplateDefinitions(repoId, null, null, null, null, null, null, null, null, null);
+        List<WTemplateInfo> templateDefinitions = templateDefinitionsResponse.join().getValue();
+        assertNotNull(templateDefinitions);
+        assertTrue(templateDefinitions.size() > 0);
+        GetDynamicFieldLogicValueRequest request = new GetDynamicFieldLogicValueRequest();
+        request.setTemplateId(templateDefinitions.get(0).getId());
+        CompletableFuture<Map<String, List<String>>> dynamicFieldValueResponse = client.getDynamicFieldValues(repoId, 1, request);
+        assertNotNull(dynamicFieldValueResponse.join());
     }
 }
