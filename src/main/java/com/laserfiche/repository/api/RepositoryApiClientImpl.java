@@ -35,18 +35,6 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
 
         okBuilder = new OkHttpClient.Builder();
         okBuilder.addInterceptor(new OAuthInterceptor(servicePrincipalKey, accessKey));
-        okBuilder.networkInterceptors().add(new Interceptor() {
-            @Override
-            public Response intercept(Chain chain) throws IOException {
-                okhttp3.Request originalRequest = chain.request();
-                Request customRequest = new RequestImpl();
-                okhttp3.Request requestWithAuth = originalRequest.newBuilder()
-                        .addHeader("Authorization", customRequest.headers().get("Authorization"))
-                        .addHeader("LoadTest", "true")
-                        .build();
-                return chain.proceed(requestWithAuth);
-            }
-        });
         RepositoryApiDeserializer json = new RepositoryApiDeserializer();
         clientBuilder = new Retrofit
                 .Builder()
