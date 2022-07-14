@@ -16,19 +16,18 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 import java.io.IOException;
 
 public class RepositoryApiClientImpl implements RepositoryApiClient {
-    protected final Retrofit.Builder clientBuilder;
+    private final Retrofit.Builder clientBuilder;
     public OkHttpClient.Builder okBuilder;
-
-    protected AttributesClient attributesClient;
-    protected AuditReasonsClient auditReasonsClient;
-    protected EntriesClient entriesClient;
-    protected FieldDefinitionsClient fieldDefinitionsClient;
-    protected RepositoriesClient repositoriesClient;
-    protected SearchesClient searchesClient;
-    protected SimpleSearchesClient simpleSearchesClient;
-    protected TagDefinitionsClient tagDefinitionsClient;
-    protected TasksClient tasksClient;
-    protected TemplateDefinitionsClient templateDefinitionsClient;
+    private AttributesClient attributesClient;
+    private AuditReasonsClient auditReasonsClient;
+    private EntriesClient entriesClient;
+    private FieldDefinitionsClient fieldDefinitionsClient;
+    private RepositoriesClient repositoriesClient;
+    private SearchesClient searchesClient;
+    private SimpleSearchesClient simpleSearchesClient;
+    private TagDefinitionsClient tagDefinitionsClient;
+    private TasksClient tasksClient;
+    private TemplateDefinitionsClient templateDefinitionsClient;
 
     protected RepositoryApiClientImpl(String servicePrincipalKey, AccessKey accessKey, String baseUrlDebug) {
         String baseUrl = baseUrlDebug != null ? baseUrlDebug : "https://api." + accessKey.getDomain() + "/repository/";
