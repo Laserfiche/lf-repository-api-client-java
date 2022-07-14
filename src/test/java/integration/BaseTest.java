@@ -8,16 +8,12 @@ import com.laserfiche.repository.api.RepositoryApiClientImpl;
 import com.laserfiche.repository.api.clients.impl.model.*;
 import com.nimbusds.jose.jwk.JWK;
 import io.github.cdimascio.dotenv.Dotenv;
-import okhttp3.Interceptor;
-import okhttp3.Response;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 
-import java.io.IOException;
 import java.util.Base64;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -25,6 +21,7 @@ public class BaseTest {
     protected static String spKey;
     protected static AccessKey accessKey;
     protected static String repoId;
+    protected static String testHeader;
     protected static RepositoryApiClient repositoryApiClient;
 
     @BeforeAll
@@ -32,6 +29,7 @@ public class BaseTest {
         spKey = System.getenv("SERVICE_PRINCIPAL_KEY");
         String accessKeyBase64 = System.getenv("ACCESS_KEY");
         repoId = System.getenv("REPOSITORY_ID");
+        testHeader = System.getenv("TEST_HEADER");
         if (spKey == null && accessKeyBase64 == null && repoId == null) {
             // Load environment variables
             Dotenv dotenv = Dotenv
@@ -41,6 +39,7 @@ public class BaseTest {
             accessKeyBase64 = dotenv.get("ACCESS_KEY");
             spKey = dotenv.get("SERVICE_PRINCIPAL_KEY");
             repoId = dotenv.get("REPOSITORY_ID");
+            testHeader = dotenv.get("TEST_HEADER");
         }
         // Read env variables
         Gson gson = new GsonBuilder().registerTypeAdapter(JWK.class, new JwkDeserializer()).create();
@@ -50,7 +49,7 @@ public class BaseTest {
         accessKeyStr = accessKeyStr.replace("\\\"", "\"");
 
         accessKey = gson.fromJson(accessKeyStr, AccessKey.class);
-        repositoryApiClient = createTestRepoClient(spKey, accessKey);
+        repositoryApiClient = createTestRepoClient(spKey, accessKey, testHeader);
     }
 
     private static String decodeBase64(String encoded) {
@@ -79,9 +78,9 @@ public class BaseTest {
         return CompletableFuture.supplyAsync(() -> true);
     }
 
-    private static RepositoryApiClientImpl createTestRepoClient(String servicePrincipalKey, AccessKey accessKey){
-        RepositoryApiClientImpl testRepoClient = RepositoryApiClientImpl.CreateFromAccessKey(servicePrincipalKey,accessKey);
-        testRepoClient.okBuilder.addInterceptor(chain -> chain.proceed(chain.request().newBuilder().addHeader("LoadTest","true").build()));
+    private static RepositoryApiClientImpl createTestRepoClient(String servicePrincipalKey, AccessKey accessKey, String testHeader) {
+        RepositoryApiClientImpl testRepoClient = RepositoryApiClientImpl.CreateFromAccessKey(servicePrincipalKey, accessKey);
+        testRepoClient.okBuilder.addInterceptor(chain -> chain.proceed(chain.request().newBuilder().addHeader(testHeader, "true").build()));
         return testRepoClient;
     }
 }
