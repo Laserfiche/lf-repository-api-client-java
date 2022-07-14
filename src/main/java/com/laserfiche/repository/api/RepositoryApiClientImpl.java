@@ -1,18 +1,13 @@
 package com.laserfiche.repository.api;
 
-import com.laserfiche.api.client.httphandlers.Request;
-import com.laserfiche.api.client.httphandlers.RequestImpl;
 import com.laserfiche.api.client.model.AccessKey;
 import com.laserfiche.repository.api.clients.*;
 import com.laserfiche.repository.api.clients.impl.*;
 import com.laserfiche.repository.api.serialization.GsonCustomConverterFactory;
-
+import com.laserfiche.repository.api.serialization.RepositoryApiDeserializer;
 import okhttp3.OkHttpClient;
-import okhttp3.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
-
-import java.io.IOException;
 
 public class RepositoryApiClientImpl implements RepositoryApiClient {
     private final Retrofit.Builder clientBuilder;
