@@ -8,9 +8,12 @@ import com.laserfiche.repository.api.RepositoryApiClientImpl;
 import com.laserfiche.repository.api.clients.impl.model.*;
 import com.nimbusds.jose.jwk.JWK;
 import io.github.cdimascio.dotenv.Dotenv;
+import okhttp3.Interceptor;
+import okhttp3.Response;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 
+import java.io.IOException;
 import java.util.Base64;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -47,7 +50,7 @@ public class BaseTest {
         accessKeyStr = accessKeyStr.replace("\\\"", "\"");
 
         accessKey = gson.fromJson(accessKeyStr, AccessKey.class);
-        repositoryApiClient = RepositoryApiClientImpl.CreateFromAccessKey(spKey, accessKey);
+        repositoryApiClient = createTestRepoClient(spKey, accessKey);
     }
 
     private static String decodeBase64(String encoded) {
@@ -74,5 +77,11 @@ public class BaseTest {
             }
         }
         return CompletableFuture.supplyAsync(() -> true);
+    }
+
+    private static RepositoryApiClientImpl createTestRepoClient(String servicePrincipalKey, AccessKey accessKey){
+        RepositoryApiClientImpl testRepoClient = RepositoryApiClientImpl.CreateFromAccessKey(servicePrincipalKey,accessKey);
+        testRepoClient.okBuilder.addInterceptor(chain -> chain.proceed(chain.request().newBuilder().addHeader("LoadTest","true").build()));
+        return testRepoClient;
     }
 }

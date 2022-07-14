@@ -16,19 +16,19 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 import java.io.IOException;
 
 public class RepositoryApiClientImpl implements RepositoryApiClient {
-    private final Retrofit.Builder clientBuilder;
-    private final OkHttpClient.Builder okBuilder;
+    protected final Retrofit.Builder clientBuilder;
+    public OkHttpClient.Builder okBuilder;
 
-    private AttributesClient attributesClient;
-    private AuditReasonsClient auditReasonsClient;
-    private EntriesClient entriesClient;
-    private FieldDefinitionsClient fieldDefinitionsClient;
-    private RepositoriesClient repositoriesClient;
-    private SearchesClient searchesClient;
-    private SimpleSearchesClient simpleSearchesClient;
-    private TagDefinitionsClient tagDefinitionsClient;
-    private TasksClient tasksClient;
-    private TemplateDefinitionsClient templateDefinitionsClient;
+    protected AttributesClient attributesClient;
+    protected AuditReasonsClient auditReasonsClient;
+    protected EntriesClient entriesClient;
+    protected FieldDefinitionsClient fieldDefinitionsClient;
+    protected RepositoriesClient repositoriesClient;
+    protected SearchesClient searchesClient;
+    protected SimpleSearchesClient simpleSearchesClient;
+    protected TagDefinitionsClient tagDefinitionsClient;
+    protected TasksClient tasksClient;
+    protected TemplateDefinitionsClient templateDefinitionsClient;
 
     protected RepositoryApiClientImpl(String servicePrincipalKey, AccessKey accessKey, String baseUrlDebug) {
         String baseUrl = baseUrlDebug != null ? baseUrlDebug : "https://api." + accessKey.getDomain() + "/repository/";
@@ -43,11 +43,11 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
                 .addConverterFactory(GsonCustomConverterFactory.create(json.getGson()));
     }
 
-    public static RepositoryApiClient CreateFromAccessKey(String servicePrincipalKey, AccessKey accessKey, String baseUrlDebug) {
+    public static RepositoryApiClientImpl CreateFromAccessKey(String servicePrincipalKey, AccessKey accessKey, String baseUrlDebug) {
         return new RepositoryApiClientImpl(servicePrincipalKey, accessKey, baseUrlDebug);
     }
 
-    public static RepositoryApiClient CreateFromAccessKey(String servicePrincipalKey, AccessKey accessKey) {
+    public static RepositoryApiClientImpl CreateFromAccessKey(String servicePrincipalKey, AccessKey accessKey) {
         return CreateFromAccessKey(servicePrincipalKey, accessKey, null);
     }
 
