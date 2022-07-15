@@ -17,7 +17,7 @@ import java.io.IOException;
 
 public class RepositoryApiClientImpl implements RepositoryApiClient {
     private final Retrofit.Builder clientBuilder;
-    public OkHttpClient.Builder okBuilder;
+    private OkHttpClient.Builder okBuilder;
     private AttributesClient attributesClient;
     private AuditReasonsClient auditReasonsClient;
     private EntriesClient entriesClient;
@@ -42,11 +42,11 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
                 .addConverterFactory(GsonCustomConverterFactory.create(json.getGson()));
     }
 
-    public static RepositoryApiClientImpl CreateFromAccessKey(String servicePrincipalKey, AccessKey accessKey, String baseUrlDebug) {
+    public static RepositoryApiClient CreateFromAccessKey(String servicePrincipalKey, AccessKey accessKey, String baseUrlDebug) {
         return new RepositoryApiClientImpl(servicePrincipalKey, accessKey, baseUrlDebug);
     }
 
-    public static RepositoryApiClientImpl CreateFromAccessKey(String servicePrincipalKey, AccessKey accessKey) {
+    public static RepositoryApiClient CreateFromAccessKey(String servicePrincipalKey, AccessKey accessKey) {
         return CreateFromAccessKey(servicePrincipalKey, accessKey, null);
     }
 
@@ -54,6 +54,10 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
         return clientBuilder.client(okBuilder.build())
                 .build()
                 .create(clientInterface);
+    }
+
+    public void setLoadTestHeader(String testHeader){
+        this.okBuilder.addInterceptor(chain -> chain.proceed(chain.request().newBuilder().addHeader(testHeader, "true").build()));
     }
 
     @Override

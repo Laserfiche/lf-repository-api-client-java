@@ -78,9 +78,9 @@ public class BaseTest {
         return CompletableFuture.supplyAsync(() -> true);
     }
 
-    private static RepositoryApiClientImpl createTestRepoClient(String servicePrincipalKey, AccessKey accessKey, String testHeader) {
-        RepositoryApiClientImpl testRepoClient = RepositoryApiClientImpl.CreateFromAccessKey(servicePrincipalKey, accessKey);
-        testRepoClient.okBuilder.addInterceptor(chain -> chain.proceed(chain.request().newBuilder().addHeader(testHeader, "true").build()));
+    private static RepositoryApiClient createTestRepoClient(String servicePrincipalKey, AccessKey accessKey, String testHeader) {
+        RepositoryApiClient testRepoClient = RepositoryApiClientImpl.CreateFromAccessKey(servicePrincipalKey, accessKey);
+        testRepoClient.setLoadTestHeader(testHeader);
         return testRepoClient;
     }
 }

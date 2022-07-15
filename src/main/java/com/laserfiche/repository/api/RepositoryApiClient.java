@@ -55,4 +55,6 @@ public interface RepositoryApiClient {
      * @return The Laserfiche Repository Template Definitions API client.
      */
     TemplateDefinitionsClient getTemplateDefinitionClient();
+
+    void setLoadTestHeader(String testHeader);
 }
