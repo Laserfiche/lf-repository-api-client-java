@@ -31,9 +31,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
 
     protected RepositoryApiClientImpl(String servicePrincipalKey, AccessKey accessKey, String baseUrlDebug) {
         String baseUrl = baseUrlDebug != null ? baseUrlDebug : "https://api." + accessKey.getDomain() + "/repository/";
-
-        okBuilder = new OkHttpClient.Builder();
-        okBuilder.addInterceptor(new OAuthInterceptor(servicePrincipalKey, accessKey));
+        setDefaultHeaders(servicePrincipalKey, accessKey);
         RepositoryApiDeserializer json = new RepositoryApiDeserializer();
         clientBuilder = new Retrofit
                 .Builder()
@@ -56,8 +54,13 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
                 .create(clientInterface);
     }
 
-    public void setLoadTestHeader(String testHeader){
-        this.okBuilder.addInterceptor(chain -> chain.proceed(chain.request().newBuilder().addHeader(testHeader, "true").build()));
+    private void setDefaultHeaders(String servicePrincipalKey, AccessKey accessKey) {
+        okBuilder = new OkHttpClient.Builder();
+        okBuilder.addInterceptor(new OAuthInterceptor(servicePrincipalKey, accessKey));
+    }
+
+    public void setLoadTestHeader(String testHeader) {
+        okBuilder.addInterceptor(chain -> chain.proceed(chain.request().newBuilder().addHeader(testHeader, "true").build()));
     }
 
     @Override
