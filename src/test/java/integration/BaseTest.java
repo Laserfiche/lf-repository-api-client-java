@@ -79,7 +79,7 @@ public class BaseTest {
     }
 
     private static RepositoryApiClient createTestRepoClient(String servicePrincipalKey, AccessKey accessKey, String testHeader) {
-        RepositoryApiClient testRepoClient = RepositoryApiClientImpl.CreateFromAccessKey(servicePrincipalKey, accessKey);
+        RepositoryApiClientImpl testRepoClient = RepositoryApiClientImpl.CreateFromAccessKey(servicePrincipalKey, accessKey);
         testRepoClient.setLoadTestHeader(testHeader);
         return testRepoClient;
     }
