@@ -21,7 +21,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
  * SimpleImportRequest
  */
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-06-21T09:31:30.649462900-04:00[America/New_York]")
 public class SimpleImportRequest {
   @SerializedName("name")
   private String name = null;

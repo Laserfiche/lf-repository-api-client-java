@@ -5,7 +5,6 @@ import com.laserfiche.repository.api.ForEachCallBack;
 import com.laserfiche.repository.api.clients.impl.LinkDefinitionsApi;
 import com.laserfiche.repository.api.clients.impl.model.EntryLinkTypeInfo;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfEntryLinkTypeInfo;
-import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfWFieldInfo;
 
 import java.util.concurrent.CompletableFuture;
 

@@ -1,7 +1,8 @@
 package com.laserfiche.repository.api.clients.impl;
 
-import retrofit2.http.*;
 import com.laserfiche.repository.api.clients.impl.model.RepositoryInfo;
+import retrofit2.http.GET;
+
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
