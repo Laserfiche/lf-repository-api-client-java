@@ -17,7 +17,7 @@ import java.io.IOException;
 
 public class RepositoryApiClientImpl implements RepositoryApiClient {
     private final Retrofit.Builder clientBuilder;
-    private OkHttpClient.Builder okBuilder;
+    private final OkHttpClient.Builder okBuilder;
     private AttributesClient attributesClient;
     private AuditReasonsClient auditReasonsClient;
     private EntriesClient entriesClient;
@@ -31,8 +31,9 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
 
     protected RepositoryApiClientImpl(String servicePrincipalKey, AccessKey accessKey, String baseUrlDebug) {
         String baseUrl = baseUrlDebug != null ? baseUrlDebug : "https://api." + accessKey.getDomain() + "/repository/";
-        setDefaultHeaders(servicePrincipalKey, accessKey);
         RepositoryApiDeserializer json = new RepositoryApiDeserializer();
+        okBuilder = new OkHttpClient.Builder()
+                .addInterceptor(new OAuthInterceptor(servicePrincipalKey, accessKey));
         clientBuilder = new Retrofit
                 .Builder()
                 .baseUrl(baseUrl)
@@ -52,11 +53,6 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
         return clientBuilder.client(okBuilder.build())
                 .build()
                 .create(clientInterface);
-    }
-
-    private void setDefaultHeaders(String servicePrincipalKey, AccessKey accessKey) {
-        okBuilder = new OkHttpClient.Builder();
-        okBuilder.addInterceptor(new OAuthInterceptor(servicePrincipalKey, accessKey));
     }
 
     public void setLoadTestHeader(String testHeader) {
