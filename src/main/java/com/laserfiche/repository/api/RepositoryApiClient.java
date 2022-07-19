@@ -1,5 +1,6 @@
 package com.laserfiche.repository.api;
 
+import com.laserfiche.api.client.httphandlers.Headers;
 import com.laserfiche.repository.api.clients.*;
 
 /**
@@ -55,4 +56,10 @@ public interface RepositoryApiClient {
      * @return The Laserfiche Repository Template Definitions API client.
      */
     TemplateDefinitionsClient getTemplateDefinitionClient();
+
+    /**
+     * Set default headers that will be used for all requests.
+     * @param defaultHeaders A key value pair of header name and value.
+     */
+    void setDefaultRequestHeaders(Headers defaultHeaders);
 }

@@ -1,19 +1,14 @@
 package com.laserfiche.repository.api;
 
-import com.laserfiche.api.client.httphandlers.Request;
-import com.laserfiche.api.client.httphandlers.RequestImpl;
+import com.laserfiche.api.client.httphandlers.Headers;
 import com.laserfiche.api.client.model.AccessKey;
 import com.laserfiche.repository.api.clients.*;
 import com.laserfiche.repository.api.clients.impl.*;
-import com.laserfiche.repository.api.serialization.RepositoryApiDeserializer;
 import com.laserfiche.repository.api.serialization.GsonCustomConverterFactory;
-import okhttp3.Interceptor;
+import com.laserfiche.repository.api.serialization.RepositoryApiDeserializer;
 import okhttp3.OkHttpClient;
-import okhttp3.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
-
-import java.io.IOException;
 
 public class RepositoryApiClientImpl implements RepositoryApiClient {
     private final Retrofit.Builder clientBuilder;
@@ -55,8 +50,13 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
                 .create(clientInterface);
     }
 
-    public void setLoadTestHeader(String testHeader) {
-        okBuilder.addInterceptor(chain -> chain.proceed(chain.request().newBuilder().addHeader(testHeader, "true").build()));
+    public void setDefaultRequestHeaders(Headers defaultHeaders) {
+        okBuilder.addInterceptor(chain -> {
+            okhttp3.Request.Builder builder = chain.request().newBuilder();
+            defaultHeaders.entries().forEach(headerKeyValue -> builder.addHeader(headerKeyValue.headerName(), headerKeyValue.header()));
+            okhttp3.Request request = builder.build();
+            return chain.proceed(request);
+        });
     }
 
     @Override

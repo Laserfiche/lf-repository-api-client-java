@@ -2,6 +2,8 @@ package integration;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.laserfiche.api.client.httphandlers.Headers;
+import com.laserfiche.api.client.httphandlers.HeadersImpl;
 import com.laserfiche.api.client.model.AccessKey;
 import com.laserfiche.repository.api.RepositoryApiClient;
 import com.laserfiche.repository.api.RepositoryApiClientImpl;
@@ -21,7 +23,7 @@ public class BaseTest {
     protected static String spKey;
     protected static AccessKey accessKey;
     protected static String repoId;
-    protected static String testHeader;
+    protected static Headers testHeaders;
     protected static RepositoryApiClient repositoryApiClient;
 
     @BeforeAll
@@ -29,8 +31,8 @@ public class BaseTest {
         spKey = System.getenv("SERVICE_PRINCIPAL_KEY");
         String accessKeyBase64 = System.getenv("ACCESS_KEY");
         repoId = System.getenv("REPOSITORY_ID");
-        testHeader = System.getenv("TEST_HEADER");
-        if (spKey == null && accessKeyBase64 == null && repoId == null) {
+        String testHeaderValue= System.getenv("TEST_HEADER");
+        if (spKey == null && accessKeyBase64 == null && repoId == null && testHeaderValue == null) {
             // Load environment variables
             Dotenv dotenv = Dotenv
                     .configure()
@@ -39,7 +41,7 @@ public class BaseTest {
             accessKeyBase64 = dotenv.get("ACCESS_KEY");
             spKey = dotenv.get("SERVICE_PRINCIPAL_KEY");
             repoId = dotenv.get("REPOSITORY_ID");
-            testHeader = dotenv.get("TEST_HEADER");
+            testHeaderValue = dotenv.get("TEST_HEADER");
         }
         // Read env variables
         Gson gson = new GsonBuilder().registerTypeAdapter(JWK.class, new JwkDeserializer()).create();
@@ -49,7 +51,12 @@ public class BaseTest {
         accessKeyStr = accessKeyStr.replace("\\\"", "\"");
 
         accessKey = gson.fromJson(accessKeyStr, AccessKey.class);
-        repositoryApiClient = createTestRepoClient(spKey, accessKey, testHeader);
+
+        testHeaders = new HeadersImpl();
+        testHeaders.append("TEST_HEADER", testHeaderValue);
+
+        repositoryApiClient = RepositoryApiClientImpl.CreateFromAccessKey(spKey, accessKey);
+        repositoryApiClient.setDefaultRequestHeaders(testHeaders);
     }
 
     private static String decodeBase64(String encoded) {
@@ -76,11 +83,5 @@ public class BaseTest {
             }
         }
         return CompletableFuture.supplyAsync(() -> true);
-    }
-
-    private static RepositoryApiClient createTestRepoClient(String servicePrincipalKey, AccessKey accessKey, String testHeader) {
-        RepositoryApiClientImpl testRepoClient = RepositoryApiClientImpl.CreateFromAccessKey(servicePrincipalKey, accessKey);
-        testRepoClient.setLoadTestHeader(testHeader);
-        return testRepoClient;
     }
 }
