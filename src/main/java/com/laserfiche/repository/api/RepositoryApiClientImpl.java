@@ -59,7 +59,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
     private void addDefaultHeaderInterceptor() {
         okBuilder.addInterceptor(chain -> {
             okhttp3.Request.Builder builder = chain.request().newBuilder();
-            builder.headers(Headers.of(defaultHeaders));
+            defaultHeaders.forEach(builder::addHeader);
             okhttp3.Request request = builder.build();
             return chain.proceed(request);
         });
