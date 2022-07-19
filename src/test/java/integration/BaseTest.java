@@ -53,7 +53,7 @@ public class BaseTest {
         accessKey = gson.fromJson(accessKeyStr, AccessKey.class);
 
         testHeaders = new HeadersImpl();
-        testHeaders.append("TEST_HEADER", testHeaderValue);
+        testHeaders.append(testHeaderValue, "true");
 
         repositoryApiClient = RepositoryApiClientImpl.CreateFromAccessKey(spKey, accessKey);
         repositoryApiClient.setDefaultRequestHeaders(testHeaders);
