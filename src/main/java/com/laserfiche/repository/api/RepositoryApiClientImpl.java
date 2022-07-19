@@ -10,9 +10,13 @@ import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class RepositoryApiClientImpl implements RepositoryApiClient {
     private final Retrofit.Builder clientBuilder;
     private final OkHttpClient.Builder okBuilder;
+    private Headers defaultHeaders;
     private AttributesClient attributesClient;
     private AuditReasonsClient auditReasonsClient;
     private EntriesClient entriesClient;
@@ -50,13 +54,25 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
                 .create(clientInterface);
     }
 
-    public void setDefaultRequestHeaders(Headers defaultHeaders) {
+    @Override
+    public void setDefaultRequestHeaders(Headers defaultRequestHeaders) {
+        this.defaultHeaders = defaultRequestHeaders;
         okBuilder.addInterceptor(chain -> {
             okhttp3.Request.Builder builder = chain.request().newBuilder();
-            defaultHeaders.entries().forEach(headerKeyValue -> builder.addHeader(headerKeyValue.headerName(), headerKeyValue.header()));
+
+            Map<String, String> nameValuePairs = new HashMap<>();
+            defaultRequestHeaders.entries().forEach(keyValue -> nameValuePairs.put(keyValue.headerName(), keyValue.header()));
+            okhttp3.Headers headers = okhttp3.Headers.of(nameValuePairs);
+            builder.headers(headers);
+
             okhttp3.Request request = builder.build();
             return chain.proceed(request);
         });
+    }
+
+    @Override
+    public Headers getDefaultRequestHeaders() {
+        return defaultHeaders;
     }
 
     @Override
