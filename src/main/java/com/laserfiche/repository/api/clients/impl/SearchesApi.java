@@ -1,12 +1,8 @@
 package com.laserfiche.repository.api.clients.impl;
 
+import com.laserfiche.repository.api.clients.impl.model.*;
 import retrofit2.http.*;
-import com.laserfiche.repository.api.clients.impl.model.AcceptedOperation;
-import com.laserfiche.repository.api.clients.impl.model.AdvancedSearchRequest;
-import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfContextHit;
-import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfEntry;
-import com.laserfiche.repository.api.clients.impl.model.ODataValueOfBoolean;
-import com.laserfiche.repository.api.clients.impl.model.OperationProgress;
+
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 

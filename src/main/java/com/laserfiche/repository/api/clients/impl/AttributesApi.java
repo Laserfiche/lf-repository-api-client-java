@@ -1,8 +1,10 @@
 package com.laserfiche.repository.api.clients.impl;
 
-import retrofit2.http.*;
 import com.laserfiche.repository.api.clients.impl.model.Attribute;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfListOfAttribute;
+import retrofit2.http.GET;
+import retrofit2.http.Url;
+
 import java.util.concurrent.CompletableFuture;
 
 public interface AttributesApi {

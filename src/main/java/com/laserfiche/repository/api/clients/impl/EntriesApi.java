@@ -1,8 +1,8 @@
 package com.laserfiche.repository.api.clients.impl;
 
 import com.laserfiche.repository.api.clients.impl.model.*;
-import retrofit2.http.*;
 import okhttp3.RequestBody;
+import retrofit2.http.*;
 
 import java.io.File;
 import java.util.List;

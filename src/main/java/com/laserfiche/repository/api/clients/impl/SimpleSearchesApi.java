@@ -1,8 +1,10 @@
 package com.laserfiche.repository.api.clients.impl;
 
-import retrofit2.http.*;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueOfIListOfEntry;
 import com.laserfiche.repository.api.clients.impl.model.SimpleSearchRequest;
+import retrofit2.http.Headers;
+import retrofit2.http.POST;
+
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 

@@ -1,10 +1,12 @@
 package com.laserfiche.repository.api.serialization;
 
 import com.google.gson.Gson;
-import com.laserfiche.repository.api.clients.impl.model.*;
+import com.laserfiche.repository.api.clients.impl.model.Entry;
+import com.laserfiche.repository.api.clients.impl.model.EntryFieldValue;
 import io.gsonfire.GsonFireBuilder;
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.OffsetDateTime;
+
 import java.util.Date;
 
 public class RepositoryApiDeserializer {
