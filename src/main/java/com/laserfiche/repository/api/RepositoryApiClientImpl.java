@@ -1,22 +1,21 @@
 package com.laserfiche.repository.api;
 
-import com.laserfiche.api.client.httphandlers.Headers;
 import com.laserfiche.api.client.model.AccessKey;
 import com.laserfiche.repository.api.clients.*;
 import com.laserfiche.repository.api.clients.impl.*;
 import com.laserfiche.repository.api.serialization.GsonCustomConverterFactory;
 import com.laserfiche.repository.api.serialization.RepositoryApiDeserializer;
+import okhttp3.Headers;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class RepositoryApiClientImpl implements RepositoryApiClient {
     private final Retrofit.Builder clientBuilder;
     private final OkHttpClient.Builder okBuilder;
-    private Headers defaultHeaders;
+    private Map<String, String> defaultHeaders;
     private AttributesClient attributesClient;
     private AuditReasonsClient auditReasonsClient;
     private EntriesClient entriesClient;
@@ -31,8 +30,11 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
     protected RepositoryApiClientImpl(String servicePrincipalKey, AccessKey accessKey, String baseUrlDebug) {
         String baseUrl = baseUrlDebug != null ? baseUrlDebug : "https://api." + accessKey.getDomain() + "/repository/";
         RepositoryApiDeserializer json = new RepositoryApiDeserializer();
-        okBuilder = new OkHttpClient.Builder()
-                .addInterceptor(new OAuthInterceptor(servicePrincipalKey, accessKey));
+
+        okBuilder = new OkHttpClient.Builder();
+        addDefaultHeaderInterceptor();
+        okBuilder.addInterceptor(new OAuthInterceptor(servicePrincipalKey, accessKey));
+
         clientBuilder = new Retrofit
                 .Builder()
                 .baseUrl(baseUrl)
@@ -54,24 +56,22 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
                 .create(clientInterface);
     }
 
-    @Override
-    public void setDefaultRequestHeaders(Headers defaultRequestHeaders) {
-        this.defaultHeaders = defaultRequestHeaders;
+    private void addDefaultHeaderInterceptor() {
         okBuilder.addInterceptor(chain -> {
             okhttp3.Request.Builder builder = chain.request().newBuilder();
-
-            Map<String, String> nameValuePairs = new HashMap<>();
-            defaultRequestHeaders.entries().forEach(keyValue -> nameValuePairs.put(keyValue.headerName(), keyValue.header()));
-            okhttp3.Headers headers = okhttp3.Headers.of(nameValuePairs);
-            builder.headers(headers);
-
+            builder.headers(Headers.of(defaultHeaders));
             okhttp3.Request request = builder.build();
             return chain.proceed(request);
         });
     }
 
     @Override
-    public Headers getDefaultRequestHeaders() {
+    public void setDefaultRequestHeaders(Map<String, String> defaultRequestHeaders) {
+        defaultHeaders = defaultRequestHeaders;
+    }
+
+    @Override
+    public Map<String, String> getDefaultRequestHeaders() {
         return defaultHeaders;
     }
 

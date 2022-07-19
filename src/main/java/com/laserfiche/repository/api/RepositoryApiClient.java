@@ -1,7 +1,8 @@
 package com.laserfiche.repository.api;
 
-import com.laserfiche.api.client.httphandlers.Headers;
 import com.laserfiche.repository.api.clients.*;
+
+import java.util.Map;
 
 /**
  * The Laserfiche Repository API client.
@@ -61,10 +62,10 @@ public interface RepositoryApiClient {
      * Set default headers that will be used for all requests.
      * @param defaultHeaders A key value pair of header name and value.
      */
-    void setDefaultRequestHeaders(Headers defaultHeaders);
+    void setDefaultRequestHeaders(Map<String, String> defaultHeaders);
 
     /**
      * @return Default request headers in a key value pair of header name and value.
      */
-    Headers getDefaultRequestHeaders();
+    Map<String, String> getDefaultRequestHeaders();
 }

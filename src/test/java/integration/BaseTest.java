@@ -2,7 +2,6 @@ package integration;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.laserfiche.api.client.httphandlers.Headers;
 import com.laserfiche.api.client.httphandlers.HeadersImpl;
 import com.laserfiche.api.client.model.AccessKey;
 import com.laserfiche.repository.api.RepositoryApiClient;
@@ -14,7 +13,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 
 import java.util.Base64;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -23,7 +24,7 @@ public class BaseTest {
     protected static String spKey;
     protected static AccessKey accessKey;
     protected static String repoId;
-    protected static Headers testHeaders;
+    protected static Map<String, String> testHeaders;
     protected static RepositoryApiClient repositoryApiClient;
 
     @BeforeAll
@@ -52,8 +53,8 @@ public class BaseTest {
 
         accessKey = gson.fromJson(accessKeyStr, AccessKey.class);
 
-        testHeaders = new HeadersImpl();
-        testHeaders.append(testHeaderValue, "true");
+        testHeaders = new HashMap<>();
+        testHeaders.put(testHeaderValue, "true");
 
         repositoryApiClient = RepositoryApiClientImpl.CreateFromAccessKey(spKey, accessKey);
         repositoryApiClient.setDefaultRequestHeaders(testHeaders);
