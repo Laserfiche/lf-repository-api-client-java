@@ -5,14 +5,17 @@ import com.laserfiche.repository.api.clients.*;
 import com.laserfiche.repository.api.clients.impl.*;
 import com.laserfiche.repository.api.serialization.GsonCustomConverterFactory;
 import com.laserfiche.repository.api.serialization.RepositoryApiDeserializer;
+import okhttp3.Headers;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
+import java.util.Map;
+
 public class RepositoryApiClientImpl implements RepositoryApiClient {
     private final Retrofit.Builder clientBuilder;
     private final OkHttpClient.Builder okBuilder;
-
+    private Map<String, String> defaultHeaders;
     private AttributesClient attributesClient;
     private AuditReasonsClient auditReasonsClient;
     private EntriesClient entriesClient;
@@ -26,10 +29,12 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
 
     protected RepositoryApiClientImpl(String servicePrincipalKey, AccessKey accessKey, String baseUrlDebug) {
         String baseUrl = baseUrlDebug != null ? baseUrlDebug : "https://api." + accessKey.getDomain() + "/repository/";
+        RepositoryApiDeserializer json = new RepositoryApiDeserializer();
 
         okBuilder = new OkHttpClient.Builder();
+        addDefaultHeaderInterceptor();
         okBuilder.addInterceptor(new OAuthInterceptor(servicePrincipalKey, accessKey));
-        RepositoryApiDeserializer json = new RepositoryApiDeserializer();
+
         clientBuilder = new Retrofit
                 .Builder()
                 .baseUrl(baseUrl)
@@ -37,11 +42,11 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
                 .addConverterFactory(GsonCustomConverterFactory.create(json.getGson()));
     }
 
-    public static RepositoryApiClient CreateFromAccessKey(String servicePrincipalKey, AccessKey accessKey, String baseUrlDebug) {
+    public static RepositoryApiClientImpl CreateFromAccessKey(String servicePrincipalKey, AccessKey accessKey, String baseUrlDebug) {
         return new RepositoryApiClientImpl(servicePrincipalKey, accessKey, baseUrlDebug);
     }
 
-    public static RepositoryApiClient CreateFromAccessKey(String servicePrincipalKey, AccessKey accessKey) {
+    public static RepositoryApiClientImpl CreateFromAccessKey(String servicePrincipalKey, AccessKey accessKey) {
         return CreateFromAccessKey(servicePrincipalKey, accessKey, null);
     }
 
@@ -49,6 +54,25 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
         return clientBuilder.client(okBuilder.build())
                 .build()
                 .create(clientInterface);
+    }
+
+    private void addDefaultHeaderInterceptor() {
+        okBuilder.addInterceptor(chain -> {
+            okhttp3.Request.Builder builder = chain.request().newBuilder();
+            defaultHeaders.forEach(builder::addHeader);
+            okhttp3.Request request = builder.build();
+            return chain.proceed(request);
+        });
+    }
+
+    @Override
+    public void setDefaultRequestHeaders(Map<String, String> defaultRequestHeaders) {
+        defaultHeaders = defaultRequestHeaders;
+    }
+
+    @Override
+    public Map<String, String> getDefaultRequestHeaders() {
+        return defaultHeaders;
     }
 
     @Override
