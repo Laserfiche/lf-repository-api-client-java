@@ -7,13 +7,13 @@ import com.laserfiche.repository.api.clients.impl.model.RepositoryInfo;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-public class RepositoriesClientImpl extends BaseClient<RepositoriesApi> {
+public class RepositoriesClientImpl extends BaseClient<RepositoriesApi, Void> {
     /**
      *
      * - Get the repository resource list that current user has access to.
      * @return CompletableFuture&lt;List&lt;RepositoryInfo&gt;&gt;
      */
     public CompletableFuture<List<RepositoryInfo>> getRepositoryList() {
-        return client.getRepositoryList();
+        return generatedClient.getRepositoryList();
     }
 }

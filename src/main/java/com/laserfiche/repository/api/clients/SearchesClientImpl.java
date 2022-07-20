@@ -3,12 +3,13 @@ package com.laserfiche.repository.api.clients;
 import com.laserfiche.repository.api.BaseClient;
 import com.laserfiche.repository.api.ForEachCallBack;
 import com.laserfiche.repository.api.clients.impl.SearchesApi;
+import com.laserfiche.repository.api.clients.impl.SearchesApiEx;
 import com.laserfiche.repository.api.clients.impl.model.*;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-public class SearchesClientImpl extends BaseClient<SearchesApi> {
+public class SearchesClientImpl extends BaseClient<SearchesApi, SearchesApiEx> {
     /**
      * Cancel or close an advanced search.
      * - Cancels a currently running search. - Closes a completed search.
@@ -17,7 +18,7 @@ public class SearchesClientImpl extends BaseClient<SearchesApi> {
      * @return CompletableFuture&lt;ODataValueOfBoolean&gt;
      */
     public CompletableFuture<ODataValueOfBoolean> cancelOrCloseSearch(String repoId, String searchToken) {
-        return client.cancelOrCloseSearch(repoId, searchToken);
+        return generatedClient.cancelOrCloseSearch(repoId, searchToken);
     }
 
     /**
@@ -28,7 +29,7 @@ public class SearchesClientImpl extends BaseClient<SearchesApi> {
      * @return CompletableFuture&lt;AcceptedOperation&gt;
      */
     public CompletableFuture<AcceptedOperation> createSearchOperation(String repoId, AdvancedSearchRequest body) {
-        return client.createSearchOperation(repoId, body);
+        return generatedClient.createSearchOperation(repoId, body);
     }
 
     /**
@@ -47,7 +48,7 @@ public class SearchesClientImpl extends BaseClient<SearchesApi> {
      * @return CompletableFuture&lt;ODataValueContextOfIListOfContextHit&gt;
      */
     public CompletableFuture<ODataValueContextOfIListOfContextHit> getSearchContextHits(String repoId, String searchToken, Integer rowNumber, String prefer, String select, String orderby, Integer top, Integer skip, Boolean count, Integer maxPageSize) {
-        return client.getSearchContextHits(repoId, searchToken, rowNumber, mergeMaxPageSizeIntoPrefer(maxPageSize, prefer), select, orderby, top, skip, count);
+        return generatedClient.getSearchContextHits(repoId, searchToken, rowNumber, mergeMaxPageSizeIntoPrefer(maxPageSize, prefer), select, orderby, top, skip, count);
     }
 
     /**
@@ -57,7 +58,7 @@ public class SearchesClientImpl extends BaseClient<SearchesApi> {
      * @return CompletableFuture&lt;ODataValueContextOfIListOfContextHit&gt;
      */
     public CompletableFuture<ODataValueContextOfIListOfContextHit> getSearchContextHitsNextLink(String nextLink, Integer maxPageSize) {
-        return client.getSearchContextHitsPaginate(nextLink, mergeMaxPageSizeIntoPrefer(maxPageSize, null));
+        return extensionClient.getSearchContextHitsPaginate(nextLink, mergeMaxPageSizeIntoPrefer(maxPageSize, null));
     }
 
     /**
@@ -111,7 +112,7 @@ public class SearchesClientImpl extends BaseClient<SearchesApi> {
      * @return CompletableFuture&lt;ODataValueContextOfIListOfEntry&gt;
      */
     public CompletableFuture<ODataValueContextOfIListOfEntry> getSearchResults(String repoId, String searchToken, Boolean groupByEntryType, Boolean refresh, List<String> fields, Boolean formatFields, String prefer, String culture, String select, String orderby, Integer top, Integer skip, Boolean count, Integer maxPageSize) {
-        return client.getSearchResults(repoId, searchToken, groupByEntryType, refresh, fields, formatFields, mergeMaxPageSizeIntoPrefer(maxPageSize, prefer), culture, select, orderby, top, skip, count);
+        return generatedClient.getSearchResults(repoId, searchToken, groupByEntryType, refresh, fields, formatFields, mergeMaxPageSizeIntoPrefer(maxPageSize, prefer), culture, select, orderby, top, skip, count);
     }
 
     /**
@@ -122,7 +123,7 @@ public class SearchesClientImpl extends BaseClient<SearchesApi> {
      * @return CompletableFuture&lt;ODataValueContextOfIListOfEntry&gt;
      */
     public CompletableFuture<ODataValueContextOfIListOfEntry> getSearchResultsNextLink(String nextLink, Integer maxPageSize) {
-        return client.getSearchResultsPaginate(nextLink, mergeMaxPageSizeIntoPrefer(maxPageSize, null));
+        return extensionClient.getSearchResultsPaginate(nextLink, mergeMaxPageSizeIntoPrefer(maxPageSize, null));
     }
 
     /**
@@ -168,6 +169,6 @@ public class SearchesClientImpl extends BaseClient<SearchesApi> {
      * @return CompletableFuture&lt;OperationProgress&gt;
      */
     public CompletableFuture<OperationProgress> getSearchStatus(String repoId, String searchToken) {
-        return client.getSearchStatus(repoId, searchToken);
+        return generatedClient.getSearchStatus(repoId, searchToken);
     }
 }

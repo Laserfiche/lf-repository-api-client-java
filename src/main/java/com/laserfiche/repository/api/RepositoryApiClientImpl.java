@@ -19,6 +19,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
     private AuditReasonsClientImpl auditReasonsClient;
     private EntriesClientImpl entriesClient;
     private FieldDefinitionsClientImpl fieldDefinitionsClient;
+    private LinkDefinitionsClientImpl linkDefinitionsClient;
     private RepositoriesClientImpl repositoriesClient;
     private SearchesClientImpl searchesClient;
     private SimpleSearchesClientImpl simpleSearchesClient;
@@ -78,7 +79,8 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
     public AttributesClientImpl getAttributesClient() {
         if (attributesClient == null) {
             attributesClient = new AttributesClientImpl();
-            attributesClient.setClient(createClient(AttributesApi.class));
+            attributesClient.setGeneratedClient(createClient(AttributesApi.class));
+            attributesClient.setExtensionClient(createClient(AttributesApiEx.class));
         }
         return attributesClient;
     }
@@ -87,7 +89,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
     public AuditReasonsClientImpl getAuditReasonsClient() {
         if (auditReasonsClient == null) {
             auditReasonsClient = new AuditReasonsClientImpl();
-            auditReasonsClient.setClient(createClient(AuditReasonsApi.class));
+            auditReasonsClient.setGeneratedClient(createClient(AuditReasonsApi.class));
         }
         return auditReasonsClient;
     }
@@ -96,7 +98,8 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
     public EntriesClientImpl getEntriesClient() {
         if (entriesClient == null) {
             entriesClient = new EntriesClientImpl();
-            entriesClient.setClient(createClient(EntriesApi.class));
+            entriesClient.setGeneratedClient(createClient(EntriesApi.class));
+            entriesClient.setExtensionClient(createClient(EntriesApiEx.class));
         }
         return entriesClient;
     }
@@ -105,16 +108,27 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
     public FieldDefinitionsClientImpl getFieldDefinitionsClient() {
         if (fieldDefinitionsClient == null) {
             fieldDefinitionsClient = new FieldDefinitionsClientImpl();
-            fieldDefinitionsClient.setClient(createClient(FieldDefinitionsApi.class));
+            fieldDefinitionsClient.setGeneratedClient(createClient(FieldDefinitionsApi.class));
+            fieldDefinitionsClient.setExtensionClient(createClient(FieldDefinitionsApiEx.class));
         }
         return fieldDefinitionsClient;
+    }
+
+    @Override
+    public LinkDefinitionsClientImpl getLinkDefinitionsClient() {
+        if (linkDefinitionsClient == null) {
+            linkDefinitionsClient = new LinkDefinitionsClientImpl();
+            linkDefinitionsClient.setGeneratedClient(createClient(LinkDefinitionsApi.class));
+            linkDefinitionsClient.setExtensionClient(createClient(LinkDefinitionsApiEx.class));
+        }
+        return linkDefinitionsClient;
     }
 
     @Override
     public RepositoriesClientImpl getRepositoryClient() {
         if (repositoriesClient == null) {
             repositoriesClient = new RepositoriesClientImpl();
-            repositoriesClient.setClient(createClient(RepositoriesApi.class));
+            repositoriesClient.setGeneratedClient(createClient(RepositoriesApi.class));
         }
         return repositoriesClient;
     }
@@ -123,7 +137,8 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
     public SearchesClientImpl getSearchesClient() {
         if (searchesClient == null) {
             searchesClient = new SearchesClientImpl();
-            searchesClient.setClient(createClient(SearchesApi.class));
+            searchesClient.setGeneratedClient(createClient(SearchesApi.class));
+            searchesClient.setExtensionClient(createClient(SearchesApiEx.class));
         }
         return searchesClient;
     }
@@ -132,7 +147,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
     public SimpleSearchesClientImpl getSimpleSearchesClient() {
         if (simpleSearchesClient == null) {
             simpleSearchesClient = new SimpleSearchesClientImpl();
-            simpleSearchesClient.setClient(createClient(SimpleSearchesApi.class));
+            simpleSearchesClient.setGeneratedClient(createClient(SimpleSearchesApi.class));
         }
         return simpleSearchesClient;
     }
@@ -141,7 +156,8 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
     public TagDefinitionsClientImpl getTagDefinitionsClient() {
         if (tagDefinitionsClient == null) {
             tagDefinitionsClient = new TagDefinitionsClientImpl();
-            tagDefinitionsClient.setClient(createClient(TagDefinitionsApi.class));
+            tagDefinitionsClient.setGeneratedClient(createClient(TagDefinitionsApi.class));
+            tagDefinitionsClient.setExtensionClient(createClient(TagDefinitionsApiEx.class));
         }
         return tagDefinitionsClient;
     }
@@ -150,7 +166,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
     public TasksClientImpl getTasksClient() {
         if (tasksClient == null) {
             tasksClient = new TasksClientImpl();
-            tasksClient.setClient(createClient(TasksApi.class));
+            tasksClient.setGeneratedClient(createClient(TasksApi.class));
         }
         return tasksClient;
     }
@@ -159,7 +175,8 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
     public TemplateDefinitionsClientImpl getTemplateDefinitionClient() {
         if (templateDefinitionsClient == null) {
             templateDefinitionsClient = new TemplateDefinitionsClientImpl();
-            templateDefinitionsClient.setClient(createClient(TemplateDefinitionsApi.class));
+            templateDefinitionsClient.setGeneratedClient(createClient(TemplateDefinitionsApi.class));
+            templateDefinitionsClient.setExtensionClient(createClient(TemplateDefinitionsApiEx.class));
         }
         return templateDefinitionsClient;
     }

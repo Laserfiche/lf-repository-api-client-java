@@ -3,12 +3,13 @@ package com.laserfiche.repository.api.clients;
 import com.laserfiche.repository.api.BaseClient;
 import com.laserfiche.repository.api.ForEachCallBack;
 import com.laserfiche.repository.api.clients.impl.FieldDefinitionsApi;
+import com.laserfiche.repository.api.clients.impl.FieldDefinitionsApiEx;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfWFieldInfo;
 import com.laserfiche.repository.api.clients.impl.model.WFieldInfo;
 
 import java.util.concurrent.CompletableFuture;
 
-public class FieldDefinitionsClientImpl extends BaseClient<FieldDefinitionsApi> {
+public class FieldDefinitionsClientImpl extends BaseClient<FieldDefinitionsApi, FieldDefinitionsApiEx> {
     /**
      *
      * - Returns a single field definition associated with the specified ID.  - Useful when a route provides a minimal amount of details and more information about the specific field definition is needed. - Allowed OData query options: Select
@@ -19,7 +20,7 @@ public class FieldDefinitionsClientImpl extends BaseClient<FieldDefinitionsApi> 
      * @return CompletableFuture&lt;WFieldInfo&gt;
      */
     public CompletableFuture<WFieldInfo> getFieldDefinitionById(String repoId, Integer fieldDefinitionId, String culture, String select) {
-        return client.getFieldDefinitionById(repoId, fieldDefinitionId, culture, select);
+        return generatedClient.getFieldDefinitionById(repoId, fieldDefinitionId, culture, select);
     }
 
     /**
@@ -37,7 +38,7 @@ public class FieldDefinitionsClientImpl extends BaseClient<FieldDefinitionsApi> 
      * @return CompletableFuture&lt;ODataValueContextOfIListOfWFieldInfo&gt;
      */
     public CompletableFuture<ODataValueContextOfIListOfWFieldInfo> getFieldDefinitions(String repoId, String prefer, String culture, String select, String orderby, Integer top, Integer skip, Boolean count, Integer maxPageSize) {
-        return client.getFieldDefinitions(repoId, mergeMaxPageSizeIntoPrefer(maxPageSize, prefer), culture, select, orderby, top, skip, count);
+        return generatedClient.getFieldDefinitions(repoId, mergeMaxPageSizeIntoPrefer(maxPageSize, prefer), culture, select, orderby, top, skip, count);
     }
 
     /**
@@ -47,7 +48,7 @@ public class FieldDefinitionsClientImpl extends BaseClient<FieldDefinitionsApi> 
      * @return CompletableFuture&lt;ODataValueContextOfIListOfWFieldInfo&gt;
      */
     public CompletableFuture<ODataValueContextOfIListOfWFieldInfo> getFieldDefinitionsNextLink(String nextLink, Integer maxPageSize) {
-        return client.getFieldDefinitionsPaginate(nextLink, mergeMaxPageSizeIntoPrefer(maxPageSize, null));
+        return extensionClient.getFieldDefinitionsPaginate(nextLink, mergeMaxPageSizeIntoPrefer(maxPageSize, null));
     }
 
     /**

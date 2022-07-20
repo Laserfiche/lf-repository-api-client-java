@@ -3,6 +3,7 @@ package com.laserfiche.repository.api.clients;
 import com.laserfiche.repository.api.BaseClient;
 import com.laserfiche.repository.api.ForEachCallBack;
 import com.laserfiche.repository.api.clients.impl.EntriesApi;
+import com.laserfiche.repository.api.clients.impl.EntriesApiEx;
 import com.laserfiche.repository.api.clients.impl.model.*;
 import okhttp3.RequestBody;
 
@@ -11,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
-public class EntriesClientImpl extends BaseClient<EntriesApi> {
+public class EntriesClientImpl extends BaseClient<EntriesApi, EntriesApiEx> {
     /**
      *
      * - Assign links to an entry. - Provide an entry ID and a list of links to assign to that entry. - This is an overwrite action. The request must include all links to assign to the entry, including existing links that should remain assigned to the entry.
@@ -21,7 +22,7 @@ public class EntriesClientImpl extends BaseClient<EntriesApi> {
      * @return Call&lt;ODataValueOfIListOfWEntryLinkInfo&gt;
      */
     public CompletableFuture<ODataValueOfIListOfWEntryLinkInfo> assignEntryLinks(String repoId, Integer entryId, List<PutLinksRequest> body) {
-        return client.assignEntryLinks(repoId, entryId, body);
+        return generatedClient.assignEntryLinks(repoId, entryId, body);
     }
 
     /**
@@ -34,7 +35,7 @@ public class EntriesClientImpl extends BaseClient<EntriesApi> {
      * @return Call&lt;ODataValueOfIListOfFieldValue&gt;
      */
     public CompletableFuture<ODataValueOfIListOfFieldValue> assignFieldValues(String repoId, Integer entryId, Map<String, FieldToUpdate> body, String culture) {
-        return client.assignFieldValues(repoId, entryId, body, culture);
+        return generatedClient.assignFieldValues(repoId, entryId, body, culture);
     }
 
     /**
@@ -46,7 +47,7 @@ public class EntriesClientImpl extends BaseClient<EntriesApi> {
      * @return Call&lt;ODataValueOfIListOfWTagInfo&gt;
      */
     public CompletableFuture<ODataValueOfIListOfWTagInfo> assignTags(String repoId, Integer entryId, PutTagRequest body) {
-        return client.assignTags(repoId, entryId, body);
+        return generatedClient.assignTags(repoId, entryId, body);
     }
 
     /**
@@ -60,7 +61,7 @@ public class EntriesClientImpl extends BaseClient<EntriesApi> {
      * @return Call&lt;AcceptedOperation&gt;
      */
     public CompletableFuture<AcceptedOperation> copyEntryAsync(String repoId, Integer entryId, CopyAsyncRequest body, Boolean autoRename, String culture) {
-        return client.copyEntryAsync(repoId, entryId, body, autoRename, culture);
+        return generatedClient.copyEntryAsync(repoId, entryId, body, autoRename, culture);
     }
 
     /**
@@ -74,7 +75,7 @@ public class EntriesClientImpl extends BaseClient<EntriesApi> {
      * @return Call&lt;Entry&gt;
      */
     public CompletableFuture<Entry> createOrCopyEntry(String repoId, Integer entryId, PostEntryChildrenRequest body, Boolean autoRename, String culture) {
-        return client.createOrCopyEntry(repoId, entryId, body, autoRename, culture);
+        return generatedClient.createOrCopyEntry(repoId, entryId, body, autoRename, culture);
     }
 
     /**
@@ -85,7 +86,7 @@ public class EntriesClientImpl extends BaseClient<EntriesApi> {
      * @return Call&lt;Entry&gt;
      */
     public CompletableFuture<Entry> deleteAssignedTemplate(String repoId, Integer entryId) {
-        return client.deleteAssignedTemplate(repoId, entryId);
+        return generatedClient.deleteAssignedTemplate(repoId, entryId);
     }
 
     /**
@@ -96,7 +97,7 @@ public class EntriesClientImpl extends BaseClient<EntriesApi> {
      * @return Call&lt;ODataValueOfBoolean&gt;
      */
     public CompletableFuture<ODataValueOfBoolean> deleteDocument(String repoId, Integer entryId) {
-        return client.deleteDocument(repoId, entryId);
+        return generatedClient.deleteDocument(repoId, entryId);
     }
 
     /**
@@ -108,7 +109,7 @@ public class EntriesClientImpl extends BaseClient<EntriesApi> {
      * @return Call&lt;AcceptedOperation&gt;
      */
     public CompletableFuture<AcceptedOperation> deleteEntryInfo(String repoId, Integer entryId, DeleteEntryWithAuditReason body) {
-        return client.deleteEntryInfo(repoId, entryId, body);
+        return generatedClient.deleteEntryInfo(repoId, entryId, body);
     }
 
     /**
@@ -120,7 +121,7 @@ public class EntriesClientImpl extends BaseClient<EntriesApi> {
      * @return Call&lt;ODataValueOfBoolean&gt;
      */
     public CompletableFuture<ODataValueOfBoolean> deletePages(String repoId, Integer entryId, String pageRange) {
-        return client.deletePages(repoId, entryId, pageRange);
+        return generatedClient.deletePages(repoId, entryId, pageRange);
     }
 
     /**
@@ -132,7 +133,7 @@ public class EntriesClientImpl extends BaseClient<EntriesApi> {
      * @return Call&lt;File&gt;
      */
     public CompletableFuture<File> exportDocument(String repoId, Integer entryId, String range) {
-        return client.exportDocument(repoId, entryId, range);
+        return generatedClient.exportDocument(repoId, entryId, range);
     }
 
     /**
@@ -145,7 +146,7 @@ public class EntriesClientImpl extends BaseClient<EntriesApi> {
      * @return Call&lt;File&gt;
      */
     public CompletableFuture<File> exportDocumentWithAuditReason(String repoId, Integer entryId, GetEdocWithAuditReasonRequest body, String range) {
-        return client.exportDocumentWithAuditReason(repoId, entryId, body, range);
+        return generatedClient.exportDocumentWithAuditReason(repoId, entryId, body, range);
     }
 
     /**
@@ -156,7 +157,7 @@ public class EntriesClientImpl extends BaseClient<EntriesApi> {
      * @return Call&lt;Void&gt;
      */
     public CompletableFuture<Void> getDocumentContentType(String repoId, Integer entryId) {
-        return client.getDocumentContentType(repoId, entryId);
+        return generatedClient.getDocumentContentType(repoId, entryId);
     }
 
     /**
@@ -168,7 +169,7 @@ public class EntriesClientImpl extends BaseClient<EntriesApi> {
      * @return Call&lt;Map&lt;String, List&lt;String&gt;&gt;&gt;
      */
     public CompletableFuture<Map<String, List<String>>> getDynamicFieldValues(String repoId, Integer entryId, GetDynamicFieldLogicValueRequest body) {
-        return client.getDynamicFieldValues(repoId, entryId, body);
+        return generatedClient.getDynamicFieldValues(repoId, entryId, body);
     }
 
     /**
@@ -180,7 +181,7 @@ public class EntriesClientImpl extends BaseClient<EntriesApi> {
      * @return Call&lt;Entry&gt;
      */
     public CompletableFuture<Entry> getEntry(String repoId, Integer entryId, String select) {
-        return client.getEntry(repoId, entryId, select);
+        return generatedClient.getEntry(repoId, entryId, select);
     }
 
     /**
@@ -202,7 +203,7 @@ public class EntriesClientImpl extends BaseClient<EntriesApi> {
      * @return CompletableFuture&lt;ODataValueContextOfIListOfEntry&gt;
      */
     public CompletableFuture<ODataValueContextOfIListOfEntry> getEntryListing(String repoId, Integer entryId, Boolean groupByEntryType, List<String> fields, Boolean formatFields, String prefer, String culture, String select, String orderby, Integer top, Integer skip, Boolean count, Integer maxPageSize) {
-        return client.getEntryListing(repoId, entryId, groupByEntryType, fields, formatFields, mergeMaxPageSizeIntoPrefer(maxPageSize, prefer), culture, select, orderby, top, skip, count);
+        return generatedClient.getEntryListing(repoId, entryId, groupByEntryType, fields, formatFields, mergeMaxPageSizeIntoPrefer(maxPageSize, prefer), culture, select, orderby, top, skip, count);
     }
 
     /**
@@ -213,7 +214,7 @@ public class EntriesClientImpl extends BaseClient<EntriesApi> {
      * @return CompletableFuture&lt;ODataValueContextOfIListOfEntry&gt;
      */
     public CompletableFuture<ODataValueContextOfIListOfEntry> getEntryListingNextLink(String nextLink, Integer maxPageSize) {
-        return client.getEntryListingPaginate(nextLink, mergeMaxPageSizeIntoPrefer(maxPageSize, null));
+        return extensionClient.getEntryListingPaginate(nextLink, mergeMaxPageSizeIntoPrefer(maxPageSize, null));
     }
 
     /**
@@ -267,7 +268,7 @@ public class EntriesClientImpl extends BaseClient<EntriesApi> {
      * @return CompletableFuture&lt;ODataValueContextOfIListOfFieldValue&gt;
      */
     public CompletableFuture<ODataValueContextOfIListOfFieldValue> getFieldValues(String repoId, Integer entryId, String prefer, Boolean formatValue, String culture, String select, String orderby, Integer top, Integer skip, Boolean count, Integer maxPageSize) {
-        return client.getFieldValues(repoId, entryId, mergeMaxPageSizeIntoPrefer(maxPageSize, prefer), formatValue, culture, select, orderby, top, skip, count);
+        return generatedClient.getFieldValues(repoId, entryId, mergeMaxPageSizeIntoPrefer(maxPageSize, prefer), formatValue, culture, select, orderby, top, skip, count);
     }
 
     /**
@@ -278,7 +279,7 @@ public class EntriesClientImpl extends BaseClient<EntriesApi> {
      * @return CompletableFuture&lt;ODataValueContextOfIListOfFieldValue&gt;
      */
     public CompletableFuture<ODataValueContextOfIListOfFieldValue> getFieldValuesNextLink(String nextLink, Integer maxPageSize) {
-        return client.getFieldValuesPaginate(nextLink, mergeMaxPageSizeIntoPrefer(maxPageSize, null));
+        return extensionClient.getFieldValuesPaginate(nextLink, mergeMaxPageSizeIntoPrefer(maxPageSize, null));
     }
 
     /**
@@ -328,7 +329,7 @@ public class EntriesClientImpl extends BaseClient<EntriesApi> {
      * @return CompletableFuture&lt;ODataValueContextOfIListOfWEntryLinkInfo&gt;
      */
     public CompletableFuture<ODataValueContextOfIListOfWEntryLinkInfo> getLinkValuesFromEntry(String repoId, Integer entryId, String prefer, String select, String orderby, Integer top, Integer skip, Boolean count, Integer maxPageSize) {
-        return client.getLinkValuesFromEntry(repoId, entryId, mergeMaxPageSizeIntoPrefer(maxPageSize, prefer), select, orderby, top, skip, count);
+        return generatedClient.getLinkValuesFromEntry(repoId, entryId, mergeMaxPageSizeIntoPrefer(maxPageSize, prefer), select, orderby, top, skip, count);
     }
 
     /**
@@ -339,7 +340,7 @@ public class EntriesClientImpl extends BaseClient<EntriesApi> {
      * @return CompletableFuture&lt;ODataValueContextOfIListOfWEntryLinkInfo&gt;
      */
     public CompletableFuture<ODataValueContextOfIListOfWEntryLinkInfo> getLinkValuesFromEntryNextLink(String nextLink, Integer maxPageSize) {
-        return client.getLinkValuesFromEntryPaginate(nextLink, mergeMaxPageSizeIntoPrefer(maxPageSize, null));
+        return extensionClient.getLinkValuesFromEntryPaginate(nextLink, mergeMaxPageSizeIntoPrefer(maxPageSize, null));
     }
 
     /**
@@ -387,7 +388,7 @@ public class EntriesClientImpl extends BaseClient<EntriesApi> {
      * @return CompletableFuture&lt;ODataValueContextOfIListOfWTagInfo&gt;
      */
     public CompletableFuture<ODataValueContextOfIListOfWTagInfo> getTagsAssignedToEntry(String repoId, Integer entryId, String prefer, String select, String orderby, Integer top, Integer skip, Boolean count, Integer maxPageSize) {
-        return client.getTagsAssignedToEntry(repoId, entryId, mergeMaxPageSizeIntoPrefer(maxPageSize, prefer), select, orderby, top, skip, count);
+        return generatedClient.getTagsAssignedToEntry(repoId, entryId, mergeMaxPageSizeIntoPrefer(maxPageSize, prefer), select, orderby, top, skip, count);
     }
 
     /**
@@ -403,7 +404,7 @@ public class EntriesClientImpl extends BaseClient<EntriesApi> {
      * @return CompletableFuture&lt;CreateEntryResult&gt;
      */
     public CompletableFuture<CreateEntryResult> importDocument(String repoId, Integer parentEntryId, String fileName, RequestBody electronicDocument, PostEntryWithEdocMetadataRequest request, Boolean autoRename, String culture) {
-        return client.importDocument(repoId, parentEntryId, fileName, electronicDocument, request, autoRename, culture);
+        return generatedClient.importDocument(repoId, parentEntryId, fileName, electronicDocument, request, autoRename, culture);
     }
 
     /**
@@ -414,7 +415,7 @@ public class EntriesClientImpl extends BaseClient<EntriesApi> {
      * @return CompletableFuture&lt;ODataValueContextOfIListOfWTagInfo&gt;
      */
     public CompletableFuture<ODataValueContextOfIListOfWTagInfo> getTagsAssignedToEntryNextLink(String nextLink, Integer maxPageSize) {
-        return client.getTagsAssignedToEntryPaginate(nextLink, mergeMaxPageSizeIntoPrefer(maxPageSize, null));
+        return extensionClient.getTagsAssignedToEntryPaginate(nextLink, mergeMaxPageSizeIntoPrefer(maxPageSize, null));
     }
 
     /**
@@ -459,7 +460,7 @@ public class EntriesClientImpl extends BaseClient<EntriesApi> {
      * @return CompletableFuture&lt;Entry&gt;
      */
     public CompletableFuture<Entry> moveOrRenameDocument(String repoId, Integer entryId, PatchEntryRequest body, Boolean autoRename, String culture) {
-        return client.moveOrRenameDocument(repoId, entryId, body, autoRename, culture);
+        return generatedClient.moveOrRenameDocument(repoId, entryId, body, autoRename, culture);
     }
 
     /**
@@ -472,7 +473,7 @@ public class EntriesClientImpl extends BaseClient<EntriesApi> {
      * @return CompletableFuture&lt;Entry&gt;
      */
     public CompletableFuture<Entry> writeTemplateValueToEntry(String repoId, Integer entryId, PutTemplateRequest body, String culture) {
-        return client.writeTemplateValueToEntry(repoId, entryId, body, culture);
+        return generatedClient.writeTemplateValueToEntry(repoId, entryId, body, culture);
     }
 
 }

@@ -1,15 +1,12 @@
 package com.laserfiche.repository.api.clients;
 
-import com.laserfiche.repository.api.BaseClient;
 import com.laserfiche.repository.api.ForEachCallBack;
-import com.laserfiche.repository.api.clients.impl.AttributesApi;
-import com.laserfiche.repository.api.clients.impl.AttributesApiEx;
 import com.laserfiche.repository.api.clients.impl.model.Attribute;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfListOfAttribute;
 
 import java.util.concurrent.CompletableFuture;
 
-public class AttributesClientImpl extends BaseClient<AttributesApi, AttributesApiEx> implements AttributesClient {
+public interface AttributesClient {
     /**
      * Get the attribute key value pairs associated with the authenticated user.
      * - Returns the attribute key value pairs associated with the authenticated user. Alternatively, return only the attribute key value pairs that are associated with the \&quot;Everyone\&quot; group. - Attribute keys can be used with subsequent calls to get specific attribute values. - Default page size: 100. Allowed OData query options: Select, Count, OrderBy, Skip, Top, SkipToken, Prefer. Optional query parameters: everyone (bool, default false). When true, this route does not return the attributes that are tied to the currently authenticated user, but rather the attributes assigned to the \&quot;Everyone\&quot; group. Note when this is true, the response does not include both the \&quot;Everyone\&quot; groups attribute and the currently authenticated user, but only the \&quot;Everyone\&quot; groups.
@@ -24,9 +21,7 @@ public class AttributesClientImpl extends BaseClient<AttributesApi, AttributesAp
      * @param maxPageSize Indicates the maximum number of items to return.
      * @return CompletableFuture&lt;ODataValueContextOfListOfAttribute&gt;
      */
-    public CompletableFuture<ODataValueContextOfListOfAttribute> getTrusteeAttributeKeyValuePairs(String repoId, Boolean everyone, String prefer, String select, String orderby, Integer top, Integer skip, Boolean count, Integer maxPageSize) {
-        return generatedClient.getTrusteeAttributeKeyValuePairs(repoId, everyone, mergeMaxPageSizeIntoPrefer(maxPageSize, prefer), select, orderby, top, skip, count);
-    }
+    CompletableFuture<ODataValueContextOfListOfAttribute> getTrusteeAttributeKeyValuePairs(String repoId, Boolean everyone, String prefer, String select, String orderby, Integer top, Integer skip, Boolean count, Integer maxPageSize);
 
     /**
      * Get an attribute object by key associated with the authenticated user.
@@ -36,9 +31,7 @@ public class AttributesClientImpl extends BaseClient<AttributesApi, AttributesAp
      * @param everyone Boolean value that indicates whether to return attributes associated with everyone or the currently authenticated user. (optional)
      * @return CompletableFuture&lt;Attribute&gt;
      */
-    public CompletableFuture<Attribute> getTrusteeAttributeValueByKey(String repoId, String attributeKey, Boolean everyone){
-        return generatedClient.getTrusteeAttributeValueByKey(repoId, attributeKey, everyone);
-    }
+    CompletableFuture<Attribute> getTrusteeAttributeValueByKey(String repoId, String attributeKey, Boolean everyone);
 
     /**
      * Get an attribute object by key associated with the authenticated user.
@@ -50,9 +43,7 @@ public class AttributesClientImpl extends BaseClient<AttributesApi, AttributesAp
      * @param maxPageSize The maximum number of items to retrieve.
      * @return CompletableFuture&lt;ODataValueContextOfListOfAttribute&gt;
      */
-    public CompletableFuture<ODataValueContextOfListOfAttribute> getTrusteeAttributeKeyValuePairsNextLink(String nextLink, Integer maxPageSize) {
-        return extensionClient.getTrusteeAttributeKeyValuePairsPaginate(nextLink, mergeMaxPageSizeIntoPrefer(maxPageSize, null));
-    }
+    CompletableFuture<ODataValueContextOfListOfAttribute> getTrusteeAttributeKeyValuePairsNextLink(String nextLink, Integer maxPageSize);
 
     /**
      * Get an attribute object by key associated with the authenticated user.
@@ -67,19 +58,5 @@ public class AttributesClientImpl extends BaseClient<AttributesApi, AttributesAp
      * @param count Indicates whether the total count of items within a collection are returned in the result. (optional)
      * @param maxPageSize Indicates the maximum number of items to return.
      */
-    public void getTrusteeAttributeKeyValuePairsForEach(ForEachCallBack<CompletableFuture<ODataValueContextOfListOfAttribute>> callback, String repoId, Boolean everyone, String prefer, String select, String orderby, Integer top, Integer skip, Boolean count, Integer maxPageSize) {
-        // Initial request
-        CompletableFuture<ODataValueContextOfListOfAttribute> future = getTrusteeAttributeKeyValuePairs(repoId, everyone, prefer, select, orderby, top, skip, count, maxPageSize);
-        // Subsequent request based on return value of callback
-        while (callback.apply(future)) {
-            future = future.thenCompose(dataFromLastRequest -> {
-                String nextLink = dataFromLastRequest.getAtOdataNextLink();
-                if (nextLink == null) {
-                    // We are at the end of the data stream
-                    return CompletableFuture.completedFuture(null);
-                }
-                return getTrusteeAttributeKeyValuePairsNextLink(nextLink, maxPageSize);
-            });
-        }
-    }
+    void getTrusteeAttributeKeyValuePairsForEach(ForEachCallBack<CompletableFuture<ODataValueContextOfListOfAttribute>> callback, String repoId, Boolean everyone, String prefer, String select, String orderby, Integer top, Integer skip, Boolean count, Integer maxPageSize);
 }

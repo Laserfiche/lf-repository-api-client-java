@@ -3,12 +3,13 @@ package com.laserfiche.repository.api.clients;
 import com.laserfiche.repository.api.BaseClient;
 import com.laserfiche.repository.api.ForEachCallBack;
 import com.laserfiche.repository.api.clients.impl.LinkDefinitionsApi;
+import com.laserfiche.repository.api.clients.impl.LinkDefinitionsApiEx;
 import com.laserfiche.repository.api.clients.impl.model.EntryLinkTypeInfo;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfEntryLinkTypeInfo;
 
 import java.util.concurrent.CompletableFuture;
 
-public class LinkDefinitionsClientImpl extends BaseClient<LinkDefinitionsApi> {
+public class LinkDefinitionsClientImpl extends BaseClient<LinkDefinitionsApi, LinkDefinitionsApiEx> {
     /**
      * Returns a single link definition object.
      * - Returns a single field definition associated with the specified ID. - Provide a link type ID and get the associated link definition. Useful when a route provides a minimal amount of details and more information about the specific link definition is needed. - Allowed OData query options: Select
@@ -18,7 +19,7 @@ public class LinkDefinitionsClientImpl extends BaseClient<LinkDefinitionsApi> {
      * @return CompletableFuture&lt;EntryLinkTypeInfo&gt;
      */
     public CompletableFuture<EntryLinkTypeInfo> getLinkDefinitionById(String repoId, Integer linkTypeId, String select) {
-        return client.getLinkDefinitionById(repoId, linkTypeId, select);
+        return generatedClient.getLinkDefinitionById(repoId, linkTypeId, select);
     }
 
     /**
@@ -35,7 +36,7 @@ public class LinkDefinitionsClientImpl extends BaseClient<LinkDefinitionsApi> {
      * @return CompletableFuture&lt;ODataValueContextOfIListOfEntryLinkTypeInfo&gt;
      */
     public CompletableFuture<ODataValueContextOfIListOfEntryLinkTypeInfo> getLinkDefinitions(String repoId, String prefer, String select, String orderby, Integer top, Integer skip, Boolean count, Integer maxPageSize) {
-        return client.getLinkDefinitions(repoId, mergeMaxPageSizeIntoPrefer(maxPageSize, prefer), select, orderby, top, skip, count);
+        return generatedClient.getLinkDefinitions(repoId, mergeMaxPageSizeIntoPrefer(maxPageSize, prefer), select, orderby, top, skip, count);
     }
 
     /**
@@ -45,7 +46,7 @@ public class LinkDefinitionsClientImpl extends BaseClient<LinkDefinitionsApi> {
      * @return CompletableFuture&lt;ODataValueContextOfIListOfWFieldInfo&gt;
      */
     public CompletableFuture<ODataValueContextOfIListOfEntryLinkTypeInfo> getLinkDefinitionsNextLink(String nextLink, Integer maxPageSize) {
-        return client.getLinkDefinitionsPaginate(nextLink, mergeMaxPageSizeIntoPrefer(maxPageSize, null));
+        return extensionClient.getLinkDefinitionsPaginate(nextLink, mergeMaxPageSizeIntoPrefer(maxPageSize, null));
     }
 
     public void getLinkDefinitionsForEach(ForEachCallBack<CompletableFuture<ODataValueContextOfIListOfEntryLinkTypeInfo>> callback, String repoId, String prefer, String select, String orderby, Integer top, Integer skip, Boolean count, Integer maxPageSize) {

@@ -33,6 +33,8 @@ public interface RepositoryApiClient {
      */
     RepositoriesClientImpl getRepositoryClient();
 
+    LinkDefinitionsClientImpl getLinkDefinitionsClient();
+
     /**
      * @return The Laserfiche Repository Searches API client.
      */

@@ -3,12 +3,13 @@ package com.laserfiche.repository.api.clients;
 import com.laserfiche.repository.api.BaseClient;
 import com.laserfiche.repository.api.ForEachCallBack;
 import com.laserfiche.repository.api.clients.impl.TagDefinitionsApi;
+import com.laserfiche.repository.api.clients.impl.TagDefinitionsApiEx;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfWTagInfo;
 import com.laserfiche.repository.api.clients.impl.model.WTagInfo;
 
 import java.util.concurrent.CompletableFuture;
 
-public class TagDefinitionsClientImpl extends BaseClient<TagDefinitionsApi> {
+public class TagDefinitionsClientImpl extends BaseClient<TagDefinitionsApi, TagDefinitionsApiEx> {
     /**
      *
      * - Returns a single tag definition. - Provide a tag definition ID, and get the single tag definition associated with that ID. Useful when another route provides a minimal amount of details, and more information about the specific tag is needed. - Allowed OData query options: Select
@@ -19,7 +20,7 @@ public class TagDefinitionsClientImpl extends BaseClient<TagDefinitionsApi> {
      * @return CompletableFuture&lt;WTagInfo&gt;
      */
     public CompletableFuture<WTagInfo> getTagDefinitionById(String repoId, Integer tagId, String culture, String select) {
-        return client.getTagDefinitionById(repoId, tagId, culture, select);
+        return generatedClient.getTagDefinitionById(repoId, tagId, culture, select);
     }
 
     /**
@@ -37,7 +38,7 @@ public class TagDefinitionsClientImpl extends BaseClient<TagDefinitionsApi> {
      * @return CompletableFuture&lt;ODataValueContextOfIListOfWTagInfo&gt;
      */
     public CompletableFuture<ODataValueContextOfIListOfWTagInfo> getTagDefinitions(String repoId, String prefer, String culture, String select, String orderby, Integer top, Integer skip, Boolean count, Integer maxPageSize) {
-        return client.getTagDefinitions(repoId, mergeMaxPageSizeIntoPrefer(maxPageSize, prefer), culture, select, orderby, top, skip, count);
+        return generatedClient.getTagDefinitions(repoId, mergeMaxPageSizeIntoPrefer(maxPageSize, prefer), culture, select, orderby, top, skip, count);
     }
 
     /**
@@ -47,7 +48,7 @@ public class TagDefinitionsClientImpl extends BaseClient<TagDefinitionsApi> {
      * @return CompletableFuture&lt;ODataValueContextOfIListOfWTagInfo&gt;
      */
     public CompletableFuture<ODataValueContextOfIListOfWTagInfo> getTagDefinitionsNextLink(String nextLink, Integer maxPageSize) {
-        return client.getTagDefinitionsPaginate(nextLink, mergeMaxPageSizeIntoPrefer(maxPageSize, null));
+        return extensionClient.getTagDefinitionsPaginate(nextLink, mergeMaxPageSizeIntoPrefer(maxPageSize, null));
     }
 
     /**

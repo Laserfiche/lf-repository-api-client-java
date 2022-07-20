@@ -3,13 +3,14 @@ package com.laserfiche.repository.api.clients;
 import com.laserfiche.repository.api.BaseClient;
 import com.laserfiche.repository.api.ForEachCallBack;
 import com.laserfiche.repository.api.clients.impl.TemplateDefinitionsApi;
+import com.laserfiche.repository.api.clients.impl.TemplateDefinitionsApiEx;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfTemplateFieldInfo;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfWTemplateInfo;
 import com.laserfiche.repository.api.clients.impl.model.WTemplateInfo;
 
 import java.util.concurrent.CompletableFuture;
 
-public class TemplateDefinitionsClientImpl extends BaseClient<TemplateDefinitionsApi> {
+public class TemplateDefinitionsClientImpl extends BaseClient<TemplateDefinitionsApi, TemplateDefinitionsApiEx> {
     /**
      *
      * - Returns a single template definition (including field definitions, if relevant). - Provide a template definition ID, and get the single template definition associated with that ID. Useful when a route provides a minimal amount of details, and more information about the specific template is needed. - Allowed OData query options: Select
@@ -20,7 +21,7 @@ public class TemplateDefinitionsClientImpl extends BaseClient<TemplateDefinition
      * @return CompletableFuture&lt;WTemplateInfo&gt;
      */
     public CompletableFuture<WTemplateInfo> getTemplateDefinitionById(String repoId, Integer templateId, String culture, String select) {
-        return client.getTemplateDefinitionById(repoId, templateId, culture, select);
+        return generatedClient.getTemplateDefinitionById(repoId, templateId, culture, select);
     }
 
     /**
@@ -39,7 +40,7 @@ public class TemplateDefinitionsClientImpl extends BaseClient<TemplateDefinition
      * @return CompletableFuture&lt;ODataValueContextOfIListOfWTemplateInfo&gt;
      */
     public CompletableFuture<ODataValueContextOfIListOfWTemplateInfo> getTemplateDefinitions(String repoId, String templateName, String prefer, String culture, String select, String orderby, Integer top, Integer skip, Boolean count, Integer maxPageSize) {
-        return client.getTemplateDefinitions(repoId, templateName, mergeMaxPageSizeIntoPrefer(maxPageSize, prefer), culture, select, orderby, top, skip, count);
+        return generatedClient.getTemplateDefinitions(repoId, templateName, mergeMaxPageSizeIntoPrefer(maxPageSize, prefer), culture, select, orderby, top, skip, count);
     }
 
     /**
@@ -49,7 +50,7 @@ public class TemplateDefinitionsClientImpl extends BaseClient<TemplateDefinition
      * @return CompletableFuture&lt;ODataValueContextOfIListOfWTemplateInfo&gt;
      */
     public CompletableFuture<ODataValueContextOfIListOfWTemplateInfo> getTemplateDefinitionsNextLink(String nextLink, Integer maxPageSize) {
-        return client.getTemplateDefinitionsPaginate(nextLink, mergeMaxPageSizeIntoPrefer(maxPageSize, null));
+        return extensionClient.getTemplateDefinitionsPaginate(nextLink, mergeMaxPageSizeIntoPrefer(maxPageSize, null));
     }
 
     /**
@@ -99,7 +100,7 @@ public class TemplateDefinitionsClientImpl extends BaseClient<TemplateDefinition
      * @return CompletableFuture&lt;ODataValueContextOfIListOfTemplateFieldInfo&gt;
      */
     public CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo> getTemplateFieldDefinitions(String repoId, Integer templateId, String prefer, String culture, String select, String orderby, Integer top, Integer skip, Boolean count, Integer maxPageSize) {
-        return client.getTemplateFieldDefinitions(repoId, templateId, mergeMaxPageSizeIntoPrefer(maxPageSize, prefer), culture, select, orderby, top, skip, count);
+        return generatedClient.getTemplateFieldDefinitions(repoId, templateId, mergeMaxPageSizeIntoPrefer(maxPageSize, prefer), culture, select, orderby, top, skip, count);
     }
 
     /**
@@ -110,7 +111,7 @@ public class TemplateDefinitionsClientImpl extends BaseClient<TemplateDefinition
      * @return CompletableFuture&lt;ODataValueContextOfIListOfTemplateFieldInfo&gt;
      */
     public CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo> getTemplateFieldDefinitionsNextLink(String nextLink, Integer maxPageSize) {
-        return client.getTemplateFieldDefinitionsPaginate(nextLink, mergeMaxPageSizeIntoPrefer(maxPageSize, null));
+        return extensionClient.getTemplateFieldDefinitionsPaginate(nextLink, mergeMaxPageSizeIntoPrefer(maxPageSize, null));
     }
 
     /**
@@ -160,7 +161,7 @@ public class TemplateDefinitionsClientImpl extends BaseClient<TemplateDefinition
      * @return CompletableFuture&lt;ODataValueContextOfIListOfTemplateFieldInfo&gt;
      */
     public CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo> getTemplateFieldDefinitionsByTemplateName(String repoId, String templateName, String prefer, String culture, String select, String orderby, Integer top, Integer skip, Boolean count, Integer maxPageSize) {
-        return client.getTemplateFieldDefinitionsByTemplateName(repoId, templateName, mergeMaxPageSizeIntoPrefer(maxPageSize, prefer), culture, select, orderby, top, skip, count);
+        return generatedClient.getTemplateFieldDefinitionsByTemplateName(repoId, templateName, mergeMaxPageSizeIntoPrefer(maxPageSize, prefer), culture, select, orderby, top, skip, count);
     }
 
     /**
@@ -170,7 +171,7 @@ public class TemplateDefinitionsClientImpl extends BaseClient<TemplateDefinition
      * @return CompletableFuture&lt;ODataValueContextOfIListOfTemplateFieldInfo&gt;
      */
     public CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo> getTemplateFieldDefinitionsByTemplateNameNextLink(String nextLink, Integer maxPageSize) {
-        return client.getTemplateFieldDefinitionsByTemplateNamePaginate(nextLink, mergeMaxPageSizeIntoPrefer(maxPageSize, null));
+        return extensionClient.getTemplateFieldDefinitionsByTemplateNamePaginate(nextLink, mergeMaxPageSizeIntoPrefer(maxPageSize, null));
     }
 
     /**
