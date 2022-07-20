@@ -7,7 +7,7 @@ import com.laserfiche.repository.api.clients.impl.model.RepositoryInfo;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-public class RepositoriesClient extends BaseClient<RepositoriesApi> {
+public class RepositoriesClientImpl extends BaseClient<RepositoriesApi> {
     /**
      *
      * - Get the repository resource list that current user has access to.

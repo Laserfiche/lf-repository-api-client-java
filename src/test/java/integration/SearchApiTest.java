@@ -1,11 +1,8 @@
 package integration;
 
-import com.laserfiche.repository.api.clients.SearchesClient;
-import com.laserfiche.repository.api.clients.impl.SearchesApi;
+import com.laserfiche.repository.api.clients.SearchesClientImpl;
 import com.laserfiche.repository.api.clients.impl.model.*;
-import org.junit.Ignore;
 import org.junit.jupiter.api.*;
-import org.mockito.internal.matchers.GreaterOrEqual;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
@@ -14,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SearchApiTest extends BaseTest {
-    SearchesClient client;
+    SearchesClientImpl client;
     private String searchToken = "";
     private final int maxPageSize = 1;
 

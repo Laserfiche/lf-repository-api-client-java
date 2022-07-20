@@ -11,52 +11,52 @@ public interface RepositoryApiClient {
     /**
      * @return The Laserfiche Repository Attributes API client.
      */
-    AttributesClient getAttributesClient();
+    AttributesClientImpl getAttributesClient();
 
     /**
      * @return The Laserfiche Repository Audit Reasons API client.
      */
-    AuditReasonsClient getAuditReasonsClient();
+    AuditReasonsClientImpl getAuditReasonsClient();
 
     /**
      * @return The Laserfiche Repository Entries API client.
      */
-    EntriesClient getEntriesClient();
+    EntriesClientImpl getEntriesClient();
 
     /**
      * @return The Laserfiche Repository Field Definitions API client.
      */
-    FieldDefinitionsClient getFieldDefinitionsClient();
+    FieldDefinitionsClientImpl getFieldDefinitionsClient();
 
     /**
      * @return The Laserfiche Repository Repositories API client.
      */
-    RepositoriesClient getRepositoryClient();
+    RepositoriesClientImpl getRepositoryClient();
 
     /**
      * @return The Laserfiche Repository Searches API client.
      */
-    SearchesClient getSearchesClient();
+    SearchesClientImpl getSearchesClient();
 
     /**
      * @return The Laserfiche Repository Simple Searches API client.
      */
-    SimpleSearchesClient getSimpleSearchesClient();
+    SimpleSearchesClientImpl getSimpleSearchesClient();
 
     /**
      * @return The Laserfiche Repository Tag Definitions API client.
      */
-    TagDefinitionsClient getTagDefinitionsClient();
+    TagDefinitionsClientImpl getTagDefinitionsClient();
 
     /**
      * @return The Laserfiche Repository Tasks API client.
      */
-    TasksClient getTasksClient();
+    TasksClientImpl getTasksClient();
 
     /**
      * @return The Laserfiche Repository Template Definitions API client.
      */
-    TemplateDefinitionsClient getTemplateDefinitionClient();
+    TemplateDefinitionsClientImpl getTemplateDefinitionClient();
 
     /**
      * Set default headers that will be used for all requests.

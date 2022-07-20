@@ -1,6 +1,6 @@
 package integration;
 
-import com.laserfiche.repository.api.clients.TagDefinitionsClient;
+import com.laserfiche.repository.api.clients.TagDefinitionsClientImpl;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfWTagInfo;
 import com.laserfiche.repository.api.clients.impl.model.WTagInfo;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,7 +11,7 @@ import java.util.concurrent.CompletableFuture;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class TagDefinitionsApiTest extends BaseTest {
-    TagDefinitionsClient client;
+    TagDefinitionsClientImpl client;
 
     private final int maxPageSize = 1;
 

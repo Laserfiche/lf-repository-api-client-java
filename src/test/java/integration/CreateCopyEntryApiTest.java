@@ -1,16 +1,14 @@
 package integration;
 
 import com.laserfiche.repository.api.RepositoryApiClient;
-import com.laserfiche.repository.api.clients.EntriesClient;
+import com.laserfiche.repository.api.clients.EntriesClientImpl;
 import com.laserfiche.repository.api.clients.impl.model.*;
-import org.junit.After;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
@@ -20,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CreateCopyEntryApiTest extends BaseTest {
     List<Entry> createdEntries = new ArrayList<Entry>();
-    EntriesClient client;
+    EntriesClientImpl client;
 
     RepositoryApiClient createEntryClient;
 

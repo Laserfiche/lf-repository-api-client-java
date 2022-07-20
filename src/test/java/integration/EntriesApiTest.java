@@ -1,18 +1,16 @@
 package integration;
 
 import com.laserfiche.repository.api.RepositoryApiClient;
-import com.laserfiche.repository.api.clients.EntriesClient;
+import com.laserfiche.repository.api.clients.EntriesClientImpl;
 import com.laserfiche.repository.api.clients.impl.model.*;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import okio.BufferedSink;
 import okio.Okio;
-import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -22,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class EntriesApiTest extends BaseTest {
-    EntriesClient client;
+    EntriesClientImpl client;
 
     private final int maxPageSize = 1;
 

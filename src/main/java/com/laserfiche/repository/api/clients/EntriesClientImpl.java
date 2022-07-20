@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
-public class EntriesClient extends BaseClient<EntriesApi> {
+public class EntriesClientImpl extends BaseClient<EntriesApi> {
     /**
      *
      * - Assign links to an entry. - Provide an entry ID and a list of links to assign to that entry. - This is an overwrite action. The request must include all links to assign to the entry, including existing links that should remain assigned to the entry.

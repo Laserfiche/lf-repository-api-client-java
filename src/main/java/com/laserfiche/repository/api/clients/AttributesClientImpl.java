@@ -8,7 +8,7 @@ import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfListO
 
 import java.util.concurrent.CompletableFuture;
 
-public class AttributesClient extends BaseClient<AttributesApi> {
+public class AttributesClientImpl extends BaseClient<AttributesApi> {
     /**
      * Get the attribute key value pairs associated with the authenticated user.
      * - Returns the attribute key value pairs associated with the authenticated user. Alternatively, return only the attribute key value pairs that are associated with the \&quot;Everyone\&quot; group. - Attribute keys can be used with subsequent calls to get specific attribute values. - Default page size: 100. Allowed OData query options: Select, Count, OrderBy, Skip, Top, SkipToken, Prefer. Optional query parameters: everyone (bool, default false). When true, this route does not return the attributes that are tied to the currently authenticated user, but rather the attributes assigned to the \&quot;Everyone\&quot; group. Note when this is true, the response does not include both the \&quot;Everyone\&quot; groups attribute and the currently authenticated user, but only the \&quot;Everyone\&quot; groups.
