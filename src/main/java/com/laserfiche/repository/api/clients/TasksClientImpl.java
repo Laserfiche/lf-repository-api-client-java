@@ -14,6 +14,7 @@ public class TasksClientImpl extends BaseClient<TasksApi, Void> implements Tasks
      * @param operationToken The operation token (required)
      * @return CompletableFuture&lt;Void&gt;
      */
+    @Override
     public CompletableFuture<Void> cancelOperation(String repoId, String operationToken) {
         return generatedClient.cancelOperation(repoId, operationToken);
     }
@@ -25,6 +26,7 @@ public class TasksClientImpl extends BaseClient<TasksApi, Void> implements Tasks
      * @param operationToken The operation token (required)
      * @return CompletableFuture&lt;OperationProgress&gt;
      */
+    @Override
     public CompletableFuture<OperationProgress> getOperationStatusAndProgress(String repoId, String operationToken) {
         return generatedClient.getOperationStatusAndProgress(repoId, operationToken);
     }

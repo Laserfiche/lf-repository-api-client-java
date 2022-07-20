@@ -14,6 +14,7 @@ public class AuditReasonsClientImpl extends BaseClient<AuditReasonsApi, Void> im
      * @param repoId The requested repository ID. (required)
      * @return CompletableFuture&lt;AuditReasons&gt;
      */
+    @Override
     public CompletableFuture<AuditReasons> getAuditReasons(String repoId) {
         return generatedClient.getAuditReasons(repoId);
     }

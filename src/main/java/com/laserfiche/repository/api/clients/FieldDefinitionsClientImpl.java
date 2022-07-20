@@ -19,6 +19,7 @@ public class FieldDefinitionsClientImpl extends BaseClient<FieldDefinitionsApi, 
      * @param select Limits the properties returned in the result. (optional)
      * @return CompletableFuture&lt;WFieldInfo&gt;
      */
+    @Override
     public CompletableFuture<WFieldInfo> getFieldDefinitionById(String repoId, Integer fieldDefinitionId, String culture, String select) {
         return generatedClient.getFieldDefinitionById(repoId, fieldDefinitionId, culture, select);
     }
@@ -37,6 +38,7 @@ public class FieldDefinitionsClientImpl extends BaseClient<FieldDefinitionsApi, 
      * @param maxPageSize Indicates the maximum number of items to return.
      * @return CompletableFuture&lt;ODataValueContextOfIListOfWFieldInfo&gt;
      */
+    @Override
     public CompletableFuture<ODataValueContextOfIListOfWFieldInfo> getFieldDefinitions(String repoId, String prefer, String culture, String select, String orderby, Integer top, Integer skip, Boolean count, Integer maxPageSize) {
         return generatedClient.getFieldDefinitions(repoId, mergeMaxPageSizeIntoPrefer(maxPageSize, prefer), culture, select, orderby, top, skip, count);
     }
@@ -47,6 +49,7 @@ public class FieldDefinitionsClientImpl extends BaseClient<FieldDefinitionsApi, 
      * @param maxPageSize The maximum number of items returned by the backend.
      * @return CompletableFuture&lt;ODataValueContextOfIListOfWFieldInfo&gt;
      */
+    @Override
     public CompletableFuture<ODataValueContextOfIListOfWFieldInfo> getFieldDefinitionsNextLink(String nextLink, Integer maxPageSize) {
         return extensionClient.getFieldDefinitionsPaginate(nextLink, mergeMaxPageSizeIntoPrefer(maxPageSize, null));
     }
@@ -64,6 +67,7 @@ public class FieldDefinitionsClientImpl extends BaseClient<FieldDefinitionsApi, 
      * @param count Indicates whether the total count of items within a collection are returned in the result. (optional)
      * @param maxPageSize Indicates the maximum number of items to return.
      */
+    @Override
     public void getFieldDefinitionsForEach(ForEachCallBack<CompletableFuture<ODataValueContextOfIListOfWFieldInfo>> callback, String repoId, String prefer, String culture, String select, String orderby, Integer top, Integer skip, Boolean count, Integer maxPageSize) {
         // Initial request
         CompletableFuture<ODataValueContextOfIListOfWFieldInfo> future = getFieldDefinitions(repoId, prefer, culture, select, orderby, top, skip, count, maxPageSize);

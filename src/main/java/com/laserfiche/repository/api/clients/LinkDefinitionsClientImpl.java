@@ -18,6 +18,7 @@ public class LinkDefinitionsClientImpl extends BaseClient<LinkDefinitionsApi, Li
      * @param select Limits the properties returned in the result. (optional)
      * @return CompletableFuture&lt;EntryLinkTypeInfo&gt;
      */
+    @Override
     public CompletableFuture<EntryLinkTypeInfo> getLinkDefinitionById(String repoId, Integer linkTypeId, String select) {
         return generatedClient.getLinkDefinitionById(repoId, linkTypeId, select);
     }
@@ -35,6 +36,7 @@ public class LinkDefinitionsClientImpl extends BaseClient<LinkDefinitionsApi, Li
      * @param maxPageSize Indicates the maximum number of items to return.
      * @return CompletableFuture&lt;ODataValueContextOfIListOfEntryLinkTypeInfo&gt;
      */
+    @Override
     public CompletableFuture<ODataValueContextOfIListOfEntryLinkTypeInfo> getLinkDefinitions(String repoId, String prefer, String select, String orderby, Integer top, Integer skip, Boolean count, Integer maxPageSize) {
         return generatedClient.getLinkDefinitions(repoId, mergeMaxPageSizeIntoPrefer(maxPageSize, prefer), select, orderby, top, skip, count);
     }
@@ -45,10 +47,12 @@ public class LinkDefinitionsClientImpl extends BaseClient<LinkDefinitionsApi, Li
      * @param maxPageSize The maximum number of items returned by the backend.
      * @return CompletableFuture&lt;ODataValueContextOfIListOfWFieldInfo&gt;
      */
+    @Override
     public CompletableFuture<ODataValueContextOfIListOfEntryLinkTypeInfo> getLinkDefinitionsNextLink(String nextLink, Integer maxPageSize) {
         return extensionClient.getLinkDefinitionsPaginate(nextLink, mergeMaxPageSizeIntoPrefer(maxPageSize, null));
     }
 
+    @Override
     public void getLinkDefinitionsForEach(ForEachCallBack<CompletableFuture<ODataValueContextOfIListOfEntryLinkTypeInfo>> callback, String repoId, String prefer, String select, String orderby, Integer top, Integer skip, Boolean count, Integer maxPageSize) {
         // Initial request
         CompletableFuture<ODataValueContextOfIListOfEntryLinkTypeInfo> future = getLinkDefinitions(repoId, prefer, select, orderby, top, skip, count, maxPageSize);

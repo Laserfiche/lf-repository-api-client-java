@@ -22,6 +22,7 @@ public class SimpleSearchesClientImpl extends BaseClient<SimpleSearchesApi, Void
      * @param count Indicates whether the total count of items within a collection are returned in the result. (optional)
      * @return CompletableFuture&lt;ODataValueOfIListOfEntry&gt;
      */
+    @Override
     public CompletableFuture<ODataValueOfIListOfEntry> createSimpleSearchOperation(String repoId, SimpleSearchRequest body, List<String> fields, Boolean formatFields, String culture, String select, String orderby, Boolean count) {
         return generatedClient.createSimpleSearchOperation(repoId, body, fields, formatFields, culture, select, orderby, count);
     }
