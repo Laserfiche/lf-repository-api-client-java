@@ -8,11 +8,6 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public class RepositoriesClientImpl extends BaseClient<RepositoriesApi, Void> implements RepositoriesClient {
-    /**
-     *
-     * - Get the repository resource list that current user has access to.
-     * @return CompletableFuture&lt;List&lt;RepositoryInfo&gt;&gt;
-     */
     @Override
     public CompletableFuture<List<RepositoryInfo>> getRepositoryList() {
         return generatedClient.getRepositoryList();
