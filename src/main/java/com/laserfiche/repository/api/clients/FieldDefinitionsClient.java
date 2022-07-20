@@ -6,7 +6,7 @@ import com.laserfiche.repository.api.clients.impl.model.WFieldInfo;
 
 import java.util.concurrent.CompletableFuture;
 
-public interface FieldsDefinitionsClient {
+public interface FieldDefinitionsClient {
     /**
      *
      * - Returns a single field definition associated with the specified ID.  - Useful when a route provides a minimal amount of details and more information about the specific field definition is needed. - Allowed OData query options: Select
