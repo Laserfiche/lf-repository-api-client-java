@@ -2,7 +2,6 @@ package com.laserfiche.repository.api.clients;
 
 import com.laserfiche.repository.api.BaseClient;
 import com.laserfiche.repository.api.clients.impl.AuditReasonsApi;
-import com.laserfiche.repository.api.clients.impl.AuditReasonsApiEx;
 import com.laserfiche.repository.api.clients.impl.model.AuditReasons;
 
 import java.util.concurrent.CompletableFuture;
