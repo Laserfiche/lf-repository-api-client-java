@@ -1,16 +1,13 @@
 package com.laserfiche.repository.api.clients;
 
-import com.laserfiche.repository.api.BaseClient;
 import com.laserfiche.repository.api.ForEachCallBack;
-import com.laserfiche.repository.api.clients.impl.TemplateDefinitionsApi;
-import com.laserfiche.repository.api.clients.impl.TemplateDefinitionsApiEx;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfTemplateFieldInfo;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfWTemplateInfo;
 import com.laserfiche.repository.api.clients.impl.model.WTemplateInfo;
 
 import java.util.concurrent.CompletableFuture;
 
-public class TemplateDefinitionsClientImpl extends BaseClient<TemplateDefinitionsApi, TemplateDefinitionsApiEx> implements TemplateDefinitionsClient {
+public interface TemplateDefinitionsClient {
     /**
      *
      * - Returns a single template definition (including field definitions, if relevant). - Provide a template definition ID, and get the single template definition associated with that ID. Useful when a route provides a minimal amount of details, and more information about the specific template is needed. - Allowed OData query options: Select
@@ -20,9 +17,7 @@ public class TemplateDefinitionsClientImpl extends BaseClient<TemplateDefinition
      * @param select Limits the properties returned in the result. (optional)
      * @return CompletableFuture&lt;WTemplateInfo&gt;
      */
-    public CompletableFuture<WTemplateInfo> getTemplateDefinitionById(String repoId, Integer templateId, String culture, String select) {
-        return generatedClient.getTemplateDefinitionById(repoId, templateId, culture, select);
-    }
+    CompletableFuture<WTemplateInfo> getTemplateDefinitionById(String repoId, Integer templateId, String culture, String select);
 
     /**
      *
@@ -39,9 +34,7 @@ public class TemplateDefinitionsClientImpl extends BaseClient<TemplateDefinition
      * @param maxPageSize Indicates the maximum number of items to return.
      * @return CompletableFuture&lt;ODataValueContextOfIListOfWTemplateInfo&gt;
      */
-    public CompletableFuture<ODataValueContextOfIListOfWTemplateInfo> getTemplateDefinitions(String repoId, String templateName, String prefer, String culture, String select, String orderby, Integer top, Integer skip, Boolean count, Integer maxPageSize) {
-        return generatedClient.getTemplateDefinitions(repoId, templateName, mergeMaxPageSizeIntoPrefer(maxPageSize, prefer), culture, select, orderby, top, skip, count);
-    }
+    CompletableFuture<ODataValueContextOfIListOfWTemplateInfo> getTemplateDefinitions(String repoId, String templateName, String prefer, String culture, String select, String orderby, Integer top, Integer skip, Boolean count, Integer maxPageSize);
 
     /**
      * - Returns all template definitions (including field definitions) in the repository.
@@ -49,9 +42,7 @@ public class TemplateDefinitionsClientImpl extends BaseClient<TemplateDefinition
      * @param maxPageSize Maximum number of items returned by the backend.
      * @return CompletableFuture&lt;ODataValueContextOfIListOfWTemplateInfo&gt;
      */
-    public CompletableFuture<ODataValueContextOfIListOfWTemplateInfo> getTemplateDefinitionsNextLink(String nextLink, Integer maxPageSize) {
-        return extensionClient.getTemplateDefinitionsPaginate(nextLink, mergeMaxPageSizeIntoPrefer(maxPageSize, null));
-    }
+    CompletableFuture<ODataValueContextOfIListOfWTemplateInfo> getTemplateDefinitionsNextLink(String nextLink, Integer maxPageSize);
 
     /**
      *
@@ -68,21 +59,7 @@ public class TemplateDefinitionsClientImpl extends BaseClient<TemplateDefinition
      * @param count Indicates whether the total count of items within a collection are returned in the result. (optional)
      * @param maxPageSize Indicates the maximum number of items to return.
      */
-    public void getTemplateDefinitionsForEach(ForEachCallBack<CompletableFuture<ODataValueContextOfIListOfWTemplateInfo>> callback, String repoId, String templateName, String prefer, String culture, String select, String orderby, Integer top, Integer skip, Boolean count, Integer maxPageSize) {
-        // Initial request
-        CompletableFuture<ODataValueContextOfIListOfWTemplateInfo> future = getTemplateDefinitions(repoId, templateName, prefer, culture, select, orderby, top, skip, count, maxPageSize);
-        // Subsequent request based on return value of callback
-        while (callback.apply(future)) {
-            future = future.thenCompose(dataFromLastRequest -> {
-                String nextLink = dataFromLastRequest.getAtOdataNextLink();
-                if (nextLink == null) {
-                    // We are at the end of the data stream
-                    return CompletableFuture.completedFuture(null);
-                }
-                return getTemplateDefinitionsNextLink(nextLink, maxPageSize);
-            });
-        }
-    }
+    void getTemplateDefinitionsForEach(ForEachCallBack<CompletableFuture<ODataValueContextOfIListOfWTemplateInfo>> callback, String repoId, String templateName, String prefer, String culture, String select, String orderby, Integer top, Integer skip, Boolean count, Integer maxPageSize);
 
     /**
      *
@@ -99,9 +76,7 @@ public class TemplateDefinitionsClientImpl extends BaseClient<TemplateDefinition
      * @param maxPageSize Indicates the maximum number of items to return.
      * @return CompletableFuture&lt;ODataValueContextOfIListOfTemplateFieldInfo&gt;
      */
-    public CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo> getTemplateFieldDefinitions(String repoId, Integer templateId, String prefer, String culture, String select, String orderby, Integer top, Integer skip, Boolean count, Integer maxPageSize) {
-        return generatedClient.getTemplateFieldDefinitions(repoId, templateId, mergeMaxPageSizeIntoPrefer(maxPageSize, prefer), culture, select, orderby, top, skip, count);
-    }
+    CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo> getTemplateFieldDefinitions(String repoId, Integer templateId, String prefer, String culture, String select, String orderby, Integer top, Integer skip, Boolean count, Integer maxPageSize);
 
     /**
      *
@@ -110,9 +85,7 @@ public class TemplateDefinitionsClientImpl extends BaseClient<TemplateDefinition
      * @param maxPageSize Maximum number of items returned by the backend.
      * @return CompletableFuture&lt;ODataValueContextOfIListOfTemplateFieldInfo&gt;
      */
-    public CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo> getTemplateFieldDefinitionsNextLink(String nextLink, Integer maxPageSize) {
-        return extensionClient.getTemplateFieldDefinitionsPaginate(nextLink, mergeMaxPageSizeIntoPrefer(maxPageSize, null));
-    }
+    CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo> getTemplateFieldDefinitionsNextLink(String nextLink, Integer maxPageSize);
 
     /**
      *
@@ -129,21 +102,7 @@ public class TemplateDefinitionsClientImpl extends BaseClient<TemplateDefinition
      * @param count Indicates whether the total count of items within a collection are returned in the result. (optional)
      * @param maxPageSize Indicates the maximum number of items to return.
      */
-    public void getTemplateFieldDefinitionsForEach(ForEachCallBack<CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo>> callback, String repoId, Integer templateId, String prefer, String culture, String select, String orderby, Integer top, Integer skip, Boolean count, Integer maxPageSize) {
-        // Initial request
-        CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo> future = getTemplateFieldDefinitions(repoId, templateId, prefer, culture, select, orderby, top, skip, count, maxPageSize);
-        // Subsequent request based on return value of callback
-        while (callback.apply(future)) {
-            future = future.thenCompose(dataFromLastRequest -> {
-                String nextLink = dataFromLastRequest.getAtOdataNextLink();
-                if (nextLink == null) {
-                    // We are at the end of the data stream
-                    return CompletableFuture.completedFuture(null);
-                }
-                return getTemplateFieldDefinitionsNextLink(nextLink, maxPageSize);
-            });
-        }
-    }
+    void getTemplateFieldDefinitionsForEach(ForEachCallBack<CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo>> callback, String repoId, Integer templateId, String prefer, String culture, String select, String orderby, Integer top, Integer skip, Boolean count, Integer maxPageSize);
 
     /**
      *
@@ -160,9 +119,7 @@ public class TemplateDefinitionsClientImpl extends BaseClient<TemplateDefinition
      * @param maxPageSize Indicates the maximum number of items to return.
      * @return CompletableFuture&lt;ODataValueContextOfIListOfTemplateFieldInfo&gt;
      */
-    public CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo> getTemplateFieldDefinitionsByTemplateName(String repoId, String templateName, String prefer, String culture, String select, String orderby, Integer top, Integer skip, Boolean count, Integer maxPageSize) {
-        return generatedClient.getTemplateFieldDefinitionsByTemplateName(repoId, templateName, mergeMaxPageSizeIntoPrefer(maxPageSize, prefer), culture, select, orderby, top, skip, count);
-    }
+    CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo> getTemplateFieldDefinitionsByTemplateName(String repoId, String templateName, String prefer, String culture, String select, String orderby, Integer top, Integer skip, Boolean count, Integer maxPageSize);
 
     /**
      * - Returns the field definitions assigned to a template definition.
@@ -170,9 +127,7 @@ public class TemplateDefinitionsClientImpl extends BaseClient<TemplateDefinition
      * @param maxPageSize Maximum number of items returned by the backend.
      * @return CompletableFuture&lt;ODataValueContextOfIListOfTemplateFieldInfo&gt;
      */
-    public CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo> getTemplateFieldDefinitionsByTemplateNameNextLink(String nextLink, Integer maxPageSize) {
-        return extensionClient.getTemplateFieldDefinitionsByTemplateNamePaginate(nextLink, mergeMaxPageSizeIntoPrefer(maxPageSize, null));
-    }
+    CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo> getTemplateFieldDefinitionsByTemplateNameNextLink(String nextLink, Integer maxPageSize);
 
     /**
      *
@@ -189,19 +144,5 @@ public class TemplateDefinitionsClientImpl extends BaseClient<TemplateDefinition
      * @param count Indicates whether the total count of items within a collection are returned in the result. (optional)
      * @param maxPageSize Indicates the maximum number of items to return.
      */
-    public void getTemplateFieldDefinitionsByTemplateNameForEach(ForEachCallBack<CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo>> callback, String repoId, String templateName, String prefer, String culture, String select, String orderby, Integer top, Integer skip, Boolean count, Integer maxPageSize) {
-        // Initial request
-        CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo> future = getTemplateFieldDefinitionsByTemplateName(repoId, templateName, prefer, culture, select, orderby, top, skip, count, maxPageSize);
-        // Subsequent request based on return value of callback
-        while (callback.apply(future)) {
-            future = future.thenCompose(dataFromLastRequest -> {
-                String nextLink = dataFromLastRequest.getAtOdataNextLink();
-                if (nextLink == null) {
-                    // We are at the end of the data stream
-                    return CompletableFuture.completedFuture(null);
-                }
-                return getTemplateFieldDefinitionsByTemplateNameNextLink(nextLink, maxPageSize);
-            });
-        }
-    }
+    void getTemplateFieldDefinitionsByTemplateNameForEach(ForEachCallBack<CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo>> callback, String repoId, String templateName, String prefer, String culture, String select, String orderby, Integer top, Integer skip, Boolean count, Integer maxPageSize);
 }
