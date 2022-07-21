@@ -2,7 +2,6 @@ package integration;
 
 import com.laserfiche.repository.api.RepositoryApiClient;
 import com.laserfiche.repository.api.clients.EntriesClient;
-import com.laserfiche.repository.api.clients.EntriesClientImpl;
 import com.laserfiche.repository.api.clients.impl.model.*;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;

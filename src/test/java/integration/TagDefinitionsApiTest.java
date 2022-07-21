@@ -1,7 +1,6 @@
 package integration;
 
 import com.laserfiche.repository.api.clients.TagDefinitionsClient;
-import com.laserfiche.repository.api.clients.TagDefinitionsClientImpl;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfWTagInfo;
 import com.laserfiche.repository.api.clients.impl.model.WTagInfo;
 import org.junit.jupiter.api.BeforeEach;

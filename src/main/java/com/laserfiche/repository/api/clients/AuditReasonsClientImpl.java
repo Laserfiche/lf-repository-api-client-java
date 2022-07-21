@@ -1,10 +1,7 @@
 package com.laserfiche.repository.api.clients;
 
 import com.laserfiche.repository.api.BaseClient;
-import com.laserfiche.repository.api.clients.impl.AttributesApi;
-import com.laserfiche.repository.api.clients.impl.AttributesApiEx;
 import com.laserfiche.repository.api.clients.impl.AuditReasonsApi;
-import com.laserfiche.repository.api.clients.impl.AuditReasonsApiEx;
 import com.laserfiche.repository.api.clients.impl.model.AuditReasons;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;

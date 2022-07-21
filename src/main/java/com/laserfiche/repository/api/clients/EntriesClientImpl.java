@@ -2,7 +2,6 @@ package com.laserfiche.repository.api.clients;
 
 import com.laserfiche.repository.api.BaseClient;
 import com.laserfiche.repository.api.ForEachCallBack;
-import com.laserfiche.repository.api.clients.impl.AuditReasonsApi;
 import com.laserfiche.repository.api.clients.impl.EntriesApi;
 import com.laserfiche.repository.api.clients.impl.EntriesApiEx;
 import com.laserfiche.repository.api.clients.impl.model.*;

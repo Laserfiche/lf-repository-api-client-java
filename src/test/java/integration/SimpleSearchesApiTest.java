@@ -1,7 +1,6 @@
 package integration;
 
 import com.laserfiche.repository.api.clients.SimpleSearchesClient;
-import com.laserfiche.repository.api.clients.SimpleSearchesClientImpl;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueOfIListOfEntry;
 import com.laserfiche.repository.api.clients.impl.model.SimpleSearchRequest;
 import org.junit.jupiter.api.Test;

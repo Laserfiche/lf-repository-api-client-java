@@ -2,7 +2,6 @@ package integration;
 
 import com.laserfiche.repository.api.RepositoryApiClient;
 import com.laserfiche.repository.api.clients.TasksClient;
-import com.laserfiche.repository.api.clients.TasksClientImpl;
 import com.laserfiche.repository.api.clients.impl.model.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

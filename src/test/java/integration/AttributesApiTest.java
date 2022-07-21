@@ -1,9 +1,8 @@
 package integration;
 
 import com.laserfiche.repository.api.clients.AttributesClient;
-import com.laserfiche.repository.api.clients.AttributesClientImpl;
-import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfListOfAttribute;
 import com.laserfiche.repository.api.clients.impl.model.Attribute;
+import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfListOfAttribute;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

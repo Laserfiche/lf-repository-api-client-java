@@ -1,7 +1,6 @@
 package integration;
 
 import com.laserfiche.repository.api.clients.AuditReasonsClient;
-import com.laserfiche.repository.api.clients.AuditReasonsClientImpl;
 import com.laserfiche.repository.api.clients.impl.model.AuditReasons;
 import org.junit.jupiter.api.Test;
 

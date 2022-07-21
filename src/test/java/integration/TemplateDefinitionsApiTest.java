@@ -1,7 +1,6 @@
 package integration;
 
 import com.laserfiche.repository.api.clients.TemplateDefinitionsClient;
-import com.laserfiche.repository.api.clients.TemplateDefinitionsClientImpl;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfTemplateFieldInfo;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfWTemplateInfo;
 import com.laserfiche.repository.api.clients.impl.model.WTemplateInfo;
