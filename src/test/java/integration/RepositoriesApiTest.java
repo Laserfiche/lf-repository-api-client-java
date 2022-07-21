@@ -1,5 +1,6 @@
 package integration;
 
+import com.laserfiche.repository.api.clients.RepositoriesClient;
 import com.laserfiche.repository.api.clients.RepositoriesClientImpl;
 import com.laserfiche.repository.api.clients.impl.model.RepositoryInfo;
 import org.junit.jupiter.api.Test;
@@ -12,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 class RepositoriesApiTest extends BaseTest {
     @Test
     void getRepositoryList_Success() {
-        RepositoriesClientImpl client = repositoryApiClient.getRepositoryClient();
+        RepositoriesClient client = repositoryApiClient.getRepositoryClient();
         CompletableFuture<List<RepositoryInfo>> future = client.getRepositoryList();
         List<RepositoryInfo> repositoryInfoList = future.join();
 

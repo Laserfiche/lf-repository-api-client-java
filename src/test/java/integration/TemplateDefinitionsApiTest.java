@@ -1,5 +1,6 @@
 package integration;
 
+import com.laserfiche.repository.api.clients.TemplateDefinitionsClient;
 import com.laserfiche.repository.api.clients.TemplateDefinitionsClientImpl;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfTemplateFieldInfo;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfWTemplateInfo;
@@ -14,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class TemplateDefinitionsApiTest extends BaseTest {
-    TemplateDefinitionsClientImpl client;
+    TemplateDefinitionsClient client;
 
     private final int maxPageSize = 1;
 

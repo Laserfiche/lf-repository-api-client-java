@@ -1,6 +1,7 @@
 package integration;
 
 import com.laserfiche.repository.api.RepositoryApiClient;
+import com.laserfiche.repository.api.clients.EntriesClient;
 import com.laserfiche.repository.api.clients.EntriesClientImpl;
 import com.laserfiche.repository.api.clients.impl.model.*;
 import okhttp3.MediaType;
@@ -20,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class EntriesApiTest extends BaseTest {
-    EntriesClientImpl client;
+    EntriesClient client;
 
     private final int maxPageSize = 1;
 

@@ -1,5 +1,6 @@
 package integration;
 
+import com.laserfiche.repository.api.clients.FieldDefinitionsClient;
 import com.laserfiche.repository.api.clients.FieldDefinitionsClientImpl;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfWFieldInfo;
 import com.laserfiche.repository.api.clients.impl.model.WFieldInfo;
@@ -11,7 +12,7 @@ import java.util.concurrent.CompletableFuture;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class FieldDefinitionsApiTest extends BaseTest {
-    FieldDefinitionsClientImpl client;
+    FieldDefinitionsClient client;
 
     private final int maxPageSize = 1;
 

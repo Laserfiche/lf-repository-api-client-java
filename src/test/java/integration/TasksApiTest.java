@@ -1,6 +1,7 @@
 package integration;
 
 import com.laserfiche.repository.api.RepositoryApiClient;
+import com.laserfiche.repository.api.clients.TasksClient;
 import com.laserfiche.repository.api.clients.TasksClientImpl;
 import com.laserfiche.repository.api.clients.impl.model.*;
 import org.junit.jupiter.api.Assertions;
@@ -14,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class TasksApiTest extends BaseTest {
-    TasksClientImpl client;
+    TasksClient client;
     RepositoryApiClient createEntryClient;
 
     @BeforeEach

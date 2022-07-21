@@ -2,7 +2,6 @@ package com.laserfiche.repository.api;
 
 import com.laserfiche.api.client.model.AccessKey;
 import com.laserfiche.repository.api.clients.*;
-import com.laserfiche.repository.api.clients.impl.*;
 import com.laserfiche.repository.api.serialization.GsonCustomConverterFactory;
 import com.laserfiche.repository.api.serialization.RepositoryApiDeserializer;
 import okhttp3.OkHttpClient;
@@ -16,16 +15,16 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
     private final OkHttpClient.Builder okBuilder;
     private Map<String, String> defaultHeaders;
     private AttributesClient attributesClient;
-    private AuditReasonsClientImpl auditReasonsClient;
-    private EntriesClientImpl entriesClient;
-    private FieldDefinitionsClientImpl fieldDefinitionsClient;
-    private LinkDefinitionsClientImpl linkDefinitionsClient;
-    private RepositoriesClientImpl repositoriesClient;
-    private SearchesClientImpl searchesClient;
-    private SimpleSearchesClientImpl simpleSearchesClient;
-    private TagDefinitionsClientImpl tagDefinitionsClient;
-    private TasksClientImpl tasksClient;
-    private TemplateDefinitionsClientImpl templateDefinitionsClient;
+    private AuditReasonsClient auditReasonsClient;
+    private EntriesClient entriesClient;
+    private FieldDefinitionsClient fieldDefinitionsClient;
+    private LinkDefinitionsClient linkDefinitionsClient;
+    private RepositoriesClient repositoriesClient;
+    private SearchesClient searchesClient;
+    private SimpleSearchesClient simpleSearchesClient;
+    private TagDefinitionsClient tagDefinitionsClient;
+    private TasksClient tasksClient;
+    private TemplateDefinitionsClient templateDefinitionsClient;
 
     protected RepositoryApiClientImpl(String servicePrincipalKey, AccessKey accessKey, String baseUrlDebug) {
         String baseUrl = baseUrlDebug != null ? baseUrlDebug : "https://api." + accessKey.getDomain() + "/repository/";
@@ -84,7 +83,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
     }
 
     @Override
-    public AuditReasonsClientImpl getAuditReasonsClient() {
+    public AuditReasonsClient getAuditReasonsClient() {
         if (auditReasonsClient == null) {
             auditReasonsClient = new AuditReasonsClientImpl(clientBuilder, okBuilder);
         }
@@ -92,7 +91,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
     }
 
     @Override
-    public EntriesClientImpl getEntriesClient() {
+    public EntriesClient getEntriesClient() {
         if (entriesClient == null) {
             entriesClient = new EntriesClientImpl(clientBuilder, okBuilder);
         }
@@ -100,7 +99,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
     }
 
     @Override
-    public FieldDefinitionsClientImpl getFieldDefinitionsClient() {
+    public FieldDefinitionsClient getFieldDefinitionsClient() {
         if (fieldDefinitionsClient == null) {
             fieldDefinitionsClient = new FieldDefinitionsClientImpl(clientBuilder, okBuilder);
         }
@@ -108,7 +107,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
     }
 
     @Override
-    public LinkDefinitionsClientImpl getLinkDefinitionsClient() {
+    public LinkDefinitionsClient getLinkDefinitionsClient() {
         if (linkDefinitionsClient == null) {
             linkDefinitionsClient = new LinkDefinitionsClientImpl(clientBuilder, okBuilder);
         }
@@ -116,7 +115,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
     }
 
     @Override
-    public RepositoriesClientImpl getRepositoryClient() {
+    public RepositoriesClient getRepositoryClient() {
         if (repositoriesClient == null) {
             repositoriesClient = new RepositoriesClientImpl(clientBuilder, okBuilder);
         }
@@ -124,7 +123,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
     }
 
     @Override
-    public SearchesClientImpl getSearchesClient() {
+    public SearchesClient getSearchesClient() {
         if (searchesClient == null) {
             searchesClient = new SearchesClientImpl(clientBuilder, okBuilder);
         }
@@ -132,7 +131,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
     }
 
     @Override
-    public SimpleSearchesClientImpl getSimpleSearchesClient() {
+    public SimpleSearchesClient getSimpleSearchesClient() {
         if (simpleSearchesClient == null) {
             simpleSearchesClient = new SimpleSearchesClientImpl(clientBuilder, okBuilder);
         }
@@ -140,7 +139,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
     }
 
     @Override
-    public TagDefinitionsClientImpl getTagDefinitionsClient() {
+    public TagDefinitionsClient getTagDefinitionsClient() {
         if (tagDefinitionsClient == null) {
             tagDefinitionsClient = new TagDefinitionsClientImpl(clientBuilder, okBuilder);
         }
@@ -148,7 +147,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
     }
 
     @Override
-    public TasksClientImpl getTasksClient() {
+    public TasksClient getTasksClient() {
         if (tasksClient == null) {
             tasksClient = new TasksClientImpl(clientBuilder, okBuilder);
         }
@@ -156,7 +155,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
     }
 
     @Override
-    public TemplateDefinitionsClientImpl getTemplateDefinitionClient() {
+    public TemplateDefinitionsClient getTemplateDefinitionClient() {
         if (templateDefinitionsClient == null) {
             templateDefinitionsClient = new TemplateDefinitionsClientImpl(clientBuilder, okBuilder);
         }
