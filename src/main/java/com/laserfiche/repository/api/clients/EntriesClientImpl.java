@@ -2,10 +2,13 @@ package com.laserfiche.repository.api.clients;
 
 import com.laserfiche.repository.api.BaseClient;
 import com.laserfiche.repository.api.ForEachCallBack;
+import com.laserfiche.repository.api.clients.impl.AuditReasonsApi;
 import com.laserfiche.repository.api.clients.impl.EntriesApi;
 import com.laserfiche.repository.api.clients.impl.EntriesApiEx;
 import com.laserfiche.repository.api.clients.impl.model.*;
+import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
+import retrofit2.Retrofit;
 
 import java.io.File;
 import java.util.List;
@@ -13,6 +16,11 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 public class EntriesClientImpl extends BaseClient<EntriesApi, EntriesApiEx> implements EntriesClient {
+    public EntriesClientImpl(Retrofit.Builder clientBuilder, OkHttpClient.Builder okBuilder) {
+        super(clientBuilder, okBuilder);
+        super.setupClients(EntriesApi.class, EntriesApiEx.class);
+    }
+
     @Override
     public CompletableFuture<ODataValueOfIListOfWEntryLinkInfo> assignEntryLinks(String repoId, Integer entryId, List<PutLinksRequest> body) {
         return generatedClient.assignEntryLinks(repoId, entryId, body);

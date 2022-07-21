@@ -2,14 +2,23 @@ package com.laserfiche.repository.api.clients;
 
 import com.laserfiche.repository.api.BaseClient;
 import com.laserfiche.repository.api.ForEachCallBack;
+import com.laserfiche.repository.api.clients.impl.EntriesApi;
+import com.laserfiche.repository.api.clients.impl.EntriesApiEx;
 import com.laserfiche.repository.api.clients.impl.FieldDefinitionsApi;
 import com.laserfiche.repository.api.clients.impl.FieldDefinitionsApiEx;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfWFieldInfo;
 import com.laserfiche.repository.api.clients.impl.model.WFieldInfo;
+import okhttp3.OkHttpClient;
+import retrofit2.Retrofit;
 
 import java.util.concurrent.CompletableFuture;
 
 public class FieldDefinitionsClientImpl extends BaseClient<FieldDefinitionsApi, FieldDefinitionsApiEx> implements FieldDefinitionsClient {
+    public FieldDefinitionsClientImpl(Retrofit.Builder clientBuilder, OkHttpClient.Builder okBuilder) {
+        super(clientBuilder, okBuilder);
+        super.setupClients(FieldDefinitionsApi.class, FieldDefinitionsApiEx.class);
+    }
+
     @Override
     public CompletableFuture<WFieldInfo> getFieldDefinitionById(String repoId, Integer fieldDefinitionId, String culture, String select) {
         return generatedClient.getFieldDefinitionById(repoId, fieldDefinitionId, culture, select);

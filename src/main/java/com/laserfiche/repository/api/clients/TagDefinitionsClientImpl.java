@@ -6,10 +6,17 @@ import com.laserfiche.repository.api.clients.impl.TagDefinitionsApi;
 import com.laserfiche.repository.api.clients.impl.TagDefinitionsApiEx;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfWTagInfo;
 import com.laserfiche.repository.api.clients.impl.model.WTagInfo;
+import okhttp3.OkHttpClient;
+import retrofit2.Retrofit;
 
 import java.util.concurrent.CompletableFuture;
 
 public class TagDefinitionsClientImpl extends BaseClient<TagDefinitionsApi, TagDefinitionsApiEx> implements TagDefinitionsClient {
+    public TagDefinitionsClientImpl(Retrofit.Builder clientBuilder, OkHttpClient.Builder okBuilder) {
+        super(clientBuilder, okBuilder);
+        super.setupClients(TagDefinitionsApi.class, TagDefinitionsApiEx.class);
+    }
+
     @Override
     public CompletableFuture<WTagInfo> getTagDefinitionById(String repoId, Integer tagId, String culture, String select) {
         return generatedClient.getTagDefinitionById(repoId, tagId, culture, select);

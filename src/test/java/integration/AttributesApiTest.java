@@ -1,5 +1,6 @@
 package integration;
 
+import com.laserfiche.repository.api.clients.AttributesClient;
 import com.laserfiche.repository.api.clients.AttributesClientImpl;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfListOfAttribute;
 import com.laserfiche.repository.api.clients.impl.model.Attribute;
@@ -11,7 +12,7 @@ import java.util.concurrent.CompletableFuture;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class AttributesApiTest extends BaseTest {
-    AttributesClientImpl client;
+    AttributesClient client;
 
     private final int maxPageSize = 1;
 

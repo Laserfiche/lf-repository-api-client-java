@@ -2,14 +2,22 @@ package com.laserfiche.repository.api.clients;
 
 import com.laserfiche.repository.api.BaseClient;
 import com.laserfiche.repository.api.ForEachCallBack;
+import com.laserfiche.repository.api.clients.impl.RepositoriesApi;
 import com.laserfiche.repository.api.clients.impl.SearchesApi;
 import com.laserfiche.repository.api.clients.impl.SearchesApiEx;
 import com.laserfiche.repository.api.clients.impl.model.*;
+import okhttp3.OkHttpClient;
+import retrofit2.Retrofit;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public class SearchesClientImpl extends BaseClient<SearchesApi, SearchesApiEx> implements SearchesClient {
+    public SearchesClientImpl(Retrofit.Builder clientBuilder, OkHttpClient.Builder okBuilder) {
+        super(clientBuilder, okBuilder);
+        super.setupClients(SearchesApi.class, SearchesApiEx.class);
+    }
+
     @Override
     public CompletableFuture<ODataValueOfBoolean> cancelOrCloseSearch(String repoId, String searchToken) {
         return generatedClient.cancelOrCloseSearch(repoId, searchToken);

@@ -1,20 +1,31 @@
 package com.laserfiche.repository.api;
 
+import okhttp3.OkHttpClient;
+import retrofit2.Retrofit;
+
 public class BaseClient<T, S> {
     protected T generatedClient;
     protected S extensionClient;
+    protected Retrofit.Builder clientBuilder;
+    protected OkHttpClient.Builder okBuilder;
 
-    protected void setGeneratedClient(T generatedClient) {
-        this.generatedClient = generatedClient;
+    public BaseClient(Retrofit.Builder clientBuilder, OkHttpClient.Builder okBuilder) {
+        this.clientBuilder = clientBuilder;
+        this.okBuilder = okBuilder;
     }
 
-    protected void setExtensionClient(S extensionClient) {
-        this.extensionClient = extensionClient;
+    protected void setupClients(Class<T> generatedClientClass, Class<S> extensionClientClass) {
+        this.generatedClient = createClient(generatedClientClass);
+        // Not all API paths have extension client (meaning, they don't have custom methods such as nextLink or forEach)
+        if (extensionClient != null) {
+            this.extensionClient = createClient(extensionClientClass);
+        }
     }
 
-    protected void setClients(T generatedClient, S extensionClient) {
-        this.generatedClient = generatedClient;
-        this.extensionClient = extensionClient;
+    private <C> C createClient(Class<C> clientInterface) {
+        return clientBuilder.client(okBuilder.build())
+                .build()
+                .create(clientInterface);
     }
 
     protected String mergeMaxPageSizeIntoPrefer(Integer maxPageSize, String prefer)

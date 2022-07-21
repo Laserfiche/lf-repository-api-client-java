@@ -7,10 +7,17 @@ import com.laserfiche.repository.api.clients.impl.TemplateDefinitionsApiEx;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfTemplateFieldInfo;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfWTemplateInfo;
 import com.laserfiche.repository.api.clients.impl.model.WTemplateInfo;
+import okhttp3.OkHttpClient;
+import retrofit2.Retrofit;
 
 import java.util.concurrent.CompletableFuture;
 
 public class TemplateDefinitionsClientImpl extends BaseClient<TemplateDefinitionsApi, TemplateDefinitionsApiEx> implements TemplateDefinitionsClient {
+    public TemplateDefinitionsClientImpl(Retrofit.Builder clientBuilder, OkHttpClient.Builder okBuilder) {
+        super(clientBuilder, okBuilder);
+        super.setupClients(TemplateDefinitionsApi.class, TemplateDefinitionsApiEx.class);
+    }
+
     @Override
     public CompletableFuture<WTemplateInfo> getTemplateDefinitionById(String repoId, Integer templateId, String culture, String select) {
         return generatedClient.getTemplateDefinitionById(repoId, templateId, culture, select);

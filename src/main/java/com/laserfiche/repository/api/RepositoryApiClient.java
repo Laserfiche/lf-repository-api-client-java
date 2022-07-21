@@ -11,7 +11,7 @@ public interface RepositoryApiClient {
     /**
      * @return The Laserfiche Repository Attributes API client.
      */
-    AttributesClientImpl getAttributesClient();
+    AttributesClient getAttributesClient();
 
     /**
      * @return The Laserfiche Repository Audit Reasons API client.

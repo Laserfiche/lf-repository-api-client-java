@@ -15,7 +15,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
     private final Retrofit.Builder clientBuilder;
     private final OkHttpClient.Builder okBuilder;
     private Map<String, String> defaultHeaders;
-    private AttributesClientImpl attributesClient;
+    private AttributesClient attributesClient;
     private AuditReasonsClientImpl auditReasonsClient;
     private EntriesClientImpl entriesClient;
     private FieldDefinitionsClientImpl fieldDefinitionsClient;
@@ -76,11 +76,9 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
     }
 
     @Override
-    public AttributesClientImpl getAttributesClient() {
+    public AttributesClient getAttributesClient() {
         if (attributesClient == null) {
-            attributesClient = new AttributesClientImpl();
-            attributesClient.setGeneratedClient(createClient(AttributesApi.class));
-            attributesClient.setExtensionClient(createClient(AttributesApiEx.class));
+            attributesClient = new AttributesClientImpl(clientBuilder, okBuilder);
         }
         return attributesClient;
     }
@@ -88,8 +86,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
     @Override
     public AuditReasonsClientImpl getAuditReasonsClient() {
         if (auditReasonsClient == null) {
-            auditReasonsClient = new AuditReasonsClientImpl();
-            auditReasonsClient.setGeneratedClient(createClient(AuditReasonsApi.class));
+            auditReasonsClient = new AuditReasonsClientImpl(clientBuilder, okBuilder);
         }
         return auditReasonsClient;
     }
@@ -97,9 +94,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
     @Override
     public EntriesClientImpl getEntriesClient() {
         if (entriesClient == null) {
-            entriesClient = new EntriesClientImpl();
-            entriesClient.setGeneratedClient(createClient(EntriesApi.class));
-            entriesClient.setExtensionClient(createClient(EntriesApiEx.class));
+            entriesClient = new EntriesClientImpl(clientBuilder, okBuilder);
         }
         return entriesClient;
     }
@@ -107,9 +102,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
     @Override
     public FieldDefinitionsClientImpl getFieldDefinitionsClient() {
         if (fieldDefinitionsClient == null) {
-            fieldDefinitionsClient = new FieldDefinitionsClientImpl();
-            fieldDefinitionsClient.setGeneratedClient(createClient(FieldDefinitionsApi.class));
-            fieldDefinitionsClient.setExtensionClient(createClient(FieldDefinitionsApiEx.class));
+            fieldDefinitionsClient = new FieldDefinitionsClientImpl(clientBuilder, okBuilder);
         }
         return fieldDefinitionsClient;
     }
@@ -117,9 +110,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
     @Override
     public LinkDefinitionsClientImpl getLinkDefinitionsClient() {
         if (linkDefinitionsClient == null) {
-            linkDefinitionsClient = new LinkDefinitionsClientImpl();
-            linkDefinitionsClient.setGeneratedClient(createClient(LinkDefinitionsApi.class));
-            linkDefinitionsClient.setExtensionClient(createClient(LinkDefinitionsApiEx.class));
+            linkDefinitionsClient = new LinkDefinitionsClientImpl(clientBuilder, okBuilder);
         }
         return linkDefinitionsClient;
     }
@@ -127,8 +118,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
     @Override
     public RepositoriesClientImpl getRepositoryClient() {
         if (repositoriesClient == null) {
-            repositoriesClient = new RepositoriesClientImpl();
-            repositoriesClient.setGeneratedClient(createClient(RepositoriesApi.class));
+            repositoriesClient = new RepositoriesClientImpl(clientBuilder, okBuilder);
         }
         return repositoriesClient;
     }
@@ -136,9 +126,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
     @Override
     public SearchesClientImpl getSearchesClient() {
         if (searchesClient == null) {
-            searchesClient = new SearchesClientImpl();
-            searchesClient.setGeneratedClient(createClient(SearchesApi.class));
-            searchesClient.setExtensionClient(createClient(SearchesApiEx.class));
+            searchesClient = new SearchesClientImpl(clientBuilder, okBuilder);
         }
         return searchesClient;
     }
@@ -146,8 +134,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
     @Override
     public SimpleSearchesClientImpl getSimpleSearchesClient() {
         if (simpleSearchesClient == null) {
-            simpleSearchesClient = new SimpleSearchesClientImpl();
-            simpleSearchesClient.setGeneratedClient(createClient(SimpleSearchesApi.class));
+            simpleSearchesClient = new SimpleSearchesClientImpl(clientBuilder, okBuilder);
         }
         return simpleSearchesClient;
     }
@@ -155,9 +142,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
     @Override
     public TagDefinitionsClientImpl getTagDefinitionsClient() {
         if (tagDefinitionsClient == null) {
-            tagDefinitionsClient = new TagDefinitionsClientImpl();
-            tagDefinitionsClient.setGeneratedClient(createClient(TagDefinitionsApi.class));
-            tagDefinitionsClient.setExtensionClient(createClient(TagDefinitionsApiEx.class));
+            tagDefinitionsClient = new TagDefinitionsClientImpl(clientBuilder, okBuilder);
         }
         return tagDefinitionsClient;
     }
@@ -165,8 +150,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
     @Override
     public TasksClientImpl getTasksClient() {
         if (tasksClient == null) {
-            tasksClient = new TasksClientImpl();
-            tasksClient.setGeneratedClient(createClient(TasksApi.class));
+            tasksClient = new TasksClientImpl(clientBuilder, okBuilder);
         }
         return tasksClient;
     }
@@ -174,9 +158,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
     @Override
     public TemplateDefinitionsClientImpl getTemplateDefinitionClient() {
         if (templateDefinitionsClient == null) {
-            templateDefinitionsClient = new TemplateDefinitionsClientImpl();
-            templateDefinitionsClient.setGeneratedClient(createClient(TemplateDefinitionsApi.class));
-            templateDefinitionsClient.setExtensionClient(createClient(TemplateDefinitionsApiEx.class));
+            templateDefinitionsClient = new TemplateDefinitionsClientImpl(clientBuilder, okBuilder);
         }
         return templateDefinitionsClient;
     }
