@@ -17,7 +17,7 @@ public class BaseClient<T, S> {
     protected void setupClients(Class<T> generatedClientClass, Class<S> extensionClientClass) {
         this.generatedClient = createClient(generatedClientClass);
         // Not all API paths have extension client (meaning, they don't have custom methods such as nextLink or forEach)
-        if (extensionClient != null) {
+        if (extensionClientClass != null) {
             this.extensionClient = createClient(extensionClientClass);
         }
     }
