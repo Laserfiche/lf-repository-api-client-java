@@ -49,12 +49,6 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
         return CreateFromAccessKey(servicePrincipalKey, accessKey, null);
     }
 
-    private <C> C createClient(Class<C> clientInterface) {
-        return clientBuilder.client(okBuilder.build())
-                .build()
-                .create(clientInterface);
-    }
-
     private void addDefaultHeaderInterceptor() {
         okBuilder.addInterceptor(chain -> {
             okhttp3.Request.Builder builder = chain.request().newBuilder();
