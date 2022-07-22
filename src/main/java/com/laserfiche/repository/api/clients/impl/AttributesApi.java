@@ -27,16 +27,6 @@ public interface AttributesApi {
   );
 
   /**
-   * Get the attribute key value pairs associated with the authenticated user.
-   * - Returns the attribute key value pairs associated with the authenticated user.
-   * @param url Full next link URL returned by the backend.
-   * @param prefer May contain maxpagesize information.
-   * @return CompletableFuture&lt;ODataValueContextOfListOfAttribute&gt;
-   */
-  @GET
-  CompletableFuture<ODataValueContextOfListOfAttribute> getTrusteeAttributeKeyValuePairsPaginate(@Url String url, @retrofit2.http.Header("Prefer") String prefer);
-
-  /**
    * Get an attribute object by key associated with the authenticated user.
    * - Returns the attribute associated with the key. Alternatively, return the attribute associated with the key within \&quot;Everyone\&quot; group. - Optional query parameters: everyone (bool, default false). When true, the server only searches for the attribute value with the given key upon the authenticated users attributes. If false, only the authenticated users attributes will be queried.
    * @param repoId The requested repository ID. (required)

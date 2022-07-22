@@ -2,7 +2,6 @@ package integration;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.laserfiche.api.client.httphandlers.HeadersImpl;
 import com.laserfiche.api.client.model.AccessKey;
 import com.laserfiche.repository.api.RepositoryApiClient;
 import com.laserfiche.repository.api.RepositoryApiClientImpl;

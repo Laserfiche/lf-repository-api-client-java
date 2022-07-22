@@ -54,15 +54,6 @@ public interface SearchesApi {
   );
 
   /**
-   * - Returns the context hits associated with a search result entry.
-   * @param url Full next link URL returned by the backend.
-   * @param prefer May contain maxpagesize information.
-   * @return CompletableFuture&lt;ODataValueContextOfIListOfContextHit&gt;
-   */
-  @GET
-  CompletableFuture<ODataValueContextOfIListOfContextHit> getSearchContextHitsPaginate(@Url String url, @retrofit2.http.Header("Prefer") String prefer);
-
-  /**
    * Get the search results listing of a search.
    * - Returns a search result listing if the search is completed. - Optional query parameter: groupByOrderType (default false). This query parameter decides whether or not results are returned in groups based on their entry type. - Optional query parameter: refresh (default false). If the search listing should be refreshed to show updated values. - Default page size: 150. Allowed OData query options: Select | Count | OrderBy | Skip | Top | SkipToken | Prefer. OData $OrderBy syntax should follow: \&quot;PropertyName direction,PropertyName2 direction\&quot;. sort order can be either \&quot;asc\&quot; or \&quot;desc\&quot;. Search results expire after 5 minutes, but can be refreshed by retrieving the results again. - Optionally returns field values for the entries in the search result listing. Each field name needs to be specified in the request. Maximum limit of 10 field names. - If field values are requested, only the first value is returned if it is a multi value field. - Null or Empty field values should not be used to determine if a field is assigned to the entry.
    * @param repoId The requested repository ID. (required)
@@ -84,16 +75,6 @@ public interface SearchesApi {
   CompletableFuture<ODataValueContextOfIListOfEntry> getSearchResults(
     @retrofit2.http.Path("repoId") String repoId, @retrofit2.http.Path("searchToken") String searchToken, @retrofit2.http.Query("groupByEntryType") Boolean groupByEntryType, @retrofit2.http.Query("refresh") Boolean refresh, @retrofit2.http.Query("fields") List<String> fields, @retrofit2.http.Query("formatFields") Boolean formatFields, @retrofit2.http.Header("Prefer") String prefer, @retrofit2.http.Query("culture") String culture, @retrofit2.http.Query("$select") String $select, @retrofit2.http.Query("$orderby") String $orderby, @retrofit2.http.Query("$top") Integer $top, @retrofit2.http.Query("$skip") Integer $skip, @retrofit2.http.Query("$count") Boolean $count
   );
-
-  /**
-   * Get the search results listing of a search.
-   * - Returns a search result listing if the search is completed.
-   * @param url Full next link URL returned by the backend.
-   * @param prefer May contain maxpagesize information.
-   * @return CompletableFuture&lt;ODataValueContextOfIListOfEntry&gt;
-   */
-  @GET
-  CompletableFuture<ODataValueContextOfIListOfEntry> getSearchResultsPaginate(@Url String url, @retrofit2.http.Header("Prefer") String prefer);
 
   /**
    * Get the status of a search using a token.

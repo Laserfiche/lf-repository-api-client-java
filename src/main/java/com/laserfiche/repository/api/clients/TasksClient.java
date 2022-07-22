@@ -1,12 +1,10 @@
 package com.laserfiche.repository.api.clients;
 
-import com.laserfiche.repository.api.BaseClient;
-import com.laserfiche.repository.api.clients.impl.TasksApi;
 import com.laserfiche.repository.api.clients.impl.model.OperationProgress;
 
 import java.util.concurrent.CompletableFuture;
 
-public class TasksClient extends BaseClient<TasksApi> {
+public interface TasksClient {
     /**
      *
      * - Cancels an operation. - Provide an operationToken to cancel the operation, if possible. Should be used if an operation was created in error, or is no longer necessary. - Rollbacks must be done manually. For example, if a copy operation is started and is halfway complete when canceled, the client application is responsible for cleaning up the files that were successfully copied before the operation was canceled.
@@ -14,9 +12,7 @@ public class TasksClient extends BaseClient<TasksApi> {
      * @param operationToken The operation token (required)
      * @return CompletableFuture&lt;Void&gt;
      */
-    public CompletableFuture<Void> cancelOperation(String repoId, String operationToken) {
-        return client.cancelOperation(repoId, operationToken);
-    }
+    CompletableFuture<Void> cancelOperation(String repoId, String operationToken);
 
     /**
      *
@@ -25,7 +21,5 @@ public class TasksClient extends BaseClient<TasksApi> {
      * @param operationToken The operation token (required)
      * @return CompletableFuture&lt;OperationProgress&gt;
      */
-    public CompletableFuture<OperationProgress> getOperationStatusAndProgress(String repoId, String operationToken) {
-        return client.getOperationStatusAndProgress(repoId, operationToken);
-    }
+    CompletableFuture<OperationProgress> getOperationStatusAndProgress(String repoId, String operationToken);
 }

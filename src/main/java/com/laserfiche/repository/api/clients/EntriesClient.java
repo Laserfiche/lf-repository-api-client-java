@@ -1,8 +1,6 @@
 package com.laserfiche.repository.api.clients;
 
-import com.laserfiche.repository.api.BaseClient;
 import com.laserfiche.repository.api.ForEachCallBack;
-import com.laserfiche.repository.api.clients.impl.EntriesApi;
 import com.laserfiche.repository.api.clients.impl.model.*;
 import okhttp3.RequestBody;
 
@@ -11,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
-public class EntriesClient extends BaseClient<EntriesApi> {
+public interface EntriesClient {
     /**
      *
      * - Assign links to an entry. - Provide an entry ID and a list of links to assign to that entry. - This is an overwrite action. The request must include all links to assign to the entry, including existing links that should remain assigned to the entry.
@@ -20,9 +18,7 @@ public class EntriesClient extends BaseClient<EntriesApi> {
      * @param body  (optional)
      * @return Call&lt;ODataValueOfIListOfWEntryLinkInfo&gt;
      */
-    public CompletableFuture<ODataValueOfIListOfWEntryLinkInfo> assignEntryLinks(String repoId, Integer entryId, List<PutLinksRequest> body) {
-        return client.assignEntryLinks(repoId, entryId, body);
-    }
+    CompletableFuture<ODataValueOfIListOfWEntryLinkInfo> assignEntryLinks(String repoId, Integer entryId, List<PutLinksRequest> body);
 
     /**
      *
@@ -33,9 +29,7 @@ public class EntriesClient extends BaseClient<EntriesApi> {
      * @param culture An optional query parameter used to indicate the locale that should be used.             The value should be a standard language tag. (optional)
      * @return Call&lt;ODataValueOfIListOfFieldValue&gt;
      */
-    public CompletableFuture<ODataValueOfIListOfFieldValue> assignFieldValues(String repoId, Integer entryId, Map<String, FieldToUpdate> body, String culture) {
-        return client.assignFieldValues(repoId, entryId, body, culture);
-    }
+    CompletableFuture<ODataValueOfIListOfFieldValue> assignFieldValues(String repoId, Integer entryId, Map<String, FieldToUpdate> body, String culture);
 
     /**
      *
@@ -45,9 +39,7 @@ public class EntriesClient extends BaseClient<EntriesApi> {
      * @param body The tags to add. (optional)
      * @return Call&lt;ODataValueOfIListOfWTagInfo&gt;
      */
-    public CompletableFuture<ODataValueOfIListOfWTagInfo> assignTags(String repoId, Integer entryId, PutTagRequest body) {
-        return client.assignTags(repoId, entryId, body);
-    }
+    CompletableFuture<ODataValueOfIListOfWTagInfo> assignTags(String repoId, Integer entryId, PutTagRequest body);
 
     /**
      *
@@ -59,9 +51,7 @@ public class EntriesClient extends BaseClient<EntriesApi> {
      * @param culture An optional query parameter used to indicate the locale that should be used.             The value should be a standard language tag. (optional)
      * @return Call&lt;AcceptedOperation&gt;
      */
-    public CompletableFuture<AcceptedOperation> copyEntryAsync(String repoId, Integer entryId, CopyAsyncRequest body, Boolean autoRename, String culture) {
-        return client.copyEntryAsync(repoId, entryId, body, autoRename, culture);
-    }
+    CompletableFuture<AcceptedOperation> copyEntryAsync(String repoId, Integer entryId, CopyAsyncRequest body, Boolean autoRename, String culture);
 
     /**
      *
@@ -73,9 +63,7 @@ public class EntriesClient extends BaseClient<EntriesApi> {
      * @param culture An optional query parameter used to indicate the locale that should be used.             The value should be a standard language tag. (optional)
      * @return Call&lt;Entry&gt;
      */
-    public CompletableFuture<Entry> createOrCopyEntry(String repoId, Integer entryId, PostEntryChildrenRequest body, Boolean autoRename, String culture) {
-        return client.createOrCopyEntry(repoId, entryId, body, autoRename, culture);
-    }
+    CompletableFuture<Entry> createOrCopyEntry(String repoId, Integer entryId, PostEntryChildrenRequest body, Boolean autoRename, String culture);
 
     /**
      *
@@ -84,9 +72,7 @@ public class EntriesClient extends BaseClient<EntriesApi> {
      * @param entryId The ID of the entry that will have its template removed. (required)
      * @return Call&lt;Entry&gt;
      */
-    public CompletableFuture<Entry> deleteAssignedTemplate(String repoId, Integer entryId) {
-        return client.deleteAssignedTemplate(repoId, entryId);
-    }
+    CompletableFuture<Entry> deleteAssignedTemplate(String repoId, Integer entryId);
 
     /**
      *
@@ -95,9 +81,7 @@ public class EntriesClient extends BaseClient<EntriesApi> {
      * @param entryId The requested document ID. (required)
      * @return Call&lt;ODataValueOfBoolean&gt;
      */
-    public CompletableFuture<ODataValueOfBoolean> deleteDocument(String repoId, Integer entryId) {
-        return client.deleteDocument(repoId, entryId);
-    }
+    CompletableFuture<ODataValueOfBoolean> deleteDocument(String repoId, Integer entryId);
 
     /**
      *
@@ -107,9 +91,7 @@ public class EntriesClient extends BaseClient<EntriesApi> {
      * @param body The submitted audit reason. (optional)
      * @return Call&lt;AcceptedOperation&gt;
      */
-    public CompletableFuture<AcceptedOperation> deleteEntryInfo(String repoId, Integer entryId, DeleteEntryWithAuditReason body) {
-        return client.deleteEntryInfo(repoId, entryId, body);
-    }
+    CompletableFuture<AcceptedOperation> deleteEntryInfo(String repoId, Integer entryId, DeleteEntryWithAuditReason body);
 
     /**
      *
@@ -119,9 +101,7 @@ public class EntriesClient extends BaseClient<EntriesApi> {
      * @param pageRange The pages to be deleted. (optional)
      * @return Call&lt;ODataValueOfBoolean&gt;
      */
-    public CompletableFuture<ODataValueOfBoolean> deletePages(String repoId, Integer entryId, String pageRange) {
-        return client.deletePages(repoId, entryId, pageRange);
-    }
+    CompletableFuture<ODataValueOfBoolean> deletePages(String repoId, Integer entryId, String pageRange);
 
     /**
      *
@@ -131,9 +111,7 @@ public class EntriesClient extends BaseClient<EntriesApi> {
      * @param range An optional header used to retrieve partial content of the edoc. Only supports single             range with byte unit. (optional)
      * @return Call&lt;File&gt;
      */
-    public CompletableFuture<File> exportDocument(String repoId, Integer entryId, String range) {
-        return client.exportDocument(repoId, entryId, range);
-    }
+    CompletableFuture<File> exportDocument(String repoId, Integer entryId, String range);
 
     /**
      *
@@ -144,9 +122,7 @@ public class EntriesClient extends BaseClient<EntriesApi> {
      * @param range An optional header used to retrieve partial content of the edoc. Only supports single             range with byte unit. (optional)
      * @return Call&lt;File&gt;
      */
-    public CompletableFuture<File> exportDocumentWithAuditReason(String repoId, Integer entryId, GetEdocWithAuditReasonRequest body, String range) {
-        return client.exportDocumentWithAuditReason(repoId, entryId, body, range);
-    }
+    CompletableFuture<File> exportDocumentWithAuditReason(String repoId, Integer entryId, GetEdocWithAuditReasonRequest body, String range);
 
     /**
      *
@@ -155,9 +131,7 @@ public class EntriesClient extends BaseClient<EntriesApi> {
      * @param entryId The requested document ID. (required)
      * @return Call&lt;Void&gt;
      */
-    public CompletableFuture<Void> getDocumentContentType(String repoId, Integer entryId) {
-        return client.getDocumentContentType(repoId, entryId);
-    }
+    CompletableFuture<Void> getDocumentContentType(String repoId, Integer entryId);
 
     /**
      *
@@ -167,9 +141,7 @@ public class EntriesClient extends BaseClient<EntriesApi> {
      * @param body  (optional)
      * @return Call&lt;Map&lt;String, List&lt;String&gt;&gt;&gt;
      */
-    public CompletableFuture<Map<String, List<String>>> getDynamicFieldValues(String repoId, Integer entryId, GetDynamicFieldLogicValueRequest body) {
-        return client.getDynamicFieldValues(repoId, entryId, body);
-    }
+    CompletableFuture<Map<String, List<String>>> getDynamicFieldValues(String repoId, Integer entryId, GetDynamicFieldLogicValueRequest body);
 
     /**
      *
@@ -179,9 +151,7 @@ public class EntriesClient extends BaseClient<EntriesApi> {
      * @param select Limits the properties returned in the result. (optional)
      * @return Call&lt;Entry&gt;
      */
-    public CompletableFuture<Entry> getEntry(String repoId, Integer entryId, String select) {
-        return client.getEntry(repoId, entryId, select);
-    }
+    CompletableFuture<Entry> getEntry(String repoId, Integer entryId, String select);
 
     /**
      *
@@ -201,9 +171,7 @@ public class EntriesClient extends BaseClient<EntriesApi> {
      * @param maxPageSize Indicates the maximum number of items to return.
      * @return CompletableFuture&lt;ODataValueContextOfIListOfEntry&gt;
      */
-    public CompletableFuture<ODataValueContextOfIListOfEntry> getEntryListing(String repoId, Integer entryId, Boolean groupByEntryType, List<String> fields, Boolean formatFields, String prefer, String culture, String select, String orderby, Integer top, Integer skip, Boolean count, Integer maxPageSize) {
-        return client.getEntryListing(repoId, entryId, groupByEntryType, fields, formatFields, mergeMaxPageSizeIntoPrefer(maxPageSize, prefer), culture, select, orderby, top, skip, count);
-    }
+    CompletableFuture<ODataValueContextOfIListOfEntry> getEntryListing(String repoId, Integer entryId, Boolean groupByEntryType, List<String> fields, Boolean formatFields, String prefer, String culture, String select, String orderby, Integer top, Integer skip, Boolean count, Integer maxPageSize);
 
     /**
      *
@@ -212,9 +180,7 @@ public class EntriesClient extends BaseClient<EntriesApi> {
      * @param maxPageSize Maximum number of items returned from the backend.
      * @return CompletableFuture&lt;ODataValueContextOfIListOfEntry&gt;
      */
-    public CompletableFuture<ODataValueContextOfIListOfEntry> getEntryListingNextLink(String nextLink, Integer maxPageSize) {
-        return client.getEntryListingPaginate(nextLink, mergeMaxPageSizeIntoPrefer(maxPageSize, null));
-    }
+    CompletableFuture<ODataValueContextOfIListOfEntry> getEntryListingNextLink(String nextLink, Integer maxPageSize);
 
     /**
      *
@@ -234,21 +200,7 @@ public class EntriesClient extends BaseClient<EntriesApi> {
      * @param count Indicates whether the total count of items within a collection are returned in the result. (optional)
      * @param maxPageSize Indicates the maximum number of items to return.
      */
-    public void getEntryListingForEach(ForEachCallBack<CompletableFuture<ODataValueContextOfIListOfEntry>> callback, String repoId, Integer entryId, Boolean groupByEntryType, List<String> fields, Boolean formatFields, String prefer, String culture, String select, String orderby, Integer top, Integer skip, Boolean count, Integer maxPageSize) {
-        // Initial request
-        CompletableFuture<ODataValueContextOfIListOfEntry> future = getEntryListing(repoId, entryId, groupByEntryType, fields, formatFields, prefer, culture, select, orderby, top, skip, count, maxPageSize);
-        // Subsequent request based on return value of callback
-        while (callback.apply(future)) {
-            future = future.thenCompose(dataFromLastRequest -> {
-                String nextLink = dataFromLastRequest.getAtOdataNextLink();
-                if (nextLink == null) {
-                    // We are at the end of the data stream
-                    return CompletableFuture.completedFuture(null);
-                }
-                return getEntryListingNextLink(nextLink, maxPageSize);
-            });
-        }
-    }
+    void getEntryListingForEach(ForEachCallBack<CompletableFuture<ODataValueContextOfIListOfEntry>> callback, String repoId, Integer entryId, Boolean groupByEntryType, List<String> fields, Boolean formatFields, String prefer, String culture, String select, String orderby, Integer top, Integer skip, Boolean count, Integer maxPageSize);
 
     /**
      *
@@ -266,9 +218,7 @@ public class EntriesClient extends BaseClient<EntriesApi> {
      * @param maxPageSize Indicates the maximum number of items to return.
      * @return CompletableFuture&lt;ODataValueContextOfIListOfFieldValue&gt;
      */
-    public CompletableFuture<ODataValueContextOfIListOfFieldValue> getFieldValues(String repoId, Integer entryId, String prefer, Boolean formatValue, String culture, String select, String orderby, Integer top, Integer skip, Boolean count, Integer maxPageSize) {
-        return client.getFieldValues(repoId, entryId, mergeMaxPageSizeIntoPrefer(maxPageSize, prefer), formatValue, culture, select, orderby, top, skip, count);
-    }
+    CompletableFuture<ODataValueContextOfIListOfFieldValue> getFieldValues(String repoId, Integer entryId, String prefer, Boolean formatValue, String culture, String select, String orderby, Integer top, Integer skip, Boolean count, Integer maxPageSize);
 
     /**
      *
@@ -277,9 +227,7 @@ public class EntriesClient extends BaseClient<EntriesApi> {
      * @param maxPageSize Maximum number of items returned from the backend.
      * @return CompletableFuture&lt;ODataValueContextOfIListOfFieldValue&gt;
      */
-    public CompletableFuture<ODataValueContextOfIListOfFieldValue> getFieldValuesNextLink(String nextLink, Integer maxPageSize) {
-        return client.getFieldValuesPaginate(nextLink, mergeMaxPageSizeIntoPrefer(maxPageSize, null));
-    }
+    CompletableFuture<ODataValueContextOfIListOfFieldValue> getFieldValuesNextLink(String nextLink, Integer maxPageSize);
 
     /**
      *
@@ -297,21 +245,7 @@ public class EntriesClient extends BaseClient<EntriesApi> {
      * @param count Indicates whether the total count of items within a collection are returned in the result. (optional)
      * @param maxPageSize Indicates the maximum number of items to return.
      */
-    public void getFieldValuesForEach(ForEachCallBack<CompletableFuture<ODataValueContextOfIListOfFieldValue>> callback, String repoId, Integer entryId, String prefer, Boolean formatValue, String culture, String select, String orderby, Integer top, Integer skip, Boolean count, Integer maxPageSize) {
-        // Initial request
-        CompletableFuture<ODataValueContextOfIListOfFieldValue> future = getFieldValues(repoId, entryId, prefer, formatValue, culture, select, orderby, top, skip, count, maxPageSize);
-        // Subsequent request based on return value of callback
-        while (callback.apply(future)) {
-            future = future.thenCompose(dataFromLastRequest -> {
-                String nextLink = dataFromLastRequest.getAtOdataNextLink();
-                if (nextLink == null) {
-                    // We are at the end of the data stream
-                    return CompletableFuture.completedFuture(null);
-                }
-                return getFieldValuesNextLink(nextLink, maxPageSize);
-            });
-        }
-    }
+    void getFieldValuesForEach(ForEachCallBack<CompletableFuture<ODataValueContextOfIListOfFieldValue>> callback, String repoId, Integer entryId, String prefer, Boolean formatValue, String culture, String select, String orderby, Integer top, Integer skip, Boolean count, Integer maxPageSize);
 
     /**
      *
@@ -327,9 +261,7 @@ public class EntriesClient extends BaseClient<EntriesApi> {
      * @param maxPageSize Indicates the maximum number of items to return.
      * @return CompletableFuture&lt;ODataValueContextOfIListOfWEntryLinkInfo&gt;
      */
-    public CompletableFuture<ODataValueContextOfIListOfWEntryLinkInfo> getLinkValuesFromEntry(String repoId, Integer entryId, String prefer, String select, String orderby, Integer top, Integer skip, Boolean count, Integer maxPageSize) {
-        return client.getLinkValuesFromEntry(repoId, entryId, mergeMaxPageSizeIntoPrefer(maxPageSize, prefer), select, orderby, top, skip, count);
-    }
+    CompletableFuture<ODataValueContextOfIListOfWEntryLinkInfo> getLinkValuesFromEntry(String repoId, Integer entryId, String prefer, String select, String orderby, Integer top, Integer skip, Boolean count, Integer maxPageSize);
 
     /**
      *
@@ -338,9 +270,7 @@ public class EntriesClient extends BaseClient<EntriesApi> {
      * @param maxPageSize Maximum number of items returned from the backend.
      * @return CompletableFuture&lt;ODataValueContextOfIListOfWEntryLinkInfo&gt;
      */
-    public CompletableFuture<ODataValueContextOfIListOfWEntryLinkInfo> getLinkValuesFromEntryNextLink(String nextLink, Integer maxPageSize) {
-        return client.getLinkValuesFromEntryPaginate(nextLink, mergeMaxPageSizeIntoPrefer(maxPageSize, null));
-    }
+    CompletableFuture<ODataValueContextOfIListOfWEntryLinkInfo> getLinkValuesFromEntryNextLink(String nextLink, Integer maxPageSize);
 
     /**
      *
@@ -356,21 +286,7 @@ public class EntriesClient extends BaseClient<EntriesApi> {
      * @param count Indicates whether the total count of items within a collection are returned in the result. (optional)
      * @param maxPageSize Indicates the maximum number of items to return.
      */
-    public void getLinkValuesFromEntryForEach(ForEachCallBack<CompletableFuture<ODataValueContextOfIListOfWEntryLinkInfo>> callback, String repoId, Integer entryId, String prefer, String select, String orderby, Integer top, Integer skip, Boolean count, Integer maxPageSize) {
-        // Initial request
-        CompletableFuture<ODataValueContextOfIListOfWEntryLinkInfo> future = getLinkValuesFromEntry(repoId, entryId, prefer, select, orderby, top, skip, count, maxPageSize);
-        // Subsequent request based on return value of callback
-        while (callback.apply(future)) {
-            future = future.thenCompose(dataFromLastRequest -> {
-                String nextLink = dataFromLastRequest.getAtOdataNextLink();
-                if (nextLink == null) {
-                    // We are at the end of the data stream
-                    return CompletableFuture.completedFuture(null);
-                }
-                return getLinkValuesFromEntryNextLink(nextLink, maxPageSize);
-            });
-        }
-    }
+    void getLinkValuesFromEntryForEach(ForEachCallBack<CompletableFuture<ODataValueContextOfIListOfWEntryLinkInfo>> callback, String repoId, Integer entryId, String prefer, String select, String orderby, Integer top, Integer skip, Boolean count, Integer maxPageSize);
 
     /**
      *
@@ -386,9 +302,7 @@ public class EntriesClient extends BaseClient<EntriesApi> {
      * @param maxPageSize Indicates the maximum number of items to return.
      * @return CompletableFuture&lt;ODataValueContextOfIListOfWTagInfo&gt;
      */
-    public CompletableFuture<ODataValueContextOfIListOfWTagInfo> getTagsAssignedToEntry(String repoId, Integer entryId, String prefer, String select, String orderby, Integer top, Integer skip, Boolean count, Integer maxPageSize) {
-        return client.getTagsAssignedToEntry(repoId, entryId, mergeMaxPageSizeIntoPrefer(maxPageSize, prefer), select, orderby, top, skip, count);
-    }
+    CompletableFuture<ODataValueContextOfIListOfWTagInfo> getTagsAssignedToEntry(String repoId, Integer entryId, String prefer, String select, String orderby, Integer top, Integer skip, Boolean count, Integer maxPageSize);
 
     /**
      * Creates a new document in a folder.
@@ -402,9 +316,7 @@ public class EntriesClient extends BaseClient<EntriesApi> {
      * @param culture An optional query parameter used to indicate the locale that should be used.             The value should be a standard language tag. (optional)
      * @return CompletableFuture&lt;CreateEntryResult&gt;
      */
-    public CompletableFuture<CreateEntryResult> importDocument(String repoId, Integer parentEntryId, String fileName, RequestBody electronicDocument, PostEntryWithEdocMetadataRequest request, Boolean autoRename, String culture) {
-        return client.importDocument(repoId, parentEntryId, fileName, electronicDocument, request, autoRename, culture);
-    }
+    CompletableFuture<CreateEntryResult> importDocument(String repoId, Integer parentEntryId, String fileName, RequestBody electronicDocument, PostEntryWithEdocMetadataRequest request, Boolean autoRename, String culture);
 
     /**
      *
@@ -413,9 +325,7 @@ public class EntriesClient extends BaseClient<EntriesApi> {
      * @param maxPageSize Maximum number of items returned from the backend.
      * @return CompletableFuture&lt;ODataValueContextOfIListOfWTagInfo&gt;
      */
-    public CompletableFuture<ODataValueContextOfIListOfWTagInfo> getTagsAssignedToEntryNextLink(String nextLink, Integer maxPageSize) {
-        return client.getTagsAssignedToEntryPaginate(nextLink, mergeMaxPageSizeIntoPrefer(maxPageSize, null));
-    }
+    CompletableFuture<ODataValueContextOfIListOfWTagInfo> getTagsAssignedToEntryNextLink(String nextLink, Integer maxPageSize);
 
     /**
      *
@@ -431,21 +341,7 @@ public class EntriesClient extends BaseClient<EntriesApi> {
      * @param count Indicates whether the total count of items within a collection are returned in the result. (optional)
      * @param maxPageSize Indicates the maximum number of items to return.
      */
-    public void getTagsAssignedToEntryForEach(ForEachCallBack<CompletableFuture<ODataValueContextOfIListOfWTagInfo>> callback, String repoId, Integer entryId, String prefer, String select, String orderby, Integer top, Integer skip, Boolean count, Integer maxPageSize) {
-        // Initial request
-        CompletableFuture<ODataValueContextOfIListOfWTagInfo> future = getTagsAssignedToEntry(repoId, entryId, prefer, select, orderby, top, skip, count, maxPageSize);
-        // Subsequent request based on return value of callback
-        while (callback.apply(future)) {
-            future = future.thenCompose(dataFromLastRequest -> {
-                String nextLink = dataFromLastRequest.getAtOdataNextLink();
-                if (nextLink == null) {
-                    // We are at the end of the data stream
-                    return CompletableFuture.completedFuture(null);
-                }
-                return getTagsAssignedToEntryNextLink(nextLink, maxPageSize);
-            });
-        }
-    }
+    void getTagsAssignedToEntryForEach(ForEachCallBack<CompletableFuture<ODataValueContextOfIListOfWTagInfo>> callback, String repoId, Integer entryId, String prefer, String select, String orderby, Integer top, Integer skip, Boolean count, Integer maxPageSize);
 
     /**
      *
@@ -458,9 +354,7 @@ public class EntriesClient extends BaseClient<EntriesApi> {
      * @param culture An optional query parameter used to indicate the locale that should be used.             The value should be a standard language tag. (optional)
      * @return CompletableFuture&lt;Entry&gt;
      */
-    public CompletableFuture<Entry> moveOrRenameDocument(String repoId, Integer entryId, PatchEntryRequest body, Boolean autoRename, String culture) {
-        return client.moveOrRenameDocument(repoId, entryId, body, autoRename, culture);
-    }
+    CompletableFuture<Entry> moveOrRenameDocument(String repoId, Integer entryId, PatchEntryRequest body, Boolean autoRename, String culture);
 
     /**
      *
@@ -471,8 +365,5 @@ public class EntriesClient extends BaseClient<EntriesApi> {
      * @param culture An optional query parameter used to indicate the locale that should be used.             The value should be a standard language tag. (optional)
      * @return CompletableFuture&lt;Entry&gt;
      */
-    public CompletableFuture<Entry> writeTemplateValueToEntry(String repoId, Integer entryId, PutTemplateRequest body, String culture) {
-        return client.writeTemplateValueToEntry(repoId, entryId, body, culture);
-    }
-
+    CompletableFuture<Entry> writeTemplateValueToEntry(String repoId, Integer entryId, PutTemplateRequest body, String culture);
 }

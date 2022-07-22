@@ -1,14 +1,12 @@
 package com.laserfiche.repository.api.clients;
 
-import com.laserfiche.repository.api.BaseClient;
 import com.laserfiche.repository.api.ForEachCallBack;
-import com.laserfiche.repository.api.clients.impl.FieldDefinitionsApi;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfWFieldInfo;
 import com.laserfiche.repository.api.clients.impl.model.WFieldInfo;
 
 import java.util.concurrent.CompletableFuture;
 
-public class FieldDefinitionsClient extends BaseClient<FieldDefinitionsApi> {
+public interface FieldDefinitionsClient {
     /**
      *
      * - Returns a single field definition associated with the specified ID.  - Useful when a route provides a minimal amount of details and more information about the specific field definition is needed. - Allowed OData query options: Select
@@ -18,9 +16,7 @@ public class FieldDefinitionsClient extends BaseClient<FieldDefinitionsApi> {
      * @param select Limits the properties returned in the result. (optional)
      * @return CompletableFuture&lt;WFieldInfo&gt;
      */
-    public CompletableFuture<WFieldInfo> getFieldDefinitionById(String repoId, Integer fieldDefinitionId, String culture, String select) {
-        return client.getFieldDefinitionById(repoId, fieldDefinitionId, culture, select);
-    }
+    CompletableFuture<WFieldInfo> getFieldDefinitionById(String repoId, Integer fieldDefinitionId, String culture, String select);
 
     /**
      *
@@ -36,9 +32,7 @@ public class FieldDefinitionsClient extends BaseClient<FieldDefinitionsApi> {
      * @param maxPageSize Indicates the maximum number of items to return.
      * @return CompletableFuture&lt;ODataValueContextOfIListOfWFieldInfo&gt;
      */
-    public CompletableFuture<ODataValueContextOfIListOfWFieldInfo> getFieldDefinitions(String repoId, String prefer, String culture, String select, String orderby, Integer top, Integer skip, Boolean count, Integer maxPageSize) {
-        return client.getFieldDefinitions(repoId, mergeMaxPageSizeIntoPrefer(maxPageSize, prefer), culture, select, orderby, top, skip, count);
-    }
+    CompletableFuture<ODataValueContextOfIListOfWFieldInfo> getFieldDefinitions(String repoId, String prefer, String culture, String select, String orderby, Integer top, Integer skip, Boolean count, Integer maxPageSize);
 
     /**
      * - Returns a paged listing of field definitions available in the specified repository.
@@ -46,9 +40,7 @@ public class FieldDefinitionsClient extends BaseClient<FieldDefinitionsApi> {
      * @param maxPageSize The maximum number of items returned by the backend.
      * @return CompletableFuture&lt;ODataValueContextOfIListOfWFieldInfo&gt;
      */
-    public CompletableFuture<ODataValueContextOfIListOfWFieldInfo> getFieldDefinitionsNextLink(String nextLink, Integer maxPageSize) {
-        return client.getFieldDefinitionsPaginate(nextLink, mergeMaxPageSizeIntoPrefer(maxPageSize, null));
-    }
+    CompletableFuture<ODataValueContextOfIListOfWFieldInfo> getFieldDefinitionsNextLink(String nextLink, Integer maxPageSize);
 
     /**
      * - Returns a paged listing of field definitions available in the specified repository. - Useful when trying to find a list of all field definitions available, rather than only those assigned to a specific entry/template. - Default page size: 100. Allowed OData query options: Select | Count | OrderBy | Skip | Top | SkipToken | Prefer.
@@ -63,19 +55,5 @@ public class FieldDefinitionsClient extends BaseClient<FieldDefinitionsApi> {
      * @param count Indicates whether the total count of items within a collection are returned in the result. (optional)
      * @param maxPageSize Indicates the maximum number of items to return.
      */
-    public void getFieldDefinitionsForEach(ForEachCallBack<CompletableFuture<ODataValueContextOfIListOfWFieldInfo>> callback, String repoId, String prefer, String culture, String select, String orderby, Integer top, Integer skip, Boolean count, Integer maxPageSize) {
-        // Initial request
-        CompletableFuture<ODataValueContextOfIListOfWFieldInfo> future = getFieldDefinitions(repoId, prefer, culture, select, orderby, top, skip, count, maxPageSize);
-        // Subsequent request based on return value of callback
-        while (callback.apply(future)) {
-            future = future.thenCompose(dataFromLastRequest -> {
-                String nextLink = dataFromLastRequest.getAtOdataNextLink();
-                if (nextLink == null) {
-                    // We are at the end of the data stream
-                    return CompletableFuture.completedFuture(null);
-                }
-                return getFieldDefinitionsNextLink(nextLink, maxPageSize);
-            });
-        }
-    }
+    void getFieldDefinitionsForEach(ForEachCallBack<CompletableFuture<ODataValueContextOfIListOfWFieldInfo>> callback, String repoId, String prefer, String culture, String select, String orderby, Integer top, Integer skip, Boolean count, Integer maxPageSize);
 }

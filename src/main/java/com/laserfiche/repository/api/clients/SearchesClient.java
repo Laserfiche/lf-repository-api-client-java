@@ -1,14 +1,12 @@
 package com.laserfiche.repository.api.clients;
 
-import com.laserfiche.repository.api.BaseClient;
 import com.laserfiche.repository.api.ForEachCallBack;
-import com.laserfiche.repository.api.clients.impl.SearchesApi;
 import com.laserfiche.repository.api.clients.impl.model.*;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-public class SearchesClient extends BaseClient<SearchesApi> {
+public interface SearchesClient {
     /**
      * Cancel or close an advanced search.
      * - Cancels a currently running search. - Closes a completed search.
@@ -16,9 +14,7 @@ public class SearchesClient extends BaseClient<SearchesApi> {
      * @param searchToken The requested searchToken. (required)
      * @return CompletableFuture&lt;ODataValueOfBoolean&gt;
      */
-    public CompletableFuture<ODataValueOfBoolean> cancelOrCloseSearch(String repoId, String searchToken) {
-        return client.cancelOrCloseSearch(repoId, searchToken);
-    }
+    CompletableFuture<ODataValueOfBoolean> cancelOrCloseSearch(String repoId, String searchToken);
 
     /**
      * Run a search in the specified repository.
@@ -27,9 +23,7 @@ public class SearchesClient extends BaseClient<SearchesApi> {
      * @param body The Laserfiche search command to run, optionally include fuzzy search settings. (optional)
      * @return CompletableFuture&lt;AcceptedOperation&gt;
      */
-    public CompletableFuture<AcceptedOperation> createSearchOperation(String repoId, AdvancedSearchRequest body) {
-        return client.createSearchOperation(repoId, body);
-    }
+    CompletableFuture<AcceptedOperation> createSearchOperation(String repoId, AdvancedSearchRequest body);
 
     /**
      *
@@ -46,9 +40,7 @@ public class SearchesClient extends BaseClient<SearchesApi> {
      * @param maxPageSize Indicates the maximum number of items to return.
      * @return CompletableFuture&lt;ODataValueContextOfIListOfContextHit&gt;
      */
-    public CompletableFuture<ODataValueContextOfIListOfContextHit> getSearchContextHits(String repoId, String searchToken, Integer rowNumber, String prefer, String select, String orderby, Integer top, Integer skip, Boolean count, Integer maxPageSize) {
-        return client.getSearchContextHits(repoId, searchToken, rowNumber, mergeMaxPageSizeIntoPrefer(maxPageSize, prefer), select, orderby, top, skip, count);
-    }
+    CompletableFuture<ODataValueContextOfIListOfContextHit> getSearchContextHits(String repoId, String searchToken, Integer rowNumber, String prefer, String select, String orderby, Integer top, Integer skip, Boolean count, Integer maxPageSize);
 
     /**
      * - Returns the context hits associated with a search result entry.
@@ -56,9 +48,7 @@ public class SearchesClient extends BaseClient<SearchesApi> {
      * @param maxPageSize Maximum number of items returned by the backend.
      * @return CompletableFuture&lt;ODataValueContextOfIListOfContextHit&gt;
      */
-    public CompletableFuture<ODataValueContextOfIListOfContextHit> getSearchContextHitsNextLink(String nextLink, Integer maxPageSize) {
-        return client.getSearchContextHitsPaginate(nextLink, mergeMaxPageSizeIntoPrefer(maxPageSize, null));
-    }
+    CompletableFuture<ODataValueContextOfIListOfContextHit> getSearchContextHitsNextLink(String nextLink, Integer maxPageSize);
 
     /**
      *
@@ -75,21 +65,7 @@ public class SearchesClient extends BaseClient<SearchesApi> {
      * @param count Indicates whether the total count of items within a collection are returned in the result. (optional)
      * @param maxPageSize Indicates the maximum number of items to return.
      */
-    public void getSearchContextHitsForEach(ForEachCallBack<CompletableFuture<ODataValueContextOfIListOfContextHit>> callback, String repoId, String searchToken, Integer rowNumber, String prefer, String select, String orderby, Integer top, Integer skip, Boolean count, Integer maxPageSize) {
-        // Initial request
-        CompletableFuture<ODataValueContextOfIListOfContextHit> future = getSearchContextHits(repoId, searchToken, rowNumber, prefer, select, orderby, top, skip, count, maxPageSize);
-        // Subsequent request based on return value of callback
-        while (callback.apply(future)) {
-            future = future.thenCompose(dataFromLastRequest -> {
-                String nextLink = dataFromLastRequest.getAtOdataNextLink();
-                if (nextLink == null) {
-                    // We are at the end of the data stream
-                    return CompletableFuture.completedFuture(null);
-                }
-                return getSearchContextHitsNextLink(nextLink, maxPageSize);
-            });
-        }
-    }
+    void getSearchContextHitsForEach(ForEachCallBack<CompletableFuture<ODataValueContextOfIListOfContextHit>> callback, String repoId, String searchToken, Integer rowNumber, String prefer, String select, String orderby, Integer top, Integer skip, Boolean count, Integer maxPageSize);
 
     /**
      * Get the search results listing of a search.
@@ -110,9 +86,7 @@ public class SearchesClient extends BaseClient<SearchesApi> {
      * @param maxPageSize Indicates the maximum number of items to return.
      * @return CompletableFuture&lt;ODataValueContextOfIListOfEntry&gt;
      */
-    public CompletableFuture<ODataValueContextOfIListOfEntry> getSearchResults(String repoId, String searchToken, Boolean groupByEntryType, Boolean refresh, List<String> fields, Boolean formatFields, String prefer, String culture, String select, String orderby, Integer top, Integer skip, Boolean count, Integer maxPageSize) {
-        return client.getSearchResults(repoId, searchToken, groupByEntryType, refresh, fields, formatFields, mergeMaxPageSizeIntoPrefer(maxPageSize, prefer), culture, select, orderby, top, skip, count);
-    }
+    CompletableFuture<ODataValueContextOfIListOfEntry> getSearchResults(String repoId, String searchToken, Boolean groupByEntryType, Boolean refresh, List<String> fields, Boolean formatFields, String prefer, String culture, String select, String orderby, Integer top, Integer skip, Boolean count, Integer maxPageSize);
 
     /**
      * Get the search results listing of a search.
@@ -121,9 +95,7 @@ public class SearchesClient extends BaseClient<SearchesApi> {
      * @param maxPageSize Maximum number of items returned by the backend.
      * @return CompletableFuture&lt;ODataValueContextOfIListOfEntry&gt;
      */
-    public CompletableFuture<ODataValueContextOfIListOfEntry> getSearchResultsNextLink(String nextLink, Integer maxPageSize) {
-        return client.getSearchResultsPaginate(nextLink, mergeMaxPageSizeIntoPrefer(maxPageSize, null));
-    }
+    CompletableFuture<ODataValueContextOfIListOfEntry> getSearchResultsNextLink(String nextLink, Integer maxPageSize);
 
     /**
      * Get the search results listing of a search.
@@ -144,21 +116,7 @@ public class SearchesClient extends BaseClient<SearchesApi> {
      * @param count Indicates whether the total count of items within a collection are returned in the result. (optional)
      * @param maxPageSize Indicates the maximum number of items to return.
      */
-    public void getSearchResultsForEach(ForEachCallBack<CompletableFuture<ODataValueContextOfIListOfEntry>> callback, String repoId, String searchToken, Boolean groupByEntryType, Boolean refresh, List<String> fields, Boolean formatFields, String prefer, String culture, String select, String orderby, Integer top, Integer skip, Boolean count, Integer maxPageSize) {
-        // Initial request
-        CompletableFuture<ODataValueContextOfIListOfEntry> future = getSearchResults(repoId, searchToken, groupByEntryType, refresh, fields, formatFields, prefer, culture, select, orderby, top, skip, count, maxPageSize);
-        // Subsequent request based on return value of callback
-        while (callback.apply(future)) {
-            future = future.thenCompose(dataFromLastRequest -> {
-                String nextLink = dataFromLastRequest.getAtOdataNextLink();
-                if (nextLink == null) {
-                    // We are at the end of the data stream
-                    return CompletableFuture.completedFuture(null);
-                }
-                return getSearchResultsNextLink(nextLink, maxPageSize);
-            });
-        }
-    }
+    void getSearchResultsForEach(ForEachCallBack<CompletableFuture<ODataValueContextOfIListOfEntry>> callback, String repoId, String searchToken, Boolean groupByEntryType, Boolean refresh, List<String> fields, Boolean formatFields, String prefer, String culture, String select, String orderby, Integer top, Integer skip, Boolean count, Integer maxPageSize);
 
     /**
      * Get the status of a search using a token.
@@ -167,7 +125,5 @@ public class SearchesClient extends BaseClient<SearchesApi> {
      * @param searchToken The requested searchToken. (required)
      * @return CompletableFuture&lt;OperationProgress&gt;
      */
-    public CompletableFuture<OperationProgress> getSearchStatus(String repoId, String searchToken) {
-        return client.getSearchStatus(repoId, searchToken);
-    }
+    CompletableFuture<OperationProgress> getSearchStatus(String repoId, String searchToken);
 }

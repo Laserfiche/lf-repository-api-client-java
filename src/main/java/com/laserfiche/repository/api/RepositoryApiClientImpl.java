@@ -2,10 +2,8 @@ package com.laserfiche.repository.api;
 
 import com.laserfiche.api.client.model.AccessKey;
 import com.laserfiche.repository.api.clients.*;
-import com.laserfiche.repository.api.clients.impl.*;
 import com.laserfiche.repository.api.serialization.GsonCustomConverterFactory;
 import com.laserfiche.repository.api.serialization.RepositoryApiDeserializer;
-import okhttp3.Headers;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
@@ -20,6 +18,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
     private AuditReasonsClient auditReasonsClient;
     private EntriesClient entriesClient;
     private FieldDefinitionsClient fieldDefinitionsClient;
+    private LinkDefinitionsClient linkDefinitionsClient;
     private RepositoriesClient repositoriesClient;
     private SearchesClient searchesClient;
     private SimpleSearchesClient simpleSearchesClient;
@@ -42,24 +41,20 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
                 .addConverterFactory(GsonCustomConverterFactory.create(json.getGson()));
     }
 
-    public static RepositoryApiClientImpl CreateFromAccessKey(String servicePrincipalKey, AccessKey accessKey, String baseUrlDebug) {
+    public static RepositoryApiClient CreateFromAccessKey(String servicePrincipalKey, AccessKey accessKey, String baseUrlDebug) {
         return new RepositoryApiClientImpl(servicePrincipalKey, accessKey, baseUrlDebug);
     }
 
-    public static RepositoryApiClientImpl CreateFromAccessKey(String servicePrincipalKey, AccessKey accessKey) {
+    public static RepositoryApiClient CreateFromAccessKey(String servicePrincipalKey, AccessKey accessKey) {
         return CreateFromAccessKey(servicePrincipalKey, accessKey, null);
-    }
-
-    private <C> C createClient(Class<C> clientInterface) {
-        return clientBuilder.client(okBuilder.build())
-                .build()
-                .create(clientInterface);
     }
 
     private void addDefaultHeaderInterceptor() {
         okBuilder.addInterceptor(chain -> {
             okhttp3.Request.Builder builder = chain.request().newBuilder();
-            defaultHeaders.forEach(builder::addHeader);
+            if (defaultHeaders != null) {
+                defaultHeaders.forEach(builder::addHeader);
+            }
             okhttp3.Request request = builder.build();
             return chain.proceed(request);
         });
@@ -78,8 +73,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
     @Override
     public AttributesClient getAttributesClient() {
         if (attributesClient == null) {
-            attributesClient = new AttributesClient();
-            attributesClient.setClient(createClient(AttributesApi.class));
+            attributesClient = new AttributesClientImpl(clientBuilder, okBuilder);
         }
         return attributesClient;
     }
@@ -87,8 +81,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
     @Override
     public AuditReasonsClient getAuditReasonsClient() {
         if (auditReasonsClient == null) {
-            auditReasonsClient = new AuditReasonsClient();
-            auditReasonsClient.setClient(createClient(AuditReasonsApi.class));
+            auditReasonsClient = new AuditReasonsClientImpl(clientBuilder, okBuilder);
         }
         return auditReasonsClient;
     }
@@ -96,8 +89,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
     @Override
     public EntriesClient getEntriesClient() {
         if (entriesClient == null) {
-            entriesClient = new EntriesClient();
-            entriesClient.setClient(createClient(EntriesApi.class));
+            entriesClient = new EntriesClientImpl(clientBuilder, okBuilder);
         }
         return entriesClient;
     }
@@ -105,17 +97,23 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
     @Override
     public FieldDefinitionsClient getFieldDefinitionsClient() {
         if (fieldDefinitionsClient == null) {
-            fieldDefinitionsClient = new FieldDefinitionsClient();
-            fieldDefinitionsClient.setClient(createClient(FieldDefinitionsApi.class));
+            fieldDefinitionsClient = new FieldDefinitionsClientImpl(clientBuilder, okBuilder);
         }
         return fieldDefinitionsClient;
     }
 
     @Override
+    public LinkDefinitionsClient getLinkDefinitionsClient() {
+        if (linkDefinitionsClient == null) {
+            linkDefinitionsClient = new LinkDefinitionsClientImpl(clientBuilder, okBuilder);
+        }
+        return linkDefinitionsClient;
+    }
+
+    @Override
     public RepositoriesClient getRepositoryClient() {
         if (repositoriesClient == null) {
-            repositoriesClient = new RepositoriesClient();
-            repositoriesClient.setClient(createClient(RepositoriesApi.class));
+            repositoriesClient = new RepositoriesClientImpl(clientBuilder, okBuilder);
         }
         return repositoriesClient;
     }
@@ -123,8 +121,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
     @Override
     public SearchesClient getSearchesClient() {
         if (searchesClient == null) {
-            searchesClient = new SearchesClient();
-            searchesClient.setClient(createClient(SearchesApi.class));
+            searchesClient = new SearchesClientImpl(clientBuilder, okBuilder);
         }
         return searchesClient;
     }
@@ -132,8 +129,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
     @Override
     public SimpleSearchesClient getSimpleSearchesClient() {
         if (simpleSearchesClient == null) {
-            simpleSearchesClient = new SimpleSearchesClient();
-            simpleSearchesClient.setClient(createClient(SimpleSearchesApi.class));
+            simpleSearchesClient = new SimpleSearchesClientImpl(clientBuilder, okBuilder);
         }
         return simpleSearchesClient;
     }
@@ -141,8 +137,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
     @Override
     public TagDefinitionsClient getTagDefinitionsClient() {
         if (tagDefinitionsClient == null) {
-            tagDefinitionsClient = new TagDefinitionsClient();
-            tagDefinitionsClient.setClient(createClient(TagDefinitionsApi.class));
+            tagDefinitionsClient = new TagDefinitionsClientImpl(clientBuilder, okBuilder);
         }
         return tagDefinitionsClient;
     }
@@ -150,8 +145,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
     @Override
     public TasksClient getTasksClient() {
         if (tasksClient == null) {
-            tasksClient = new TasksClient();
-            tasksClient.setClient(createClient(TasksApi.class));
+            tasksClient = new TasksClientImpl(clientBuilder, okBuilder);
         }
         return tasksClient;
     }
@@ -159,8 +153,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
     @Override
     public TemplateDefinitionsClient getTemplateDefinitionClient() {
         if (templateDefinitionsClient == null) {
-            templateDefinitionsClient = new TemplateDefinitionsClient();
-            templateDefinitionsClient.setClient(createClient(TemplateDefinitionsApi.class));
+            templateDefinitionsClient = new TemplateDefinitionsClientImpl(clientBuilder, okBuilder);
         }
         return templateDefinitionsClient;
     }

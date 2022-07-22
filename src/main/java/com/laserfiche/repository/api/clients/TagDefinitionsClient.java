@@ -1,14 +1,12 @@
 package com.laserfiche.repository.api.clients;
 
-import com.laserfiche.repository.api.BaseClient;
 import com.laserfiche.repository.api.ForEachCallBack;
-import com.laserfiche.repository.api.clients.impl.TagDefinitionsApi;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfWTagInfo;
 import com.laserfiche.repository.api.clients.impl.model.WTagInfo;
 
 import java.util.concurrent.CompletableFuture;
 
-public class TagDefinitionsClient extends BaseClient<TagDefinitionsApi> {
+public interface TagDefinitionsClient {
     /**
      *
      * - Returns a single tag definition. - Provide a tag definition ID, and get the single tag definition associated with that ID. Useful when another route provides a minimal amount of details, and more information about the specific tag is needed. - Allowed OData query options: Select
@@ -18,9 +16,7 @@ public class TagDefinitionsClient extends BaseClient<TagDefinitionsApi> {
      * @param select Limits the properties returned in the result. (optional)
      * @return CompletableFuture&lt;WTagInfo&gt;
      */
-    public CompletableFuture<WTagInfo> getTagDefinitionById(String repoId, Integer tagId, String culture, String select) {
-        return client.getTagDefinitionById(repoId, tagId, culture, select);
-    }
+    CompletableFuture<WTagInfo> getTagDefinitionById(String repoId, Integer tagId, String culture, String select);
 
     /**
      *
@@ -36,9 +32,7 @@ public class TagDefinitionsClient extends BaseClient<TagDefinitionsApi> {
      * @param maxPageSize Indicates the maximum number of items to return.
      * @return CompletableFuture&lt;ODataValueContextOfIListOfWTagInfo&gt;
      */
-    public CompletableFuture<ODataValueContextOfIListOfWTagInfo> getTagDefinitions(String repoId, String prefer, String culture, String select, String orderby, Integer top, Integer skip, Boolean count, Integer maxPageSize) {
-        return client.getTagDefinitions(repoId, mergeMaxPageSizeIntoPrefer(maxPageSize, prefer), culture, select, orderby, top, skip, count);
-    }
+    CompletableFuture<ODataValueContextOfIListOfWTagInfo> getTagDefinitions(String repoId, String prefer, String culture, String select, String orderby, Integer top, Integer skip, Boolean count, Integer maxPageSize);
 
     /**
      * - Returns all tag definitions in the repository.
@@ -46,9 +40,7 @@ public class TagDefinitionsClient extends BaseClient<TagDefinitionsApi> {
      * @param maxPageSize Maximum number of items returned by the backend.
      * @return CompletableFuture&lt;ODataValueContextOfIListOfWTagInfo&gt;
      */
-    public CompletableFuture<ODataValueContextOfIListOfWTagInfo> getTagDefinitionsNextLink(String nextLink, Integer maxPageSize) {
-        return client.getTagDefinitionsPaginate(nextLink, mergeMaxPageSizeIntoPrefer(maxPageSize, null));
-    }
+    CompletableFuture<ODataValueContextOfIListOfWTagInfo> getTagDefinitionsNextLink(String nextLink, Integer maxPageSize);
 
     /**
      *
@@ -64,19 +56,5 @@ public class TagDefinitionsClient extends BaseClient<TagDefinitionsApi> {
      * @param count Indicates whether the total count of items within a collection are returned in the result. (optional)
      * @param maxPageSize Indicates the maximum number of items to return.
      */
-    public void getTrusteeAttributeKeyValuePairsForEach(ForEachCallBack<CompletableFuture<ODataValueContextOfIListOfWTagInfo>> callback, String repoId, String prefer, String culture, String select, String orderby, Integer top, Integer skip, Boolean count, Integer maxPageSize) {
-        // Initial request
-        CompletableFuture<ODataValueContextOfIListOfWTagInfo> future = getTagDefinitions(repoId, prefer, culture, select, orderby, top, skip, count, maxPageSize);
-        // Subsequent request based on return value of callback
-        while (callback.apply(future)) {
-            future = future.thenCompose(dataFromLastRequest -> {
-                String nextLink = dataFromLastRequest.getAtOdataNextLink();
-                if (nextLink == null) {
-                    // We are at the end of the data stream
-                    return CompletableFuture.completedFuture(null);
-                }
-                return getTagDefinitionsNextLink(nextLink, maxPageSize);
-            });
-        }
-    }
+    void getTrusteeAttributeKeyValuePairsForEach(ForEachCallBack<CompletableFuture<ODataValueContextOfIListOfWTagInfo>> callback, String repoId, String prefer, String culture, String select, String orderby, Integer top, Integer skip, Boolean count, Integer maxPageSize);
 }
