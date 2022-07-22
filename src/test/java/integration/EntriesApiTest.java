@@ -3,15 +3,9 @@ package integration;
 import com.laserfiche.repository.api.RepositoryApiClient;
 import com.laserfiche.repository.api.clients.EntriesClient;
 import com.laserfiche.repository.api.clients.impl.model.*;
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
-import okio.BufferedSink;
-import okio.Okio;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -203,34 +197,5 @@ class EntriesApiTest extends BaseTest {
         request.setTemplateId(templateDefinitions.get(0).getId());
         CompletableFuture<Map<String, List<String>>> dynamicFieldValueResponse = client.getDynamicFieldValues(repoId, 1, request);
         assertNotNull(dynamicFieldValueResponse.join());
-    }
-
-    @Test
-    void importDocument_Success() throws IOException {
-        String fileName = "RepositoryApiClientIntegrationTest Java ImportDocument";
-        PostEntryWithEdocMetadataRequest request = new PostEntryWithEdocMetadataRequest();
-        RequestBody electronicDocument = new RequestBody() {
-            @Override
-            public MediaType contentType() {
-                return null;
-            }
-
-            @Override
-            public void writeTo(BufferedSink bufferedSink) throws IOException {
-
-            }
-        };
-        File file = new File("test.pdf");
-        BufferedSink writer = Okio.buffer(Okio.sink(file));
-        electronicDocument.writeTo(writer);
-
-        CompletableFuture<CreateEntryResult> importDocumentResponse = client.importDocument(repoId, 1, fileName, electronicDocument, request, true, null);
-        CreateEntryOperations operations = importDocumentResponse.join().getOperations();
-        assertNotNull(operations);
-        assertTrue(operations.getEntryCreate().getExceptions().size() == 0);
-        assertTrue(!operations.getEntryCreate().getEntryId().equals(0));
-        assertTrue(operations.getSetEdoc().getExceptions().size() == 0);
-        assertTrue(importDocumentResponse.join().getDocumentLink() != null);
-
     }
 }

@@ -109,7 +109,6 @@ public class SearchApiTest extends BaseTest {
     }
 
     @Test
-    @Disabled("Weird Exception Thrown")
     void getSearchStatus_Success() throws InterruptedException {
         AdvancedSearchRequest request = new AdvancedSearchRequest();
         request.setSearchCommand("({LF:Basic ~= \"search text\", option=\"DFANLT\"})");
