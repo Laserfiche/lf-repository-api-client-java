@@ -2,16 +2,17 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.laserfiche</groupId>
-  <artifactId>lf-repository-api-client-java</artifactId>
+  <artifactId>lf-repository-api-client</artifactId>
   <packaging>jar</packaging>
-  <name>Laserfiche Repository API Client Java</name>
+  <name>Laserfiche Repository API Client</name>
   <version>1.0.0</version>
-  <url>https://github.com/swagger-api/swagger-codegen</url>
-  <description>Swagger Java</description>
+  <url>https://github.com/Laserfiche/lf-repository-api-client-java</url>
+  <description>Java implementation of various foundational APIs for Laserfiche, including Repository APIs such as
+    Entry API flows for secure and easy access to Laserfiche Repository Entries.</description>
   <scm>
-    <connection>scm:git:git@github.com:swagger-api/swagger-codegen.git</connection>
-    <developerConnection>scm:git:git@github.com:swagger-api/swagger-codegen.git</developerConnection>
-    <url>https://github.com/swagger-api/swagger-codegen</url>
+    <connection>scm:git:git://github.com/Laserfiche/lf-repository-api-client-java.git</connection>
+    <developerConnection>scm:git:ssh://github.com:Laserfiche/lf-repository-api-client-java.git</developerConnection>
+    <url>https://github.com/Laserfiche/lf-repository-api-client-java</url>
   </scm>
   <prerequisites>
     <maven>2.2.0</maven>
@@ -19,20 +20,37 @@
 
   <licenses>
     <license>
-      <name>MIT License</name>
-      <url>http://www.opensource.org/licenses/mit-license.php</url>
+      <name>MIT</name>
+      <url>https://opensource.org/licenses/MIT</url>
       <distribution>repo</distribution>
     </license>
   </licenses>
 
   <developers>
     <developer>
-      <name>Swagger</name>
-      <email>apiteam@swagger.io</email>
-      <organization>Swagger</organization>
-      <organizationUrl>http://swagger.io</organizationUrl>
+      <name>Jason Jia</name>
+      <email>jason.jia@laserfiche.com</email>
+      <organization>Laserfiche</organization>
+      <organizationUrl>https://www.laserfiche.com/</organizationUrl>
+    </developer>
+    <developer>
+      <name>Steven Xu</name>
+      <email>steven.xu@laserfiche.com</email>
+      <organization>Laserfiche</organization>
+      <organizationUrl>https://www.laserfiche.com/</organizationUrl>
     </developer>
   </developers>
+
+  <distributionManagement>
+    <snapshotRepository>
+      <id>ossrh</id>
+      <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+    </snapshotRepository>
+    <repository>
+      <id>ossrh</id>
+      <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+    </repository>
+  </distributionManagement>
 
   <repositories>
     <repository>
@@ -50,6 +68,17 @@
 
   <build>
     <plugins>
+      <plugin>
+        <groupId>org.sonatype.plugins</groupId>
+        <artifactId>nexus-staging-maven-plugin</artifactId>
+        <version>1.6.7</version>
+        <extensions>true</extensions>
+        <configuration>
+          <serverId>ossrh</serverId>
+          <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
+          <autoReleaseAfterClose>true</autoReleaseAfterClose>
+        </configuration>
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
@@ -141,6 +170,26 @@
             </goals>
           </execution>
         </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-gpg-plugin</artifactId>
+        <version>1.5</version>
+        <executions>
+          <execution>
+            <id>sign-artifacts</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>sign</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <gpgArguments>
+            <arg>--pinentry-mode</arg>
+            <arg>loopback</arg>
+          </gpgArguments>
+        </configuration>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
