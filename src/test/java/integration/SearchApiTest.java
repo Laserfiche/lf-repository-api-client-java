@@ -33,9 +33,11 @@ public class SearchApiTest extends BaseTest {
     }
 
     @Test
+    @Disabled("flaky test case")
     void getSearchContextHits_Success() throws InterruptedException {
         AdvancedSearchRequest request = new AdvancedSearchRequest();
         request.setSearchCommand("({LF:Basic ~= \"*\", option=\"DFANLT\"})");
+        request.setFuzzyFactor(2);
         CompletableFuture<AcceptedOperation> searchResponse = client.createSearchOperation(repoId, request);
         searchToken = searchResponse.join().getToken();
         assertNotNull(searchToken);
