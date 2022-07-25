@@ -14,12 +14,12 @@ class TagDefinitionsApiTest extends BaseTest {
 
     private final int maxPageSize = 1;
 
-    @BeforeAll
+    @BeforeEach
     void PerTestSetup() {
         client = repositoryApiClient.getTagDefinitionsClient();
     }
 
-    @AfterAll
+    @AfterEach
     void resetClient_Success() {
         client = null;
     }

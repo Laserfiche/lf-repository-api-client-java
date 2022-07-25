@@ -16,12 +16,12 @@ class TemplateDefinitionsApiTest extends BaseTest {
 
     private final int maxPageSize = 1;
 
-    @BeforeAll
+    @BeforeEach
     void PerTestSetup() {
         client = repositoryApiClient.getTemplateDefinitionClient();
     }
 
-    @AfterAll
+    @AfterEach
     void resetClient_Success() {
         client = null;
     }

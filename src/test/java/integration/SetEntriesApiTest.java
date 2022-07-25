@@ -32,11 +32,6 @@ public class SetEntriesApiTest extends BaseTest {
         }
     }
 
-    @AfterAll
-    void resetClient_Success() {
-        client = null;
-    }
-
     @Test
     void setTags_Success() {
         CompletableFuture<ODataValueContextOfIListOfWTagInfo> tagDefinitionsResponse = repositoryApiClient.getTagDefinitionsClient().getTagDefinitions(repoId, null, null, null, null, null, null, null, null);
