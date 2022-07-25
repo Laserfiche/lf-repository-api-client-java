@@ -30,7 +30,6 @@ public class SearchApiTest extends BaseTest {
     }
 
     @Test
-    @Disabled("flaky test case")
     void getSearchContextHits_Success() throws InterruptedException {
         AdvancedSearchRequest request = new AdvancedSearchRequest();
         request.setSearchCommand("({LF:Basic ~= \"*\", option=\"DFANLT\"})");
@@ -49,7 +48,6 @@ public class SearchApiTest extends BaseTest {
     }
 
     @Test
-    @Disabled("flaky test case")
     void getSearchResults_Success() throws InterruptedException {
         AdvancedSearchRequest request = new AdvancedSearchRequest();
         request.setSearchCommand("({LF:Basic ~= \"search text\", option=\"DFANLT\"})");
@@ -62,7 +60,6 @@ public class SearchApiTest extends BaseTest {
     }
 
     @Test
-    @Disabled("flaky test case")
     void getSearchResultsForEach_Success() throws InterruptedException {
         AdvancedSearchRequest searchRequest = new AdvancedSearchRequest();
         searchRequest.setSearchCommand("({LF:Basic ~= \"search text\", option=\"DFANLT\"})");
@@ -110,7 +107,6 @@ public class SearchApiTest extends BaseTest {
     }
 
     @Test
-    @Disabled("flaky test case")
     void getSearchStatus_Success() throws InterruptedException {
         AdvancedSearchRequest request = new AdvancedSearchRequest();
         request.setSearchCommand("({LF:Basic ~= \"search text\", option=\"DFANLT\"})");
@@ -123,7 +119,6 @@ public class SearchApiTest extends BaseTest {
     }
 
     @Test
-    @Disabled("flaky test case")
     void closeSearchOperations_Success() {
         AdvancedSearchRequest request = new AdvancedSearchRequest();
         request.setSearchCommand("({LF:Basic ~= \"search text\", option=\"DFANLT\"})");
@@ -135,7 +130,6 @@ public class SearchApiTest extends BaseTest {
     }
 
     @Test
-    @Disabled("flaky test case")
     void getSearchResultNextLink_Success() throws InterruptedException {
         AdvancedSearchRequest searchRequest = new AdvancedSearchRequest();
         searchRequest.setSearchCommand("({LF:Basic ~= \"search text\", option=\"DFANLT\"})");
