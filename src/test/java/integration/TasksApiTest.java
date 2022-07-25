@@ -3,6 +3,7 @@ package integration;
 import com.laserfiche.repository.api.RepositoryApiClient;
 import com.laserfiche.repository.api.clients.TasksClient;
 import com.laserfiche.repository.api.clients.impl.model.*;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,6 +21,11 @@ public class TasksApiTest extends BaseTest {
     void PerTestSetup() {
         client = repositoryApiClient.getTasksClient();
         createEntryClient = repositoryApiClient;
+    }
+
+    @AfterEach
+    void resetClient_Success() {
+        client = null;
     }
 
     @Test

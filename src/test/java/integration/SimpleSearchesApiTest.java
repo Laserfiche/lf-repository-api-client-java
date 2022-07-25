@@ -17,7 +17,7 @@ class SimpleSearchesApiTest extends BaseTest {
         searchRequest.setSearchCommand("({LF:Basic ~= \"search text\", option=\"DFANLT\"})");
         CompletableFuture<ODataValueOfIListOfEntry> future = client.createSimpleSearchOperation(repoId, searchRequest, null, null, null, null, null, false);
         ODataValueOfIListOfEntry entryList = future.join();
-
         assertNotNull(entryList);
+        client = null;
     }
 }

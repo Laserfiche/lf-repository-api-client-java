@@ -15,7 +15,7 @@ class RepositoriesApiTest extends BaseTest {
         RepositoriesClient client = repositoryApiClient.getRepositoryClient();
         CompletableFuture<List<RepositoryInfo>> future = client.getRepositoryList();
         List<RepositoryInfo> repositoryInfoList = future.join();
-
         assertNotNull(repositoryInfoList);
+        client = null;
     }
 }

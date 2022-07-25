@@ -3,6 +3,7 @@ package integration;
 import com.laserfiche.repository.api.RepositoryApiClient;
 import com.laserfiche.repository.api.clients.EntriesClient;
 import com.laserfiche.repository.api.clients.impl.model.*;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -19,9 +20,14 @@ class EntriesApiTest extends BaseTest {
     RepositoryApiClient createEntryClient;
 
     @BeforeEach
-    public void PerTestSetup() {
+    void PerTestSetup() {
         client = repositoryApiClient.getEntriesClient();
         createEntryClient = repositoryApiClient;
+    }
+
+    @AfterEach
+    void resetClient_Success() {
+        client = null;
     }
 
     @Test

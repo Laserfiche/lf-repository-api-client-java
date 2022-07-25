@@ -3,6 +3,7 @@ package integration;
 import com.laserfiche.repository.api.clients.AttributesClient;
 import com.laserfiche.repository.api.clients.impl.model.Attribute;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfListOfAttribute;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,6 +19,11 @@ class AttributesApiTest extends BaseTest {
     @BeforeEach
     void PerTestSetup() {
         client = repositoryApiClient.getAttributesClient();
+    }
+
+    @AfterEach
+    void resetClient_Success() {
+        client = null;
     }
 
     @Test

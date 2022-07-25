@@ -36,6 +36,7 @@ public class ImportDocumentApiTest extends BaseTest {
             DeleteEntryWithAuditReason body = new DeleteEntryWithAuditReason();
             client.deleteEntryInfo(repoId, createdEntryId, body);
         }
+        client = null;
     }
 
     @Test

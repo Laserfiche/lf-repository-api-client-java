@@ -3,6 +3,7 @@ package integration;
 import com.laserfiche.repository.api.clients.TagDefinitionsClient;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfWTagInfo;
 import com.laserfiche.repository.api.clients.impl.model.WTagInfo;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,6 +19,11 @@ class TagDefinitionsApiTest extends BaseTest {
     @BeforeEach
     void PerTestSetup() {
         client = repositoryApiClient.getTagDefinitionsClient();
+    }
+
+    @AfterEach
+    void resetClient_Success() {
+        client = null;
     }
 
     @Test

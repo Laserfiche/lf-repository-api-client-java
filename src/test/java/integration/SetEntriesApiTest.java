@@ -2,6 +2,7 @@ package integration;
 
 import com.laserfiche.repository.api.RepositoryApiClient;
 import com.laserfiche.repository.api.clients.impl.model.*;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
@@ -29,6 +30,11 @@ public class SetEntriesApiTest extends BaseTest {
             Integer num = entry.join().getId();
             repositoryApiClient.getEntriesClient().deleteEntryInfo(repoId, num, body);
         }
+    }
+
+    @AfterAll
+    void resetClient_Success() {
+        client = null;
     }
 
     @Test
