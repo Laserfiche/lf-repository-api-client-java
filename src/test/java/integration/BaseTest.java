@@ -52,7 +52,7 @@ public class BaseTest {
 
         accessKey = gson.fromJson(accessKeyStr, AccessKey.class);
 
-        testHeaders = new HashMap<String, String>();
+        testHeaders = new HashMap<>();
         testHeaders.put(testHeaderValue, "true");
         repositoryApiClient = RepositoryApiClientImpl.CreateFromAccessKey(spKey, accessKey);
         repositoryApiClient.setDefaultRequestHeaders(testHeaders);
