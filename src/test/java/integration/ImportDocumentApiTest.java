@@ -34,7 +34,7 @@ public class ImportDocumentApiTest extends BaseTest {
     public void deleteEntries() {
         if (createdEntryId != 0) {
             DeleteEntryWithAuditReason body = new DeleteEntryWithAuditReason();
-            client.deleteEntryInfo(repoId, createdEntryId, body);
+            client.deleteEntryInfo(repoId, createdEntryId, body).join();
         }
     }
 

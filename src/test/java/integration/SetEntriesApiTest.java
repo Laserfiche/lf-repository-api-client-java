@@ -13,8 +13,7 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class SetEntriesApiTest extends BaseTest {
     RepositoryApiClient client = repositoryApiClient;
@@ -28,8 +27,9 @@ public class SetEntriesApiTest extends BaseTest {
         if (entry != null) {
             DeleteEntryWithAuditReason body = new DeleteEntryWithAuditReason();
             Integer num = entry.join().getId();
-            repositoryApiClient.getEntriesClient().deleteEntryInfo(repoId, num, body);
+            repositoryApiClient.getEntriesClient().deleteEntryInfo(repoId, num, body).join();
         }
+        entry = null;
     }
 
     @Test
@@ -46,7 +46,7 @@ public class SetEntriesApiTest extends BaseTest {
         CompletableFuture<ODataValueOfIListOfWTagInfo> assignTagsResponse = repositoryApiClient.getEntriesClient().assignTags(repoId, num, request);
         List<WTagInfo> tags = assignTagsResponse.join().getValue();
         assertNotNull(tags);
-        assertTrue(tags.get(0).getName().equals(tag));
+        assertEquals(tags.get(0).getName(), tag);
     }
 
     @Test
@@ -56,10 +56,10 @@ public class SetEntriesApiTest extends BaseTest {
         List<WTemplateInfo> templateDefinitions = templateDefinitionsResponse.join().getValue();
         assertNotNull(templateDefinitions);
         assertTrue(templateDefinitions.size() > 0);
-        for (int i = 0; i < templateDefinitions.size(); i++) {
-            CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo> templateDefinitionsFieldsResponse = repositoryApiClient.getTemplateDefinitionClient().getTemplateFieldDefinitions(repoId, templateDefinitions.get(i).getId(), null, null, null, null, null, null, null, null);
+        for (WTemplateInfo templateDefinition : templateDefinitions) {
+            CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo> templateDefinitionsFieldsResponse = repositoryApiClient.getTemplateDefinitionClient().getTemplateFieldDefinitions(repoId, templateDefinition.getId(), null, null, null, null, null, null, null, null);
             if (templateDefinitionsFieldsResponse.join().getValue() != null && allFalse(templateDefinitionsFieldsResponse.join().getValue()).get()) {
-                template = templateDefinitions.get(i);
+                template = templateDefinition;
                 break;
             }
         }
@@ -69,7 +69,7 @@ public class SetEntriesApiTest extends BaseTest {
         entry = createEntry(client, "RepositoryApiClientIntegrationTest Java DeleteTemplate", 1, true);
         CompletableFuture<Entry> setTemplateResponse = repositoryApiClient.getEntriesClient().writeTemplateValueToEntry(repoId, entry.get().getId(), request, null);
         assertNotNull(setTemplateResponse.join());
-        assertTrue(setTemplateResponse.join().getTemplateName().equals(template.getName()));
+        assertEquals(setTemplateResponse.join().getTemplateName(), template.getName());
     }
 
     @Test
@@ -78,9 +78,9 @@ public class SetEntriesApiTest extends BaseTest {
         String fieldValue = "a";
         CompletableFuture<ODataValueContextOfIListOfWFieldInfo> fieldDefinitionsResponse = repositoryApiClient.getFieldDefinitionsClient().getFieldDefinitions(repoId, null, null, null, null, null, null, null, null);
         List<WFieldInfo> fieldDefinitions = fieldDefinitionsResponse.join().getValue();
-        for (int i = 0; i < fieldDefinitions.size(); i++) {
-            if (fieldDefinitions.get(i).getFieldType() == WFieldType.STRING && (fieldDefinitions.get(i).getConstraint().equals("") || fieldDefinitions.get(i).getConstraint().equals(null)) && (fieldDefinitions.get(i).getLength() >= 1)) {
-                field = fieldDefinitions.get(i);
+        for (WFieldInfo fieldDefinition : fieldDefinitions) {
+            if (fieldDefinition.getFieldType() == WFieldType.STRING && (fieldDefinition.getConstraint().equals("") || fieldDefinition.getConstraint() == null) && (fieldDefinition.getLength() >= 1)) {
+                field = fieldDefinition;
                 break;
             }
         }
@@ -99,8 +99,8 @@ public class SetEntriesApiTest extends BaseTest {
         CompletableFuture<ODataValueOfIListOfFieldValue> assignFieldValuesResponse = repositoryApiClient.getEntriesClient().assignFieldValues(repoId, num, requestBody, null);
         List<FieldValue> fields = assignFieldValuesResponse.join().getValue();
         assertNotNull(fields);
-        assertTrue(fields.size() == 1);
-        assertTrue(fields.get(0).getFieldName().equals(field.getName()));
+        assertEquals(1, fields.size());
+        assertEquals(fields.get(0).getFieldName(), field.getName());
     }
 
     @Test
@@ -110,10 +110,10 @@ public class SetEntriesApiTest extends BaseTest {
         List<WTemplateInfo> templateDefinitions = templateDefinitionsResponse.join().getValue();
         assertNotNull(templateDefinitions);
         assertTrue(templateDefinitions.size() > 0);
-        for (int i = 0; i < templateDefinitions.size(); i++) {
-            CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo> templateDefinitionsFieldsResponse = client.getTemplateDefinitionClient().getTemplateFieldDefinitions(repoId, templateDefinitions.get(i).getId(), null, null, null, null, null, null, null, null);
+        for (WTemplateInfo templateDefinition : templateDefinitions) {
+            CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo> templateDefinitionsFieldsResponse = client.getTemplateDefinitionClient().getTemplateFieldDefinitions(repoId, templateDefinition.getId(), null, null, null, null, null, null, null, null);
             if (templateDefinitionsFieldsResponse.join().getValue() != null && allFalse(templateDefinitionsFieldsResponse.join().getValue()).get()) {
-                template = templateDefinitions.get(i);
+                template = templateDefinition;
                 break;
             }
         }
@@ -123,6 +123,6 @@ public class SetEntriesApiTest extends BaseTest {
         entry = createEntry(createEntryClient, "RepositoryApiClientIntegrationTest Java DeleteTemplate", 1, true);
         CompletableFuture<Entry> writeTemplateValueToEntryResponse = client.getEntriesClient().writeTemplateValueToEntry(repoId, entry.join().getId(), request, null);
         assertNotNull(writeTemplateValueToEntryResponse);
-        assertTrue(writeTemplateValueToEntryResponse.join().getTemplateName().equals(template.getName()));
+        assertEquals(writeTemplateValueToEntryResponse.join().getTemplateName(), template.getName());
     }
 }
