@@ -54,9 +54,8 @@ public class BaseTest {
 
         testHeaders = new HashMap<String, String>();
         testHeaders.put('"' + testHeaderValue + '"', "true");
-
-        repositoryApiClient = RepositoryApiClientImpl.CreateFromAccessKey(spKey, accessKey);
         repositoryApiClient.setDefaultRequestHeaders(testHeaders);
+        repositoryApiClient = RepositoryApiClientImpl.CreateFromAccessKey(spKey, accessKey);
     }
 
     private static String decodeBase64(String encoded) {
