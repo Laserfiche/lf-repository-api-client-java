@@ -15,11 +15,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class EntriesApiTest extends BaseTest {
     EntriesClient client;
-
     private final int maxPageSize = 1;
-
     RepositoryApiClient createEntryClient;
-
 
     @BeforeEach
     public void PerTestSetup() {
