@@ -31,7 +31,7 @@ public class BaseTest {
         spKey = System.getenv("SERVICE_PRINCIPAL_KEY");
         String accessKeyBase64 = System.getenv("ACCESS_KEY");
         repoId = System.getenv("REPOSITORY_ID");
-        String testHeaderValue= System.getenv("TEST_HEADER");
+        String testHeaderValue = System.getenv("TEST_HEADER");
         if (spKey == null && accessKeyBase64 == null && repoId == null && testHeaderValue == null) {
             // Load environment variables
             Dotenv dotenv = Dotenv
@@ -54,7 +54,6 @@ public class BaseTest {
 
         testHeaders = new HashMap<>();
         testHeaders.put(testHeaderValue, "true");
-
         repositoryApiClient = RepositoryApiClientImpl.CreateFromAccessKey(spKey, accessKey);
         repositoryApiClient.setDefaultRequestHeaders(testHeaders);
     }

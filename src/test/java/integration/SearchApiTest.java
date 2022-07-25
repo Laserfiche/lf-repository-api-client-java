@@ -2,10 +2,7 @@ package integration;
 
 import com.laserfiche.repository.api.clients.SearchesClient;
 import com.laserfiche.repository.api.clients.impl.model.*;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
@@ -36,6 +33,7 @@ public class SearchApiTest extends BaseTest {
     void getSearchContextHits_Success() throws InterruptedException {
         AdvancedSearchRequest request = new AdvancedSearchRequest();
         request.setSearchCommand("({LF:Basic ~= \"*\", option=\"DFANLT\"})");
+        request.setFuzzyFactor(2);
         CompletableFuture<AcceptedOperation> searchResponse = client.createSearchOperation(repoId, request);
         searchToken = searchResponse.join().getToken();
         assertNotNull(searchToken);
