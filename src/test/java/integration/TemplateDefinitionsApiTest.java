@@ -21,11 +21,6 @@ class TemplateDefinitionsApiTest extends BaseTest {
         client = repositoryApiClient.getTemplateDefinitionClient();
     }
 
-    @AfterEach
-    void resetClient_Success() {
-        client = null;
-    }
-
     @Test
     void getTemplateDefinitions_Success() {
         CompletableFuture<ODataValueContextOfIListOfWTemplateInfo> future = client.getTemplateDefinitions(repoId, null, null, null, null, null, null, null, false, null);

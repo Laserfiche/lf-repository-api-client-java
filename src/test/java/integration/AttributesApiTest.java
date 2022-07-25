@@ -19,11 +19,6 @@ class AttributesApiTest extends BaseTest {
         client = repositoryApiClient.getAttributesClient();
     }
 
-    @AfterEach
-    void resetClient_Success() {
-        client = null;
-    }
-
     @Test
     void getTrusteeAttributeKeyValuePairs_Success() {
         CompletableFuture<ODataValueContextOfListOfAttribute> future = client.getTrusteeAttributeKeyValuePairs(repoId, true, null, null, null, null, null, false, null);

@@ -23,11 +23,6 @@ public class TasksApiTest extends BaseTest {
         createEntryClient = repositoryApiClient;
     }
 
-    @AfterEach
-    void resetClient_Success() {
-        client = null;
-    }
-
     @Test
     void cancelOperation_Success() throws InterruptedException {
         CompletableFuture<Entry> deleteEntry = createEntry(createEntryClient, "RepositoryApiClientIntegrationTest Java CancelOperation", 1, true);

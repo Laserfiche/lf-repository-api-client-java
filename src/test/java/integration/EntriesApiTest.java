@@ -25,11 +25,6 @@ class EntriesApiTest extends BaseTest {
         createEntryClient = repositoryApiClient;
     }
 
-    @AfterEach
-    void resetClient_Success() {
-        client = null;
-    }
-
     @Test
     void getEntry_Success() {
         CompletableFuture<Entry> future = client.getEntry(repoId, 1, null);

@@ -18,6 +18,5 @@ class SimpleSearchesApiTest extends BaseTest {
         CompletableFuture<ODataValueOfIListOfEntry> future = client.createSimpleSearchOperation(repoId, searchRequest, null, null, null, null, null, false);
         ODataValueOfIListOfEntry entryList = future.join();
         assertNotNull(entryList);
-        client = null;
     }
 }

@@ -15,6 +15,5 @@ class AuditReasonsApiTest extends BaseTest {
         CompletableFuture<AuditReasons> future = client.getAuditReasons(repoId);
         AuditReasons reasons = future.join();
         assertNotNull(reasons);
-        client = null;
     }
 }

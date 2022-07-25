@@ -37,7 +37,6 @@ public class CreateCopyEntryApiTest extends BaseTest {
             }
         }
         createdEntries.clear();
-        client = null;
     }
 
     @Test

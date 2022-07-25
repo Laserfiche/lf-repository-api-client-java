@@ -63,6 +63,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
     @Override
     public void setDefaultRequestHeaders(Map<String, String> defaultRequestHeaders) {
         defaultHeaders = defaultRequestHeaders;
+        okBuilder.addInterceptor(chain -> chain.proceed(chain.request().newBuilder().addHeader(String.valueOf(defaultHeaders.keySet()), "true").build()));
     }
 
     @Override

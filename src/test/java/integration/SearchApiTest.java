@@ -27,7 +27,6 @@ public class SearchApiTest extends BaseTest {
         if (searchToken != null) {
             client.cancelOrCloseSearch(repoId, searchToken);
         }
-        client = null;
     }
 
     @Test

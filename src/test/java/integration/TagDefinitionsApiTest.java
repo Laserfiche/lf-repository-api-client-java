@@ -19,11 +19,6 @@ class TagDefinitionsApiTest extends BaseTest {
         client = repositoryApiClient.getTagDefinitionsClient();
     }
 
-    @AfterEach
-    void resetClient_Success() {
-        client = null;
-    }
-
     @Test
     void getTagDefinitions_Success() {
         CompletableFuture<ODataValueContextOfIListOfWTagInfo> future = client.getTagDefinitions(repoId, null, null, null, null, null, null, false, null);

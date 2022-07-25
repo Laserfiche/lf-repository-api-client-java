@@ -19,11 +19,6 @@ class FieldDefinitionsApiTest extends BaseTest {
         client = repositoryApiClient.getFieldDefinitionsClient();
     }
 
-    @AfterEach
-    void resetClient_Success() {
-        client = null;
-    }
-
     @Test
     void getFieldDefinitionById_Success() {
         CompletableFuture<WFieldInfo> future = client.getFieldDefinitionById(repoId, 1, null, null);
