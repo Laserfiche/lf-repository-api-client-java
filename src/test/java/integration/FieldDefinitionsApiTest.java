@@ -3,9 +3,7 @@ package integration;
 import com.laserfiche.repository.api.clients.FieldDefinitionsClient;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfWFieldInfo;
 import com.laserfiche.repository.api.clients.impl.model.WFieldInfo;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -16,12 +14,12 @@ class FieldDefinitionsApiTest extends BaseTest {
 
     private final int maxPageSize = 1;
 
-    @BeforeEach
+    @BeforeAll
     void PerTestSetup() {
         client = repositoryApiClient.getFieldDefinitionsClient();
     }
 
-    @AfterEach
+    @AfterAll
     void resetClient_Success() {
         client = null;
     }

@@ -3,9 +3,7 @@ package integration;
 import com.laserfiche.repository.api.clients.AttributesClient;
 import com.laserfiche.repository.api.clients.impl.model.Attribute;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfListOfAttribute;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -16,12 +14,12 @@ class AttributesApiTest extends BaseTest {
 
     private final int maxPageSize = 1;
 
-    @BeforeEach
+    @BeforeAll
     void PerTestSetup() {
         client = repositoryApiClient.getAttributesClient();
     }
 
-    @AfterEach
+    @AfterAll
     void resetClient_Success() {
         client = null;
     }

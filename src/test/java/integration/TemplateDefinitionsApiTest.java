@@ -4,10 +4,7 @@ import com.laserfiche.repository.api.clients.TemplateDefinitionsClient;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfTemplateFieldInfo;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfWTemplateInfo;
 import com.laserfiche.repository.api.clients.impl.model.WTemplateInfo;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -19,12 +16,12 @@ class TemplateDefinitionsApiTest extends BaseTest {
 
     private final int maxPageSize = 1;
 
-    @BeforeEach
+    @BeforeAll
     void PerTestSetup() {
         client = repositoryApiClient.getTemplateDefinitionClient();
     }
 
-    @AfterEach
+    @AfterAll
     void resetClient_Success() {
         client = null;
     }
