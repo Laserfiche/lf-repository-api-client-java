@@ -12,7 +12,7 @@ public interface TasksClient {
      * @param operationToken The operation token (required)
      * @return CompletableFuture&lt;Void&gt;
      */
-    CompletableFuture<Void> cancelOperation(String repoId, String operationToken);
+    CompletableFuture<Boolean> cancelOperation(String repoId, String operationToken);
 
     /**
      *
