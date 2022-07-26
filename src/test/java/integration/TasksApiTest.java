@@ -9,6 +9,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TasksApiTest extends BaseTest {
     TasksClient client;
@@ -27,8 +28,11 @@ public class TasksApiTest extends BaseTest {
         CompletableFuture<AcceptedOperation> result = repositoryApiClient.getEntriesClient().deleteEntryInfo(repoId, deleteEntry.join().getId(), body);
         String token = result.join().getToken();
         assertNotNull(token);
+
         TimeUnit.SECONDS.sleep(5);
-        client.cancelOperation(repoId, token);
+
+        boolean isCancelOperationSuccessful = client.cancelOperation(repoId, token).join();
+        assertTrue(isCancelOperationSuccessful);
     }
 
     @Test
