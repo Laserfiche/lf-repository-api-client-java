@@ -2,21 +2,22 @@ package com.laserfiche.repository.api.clients;
 
 import com.laserfiche.repository.api.BaseClient;
 import com.laserfiche.repository.api.clients.impl.TasksApi;
+import com.laserfiche.repository.api.clients.impl.TasksApiEx;
 import com.laserfiche.repository.api.clients.impl.model.OperationProgress;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 
 import java.util.concurrent.CompletableFuture;
 
-public class TasksClientImpl extends BaseClient<TasksApi, Void> implements TasksClient {
+public class TasksClientImpl extends BaseClient<TasksApi, TasksApiEx> implements TasksClient {
     public TasksClientImpl(Retrofit.Builder clientBuilder, OkHttpClient.Builder okBuilder) {
         super(clientBuilder, okBuilder);
-        super.setupClients(TasksApi.class, null);
+        super.setupClients(TasksApi.class, TasksApiEx.class);
     }
 
     @Override
-    public CompletableFuture<Void> cancelOperation(String repoId, String operationToken) {
-        return generatedClient.cancelOperation(repoId, operationToken);
+    public CompletableFuture<Boolean> cancelOperation(String repoId, String operationToken) {
+        return extensionClient.cancelOperation(repoId, operationToken).thenApply((response) -> response.code() == 204);
     }
 
     @Override

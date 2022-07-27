@@ -76,8 +76,13 @@ public class EntriesClientImpl extends BaseClient<EntriesApi, EntriesApiEx> impl
     }
 
     @Override
-    public CompletableFuture<Void> getDocumentContentType(String repoId, Integer entryId) {
-        return generatedClient.getDocumentContentType(repoId, entryId);
+    public CompletableFuture<GetDocumentContentTypeResult> getDocumentContentType(String repoId, Integer entryId) {
+        return extensionClient.getDocumentContentType(repoId, entryId).thenApply(response -> {
+            String contentType = response.headers().get("content-type");
+            String contentLengthStr = response.headers().get("content-length");
+            int contentLength = contentLengthStr == null ? -1 : Integer.parseInt(contentLengthStr);
+            return new GetDocumentContentTypeResult(contentLength, contentType);
+        });
     }
 
     @Override

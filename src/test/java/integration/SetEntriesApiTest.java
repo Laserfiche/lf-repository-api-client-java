@@ -2,7 +2,6 @@ package integration;
 
 import com.laserfiche.repository.api.RepositoryApiClient;
 import com.laserfiche.repository.api.clients.impl.model.*;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 

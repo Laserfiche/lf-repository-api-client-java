@@ -4,7 +4,9 @@ import com.laserfiche.repository.api.clients.TemplateDefinitionsClient;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfTemplateFieldInfo;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfWTemplateInfo;
 import com.laserfiche.repository.api.clients.impl.model.WTemplateInfo;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.CompletableFuture;
 

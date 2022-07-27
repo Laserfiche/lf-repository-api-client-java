@@ -3,11 +3,15 @@ package integration;
 import com.laserfiche.repository.api.RepositoryApiClient;
 import com.laserfiche.repository.api.clients.TasksClient;
 import com.laserfiche.repository.api.clients.impl.model.*;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class TasksApiTest extends BaseTest {
@@ -27,8 +31,11 @@ public class TasksApiTest extends BaseTest {
         CompletableFuture<AcceptedOperation> result = repositoryApiClient.getEntriesClient().deleteEntryInfo(repoId, deleteEntry.join().getId(), body);
         String token = result.join().getToken();
         assertNotNull(token);
+
         TimeUnit.SECONDS.sleep(5);
-        client.cancelOperation(repoId, token);
+
+        boolean isCancelOperationSuccessful = client.cancelOperation(repoId, token).join();
+        assertFalse(isCancelOperationSuccessful); // The operation is very fast. So we assert that we cannot cancel it due to it is already completed.
     }
 
     @Test
