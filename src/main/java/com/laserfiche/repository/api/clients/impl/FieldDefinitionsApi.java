@@ -3,7 +3,6 @@ package com.laserfiche.repository.api.clients.impl;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfWFieldInfo;
 import com.laserfiche.repository.api.clients.impl.model.WFieldInfo;
 import retrofit2.http.GET;
-import retrofit2.http.Url;
 
 import java.util.concurrent.CompletableFuture;
 

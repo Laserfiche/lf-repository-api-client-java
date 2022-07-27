@@ -1,9 +1,9 @@
 package com.laserfiche.repository.api.clients.impl.model;
 
-import java.util.Objects;
-
 import com.google.gson.annotations.SerializedName;
 import io.swagger.v3.oas.annotations.media.Schema;
+
+import java.util.Objects;
 
 /**
  * AdvancedSearchRequest

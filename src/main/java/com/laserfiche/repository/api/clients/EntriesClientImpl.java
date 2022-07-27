@@ -7,7 +7,6 @@ import com.laserfiche.repository.api.clients.impl.EntriesApiEx;
 import com.laserfiche.repository.api.clients.impl.model.*;
 import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
-import okhttp3.Response;
 import retrofit2.Retrofit;
 
 import java.io.File;

@@ -1,7 +1,10 @@
 package com.laserfiche.repository.api.clients.impl;
 
 import com.laserfiche.repository.api.clients.impl.model.*;
-import retrofit2.http.*;
+import retrofit2.http.DELETE;
+import retrofit2.http.GET;
+import retrofit2.http.Headers;
+import retrofit2.http.POST;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;

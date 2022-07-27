@@ -1,12 +1,14 @@
 package com.laserfiche.repository.api.clients.impl;
 
-import com.laserfiche.repository.api.clients.impl.model.*;
+import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfEntry;
+import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfFieldValue;
+import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfWEntryLinkInfo;
+import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfWTagInfo;
 import retrofit2.Response;
-import retrofit2.http.*;
+import retrofit2.http.GET;
+import retrofit2.http.HEAD;
+import retrofit2.http.Url;
 
-import java.io.File;
-import java.util.List;
-import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 public interface EntriesApiEx {

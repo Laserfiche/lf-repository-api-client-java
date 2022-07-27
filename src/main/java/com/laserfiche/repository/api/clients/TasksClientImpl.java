@@ -5,7 +5,6 @@ import com.laserfiche.repository.api.clients.impl.TasksApi;
 import com.laserfiche.repository.api.clients.impl.TasksApiEx;
 import com.laserfiche.repository.api.clients.impl.model.OperationProgress;
 import okhttp3.OkHttpClient;
-import okhttp3.Response;
 import retrofit2.Retrofit;
 
 import java.util.concurrent.CompletableFuture;
