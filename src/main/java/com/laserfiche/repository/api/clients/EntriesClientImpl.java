@@ -7,6 +7,7 @@ import com.laserfiche.repository.api.clients.impl.EntriesApiEx;
 import com.laserfiche.repository.api.clients.impl.model.*;
 import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
+import okhttp3.Response;
 import retrofit2.Retrofit;
 
 import java.io.File;
@@ -76,8 +77,19 @@ public class EntriesClientImpl extends BaseClient<EntriesApi, EntriesApiEx> impl
     }
 
     @Override
-    public CompletableFuture<Void> getDocumentContentType(String repoId, Integer entryId) {
-        return generatedClient.getDocumentContentType(repoId, entryId);
+    public CompletableFuture<GetDocumentContentTypeResult> getDocumentContentType(String repoId, Integer entryId) {
+        return extensionClient.getDocumentContentType(repoId, entryId).thenApply(response -> {
+            String contentType = response.headers().get("content-type");
+            String contentLengthStr = response.headers().get("content-length");
+            if (contentType == null) {
+                throw new RuntimeException("The header doesn't contain 'content-type'.");
+            }
+            if (contentLengthStr == null) {
+                throw new RuntimeException("The header doesn't contain 'content-length'.");
+            }
+            int contentLength = Integer.parseInt(contentLengthStr);
+            return new GetDocumentContentTypeResult(contentLength, contentType);
+        });
     }
 
     @Override

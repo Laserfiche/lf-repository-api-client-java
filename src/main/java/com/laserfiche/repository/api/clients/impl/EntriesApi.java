@@ -181,18 +181,6 @@ public interface EntriesApi {
 
   /**
    * 
-   * - Get information about the edoc content of an entry, without downloading the edoc in its entirety. - Provide an entry ID, and get back the Content-Type and Content-Length in the response headers. - This route does not provide a way to download the actual edoc. Instead, it just gives metadata information about the edoc associated with the entry.
-   * @param repoId The requested repository ID. (required)
-   * @param entryId The requested document ID. (required)
-   * @return Call&lt;Void&gt;
-   */
-  @HEAD("v1/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Document/edoc")
-  CompletableFuture<Void> getDocumentContentType(
-    @retrofit2.http.Path("repoId") String repoId, @retrofit2.http.Path("entryId") Integer entryId
-  );
-
-  /**
-   * 
    * - Get dynamic field logic values with the current values of the fields in the template. - Provide an entry ID and field values in the JSON body to get dynamic field logic values.  Independent and non-dynamic fields in the request body will be ignored, and only related dynamic field logic values for the assigned template will be returned.
    * @param repoId The requested repository ID. (required)
    * @param entryId The requested entry ID. (required)

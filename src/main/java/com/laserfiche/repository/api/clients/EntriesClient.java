@@ -129,9 +129,9 @@ public interface EntriesClient {
      * - Get information about the edoc content of an entry, without downloading the edoc in its entirety. - Provide an entry ID, and get back the Content-Type and Content-Length in the response headers. - This route does not provide a way to download the actual edoc. Instead, it just gives metadata information about the edoc associated with the entry.
      * @param repoId The requested repository ID. (required)
      * @param entryId The requested document ID. (required)
-     * @return Call&lt;Void&gt;
+     * @return GetDocumentContentTypeResult
      */
-    CompletableFuture<Void> getDocumentContentType(String repoId, Integer entryId);
+    CompletableFuture<GetDocumentContentTypeResult> getDocumentContentType(String repoId, Integer entryId);
 
     /**
      *
