@@ -1,8 +1,7 @@
 package com.laserfiche.repository.api.clients.impl;
 
 import com.laserfiche.repository.api.clients.impl.model.*;
-import okhttp3.RequestBody;
-import okhttp3.Response;
+import retrofit2.Response;
 import retrofit2.http.*;
 
 import java.io.File;
@@ -59,7 +58,7 @@ public interface EntriesApiEx {
      * @return Call&lt;Void&gt;
      */
     @HEAD("v1/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Document/edoc")
-    CompletableFuture<Response> getDocumentContentType(
+    CompletableFuture<Response<Void>> getDocumentContentType(
             @retrofit2.http.Path("repoId") String repoId, @retrofit2.http.Path("entryId") Integer entryId
     );
 }

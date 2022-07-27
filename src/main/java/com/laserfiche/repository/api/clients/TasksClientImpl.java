@@ -18,7 +18,7 @@ public class TasksClientImpl extends BaseClient<TasksApi, TasksApiEx> implements
 
     @Override
     public CompletableFuture<Boolean> cancelOperation(String repoId, String operationToken) {
-        return extensionClient.cancelOperation(repoId, operationToken).thenApply(Response::isSuccessful);
+        return extensionClient.cancelOperation(repoId, operationToken).thenApply((response) -> response.code() == 204);
     }
 
     @Override

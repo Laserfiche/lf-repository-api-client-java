@@ -1,6 +1,6 @@
 package com.laserfiche.repository.api.clients.impl;
 
-import okhttp3.Response;
+import retrofit2.Response;
 import retrofit2.http.DELETE;
 
 import java.util.concurrent.CompletableFuture;

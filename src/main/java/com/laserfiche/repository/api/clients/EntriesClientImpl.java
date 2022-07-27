@@ -81,13 +81,7 @@ public class EntriesClientImpl extends BaseClient<EntriesApi, EntriesApiEx> impl
         return extensionClient.getDocumentContentType(repoId, entryId).thenApply(response -> {
             String contentType = response.headers().get("content-type");
             String contentLengthStr = response.headers().get("content-length");
-            if (contentType == null) {
-                throw new RuntimeException("The header doesn't contain 'content-type'.");
-            }
-            if (contentLengthStr == null) {
-                throw new RuntimeException("The header doesn't contain 'content-length'.");
-            }
-            int contentLength = Integer.parseInt(contentLengthStr);
+            int contentLength = contentLengthStr == null ? -1 : Integer.parseInt(contentLengthStr);
             return new GetDocumentContentTypeResult(contentLength, contentType);
         });
     }
