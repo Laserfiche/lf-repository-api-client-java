@@ -16,7 +16,7 @@ public interface EntriesClient {
      * @param repoId The request repository ID. (required)
      * @param entryId The requested entry ID. (required)
      * @param body  (optional)
-     * @return Call&lt;ODataValueOfIListOfWEntryLinkInfo&gt;
+     * @return CompletableFuture&lt;ODataValueOfIListOfWEntryLinkInfo&gt;
      */
     CompletableFuture<ODataValueOfIListOfWEntryLinkInfo> assignEntryLinks(String repoId, Integer entryId, List<PutLinksRequest> body);
 
@@ -27,7 +27,7 @@ public interface EntriesClient {
      * @param entryId The entry ID of the entry that will have its fields updated. (required)
      * @param body  (optional)
      * @param culture An optional query parameter used to indicate the locale that should be used.             The value should be a standard language tag. (optional)
-     * @return Call&lt;ODataValueOfIListOfFieldValue&gt;
+     * @return CompletableFuture&lt;ODataValueOfIListOfFieldValue&gt;
      */
     CompletableFuture<ODataValueOfIListOfFieldValue> assignFieldValues(String repoId, Integer entryId, Map<String, FieldToUpdate> body, String culture);
 
@@ -37,7 +37,7 @@ public interface EntriesClient {
      * @param repoId The requested repository ID. (required)
      * @param entryId The requested entry ID. (required)
      * @param body The tags to add. (optional)
-     * @return Call&lt;ODataValueOfIListOfWTagInfo&gt;
+     * @return CompletableFuture&lt;ODataValueOfIListOfWTagInfo&gt;
      */
     CompletableFuture<ODataValueOfIListOfWTagInfo> assignTags(String repoId, Integer entryId, PutTagRequest body);
 
@@ -49,7 +49,7 @@ public interface EntriesClient {
      * @param body Copy entry request. (optional)
      * @param autoRename An optional query parameter used to indicate if the new entry should be automatically             renamed if an entry already exists with the given name in the folder. The default value is false. (optional)
      * @param culture An optional query parameter used to indicate the locale that should be used.             The value should be a standard language tag. (optional)
-     * @return Call&lt;AcceptedOperation&gt;
+     * @return CompletableFuture&lt;AcceptedOperation&gt;
      */
     CompletableFuture<AcceptedOperation> copyEntryAsync(String repoId, Integer entryId, CopyAsyncRequest body, Boolean autoRename, String culture);
 
@@ -61,7 +61,7 @@ public interface EntriesClient {
      * @param body The entry to create. (optional)
      * @param autoRename An optional query parameter used to indicate if the new entry should be automatically             renamed if an entry already exists with the given name in the folder. The default value is false. (optional)
      * @param culture An optional query parameter used to indicate the locale that should be used.             The value should be a standard language tag. (optional)
-     * @return Call&lt;Entry&gt;
+     * @return CompletableFuture&lt;Entry&gt;
      */
     CompletableFuture<Entry> createOrCopyEntry(String repoId, Integer entryId, PostEntryChildrenRequest body, Boolean autoRename, String culture);
 
@@ -70,7 +70,7 @@ public interface EntriesClient {
      * - Remove the currently assigned template from the specified entry. - Provide an entry ID to clear template value on. - If the entry does not have a template assigned, no change will be made.
      * @param repoId The requested repository ID. (required)
      * @param entryId The ID of the entry that will have its template removed. (required)
-     * @return Call&lt;Entry&gt;
+     * @return CompletableFuture&lt;Entry&gt;
      */
     CompletableFuture<Entry> deleteAssignedTemplate(String repoId, Integer entryId);
 
@@ -79,7 +79,7 @@ public interface EntriesClient {
      * - Delete the edoc associated with the provided entry ID.
      * @param repoId The requested repository ID. (required)
      * @param entryId The requested document ID. (required)
-     * @return Call&lt;ODataValueOfBoolean&gt;
+     * @return CompletableFuture&lt;ODataValueOfBoolean&gt;
      */
     CompletableFuture<ODataValueOfBoolean> deleteDocument(String repoId, Integer entryId);
 
@@ -89,7 +89,7 @@ public interface EntriesClient {
      * @param repoId The requested repository ID. (required)
      * @param entryId The requested entry ID. (required)
      * @param body The submitted audit reason. (optional)
-     * @return Call&lt;AcceptedOperation&gt;
+     * @return CompletableFuture&lt;AcceptedOperation&gt;
      */
     CompletableFuture<AcceptedOperation> deleteEntryInfo(String repoId, Integer entryId, DeleteEntryWithAuditReason body);
 
@@ -99,7 +99,7 @@ public interface EntriesClient {
      * @param repoId The requested repository ID. (required)
      * @param entryId The requested document ID. (required)
      * @param pageRange The pages to be deleted. (optional)
-     * @return Call&lt;ODataValueOfBoolean&gt;
+     * @return CompletableFuture&lt;ODataValueOfBoolean&gt;
      */
     CompletableFuture<ODataValueOfBoolean> deletePages(String repoId, Integer entryId, String pageRange);
 
@@ -109,7 +109,7 @@ public interface EntriesClient {
      * @param repoId The requested repository ID. (required)
      * @param entryId The requested document ID. (required)
      * @param range An optional header used to retrieve partial content of the edoc. Only supports single             range with byte unit. (optional)
-     * @return Call&lt;File&gt;
+     * @return CompletableFuture&lt;File&gt;
      */
     CompletableFuture<File> exportDocument(String repoId, Integer entryId, String range);
 
@@ -120,7 +120,7 @@ public interface EntriesClient {
      * @param entryId The requested document ID. (required)
      * @param body  (optional)
      * @param range An optional header used to retrieve partial content of the edoc. Only supports single             range with byte unit. (optional)
-     * @return Call&lt;File&gt;
+     * @return CompletableFuture&lt;File&gt;
      */
     CompletableFuture<File> exportDocumentWithAuditReason(String repoId, Integer entryId, GetEdocWithAuditReasonRequest body, String range);
 
@@ -129,7 +129,7 @@ public interface EntriesClient {
      * - Get information about the edoc content of an entry, without downloading the edoc in its entirety. - Provide an entry ID, and get back the Content-Type and Content-Length in the response headers. - This route does not provide a way to download the actual edoc. Instead, it just gives metadata information about the edoc associated with the entry.
      * @param repoId The requested repository ID. (required)
      * @param entryId The requested document ID. (required)
-     * @return GetDocumentContentTypeResult
+     * @return CompletableFuture&lt;GetDocumentContentTypeResult&gt;
      */
     CompletableFuture<GetDocumentContentTypeResult> getDocumentContentType(String repoId, Integer entryId);
 
@@ -139,7 +139,7 @@ public interface EntriesClient {
      * @param repoId The requested repository ID. (required)
      * @param entryId The requested entry ID. (required)
      * @param body  (optional)
-     * @return Call&lt;Map&lt;String, List&lt;String&gt;&gt;&gt;
+     * @return CompletableFuture&lt;Map&lt;String, List&lt;String&gt;&gt;&gt;
      */
     CompletableFuture<Map<String, List<String>>> getDynamicFieldValues(String repoId, Integer entryId, GetDynamicFieldLogicValueRequest body);
 
@@ -149,7 +149,7 @@ public interface EntriesClient {
      * @param repoId The requested repository ID. (required)
      * @param entryId The requested entry ID. (required)
      * @param select Limits the properties returned in the result. (optional)
-     * @return Call&lt;Entry&gt;
+     * @return CompletableFuture&lt;Entry&gt;
      */
     CompletableFuture<Entry> getEntry(String repoId, Integer entryId, String select);
 

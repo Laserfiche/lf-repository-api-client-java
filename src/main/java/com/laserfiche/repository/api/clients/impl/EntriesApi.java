@@ -16,7 +16,7 @@ public interface EntriesApi {
    * @param repoId The request repository ID. (required)
    * @param entryId The requested entry ID. (required)
    * @param body  (optional)
-   * @return Call&lt;ODataValueOfIListOfWEntryLinkInfo&gt;
+   * @return CompletableFuture&lt;ODataValueOfIListOfWEntryLinkInfo&gt;
    */
   @Headers({
     "Content-Type:application/json"
@@ -33,7 +33,7 @@ public interface EntriesApi {
    * @param entryId The entry ID of the entry that will have its fields updated. (required)
    * @param body  (optional)
    * @param culture An optional query parameter used to indicate the locale that should be used.             The value should be a standard language tag. (optional)
-   * @return Call&lt;ODataValueOfIListOfFieldValue&gt;
+   * @return CompletableFuture&lt;ODataValueOfIListOfFieldValue&gt;
    */
   @Headers({
     "Content-Type:application/json"
@@ -49,7 +49,7 @@ public interface EntriesApi {
    * @param repoId The requested repository ID. (required)
    * @param entryId The requested entry ID. (required)
    * @param body The tags to add. (optional)
-   * @return Call&lt;ODataValueOfIListOfWTagInfo&gt;
+   * @return CompletableFuture&lt;ODataValueOfIListOfWTagInfo&gt;
    */
   @Headers({
     "Content-Type:application/json"
@@ -67,7 +67,7 @@ public interface EntriesApi {
    * @param body Copy entry request. (optional)
    * @param autoRename An optional query parameter used to indicate if the new entry should be automatically             renamed if an entry already exists with the given name in the folder. The default value is false. (optional)
    * @param culture An optional query parameter used to indicate the locale that should be used.             The value should be a standard language tag. (optional)
-   * @return Call&lt;AcceptedOperation&gt;
+   * @return CompletableFuture&lt;AcceptedOperation&gt;
    */
   @Headers({
     "Content-Type:application/json"
@@ -85,7 +85,7 @@ public interface EntriesApi {
    * @param body The entry to create. (optional)
    * @param autoRename An optional query parameter used to indicate if the new entry should be automatically             renamed if an entry already exists with the given name in the folder. The default value is false. (optional)
    * @param culture An optional query parameter used to indicate the locale that should be used.             The value should be a standard language tag. (optional)
-   * @return Call&lt;Entry&gt;
+   * @return CompletableFuture&lt;Entry&gt;
    */
   @Headers({
     "Content-Type:application/json"
@@ -100,7 +100,7 @@ public interface EntriesApi {
    * - Remove the currently assigned template from the specified entry. - Provide an entry ID to clear template value on. - If the entry does not have a template assigned, no change will be made.
    * @param repoId The requested repository ID. (required)
    * @param entryId The ID of the entry that will have its template removed. (required)
-   * @return Call&lt;Entry&gt;
+   * @return CompletableFuture&lt;Entry&gt;
    */
   @DELETE("v1/Repositories/{repoId}/Entries/{entryId}/template")
   CompletableFuture<Entry> deleteAssignedTemplate(
@@ -112,7 +112,7 @@ public interface EntriesApi {
    * - Delete the edoc associated with the provided entry ID.
    * @param repoId The requested repository ID. (required)
    * @param entryId The requested document ID. (required)
-   * @return Call&lt;ODataValueOfBoolean&gt;
+   * @return CompletableFuture&lt;ODataValueOfBoolean&gt;
    */
   @DELETE("v1/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Document/edoc")
   CompletableFuture<ODataValueOfBoolean> deleteDocument(
@@ -125,7 +125,7 @@ public interface EntriesApi {
    * @param repoId The requested repository ID. (required)
    * @param entryId The requested entry ID. (required)
    * @param body The submitted audit reason. (optional)
-   * @return Call&lt;AcceptedOperation&gt;
+   * @return CompletableFuture&lt;AcceptedOperation&gt;
    */
   @Headers({
     "Content-Type:application/json"
@@ -142,7 +142,7 @@ public interface EntriesApi {
    * @param repoId The requested repository ID. (required)
    * @param entryId The requested document ID. (required)
    * @param pageRange The pages to be deleted. (optional)
-   * @return Call&lt;ODataValueOfBoolean&gt;
+   * @return CompletableFuture&lt;ODataValueOfBoolean&gt;
    */
   @DELETE("v1/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Document/pages")
   CompletableFuture<ODataValueOfBoolean> deletePages(
@@ -155,7 +155,7 @@ public interface EntriesApi {
    * @param repoId The requested repository ID. (required)
    * @param entryId The requested document ID. (required)
    * @param range An optional header used to retrieve partial content of the edoc. Only supports single             range with byte unit. (optional)
-   * @return Call&lt;File&gt;
+   * @return CompletableFuture&lt;File&gt;
    */
   @GET("v1/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Document/edoc")
   CompletableFuture<File> exportDocument(
@@ -169,7 +169,7 @@ public interface EntriesApi {
    * @param entryId The requested document ID. (required)
    * @param body  (optional)
    * @param range An optional header used to retrieve partial content of the edoc. Only supports single             range with byte unit. (optional)
-   * @return Call&lt;File&gt;
+   * @return CompletableFuture&lt;File&gt;
    */
   @Headers({
     "Content-Type:application/json"
@@ -185,7 +185,7 @@ public interface EntriesApi {
    * @param repoId The requested repository ID. (required)
    * @param entryId The requested entry ID. (required)
    * @param body  (optional)
-   * @return Call&lt;Map&lt;String, List&lt;String&gt;&gt;&gt;
+   * @return CompletableFuture&lt;Map&lt;String, List&lt;String&gt;&gt;&gt;
    */
   @Headers({
     "Content-Type:application/json"
@@ -201,7 +201,7 @@ public interface EntriesApi {
    * @param repoId The requested repository ID. (required)
    * @param entryId The requested entry ID. (required)
    * @param $select Limits the properties returned in the result. (optional)
-   * @return Call&lt;Entry&gt;
+   * @return CompletableFuture&lt;Entry&gt;
    */
   @GET("v1/Repositories/{repoId}/Entries/{entryId}")
   CompletableFuture<Entry> getEntry(
