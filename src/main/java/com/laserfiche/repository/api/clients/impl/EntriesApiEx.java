@@ -55,7 +55,7 @@ public interface EntriesApiEx {
      * - Get information about the edoc content of an entry, without downloading the edoc in its entirety. - Provide an entry ID, and get back the Content-Type and Content-Length in the response headers. - This route does not provide a way to download the actual edoc. Instead, it just gives metadata information about the edoc associated with the entry.
      * @param repoId The requested repository ID. (required)
      * @param entryId The requested document ID. (required)
-     * @return Call&lt;Void&gt;
+     * @return CompletableFuture&lt;Void&gt;
      */
     @HEAD("v1/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Document/edoc")
     CompletableFuture<Response<Void>> getDocumentContentType(
