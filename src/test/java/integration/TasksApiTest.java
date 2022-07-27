@@ -8,8 +8,7 @@ import org.junit.jupiter.api.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TasksApiTest extends BaseTest {
     TasksClient client;
@@ -32,7 +31,7 @@ public class TasksApiTest extends BaseTest {
         TimeUnit.SECONDS.sleep(5);
 
         boolean isCancelOperationSuccessful = client.cancelOperation(repoId, token).join();
-        assertTrue(isCancelOperationSuccessful);
+        assertFalse(isCancelOperationSuccessful); // The operation is very fast. So we assert that we cannot cancel it due to it is already completed.
     }
 
     @Test
