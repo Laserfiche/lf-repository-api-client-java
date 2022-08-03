@@ -43,24 +43,11 @@ public class BaseTest {
             repoId = dotenv.get("REPOSITORY_ID");
             testHeaderValue = dotenv.get("TEST_HEADER");
         }
-        // Read env variables
-        Gson gson = new GsonBuilder().registerTypeAdapter(JWK.class, new JwkDeserializer()).create();
-
-        String accessKeyStr = decodeBase64(accessKeyBase64);
-        // Gson doesn't escape forward slash https://github.com/google/gson/issues/356
-        accessKeyStr = accessKeyStr.replace("\\\"", "\"");
-
-        accessKey = gson.fromJson(accessKeyStr, AccessKey.class);
-
+        accessKey = AccessKey.CreateFromBase64EncodedAccessKey(accessKeyBase64);
         testHeaders = new HashMap<>();
         testHeaders.put(testHeaderValue, "true");
         repositoryApiClient = RepositoryApiClientImpl.CreateFromAccessKey(spKey, accessKey);
         repositoryApiClient.setDefaultRequestHeaders(testHeaders);
-    }
-
-    private static String decodeBase64(String encoded) {
-        byte[] decodedBytes = Base64.getDecoder().decode(encoded);
-        return new String(decodedBytes);
     }
 
     public static CompletableFuture<Entry> createEntry(RepositoryApiClient client, String entryName, Integer parentEntryId, Boolean autoRename) {
