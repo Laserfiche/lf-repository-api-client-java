@@ -8,7 +8,7 @@ import java.util.concurrent.CompletableFuture;
 
 public class AuditReasonsClientImpl extends ApiClient implements AuditReasonsClient {
 
-    @Override
+    @Override()
     public CompletableFuture<AuditReasons> getAuditReasons(String repoId) {
         return Unirest
                 .get(baseUrl + "/v1/Repositories/{repoId}/AuditReasons")

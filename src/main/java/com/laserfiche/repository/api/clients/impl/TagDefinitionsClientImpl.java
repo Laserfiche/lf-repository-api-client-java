@@ -9,9 +9,9 @@ import java.util.concurrent.CompletableFuture;
 
 public class TagDefinitionsClientImpl extends ApiClient implements TagDefinitionsClient {
 
-    @Override
+    @Override()
     public CompletableFuture<ODataValueContextOfIListOfWTagInfo> getTagDefinitions(String repoId, String prefer,
-            String culture, String select, String orderby, int top, int skip, boolean count) {
+            String culture, String select, String orderby, Integer top, Integer skip, Boolean count) {
         return Unirest
                 .get(baseUrl + "/v1/Repositories/{repoId}/TagDefinitions")
                 .routeParam("repoId", repoId)
@@ -40,8 +40,9 @@ public class TagDefinitionsClientImpl extends ApiClient implements TagDefinition
                 });
     }
 
-    @Override
-    public CompletableFuture<WTagInfo> getTagDefinitionById(String repoId, int tagId, String culture, String select) {
+    @Override()
+    public CompletableFuture<WTagInfo> getTagDefinitionById(String repoId, Integer tagId, String culture,
+            String select) {
         return Unirest
                 .get(baseUrl + "/v1/Repositories/{repoId}/TagDefinitions/{tagId}")
                 .routeParam("repoId", repoId)

@@ -8,7 +8,7 @@ import java.util.concurrent.CompletableFuture;
 
 public class TasksClientImpl extends ApiClient implements TasksClient {
 
-    @Override
+    @Override()
     public CompletableFuture<OperationProgress> getOperationStatusAndProgress(String repoId, String operationToken) {
         return Unirest
                 .get(baseUrl + "/v1/Repositories/{repoId}/Tasks/{operationToken}")
@@ -35,7 +35,7 @@ public class TasksClientImpl extends ApiClient implements TasksClient {
                 });
     }
 
-    @Override
+    @Override()
     public CompletableFuture<Void> cancelOperation(String repoId, String operationToken) {
         return Unirest
                 .delete(baseUrl + "/v1/Repositories/{repoId}/Tasks/{operationToken}")

@@ -9,9 +9,9 @@ import java.util.concurrent.CompletableFuture;
 
 public class AttributesClientImpl extends ApiClient implements AttributesClient {
 
-    @Override
+    @Override()
     public CompletableFuture<Attribute> getTrusteeAttributeValueByKey(String repoId, String attributeKey,
-            boolean everyone) {
+            Boolean everyone) {
         return Unirest
                 .get(baseUrl + "/v1/Repositories/{repoId}/Attributes/{attributeKey}")
                 .routeParam("repoId", repoId)
@@ -38,9 +38,9 @@ public class AttributesClientImpl extends ApiClient implements AttributesClient 
                 });
     }
 
-    @Override
+    @Override()
     public CompletableFuture<ODataValueContextOfListOfAttribute> getTrusteeAttributeKeyValuePairs(String repoId,
-            boolean everyone, String prefer, String select, String orderby, int top, int skip, boolean count) {
+            Boolean everyone, String prefer, String select, String orderby, Integer top, Integer skip, Boolean count) {
         return Unirest
                 .get(baseUrl + "/v1/Repositories/{repoId}/Attributes")
                 .routeParam("repoId", repoId)

@@ -8,7 +8,7 @@ import java.util.concurrent.CompletableFuture;
 
 public class SearchesClientImpl extends ApiClient implements SearchesClient {
 
-    @Override
+    @Override()
     public CompletableFuture<OperationProgress> getSearchStatus(String repoId, String searchToken) {
         return Unirest
                 .get(baseUrl + "/v1/Repositories/{repoId}/Searches/{searchToken}")
@@ -35,7 +35,7 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
                 });
     }
 
-    @Override
+    @Override()
     public CompletableFuture<ODataValueOfBoolean> cancelOrCloseSearch(String repoId, String searchToken) {
         return Unirest
                 .delete(baseUrl + "/v1/Repositories/{repoId}/Searches/{searchToken}")
@@ -62,10 +62,10 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
                 });
     }
 
-    @Override
+    @Override()
     public CompletableFuture<ODataValueContextOfIListOfContextHit> getSearchContextHits(String repoId,
-            String searchToken, int rowNumber, String prefer, String select, String orderby, int top, int skip,
-            boolean count) {
+            String searchToken, Integer rowNumber, String prefer, String select, String orderby, Integer top,
+            Integer skip, Boolean count) {
         return Unirest
                 .get(baseUrl + "/v1/Repositories/{repoId}/Searches/{searchToken}/Results/{rowNumber}/ContextHits")
                 .routeParam("repoId", repoId)
@@ -98,7 +98,7 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
                 });
     }
 
-    @Override
+    @Override()
     public CompletableFuture<AcceptedOperation> createSearchOperation(String repoId,
             AdvancedSearchRequest requestBody) {
         return Unirest
@@ -123,10 +123,10 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
                 });
     }
 
-    @Override
+    @Override()
     public CompletableFuture<ODataValueContextOfIListOfEntry> getSearchResults(String repoId, String searchToken,
-            boolean groupByEntryType, boolean refresh, String[] fields, boolean formatFields, String prefer,
-            String culture, String select, String orderby, int top, int skip, boolean count) {
+            Boolean groupByEntryType, Boolean refresh, String[] fields, Boolean formatFields, String prefer,
+            String culture, String select, String orderby, Integer top, Integer skip, Boolean count) {
         return Unirest
                 .get(baseUrl + "/v1/Repositories/{repoId}/Searches/{searchToken}/Results")
                 .routeParam("repoId", repoId)

@@ -9,8 +9,9 @@ import java.util.concurrent.CompletableFuture;
 
 public class LinkDefinitionsClientImpl extends ApiClient implements LinkDefinitionsClient {
 
-    @Override
-    public CompletableFuture<EntryLinkTypeInfo> getLinkDefinitionById(String repoId, int linkTypeId, String select) {
+    @Override()
+    public CompletableFuture<EntryLinkTypeInfo> getLinkDefinitionById(String repoId, Integer linkTypeId,
+            String select) {
         return Unirest
                 .get(baseUrl + "/v1/Repositories/{repoId}/LinkDefinitions/{linkTypeId}")
                 .routeParam("repoId", repoId)
@@ -37,9 +38,9 @@ public class LinkDefinitionsClientImpl extends ApiClient implements LinkDefiniti
                 });
     }
 
-    @Override
+    @Override()
     public CompletableFuture<ODataValueContextOfIListOfEntryLinkTypeInfo> getLinkDefinitions(String repoId,
-            String prefer, String select, String orderby, int top, int skip, boolean count) {
+            String prefer, String select, String orderby, Integer top, Integer skip, Boolean count) {
         return Unirest
                 .get(baseUrl + "/v1/Repositories/{repoId}/LinkDefinitions")
                 .routeParam("repoId", repoId)

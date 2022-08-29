@@ -9,9 +9,9 @@ import java.util.concurrent.CompletableFuture;
 
 public class SimpleSearchesClientImpl extends ApiClient implements SimpleSearchesClient {
 
-    @Override
+    @Override()
     public CompletableFuture<ODataValueOfIListOfEntry> createSimpleSearchOperation(String select, String orderby,
-            boolean count, String repoId, String[] fields, boolean formatFields, SimpleSearchRequest requestBody,
+            Boolean count, String repoId, String[] fields, Boolean formatFields, SimpleSearchRequest requestBody,
             String culture) {
         return Unirest
                 .post(baseUrl + "/v1/Repositories/{repoId}/SimpleSearches")

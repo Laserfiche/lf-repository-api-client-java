@@ -9,8 +9,9 @@ import java.util.concurrent.CompletableFuture;
 
 public class FieldDefinitionsClientImpl extends ApiClient implements FieldDefinitionsClient {
 
-    public CompletableFuture<WFieldInfo> getFieldDefinitionById(String repoId, int fieldDefinitionId, String culture,
-            String select) {
+    @Override()
+    public CompletableFuture<WFieldInfo> getFieldDefinitionById(String repoId, Integer fieldDefinitionId,
+            String culture, String select) {
         return Unirest
                 .get(baseUrl + "/v1/Repositories/{repoId}/FieldDefinitions/{fieldDefinitionId}")
                 .routeParam("repoId", repoId)
@@ -38,8 +39,9 @@ public class FieldDefinitionsClientImpl extends ApiClient implements FieldDefini
                 });
     }
 
+    @Override()
     public CompletableFuture<ODataValueContextOfIListOfWFieldInfo> getFieldDefinitions(String repoId, String prefer,
-            String culture, String select, String orderby, int top, int skip, boolean count) {
+            String culture, String select, String orderby, Integer top, Integer skip, Boolean count) {
         return Unirest
                 .get(baseUrl + "/v1/Repositories/{repoId}/FieldDefinitions")
                 .routeParam("repoId", repoId)

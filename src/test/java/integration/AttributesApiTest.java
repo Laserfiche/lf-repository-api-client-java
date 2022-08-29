@@ -36,32 +36,4 @@ class AttributesApiTest extends BaseTest {
         Attribute attributeObj = newFuture.join();
         assertNotNull(attributeObj);
     }
-
-    @Test
-    void getTrusteeAttributeKeyValuePairsNextLink_Success() {
-        CompletableFuture<ODataValueContextOfListOfAttribute> future = client.getTrusteeAttributeKeyValuePairs(repoId, true, null, null, null, null, null, false, maxPageSize);
-        ODataValueContextOfListOfAttribute attributeList = future.join();
-
-        assertNotNull(attributeList);
-        assertNotNull(attributeList.getAtOdataNextLink());
-
-        String nextLink = attributeList.getAtOdataNextLink();
-
-        CompletableFuture<ODataValueContextOfListOfAttribute> newFuture = client.getTrusteeAttributeKeyValuePairsNextLink(nextLink, maxPageSize);
-        ODataValueContextOfListOfAttribute newAttributeList = newFuture.join();
-
-        assertNotNull(newAttributeList);
-    }
-
-    @Test
-    void getTrusteeAttributeKeyValuePairsForEach_Success() {
-        client.getTrusteeAttributeKeyValuePairsForEach((future -> {
-            assertNotNull(future);
-            ODataValueContextOfListOfAttribute attributeList = future.join();
-            if (attributeList != null) {
-                assertNotNull(attributeList.getValue());
-            }
-            return attributeList != null; // Stop asking if there's no data.
-        }), repoId, true, null, null, null, null, null, false, maxPageSize);
-    }
 }

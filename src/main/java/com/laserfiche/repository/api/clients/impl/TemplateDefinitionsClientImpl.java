@@ -1,6 +1,6 @@
-package com.laserfiche.repository.api.clients;
+package com.laserfiche.repository.api.clients.impl;
 
-import com.laserfiche.repository.api.clients.impl.ApiClient;
+import com.laserfiche.repository.api.clients.TemplateDefinitionsClient;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfTemplateFieldInfo;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfWTemplateInfo;
 import com.laserfiche.repository.api.clients.impl.model.WTemplateInfo;
@@ -10,10 +10,10 @@ import java.util.concurrent.CompletableFuture;
 
 public class TemplateDefinitionsClientImpl extends ApiClient implements TemplateDefinitionsClient {
 
-    @Override
+    @Override()
     public CompletableFuture<ODataValueContextOfIListOfWTemplateInfo> getTemplateDefinitions(String repoId,
-            String templateName, String prefer, String culture, String select, String orderby, int top, int skip,
-            boolean count) {
+            String templateName, String prefer, String culture, String select, String orderby, Integer top,
+            Integer skip, Boolean count) {
         return Unirest
                 .get(baseUrl + "/v1/Repositories/{repoId}/TemplateDefinitions")
                 .routeParam("repoId", repoId)
@@ -46,10 +46,10 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
                 });
     }
 
-    @Override
+    @Override()
     public CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo> getTemplateFieldDefinitionsByTemplateName(
-            String repoId, String templateName, String prefer, String culture, String select, String orderby, int top,
-            int skip, boolean count) {
+            String repoId, String templateName, String prefer, String culture, String select, String orderby,
+            Integer top, Integer skip, Boolean count) {
         return Unirest
                 .get(baseUrl + "/v1/Repositories/{repoId}/TemplateDefinitions/Fields")
                 .routeParam("repoId", repoId)
@@ -82,10 +82,10 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
                 });
     }
 
-    @Override
+    @Override()
     public CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo> getTemplateFieldDefinitions(String repoId,
-            int templateId, String prefer, String culture, String select, String orderby, int top, int skip,
-            boolean count) {
+            Integer templateId, String prefer, String culture, String select, String orderby, Integer top, Integer skip,
+            Boolean count) {
         return Unirest
                 .get(baseUrl + "/v1/Repositories/{repoId}/TemplateDefinitions/{templateId}/Fields")
                 .routeParam("repoId", repoId)
@@ -118,8 +118,8 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
                 });
     }
 
-    @Override
-    public CompletableFuture<WTemplateInfo> getTemplateDefinitionById(String repoId, int templateId, String culture,
+    @Override()
+    public CompletableFuture<WTemplateInfo> getTemplateDefinitionById(String repoId, Integer templateId, String culture,
             String select) {
         return Unirest
                 .get(baseUrl + "/v1/Repositories/{repoId}/TemplateDefinitions/{templateId}")

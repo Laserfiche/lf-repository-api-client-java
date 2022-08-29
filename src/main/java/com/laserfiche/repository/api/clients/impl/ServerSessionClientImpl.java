@@ -9,7 +9,7 @@ import java.util.concurrent.CompletableFuture;
 
 public class ServerSessionClientImpl extends ApiClient implements ServerSessionClient {
 
-    @Override
+    @Override()
     public CompletableFuture<ODataValueOfBoolean> invalidateServerSession(String repoId) {
         return Unirest
                 .post(baseUrl + "/v1/Repositories/{repoId}/ServerSession/Invalidate")
@@ -32,7 +32,7 @@ public class ServerSessionClientImpl extends ApiClient implements ServerSessionC
                 });
     }
 
-    @Override
+    @Override()
     public CompletableFuture<ODataValueOfBoolean> createServerSession(String repoId) {
         return Unirest
                 .post(baseUrl + "/v1/Repositories/{repoId}/ServerSession/Create")
@@ -46,7 +46,7 @@ public class ServerSessionClientImpl extends ApiClient implements ServerSessionC
                 });
     }
 
-    @Override
+    @Override()
     public CompletableFuture<ODataValueOfDateTime> refreshServerSession(String repoId) {
         return Unirest
                 .post(baseUrl + "/v1/Repositories/{repoId}/ServerSession/Refresh")
