@@ -11,8 +11,6 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 import java.util.Map;
 
 public class RepositoryApiClientImpl implements RepositoryApiClient {
-    private final Retrofit.Builder clientBuilder;
-    private final OkHttpClient.Builder okBuilder;
     private Map<String, String> defaultHeaders;
     private AttributesClient attributesClient;
     private AuditReasonsClient auditReasonsClient;
