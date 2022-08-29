@@ -1,14 +1,10 @@
 package com.laserfiche.repository.api.clients.impl;
 
-import java.util.*;
-
 import com.laserfiche.repository.api.clients.SearchesClient;
-import kong.unirest.HttpResponse;
+import com.laserfiche.repository.api.clients.impl.model.*;
 import kong.unirest.Unirest;
 
 import java.util.concurrent.CompletableFuture;
-
-import com.laserfiche.repository.api.clients.impl.model.*;
 
 public class SearchesClientImpl extends ApiClient implements SearchesClient {
 

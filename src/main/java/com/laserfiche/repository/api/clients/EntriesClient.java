@@ -1,14 +1,9 @@
 package com.laserfiche.repository.api.clients;
 
-import java.io.File;
-import java.util.*;
-
-import kong.unirest.HttpResponse;
-import kong.unirest.Unirest;
-
-import java.util.concurrent.CompletableFuture;
-
 import com.laserfiche.repository.api.clients.impl.model.*;
+
+import java.io.File;
+import java.util.concurrent.CompletableFuture;
 
 public interface EntriesClient {
 

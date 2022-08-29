@@ -1,7 +1,6 @@
 package com.laserfiche.repository.api.clients.impl;
 
 import com.laserfiche.repository.api.clients.SimpleSearchesClient;
-import com.laserfiche.repository.api.clients.impl.ApiClient;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueOfIListOfEntry;
 import com.laserfiche.repository.api.clients.impl.model.SimpleSearchRequest;
 import kong.unirest.Unirest;

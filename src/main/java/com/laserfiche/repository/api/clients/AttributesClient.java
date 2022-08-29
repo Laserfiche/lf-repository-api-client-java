@@ -1,13 +1,9 @@
 package com.laserfiche.repository.api.clients;
 
-import java.util.*;
-
-import kong.unirest.HttpResponse;
-import kong.unirest.Unirest;
+import com.laserfiche.repository.api.clients.impl.model.Attribute;
+import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfListOfAttribute;
 
 import java.util.concurrent.CompletableFuture;
-
-import com.laserfiche.repository.api.clients.impl.model.*;
 
 public interface AttributesClient {
 

@@ -1,14 +1,10 @@
 package com.laserfiche.repository.api.clients.impl;
 
-import java.util.*;
-
 import com.laserfiche.repository.api.clients.AuditReasonsClient;
-import kong.unirest.HttpResponse;
+import com.laserfiche.repository.api.clients.impl.model.AuditReasons;
 import kong.unirest.Unirest;
 
 import java.util.concurrent.CompletableFuture;
-
-import com.laserfiche.repository.api.clients.impl.model.*;
 
 public class AuditReasonsClientImpl extends ApiClient implements AuditReasonsClient {
 

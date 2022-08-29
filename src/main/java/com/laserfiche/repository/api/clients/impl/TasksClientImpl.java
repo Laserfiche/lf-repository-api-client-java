@@ -1,7 +1,6 @@
 package com.laserfiche.repository.api.clients.impl;
 
 import com.laserfiche.repository.api.clients.TasksClient;
-import com.laserfiche.repository.api.clients.impl.ApiClient;
 import com.laserfiche.repository.api.clients.impl.model.OperationProgress;
 import kong.unirest.Unirest;
 

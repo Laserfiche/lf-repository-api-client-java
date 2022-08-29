@@ -1,14 +1,11 @@
 package com.laserfiche.repository.api.clients.impl;
 
-import java.util.*;
-
 import com.laserfiche.repository.api.clients.TagDefinitionsClient;
-import kong.unirest.HttpResponse;
+import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfWTagInfo;
+import com.laserfiche.repository.api.clients.impl.model.WTagInfo;
 import kong.unirest.Unirest;
 
 import java.util.concurrent.CompletableFuture;
-
-import com.laserfiche.repository.api.clients.impl.model.*;
 
 public class TagDefinitionsClientImpl extends ApiClient implements TagDefinitionsClient {
 

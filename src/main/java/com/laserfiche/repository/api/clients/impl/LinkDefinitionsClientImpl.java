@@ -1,14 +1,11 @@
 package com.laserfiche.repository.api.clients.impl;
 
-import java.util.*;
-
 import com.laserfiche.repository.api.clients.LinkDefinitionsClient;
-import kong.unirest.HttpResponse;
+import com.laserfiche.repository.api.clients.impl.model.EntryLinkTypeInfo;
+import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfEntryLinkTypeInfo;
 import kong.unirest.Unirest;
 
 import java.util.concurrent.CompletableFuture;
-
-import com.laserfiche.repository.api.clients.impl.model.*;
 
 public class LinkDefinitionsClientImpl extends ApiClient implements LinkDefinitionsClient {
 

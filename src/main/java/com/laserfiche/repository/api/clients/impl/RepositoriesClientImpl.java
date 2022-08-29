@@ -1,12 +1,10 @@
 package com.laserfiche.repository.api.clients.impl;
 
-import java.util.*;
-
 import com.laserfiche.repository.api.clients.RepositoriesClient;
-import kong.unirest.HttpResponse;
+import com.laserfiche.repository.api.clients.impl.model.RepositoryInfo;
 import kong.unirest.Unirest;
+
 import java.util.concurrent.CompletableFuture;
-import com.laserfiche.repository.api.clients.impl.model.*;
 
 public class RepositoriesClientImpl extends ApiClient implements RepositoriesClient {
 

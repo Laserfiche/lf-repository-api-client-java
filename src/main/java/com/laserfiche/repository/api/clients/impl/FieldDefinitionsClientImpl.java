@@ -1,14 +1,11 @@
 package com.laserfiche.repository.api.clients.impl;
 
-import java.util.*;
-
 import com.laserfiche.repository.api.clients.FieldDefinitionsClient;
-import kong.unirest.HttpResponse;
+import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfWFieldInfo;
+import com.laserfiche.repository.api.clients.impl.model.WFieldInfo;
 import kong.unirest.Unirest;
 
 import java.util.concurrent.CompletableFuture;
-
-import com.laserfiche.repository.api.clients.impl.model.*;
 
 public class FieldDefinitionsClientImpl extends ApiClient implements FieldDefinitionsClient {
 

@@ -1,13 +1,11 @@
 package com.laserfiche.repository.api.clients.impl;
 
-import java.io.File;
-
 import com.laserfiche.repository.api.clients.EntriesClient;
+import com.laserfiche.repository.api.clients.impl.model.*;
 import kong.unirest.Unirest;
 
+import java.io.File;
 import java.util.concurrent.CompletableFuture;
-
-import com.laserfiche.repository.api.clients.impl.model.*;
 
 public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
