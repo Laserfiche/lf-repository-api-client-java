@@ -20,15 +20,14 @@ class FieldDefinitionsApiTest extends BaseTest {
 
     @Test
     void getFieldDefinitionById_Success() {
-        CompletableFuture<WFieldInfo> future = client.getFieldDefinitionById(repoId, 1, null, null);
-        WFieldInfo fieldInfo = future.join();
+        WFieldInfo fieldInfo = client.getFieldDefinitionById(repoId, 1, null, null).join();
+
         assertNotNull(fieldInfo);
     }
 
     @Test
     void getFieldDefinitions_Success() {
-        CompletableFuture<ODataValueContextOfIListOfWFieldInfo> future = client.getFieldDefinitions(repoId, null, null, null, null, null, null, false, null);
-        ODataValueContextOfIListOfWFieldInfo fieldInfoList = future.join();
+        ODataValueContextOfIListOfWFieldInfo fieldInfoList = client.getFieldDefinitions(repoId, null, null, null, null, null, null, false).join();
 
         assertNotNull(fieldInfoList);
     }
