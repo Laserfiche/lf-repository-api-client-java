@@ -70,8 +70,7 @@ public class CreateCopyEntryApiTest extends BaseTest {
         request.entryType = PostEntryChildrenEntryType.FOLDER;
         request.name = newEntryName;
 
-        CompletableFuture<Entry> createOrCopyEntryResponse = client.createOrCopyEntry(repoId, parentEntryId, request, true, null);
-        Entry targetEntry = createOrCopyEntryResponse.join();
+        Entry targetEntry = client.createOrCopyEntry(repoId, parentEntryId, request, true, null).join();
 
         assertNotNull(targetEntry);
         createdEntries.add(targetEntry);
@@ -85,8 +84,7 @@ public class CreateCopyEntryApiTest extends BaseTest {
         request.name = newEntryName;
         request.targetId = targetEntry.id;
 
-        CompletableFuture<Entry> shortCutResponse = client.createOrCopyEntry(repoId, parentEntryId, request, true, null);
-        Entry shortCut = shortCutResponse.join();
+        Entry shortCut = client.createOrCopyEntry(repoId, parentEntryId, request, true, null).join();
 
         assertNotNull(shortCut);
         createdEntries.add(shortCut);
