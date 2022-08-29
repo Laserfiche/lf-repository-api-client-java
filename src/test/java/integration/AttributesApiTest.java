@@ -22,17 +22,19 @@ class AttributesApiTest extends BaseTest {
 
     @Test
     void getTrusteeAttributeKeyValuePairs_Success() {
-        CompletableFuture<ODataValueContextOfListOfAttribute> future = client.getTrusteeAttributeKeyValuePairs(repoId, true, null, null, null, null, null, false, null);
+        CompletableFuture<ODataValueContextOfListOfAttribute> future = client.getTrusteeAttributeKeyValuePairs(repoId, true, null, null, null, null, null, false);
         ODataValueContextOfListOfAttribute attributeList = future.join();
+
         assertNotNull(attributeList);
     }
 
     @Test
     void getAttributeValueByKey_Success() {
-        CompletableFuture<ODataValueContextOfListOfAttribute> future = client.getTrusteeAttributeKeyValuePairs(repoId, true, null, null, null, null, null, false, null);
+        CompletableFuture<ODataValueContextOfListOfAttribute> future = client.getTrusteeAttributeKeyValuePairs(repoId, true, null, null, null, null, null, false);
         ODataValueContextOfListOfAttribute attributeList = future.join();
         assertNotNull(attributeList);
-        CompletableFuture<Attribute> newFuture = client.getTrusteeAttributeValueByKey(repoId, attributeList.getValue().get(0).getKey(), true);
+
+        CompletableFuture<Attribute> newFuture = client.getTrusteeAttributeValueByKey(repoId, attributeList.value.get(0).key, true);
         Attribute attributeObj = newFuture.join();
         assertNotNull(attributeObj);
     }
