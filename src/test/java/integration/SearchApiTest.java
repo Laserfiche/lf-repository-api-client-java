@@ -63,53 +63,6 @@ public class SearchApiTest extends BaseTest {
     }
 
     @Test
-    void getSearchResultsForEach_Success() throws InterruptedException {
-        AdvancedSearchRequest searchRequest = new AdvancedSearchRequest();
-        searchRequest.setSearchCommand("({LF:Basic ~= \"search text\", option=\"DFANLT\"})");
-        CompletableFuture<AcceptedOperation> searchOperationResponse = client.createSearchOperation(repoId, searchRequest);
-        searchToken = searchOperationResponse.join().getToken();
-        assertNotNull(searchToken);
-        TimeUnit.SECONDS.sleep(5);
-        client.getSearchResultsForEach((
-                future -> {
-                    assertNotNull(future);
-                    ODataValueContextOfIListOfEntry searchList = future.join();
-                    if (searchList != null) {
-                        assertNotNull(searchList.getValue());
-                    }
-                    return searchList != null; // Stop asking if there's no data.
-                }
-        ), repoId, searchToken, null, null, null, null, null, null, null, null, null, null, null, maxPageSizeForEach);
-    }
-
-    @Test
-    @Disabled("Weird Exception Thrown")
-    void getSearchContextHitsForEach_Success() throws InterruptedException {
-        AdvancedSearchRequest searchRequest = new AdvancedSearchRequest();
-        searchRequest.setSearchCommand("({LF:Basic ~= \"search text\", option=\"DFANLT\"})");
-        CompletableFuture<AcceptedOperation> searchOperationResponse = client.createSearchOperation(repoId, searchRequest);
-        searchToken = searchOperationResponse.join().getToken();
-        assertNotNull(searchToken);
-        TimeUnit.SECONDS.sleep(5);
-        CompletableFuture<ODataValueContextOfIListOfEntry> searchResultsResponse = client.getSearchResults(repoId, searchToken, null, null, null, null, null, null, null, null, null, null, null, null);
-        ODataValueContextOfIListOfEntry searchResults = searchResultsResponse.join();
-        assertNotNull(searchResults);
-        assertTrue(searchResults.getValue().size() > 0);
-        int rowNum = searchResults.getValue().get(0).getRowNumber();
-        client.getSearchContextHitsForEach((
-                future -> {
-                    assertNotNull(future);
-                    ODataValueContextOfIListOfContextHit searchList = future.join();
-                    if (searchList != null) {
-                        assertNotNull(searchList.getValue());
-                    }
-                    return searchList != null; // Stop asking if there's no data.
-                }
-        ), repoId, searchToken, rowNum, null, null, null, null, null, null, maxPageSizeForEach);
-
-    }
-
-    @Test
     @Disabled("Weird Exception Thrown")
     void getSearchStatus_Success() throws InterruptedException {
         AdvancedSearchRequest request = new AdvancedSearchRequest();
@@ -131,23 +84,5 @@ public class SearchApiTest extends BaseTest {
         assertNotNull(searchToken);
         CompletableFuture<ODataValueOfBoolean> closeSearchResponse = client.cancelOrCloseSearch(repoId, searchToken);
         assertTrue(closeSearchResponse.join().isValue());
-    }
-
-    @Test
-    void getSearchResultNextLink_Success() throws InterruptedException {
-        AdvancedSearchRequest searchRequest = new AdvancedSearchRequest();
-        searchRequest.setSearchCommand("({LF:Basic ~= \"search text\", option=\"DFANLT\"})");
-        CompletableFuture<AcceptedOperation> searchOperationResponse = client.createSearchOperation(repoId, searchRequest);
-        String searchToken = searchOperationResponse.join().getToken();
-        assertNotNull(searchToken);
-        TimeUnit.SECONDS.sleep(5);
-        CompletableFuture<ODataValueContextOfIListOfEntry> searchResultsResponse = client.getSearchResults(repoId, searchToken, null, null, null, null, null, null, null, null, null, null, null, maxPageSize);
-        assertNotNull(searchResultsResponse);
-        String nextLink = searchResultsResponse.join().getAtOdataNextLink();
-        assertNotNull(nextLink);
-        assertTrue(searchResultsResponse.join().getValue().size() <= maxPageSize);
-        CompletableFuture<ODataValueContextOfIListOfEntry> searchResultsNextLinkResponse = client.getSearchResultsNextLink(nextLink, maxPageSize);
-        assertNotNull(searchResultsNextLinkResponse);
-        assertTrue(searchResultsNextLinkResponse.join().getValue().size() <= maxPageSize);
     }
 }
