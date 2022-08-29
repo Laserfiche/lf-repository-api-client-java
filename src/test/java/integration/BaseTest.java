@@ -52,14 +52,10 @@ public class BaseTest {
 
     public static CompletableFuture<Entry> createEntry(RepositoryApiClient client, String entryName, Integer parentEntryId, Boolean autoRename) {
         PostEntryChildrenRequest request = new PostEntryChildrenRequest();
-        request.setEntryType(PostEntryChildrenEntryType.FOLDER);
-        request.setName(entryName);
-        CompletableFuture<Entry> newEntry = client.getEntriesClient().createOrCopyEntry(repoId, parentEntryId, request, autoRename, null);
-        Entry entry = newEntry.join();
-        assertNotNull(newEntry);
-        Assertions.assertSame(entry.getParentId(), parentEntryId);
-        Assertions.assertSame(entry.getEntryType(), EntryType.FOLDER);
-        return newEntry;
+        request.entryType = PostEntryChildrenEntryType.FOLDER;
+        request.name = entryName;
+
+        return client.getEntriesClient().createOrCopyEntry(repoId, parentEntryId, request, autoRename, null);
     }
 
     public static CompletableFuture<Boolean> allFalse(List<TemplateFieldInfo> arr) {
