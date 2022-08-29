@@ -1,13 +1,7 @@
-package com.laserfiche.api.client.model;
+package com.laserfiche.repository.api.clients.impl.model;
 
-import java.util.Objects;
-import java.util.Arrays;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
-import com.laserfiche.api.client.model.WFieldType;
-import io.swagger.v3.oas.annotations.media.Schema;
-import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Map;
 

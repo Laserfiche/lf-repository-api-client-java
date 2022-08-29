@@ -1,16 +1,6 @@
-package com.laserfiche.api.client.model;
+package com.laserfiche.repository.api.clients.impl.model;
 
-import java.util.Objects;
-import java.util.Arrays;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
-import com.laserfiche.api.client.model.EntryCreate;
-import com.laserfiche.api.client.model.SetEdoc;
-import com.laserfiche.api.client.model.SetFields;
-import com.laserfiche.api.client.model.SetLinks;
-import com.laserfiche.api.client.model.SetTags;
-import com.laserfiche.api.client.model.SetTemplate;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 @Schema(description = "The results of each operation needed in order to create the electronic document with optional template and fields.")
