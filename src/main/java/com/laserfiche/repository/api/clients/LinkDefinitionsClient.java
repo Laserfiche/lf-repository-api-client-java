@@ -17,7 +17,7 @@ public interface LinkDefinitionsClient {
      * @param select     Limits the properties returned in the result.
      * @return CompletableFuture<EntryLinkTypeInfo> The return value
      */
-    CompletableFuture<EntryLinkTypeInfo> getLinkDefinitionById(String repoId, int linkTypeId, String select);
+    CompletableFuture<EntryLinkTypeInfo> getLinkDefinitionById(String repoId, Integer linkTypeId, String select);
 
     /**
      * - Returns the link definitions in the repository.
@@ -34,5 +34,5 @@ public interface LinkDefinitionsClient {
      * @return CompletableFuture<ODataValueContextOfIListOfEntryLinkTypeInfo> The return value
      */
     CompletableFuture<ODataValueContextOfIListOfEntryLinkTypeInfo> getLinkDefinitions(String repoId, String prefer,
-            String select, String orderby, int top, int skip, boolean count);
+            String select, String orderby, Integer top, Integer skip, Boolean count);
 }

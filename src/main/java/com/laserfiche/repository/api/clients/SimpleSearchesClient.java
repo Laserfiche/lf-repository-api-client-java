@@ -28,6 +28,6 @@ public interface SimpleSearchesClient {
      * @return CompletableFuture<ODataValueOfIListOfEntry> The return value
      */
     CompletableFuture<ODataValueOfIListOfEntry> createSimpleSearchOperation(String select, String orderby,
-            boolean count, String repoId, String[] fields, boolean formatFields, SimpleSearchRequest requestBody,
+            Boolean count, String repoId, String[] fields, Boolean formatFields, SimpleSearchRequest requestBody,
             String culture);
 }

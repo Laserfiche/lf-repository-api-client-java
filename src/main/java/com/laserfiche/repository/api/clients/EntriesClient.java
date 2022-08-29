@@ -27,8 +27,9 @@ public interface EntriesClient {
      * @param count       Indicates whether the total count of items within a collection are returned in the result.
      * @return CompletableFuture<ODataValueContextOfIListOfFieldValue> The return value
      */
-    CompletableFuture<ODataValueContextOfIListOfFieldValue> getFieldValues(String repoId, int entryId, String prefer,
-            boolean formatValue, String culture, String select, String orderby, int top, int skip, boolean count);
+    CompletableFuture<ODataValueContextOfIListOfFieldValue> getFieldValues(String repoId, Integer entryId,
+            String prefer, Boolean formatValue, String culture, String select, String orderby, Integer top,
+            Integer skip, Boolean count);
 
     /**
      * - Update the field values assigned to an entry.
@@ -42,7 +43,7 @@ public interface EntriesClient {
      *                    The value should be a standard language tag.
      * @return CompletableFuture<ODataValueOfIListOfFieldValue> The return value
      */
-    CompletableFuture<ODataValueOfIListOfFieldValue> assignFieldValues(String repoId, int entryId,
+    CompletableFuture<ODataValueOfIListOfFieldValue> assignFieldValues(String repoId, Integer entryId,
             FieldToUpdate requestBody, String culture);
 
     /**
@@ -61,7 +62,7 @@ public interface EntriesClient {
      * @return CompletableFuture<CreateEntryResult> The return value
      */
     CompletableFuture<CreateEntryResult> importDocument(PostEntryWithEdocMetadataRequest requestBody, String repoId,
-            int parentEntryId, String fileName, boolean autoRename, String culture);
+            Integer parentEntryId, String fileName, Boolean autoRename, String culture);
 
     /**
      * - Returns the links assigned to an entry.
@@ -78,8 +79,8 @@ public interface EntriesClient {
      * @param count   Indicates whether the total count of items within a collection are returned in the result.
      * @return CompletableFuture<ODataValueContextOfIListOfWEntryLinkInfo> The return value
      */
-    CompletableFuture<ODataValueContextOfIListOfWEntryLinkInfo> getLinkValuesFromEntry(String repoId, int entryId,
-            String prefer, String select, String orderby, int top, int skip, boolean count);
+    CompletableFuture<ODataValueContextOfIListOfWEntryLinkInfo> getLinkValuesFromEntry(String repoId, Integer entryId,
+            String prefer, String select, String orderby, Integer top, Integer skip, Boolean count);
 
     /**
      * - Assign links to an entry.
@@ -91,7 +92,7 @@ public interface EntriesClient {
      * @param requestBody null
      * @return CompletableFuture<ODataValueOfIListOfWEntryLinkInfo> The return value
      */
-    CompletableFuture<ODataValueOfIListOfWEntryLinkInfo> assignEntryLinks(String repoId, int entryId,
+    CompletableFuture<ODataValueOfIListOfWEntryLinkInfo> assignEntryLinks(String repoId, Integer entryId,
             PutLinksRequest requestBody);
 
     /**
@@ -106,7 +107,7 @@ public interface EntriesClient {
      *                    The value should be a standard language tag.
      * @return CompletableFuture<Entry> The return value
      */
-    CompletableFuture<Entry> writeTemplateValueToEntry(String repoId, int entryId, PutTemplateRequest requestBody,
+    CompletableFuture<Entry> writeTemplateValueToEntry(String repoId, Integer entryId, PutTemplateRequest requestBody,
             String culture);
 
     /**
@@ -118,7 +119,7 @@ public interface EntriesClient {
      * @param entryId The ID of the entry that will have its template removed.
      * @return CompletableFuture<Entry> The return value
      */
-    CompletableFuture<Entry> deleteAssignedTemplate(String repoId, int entryId);
+    CompletableFuture<Entry> deleteAssignedTemplate(String repoId, Integer entryId);
 
     /**
      * - Returns an entry's edoc resource in a stream format while including an audit reason.
@@ -132,7 +133,7 @@ public interface EntriesClient {
      *                    range with byte unit.
      * @return CompletableFuture<File> The return value
      */
-    CompletableFuture<File> exportDocumentWithAuditReason(String repoId, int entryId,
+    CompletableFuture<File> exportDocumentWithAuditReason(String repoId, Integer entryId,
             GetEdocWithAuditReasonRequest requestBody, String range);
 
     /**
@@ -146,7 +147,7 @@ public interface EntriesClient {
      *                range with byte unit.
      * @return CompletableFuture<File> The return value
      */
-    CompletableFuture<File> exportDocument(String repoId, int entryId, String range);
+    CompletableFuture<File> exportDocument(String repoId, Integer entryId, String range);
 
     /**
      * - Delete the edoc associated with the provided entry ID.
@@ -155,7 +156,7 @@ public interface EntriesClient {
      * @param entryId The requested document ID.
      * @return CompletableFuture<ODataValueOfBoolean> The return value
      */
-    CompletableFuture<ODataValueOfBoolean> deleteDocument(String repoId, int entryId);
+    CompletableFuture<ODataValueOfBoolean> deleteDocument(String repoId, Integer entryId);
 
     /**
      * - Delete the pages associated with the provided entry ID. If no pageRange is specified, all pages will be deleted.
@@ -166,7 +167,7 @@ public interface EntriesClient {
      * @param pageRange The pages to be deleted.
      * @return CompletableFuture<ODataValueOfBoolean> The return value
      */
-    CompletableFuture<ODataValueOfBoolean> deletePages(String repoId, int entryId, String pageRange);
+    CompletableFuture<ODataValueOfBoolean> deletePages(String repoId, Integer entryId, String pageRange);
 
     /**
      * - Returns the children entries of a folder in the repository.
@@ -192,9 +193,9 @@ public interface EntriesClient {
      * @param count            Indicates whether the total count of items within a collection are returned in the result.
      * @return CompletableFuture<ODataValueContextOfIListOfEntry> The return value
      */
-    CompletableFuture<ODataValueContextOfIListOfEntry> getEntryListing(String repoId, int entryId,
-            boolean groupByEntryType, String[] fields, boolean formatFields, String prefer, String culture,
-            String select, String orderby, int top, int skip, boolean count);
+    CompletableFuture<ODataValueContextOfIListOfEntry> getEntryListing(String repoId, Integer entryId,
+            Boolean groupByEntryType, String[] fields, Boolean formatFields, String prefer, String culture,
+            String select, String orderby, Integer top, Integer skip, Boolean count);
 
     /**
      * - Create/copy a new child entry in the designated folder.
@@ -210,8 +211,8 @@ public interface EntriesClient {
      *                    The value should be a standard language tag.
      * @return CompletableFuture<Entry> The return value
      */
-    CompletableFuture<Entry> createOrCopyEntry(String repoId, int entryId, PostEntryChildrenRequest requestBody,
-            boolean autoRename, String culture);
+    CompletableFuture<Entry> createOrCopyEntry(String repoId, Integer entryId, PostEntryChildrenRequest requestBody,
+            Boolean autoRename, String culture);
 
     /**
      * - Returns dynamic field logic values with the current values of the fields in the template.
@@ -223,7 +224,7 @@ public interface EntriesClient {
      * @param requestBody null
      * @return CompletableFuture<String [ ]> The return value
      */
-    CompletableFuture<String[]> getDynamicFieldValues(String repoId, int entryId,
+    CompletableFuture<String[]> getDynamicFieldValues(String repoId, Integer entryId,
             GetDynamicFieldLogicValueRequest requestBody);
 
     /**
@@ -241,8 +242,8 @@ public interface EntriesClient {
      *                    The value should be a standard language tag.
      * @return CompletableFuture<AcceptedOperation> The return value
      */
-    CompletableFuture<AcceptedOperation> copyEntryAsync(String repoId, int entryId, CopyAsyncRequest requestBody,
-            boolean autoRename, String culture);
+    CompletableFuture<AcceptedOperation> copyEntryAsync(String repoId, Integer entryId, CopyAsyncRequest requestBody,
+            Boolean autoRename, String culture);
 
     /**
      * - Returns the tags assigned to an entry.
@@ -259,8 +260,8 @@ public interface EntriesClient {
      * @param count   Indicates whether the total count of items within a collection are returned in the result.
      * @return CompletableFuture<ODataValueContextOfIListOfWTagInfo> The return value
      */
-    CompletableFuture<ODataValueContextOfIListOfWTagInfo> getTagsAssignedToEntry(String repoId, int entryId,
-            String prefer, String select, String orderby, int top, int skip, boolean count);
+    CompletableFuture<ODataValueContextOfIListOfWTagInfo> getTagsAssignedToEntry(String repoId, Integer entryId,
+            String prefer, String select, String orderby, Integer top, Integer skip, Boolean count);
 
     /**
      * - Assign tags to an entry.
@@ -272,7 +273,8 @@ public interface EntriesClient {
      * @param requestBody The tags to add.
      * @return CompletableFuture<ODataValueOfIListOfWTagInfo> The return value
      */
-    CompletableFuture<ODataValueOfIListOfWTagInfo> assignTags(String repoId, int entryId, PutTagRequest requestBody);
+    CompletableFuture<ODataValueOfIListOfWTagInfo> assignTags(String repoId, Integer entryId,
+            PutTagRequest requestBody);
 
     /**
      * - Returns a single entry object.
@@ -284,7 +286,7 @@ public interface EntriesClient {
      * @param select  Limits the properties returned in the result.
      * @return CompletableFuture<Entry> The return value
      */
-    CompletableFuture<Entry> getEntry(String repoId, int entryId, String select);
+    CompletableFuture<Entry> getEntry(String repoId, Integer entryId, String select);
 
     /**
      * - Moves and/or renames an entry.
@@ -301,8 +303,8 @@ public interface EntriesClient {
      *                    The value should be a standard language tag.
      * @return CompletableFuture<Entry> The return value
      */
-    CompletableFuture<Entry> moveOrRenameDocument(String repoId, int entryId, PatchEntryRequest requestBody,
-            boolean autoRename, String culture);
+    CompletableFuture<Entry> moveOrRenameDocument(String repoId, Integer entryId, PatchEntryRequest requestBody,
+            Boolean autoRename, String culture);
 
     /**
      * - Begins a task to delete an entry, and returns an operationToken.
@@ -314,6 +316,6 @@ public interface EntriesClient {
      * @param requestBody The submitted audit reason.
      * @return CompletableFuture<AcceptedOperation> The return value
      */
-    CompletableFuture<AcceptedOperation> deleteEntryInfo(String repoId, int entryId,
+    CompletableFuture<AcceptedOperation> deleteEntryInfo(String repoId, Integer entryId,
             DeleteEntryWithAuditReason requestBody);
 }

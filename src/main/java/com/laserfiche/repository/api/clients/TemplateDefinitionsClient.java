@@ -26,8 +26,8 @@ public interface TemplateDefinitionsClient {
      * @return CompletableFuture<ODataValueContextOfIListOfWTemplateInfo> The return value
      */
     CompletableFuture<ODataValueContextOfIListOfWTemplateInfo> getTemplateDefinitions(String repoId,
-            String templateName, String prefer, String culture, String select, String orderby, int top, int skip,
-            boolean count);
+            String templateName, String prefer, String culture, String select, String orderby, Integer top,
+            Integer skip, Boolean count);
 
     /**
      * - Returns the field definitions assigned to a template definition.
@@ -47,8 +47,8 @@ public interface TemplateDefinitionsClient {
      * @return CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo> The return value
      */
     CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo> getTemplateFieldDefinitionsByTemplateName(
-            String repoId, String templateName, String prefer, String culture, String select, String orderby, int top,
-            int skip, boolean count);
+            String repoId, String templateName, String prefer, String culture, String select, String orderby,
+            Integer top, Integer skip, Boolean count);
 
     /**
      * - Returns the field definitions assigned to a template definition.
@@ -68,8 +68,8 @@ public interface TemplateDefinitionsClient {
      * @return CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo> The return value
      */
     CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo> getTemplateFieldDefinitions(String repoId,
-            int templateId, String prefer, String culture, String select, String orderby, int top, int skip,
-            boolean count);
+            Integer templateId, String prefer, String culture, String select, String orderby, Integer top, Integer skip,
+            Boolean count);
 
     /**
      * - Returns a single template definition (including field definitions, if relevant).
@@ -83,6 +83,6 @@ public interface TemplateDefinitionsClient {
      * @param select     Limits the properties returned in the result.
      * @return CompletableFuture<WTemplateInfo> The return value
      */
-    CompletableFuture<WTemplateInfo> getTemplateDefinitionById(String repoId, int templateId, String culture,
+    CompletableFuture<WTemplateInfo> getTemplateDefinitionById(String repoId, Integer templateId, String culture,
             String select);
 }

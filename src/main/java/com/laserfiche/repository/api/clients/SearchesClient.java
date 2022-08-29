@@ -44,7 +44,7 @@ public interface SearchesClient {
      * @return CompletableFuture<ODataValueContextOfIListOfContextHit> The return value
      */
     CompletableFuture<ODataValueContextOfIListOfContextHit> getSearchContextHits(String repoId, String searchToken,
-            int rowNumber, String prefer, String select, String orderby, int top, int skip, boolean count);
+            Integer rowNumber, String prefer, String select, String orderby, Integer top, Integer skip, Boolean count);
 
     /**
      * - Runs a search operation on the repository.
@@ -83,6 +83,6 @@ public interface SearchesClient {
      * @return CompletableFuture<ODataValueContextOfIListOfEntry> The return value
      */
     CompletableFuture<ODataValueContextOfIListOfEntry> getSearchResults(String repoId, String searchToken,
-            boolean groupByEntryType, boolean refresh, String[] fields, boolean formatFields, String prefer,
-            String culture, String select, String orderby, int top, int skip, boolean count);
+            Boolean groupByEntryType, Boolean refresh, String[] fields, Boolean formatFields, String prefer,
+            String culture, String select, String orderby, Integer top, Integer skip, Boolean count);
 }

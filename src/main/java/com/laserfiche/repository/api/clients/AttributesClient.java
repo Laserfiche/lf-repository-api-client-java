@@ -16,7 +16,7 @@ public interface AttributesClient {
      * @param everyone     Boolean value that indicates whether to return attributes associated with everyone or the currently authenticated user.
      * @return CompletableFuture<Attribute> The return value
      */
-    CompletableFuture<Attribute> getTrusteeAttributeValueByKey(String repoId, String attributeKey, boolean everyone);
+    CompletableFuture<Attribute> getTrusteeAttributeValueByKey(String repoId, String attributeKey, Boolean everyone);
 
     /**
      * - Returns the attribute key value pairs associated with the authenticated user. Alternatively, return only the attribute key value pairs that are associated with the "Everyone" group.
@@ -34,5 +34,5 @@ public interface AttributesClient {
      * @return CompletableFuture<ODataValueContextOfListOfAttribute> The return value
      */
     CompletableFuture<ODataValueContextOfListOfAttribute> getTrusteeAttributeKeyValuePairs(String repoId,
-            boolean everyone, String prefer, String select, String orderby, int top, int skip, boolean count);
+            Boolean everyone, String prefer, String select, String orderby, Integer top, Integer skip, Boolean count);
 }

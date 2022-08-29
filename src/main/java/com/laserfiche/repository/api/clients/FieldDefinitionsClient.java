@@ -19,7 +19,7 @@ public interface FieldDefinitionsClient {
      * @param select            Limits the properties returned in the result.
      * @return CompletableFuture<WFieldInfo> The return value
      */
-    CompletableFuture<WFieldInfo> getFieldDefinitionById(String repoId, int fieldDefinitionId, String culture,
+    CompletableFuture<WFieldInfo> getFieldDefinitionById(String repoId, Integer fieldDefinitionId, String culture,
             String select);
 
     /**
@@ -39,5 +39,5 @@ public interface FieldDefinitionsClient {
      * @return CompletableFuture<ODataValueContextOfIListOfWFieldInfo> The return value
      */
     CompletableFuture<ODataValueContextOfIListOfWFieldInfo> getFieldDefinitions(String repoId, String prefer,
-            String culture, String select, String orderby, int top, int skip, boolean count);
+            String culture, String select, String orderby, Integer top, Integer skip, Boolean count);
 }
