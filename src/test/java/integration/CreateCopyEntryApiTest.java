@@ -101,27 +101,25 @@ public class CreateCopyEntryApiTest extends BaseTest {
         String testFolderName = "RepositoryApiClientIntegrationTest Java CreateCopyEntry_CopyEntry_test_folder";
         String newEntryName = "RepositoryApiClientIntegrationTest Java CreateFolder";
 
-        CompletableFuture<Entry> testFolder = createEntry(createEntryClient, testFolderName, 1, true);
+        Entry testFolder = createEntry(createEntryClient, testFolderName, 1, true).join();
 
         PostEntryChildrenRequest request = new PostEntryChildrenRequest();
         request.entryType = PostEntryChildrenEntryType.FOLDER;
         request.name = newEntryName;
 
-        CompletableFuture<Entry> targetEntry = client.createOrCopyEntry(repoId, testFolder.join().id, request, true, null);
+        Entry targetEntry = client.createOrCopyEntry(repoId, testFolder.id, request, true, null).join();
 
-        assertNotNull(targetEntry.join());
-        createdEntries.add(targetEntry.join());
+        assertNotNull(targetEntry);
+        createdEntries.add(targetEntry);
 
-        assertEquals(targetEntry.join().parentId, testFolder.join().id);
-        assertEquals(targetEntry
-                .join()
-                .entryType, EntryType.FOLDER);
+        assertEquals(targetEntry.parentId, testFolder.id);
+        assertEquals(targetEntry.entryType, EntryType.FOLDER);
 
         CopyAsyncRequest copyAsyncRequest = new CopyAsyncRequest();
         copyAsyncRequest.name = "RepositoryApiClientIntegrationTest Java CopiedEntry";
-        copyAsyncRequest.sourceId = targetEntry.join().id;
+        copyAsyncRequest.sourceId = targetEntry.id;
 
-        CompletableFuture<AcceptedOperation> copyEntryResponse = client.copyEntryAsync(repoId, testFolder.join().id, copyAsyncRequest, true, null);
+        CompletableFuture<AcceptedOperation> copyEntryResponse = client.copyEntryAsync(repoId, testFolder.id, copyAsyncRequest, true, null);
         String opToken = copyEntryResponse.join().token;
 
         TimeUnit.SECONDS.sleep(5);
@@ -131,8 +129,8 @@ public class CreateCopyEntryApiTest extends BaseTest {
         assertEquals(getOperationStatusAndProgressResponse.join().status, OperationStatus.COMPLETED);
 
         DeleteEntryWithAuditReason deleteEntryWithAuditReason = new DeleteEntryWithAuditReason();
-        CompletableFuture<AcceptedOperation> deleteEntryResponse = client.deleteEntryInfo(repoId, testFolder.join().id, deleteEntryWithAuditReason);
-        assertNotNull(deleteEntryResponse.join());
+        AcceptedOperation deleteEntryResponse = client.deleteEntryInfo(repoId, testFolder.id, deleteEntryWithAuditReason).join();
+        assertNotNull(deleteEntryResponse);
     }
 
     @Test
@@ -144,8 +142,7 @@ public class CreateCopyEntryApiTest extends BaseTest {
         request.entryType = PostEntryChildrenEntryType.FOLDER;
         request.name = newEntryName;
 
-        CompletableFuture<Entry> createOrCopyEntryResponse = client.createOrCopyEntry(repoId, parentEntryId, request, true, null);
-        Entry targetEntry = createOrCopyEntryResponse.join();
+        Entry targetEntry = client.createOrCopyEntry(repoId, parentEntryId, request, true, null).join();
 
         assertNotNull(targetEntry);
 
@@ -161,46 +158,46 @@ public class CreateCopyEntryApiTest extends BaseTest {
         request.name = newEntryName;
         request.targetId = targetEntry.id;
 
-        createOrCopyEntryResponse = client.createOrCopyEntry(repoId, parentEntryId, request, true, null);
+        Entry createOrCopyEntryResponse = client.createOrCopyEntry(repoId, parentEntryId, request, true, null).join();
 
-        assertNotNull(createOrCopyEntryResponse.join());
+        assertNotNull(createOrCopyEntryResponse);
 
-        createdEntries.add(createOrCopyEntryResponse.join());
+        createdEntries.add(createOrCopyEntryResponse);
 
-        assertEquals(parentEntryId, createOrCopyEntryResponse.join().parentId);
-        assertEquals(createOrCopyEntryResponse.join().entryType, EntryType.SHORTCUT);
+        assertEquals(parentEntryId, createOrCopyEntryResponse.parentId);
+        assertEquals(createOrCopyEntryResponse.entryType, EntryType.SHORTCUT);
 
         request = new PostEntryChildrenRequest();
         request.name = "RepositoryApiClientIntegrationTest Java CopiedEntry";
-        request.sourceId = createOrCopyEntryResponse.join().id;
+        request.sourceId = createOrCopyEntryResponse.id;
 
-        CompletableFuture<Entry> newEntryResponse = client.createOrCopyEntry(repoId, parentEntryId, request, true, null);
+        Entry newEntryResponse = client.createOrCopyEntry(repoId, parentEntryId, request, true, null).join();
 
-        createdEntries.add(newEntryResponse.join());
+        createdEntries.add(newEntryResponse);
 
-        assertEquals(newEntryResponse.join().parentId, parentEntryId);
-        assertEquals(newEntryResponse.join().entryType, createOrCopyEntryResponse.join().entryType);
+        assertEquals(newEntryResponse.parentId, parentEntryId);
+        assertEquals(newEntryResponse.entryType, createOrCopyEntryResponse.entryType);
     }
 
     @Test
     void moveAndRenameEntry_Success() {
-        CompletableFuture<Entry> parentFolder = createEntry(createEntryClient, "RepositoryApiClientIntegrationTest Java ParentFolder", 1, true);
+        Entry parentFolder = createEntry(createEntryClient, "RepositoryApiClientIntegrationTest Java ParentFolder", 1, true).join();
 
-        createdEntries.add(parentFolder.join());
+        createdEntries.add(parentFolder);
 
-        CompletableFuture<Entry> childFolder = createEntry(createEntryClient, "RepositoryApiClientIntegrationTest Java ChildFolder", 1, true);
+        Entry childFolder = createEntry(createEntryClient, "RepositoryApiClientIntegrationTest Java ChildFolder", 1, true).join();
 
-        createdEntries.add(childFolder.join());
+        createdEntries.add(childFolder);
 
         PatchEntryRequest request = new PatchEntryRequest();
-        request.parentId = parentFolder.join().id;
+        request.parentId = parentFolder.id;
         request.name = "RepositoryApiClientIntegrationTest Java MovedFolder";
 
-        CompletableFuture<Entry> movedEntryResponse = client.moveOrRenameDocument(repoId, childFolder.join().id, request, true, null);
+        Entry movedEntryResponse = client.moveOrRenameDocument(repoId, childFolder.id, request, true, null).join();
 
         assertNotNull(movedEntryResponse);
-        assertEquals(movedEntryResponse.join().id, childFolder.join().id);
-        assertEquals(movedEntryResponse.join().parentId, parentFolder.join().id);
-        assertEquals(movedEntryResponse.join().name, request.name);
+        assertEquals(movedEntryResponse.id, childFolder.id);
+        assertEquals(movedEntryResponse.parentId, parentFolder.id);
+        assertEquals(movedEntryResponse.name, request.name);
     }
 }
