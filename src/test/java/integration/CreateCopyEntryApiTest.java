@@ -51,17 +51,14 @@ public class CreateCopyEntryApiTest extends BaseTest {
         request.entryType = PostEntryChildrenEntryType.FOLDER;
         request.name = newEntryName;
 
-        CompletableFuture<Entry> createOrCopyEntryResponse = client.createOrCopyEntry(repoId, parentEntryId, request, true, null);
+        Entry createOrCopyEntryResponse = client.createOrCopyEntry(repoId, parentEntryId, request, true, null).join();
 
-        assertNotNull(createOrCopyEntryResponse.join());
-        createdEntries.add(createOrCopyEntryResponse.join());
+        assertNotNull(createOrCopyEntryResponse);
+        createdEntries.add(createOrCopyEntryResponse);
 
-        assertEquals(parentEntryId, createOrCopyEntryResponse.join().parentId);
-        assertEquals(createOrCopyEntryResponse.join().entryType, EntryType.FOLDER);
-        assertEquals(Folder.class.getName(), createOrCopyEntryResponse
-                .join()
-                .getClass()
-                .getName());
+        assertEquals(parentEntryId, createOrCopyEntryResponse.parentId);
+        assertEquals(createOrCopyEntryResponse.entryType, EntryType.FOLDER);
+        assertEquals(Folder.class.getName(), createOrCopyEntryResponse.getClass().getName());
     }
 
     @Test
