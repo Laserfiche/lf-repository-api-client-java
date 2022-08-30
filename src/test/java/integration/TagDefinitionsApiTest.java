@@ -13,8 +13,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 class TagDefinitionsApiTest extends BaseTest {
     TagDefinitionsClient client;
 
-    private final int maxPageSize = 1;
-
     @BeforeEach
     void PerTestSetup() {
         client = repositoryApiClient.getTagDefinitionsClient();
@@ -22,19 +20,19 @@ class TagDefinitionsApiTest extends BaseTest {
 
     @Test
     void getTagDefinitions_Success() {
-        CompletableFuture<ODataValueContextOfIListOfWTagInfo> future = client.getTagDefinitions(repoId, null, null, null, null, null, null, false, null);
-        ODataValueContextOfIListOfWTagInfo tagInfoList = future.join();
+        ODataValueContextOfIListOfWTagInfo tagInfoList = client.getTagDefinitions(repoId, null, null, null, null, null, null, false).join();
 
         assertNotNull(tagInfoList);
     }
 
     @Test
     void getTagDefinitionById_Success() {
-        CompletableFuture<ODataValueContextOfIListOfWTagInfo> future = client.getTagDefinitions(repoId, null, null, null, null, null, null, false, null);
-        ODataValueContextOfIListOfWTagInfo tagInfoList = future.join();
+        ODataValueContextOfIListOfWTagInfo tagInfoList = client.getTagDefinitions(repoId, null, null, null, null, null, null, false).join();
+
         assertNotNull(tagInfoList);
-        CompletableFuture<WTagInfo> newFuture = client.getTagDefinitionById(repoId, tagInfoList.getValue().get(0).getId(), null, null);
-        WTagInfo tagInfo = newFuture.join();
+
+        WTagInfo tagInfo = client.getTagDefinitionById(repoId, tagInfoList.value.get(0).id, null, null).join();
+
         assertNotNull(tagInfo);
     }
 }
