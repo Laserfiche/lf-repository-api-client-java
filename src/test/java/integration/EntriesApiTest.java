@@ -59,12 +59,15 @@ class EntriesApiTest extends BaseTest {
 
     @Test
     void deleteEntry_Success() {
-        CompletableFuture<Entry> deleteEntry = createEntry(createEntryClient,
-                "RepositoryApiClientIntegrationTest Java DeleteFolder", 1, true);
-        DeleteEntryWithAuditReason body = new DeleteEntryWithAuditReason();
-        CompletableFuture<AcceptedOperation> deleteEntryResponse = client.deleteEntryInfo(repoId, deleteEntry.join().id,
-                body);
+        Entry deleteEntry = createEntry(createEntryClient,
+                "RepositoryApiClientIntegrationTest Java DeleteFolder", 1, true)
+                .join();
+
+        CompletableFuture<AcceptedOperation> deleteEntryResponse = client.deleteEntryInfo(repoId, deleteEntry.id,
+                new DeleteEntryWithAuditReason());
+
         String token = deleteEntryResponse.join().token;
+
         assertNotNull(token);
     }
 
