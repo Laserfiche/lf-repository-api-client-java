@@ -5,10 +5,8 @@ import com.laserfiche.api.client.httphandlers.OAuthClientCredentialsHandler;
 import com.laserfiche.api.client.httphandlers.Request;
 import com.laserfiche.api.client.httphandlers.RequestImpl;
 import com.laserfiche.api.client.model.AccessKey;
-import okhttp3.Interceptor;
-import okhttp3.Response;
+import kong.unirest.*;
 
-import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
 
 public class OAuthInterceptor implements Interceptor {
@@ -19,14 +17,10 @@ public class OAuthInterceptor implements Interceptor {
     }
 
     @Override
-    public Response intercept(Chain chain) throws IOException {
-        okhttp3.Request originalRequest = chain.request();
+    public void onRequest(HttpRequest<?> request, Config config) {
         Request customRequest = new RequestImpl();
         CompletableFuture<BeforeSendResult> future = oauthHandler.beforeSendAsync(customRequest);
         future.join(); // We are blocked by the HTTP handler
-        okhttp3.Request requestWithAuth = originalRequest.newBuilder()
-                .addHeader("Authorization", customRequest.headers().get("Authorization"))
-                .build();
-        return chain.proceed(requestWithAuth);
+        request.header("Authorization", customRequest.headers().get("Authorization"));
     }
 }
