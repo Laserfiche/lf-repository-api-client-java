@@ -17,7 +17,7 @@ import org.threeten.bp.OffsetDateTime;
 import java.io.IOException;
 
 public class RepositoryClientObjectMapper implements ObjectMapper {
-    private com.fasterxml.jackson.databind.ObjectMapper jacksonMapper;
+    private final com.fasterxml.jackson.databind.ObjectMapper jacksonMapper;
 
     public RepositoryClientObjectMapper() {
         SimpleModule module = new SimpleModule();
