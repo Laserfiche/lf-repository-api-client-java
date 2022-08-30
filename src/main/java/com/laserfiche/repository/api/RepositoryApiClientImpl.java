@@ -3,27 +3,25 @@ package com.laserfiche.repository.api;
 import com.laserfiche.api.client.model.AccessKey;
 import com.laserfiche.repository.api.clients.*;
 import com.laserfiche.repository.api.clients.impl.*;
-import com.laserfiche.repository.api.serialization.RepositoryApiDeserializer;
 
 import java.util.Map;
 
 public class RepositoryApiClientImpl implements RepositoryApiClient {
     private Map<String, String> defaultHeaders;
-    private AttributesClient attributesClient;
-    private AuditReasonsClient auditReasonsClient;
-    private EntriesClient entriesClient;
-    private FieldDefinitionsClient fieldDefinitionsClient;
-    private LinkDefinitionsClient linkDefinitionsClient;
-    private RepositoriesClient repositoriesClient;
-    private SearchesClient searchesClient;
-    private SimpleSearchesClient simpleSearchesClient;
-    private TagDefinitionsClient tagDefinitionsClient;
-    private TasksClient tasksClient;
-    private TemplateDefinitionsClient templateDefinitionsClient;
+    private final AttributesClient attributesClient;
+    private final AuditReasonsClient auditReasonsClient;
+    private final EntriesClient entriesClient;
+    private final FieldDefinitionsClient fieldDefinitionsClient;
+    private final LinkDefinitionsClient linkDefinitionsClient;
+    private final RepositoriesClient repositoriesClient;
+    private final SearchesClient searchesClient;
+    private final SimpleSearchesClient simpleSearchesClient;
+    private final TagDefinitionsClient tagDefinitionsClient;
+    private final TasksClient tasksClient;
+    private final TemplateDefinitionsClient templateDefinitionsClient;
 
     protected RepositoryApiClientImpl(String servicePrincipalKey, AccessKey accessKey, String baseUrlDebug) {
         String baseUrl = baseUrlDebug != null ? baseUrlDebug : "https://api." + accessKey.domain + "/repository";
-        RepositoryApiDeserializer json = new RepositoryApiDeserializer();
         attributesClient = new AttributesClientImpl(baseUrl);
         auditReasonsClient = new AuditReasonsClientImpl(baseUrl);
         entriesClient = new EntriesClientImpl(baseUrl);
