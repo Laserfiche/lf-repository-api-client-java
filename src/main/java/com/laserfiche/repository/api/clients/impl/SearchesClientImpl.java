@@ -5,13 +5,14 @@ import com.laserfiche.repository.api.clients.SearchesClient;
 import com.laserfiche.repository.api.clients.impl.model.*;
 import kong.unirest.Interceptor;
 import kong.unirest.Unirest;
+import kong.unirest.UnirestInstance;
 
 import java.util.concurrent.CompletableFuture;
 
 public class SearchesClientImpl extends ApiClient implements SearchesClient {
 
-    public SearchesClientImpl(String baseUrl, Interceptor interceptor) {
-        super(baseUrl, interceptor);
+    public SearchesClientImpl(String baseUrl, UnirestInstance httpClient) {
+        super(baseUrl, httpClient);
     }
 
     @Override()

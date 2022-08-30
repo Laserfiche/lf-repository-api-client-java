@@ -6,13 +6,14 @@ import com.laserfiche.repository.api.clients.impl.model.ODataValueOfIListOfEntry
 import com.laserfiche.repository.api.clients.impl.model.SimpleSearchRequest;
 import kong.unirest.Interceptor;
 import kong.unirest.Unirest;
+import kong.unirest.UnirestInstance;
 
 import java.util.concurrent.CompletableFuture;
 
 public class SimpleSearchesClientImpl extends ApiClient implements SimpleSearchesClient {
 
-    public SimpleSearchesClientImpl(String baseUrl, Interceptor interceptor) {
-        super(baseUrl, interceptor);
+    public SimpleSearchesClientImpl(String baseUrl, UnirestInstance httpClient) {
+        super(baseUrl, httpClient);
     }
 
     @Override()

@@ -1,16 +1,13 @@
 package com.laserfiche.repository.api.clients.impl;
 
-import com.laserfiche.api.client.oauth.TokenClientObjectMapper;
-import kong.unirest.Interceptor;
-import kong.unirest.Unirest;
+import kong.unirest.UnirestInstance;
 
 public class ApiClient {
-    public String baseUrl;
+    protected String baseUrl;
+    protected UnirestInstance httpClient;
 
-    public ApiClient(String baseUrl, Interceptor interceptor) {
+    public ApiClient(String baseUrl, UnirestInstance httpClient) {
         this.baseUrl = baseUrl;
-        Unirest.config()
-               .setObjectMapper(new TokenClientObjectMapper())
-               .interceptor(interceptor);
+        this.httpClient = httpClient;
     }
 }

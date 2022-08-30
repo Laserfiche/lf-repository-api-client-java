@@ -5,13 +5,14 @@ import com.laserfiche.repository.api.clients.RepositoriesClient;
 import com.laserfiche.repository.api.clients.impl.model.RepositoryInfo;
 import kong.unirest.Interceptor;
 import kong.unirest.Unirest;
+import kong.unirest.UnirestInstance;
 
 import java.util.concurrent.CompletableFuture;
 
 public class RepositoriesClientImpl extends ApiClient implements RepositoriesClient {
 
-    public RepositoriesClientImpl(String baseUrl, Interceptor interceptor) {
-        super(baseUrl, interceptor);
+    public RepositoriesClientImpl(String baseUrl, UnirestInstance httpClient) {
+        super(baseUrl, httpClient);
     }
 
     @Override()

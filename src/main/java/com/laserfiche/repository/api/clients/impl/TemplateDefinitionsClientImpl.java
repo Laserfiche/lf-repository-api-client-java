@@ -7,13 +7,14 @@ import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIList
 import com.laserfiche.repository.api.clients.impl.model.WTemplateInfo;
 import kong.unirest.Interceptor;
 import kong.unirest.Unirest;
+import kong.unirest.UnirestInstance;
 
 import java.util.concurrent.CompletableFuture;
 
 public class TemplateDefinitionsClientImpl extends ApiClient implements TemplateDefinitionsClient {
 
-    public TemplateDefinitionsClientImpl(String baseUrl, Interceptor interceptor) {
-        super(baseUrl, interceptor);
+    public TemplateDefinitionsClientImpl(String baseUrl, UnirestInstance httpClient) {
+        super(baseUrl, httpClient);
     }
 
     @Override()

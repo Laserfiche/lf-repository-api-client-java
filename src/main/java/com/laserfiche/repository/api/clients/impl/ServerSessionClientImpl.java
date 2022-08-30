@@ -6,13 +6,14 @@ import com.laserfiche.repository.api.clients.impl.model.ODataValueOfBoolean;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueOfDateTime;
 import kong.unirest.Interceptor;
 import kong.unirest.Unirest;
+import kong.unirest.UnirestInstance;
 
 import java.util.concurrent.CompletableFuture;
 
 public class ServerSessionClientImpl extends ApiClient implements ServerSessionClient {
 
-    public ServerSessionClientImpl(String baseUrl, Interceptor interceptor) {
-        super(baseUrl, interceptor);
+    public ServerSessionClientImpl(String baseUrl, UnirestInstance httpClient) {
+        super(baseUrl, httpClient);
     }
 
     @Override()

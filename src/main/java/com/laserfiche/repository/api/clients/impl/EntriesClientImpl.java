@@ -5,14 +5,15 @@ import com.laserfiche.repository.api.clients.EntriesClient;
 import com.laserfiche.repository.api.clients.impl.model.*;
 import kong.unirest.Interceptor;
 import kong.unirest.Unirest;
+import kong.unirest.UnirestInstance;
 
 import java.io.File;
 import java.util.concurrent.CompletableFuture;
 
 public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
-    public EntriesClientImpl(String baseUrl, Interceptor interceptor) {
-        super(baseUrl, interceptor);
+    public EntriesClientImpl(String baseUrl, UnirestInstance httpClient) {
+        super(baseUrl, httpClient);
     }
 
     @Override()

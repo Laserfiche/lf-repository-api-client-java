@@ -6,13 +6,14 @@ import com.laserfiche.repository.api.clients.impl.model.EntryLinkTypeInfo;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfEntryLinkTypeInfo;
 import kong.unirest.Interceptor;
 import kong.unirest.Unirest;
+import kong.unirest.UnirestInstance;
 
 import java.util.concurrent.CompletableFuture;
 
 public class LinkDefinitionsClientImpl extends ApiClient implements LinkDefinitionsClient {
 
-    public LinkDefinitionsClientImpl(String baseUrl, Interceptor interceptor) {
-        super(baseUrl, interceptor);
+    public LinkDefinitionsClientImpl(String baseUrl, UnirestInstance httpClient) {
+        super(baseUrl, httpClient);
     }
 
     @Override()

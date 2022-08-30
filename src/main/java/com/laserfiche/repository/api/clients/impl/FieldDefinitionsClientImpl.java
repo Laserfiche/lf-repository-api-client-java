@@ -6,13 +6,14 @@ import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIList
 import com.laserfiche.repository.api.clients.impl.model.WFieldInfo;
 import kong.unirest.Interceptor;
 import kong.unirest.Unirest;
+import kong.unirest.UnirestInstance;
 
 import java.util.concurrent.CompletableFuture;
 
 public class FieldDefinitionsClientImpl extends ApiClient implements FieldDefinitionsClient {
 
-    public FieldDefinitionsClientImpl(String baseUrl, Interceptor interceptor) {
-        super(baseUrl, interceptor);
+    public FieldDefinitionsClientImpl(String baseUrl, UnirestInstance httpClient) {
+        super(baseUrl, httpClient);
     }
 
     @Override()

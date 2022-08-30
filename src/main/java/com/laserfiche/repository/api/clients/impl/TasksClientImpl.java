@@ -5,13 +5,14 @@ import com.laserfiche.repository.api.clients.TasksClient;
 import com.laserfiche.repository.api.clients.impl.model.OperationProgress;
 import kong.unirest.Interceptor;
 import kong.unirest.Unirest;
+import kong.unirest.UnirestInstance;
 
 import java.util.concurrent.CompletableFuture;
 
 public class TasksClientImpl extends ApiClient implements TasksClient {
 
-    public TasksClientImpl(String baseUrl, Interceptor interceptor) {
-        super(baseUrl, interceptor);
+    public TasksClientImpl(String baseUrl, UnirestInstance httpClient) {
+        super(baseUrl, httpClient);
     }
 
     @Override()

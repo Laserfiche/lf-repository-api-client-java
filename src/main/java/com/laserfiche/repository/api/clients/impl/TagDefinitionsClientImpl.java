@@ -6,13 +6,14 @@ import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIList
 import com.laserfiche.repository.api.clients.impl.model.WTagInfo;
 import kong.unirest.Interceptor;
 import kong.unirest.Unirest;
+import kong.unirest.UnirestInstance;
 
 import java.util.concurrent.CompletableFuture;
 
 public class TagDefinitionsClientImpl extends ApiClient implements TagDefinitionsClient {
 
-    public TagDefinitionsClientImpl(String baseUrl, Interceptor interceptor) {
-        super(baseUrl, interceptor);
+    public TagDefinitionsClientImpl(String baseUrl, UnirestInstance httpClient) {
+        super(baseUrl, httpClient);
     }
 
     @Override()

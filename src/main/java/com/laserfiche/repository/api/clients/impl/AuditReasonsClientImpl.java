@@ -5,13 +5,14 @@ import com.laserfiche.repository.api.clients.AuditReasonsClient;
 import com.laserfiche.repository.api.clients.impl.model.AuditReasons;
 import kong.unirest.Interceptor;
 import kong.unirest.Unirest;
+import kong.unirest.UnirestInstance;
 
 import java.util.concurrent.CompletableFuture;
 
 public class AuditReasonsClientImpl extends ApiClient implements AuditReasonsClient {
 
-    public AuditReasonsClientImpl(String baseUrl, Interceptor interceptor) {
-        super(baseUrl, interceptor);
+    public AuditReasonsClientImpl(String baseUrl, UnirestInstance httpClient) {
+        super(baseUrl, httpClient);
     }
 
     @Override()

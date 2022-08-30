@@ -1,14 +1,17 @@
 package com.laserfiche.repository.api;
 
 import com.laserfiche.api.client.model.AccessKey;
+import com.laserfiche.api.client.oauth.TokenClientObjectMapper;
 import com.laserfiche.repository.api.clients.*;
 import com.laserfiche.repository.api.clients.impl.*;
-import kong.unirest.Interceptor;
+import kong.unirest.Unirest;
+import kong.unirest.UnirestInstance;
 
 import java.util.Map;
 
-public class RepositoryApiClientImpl implements RepositoryApiClient {
+public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseable {
     private Map<String, String> defaultHeaders;
+    private UnirestInstance httpClient;
     private final AttributesClient attributesClient;
     private final AuditReasonsClient auditReasonsClient;
     private final EntriesClient entriesClient;
@@ -24,19 +27,22 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
     protected RepositoryApiClientImpl(String servicePrincipalKey, AccessKey accessKey, String baseUrlDebug) {
         String baseUrl = baseUrlDebug != null ? baseUrlDebug : "https://api." + accessKey.domain + "/repository";
 
-        Interceptor oauthInterceptor = new OAuthInterceptor(servicePrincipalKey, accessKey);
+        httpClient = Unirest.spawnInstance();
+        httpClient.config()
+               .setObjectMapper(new TokenClientObjectMapper())
+               .interceptor(new OAuthInterceptor(servicePrincipalKey, accessKey));
 
-        attributesClient = new AttributesClientImpl(baseUrl, oauthInterceptor);
-        auditReasonsClient = new AuditReasonsClientImpl(baseUrl, oauthInterceptor);
-        entriesClient = new EntriesClientImpl(baseUrl, oauthInterceptor);
-        fieldDefinitionsClient = new FieldDefinitionsClientImpl(baseUrl, oauthInterceptor);
-        linkDefinitionsClient = new LinkDefinitionsClientImpl(baseUrl, oauthInterceptor);
-        repositoriesClient = new RepositoriesClientImpl(baseUrl, oauthInterceptor);
-        searchesClient = new SearchesClientImpl(baseUrl, oauthInterceptor);
-        simpleSearchesClient = new SimpleSearchesClientImpl(baseUrl, oauthInterceptor);
-        tagDefinitionsClient = new TagDefinitionsClientImpl(baseUrl, oauthInterceptor);
-        tasksClient = new TasksClientImpl(baseUrl, oauthInterceptor);
-        templateDefinitionsClient = new TemplateDefinitionsClientImpl(baseUrl, oauthInterceptor);
+        attributesClient = new AttributesClientImpl(baseUrl, httpClient);
+        auditReasonsClient = new AuditReasonsClientImpl(baseUrl, httpClient);
+        entriesClient = new EntriesClientImpl(baseUrl, httpClient);
+        fieldDefinitionsClient = new FieldDefinitionsClientImpl(baseUrl, httpClient);
+        linkDefinitionsClient = new LinkDefinitionsClientImpl(baseUrl, httpClient);
+        repositoriesClient = new RepositoriesClientImpl(baseUrl, httpClient);
+        searchesClient = new SearchesClientImpl(baseUrl, httpClient);
+        simpleSearchesClient = new SimpleSearchesClientImpl(baseUrl, httpClient);
+        tagDefinitionsClient = new TagDefinitionsClientImpl(baseUrl, httpClient);
+        tasksClient = new TasksClientImpl(baseUrl, httpClient);
+        templateDefinitionsClient = new TemplateDefinitionsClientImpl(baseUrl, httpClient);
     }
 
     public static RepositoryApiClient CreateFromAccessKey(String servicePrincipalKey, AccessKey accessKey, String baseUrlDebug) {
@@ -110,5 +116,13 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
     @Override
     public TemplateDefinitionsClient getTemplateDefinitionClient() {
         return templateDefinitionsClient;
+    }
+
+    /**
+     * From the AutoCloseable interface
+     */
+    @Override
+    public void close() {
+        httpClient.shutDown();
     }
 }
