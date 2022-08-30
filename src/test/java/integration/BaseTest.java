@@ -46,12 +46,15 @@ public class BaseTest {
         repositoryApiClient.setDefaultRequestHeaders(testHeaders);
     }
 
-    public static CompletableFuture<Entry> createEntry(RepositoryApiClient client, String entryName, Integer parentEntryId, Boolean autoRename) {
+    public static CompletableFuture<Entry> createEntry(RepositoryApiClient client, String entryName,
+            Integer parentEntryId, Boolean autoRename) {
         PostEntryChildrenRequest request = new PostEntryChildrenRequest();
         request.entryType = PostEntryChildrenEntryType.FOLDER;
         request.name = entryName;
 
-        return client.getEntriesClient().createOrCopyEntry(repoId, parentEntryId, request, autoRename, null);
+        return client
+                .getEntriesClient()
+                .createOrCopyEntry(repoId, parentEntryId, request, autoRename, null);
     }
 
     public static CompletableFuture<Boolean> allFalse(List<TemplateFieldInfo> arr) {

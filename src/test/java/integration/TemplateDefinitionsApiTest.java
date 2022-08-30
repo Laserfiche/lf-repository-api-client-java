@@ -20,20 +20,26 @@ class TemplateDefinitionsApiTest extends BaseTest {
 
     @Test
     void getTemplateDefinitions_Success() {
-        ODataValueContextOfIListOfWTemplateInfo templateInfoList = client.getTemplateDefinitions(repoId, null, null, null, null, null, null, null, false).join();
+        ODataValueContextOfIListOfWTemplateInfo templateInfoList = client
+                .getTemplateDefinitions(repoId, null, null, null, null, null, null, null, false)
+                .join();
 
         assertNotNull(templateInfoList);
     }
 
     @Test
     void getTemplateDefinitionsFields_Success() {
-        ODataValueContextOfIListOfWTemplateInfo templateInfoList = client.getTemplateDefinitions(repoId, null, null, null, null, null, null, null, false).join();
+        ODataValueContextOfIListOfWTemplateInfo templateInfoList = client
+                .getTemplateDefinitions(repoId, null, null, null, null, null, null, null, false)
+                .join();
 
         WTemplateInfo tempDef = templateInfoList.value.get(0);
 
         assertNotNull(templateInfoList);
 
-        ODataValueContextOfIListOfTemplateFieldInfo result = client.getTemplateFieldDefinitions(repoId, tempDef.id, null, null, null, null, null, null, false).join();
+        ODataValueContextOfIListOfTemplateFieldInfo result = client
+                .getTemplateFieldDefinitions(repoId, tempDef.id, null, null, null, null, null, null, false)
+                .join();
 
         assertNotNull(result);
         Assertions.assertSame(result.value.size(), tempDef.fieldCount);
@@ -41,13 +47,17 @@ class TemplateDefinitionsApiTest extends BaseTest {
 
     @Test
     void getTemplateDefinitionsFieldsById_Success() {
-        ODataValueContextOfIListOfWTemplateInfo templateInfoList = client.getTemplateDefinitions(repoId, null, null, null, null, null, null, null, false).join();
+        ODataValueContextOfIListOfWTemplateInfo templateInfoList = client
+                .getTemplateDefinitions(repoId, null, null, null, null, null, null, null, false)
+                .join();
 
         WTemplateInfo tempDef = templateInfoList.value.get(0);
 
         assertNotNull(templateInfoList);
 
-        WTemplateInfo result = client.getTemplateDefinitionById(repoId, tempDef.id, null, null).join();
+        WTemplateInfo result = client
+                .getTemplateDefinitionById(repoId, tempDef.id, null, null)
+                .join();
 
         assertNotNull(result);
         Assertions.assertSame(result.id, tempDef.id);
@@ -55,13 +65,17 @@ class TemplateDefinitionsApiTest extends BaseTest {
 
     @Test
     void getTemplateDefinitionsByTemplateName_Success() {
-        ODataValueContextOfIListOfWTemplateInfo templateInfoList = client.getTemplateDefinitions(repoId, null, null, null, null, null, null, null, false).join();
+        ODataValueContextOfIListOfWTemplateInfo templateInfoList = client
+                .getTemplateDefinitions(repoId, null, null, null, null, null, null, null, false)
+                .join();
 
         WTemplateInfo tempDef = templateInfoList.value.get(0);
 
         assertNotNull(templateInfoList);
 
-        ODataValueContextOfIListOfWTemplateInfo result = client.getTemplateDefinitions(repoId, tempDef.name, null, null, null, null, null, null, false).join();
+        ODataValueContextOfIListOfWTemplateInfo result = client
+                .getTemplateDefinitions(repoId, tempDef.name, null, null, null, null, null, null, false)
+                .join();
 
         assertNotNull(result);
     }

@@ -18,14 +18,18 @@ class FieldDefinitionsApiTest extends BaseTest {
 
     @Test
     void getFieldDefinitionById_Success() {
-        WFieldInfo fieldInfo = client.getFieldDefinitionById(repoId, 1, null, null).join();
+        WFieldInfo fieldInfo = client
+                .getFieldDefinitionById(repoId, 1, null, null)
+                .join();
 
         assertNotNull(fieldInfo);
     }
 
     @Test
     void getFieldDefinitions_Success() {
-        ODataValueContextOfIListOfWFieldInfo fieldInfoList = client.getFieldDefinitions(repoId, null, null, null, null, null, null, false).join();
+        ODataValueContextOfIListOfWFieldInfo fieldInfoList = client
+                .getFieldDefinitions(repoId, null, null, null, null, null, null, false)
+                .join();
 
         assertNotNull(fieldInfoList);
     }

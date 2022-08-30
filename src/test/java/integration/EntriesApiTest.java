@@ -32,44 +32,57 @@ class EntriesApiTest extends BaseTest {
 
     @Test
     void getEntryListing_Success() {
-        ODataValueContextOfIListOfEntry entryList = client.getEntryListing(repoId, 1, false, null, false, null, null, null, null, null, null, false).join();
+        ODataValueContextOfIListOfEntry entryList = client
+                .getEntryListing(repoId, 1, false, null, false, null, null, null, null, null, null, false)
+                .join();
 
         assertNotNull(entryList);
     }
 
     @Test
     void getFieldValues_Success() {
-        ODataValueContextOfIListOfFieldValue fieldValueList = client.getFieldValues(repoId, 1, null, null, null, null, null, null, null, false).join();
+        ODataValueContextOfIListOfFieldValue fieldValueList = client
+                .getFieldValues(repoId, 1, null, null, null, null, null, null, null, false)
+                .join();
 
         assertNotNull(fieldValueList);
     }
 
     @Test
     void getLinkValuesFromEntry_Success() {
-        ODataValueContextOfIListOfWEntryLinkInfo linkInfoList = client.getLinkValuesFromEntry(repoId, 1, null, null, null, null, null, false).join();
+        ODataValueContextOfIListOfWEntryLinkInfo linkInfoList = client
+                .getLinkValuesFromEntry(repoId, 1, null, null, null, null, null, false)
+                .join();
 
         assertNotNull(linkInfoList);
     }
 
     @Test
     void deleteEntry_Success() {
-        CompletableFuture<Entry> deleteEntry = createEntry(createEntryClient, "RepositoryApiClientIntegrationTest Java DeleteFolder", 1, true);
+        CompletableFuture<Entry> deleteEntry = createEntry(createEntryClient,
+                "RepositoryApiClientIntegrationTest Java DeleteFolder", 1, true);
         DeleteEntryWithAuditReason body = new DeleteEntryWithAuditReason();
-        CompletableFuture<AcceptedOperation> deleteEntryResponse = client.deleteEntryInfo(repoId, deleteEntry.join().id, body);
+        CompletableFuture<AcceptedOperation> deleteEntryResponse = client.deleteEntryInfo(repoId, deleteEntry.join().id,
+                body);
         String token = deleteEntryResponse.join().token;
         assertNotNull(token);
     }
 
     @Test
     void getTagsAssignedToEntry_Success() {
-        ODataValueContextOfIListOfWTagInfo tagInfoList = client.getTagsAssignedToEntry(repoId, 1, null, null, null, null, null, false).join();
+        ODataValueContextOfIListOfWTagInfo tagInfoList = client
+                .getTagsAssignedToEntry(repoId, 1, null, null, null, null, null, false)
+                .join();
 
         assertNotNull(tagInfoList);
     }
 
     @Test
     void getDynamicFieldsEntry_Success() {
-        ODataValueContextOfIListOfWTemplateInfo templateDefinitionsResponse = repositoryApiClient.getTemplateDefinitionClient().getTemplateDefinitions(repoId, null, null, null, null, null, null, null, null).join();
+        ODataValueContextOfIListOfWTemplateInfo templateDefinitionsResponse = repositoryApiClient
+                .getTemplateDefinitionClient()
+                .getTemplateDefinitions(repoId, null, null, null, null, null, null, null, null)
+                .join();
         List<WTemplateInfo> templateDefinitions = templateDefinitionsResponse.value;
 
         assertNotNull(templateDefinitions);
@@ -78,7 +91,9 @@ class EntriesApiTest extends BaseTest {
         GetDynamicFieldLogicValueRequest request = new GetDynamicFieldLogicValueRequest();
         request.templateId = templateDefinitions.get(0).id;
 
-        String[] dynamicFieldValueResponse = client.getDynamicFieldValues(repoId, 1, request).join();
+        String[] dynamicFieldValueResponse = client
+                .getDynamicFieldValues(repoId, 1, request)
+                .join();
         assertNotNull(dynamicFieldValueResponse);
     }
 }

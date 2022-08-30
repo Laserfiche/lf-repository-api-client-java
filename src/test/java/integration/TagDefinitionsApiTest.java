@@ -18,18 +18,24 @@ class TagDefinitionsApiTest extends BaseTest {
 
     @Test
     void getTagDefinitions_Success() {
-        ODataValueContextOfIListOfWTagInfo tagInfoList = client.getTagDefinitions(repoId, null, null, null, null, null, null, false).join();
+        ODataValueContextOfIListOfWTagInfo tagInfoList = client
+                .getTagDefinitions(repoId, null, null, null, null, null, null, false)
+                .join();
 
         assertNotNull(tagInfoList);
     }
 
     @Test
     void getTagDefinitionById_Success() {
-        ODataValueContextOfIListOfWTagInfo tagInfoList = client.getTagDefinitions(repoId, null, null, null, null, null, null, false).join();
+        ODataValueContextOfIListOfWTagInfo tagInfoList = client
+                .getTagDefinitions(repoId, null, null, null, null, null, null, false)
+                .join();
 
         assertNotNull(tagInfoList);
 
-        WTagInfo tagInfo = client.getTagDefinitionById(repoId, tagInfoList.value.get(0).id, null, null).join();
+        WTagInfo tagInfo = client
+                .getTagDefinitionById(repoId, tagInfoList.value.get(0).id, null, null)
+                .join();
 
         assertNotNull(tagInfo);
     }
