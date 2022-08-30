@@ -29,7 +29,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
 
         httpClient = Unirest.spawnInstance();
         httpClient.config()
-               .setObjectMapper(new TokenClientObjectMapper())
+               .setObjectMapper(new RepositoryClientObjectMapper())
                .interceptor(new OAuthInterceptor(servicePrincipalKey, accessKey));
 
         attributesClient = new AttributesClientImpl(baseUrl, httpClient);
