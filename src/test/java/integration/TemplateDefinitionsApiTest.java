@@ -13,8 +13,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 class TemplateDefinitionsApiTest extends BaseTest {
     TemplateDefinitionsClient client;
 
-    private final int maxPageSize = 1;
-
     @BeforeEach
     void PerTestSetup() {
         client = repositoryApiClient.getTemplateDefinitionClient();
