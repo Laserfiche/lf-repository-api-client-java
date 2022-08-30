@@ -104,7 +104,7 @@ public class CreateCopyEntryApiTest extends BaseTest {
     }
 
     @Test
-    @Disabled("Test is failing: Weird exception is being thrown")
+    @Disabled("Test is failing: We need to update it to match the new implementation.")
     void createCopyEntryCopyEntry_Success() throws InterruptedException {
         String testFolderName = "RepositoryApiClientIntegrationTest Java CreateCopyEntry_CopyEntry_test_folder";
         String newEntryName = "RepositoryApiClientIntegrationTest Java CreateFolder";
