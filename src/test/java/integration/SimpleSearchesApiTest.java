@@ -5,8 +5,6 @@ import com.laserfiche.repository.api.clients.impl.model.ODataValueOfIListOfEntry
 import com.laserfiche.repository.api.clients.impl.model.SimpleSearchRequest;
 import org.junit.jupiter.api.Test;
 
-import java.util.concurrent.CompletableFuture;
-
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class SimpleSearchesApiTest extends BaseTest {

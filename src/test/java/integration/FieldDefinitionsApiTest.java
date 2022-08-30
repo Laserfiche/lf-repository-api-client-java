@@ -6,8 +6,6 @@ import com.laserfiche.repository.api.clients.impl.model.WFieldInfo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.concurrent.CompletableFuture;
-
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class FieldDefinitionsApiTest extends BaseTest {
