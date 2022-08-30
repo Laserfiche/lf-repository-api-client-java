@@ -1,6 +1,7 @@
 package com.laserfiche.repository.api.clients.impl;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import kong.unirest.GenericType;
@@ -12,7 +13,11 @@ public class RepositoryClientObjectMapper implements ObjectMapper {
     private com.fasterxml.jackson.databind.ObjectMapper jacksonMapper;
 
     public RepositoryClientObjectMapper() {
-        jacksonMapper = JsonMapper.builder().disable(MapperFeature.CAN_OVERRIDE_ACCESS_MODIFIERS).build();
+        jacksonMapper = JsonMapper
+                .builder()
+                .disable(MapperFeature.CAN_OVERRIDE_ACCESS_MODIFIERS)
+                .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
+                .build();
     }
 
     @Override
