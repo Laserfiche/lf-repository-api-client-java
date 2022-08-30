@@ -2,7 +2,7 @@ package com.laserfiche.repository.api;
 
 import com.laserfiche.api.client.model.AccessKey;
 import com.laserfiche.repository.api.clients.*;
-import com.laserfiche.repository.api.clients.impl.AttributesClientImpl;
+import com.laserfiche.repository.api.clients.impl.*;
 import com.laserfiche.repository.api.serialization.RepositoryApiDeserializer;
 
 import java.util.Map;
@@ -22,9 +22,19 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
     private TemplateDefinitionsClient templateDefinitionsClient;
 
     protected RepositoryApiClientImpl(String servicePrincipalKey, AccessKey accessKey, String baseUrlDebug) {
-        String baseUrl = baseUrlDebug != null ? baseUrlDebug : "https://api." + accessKey.domain + "/repository/";
+        String baseUrl = baseUrlDebug != null ? baseUrlDebug : "https://api." + accessKey.domain + "/repository";
         RepositoryApiDeserializer json = new RepositoryApiDeserializer();
-        attributesClient = new AttributesClientImpl();
+        attributesClient = new AttributesClientImpl(baseUrl);
+        auditReasonsClient = new AuditReasonsClientImpl(baseUrl);
+        entriesClient = new EntriesClientImpl(baseUrl);
+        fieldDefinitionsClient = new FieldDefinitionsClientImpl(baseUrl);
+        linkDefinitionsClient = new LinkDefinitionsClientImpl(baseUrl);
+        repositoriesClient = new RepositoriesClientImpl(baseUrl);
+        searchesClient = new SearchesClientImpl(baseUrl);
+        simpleSearchesClient = new SimpleSearchesClientImpl(baseUrl);
+        tagDefinitionsClient = new TagDefinitionsClientImpl(baseUrl);
+        tasksClient = new TasksClientImpl(baseUrl);
+        templateDefinitionsClient = new TemplateDefinitionsClientImpl(baseUrl);
     }
 
     public static RepositoryApiClient CreateFromAccessKey(String servicePrincipalKey, AccessKey accessKey, String baseUrlDebug) {
