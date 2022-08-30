@@ -13,10 +13,12 @@ class SimpleSearchesApiTest extends BaseTest {
     @Test
     void createSimpleSearchOperation_Success() {
         SimpleSearchesClient client = repositoryApiClient.getSimpleSearchesClient();
+
         SimpleSearchRequest searchRequest = new SimpleSearchRequest();
-        searchRequest.setSearchCommand("({LF:Basic ~= \"search text\", option=\"DFANLT\"})");
-        CompletableFuture<ODataValueOfIListOfEntry> future = client.createSimpleSearchOperation(repoId, searchRequest, null, null, null, null, null, false);
-        ODataValueOfIListOfEntry entryList = future.join();
+        searchRequest.searchCommand = "({LF:Basic ~= \"search text\", option=\"DFANLT\"})";
+
+        ODataValueOfIListOfEntry entryList = client.createSimpleSearchOperation(null, null, null, repoId, null, null, searchRequest, null).join();
+
         assertNotNull(entryList);
     }
 }
