@@ -1,7 +1,6 @@
 package com.laserfiche.repository.api.clients.impl;
 
 import com.laserfiche.api.client.oauth.TokenClientObjectMapper;
-import com.laserfiche.repository.api.OAuthInterceptor;
 import kong.unirest.Interceptor;
 import kong.unirest.Unirest;
 
