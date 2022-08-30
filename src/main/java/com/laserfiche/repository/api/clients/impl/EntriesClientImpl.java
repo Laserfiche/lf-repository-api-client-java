@@ -18,7 +18,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
     public CompletableFuture<ODataValueContextOfIListOfFieldValue> getFieldValues(String repoId, Integer entryId,
             String prefer, Boolean formatValue, String culture, String select, String orderby, Integer top,
             Integer skip, Boolean count) {
-        return Unirest
+        return httpClient
                 .get(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/fields")
                 .routeParam("repoId", repoId)
                 .routeParam("entryId", String.valueOf(entryId))
@@ -54,7 +54,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
     @Override()
     public CompletableFuture<ODataValueOfIListOfFieldValue> assignFieldValues(String repoId, Integer entryId,
             FieldToUpdate requestBody, String culture) {
-        return Unirest
+        return httpClient
                 .put(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/fields")
                 .routeParam("repoId", repoId)
                 .routeParam("entryId", String.valueOf(entryId))
@@ -87,7 +87,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
     @Override()
     public CompletableFuture<CreateEntryResult> importDocument(PostEntryWithEdocMetadataRequest requestBody,
             String repoId, Integer parentEntryId, String fileName, Boolean autoRename, String culture) {
-        return Unirest
+        return httpClient
                 .post(baseUrl + "/v1/Repositories/{repoId}/Entries/{parentEntryId}/{fileName}")
                 .routeParam("repoId", repoId)
                 .routeParam("parentEntryId", String.valueOf(parentEntryId))
@@ -125,7 +125,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
     @Override()
     public CompletableFuture<ODataValueContextOfIListOfWEntryLinkInfo> getLinkValuesFromEntry(String repoId,
             Integer entryId, String prefer, String select, String orderby, Integer top, Integer skip, Boolean count) {
-        return Unirest
+        return httpClient
                 .get(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/links")
                 .routeParam("repoId", repoId)
                 .routeParam("entryId", String.valueOf(entryId))
@@ -159,7 +159,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
     @Override()
     public CompletableFuture<ODataValueOfIListOfWEntryLinkInfo> assignEntryLinks(String repoId, Integer entryId,
             PutLinksRequest requestBody) {
-        return Unirest
+        return httpClient
                 .put(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/links")
                 .routeParam("repoId", repoId)
                 .routeParam("entryId", String.valueOf(entryId))
@@ -191,7 +191,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
     @Override()
     public CompletableFuture<Entry> writeTemplateValueToEntry(String repoId, Integer entryId,
             PutTemplateRequest requestBody, String culture) {
-        return Unirest
+        return httpClient
                 .put(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/template")
                 .routeParam("repoId", repoId)
                 .routeParam("entryId", String.valueOf(entryId))
@@ -223,7 +223,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override()
     public CompletableFuture<Entry> deleteAssignedTemplate(String repoId, Integer entryId) {
-        return Unirest
+        return httpClient
                 .delete(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/template")
                 .routeParam("repoId", repoId)
                 .routeParam("entryId", String.valueOf(entryId))
@@ -254,7 +254,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
     @Override()
     public CompletableFuture<File> exportDocumentWithAuditReason(String repoId, Integer entryId,
             GetEdocWithAuditReasonRequest requestBody, String range) {
-        return Unirest
+        return httpClient
                 .post(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Document/GetEdocWithAuditReason")
                 .routeParam("repoId", repoId)
                 .routeParam("entryId", String.valueOf(entryId))
@@ -286,7 +286,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override()
     public CompletableFuture<File> exportDocument(String repoId, Integer entryId, String range) {
-        return Unirest
+        return httpClient
                 .get(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Document/edoc")
                 .routeParam("repoId", repoId)
                 .routeParam("entryId", String.valueOf(entryId))
@@ -317,7 +317,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override()
     public CompletableFuture<ODataValueOfBoolean> deleteDocument(String repoId, Integer entryId) {
-        return Unirest
+        return httpClient
                 .delete(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Document/edoc")
                 .routeParam("repoId", repoId)
                 .routeParam("entryId", String.valueOf(entryId))
@@ -347,7 +347,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override()
     public CompletableFuture<ODataValueOfBoolean> deletePages(String repoId, Integer entryId, String pageRange) {
-        return Unirest
+        return httpClient
                 .delete(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Document/pages")
                 .routeParam("repoId", repoId)
                 .routeParam("entryId", String.valueOf(entryId))
@@ -380,7 +380,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
     public CompletableFuture<ODataValueContextOfIListOfEntry> getEntryListing(String repoId, Integer entryId,
             Boolean groupByEntryType, String[] fields, Boolean formatFields, String prefer, String culture,
             String select, String orderby, Integer top, Integer skip, Boolean count) {
-        return Unirest
+        return httpClient
                 .get(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Folder/children")
                 .routeParam("repoId", repoId)
                 .routeParam("entryId", String.valueOf(entryId))
@@ -418,7 +418,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
     @Override()
     public CompletableFuture<Entry> createOrCopyEntry(String repoId, Integer entryId,
             PostEntryChildrenRequest requestBody, Boolean autoRename, String culture) {
-        return Unirest
+        return httpClient
                 .post(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Folder/children")
                 .routeParam("repoId", repoId)
                 .routeParam("entryId", String.valueOf(entryId))
@@ -452,7 +452,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
     @Override()
     public CompletableFuture<String[]> getDynamicFieldValues(String repoId, Integer entryId,
             GetDynamicFieldLogicValueRequest requestBody) {
-        return Unirest
+        return httpClient
                 .post(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/fields/GetDynamicFieldLogicValue")
                 .routeParam("repoId", repoId)
                 .routeParam("entryId", String.valueOf(entryId))
@@ -481,7 +481,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
     @Override()
     public CompletableFuture<AcceptedOperation> copyEntryAsync(String repoId, Integer entryId,
             CopyAsyncRequest requestBody, Boolean autoRename, String culture) {
-        return Unirest
+        return httpClient
                 .post(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Folder/CopyAsync")
                 .routeParam("repoId", repoId)
                 .routeParam("entryId", String.valueOf(entryId))
@@ -509,7 +509,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
     @Override()
     public CompletableFuture<ODataValueContextOfIListOfWTagInfo> getTagsAssignedToEntry(String repoId, Integer entryId,
             String prefer, String select, String orderby, Integer top, Integer skip, Boolean count) {
-        return Unirest
+        return httpClient
                 .get(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/tags")
                 .routeParam("repoId", repoId)
                 .routeParam("entryId", String.valueOf(entryId))
@@ -543,7 +543,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
     @Override()
     public CompletableFuture<ODataValueOfIListOfWTagInfo> assignTags(String repoId, Integer entryId,
             PutTagRequest requestBody) {
-        return Unirest
+        return httpClient
                 .put(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/tags")
                 .routeParam("repoId", repoId)
                 .routeParam("entryId", String.valueOf(entryId))
@@ -574,7 +574,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override()
     public CompletableFuture<Entry> getEntry(String repoId, Integer entryId, String select) {
-        return Unirest
+        return httpClient
                 .get(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}")
                 .routeParam("repoId", repoId)
                 .routeParam("entryId", String.valueOf(entryId))
@@ -603,7 +603,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
     @Override()
     public CompletableFuture<Entry> moveOrRenameDocument(String repoId, Integer entryId, PatchEntryRequest requestBody,
             Boolean autoRename, String culture) {
-        return Unirest
+        return httpClient
                 .patch(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}")
                 .routeParam("repoId", repoId)
                 .routeParam("entryId", String.valueOf(entryId))
@@ -640,7 +640,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
     @Override()
     public CompletableFuture<AcceptedOperation> deleteEntryInfo(String repoId, Integer entryId,
             DeleteEntryWithAuditReason requestBody) {
-        return Unirest
+        return httpClient
                 .delete(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}")
                 .routeParam("repoId", repoId)
                 .routeParam("entryId", String.valueOf(entryId))

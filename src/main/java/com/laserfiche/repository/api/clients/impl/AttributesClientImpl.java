@@ -17,7 +17,7 @@ public class AttributesClientImpl extends ApiClient implements AttributesClient 
     @Override()
     public CompletableFuture<Attribute> getTrusteeAttributeValueByKey(String repoId, String attributeKey,
             Boolean everyone) {
-        return Unirest
+        return httpClient
                 .get(baseUrl + "/v1/Repositories/{repoId}/Attributes/{attributeKey}")
                 .routeParam("repoId", repoId)
                 .routeParam("attributeKey", attributeKey)
@@ -46,7 +46,7 @@ public class AttributesClientImpl extends ApiClient implements AttributesClient 
     @Override()
     public CompletableFuture<ODataValueContextOfListOfAttribute> getTrusteeAttributeKeyValuePairs(String repoId,
             Boolean everyone, String prefer, String select, String orderby, Integer top, Integer skip, Boolean count) {
-        return Unirest
+        return httpClient
                 .get(baseUrl + "/v1/Repositories/{repoId}/Attributes")
                 .routeParam("repoId", repoId)
                 .queryString("everyone", everyone)

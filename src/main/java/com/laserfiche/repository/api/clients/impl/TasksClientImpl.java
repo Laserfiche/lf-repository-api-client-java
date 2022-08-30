@@ -15,7 +15,7 @@ public class TasksClientImpl extends ApiClient implements TasksClient {
 
     @Override()
     public CompletableFuture<OperationProgress> getOperationStatusAndProgress(String repoId, String operationToken) {
-        return Unirest
+        return httpClient
                 .get(baseUrl + "/v1/Repositories/{repoId}/Tasks/{operationToken}")
                 .routeParam("repoId", repoId)
                 .routeParam("operationToken", operationToken)
@@ -42,7 +42,7 @@ public class TasksClientImpl extends ApiClient implements TasksClient {
 
     @Override()
     public CompletableFuture<Void> cancelOperation(String repoId, String operationToken) {
-        return Unirest
+        return httpClient
                 .delete(baseUrl + "/v1/Repositories/{repoId}/Tasks/{operationToken}")
                 .routeParam("repoId", repoId)
                 .routeParam("operationToken", operationToken)

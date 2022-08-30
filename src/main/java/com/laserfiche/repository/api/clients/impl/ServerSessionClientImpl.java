@@ -16,7 +16,7 @@ public class ServerSessionClientImpl extends ApiClient implements ServerSessionC
 
     @Override()
     public CompletableFuture<ODataValueOfBoolean> invalidateServerSession(String repoId) {
-        return Unirest
+        return httpClient
                 .post(baseUrl + "/v1/Repositories/{repoId}/ServerSession/Invalidate")
                 .routeParam("repoId", repoId)
                 .asObjectAsync(ODataValueOfBoolean.class)
@@ -39,7 +39,7 @@ public class ServerSessionClientImpl extends ApiClient implements ServerSessionC
 
     @Override()
     public CompletableFuture<ODataValueOfBoolean> createServerSession(String repoId) {
-        return Unirest
+        return httpClient
                 .post(baseUrl + "/v1/Repositories/{repoId}/ServerSession/Create")
                 .routeParam("repoId", repoId)
                 .asObjectAsync(ODataValueOfBoolean.class)
@@ -53,7 +53,7 @@ public class ServerSessionClientImpl extends ApiClient implements ServerSessionC
 
     @Override()
     public CompletableFuture<ODataValueOfDateTime> refreshServerSession(String repoId) {
-        return Unirest
+        return httpClient
                 .post(baseUrl + "/v1/Repositories/{repoId}/ServerSession/Refresh")
                 .routeParam("repoId", repoId)
                 .asObjectAsync(ODataValueOfDateTime.class)

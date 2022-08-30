@@ -15,7 +15,7 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
 
     @Override()
     public CompletableFuture<OperationProgress> getSearchStatus(String repoId, String searchToken) {
-        return Unirest
+        return httpClient
                 .get(baseUrl + "/v1/Repositories/{repoId}/Searches/{searchToken}")
                 .routeParam("repoId", repoId)
                 .routeParam("searchToken", searchToken)
@@ -42,7 +42,7 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
 
     @Override()
     public CompletableFuture<ODataValueOfBoolean> cancelOrCloseSearch(String repoId, String searchToken) {
-        return Unirest
+        return httpClient
                 .delete(baseUrl + "/v1/Repositories/{repoId}/Searches/{searchToken}")
                 .routeParam("repoId", repoId)
                 .routeParam("searchToken", searchToken)
@@ -71,7 +71,7 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
     public CompletableFuture<ODataValueContextOfIListOfContextHit> getSearchContextHits(String repoId,
             String searchToken, Integer rowNumber, String prefer, String select, String orderby, Integer top,
             Integer skip, Boolean count) {
-        return Unirest
+        return httpClient
                 .get(baseUrl + "/v1/Repositories/{repoId}/Searches/{searchToken}/Results/{rowNumber}/ContextHits")
                 .routeParam("repoId", repoId)
                 .routeParam("searchToken", searchToken)
@@ -106,7 +106,7 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
     @Override()
     public CompletableFuture<AcceptedOperation> createSearchOperation(String repoId,
             AdvancedSearchRequest requestBody) {
-        return Unirest
+        return httpClient
                 .post(baseUrl + "/v1/Repositories/{repoId}/Searches")
                 .routeParam("repoId", repoId)
                 .body(requestBody)
@@ -132,7 +132,7 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
     public CompletableFuture<ODataValueContextOfIListOfEntry> getSearchResults(String repoId, String searchToken,
             Boolean groupByEntryType, Boolean refresh, String[] fields, Boolean formatFields, String prefer,
             String culture, String select, String orderby, Integer top, Integer skip, Boolean count) {
-        return Unirest
+        return httpClient
                 .get(baseUrl + "/v1/Repositories/{repoId}/Searches/{searchToken}/Results")
                 .routeParam("repoId", repoId)
                 .routeParam("searchToken", searchToken)

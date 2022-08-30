@@ -18,7 +18,7 @@ public class SimpleSearchesClientImpl extends ApiClient implements SimpleSearche
     public CompletableFuture<ODataValueOfIListOfEntry> createSimpleSearchOperation(String select, String orderby,
             Boolean count, String repoId, String[] fields, Boolean formatFields, SimpleSearchRequest requestBody,
             String culture) {
-        return Unirest
+        return httpClient
                 .post(baseUrl + "/v1/Repositories/{repoId}/SimpleSearches")
                 .routeParam("repoId", repoId)
                 .queryString("fields", fields)

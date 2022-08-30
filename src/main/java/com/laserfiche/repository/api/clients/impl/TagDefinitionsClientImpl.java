@@ -17,7 +17,7 @@ public class TagDefinitionsClientImpl extends ApiClient implements TagDefinition
     @Override()
     public CompletableFuture<ODataValueContextOfIListOfWTagInfo> getTagDefinitions(String repoId, String prefer,
             String culture, String select, String orderby, Integer top, Integer skip, Boolean count) {
-        return Unirest
+        return httpClient
                 .get(baseUrl + "/v1/Repositories/{repoId}/TagDefinitions")
                 .routeParam("repoId", repoId)
                 .queryString("culture", culture)
@@ -48,7 +48,7 @@ public class TagDefinitionsClientImpl extends ApiClient implements TagDefinition
     @Override()
     public CompletableFuture<WTagInfo> getTagDefinitionById(String repoId, Integer tagId, String culture,
             String select) {
-        return Unirest
+        return httpClient
                 .get(baseUrl + "/v1/Repositories/{repoId}/TagDefinitions/{tagId}")
                 .routeParam("repoId", repoId)
                 .routeParam("tagId", String.valueOf(tagId))

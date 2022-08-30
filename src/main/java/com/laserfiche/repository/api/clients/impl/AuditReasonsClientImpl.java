@@ -15,7 +15,7 @@ public class AuditReasonsClientImpl extends ApiClient implements AuditReasonsCli
 
     @Override()
     public CompletableFuture<AuditReasons> getAuditReasons(String repoId) {
-        return Unirest
+        return httpClient
                 .get(baseUrl + "/v1/Repositories/{repoId}/AuditReasons")
                 .routeParam("repoId", repoId)
                 .asObjectAsync(AuditReasons.class)

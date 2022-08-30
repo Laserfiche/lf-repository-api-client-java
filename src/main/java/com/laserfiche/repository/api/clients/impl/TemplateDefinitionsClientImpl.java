@@ -19,7 +19,7 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
     public CompletableFuture<ODataValueContextOfIListOfWTemplateInfo> getTemplateDefinitions(String repoId,
             String templateName, String prefer, String culture, String select, String orderby, Integer top,
             Integer skip, Boolean count) {
-        return Unirest
+        return httpClient
                 .get(baseUrl + "/v1/Repositories/{repoId}/TemplateDefinitions")
                 .routeParam("repoId", repoId)
                 .queryString("templateName", templateName)
@@ -55,7 +55,7 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
     public CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo> getTemplateFieldDefinitionsByTemplateName(
             String repoId, String templateName, String prefer, String culture, String select, String orderby,
             Integer top, Integer skip, Boolean count) {
-        return Unirest
+        return httpClient
                 .get(baseUrl + "/v1/Repositories/{repoId}/TemplateDefinitions/Fields")
                 .routeParam("repoId", repoId)
                 .queryString("templateName", templateName)
@@ -91,7 +91,7 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
     public CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo> getTemplateFieldDefinitions(String repoId,
             Integer templateId, String prefer, String culture, String select, String orderby, Integer top, Integer skip,
             Boolean count) {
-        return Unirest
+        return httpClient
                 .get(baseUrl + "/v1/Repositories/{repoId}/TemplateDefinitions/{templateId}/Fields")
                 .routeParam("repoId", repoId)
                 .routeParam("templateId", String.valueOf(templateId))
@@ -126,7 +126,7 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
     @Override()
     public CompletableFuture<WTemplateInfo> getTemplateDefinitionById(String repoId, Integer templateId, String culture,
             String select) {
-        return Unirest
+        return httpClient
                 .get(baseUrl + "/v1/Repositories/{repoId}/TemplateDefinitions/{templateId}")
                 .routeParam("repoId", repoId)
                 .routeParam("templateId", String.valueOf(templateId))

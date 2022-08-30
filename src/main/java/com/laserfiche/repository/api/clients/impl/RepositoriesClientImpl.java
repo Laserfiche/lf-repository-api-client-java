@@ -15,7 +15,7 @@ public class RepositoriesClientImpl extends ApiClient implements RepositoriesCli
 
     @Override()
     public CompletableFuture<RepositoryInfo[]> getRepositoryList() {
-        return Unirest
+        return httpClient
                 .get(baseUrl + "/v1/Repositories")
                 .asObjectAsync(RepositoryInfo[].class)
                 .thenApply(httpResponse -> {
