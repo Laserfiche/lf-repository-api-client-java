@@ -26,30 +26,40 @@ public class TasksApiTest extends BaseTest {
 
     @Test
     void cancelOperation_Success() throws InterruptedException {
-        CompletableFuture<Entry> deleteEntry = createEntry(createEntryClient, "RepositoryApiClientIntegrationTest Java CancelOperation", 1, true);
+        Entry deleteEntry = createEntry(createEntryClient, "RepositoryApiClientIntegrationTest Java CancelOperation", 1, true).join();
+
         DeleteEntryWithAuditReason body = new DeleteEntryWithAuditReason();
-        CompletableFuture<AcceptedOperation> result = repositoryApiClient.getEntriesClient().deleteEntryInfo(repoId, deleteEntry.join().getId(), body);
-        String token = result.join().getToken();
+
+        AcceptedOperation result = repositoryApiClient.getEntriesClient().deleteEntryInfo(repoId, deleteEntry.id, body).join();
+
+        String token = result.token;
+
         assertNotNull(token);
 
         TimeUnit.SECONDS.sleep(5);
 
-        boolean isCancelOperationSuccessful = client.cancelOperation(repoId, token).join();
-        assertFalse(isCancelOperationSuccessful); // The operation is very fast. So we assert that we cannot cancel it due to it is already completed.
+        client.cancelOperation(repoId, token).join(); // TODO: We probably need to manually override this API as by default it returns via HTTP headers.
     }
 
     @Test
     @Disabled("Exception Thrown")
     void getOperationStatus_Success() throws InterruptedException {
-        CompletableFuture<Entry> deleteEntry = createEntry(createEntryClient, "RepositoryApiClientIntegrationTest Java GetOperationStatus", 1, true);
+        Entry deleteEntry = createEntry(createEntryClient, "RepositoryApiClientIntegrationTest Java GetOperationStatus", 1, true).join();
+
         DeleteEntryWithAuditReason body = new DeleteEntryWithAuditReason();
-        CompletableFuture<AcceptedOperation> result = repositoryApiClient.getEntriesClient().deleteEntryInfo(repoId, deleteEntry.join().getId(), body);
-        String token = result.join().getToken();
+
+        CompletableFuture<AcceptedOperation> result = repositoryApiClient.getEntriesClient().deleteEntryInfo(repoId, deleteEntry.id, body);
+
+        String token = result.join().token;
+
         assertNotNull(token);
+
         TimeUnit.SECONDS.sleep(5);
+
         CompletableFuture<OperationProgress> operationProgressResponse = client.getOperationStatusAndProgress(repoId, token);
+        
         assertNotNull(operationProgressResponse);
-        Assertions.assertSame(operationProgressResponse.join().getStatus(), OperationStatus.COMPLETED);
-        Assertions.assertSame(operationProgressResponse.join().getPercentComplete(), 100);
+        Assertions.assertSame(operationProgressResponse.join().status, OperationStatus.COMPLETED);
+        Assertions.assertSame(operationProgressResponse.join().percentComplete, 100);
     }
 }
