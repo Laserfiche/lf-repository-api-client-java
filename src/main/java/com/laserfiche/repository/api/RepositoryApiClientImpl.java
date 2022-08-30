@@ -1,9 +1,9 @@
 package com.laserfiche.repository.api;
 
 import com.laserfiche.api.client.model.AccessKey;
-import com.laserfiche.api.client.oauth.TokenClientObjectMapper;
 import com.laserfiche.repository.api.clients.*;
 import com.laserfiche.repository.api.clients.impl.*;
+import com.laserfiche.repository.api.clients.impl.deserialization.RepositoryClientObjectMapper;
 import kong.unirest.Unirest;
 import kong.unirest.UnirestInstance;
 
