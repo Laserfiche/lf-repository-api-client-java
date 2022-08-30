@@ -1,10 +1,8 @@
 package com.laserfiche.repository.api.clients.impl;
 
-import com.laserfiche.repository.api.OAuthInterceptor;
 import com.laserfiche.repository.api.clients.SimpleSearchesClient;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueOfIListOfEntry;
 import com.laserfiche.repository.api.clients.impl.model.SimpleSearchRequest;
-import kong.unirest.Interceptor;
 import kong.unirest.Unirest;
 import kong.unirest.UnirestInstance;
 

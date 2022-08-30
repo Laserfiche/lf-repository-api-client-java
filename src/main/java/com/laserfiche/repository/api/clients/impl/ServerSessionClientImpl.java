@@ -1,10 +1,8 @@
 package com.laserfiche.repository.api.clients.impl;
 
-import com.laserfiche.repository.api.OAuthInterceptor;
 import com.laserfiche.repository.api.clients.ServerSessionClient;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueOfBoolean;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueOfDateTime;
-import kong.unirest.Interceptor;
 import kong.unirest.Unirest;
 import kong.unirest.UnirestInstance;
 

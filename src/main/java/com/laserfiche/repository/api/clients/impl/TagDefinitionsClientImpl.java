@@ -1,10 +1,8 @@
 package com.laserfiche.repository.api.clients.impl;
 
-import com.laserfiche.repository.api.OAuthInterceptor;
 import com.laserfiche.repository.api.clients.TagDefinitionsClient;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfWTagInfo;
 import com.laserfiche.repository.api.clients.impl.model.WTagInfo;
-import kong.unirest.Interceptor;
 import kong.unirest.Unirest;
 import kong.unirest.UnirestInstance;
 

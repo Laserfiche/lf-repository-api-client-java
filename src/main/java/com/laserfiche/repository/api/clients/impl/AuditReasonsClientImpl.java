@@ -1,9 +1,7 @@
 package com.laserfiche.repository.api.clients.impl;
 
-import com.laserfiche.repository.api.OAuthInterceptor;
 import com.laserfiche.repository.api.clients.AuditReasonsClient;
 import com.laserfiche.repository.api.clients.impl.model.AuditReasons;
-import kong.unirest.Interceptor;
 import kong.unirest.Unirest;
 import kong.unirest.UnirestInstance;
 

@@ -1,11 +1,9 @@
 package com.laserfiche.repository.api.clients.impl;
 
-import com.laserfiche.repository.api.OAuthInterceptor;
 import com.laserfiche.repository.api.clients.TemplateDefinitionsClient;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfTemplateFieldInfo;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfWTemplateInfo;
 import com.laserfiche.repository.api.clients.impl.model.WTemplateInfo;
-import kong.unirest.Interceptor;
 import kong.unirest.Unirest;
 import kong.unirest.UnirestInstance;
 
