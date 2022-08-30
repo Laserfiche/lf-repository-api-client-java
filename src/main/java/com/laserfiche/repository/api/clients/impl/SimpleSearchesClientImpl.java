@@ -1,16 +1,18 @@
 package com.laserfiche.repository.api.clients.impl;
 
+import com.laserfiche.repository.api.OAuthInterceptor;
 import com.laserfiche.repository.api.clients.SimpleSearchesClient;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueOfIListOfEntry;
 import com.laserfiche.repository.api.clients.impl.model.SimpleSearchRequest;
+import kong.unirest.Interceptor;
 import kong.unirest.Unirest;
 
 import java.util.concurrent.CompletableFuture;
 
 public class SimpleSearchesClientImpl extends ApiClient implements SimpleSearchesClient {
 
-    public SimpleSearchesClientImpl(String baseUrl) {
-        super(baseUrl);
+    public SimpleSearchesClientImpl(String baseUrl, Interceptor interceptor) {
+        super(baseUrl, interceptor);
     }
 
     @Override()

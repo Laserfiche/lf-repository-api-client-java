@@ -1,15 +1,17 @@
 package com.laserfiche.repository.api.clients.impl;
 
+import com.laserfiche.repository.api.OAuthInterceptor;
 import com.laserfiche.repository.api.clients.TasksClient;
 import com.laserfiche.repository.api.clients.impl.model.OperationProgress;
+import kong.unirest.Interceptor;
 import kong.unirest.Unirest;
 
 import java.util.concurrent.CompletableFuture;
 
 public class TasksClientImpl extends ApiClient implements TasksClient {
 
-    public TasksClientImpl(String baseUrl) {
-        super(baseUrl);
+    public TasksClientImpl(String baseUrl, Interceptor interceptor) {
+        super(baseUrl, interceptor);
     }
 
     @Override()

@@ -1,16 +1,18 @@
 package com.laserfiche.repository.api.clients.impl;
 
+import com.laserfiche.repository.api.OAuthInterceptor;
 import com.laserfiche.repository.api.clients.LinkDefinitionsClient;
 import com.laserfiche.repository.api.clients.impl.model.EntryLinkTypeInfo;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfEntryLinkTypeInfo;
+import kong.unirest.Interceptor;
 import kong.unirest.Unirest;
 
 import java.util.concurrent.CompletableFuture;
 
 public class LinkDefinitionsClientImpl extends ApiClient implements LinkDefinitionsClient {
 
-    public LinkDefinitionsClientImpl(String baseUrl) {
-        super(baseUrl);
+    public LinkDefinitionsClientImpl(String baseUrl, Interceptor interceptor) {
+        super(baseUrl, interceptor);
     }
 
     @Override()

@@ -1,16 +1,18 @@
 package com.laserfiche.repository.api.clients.impl;
 
+import com.laserfiche.repository.api.OAuthInterceptor;
 import com.laserfiche.repository.api.clients.AttributesClient;
 import com.laserfiche.repository.api.clients.impl.model.Attribute;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfListOfAttribute;
+import kong.unirest.Interceptor;
 import kong.unirest.Unirest;
 
 import java.util.concurrent.CompletableFuture;
 
 public class AttributesClientImpl extends ApiClient implements AttributesClient {
 
-    public AttributesClientImpl(String baseUrl) {
-        super(baseUrl);
+    public AttributesClientImpl(String baseUrl, Interceptor interceptor) {
+        super(baseUrl, interceptor);
     }
 
     @Override()

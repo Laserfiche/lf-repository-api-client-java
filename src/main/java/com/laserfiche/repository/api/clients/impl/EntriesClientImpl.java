@@ -1,7 +1,9 @@
 package com.laserfiche.repository.api.clients.impl;
 
+import com.laserfiche.repository.api.OAuthInterceptor;
 import com.laserfiche.repository.api.clients.EntriesClient;
 import com.laserfiche.repository.api.clients.impl.model.*;
+import kong.unirest.Interceptor;
 import kong.unirest.Unirest;
 
 import java.io.File;
@@ -9,8 +11,8 @@ import java.util.concurrent.CompletableFuture;
 
 public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
-    public EntriesClientImpl(String baseUrl) {
-        super(baseUrl);
+    public EntriesClientImpl(String baseUrl, Interceptor interceptor) {
+        super(baseUrl, interceptor);
     }
 
     @Override()

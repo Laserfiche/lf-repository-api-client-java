@@ -1,15 +1,17 @@
 package com.laserfiche.repository.api.clients.impl;
 
+import com.laserfiche.repository.api.OAuthInterceptor;
 import com.laserfiche.repository.api.clients.AuditReasonsClient;
 import com.laserfiche.repository.api.clients.impl.model.AuditReasons;
+import kong.unirest.Interceptor;
 import kong.unirest.Unirest;
 
 import java.util.concurrent.CompletableFuture;
 
 public class AuditReasonsClientImpl extends ApiClient implements AuditReasonsClient {
 
-    public AuditReasonsClientImpl(String baseUrl) {
-        super(baseUrl);
+    public AuditReasonsClientImpl(String baseUrl, Interceptor interceptor) {
+        super(baseUrl, interceptor);
     }
 
     @Override()

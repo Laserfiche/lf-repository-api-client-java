@@ -3,6 +3,7 @@ package com.laserfiche.repository.api;
 import com.laserfiche.api.client.model.AccessKey;
 import com.laserfiche.repository.api.clients.*;
 import com.laserfiche.repository.api.clients.impl.*;
+import kong.unirest.Interceptor;
 
 import java.util.Map;
 
@@ -22,17 +23,20 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
 
     protected RepositoryApiClientImpl(String servicePrincipalKey, AccessKey accessKey, String baseUrlDebug) {
         String baseUrl = baseUrlDebug != null ? baseUrlDebug : "https://api." + accessKey.domain + "/repository";
-        attributesClient = new AttributesClientImpl(baseUrl);
-        auditReasonsClient = new AuditReasonsClientImpl(baseUrl);
-        entriesClient = new EntriesClientImpl(baseUrl);
-        fieldDefinitionsClient = new FieldDefinitionsClientImpl(baseUrl);
-        linkDefinitionsClient = new LinkDefinitionsClientImpl(baseUrl);
-        repositoriesClient = new RepositoriesClientImpl(baseUrl);
-        searchesClient = new SearchesClientImpl(baseUrl);
-        simpleSearchesClient = new SimpleSearchesClientImpl(baseUrl);
-        tagDefinitionsClient = new TagDefinitionsClientImpl(baseUrl);
-        tasksClient = new TasksClientImpl(baseUrl);
-        templateDefinitionsClient = new TemplateDefinitionsClientImpl(baseUrl);
+
+        Interceptor oauthInterceptor = new OAuthInterceptor(servicePrincipalKey, accessKey);
+
+        attributesClient = new AttributesClientImpl(baseUrl, oauthInterceptor);
+        auditReasonsClient = new AuditReasonsClientImpl(baseUrl, oauthInterceptor);
+        entriesClient = new EntriesClientImpl(baseUrl, oauthInterceptor);
+        fieldDefinitionsClient = new FieldDefinitionsClientImpl(baseUrl, oauthInterceptor);
+        linkDefinitionsClient = new LinkDefinitionsClientImpl(baseUrl, oauthInterceptor);
+        repositoriesClient = new RepositoriesClientImpl(baseUrl, oauthInterceptor);
+        searchesClient = new SearchesClientImpl(baseUrl, oauthInterceptor);
+        simpleSearchesClient = new SimpleSearchesClientImpl(baseUrl, oauthInterceptor);
+        tagDefinitionsClient = new TagDefinitionsClientImpl(baseUrl, oauthInterceptor);
+        tasksClient = new TasksClientImpl(baseUrl, oauthInterceptor);
+        templateDefinitionsClient = new TemplateDefinitionsClientImpl(baseUrl, oauthInterceptor);
     }
 
     public static RepositoryApiClient CreateFromAccessKey(String servicePrincipalKey, AccessKey accessKey, String baseUrlDebug) {
