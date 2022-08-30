@@ -25,43 +25,49 @@ class TemplateDefinitionsApiTest extends BaseTest {
 
     @Test
     void getTemplateDefinitions_Success() {
-        CompletableFuture<ODataValueContextOfIListOfWTemplateInfo> future = client.getTemplateDefinitions(repoId, null, null, null, null, null, null, null, false, null);
-        ODataValueContextOfIListOfWTemplateInfo templateInfoList = future.join();
+        ODataValueContextOfIListOfWTemplateInfo templateInfoList = client.getTemplateDefinitions(repoId, null, null, null, null, null, null, null, false).join();
+
         assertNotNull(templateInfoList);
     }
 
     @Test
     void getTemplateDefinitionsFields_Success() {
-        CompletableFuture<ODataValueContextOfIListOfWTemplateInfo> future = client.getTemplateDefinitions(repoId, null, null, null, null, null, null, null, false, null);
-        ODataValueContextOfIListOfWTemplateInfo templateInfoList = future.join();
-        WTemplateInfo tempDef = templateInfoList.getValue().get(0);
+        ODataValueContextOfIListOfWTemplateInfo templateInfoList = client.getTemplateDefinitions(repoId, null, null, null, null, null, null, null, false).join();
+
+        WTemplateInfo tempDef = templateInfoList.value.get(0);
+
         assertNotNull(templateInfoList);
-        CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo> newFuture = client.getTemplateFieldDefinitions(repoId, tempDef.getId(), null, null, null, null, null, null, false, null);
-        ODataValueContextOfIListOfTemplateFieldInfo result = newFuture.join();
+
+        ODataValueContextOfIListOfTemplateFieldInfo result = client.getTemplateFieldDefinitions(repoId, tempDef.id, null, null, null, null, null, null, false).join();
+
         assertNotNull(result);
-        Assertions.assertSame(result.getValue().size(), tempDef.getFieldCount());
+        Assertions.assertSame(result.value.size(), tempDef.fieldCount);
     }
 
     @Test
     void getTemplateDefinitionsFieldsById_Success() {
-        CompletableFuture<ODataValueContextOfIListOfWTemplateInfo> future = client.getTemplateDefinitions(repoId, null, null, null, null, null, null, null, false, null);
-        ODataValueContextOfIListOfWTemplateInfo templateInfoList = future.join();
-        WTemplateInfo tempDef = templateInfoList.getValue().get(0);
+        ODataValueContextOfIListOfWTemplateInfo templateInfoList = client.getTemplateDefinitions(repoId, null, null, null, null, null, null, null, false).join();
+
+        WTemplateInfo tempDef = templateInfoList.value.get(0);
+
         assertNotNull(templateInfoList);
-        CompletableFuture<WTemplateInfo> newFuture = client.getTemplateDefinitionById(repoId, tempDef.getId(), null, null);
-        WTemplateInfo result = newFuture.join();
+
+        WTemplateInfo result = client.getTemplateDefinitionById(repoId, tempDef.id, null, null).join();
+
         assertNotNull(result);
-        Assertions.assertSame(result.getId(), tempDef.getId());
+        Assertions.assertSame(result.id, tempDef.id);
     }
 
     @Test
     void getTemplateDefinitionsByTemplateName_Success() {
-        CompletableFuture<ODataValueContextOfIListOfWTemplateInfo> future = client.getTemplateDefinitions(repoId, null, null, null, null, null, null, null, false, null);
-        ODataValueContextOfIListOfWTemplateInfo templateInfoList = future.join();
-        WTemplateInfo tempDef = templateInfoList.getValue().get(0);
+        ODataValueContextOfIListOfWTemplateInfo templateInfoList = client.getTemplateDefinitions(repoId, null, null, null, null, null, null, null, false).join();
+
+        WTemplateInfo tempDef = templateInfoList.value.get(0);
+
         assertNotNull(templateInfoList);
-        CompletableFuture<ODataValueContextOfIListOfWTemplateInfo> newFuture = client.getTemplateDefinitions(repoId, tempDef.getName(), null, null, null, null, null, null, false, null);
-        ODataValueContextOfIListOfWTemplateInfo result = newFuture.join();
+
+        ODataValueContextOfIListOfWTemplateInfo result = client.getTemplateDefinitions(repoId, tempDef.name, null, null, null, null, null, null, false).join();
+
         assertNotNull(result);
     }
 }
