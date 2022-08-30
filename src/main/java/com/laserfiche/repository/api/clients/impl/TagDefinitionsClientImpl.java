@@ -9,6 +9,10 @@ import java.util.concurrent.CompletableFuture;
 
 public class TagDefinitionsClientImpl extends ApiClient implements TagDefinitionsClient {
 
+    public TagDefinitionsClientImpl(String baseUrl) {
+        super(baseUrl);
+    }
+
     @Override()
     public CompletableFuture<ODataValueContextOfIListOfWTagInfo> getTagDefinitions(String repoId, String prefer,
             String culture, String select, String orderby, Integer top, Integer skip, Boolean count) {

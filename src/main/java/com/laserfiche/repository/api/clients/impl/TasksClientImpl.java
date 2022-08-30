@@ -8,6 +8,10 @@ import java.util.concurrent.CompletableFuture;
 
 public class TasksClientImpl extends ApiClient implements TasksClient {
 
+    public TasksClientImpl(String baseUrl) {
+        super(baseUrl);
+    }
+
     @Override()
     public CompletableFuture<OperationProgress> getOperationStatusAndProgress(String repoId, String operationToken) {
         return Unirest

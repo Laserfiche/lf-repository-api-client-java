@@ -9,6 +9,10 @@ import java.util.concurrent.CompletableFuture;
 
 public class LinkDefinitionsClientImpl extends ApiClient implements LinkDefinitionsClient {
 
+    public LinkDefinitionsClientImpl(String baseUrl) {
+        super(baseUrl);
+    }
+
     @Override()
     public CompletableFuture<EntryLinkTypeInfo> getLinkDefinitionById(String repoId, Integer linkTypeId,
             String select) {

@@ -8,6 +8,10 @@ import java.util.concurrent.CompletableFuture;
 
 public class SearchesClientImpl extends ApiClient implements SearchesClient {
 
+    public SearchesClientImpl(String baseUrl) {
+        super(baseUrl);
+    }
+
     @Override()
     public CompletableFuture<OperationProgress> getSearchStatus(String repoId, String searchToken) {
         return Unirest

@@ -10,6 +10,10 @@ import java.util.concurrent.CompletableFuture;
 
 public class TemplateDefinitionsClientImpl extends ApiClient implements TemplateDefinitionsClient {
 
+    public TemplateDefinitionsClientImpl(String baseUrl) {
+        super(baseUrl);
+    }
+
     @Override()
     public CompletableFuture<ODataValueContextOfIListOfWTemplateInfo> getTemplateDefinitions(String repoId,
             String templateName, String prefer, String culture, String select, String orderby, Integer top,

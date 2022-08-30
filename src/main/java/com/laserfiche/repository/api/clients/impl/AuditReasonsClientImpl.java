@@ -8,6 +8,10 @@ import java.util.concurrent.CompletableFuture;
 
 public class AuditReasonsClientImpl extends ApiClient implements AuditReasonsClient {
 
+    public AuditReasonsClientImpl(String baseUrl) {
+        super(baseUrl);
+    }
+
     @Override()
     public CompletableFuture<AuditReasons> getAuditReasons(String repoId) {
         return Unirest

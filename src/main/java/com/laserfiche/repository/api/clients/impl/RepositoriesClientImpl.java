@@ -8,6 +8,10 @@ import java.util.concurrent.CompletableFuture;
 
 public class RepositoriesClientImpl extends ApiClient implements RepositoriesClient {
 
+    public RepositoriesClientImpl(String baseUrl) {
+        super(baseUrl);
+    }
+
     @Override()
     public CompletableFuture<RepositoryInfo[]> getRepositoryList() {
         return Unirest

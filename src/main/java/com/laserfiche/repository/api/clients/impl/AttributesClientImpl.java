@@ -9,6 +9,10 @@ import java.util.concurrent.CompletableFuture;
 
 public class AttributesClientImpl extends ApiClient implements AttributesClient {
 
+    public AttributesClientImpl(String baseUrl) {
+        super(baseUrl);
+    }
+
     @Override()
     public CompletableFuture<Attribute> getTrusteeAttributeValueByKey(String repoId, String attributeKey,
             Boolean everyone) {

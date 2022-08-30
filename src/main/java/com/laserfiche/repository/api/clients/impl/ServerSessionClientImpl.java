@@ -9,6 +9,10 @@ import java.util.concurrent.CompletableFuture;
 
 public class ServerSessionClientImpl extends ApiClient implements ServerSessionClient {
 
+    public ServerSessionClientImpl(String baseUrl) {
+        super(baseUrl);
+    }
+
     @Override()
     public CompletableFuture<ODataValueOfBoolean> invalidateServerSession(String repoId) {
         return Unirest

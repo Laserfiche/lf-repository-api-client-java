@@ -9,6 +9,10 @@ import java.util.concurrent.CompletableFuture;
 
 public class SimpleSearchesClientImpl extends ApiClient implements SimpleSearchesClient {
 
+    public SimpleSearchesClientImpl(String baseUrl) {
+        super(baseUrl);
+    }
+
     @Override()
     public CompletableFuture<ODataValueOfIListOfEntry> createSimpleSearchOperation(String select, String orderby,
             Boolean count, String repoId, String[] fields, Boolean formatFields, SimpleSearchRequest requestBody,

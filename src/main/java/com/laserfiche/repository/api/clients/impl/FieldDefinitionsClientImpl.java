@@ -9,6 +9,10 @@ import java.util.concurrent.CompletableFuture;
 
 public class FieldDefinitionsClientImpl extends ApiClient implements FieldDefinitionsClient {
 
+    public FieldDefinitionsClientImpl(String baseUrl) {
+        super(baseUrl);
+    }
+
     @Override()
     public CompletableFuture<WFieldInfo> getFieldDefinitionById(String repoId, Integer fieldDefinitionId,
             String culture, String select) {

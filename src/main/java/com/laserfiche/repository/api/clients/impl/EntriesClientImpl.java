@@ -9,6 +9,10 @@ import java.util.concurrent.CompletableFuture;
 
 public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
+    public EntriesClientImpl(String baseUrl) {
+        super(baseUrl);
+    }
+
     @Override()
     public CompletableFuture<ODataValueContextOfIListOfFieldValue> getFieldValues(String repoId, Integer entryId,
             String prefer, Boolean formatValue, String culture, String select, String orderby, Integer top,
