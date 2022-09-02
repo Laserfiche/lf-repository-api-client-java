@@ -17,9 +17,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class CreateCopyEntryApiTest extends BaseTest {
-    List<Entry> createdEntries = new ArrayList<Entry>();
+    List<Entry> createdEntries = new ArrayList<>();
     EntriesClient client;
-
     RepositoryApiClient createEntryClient;
 
     @BeforeEach
@@ -51,16 +50,16 @@ public class CreateCopyEntryApiTest extends BaseTest {
         request.entryType = PostEntryChildrenEntryType.FOLDER;
         request.name = newEntryName;
 
-        Entry createOrCopyEntryResponse = client
+        Entry createdEntry = client
                 .createOrCopyEntry(repoId, parentEntryId, request, true, null)
                 .join();
 
-        assertNotNull(createOrCopyEntryResponse);
-        createdEntries.add(createOrCopyEntryResponse);
+        assertNotNull(createdEntry);
+        createdEntries.add(createdEntry);
 
-        assertEquals(parentEntryId, createOrCopyEntryResponse.parentId);
-        assertEquals(createOrCopyEntryResponse.entryType, EntryType.FOLDER);
-        assertEquals(Folder.class.getName(), createOrCopyEntryResponse
+        assertEquals(parentEntryId, createdEntry.parentId);
+        assertEquals(createdEntry.entryType, EntryType.FOLDER);
+        assertEquals(Folder.class.getName(), createdEntry
                 .getClass()
                 .getName());
     }
