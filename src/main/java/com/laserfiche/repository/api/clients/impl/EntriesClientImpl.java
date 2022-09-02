@@ -94,6 +94,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 .routeParam("fileName", fileName)
                 .queryString("autoRename", autoRename)
                 .queryString("culture", culture)
+                .contentType("application/json")
                 .body(requestBody)
                 .asObjectAsync(CreateEntryResult.class)
                 .thenApply(httpResponse -> {
@@ -259,6 +260,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 .routeParam("repoId", repoId)
                 .routeParam("entryId", String.valueOf(entryId))
                 .header("range", range)
+                .contentType("application/json")
                 .body(requestBody)
                 .asObjectAsync(File.class)
                 .thenApply(httpResponse -> {
@@ -424,6 +426,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 .routeParam("entryId", String.valueOf(entryId))
                 .queryString("autoRename", autoRename)
                 .queryString("culture", culture)
+                .contentType("application/json")
                 .body(requestBody)
                 .asObjectAsync(Entry.class)
                 .thenApply(httpResponse -> {
@@ -456,6 +459,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 .post(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/fields/GetDynamicFieldLogicValue")
                 .routeParam("repoId", repoId)
                 .routeParam("entryId", String.valueOf(entryId))
+                .contentType("application/json")
                 .body(requestBody)
                 .asObjectAsync(String[].class)
                 .thenApply(httpResponse -> {
@@ -487,6 +491,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 .routeParam("entryId", String.valueOf(entryId))
                 .queryString("autoRename", autoRename)
                 .queryString("culture", culture)
+                .contentType("application/json")
                 .body(requestBody)
                 .asObjectAsync(AcceptedOperation.class)
                 .thenApply(httpResponse -> {

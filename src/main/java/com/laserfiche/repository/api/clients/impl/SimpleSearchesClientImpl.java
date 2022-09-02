@@ -27,6 +27,7 @@ public class SimpleSearchesClientImpl extends ApiClient implements SimpleSearche
                 .queryString("select", select)
                 .queryString("orderby", orderby)
                 .queryString("count", count)
+                .contentType("application/json")
                 .body(requestBody)
                 .asObjectAsync(ODataValueOfIListOfEntry.class)
                 .thenApply(httpResponse -> {

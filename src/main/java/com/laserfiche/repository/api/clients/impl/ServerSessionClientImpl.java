@@ -19,6 +19,7 @@ public class ServerSessionClientImpl extends ApiClient implements ServerSessionC
         return httpClient
                 .post(baseUrl + "/v1/Repositories/{repoId}/ServerSession/Invalidate")
                 .routeParam("repoId", repoId)
+                .contentType("application/json")
                 .asObjectAsync(ODataValueOfBoolean.class)
                 .thenApply(httpResponse -> {
                     if (httpResponse.getStatus() == 400) {

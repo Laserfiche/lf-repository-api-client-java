@@ -109,6 +109,7 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
         return httpClient
                 .post(baseUrl + "/v1/Repositories/{repoId}/Searches")
                 .routeParam("repoId", repoId)
+                .contentType("application/json")
                 .body(requestBody)
                 .asObjectAsync(AcceptedOperation.class)
                 .thenApply(httpResponse -> {
