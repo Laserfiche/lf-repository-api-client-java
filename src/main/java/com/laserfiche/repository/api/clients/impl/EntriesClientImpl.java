@@ -614,6 +614,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 .routeParam("entryId", String.valueOf(entryId))
                 .queryString("autoRename", autoRename)
                 .queryString("culture", culture)
+                .contentType("application/json")
                 .body(requestBody)
                 .asObjectAsync(Entry.class)
                 .thenApply(httpResponse -> {
