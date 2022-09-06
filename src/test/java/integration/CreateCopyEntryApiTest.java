@@ -42,6 +42,7 @@ public class CreateCopyEntryApiTest extends BaseTest {
     }
 
     @Test
+    @Disabled("Ignore for now because of the APIServer's entry related serialization bug.")
     void createCopyEntryCreateFolder_Success() {
         String newEntryName = "RepositoryApiClientIntegrationTest Java CreateFolder";
         Integer parentEntryId = 1;
@@ -65,6 +66,7 @@ public class CreateCopyEntryApiTest extends BaseTest {
     }
 
     @Test
+    @Disabled("Ignore for now because of the APIServer's entry related serialization bug.")
     void createCopyEntryCreateShortcut_Success() {
         String newEntryName = "RepositoryApiClientIntegrationTest Java CreateFolder";
         Integer parentEntryId = 1;
@@ -215,13 +217,13 @@ public class CreateCopyEntryApiTest extends BaseTest {
         request.parentId = parentFolder.id;
         request.name = "RepositoryApiClientIntegrationTest Java MovedFolder";
 
-        Entry movedEntryResponse = client
+        Entry movedEntry = client
                 .moveOrRenameDocument(repoId, childFolder.id, request, true, null)
                 .join();
 
-        assertNotNull(movedEntryResponse);
-        assertEquals(movedEntryResponse.id, childFolder.id);
-        assertEquals(movedEntryResponse.parentId, parentFolder.id);
-        assertEquals(movedEntryResponse.name, request.name);
+        assertNotNull(movedEntry);
+        assertEquals(movedEntry.id, childFolder.id);
+        assertEquals(movedEntry.parentId, parentFolder.id);
+        assertEquals(movedEntry.name, request.name);
     }
 }
