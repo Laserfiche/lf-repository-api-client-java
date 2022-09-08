@@ -2,10 +2,12 @@ package com.laserfiche.repository.api.clients.impl;
 
 import com.laserfiche.repository.api.clients.EntriesClient;
 import com.laserfiche.repository.api.clients.impl.model.*;
-import kong.unirest.Unirest;
+import kong.unirest.GenericType;
 import kong.unirest.UnirestInstance;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 public class EntriesClientImpl extends ApiClient implements EntriesClient {
@@ -453,7 +455,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
     }
 
     @Override()
-    public CompletableFuture<String[]> getDynamicFieldValues(String repoId, Integer entryId,
+    public CompletableFuture<Map<String, String[]>> getDynamicFieldValues(String repoId, Integer entryId,
             GetDynamicFieldLogicValueRequest requestBody) {
         return httpClient
                 .post(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/fields/GetDynamicFieldLogicValue")
@@ -461,7 +463,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 .routeParam("entryId", String.valueOf(entryId))
                 .contentType("application/json")
                 .body(requestBody)
-                .asObjectAsync(String[].class)
+                .asObjectAsync((new HashMap<String, String[]>()).getClass())
                 .thenApply(httpResponse -> {
                     if (httpResponse.getStatus() == 400) {
                         throw new RuntimeException("Invalid or bad request.");

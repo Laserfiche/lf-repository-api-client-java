@@ -3,6 +3,7 @@ package com.laserfiche.repository.api.clients;
 import com.laserfiche.repository.api.clients.impl.model.*;
 
 import java.io.File;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 public interface EntriesClient {
@@ -222,9 +223,9 @@ public interface EntriesClient {
      * @param repoId      The requested repository ID.
      * @param entryId     The requested entry ID.
      * @param requestBody null
-     * @return CompletableFuture<String [ ]> The return value
+     * @return CompletableFuture<Map<String, String[]>> The return value
      */
-    CompletableFuture<String[]> getDynamicFieldValues(String repoId, Integer entryId,
+    CompletableFuture<Map<String, String[]>> getDynamicFieldValues(String repoId, Integer entryId,
             GetDynamicFieldLogicValueRequest requestBody);
 
     /**
