@@ -59,7 +59,6 @@ class EntriesApiTest extends BaseTest {
         assertNotNull(linkInfoList);
     }
 
-    @Disabled("Enable after entry related swagger.json issue is fixed.")
     @Test
     void deleteEntry_Success() {
         Entry entryToDelete = createEntry(createEntryClient,
@@ -83,7 +82,6 @@ class EntriesApiTest extends BaseTest {
         assertNotNull(tagInfoList);
     }
 
-    @Disabled("Enable after entry related swagger.json issue is fixed.")
     @Test
     void getDynamicFieldsEntry_Success() {
         ODataValueContextOfIListOfWTemplateInfo templateDefinitionsResponse = repositoryApiClient
