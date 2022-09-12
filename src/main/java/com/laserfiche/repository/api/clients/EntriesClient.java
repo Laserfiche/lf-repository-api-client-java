@@ -223,7 +223,7 @@ public interface EntriesClient {
      * @param repoId      The requested repository ID.
      * @param entryId     The requested entry ID.
      * @param requestBody null
-     * @return CompletableFuture<Map<String, String[]>> The return value
+     * @return CompletableFuture<Map < String, String [ ]>> The return value
      */
     CompletableFuture<Map<String, String[]>> getDynamicFieldValues(String repoId, Integer entryId,
             GetDynamicFieldLogicValueRequest requestBody);
