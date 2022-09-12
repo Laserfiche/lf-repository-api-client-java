@@ -3,7 +3,6 @@ package com.laserfiche.repository.api.clients.impl;
 import com.laserfiche.repository.api.clients.ServerSessionClient;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueOfBoolean;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueOfDateTime;
-import kong.unirest.Unirest;
 import kong.unirest.UnirestInstance;
 
 import java.util.concurrent.CompletableFuture;
@@ -14,7 +13,7 @@ public class ServerSessionClientImpl extends ApiClient implements ServerSessionC
         super(baseUrl, httpClient);
     }
 
-    @Override()
+    @Override
     public CompletableFuture<ODataValueOfBoolean> invalidateServerSession(String repoId) {
         return httpClient
                 .post(baseUrl + "/v1/Repositories/{repoId}/ServerSession/Invalidate")
@@ -38,11 +37,12 @@ public class ServerSessionClientImpl extends ApiClient implements ServerSessionC
                 });
     }
 
-    @Override()
+    @Override
     public CompletableFuture<ODataValueOfBoolean> createServerSession(String repoId) {
         return httpClient
                 .post(baseUrl + "/v1/Repositories/{repoId}/ServerSession/Create")
                 .routeParam("repoId", repoId)
+                .contentType("application/json")
                 .asObjectAsync(ODataValueOfBoolean.class)
                 .thenApply(httpResponse -> {
                     if (httpResponse.getStatus() == 401) {
@@ -52,11 +52,12 @@ public class ServerSessionClientImpl extends ApiClient implements ServerSessionC
                 });
     }
 
-    @Override()
+    @Override
     public CompletableFuture<ODataValueOfDateTime> refreshServerSession(String repoId) {
         return httpClient
                 .post(baseUrl + "/v1/Repositories/{repoId}/ServerSession/Refresh")
                 .routeParam("repoId", repoId)
+                .contentType("application/json")
                 .asObjectAsync(ODataValueOfDateTime.class)
                 .thenApply(httpResponse -> {
                     if (httpResponse.getStatus() == 400) {

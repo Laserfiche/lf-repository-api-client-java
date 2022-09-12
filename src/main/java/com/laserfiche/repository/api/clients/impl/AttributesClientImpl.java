@@ -26,7 +26,7 @@ public class AttributesClientImpl extends ApiClient implements AttributesClient 
                 .get(baseUrl + "/v1/Repositories/{repoId}/Attributes/{attributeKey}")
                 .routeParam("repoId", repoId)
                 .routeParam("attributeKey", attributeKey)
-                .queryString("everyone", everyone)
+                .queryString(queryParameters)
                 .asObjectAsync(Attribute.class)
                 .thenApply(httpResponse -> {
                     if (httpResponse.getStatus() == 400) {
@@ -73,12 +73,7 @@ public class AttributesClientImpl extends ApiClient implements AttributesClient 
         return httpClient
                 .get(baseUrl + "/v1/Repositories/{repoId}/Attributes")
                 .routeParam("repoId", repoId)
-                .queryString("everyone", everyone)
-                .queryString("select", select)
-                .queryString("orderby", orderby)
-                .queryString("top", top)
-                .queryString("skip", skip)
-                .queryString("count", count)
+                .queryString(queryParameters)
                 .header("prefer", prefer)
                 .asObjectAsync(ODataValueContextOfListOfAttribute.class)
                 .thenApply(httpResponse -> {

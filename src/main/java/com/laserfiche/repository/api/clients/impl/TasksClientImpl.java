@@ -2,7 +2,6 @@ package com.laserfiche.repository.api.clients.impl;
 
 import com.laserfiche.repository.api.clients.TasksClient;
 import com.laserfiche.repository.api.clients.impl.model.OperationProgress;
-import kong.unirest.Unirest;
 import kong.unirest.UnirestInstance;
 
 import java.util.concurrent.CompletableFuture;
@@ -13,7 +12,7 @@ public class TasksClientImpl extends ApiClient implements TasksClient {
         super(baseUrl, httpClient);
     }
 
-    @Override()
+    @Override
     public CompletableFuture<OperationProgress> getOperationStatusAndProgress(String repoId, String operationToken) {
         return httpClient
                 .get(baseUrl + "/v1/Repositories/{repoId}/Tasks/{operationToken}")
@@ -40,7 +39,7 @@ public class TasksClientImpl extends ApiClient implements TasksClient {
                 });
     }
 
-    @Override()
+    @Override
     public CompletableFuture<Void> cancelOperation(String repoId, String operationToken) {
         return httpClient
                 .delete(baseUrl + "/v1/Repositories/{repoId}/Tasks/{operationToken}")

@@ -2,9 +2,10 @@ package com.laserfiche.repository.api.clients.impl;
 
 import com.laserfiche.repository.api.clients.SearchesClient;
 import com.laserfiche.repository.api.clients.impl.model.*;
-import kong.unirest.Unirest;
 import kong.unirest.UnirestInstance;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 public class SearchesClientImpl extends ApiClient implements SearchesClient {
@@ -13,7 +14,7 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
         super(baseUrl, httpClient);
     }
 
-    @Override()
+    @Override
     public CompletableFuture<OperationProgress> getSearchStatus(String repoId, String searchToken) {
         return httpClient
                 .get(baseUrl + "/v1/Repositories/{repoId}/Searches/{searchToken}")
@@ -40,7 +41,7 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
                 });
     }
 
-    @Override()
+    @Override
     public CompletableFuture<ODataValueOfBoolean> cancelOrCloseSearch(String repoId, String searchToken) {
         return httpClient
                 .delete(baseUrl + "/v1/Repositories/{repoId}/Searches/{searchToken}")
@@ -67,20 +68,32 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
                 });
     }
 
-    @Override()
+    @Override
     public CompletableFuture<ODataValueContextOfIListOfContextHit> getSearchContextHits(String repoId,
             String searchToken, Integer rowNumber, String prefer, String select, String orderby, Integer top,
             Integer skip, Boolean count) {
+        Map<String, Object> queryParameters = new HashMap<>();
+        if (select != null) {
+            queryParameters.put("select", select);
+        }
+        if (orderby != null) {
+            queryParameters.put("orderby", orderby);
+        }
+        if (top != null) {
+            queryParameters.put("top", top);
+        }
+        if (skip != null) {
+            queryParameters.put("skip", skip);
+        }
+        if (count != null) {
+            queryParameters.put("count", count);
+        }
         return httpClient
                 .get(baseUrl + "/v1/Repositories/{repoId}/Searches/{searchToken}/Results/{rowNumber}/ContextHits")
                 .routeParam("repoId", repoId)
                 .routeParam("searchToken", searchToken)
                 .routeParam("rowNumber", String.valueOf(rowNumber))
-                .queryString("select", select)
-                .queryString("orderby", orderby)
-                .queryString("top", top)
-                .queryString("skip", skip)
-                .queryString("count", count)
+                .queryString(queryParameters)
                 .header("prefer", prefer)
                 .asObjectAsync(ODataValueContextOfIListOfContextHit.class)
                 .thenApply(httpResponse -> {
@@ -103,7 +116,7 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
                 });
     }
 
-    @Override()
+    @Override
     public CompletableFuture<AcceptedOperation> createSearchOperation(String repoId,
             AdvancedSearchRequest requestBody) {
         return httpClient
@@ -129,24 +142,46 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
                 });
     }
 
-    @Override()
+    @Override
     public CompletableFuture<ODataValueContextOfIListOfEntry> getSearchResults(String repoId, String searchToken,
             Boolean groupByEntryType, Boolean refresh, String[] fields, Boolean formatFields, String prefer,
             String culture, String select, String orderby, Integer top, Integer skip, Boolean count) {
+        Map<String, Object> queryParameters = new HashMap<>();
+        if (groupByEntryType != null) {
+            queryParameters.put("groupByEntryType", groupByEntryType);
+        }
+        if (refresh != null) {
+            queryParameters.put("refresh", refresh);
+        }
+        if (fields != null) {
+            queryParameters.put("fields", fields);
+        }
+        if (formatFields != null) {
+            queryParameters.put("formatFields", formatFields);
+        }
+        if (culture != null) {
+            queryParameters.put("culture", culture);
+        }
+        if (select != null) {
+            queryParameters.put("select", select);
+        }
+        if (orderby != null) {
+            queryParameters.put("orderby", orderby);
+        }
+        if (top != null) {
+            queryParameters.put("top", top);
+        }
+        if (skip != null) {
+            queryParameters.put("skip", skip);
+        }
+        if (count != null) {
+            queryParameters.put("count", count);
+        }
         return httpClient
                 .get(baseUrl + "/v1/Repositories/{repoId}/Searches/{searchToken}/Results")
                 .routeParam("repoId", repoId)
                 .routeParam("searchToken", searchToken)
-                .queryString("groupByEntryType", groupByEntryType)
-                .queryString("refresh", refresh)
-                .queryString("fields", fields)
-                .queryString("formatFields", formatFields)
-                .queryString("culture", culture)
-                .queryString("select", select)
-                .queryString("orderby", orderby)
-                .queryString("top", top)
-                .queryString("skip", skip)
-                .queryString("count", count)
+                .queryString(queryParameters)
                 .header("prefer", prefer)
                 .asObjectAsync(ODataValueContextOfIListOfEntry.class)
                 .thenApply(httpResponse -> {

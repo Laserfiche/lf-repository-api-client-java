@@ -3,9 +3,10 @@ package com.laserfiche.repository.api.clients.impl;
 import com.laserfiche.repository.api.clients.FieldDefinitionsClient;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfWFieldInfo;
 import com.laserfiche.repository.api.clients.impl.model.WFieldInfo;
-import kong.unirest.Unirest;
 import kong.unirest.UnirestInstance;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 public class FieldDefinitionsClientImpl extends ApiClient implements FieldDefinitionsClient {
@@ -14,15 +15,21 @@ public class FieldDefinitionsClientImpl extends ApiClient implements FieldDefini
         super(baseUrl, httpClient);
     }
 
-    @Override()
+    @Override
     public CompletableFuture<WFieldInfo> getFieldDefinitionById(String repoId, Integer fieldDefinitionId,
             String culture, String select) {
+        Map<String, Object> queryParameters = new HashMap<>();
+        if (culture != null) {
+            queryParameters.put("culture", culture);
+        }
+        if (select != null) {
+            queryParameters.put("select", select);
+        }
         return httpClient
                 .get(baseUrl + "/v1/Repositories/{repoId}/FieldDefinitions/{fieldDefinitionId}")
                 .routeParam("repoId", repoId)
                 .routeParam("fieldDefinitionId", String.valueOf(fieldDefinitionId))
-                .queryString("culture", culture)
-                .queryString("select", select)
+                .queryString(queryParameters)
                 .asObjectAsync(WFieldInfo.class)
                 .thenApply(httpResponse -> {
                     if (httpResponse.getStatus() == 400) {
@@ -44,18 +51,32 @@ public class FieldDefinitionsClientImpl extends ApiClient implements FieldDefini
                 });
     }
 
-    @Override()
+    @Override
     public CompletableFuture<ODataValueContextOfIListOfWFieldInfo> getFieldDefinitions(String repoId, String prefer,
             String culture, String select, String orderby, Integer top, Integer skip, Boolean count) {
+        Map<String, Object> queryParameters = new HashMap<>();
+        if (culture != null) {
+            queryParameters.put("culture", culture);
+        }
+        if (select != null) {
+            queryParameters.put("select", select);
+        }
+        if (orderby != null) {
+            queryParameters.put("orderby", orderby);
+        }
+        if (top != null) {
+            queryParameters.put("top", top);
+        }
+        if (skip != null) {
+            queryParameters.put("skip", skip);
+        }
+        if (count != null) {
+            queryParameters.put("count", count);
+        }
         return httpClient
                 .get(baseUrl + "/v1/Repositories/{repoId}/FieldDefinitions")
                 .routeParam("repoId", repoId)
-                .queryString("culture", culture)
-                .queryString("select", select)
-                .queryString("orderby", orderby)
-                .queryString("top", top)
-                .queryString("skip", skip)
-                .queryString("count", count)
+                .queryString(queryParameters)
                 .header("prefer", prefer)
                 .asObjectAsync(ODataValueContextOfIListOfWFieldInfo.class)
                 .thenApply(httpResponse -> {

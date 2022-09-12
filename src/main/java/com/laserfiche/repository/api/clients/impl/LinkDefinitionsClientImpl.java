@@ -3,9 +3,10 @@ package com.laserfiche.repository.api.clients.impl;
 import com.laserfiche.repository.api.clients.LinkDefinitionsClient;
 import com.laserfiche.repository.api.clients.impl.model.EntryLinkTypeInfo;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfEntryLinkTypeInfo;
-import kong.unirest.Unirest;
 import kong.unirest.UnirestInstance;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 public class LinkDefinitionsClientImpl extends ApiClient implements LinkDefinitionsClient {
@@ -14,14 +15,18 @@ public class LinkDefinitionsClientImpl extends ApiClient implements LinkDefiniti
         super(baseUrl, httpClient);
     }
 
-    @Override()
+    @Override
     public CompletableFuture<EntryLinkTypeInfo> getLinkDefinitionById(String repoId, Integer linkTypeId,
             String select) {
+        Map<String, Object> queryParameters = new HashMap<>();
+        if (select != null) {
+            queryParameters.put("select", select);
+        }
         return httpClient
                 .get(baseUrl + "/v1/Repositories/{repoId}/LinkDefinitions/{linkTypeId}")
                 .routeParam("repoId", repoId)
                 .routeParam("linkTypeId", String.valueOf(linkTypeId))
-                .queryString("select", select)
+                .queryString(queryParameters)
                 .asObjectAsync(EntryLinkTypeInfo.class)
                 .thenApply(httpResponse -> {
                     if (httpResponse.getStatus() == 400) {
@@ -43,17 +48,29 @@ public class LinkDefinitionsClientImpl extends ApiClient implements LinkDefiniti
                 });
     }
 
-    @Override()
+    @Override
     public CompletableFuture<ODataValueContextOfIListOfEntryLinkTypeInfo> getLinkDefinitions(String repoId,
             String prefer, String select, String orderby, Integer top, Integer skip, Boolean count) {
+        Map<String, Object> queryParameters = new HashMap<>();
+        if (select != null) {
+            queryParameters.put("select", select);
+        }
+        if (orderby != null) {
+            queryParameters.put("orderby", orderby);
+        }
+        if (top != null) {
+            queryParameters.put("top", top);
+        }
+        if (skip != null) {
+            queryParameters.put("skip", skip);
+        }
+        if (count != null) {
+            queryParameters.put("count", count);
+        }
         return httpClient
                 .get(baseUrl + "/v1/Repositories/{repoId}/LinkDefinitions")
                 .routeParam("repoId", repoId)
-                .queryString("select", select)
-                .queryString("orderby", orderby)
-                .queryString("top", top)
-                .queryString("skip", skip)
-                .queryString("count", count)
+                .queryString(queryParameters)
                 .header("prefer", prefer)
                 .asObjectAsync(ODataValueContextOfIListOfEntryLinkTypeInfo.class)
                 .thenApply(httpResponse -> {

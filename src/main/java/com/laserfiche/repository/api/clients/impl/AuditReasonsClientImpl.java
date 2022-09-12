@@ -2,7 +2,6 @@ package com.laserfiche.repository.api.clients.impl;
 
 import com.laserfiche.repository.api.clients.AuditReasonsClient;
 import com.laserfiche.repository.api.clients.impl.model.AuditReasons;
-import kong.unirest.Unirest;
 import kong.unirest.UnirestInstance;
 
 import java.util.concurrent.CompletableFuture;
@@ -13,7 +12,7 @@ public class AuditReasonsClientImpl extends ApiClient implements AuditReasonsCli
         super(baseUrl, httpClient);
     }
 
-    @Override()
+    @Override
     public CompletableFuture<AuditReasons> getAuditReasons(String repoId) {
         return httpClient
                 .get(baseUrl + "/v1/Repositories/{repoId}/AuditReasons")

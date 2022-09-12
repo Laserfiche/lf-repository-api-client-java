@@ -2,7 +2,6 @@ package com.laserfiche.repository.api.clients.impl;
 
 import com.laserfiche.repository.api.clients.RepositoriesClient;
 import com.laserfiche.repository.api.clients.impl.model.RepositoryInfo;
-import kong.unirest.Unirest;
 import kong.unirest.UnirestInstance;
 
 import java.util.concurrent.CompletableFuture;
@@ -13,7 +12,7 @@ public class RepositoriesClientImpl extends ApiClient implements RepositoriesCli
         super(baseUrl, httpClient);
     }
 
-    @Override()
+    @Override
     public CompletableFuture<RepositoryInfo[]> getRepositoryList() {
         return httpClient
                 .get(baseUrl + "/v1/Repositories")
