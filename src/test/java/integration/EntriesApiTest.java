@@ -62,11 +62,11 @@ class EntriesApiTest extends BaseTest {
     @Disabled("Enable after entry related swagger.json issue is fixed.")
     @Test
     void deleteEntry_Success() {
-        Entry deleteEntry = createEntry(createEntryClient,
+        Entry entryToDelete = createEntry(createEntryClient,
                 "RepositoryApiClientIntegrationTest Java DeleteFolder", 1, true)
                 .join();
 
-        CompletableFuture<AcceptedOperation> deleteEntryResponse = client.deleteEntryInfo(repoId, deleteEntry.id,
+        CompletableFuture<AcceptedOperation> deleteEntryResponse = client.deleteEntryInfo(repoId, entryToDelete.id,
                 new DeleteEntryWithAuditReason());
 
         String token = deleteEntryResponse.join().token;
