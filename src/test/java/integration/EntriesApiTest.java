@@ -4,6 +4,7 @@ import com.laserfiche.repository.api.RepositoryApiClient;
 import com.laserfiche.repository.api.clients.EntriesClient;
 import com.laserfiche.repository.api.clients.impl.model.*;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -58,6 +59,7 @@ class EntriesApiTest extends BaseTest {
         assertNotNull(linkInfoList);
     }
 
+    @Disabled("Enable after entry related swagger.json issue is fixed.")
     @Test
     void deleteEntry_Success() {
         Entry deleteEntry = createEntry(createEntryClient,
@@ -81,6 +83,7 @@ class EntriesApiTest extends BaseTest {
         assertNotNull(tagInfoList);
     }
 
+    @Disabled("Enable after entry related swagger.json issue is fixed.")
     @Test
     void getDynamicFieldsEntry_Success() {
         ODataValueContextOfIListOfWTemplateInfo templateDefinitionsResponse = repositoryApiClient
