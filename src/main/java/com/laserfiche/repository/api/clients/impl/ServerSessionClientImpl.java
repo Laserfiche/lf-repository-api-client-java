@@ -18,7 +18,6 @@ public class ServerSessionClientImpl extends ApiClient implements ServerSessionC
         return httpClient
                 .post(baseUrl + "/v1/Repositories/{repoId}/ServerSession/Invalidate")
                 .routeParam("repoId", repoId)
-                .contentType("application/json")
                 .asObjectAsync(ODataValueOfBoolean.class)
                 .thenApply(httpResponse -> {
                     if (httpResponse.getStatus() == 400) {
@@ -42,7 +41,6 @@ public class ServerSessionClientImpl extends ApiClient implements ServerSessionC
         return httpClient
                 .post(baseUrl + "/v1/Repositories/{repoId}/ServerSession/Create")
                 .routeParam("repoId", repoId)
-                .contentType("application/json")
                 .asObjectAsync(ODataValueOfBoolean.class)
                 .thenApply(httpResponse -> {
                     if (httpResponse.getStatus() == 401) {
@@ -57,7 +55,6 @@ public class ServerSessionClientImpl extends ApiClient implements ServerSessionC
         return httpClient
                 .post(baseUrl + "/v1/Repositories/{repoId}/ServerSession/Refresh")
                 .routeParam("repoId", repoId)
-                .contentType("application/json")
                 .asObjectAsync(ODataValueOfDateTime.class)
                 .thenApply(httpResponse -> {
                     if (httpResponse.getStatus() == 400) {

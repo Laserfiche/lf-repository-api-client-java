@@ -80,6 +80,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 .routeParam("repoId", repoId)
                 .routeParam("entryId", String.valueOf(entryId))
                 .queryString(queryParameters)
+                .contentType("application/json")
                 .body(requestBody)
                 .asObjectAsync(ODataValueOfIListOfFieldValue.class)
                 .thenApply(httpResponse -> {
@@ -203,6 +204,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 .put(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/links")
                 .routeParam("repoId", repoId)
                 .routeParam("entryId", String.valueOf(entryId))
+                .contentType("application/json")
                 .body(requestBody)
                 .asObjectAsync(ODataValueOfIListOfWEntryLinkInfo.class)
                 .thenApply(httpResponse -> {
@@ -240,6 +242,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 .routeParam("repoId", repoId)
                 .routeParam("entryId", String.valueOf(entryId))
                 .queryString(queryParameters)
+                .contentType("application/json")
                 .body(requestBody)
                 .asObjectAsync(Entry.class)
                 .thenApply(httpResponse -> {
@@ -643,6 +646,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 .put(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/tags")
                 .routeParam("repoId", repoId)
                 .routeParam("entryId", String.valueOf(entryId))
+                .contentType("application/json")
                 .body(requestBody)
                 .asObjectAsync(ODataValueOfIListOfWTagInfo.class)
                 .thenApply(httpResponse -> {
@@ -751,6 +755,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 .delete(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}")
                 .routeParam("repoId", repoId)
                 .routeParam("entryId", String.valueOf(entryId))
+                .contentType("application/json")
                 .body(requestBody)
                 .asObjectAsync(AcceptedOperation.class)
                 .thenApply(httpResponse -> {
