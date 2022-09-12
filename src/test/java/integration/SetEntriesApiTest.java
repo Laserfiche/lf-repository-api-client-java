@@ -44,6 +44,7 @@ public class SetEntriesApiTest extends BaseTest {
 
         String tag = tagDefinitions.get(0).name;
         PutTagRequest request = new PutTagRequest();
+        request.tags = new ArrayList<>();
         request.tags.add(tag);
         entry = createEntry(client, "RepositoryApiClientIntegrationTest Java SetTags", 1, true);
         Integer num = entry.join().id;
