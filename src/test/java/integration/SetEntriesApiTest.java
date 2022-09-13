@@ -96,7 +96,7 @@ public class SetEntriesApiTest extends BaseTest {
     }
 
     @Test
-    void setFields_Success() throws ExecutionException, InterruptedException {
+    void setFields_Success() {
         WFieldInfo field = null;
         String fieldValue = "a";
 
