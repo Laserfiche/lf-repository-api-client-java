@@ -105,8 +105,7 @@ public class SetEntriesApiTest extends BaseTest {
                 .getFieldDefinitions(repoId, null, null, null, null, null, null, null);
         List<WFieldInfo> fieldDefinitions = fieldDefinitionsResponse.join().value;
         for (WFieldInfo fieldDefinition : fieldDefinitions) {
-            if (fieldDefinition.fieldType.equals(WFieldType.STRING) && (fieldDefinition.constraint.equals(
-                    "") || fieldDefinition.constraint == null) && (fieldDefinition.length >= 1)) {
+            if (fieldDefinition.fieldType.equals(WFieldType.STRING) && (fieldDefinition.constraint == null || fieldDefinition.constraint.equals("")) && (fieldDefinition.length >= 1)) {
                 field = fieldDefinition;
                 break;
             }
