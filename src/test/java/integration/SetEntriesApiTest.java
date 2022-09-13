@@ -6,7 +6,9 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
@@ -100,12 +102,16 @@ public class SetEntriesApiTest extends BaseTest {
         WFieldInfo field = null;
         String fieldValue = "a";
 
+        // Find a field definition that accepts String and has constraint.
         CompletableFuture<ODataValueContextOfIListOfWFieldInfo> fieldDefinitionsResponse = repositoryApiClient
                 .getFieldDefinitionsClient()
                 .getFieldDefinitions(repoId, null, null, null, null, null, null, null);
         List<WFieldInfo> fieldDefinitions = fieldDefinitionsResponse.join().value;
         for (WFieldInfo fieldDefinition : fieldDefinitions) {
-            if (fieldDefinition.fieldType.equals(WFieldType.STRING) && (fieldDefinition.constraint == null || fieldDefinition.constraint.equals("")) && (fieldDefinition.length >= 1)) {
+            if (fieldDefinition.fieldType.equals(WFieldType.STRING) &&
+                    nullOrEmpty(fieldDefinition.constraint) &&
+                    fieldDefinition.length != null &&
+                    fieldDefinition.length >= 1) {
                 field = fieldDefinition;
                 break;
             }
@@ -113,24 +119,25 @@ public class SetEntriesApiTest extends BaseTest {
 
         assertNotNull(field);
 
-        ValueToUpdate value = new ValueToUpdate();
-        value.value = fieldValue;
-        value.position = 1;
+        // Create an entry and set a field using the definition we found earlier.
 
-        FieldToUpdate name = new FieldToUpdate();
+        Map<String, FieldToUpdate> requestBody = new HashMap<>();
+        FieldToUpdate fieldToUpdate = new FieldToUpdate();
+        requestBody.put(field.name, fieldToUpdate);
 
-        List<ValueToUpdate> values = new ArrayList<>();
+        fieldToUpdate.values = new ArrayList<>();
+        ValueToUpdate valueToUpdate = new ValueToUpdate();
+        fieldToUpdate.values.add(valueToUpdate);
 
-        values.add(value);
-
-        name.values = values;
+        valueToUpdate.position = 1;
+        valueToUpdate.value = fieldValue;
 
         entry = createEntry(client, "RepositoryApiClientIntegrationTest Java SetFields", 1, true);
-        Integer num = entry.join().id;
+        Integer entryId = entry.join().id;
 
         CompletableFuture<ODataValueOfIListOfFieldValue> assignFieldValuesResponse = repositoryApiClient
                 .getEntriesClient()
-                .assignFieldValues(repoId, num, name, null);
+                .assignFieldValues(repoId, entryId, requestBody, null);
         List<FieldValue> fields = assignFieldValuesResponse.join().value;
 
         assertNotNull(fields);

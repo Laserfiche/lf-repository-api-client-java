@@ -65,4 +65,8 @@ public class BaseTest {
         }
         return CompletableFuture.supplyAsync(() -> true);
     }
+
+    public static boolean nullOrEmpty(String str) {
+        return str == null || str.length() == 0;
+    }
 }
