@@ -47,7 +47,6 @@ public class TasksApiTest extends BaseTest {
     }
 
     @Test
-    @Disabled("Exception Thrown")
     void getOperationStatus_Success() throws InterruptedException {
         Entry deleteEntry = createEntry(createEntryClient, "RepositoryApiClientIntegrationTest Java GetOperationStatus",
                 1, true).join();
