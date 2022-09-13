@@ -45,7 +45,7 @@ public interface EntriesClient {
      * @return CompletableFuture<ODataValueOfIListOfFieldValue> The return value
      */
     CompletableFuture<ODataValueOfIListOfFieldValue> assignFieldValues(String repoId, Integer entryId,
-            FieldToUpdate requestBody, String culture);
+            Map<String, FieldToUpdate> requestBody, String culture);
 
     /**
      * - Creates a new document in the specified folder with file (no more than 100 MB).

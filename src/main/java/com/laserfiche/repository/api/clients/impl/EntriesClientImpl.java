@@ -70,7 +70,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override
     public CompletableFuture<ODataValueOfIListOfFieldValue> assignFieldValues(String repoId, Integer entryId,
-            FieldToUpdate requestBody, String culture) {
+            Map<String, FieldToUpdate> requestBody, String culture) {
         Map<String, Object> queryParameters = new HashMap<>();
         if (culture != null) {
             queryParameters.put("culture", culture);
