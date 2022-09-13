@@ -23,6 +23,7 @@ public class TasksApiTest extends BaseTest {
         createEntryClient = repositoryApiClient;
     }
 
+    @Disabled("We should enable it when we figure out how to design this test.")
     @Test
     void cancelOperation_Success() throws InterruptedException {
         Entry deleteEntry = createEntry(createEntryClient, "RepositoryApiClientIntegrationTest Java CancelOperation", 1,
