@@ -1,64 +1,48 @@
 package com.laserfiche.repository.api.clients.impl.model;
 
-import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.io.IOException;
-
-/**
- * Enumeration of Laserfiche template field formats.
- */
-@JsonAdapter(WFieldFormat.Adapter.class)
 public enum WFieldFormat {
-  NONE("None"),
-  SHORTDATE("ShortDate"),
-  LONGDATE("LongDate"),
-  SHORTDATETIME("ShortDateTime"),
-  LONGDATETIME("LongDateTime"),
-  SHORTTIME("ShortTime"),
-  LONGTIME("LongTime"),
-  GENERALNUMBER("GeneralNumber"),
-  CURRENCY("Currency"),
-  PERCENT("Percent"),
-  SCIENTIFIC("Scientific"),
-  CUSTOM("Custom");
 
-  private String value;
+    @JsonProperty("None")
+    NONE("None"),
 
-  WFieldFormat(String value) {
-    this.value = value;
-  }
+    @JsonProperty("ShortDate")
+    SHORTDATE("ShortDate"),
 
-  public String getValue() {
-    return value;
-  }
+    @JsonProperty("LongDate")
+    LONGDATE("LongDate"),
 
-  @Override
-  public String toString() {
-    return String.valueOf(value);
-  }
+    @JsonProperty("ShortDateTime")
+    SHORTDATETIME("ShortDateTime"),
 
-  public static WFieldFormat fromValue(String input) {
-    for (WFieldFormat b : WFieldFormat.values()) {
-      if (b.value.equals(input)) {
-        return b;
-      }
+    @JsonProperty("LongDateTime")
+    LONGDATETIME("LongDateTime"),
+
+    @JsonProperty("ShortTime")
+    SHORTTIME("ShortTime"),
+
+    @JsonProperty("LongTime")
+    LONGTIME("LongTime"),
+
+    @JsonProperty("GeneralNumber")
+    GENERALNUMBER("GeneralNumber"),
+
+    @JsonProperty("Currency")
+    CURRENCY("Currency"),
+
+    @JsonProperty("Percent")
+    PERCENT("Percent"),
+
+    @JsonProperty("Scientific")
+    SCIENTIFIC("Scientific"),
+
+    @JsonProperty("Custom")
+    CUSTOM("Custom");
+
+    public String value;
+
+    WFieldFormat(String value) {
+        this.value = value;
     }
-    return null;
-  }
-
-  public static class Adapter extends TypeAdapter<WFieldFormat> {
-    @Override
-    public void write(final JsonWriter jsonWriter, final WFieldFormat enumeration) throws IOException {
-      jsonWriter.value(String.valueOf(enumeration.getValue()));
-    }
-
-    @Override
-    public WFieldFormat read(final JsonReader jsonReader) throws IOException {
-      Object value = jsonReader.nextString();
-      return WFieldFormat.fromValue((String)(value));
-    }
-  }
 }

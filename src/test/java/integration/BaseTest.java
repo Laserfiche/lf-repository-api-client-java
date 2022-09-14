@@ -1,23 +1,19 @@
 package integration;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.laserfiche.api.client.model.AccessKey;
 import com.laserfiche.repository.api.RepositoryApiClient;
 import com.laserfiche.repository.api.RepositoryApiClientImpl;
-import com.laserfiche.repository.api.clients.impl.model.*;
-import com.nimbusds.jose.jwk.JWK;
+import com.laserfiche.repository.api.clients.impl.model.Entry;
+import com.laserfiche.repository.api.clients.impl.model.PostEntryChildrenEntryType;
+import com.laserfiche.repository.api.clients.impl.model.PostEntryChildrenRequest;
+import com.laserfiche.repository.api.clients.impl.model.TemplateFieldInfo;
 import io.github.cdimascio.dotenv.Dotenv;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 
-import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
-
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class BaseTest {
     protected static String spKey;
@@ -50,24 +46,27 @@ public class BaseTest {
         repositoryApiClient.setDefaultRequestHeaders(testHeaders);
     }
 
-    public static CompletableFuture<Entry> createEntry(RepositoryApiClient client, String entryName, Integer parentEntryId, Boolean autoRename) {
+    public static CompletableFuture<Entry> createEntry(RepositoryApiClient client, String entryName,
+            Integer parentEntryId, Boolean autoRename) {
         PostEntryChildrenRequest request = new PostEntryChildrenRequest();
-        request.setEntryType(PostEntryChildrenEntryType.FOLDER);
-        request.setName(entryName);
-        CompletableFuture<Entry> newEntry = client.getEntriesClient().createOrCopyEntry(repoId, parentEntryId, request, autoRename, null);
-        Entry entry = newEntry.join();
-        assertNotNull(newEntry);
-        Assertions.assertSame(entry.getParentId(), parentEntryId);
-        Assertions.assertSame(entry.getEntryType(), EntryType.FOLDER);
-        return newEntry;
+        request.entryType = PostEntryChildrenEntryType.FOLDER;
+        request.name = entryName;
+
+        return client
+                .getEntriesClient()
+                .createOrCopyEntry(repoId, parentEntryId, request, autoRename, null);
     }
 
     public static CompletableFuture<Boolean> allFalse(List<TemplateFieldInfo> arr) {
         for (TemplateFieldInfo templateFieldInfo : arr) {
-            if (templateFieldInfo.isIsRequired()) {
+            if (templateFieldInfo.isRequired) {
                 return CompletableFuture.supplyAsync(() -> false);
             }
         }
         return CompletableFuture.supplyAsync(() -> true);
+    }
+
+    public static boolean nullOrEmpty(String str) {
+        return str == null || str.length() == 0;
     }
 }

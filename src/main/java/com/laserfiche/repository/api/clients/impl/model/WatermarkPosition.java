@@ -1,61 +1,39 @@
 package com.laserfiche.repository.api.clients.impl.model;
 
-import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.io.IOException;
-
-/**
- * Gets or Sets WatermarkPosition
- */
-@JsonAdapter(WatermarkPosition.Adapter.class)
 public enum WatermarkPosition {
-  TOPLEFT("TopLeft"),
-  TOPCENTER("TopCenter"),
-  TOPRIGHT("TopRight"),
-  MIDDLELEFT("MiddleLeft"),
-  DEADCENTER("DeadCenter"),
-  MIDDLERIGHT("MiddleRight"),
-  BOTTOMLEFT("BottomLeft"),
-  BOTTOMCENTER("BottomCenter"),
-  BOTTOMRIGHT("BottomRight");
 
-  private String value;
+    @JsonProperty("TopLeft")
+    TOPLEFT("TopLeft"),
 
-  WatermarkPosition(String value) {
-    this.value = value;
-  }
+    @JsonProperty("TopCenter")
+    TOPCENTER("TopCenter"),
 
-  public String getValue() {
-    return value;
-  }
+    @JsonProperty("TopRight")
+    TOPRIGHT("TopRight"),
 
-  @Override
-  public String toString() {
-    return String.valueOf(value);
-  }
+    @JsonProperty("MiddleLeft")
+    MIDDLELEFT("MiddleLeft"),
 
-  public static WatermarkPosition fromValue(String input) {
-    for (WatermarkPosition b : WatermarkPosition.values()) {
-      if (b.value.equals(input)) {
-        return b;
-      }
+    @JsonProperty("DeadCenter")
+    DEADCENTER("DeadCenter"),
+
+    @JsonProperty("MiddleRight")
+    MIDDLERIGHT("MiddleRight"),
+
+    @JsonProperty("BottomLeft")
+    BOTTOMLEFT("BottomLeft"),
+
+    @JsonProperty("BottomCenter")
+    BOTTOMCENTER("BottomCenter"),
+
+    @JsonProperty("BottomRight")
+    BOTTOMRIGHT("BottomRight");
+
+    public String value;
+
+    WatermarkPosition(String value) {
+        this.value = value;
     }
-    return null;
-  }
-
-  public static class Adapter extends TypeAdapter<WatermarkPosition> {
-    @Override
-    public void write(final JsonWriter jsonWriter, final WatermarkPosition enumeration) throws IOException {
-      jsonWriter.value(String.valueOf(enumeration.getValue()));
-    }
-
-    @Override
-    public WatermarkPosition read(final JsonReader jsonReader) throws IOException {
-      Object value = jsonReader.nextString();
-      return WatermarkPosition.fromValue((String)(value));
-    }
-  }
 }

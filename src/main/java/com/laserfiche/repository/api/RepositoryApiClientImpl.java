@@ -2,43 +2,47 @@ package com.laserfiche.repository.api;
 
 import com.laserfiche.api.client.model.AccessKey;
 import com.laserfiche.repository.api.clients.*;
-import com.laserfiche.repository.api.serialization.GsonCustomConverterFactory;
-import com.laserfiche.repository.api.serialization.RepositoryApiDeserializer;
-import okhttp3.OkHttpClient;
-import retrofit2.Retrofit;
-import retrofit2.converter.scalars.ScalarsConverterFactory;
+import com.laserfiche.repository.api.clients.impl.*;
+import com.laserfiche.repository.api.clients.impl.deserialization.RepositoryClientObjectMapper;
+import kong.unirest.Unirest;
+import kong.unirest.UnirestInstance;
 
 import java.util.Map;
 
-public class RepositoryApiClientImpl implements RepositoryApiClient {
-    private final Retrofit.Builder clientBuilder;
-    private final OkHttpClient.Builder okBuilder;
+public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseable {
     private Map<String, String> defaultHeaders;
-    private AttributesClient attributesClient;
-    private AuditReasonsClient auditReasonsClient;
-    private EntriesClient entriesClient;
-    private FieldDefinitionsClient fieldDefinitionsClient;
-    private LinkDefinitionsClient linkDefinitionsClient;
-    private RepositoriesClient repositoriesClient;
-    private SearchesClient searchesClient;
-    private SimpleSearchesClient simpleSearchesClient;
-    private TagDefinitionsClient tagDefinitionsClient;
-    private TasksClient tasksClient;
-    private TemplateDefinitionsClient templateDefinitionsClient;
+    private UnirestInstance httpClient;
+    private final AttributesClient attributesClient;
+    private final AuditReasonsClient auditReasonsClient;
+    private final EntriesClient entriesClient;
+    private final FieldDefinitionsClient fieldDefinitionsClient;
+    private final LinkDefinitionsClient linkDefinitionsClient;
+    private final RepositoriesClient repositoriesClient;
+    private final SearchesClient searchesClient;
+    private final SimpleSearchesClient simpleSearchesClient;
+    private final TagDefinitionsClient tagDefinitionsClient;
+    private final TasksClient tasksClient;
+    private final TemplateDefinitionsClient templateDefinitionsClient;
 
     protected RepositoryApiClientImpl(String servicePrincipalKey, AccessKey accessKey, String baseUrlDebug) {
-        String baseUrl = baseUrlDebug != null ? baseUrlDebug : "https://api." + accessKey.getDomain() + "/repository/";
-        RepositoryApiDeserializer json = new RepositoryApiDeserializer();
+        String baseUrl = baseUrlDebug != null ? baseUrlDebug : "https://api." + accessKey.domain + "/repository";
 
-        okBuilder = new OkHttpClient.Builder();
-        addDefaultHeaderInterceptor();
-        okBuilder.addInterceptor(new OAuthInterceptor(servicePrincipalKey, accessKey));
+        httpClient = Unirest.spawnInstance();
+        httpClient.config()
+               .setObjectMapper(new RepositoryClientObjectMapper())
+               .interceptor(new OAuthInterceptor(servicePrincipalKey, accessKey));
 
-        clientBuilder = new Retrofit
-                .Builder()
-                .baseUrl(baseUrl)
-                .addConverterFactory(ScalarsConverterFactory.create())
-                .addConverterFactory(GsonCustomConverterFactory.create(json.getGson()));
+        attributesClient = new AttributesClientImpl(baseUrl, httpClient);
+        auditReasonsClient = new AuditReasonsClientImpl(baseUrl, httpClient);
+        entriesClient = new EntriesClientImpl(baseUrl, httpClient);
+        fieldDefinitionsClient = new FieldDefinitionsClientImpl(baseUrl, httpClient);
+        linkDefinitionsClient = new LinkDefinitionsClientImpl(baseUrl, httpClient);
+        repositoriesClient = new RepositoriesClientImpl(baseUrl, httpClient);
+        searchesClient = new SearchesClientImpl(baseUrl, httpClient);
+        simpleSearchesClient = new SimpleSearchesClientImpl(baseUrl, httpClient);
+        tagDefinitionsClient = new TagDefinitionsClientImpl(baseUrl, httpClient);
+        tasksClient = new TasksClientImpl(baseUrl, httpClient);
+        templateDefinitionsClient = new TemplateDefinitionsClientImpl(baseUrl, httpClient);
     }
 
     public static RepositoryApiClient CreateFromAccessKey(String servicePrincipalKey, AccessKey accessKey, String baseUrlDebug) {
@@ -47,17 +51,6 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
 
     public static RepositoryApiClient CreateFromAccessKey(String servicePrincipalKey, AccessKey accessKey) {
         return CreateFromAccessKey(servicePrincipalKey, accessKey, null);
-    }
-
-    private void addDefaultHeaderInterceptor() {
-        okBuilder.addInterceptor(chain -> {
-            okhttp3.Request.Builder builder = chain.request().newBuilder();
-            if (defaultHeaders != null) {
-                defaultHeaders.forEach(builder::addHeader);
-            }
-            okhttp3.Request request = builder.build();
-            return chain.proceed(request);
-        });
     }
 
     @Override
@@ -72,89 +65,64 @@ public class RepositoryApiClientImpl implements RepositoryApiClient {
 
     @Override
     public AttributesClient getAttributesClient() {
-        if (attributesClient == null) {
-            attributesClient = new AttributesClientImpl(clientBuilder, okBuilder);
-        }
         return attributesClient;
     }
 
     @Override
     public AuditReasonsClient getAuditReasonsClient() {
-        if (auditReasonsClient == null) {
-            auditReasonsClient = new AuditReasonsClientImpl(clientBuilder, okBuilder);
-        }
         return auditReasonsClient;
     }
 
     @Override
     public EntriesClient getEntriesClient() {
-        if (entriesClient == null) {
-            entriesClient = new EntriesClientImpl(clientBuilder, okBuilder);
-        }
         return entriesClient;
     }
 
     @Override
     public FieldDefinitionsClient getFieldDefinitionsClient() {
-        if (fieldDefinitionsClient == null) {
-            fieldDefinitionsClient = new FieldDefinitionsClientImpl(clientBuilder, okBuilder);
-        }
         return fieldDefinitionsClient;
     }
 
     @Override
     public LinkDefinitionsClient getLinkDefinitionsClient() {
-        if (linkDefinitionsClient == null) {
-            linkDefinitionsClient = new LinkDefinitionsClientImpl(clientBuilder, okBuilder);
-        }
         return linkDefinitionsClient;
     }
 
     @Override
     public RepositoriesClient getRepositoryClient() {
-        if (repositoriesClient == null) {
-            repositoriesClient = new RepositoriesClientImpl(clientBuilder, okBuilder);
-        }
         return repositoriesClient;
     }
 
     @Override
     public SearchesClient getSearchesClient() {
-        if (searchesClient == null) {
-            searchesClient = new SearchesClientImpl(clientBuilder, okBuilder);
-        }
         return searchesClient;
     }
 
     @Override
     public SimpleSearchesClient getSimpleSearchesClient() {
-        if (simpleSearchesClient == null) {
-            simpleSearchesClient = new SimpleSearchesClientImpl(clientBuilder, okBuilder);
-        }
         return simpleSearchesClient;
     }
 
     @Override
     public TagDefinitionsClient getTagDefinitionsClient() {
-        if (tagDefinitionsClient == null) {
-            tagDefinitionsClient = new TagDefinitionsClientImpl(clientBuilder, okBuilder);
-        }
         return tagDefinitionsClient;
     }
 
     @Override
     public TasksClient getTasksClient() {
-        if (tasksClient == null) {
-            tasksClient = new TasksClientImpl(clientBuilder, okBuilder);
-        }
         return tasksClient;
     }
 
     @Override
     public TemplateDefinitionsClient getTemplateDefinitionClient() {
-        if (templateDefinitionsClient == null) {
-            templateDefinitionsClient = new TemplateDefinitionsClientImpl(clientBuilder, okBuilder);
-        }
         return templateDefinitionsClient;
+    }
+
+    /**
+     * From the AutoCloseable interface
+     */
+    @Override
+    public void close() {
+        httpClient.shutDown();
     }
 }

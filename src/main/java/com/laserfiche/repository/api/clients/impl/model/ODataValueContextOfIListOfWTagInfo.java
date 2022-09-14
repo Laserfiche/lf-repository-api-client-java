@@ -1,97 +1,15 @@
 package com.laserfiche.repository.api.clients.impl.model;
 
-import com.google.gson.annotations.SerializedName;
-import io.swagger.v3.oas.annotations.media.Schema;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.Objects;
-/**
- * ODataValueContextOfIListOfWTagInfo
- */
-
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-08-19T17:07:43.799-04:00[America/New_York]")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ODataValueContextOfIListOfWTagInfo extends ODataValueOfIListOfWTagInfo {
-  @SerializedName("@odata.nextLink")
-  private String _atOdataNextLink = null;
 
-  @SerializedName("@odata.count")
-  private Integer _atOdataCount = null;
+    @JsonProperty("@odata.nextLink")
+    public String _atOdataNextLink = null;
 
-  public ODataValueContextOfIListOfWTagInfo _atOdataNextLink(String _atOdataNextLink) {
-    this._atOdataNextLink = _atOdataNextLink;
-    return this;
-  }
-
-   /**
-   * It contains a URL that allows retrieving the next subset of the requested collection.
-   * @return _atOdataNextLink
-  **/
-  @Schema(description = "It contains a URL that allows retrieving the next subset of the requested collection.")
-  public String getAtOdataNextLink() {
-    return _atOdataNextLink;
-  }
-
-  public void setAtOdataNextLink(String _atOdataNextLink) {
-    this._atOdataNextLink = _atOdataNextLink;
-  }
-
-  public ODataValueContextOfIListOfWTagInfo _atOdataCount(Integer _atOdataCount) {
-    this._atOdataCount = _atOdataCount;
-    return this;
-  }
-
-   /**
-   * It contains the count of a collection of entities or a collection of entity references.
-   * @return _atOdataCount
-  **/
-  @Schema(description = "It contains the count of a collection of entities or a collection of entity references.")
-  public Integer getAtOdataCount() {
-    return _atOdataCount;
-  }
-
-  public void setAtOdataCount(Integer _atOdataCount) {
-    this._atOdataCount = _atOdataCount;
-  }
-
-
-  @Override
-  public boolean equals(java.lang.Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    ODataValueContextOfIListOfWTagInfo odataValueContextOfIListOfWTagInfo = (ODataValueContextOfIListOfWTagInfo) o;
-    return Objects.equals(this._atOdataNextLink, odataValueContextOfIListOfWTagInfo._atOdataNextLink) &&
-        Objects.equals(this._atOdataCount, odataValueContextOfIListOfWTagInfo._atOdataCount) &&
-        super.equals(o);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(_atOdataNextLink, _atOdataCount, super.hashCode());
-  }
-
-
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class ODataValueContextOfIListOfWTagInfo {\n");
-    sb.append("    ").append(toIndentedString(super.toString())).append("\n");
-    sb.append("    _atOdataNextLink: ").append(toIndentedString(_atOdataNextLink)).append("\n");
-    sb.append("    _atOdataCount: ").append(toIndentedString(_atOdataCount)).append("\n");
-    sb.append("}");
-    return sb.toString();
-  }
-
-  /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
-   */
-  private String toIndentedString(java.lang.Object o) {
-    if (o == null) {
-      return "null";
-    }
-    return o.toString().replace("\n", "\n    ");
-  }
-
+    @JsonProperty("@odata.count")
+    public Integer _atOdataCount = null;
 }

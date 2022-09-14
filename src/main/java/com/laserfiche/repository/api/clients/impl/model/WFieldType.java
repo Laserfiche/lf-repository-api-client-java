@@ -1,61 +1,39 @@
 package com.laserfiche.repository.api.clients.impl.model;
 
-import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.io.IOException;
-
-/**
- * Gets or Sets WFieldType
- */
-@JsonAdapter(WFieldType.Adapter.class)
 public enum WFieldType {
-  DATETIME("DateTime"),
-  BLOB("Blob"),
-  DATE("Date"),
-  SHORTINTEGER("ShortInteger"),
-  LONGINTEGER("LongInteger"),
-  LIST("List"),
-  NUMBER("Number"),
-  STRING("String"),
-  TIME("Time");
 
-  private String value;
+    @JsonProperty("DateTime")
+    DATETIME("DateTime"),
 
-  WFieldType(String value) {
-    this.value = value;
-  }
+    @JsonProperty("Blob")
+    BLOB("Blob"),
 
-  public String getValue() {
-    return value;
-  }
+    @JsonProperty("Date")
+    DATE("Date"),
 
-  @Override
-  public String toString() {
-    return String.valueOf(value);
-  }
+    @JsonProperty("ShortInteger")
+    SHORTINTEGER("ShortInteger"),
 
-  public static WFieldType fromValue(String input) {
-    for (WFieldType b : WFieldType.values()) {
-      if (b.value.equals(input)) {
-        return b;
-      }
+    @JsonProperty("LongInteger")
+    LONGINTEGER("LongInteger"),
+
+    @JsonProperty("List")
+    LIST("List"),
+
+    @JsonProperty("Number")
+    NUMBER("Number"),
+
+    @JsonProperty("String")
+    STRING("String"),
+
+    @JsonProperty("Time")
+    TIME("Time");
+
+    public String value;
+
+    WFieldType(String value) {
+        this.value = value;
     }
-    return null;
-  }
-
-  public static class Adapter extends TypeAdapter<WFieldType> {
-    @Override
-    public void write(final JsonWriter jsonWriter, final WFieldType enumeration) throws IOException {
-      jsonWriter.value(String.valueOf(enumeration.getValue()));
-    }
-
-    @Override
-    public WFieldType read(final JsonReader jsonReader) throws IOException {
-      Object value = jsonReader.nextString();
-      return WFieldType.fromValue((String)(value));
-    }
-  }
 }

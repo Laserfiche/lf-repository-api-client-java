@@ -14,6 +14,7 @@ class AuditReasonsApiTest extends BaseTest {
         AuditReasonsClient client = repositoryApiClient.getAuditReasonsClient();
         CompletableFuture<AuditReasons> future = client.getAuditReasons(repoId);
         AuditReasons reasons = future.join();
+
         assertNotNull(reasons);
     }
 }
