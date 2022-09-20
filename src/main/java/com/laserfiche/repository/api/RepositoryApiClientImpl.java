@@ -56,6 +56,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
     @Override
     public void setDefaultRequestHeaders(Map<String, String> defaultRequestHeaders) {
         defaultHeaders = defaultRequestHeaders;
+        httpClient.config().clearDefaultHeaders();
         for (String Key : defaultRequestHeaders.keySet()) {
             httpClient.config().setDefaultHeader(Key, defaultHeaders.get(Key));
         }
