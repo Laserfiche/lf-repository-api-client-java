@@ -26,7 +26,6 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
 
     protected RepositoryApiClientImpl(String servicePrincipalKey, AccessKey accessKey, String baseUrlDebug) {
         String baseUrl = baseUrlDebug != null ? baseUrlDebug : "https://api." + accessKey.domain + "/repository";
-
         httpClient = Unirest.spawnInstance();
         httpClient.config()
                .setObjectMapper(new RepositoryClientObjectMapper())
@@ -56,6 +55,8 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
     @Override
     public void setDefaultRequestHeaders(Map<String, String> defaultRequestHeaders) {
         defaultHeaders = defaultRequestHeaders;
+        String defaultHeadersValue = defaultHeaders.keySet().toArray()[0].toString();
+        httpClient.config().addDefaultHeader(defaultHeadersValue, defaultHeaders.get(defaultHeadersValue));
     }
 
     @Override
