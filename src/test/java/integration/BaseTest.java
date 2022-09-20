@@ -39,15 +39,14 @@ public class BaseTest {
             repoId = dotenv.get("REPOSITORY_ID");
             testHeaderValue = dotenv.get("TEST_HEADER");
         }
-        accessKey = AccessKey.CreateFromBase64EncodedAccessKey(accessKeyBase64);
+        accessKey = AccessKey.createFromBase64EncodedAccessKey(accessKeyBase64);
         testHeaders = new HashMap<>();
         testHeaders.put(testHeaderValue, "true");
         repositoryApiClient = RepositoryApiClientImpl.CreateFromAccessKey(spKey, accessKey);
         repositoryApiClient.setDefaultRequestHeaders(testHeaders);
     }
 
-    public static CompletableFuture<Entry> createEntry(RepositoryApiClient client, String entryName,
-            Integer parentEntryId, Boolean autoRename) {
+    public static CompletableFuture<Entry> createEntry(RepositoryApiClient client, String entryName, Integer parentEntryId, Boolean autoRename) {
         PostEntryChildrenRequest request = new PostEntryChildrenRequest();
         request.entryType = PostEntryChildrenEntryType.FOLDER;
         request.name = entryName;
