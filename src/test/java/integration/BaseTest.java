@@ -47,7 +47,7 @@ public class BaseTest {
     }
 
     public static CompletableFuture<Entry> createEntry(RepositoryApiClient client, String entryName,
-            Integer parentEntryId, Boolean autoRename) {
+                                                       Integer parentEntryId, Boolean autoRename) {
         PostEntryChildrenRequest request = new PostEntryChildrenRequest();
         request.entryType = PostEntryChildrenEntryType.FOLDER;
         request.name = entryName;

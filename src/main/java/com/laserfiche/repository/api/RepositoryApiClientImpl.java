@@ -27,9 +27,10 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
     protected RepositoryApiClientImpl(String servicePrincipalKey, AccessKey accessKey, String baseUrlDebug) {
         String baseUrl = baseUrlDebug != null ? baseUrlDebug : "https://api." + accessKey.domain + "/repository";
         httpClient = Unirest.spawnInstance();
+
         httpClient.config()
-               .setObjectMapper(new RepositoryClientObjectMapper())
-               .interceptor(new OAuthInterceptor(servicePrincipalKey, accessKey));
+                .setObjectMapper(new RepositoryClientObjectMapper())
+                .interceptor(new OAuthInterceptor(servicePrincipalKey, accessKey));
 
         attributesClient = new AttributesClientImpl(baseUrl, httpClient);
         auditReasonsClient = new AuditReasonsClientImpl(baseUrl, httpClient);
