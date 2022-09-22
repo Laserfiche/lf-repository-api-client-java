@@ -23,8 +23,6 @@ public class AttributesClientImpl extends ApiClient implements AttributesClient 
                 new Object[]{repoId, attributeKey});
         return httpClient
                 .get(baseUrl + "/v1/Repositories/{repoId}/Attributes/{attributeKey}")
-                .routeParam("repoId", repoId)
-                .routeParam("attributeKey", attributeKey)
                 .queryString(queryParameters)
                 .routeParam(pathParameters)
                 .asObjectAsync(Attribute.class)
@@ -68,7 +66,6 @@ public class AttributesClientImpl extends ApiClient implements AttributesClient 
         Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId"}, new Object[]{repoId});
         return httpClient
                 .get(url)
-                .routeParam("repoId", repoId)
                 .queryString(queryParameters)
                 .routeParam(pathParameters)
                 .header("prefer", prefer)

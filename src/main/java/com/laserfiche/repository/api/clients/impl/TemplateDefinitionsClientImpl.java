@@ -33,7 +33,6 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
         Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId"}, new Object[]{repoId});
         return httpClient
                 .get(url)
-                .routeParam("repoId", repoId)
                 .queryString(queryParameters)
                 .routeParam(pathParameters)
                 .header("prefer", prefer)
@@ -87,7 +86,6 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
         Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId"}, new Object[]{repoId});
         return httpClient
                 .get(url)
-                .routeParam("repoId", repoId)
                 .queryString(queryParameters)
                 .routeParam(pathParameters)
                 .header("prefer", prefer)
@@ -142,8 +140,6 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
                 new Object[]{repoId, String.valueOf(templateId)});
         return httpClient
                 .get(url)
-                .routeParam("repoId", repoId)
-                .routeParam("templateId", String.valueOf(templateId))
                 .queryString(queryParameters)
                 .routeParam(pathParameters)
                 .header("prefer", prefer)
@@ -187,8 +183,6 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
                 new Object[]{repoId, String.valueOf(templateId)});
         return httpClient
                 .get(baseUrl + "/v1/Repositories/{repoId}/TemplateDefinitions/{templateId}")
-                .routeParam("repoId", repoId)
-                .routeParam("templateId", String.valueOf(templateId))
                 .queryString(queryParameters)
                 .routeParam(pathParameters)
                 .asObjectAsync(WTemplateInfo.class)

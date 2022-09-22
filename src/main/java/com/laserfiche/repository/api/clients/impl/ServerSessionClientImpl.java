@@ -19,7 +19,6 @@ public class ServerSessionClientImpl extends ApiClient implements ServerSessionC
         Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId"}, new Object[]{repoId});
         return httpClient
                 .post(baseUrl + "/v1/Repositories/{repoId}/ServerSession/Invalidate")
-                .routeParam("repoId", repoId)
                 .routeParam(pathParameters)
                 .asObjectAsync(ODataValueOfBoolean.class)
                 .thenApply(httpResponse -> {
@@ -47,7 +46,6 @@ public class ServerSessionClientImpl extends ApiClient implements ServerSessionC
         Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId"}, new Object[]{repoId});
         return httpClient
                 .post(baseUrl + "/v1/Repositories/{repoId}/ServerSession/Create")
-                .routeParam("repoId", repoId)
                 .routeParam(pathParameters)
                 .asObjectAsync(ODataValueOfBoolean.class)
                 .thenApply(httpResponse -> {
@@ -66,7 +64,6 @@ public class ServerSessionClientImpl extends ApiClient implements ServerSessionC
         Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId"}, new Object[]{repoId});
         return httpClient
                 .post(baseUrl + "/v1/Repositories/{repoId}/ServerSession/Refresh")
-                .routeParam("repoId", repoId)
                 .routeParam(pathParameters)
                 .asObjectAsync(ODataValueOfDateTime.class)
                 .thenApply(httpResponse -> {

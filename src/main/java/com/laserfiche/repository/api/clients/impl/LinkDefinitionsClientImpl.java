@@ -22,8 +22,6 @@ public class LinkDefinitionsClientImpl extends ApiClient implements LinkDefiniti
                 new Object[]{repoId, String.valueOf(linkTypeId)});
         return httpClient
                 .get(baseUrl + "/v1/Repositories/{repoId}/LinkDefinitions/{linkTypeId}")
-                .routeParam("repoId", repoId)
-                .routeParam("linkTypeId", String.valueOf(linkTypeId))
                 .queryString(queryParameters)
                 .routeParam(pathParameters)
                 .asObjectAsync(EntryLinkTypeInfo.class)
@@ -65,7 +63,6 @@ public class LinkDefinitionsClientImpl extends ApiClient implements LinkDefiniti
         Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId"}, new Object[]{repoId});
         return httpClient
                 .get(url)
-                .routeParam("repoId", repoId)
                 .queryString(queryParameters)
                 .routeParam(pathParameters)
                 .header("prefer", prefer)

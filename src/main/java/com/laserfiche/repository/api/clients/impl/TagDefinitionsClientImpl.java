@@ -30,7 +30,6 @@ public class TagDefinitionsClientImpl extends ApiClient implements TagDefinition
         Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId"}, new Object[]{repoId});
         return httpClient
                 .get(url)
-                .routeParam("repoId", repoId)
                 .queryString(queryParameters)
                 .routeParam(pathParameters)
                 .header("prefer", prefer)
@@ -71,8 +70,6 @@ public class TagDefinitionsClientImpl extends ApiClient implements TagDefinition
                 new Object[]{repoId, String.valueOf(tagId)});
         return httpClient
                 .get(baseUrl + "/v1/Repositories/{repoId}/TagDefinitions/{tagId}")
-                .routeParam("repoId", repoId)
-                .routeParam("tagId", String.valueOf(tagId))
                 .queryString(queryParameters)
                 .routeParam(pathParameters)
                 .asObjectAsync(WTagInfo.class)

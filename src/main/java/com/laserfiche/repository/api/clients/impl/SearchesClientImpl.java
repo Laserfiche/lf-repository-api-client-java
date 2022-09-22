@@ -19,8 +19,6 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
                 new Object[]{repoId, searchToken});
         return httpClient
                 .get(baseUrl + "/v1/Repositories/{repoId}/Searches/{searchToken}")
-                .routeParam("repoId", repoId)
-                .routeParam("searchToken", searchToken)
                 .routeParam(pathParameters)
                 .asObjectAsync(OperationProgress.class)
                 .thenApply(httpResponse -> {
@@ -52,8 +50,6 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
                 new Object[]{repoId, searchToken});
         return httpClient
                 .delete(baseUrl + "/v1/Repositories/{repoId}/Searches/{searchToken}")
-                .routeParam("repoId", repoId)
-                .routeParam("searchToken", searchToken)
                 .routeParam(pathParameters)
                 .asObjectAsync(ODataValueOfBoolean.class)
                 .thenApply(httpResponse -> {
@@ -98,9 +94,6 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
                 new Object[]{repoId, searchToken, String.valueOf(rowNumber)});
         return httpClient
                 .get(url)
-                .routeParam("repoId", repoId)
-                .routeParam("searchToken", searchToken)
-                .routeParam("rowNumber", String.valueOf(rowNumber))
                 .queryString(queryParameters)
                 .routeParam(pathParameters)
                 .header("prefer", prefer)
@@ -141,7 +134,6 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
         Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId"}, new Object[]{repoId});
         return httpClient
                 .post(baseUrl + "/v1/Repositories/{repoId}/Searches")
-                .routeParam("repoId", repoId)
                 .routeParam(pathParameters)
                 .contentType("application/json")
                 .body(requestBody)
@@ -187,8 +179,6 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
                 new Object[]{repoId, searchToken});
         return httpClient
                 .get(url)
-                .routeParam("repoId", repoId)
-                .routeParam("searchToken", searchToken)
                 .queryString(queryParameters)
                 .routeParam(pathParameters)
                 .header("prefer", prefer)

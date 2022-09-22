@@ -34,8 +34,6 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 new Object[]{repoId, String.valueOf(entryId)});
         return httpClient
                 .get(url)
-                .routeParam("repoId", repoId)
-                .routeParam("entryId", String.valueOf(entryId))
                 .queryString(queryParameters)
                 .routeParam(pathParameters)
                 .header("prefer", prefer)
@@ -78,8 +76,6 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 new Object[]{repoId, String.valueOf(entryId)});
         return httpClient
                 .put(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/fields")
-                .routeParam("repoId", repoId)
-                .routeParam("entryId", String.valueOf(entryId))
                 .queryString(queryParameters)
                 .routeParam(pathParameters)
                 .contentType("application/json")
@@ -120,9 +116,6 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 new Object[]{repoId, String.valueOf(parentEntryId), fileName});
         return httpClient
                 .post(baseUrl + "/v1/Repositories/{repoId}/Entries/{parentEntryId}/{fileName}")
-                .routeParam("repoId", repoId)
-                .routeParam("parentEntryId", String.valueOf(parentEntryId))
-                .routeParam("fileName", fileName)
                 .queryString(queryParameters)
                 .routeParam(pathParameters)
                 .contentType("application/json")
@@ -174,8 +167,6 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 new Object[]{repoId, String.valueOf(entryId)});
         return httpClient
                 .get(url)
-                .routeParam("repoId", repoId)
-                .routeParam("entryId", String.valueOf(entryId))
                 .queryString(queryParameters)
                 .routeParam(pathParameters)
                 .header("prefer", prefer)
@@ -217,8 +208,6 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 new Object[]{repoId, String.valueOf(entryId)});
         return httpClient
                 .put(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/links")
-                .routeParam("repoId", repoId)
-                .routeParam("entryId", String.valueOf(entryId))
                 .routeParam(pathParameters)
                 .contentType("application/json")
                 .body(requestBody)
@@ -257,8 +246,6 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 new Object[]{repoId, String.valueOf(entryId)});
         return httpClient
                 .put(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/template")
-                .routeParam("repoId", repoId)
-                .routeParam("entryId", String.valueOf(entryId))
                 .queryString(queryParameters)
                 .routeParam(pathParameters)
                 .contentType("application/json")
@@ -296,8 +283,6 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 new Object[]{repoId, String.valueOf(entryId)});
         return httpClient
                 .delete(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/template")
-                .routeParam("repoId", repoId)
-                .routeParam("entryId", String.valueOf(entryId))
                 .routeParam(pathParameters)
                 .asObjectAsync(Entry.class)
                 .thenApply(httpResponse -> {
@@ -333,8 +318,6 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 new Object[]{repoId, String.valueOf(entryId)});
         return httpClient
                 .post(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Document/GetEdocWithAuditReason")
-                .routeParam("repoId", repoId)
-                .routeParam("entryId", String.valueOf(entryId))
                 .routeParam(pathParameters)
                 .header("range", range)
                 .contentType("application/json")
@@ -372,8 +355,6 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 new Object[]{repoId, String.valueOf(entryId)});
         return httpClient
                 .get(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Document/edoc")
-                .routeParam("repoId", repoId)
-                .routeParam("entryId", String.valueOf(entryId))
                 .routeParam(pathParameters)
                 .header("range", range)
                 .asObjectAsync(File.class)
@@ -409,8 +390,6 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 new Object[]{repoId, String.valueOf(entryId)});
         return httpClient
                 .delete(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Document/edoc")
-                .routeParam("repoId", repoId)
-                .routeParam("entryId", String.valueOf(entryId))
                 .routeParam(pathParameters)
                 .asObjectAsync(ODataValueOfBoolean.class)
                 .thenApply(httpResponse -> {
@@ -446,8 +425,6 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 new Object[]{repoId, String.valueOf(entryId)});
         return httpClient
                 .delete(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Document/pages")
-                .routeParam("repoId", repoId)
-                .routeParam("entryId", String.valueOf(entryId))
                 .queryString(queryParameters)
                 .routeParam(pathParameters)
                 .asObjectAsync(ODataValueOfBoolean.class)
@@ -498,8 +475,6 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 new Object[]{repoId, String.valueOf(entryId)});
         return httpClient
                 .get(url)
-                .routeParam("repoId", repoId)
-                .routeParam("entryId", String.valueOf(entryId))
                 .queryString(queryParameters)
                 .routeParam(pathParameters)
                 .header("prefer", prefer)
@@ -543,8 +518,6 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 new Object[]{repoId, String.valueOf(entryId)});
         return httpClient
                 .post(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Folder/children")
-                .routeParam("repoId", repoId)
-                .routeParam("entryId", String.valueOf(entryId))
                 .queryString(queryParameters)
                 .routeParam(pathParameters)
                 .contentType("application/json")
@@ -583,8 +556,6 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 new Object[]{repoId, String.valueOf(entryId)});
         return httpClient
                 .post(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/fields/GetDynamicFieldLogicValue")
-                .routeParam("repoId", repoId)
-                .routeParam("entryId", String.valueOf(entryId))
                 .routeParam(pathParameters)
                 .contentType("application/json")
                 .body(requestBody)
@@ -621,8 +592,6 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 new Object[]{repoId, String.valueOf(entryId)});
         return httpClient
                 .post(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Folder/CopyAsync")
-                .routeParam("repoId", repoId)
-                .routeParam("entryId", String.valueOf(entryId))
                 .queryString(queryParameters)
                 .routeParam(pathParameters)
                 .contentType("application/json")
@@ -664,8 +633,6 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 new Object[]{repoId, String.valueOf(entryId)});
         return httpClient
                 .get(url)
-                .routeParam("repoId", repoId)
-                .routeParam("entryId", String.valueOf(entryId))
                 .queryString(queryParameters)
                 .routeParam(pathParameters)
                 .header("prefer", prefer)
@@ -707,8 +674,6 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 new Object[]{repoId, String.valueOf(entryId)});
         return httpClient
                 .put(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/tags")
-                .routeParam("repoId", repoId)
-                .routeParam("entryId", String.valueOf(entryId))
                 .routeParam(pathParameters)
                 .contentType("application/json")
                 .body(requestBody)
@@ -746,8 +711,6 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 new Object[]{repoId, String.valueOf(entryId)});
         return httpClient
                 .get(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}")
-                .routeParam("repoId", repoId)
-                .routeParam("entryId", String.valueOf(entryId))
                 .queryString(queryParameters)
                 .routeParam(pathParameters)
                 .asObjectAsync(Entry.class)
@@ -783,8 +746,6 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 new Object[]{repoId, String.valueOf(entryId)});
         return httpClient
                 .patch(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}")
-                .routeParam("repoId", repoId)
-                .routeParam("entryId", String.valueOf(entryId))
                 .queryString(queryParameters)
                 .routeParam(pathParameters)
                 .contentType("application/json")
@@ -826,8 +787,6 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 new Object[]{repoId, String.valueOf(entryId)});
         return httpClient
                 .delete(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}")
-                .routeParam("repoId", repoId)
-                .routeParam("entryId", String.valueOf(entryId))
                 .routeParam(pathParameters)
                 .contentType("application/json")
                 .body(requestBody)

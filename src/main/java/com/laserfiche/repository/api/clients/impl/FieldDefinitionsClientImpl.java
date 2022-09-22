@@ -23,8 +23,6 @@ public class FieldDefinitionsClientImpl extends ApiClient implements FieldDefini
                 new Object[]{repoId, String.valueOf(fieldDefinitionId)});
         return httpClient
                 .get(baseUrl + "/v1/Repositories/{repoId}/FieldDefinitions/{fieldDefinitionId}")
-                .routeParam("repoId", repoId)
-                .routeParam("fieldDefinitionId", String.valueOf(fieldDefinitionId))
                 .queryString(queryParameters)
                 .routeParam(pathParameters)
                 .asObjectAsync(WFieldInfo.class)
@@ -67,7 +65,6 @@ public class FieldDefinitionsClientImpl extends ApiClient implements FieldDefini
         Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId"}, new Object[]{repoId});
         return httpClient
                 .get(url)
-                .routeParam("repoId", repoId)
                 .queryString(queryParameters)
                 .routeParam(pathParameters)
                 .header("prefer", prefer)

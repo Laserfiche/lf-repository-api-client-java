@@ -18,7 +18,6 @@ public class AuditReasonsClientImpl extends ApiClient implements AuditReasonsCli
         Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId"}, new Object[]{repoId});
         return httpClient
                 .get(baseUrl + "/v1/Repositories/{repoId}/AuditReasons")
-                .routeParam("repoId", repoId)
                 .routeParam(pathParameters)
                 .asObjectAsync(AuditReasons.class)
                 .thenApply(httpResponse -> {

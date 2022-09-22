@@ -19,8 +19,6 @@ public class TasksClientImpl extends ApiClient implements TasksClient {
                 new Object[]{repoId, operationToken});
         return httpClient
                 .get(baseUrl + "/v1/Repositories/{repoId}/Tasks/{operationToken}")
-                .routeParam("repoId", repoId)
-                .routeParam("operationToken", operationToken)
                 .routeParam(pathParameters)
                 .asObjectAsync(OperationProgress.class)
                 .thenApply(httpResponse -> {
@@ -52,8 +50,6 @@ public class TasksClientImpl extends ApiClient implements TasksClient {
                 new Object[]{repoId, operationToken});
         return httpClient
                 .delete(baseUrl + "/v1/Repositories/{repoId}/Tasks/{operationToken}")
-                .routeParam("repoId", repoId)
-                .routeParam("operationToken", operationToken)
                 .routeParam(pathParameters)
                 .asObjectAsync(Void.class)
                 .thenApply(httpResponse -> {

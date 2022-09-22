@@ -25,7 +25,6 @@ public class SimpleSearchesClientImpl extends ApiClient implements SimpleSearche
         Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId"}, new Object[]{repoId});
         return httpClient
                 .post(baseUrl + "/v1/Repositories/{repoId}/SimpleSearches")
-                .routeParam("repoId", repoId)
                 .queryString(queryParameters)
                 .routeParam(pathParameters)
                 .contentType("application/json")
