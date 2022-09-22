@@ -11,13 +11,13 @@ public class ImportDocumentApiTest extends BaseTest {
     int createdEntryId;
 
     @BeforeEach
-    public void PerTestSetup() {
+    void PerTestSetup() {
         client = repositoryApiClient.getEntriesClient();
         createdEntryId = 0;
     }
 
     @AfterEach
-    public void deleteEntries() {
+    void deleteEntries() {
         if (createdEntryId != 0) {
             DeleteEntryWithAuditReason body = new DeleteEntryWithAuditReason();
             client

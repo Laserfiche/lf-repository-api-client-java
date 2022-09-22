@@ -43,7 +43,7 @@ public class CreateCopyEntryApiTest extends BaseTest {
 
     @Test
     @Disabled("Ignore for now because of the APIServer's entry related serialization bug.")
-    void createCopyEntryCreateFolder_Success() {
+    void createCopyEntry_CreateFolder() {
         String newEntryName = "RepositoryApiClientIntegrationTest Java CreateFolder";
         Integer parentEntryId = 1;
 
@@ -67,7 +67,7 @@ public class CreateCopyEntryApiTest extends BaseTest {
 
     @Test
     @Disabled("Ignore for now because of the APIServer's entry related serialization bug.")
-    void createCopyEntryCreateShortcut_Success() {
+    void createCopyEntry_CreateShortcut() {
         String newEntryName = "RepositoryApiClientIntegrationTest Java CreateFolder";
         Integer parentEntryId = 1;
 
@@ -106,7 +106,7 @@ public class CreateCopyEntryApiTest extends BaseTest {
 
     @Test
     @Disabled("Test is failing: We need to update it to match the new implementation.")
-    void createCopyEntryCopyEntry_Success() throws InterruptedException {
+    void createCopyEntry_CopyEntry() throws InterruptedException {
         String testFolderName = "RepositoryApiClientIntegrationTest Java CreateCopyEntry_CopyEntry_test_folder";
         String newEntryName = "RepositoryApiClientIntegrationTest Java CreateFolder";
 
@@ -150,7 +150,7 @@ public class CreateCopyEntryApiTest extends BaseTest {
     }
 
     @Test
-    void createCopyEntryCopyShortCut_Success() {
+    void createCopyEntry_CopyShortCut() {
         String newEntryName = "RepositoryApiClientIntegrationTest Java CreateFolder";
         Integer parentEntryId = 1;
 
@@ -202,7 +202,7 @@ public class CreateCopyEntryApiTest extends BaseTest {
     }
 
     @Test
-    void moveAndRenameEntry_Success() {
+    void moveAndRenameEntry_ReturnEntry() {
         Entry parentFolder = createEntry(createEntryClient, "RepositoryApiClientIntegrationTest Java ParentFolder", 1,
                 true).join();
 

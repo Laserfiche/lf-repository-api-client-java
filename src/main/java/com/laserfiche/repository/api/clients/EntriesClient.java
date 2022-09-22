@@ -3,6 +3,7 @@ package com.laserfiche.repository.api.clients;
 import com.laserfiche.repository.api.clients.impl.model.*;
 
 import java.io.File;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
@@ -94,7 +95,7 @@ public interface EntriesClient {
      * @return CompletableFuture<ODataValueOfIListOfWEntryLinkInfo> The return value
      */
     CompletableFuture<ODataValueOfIListOfWEntryLinkInfo> assignEntryLinks(String repoId, Integer entryId,
-            PutLinksRequest requestBody);
+            List<PutLinksRequest> requestBody);
 
     /**
      * - Assign a template to an entry.

@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class SimpleSearchesApiTest extends BaseTest {
     @Test
-    void createSimpleSearchOperation_Success() {
+    void createSimpleSearch_ReturnSearchResults() {
         SimpleSearchesClient client = repositoryApiClient.getSimpleSearchesClient();
 
         SimpleSearchRequest searchRequest = new SimpleSearchRequest();

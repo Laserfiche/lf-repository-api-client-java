@@ -19,7 +19,7 @@ class AttributesApiTest extends BaseTest {
     }
 
     @Test
-    void getTrusteeAttributeKeyValuePairs_Success() {
+    void getTrusteeAttributeKeyValuePairs_ReturnAttributes() {
         CompletableFuture<ODataValueContextOfListOfAttribute> future = client.getTrusteeAttributeKeyValuePairs(repoId,
                 true, null, null, null, null, null, false);
         ODataValueContextOfListOfAttribute attributeList = future.join();
@@ -28,7 +28,7 @@ class AttributesApiTest extends BaseTest {
     }
 
     @Test
-    void getAttributeValueByKey_Success() {
+    void getAttributeValueByKey_ReturnAttribute() {
         CompletableFuture<ODataValueContextOfListOfAttribute> future = client.getTrusteeAttributeKeyValuePairs(repoId,
                 true, null, null, null, null, null, false);
         ODataValueContextOfListOfAttribute attributeList = future.join();

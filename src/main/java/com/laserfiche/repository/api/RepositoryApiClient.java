@@ -41,6 +41,11 @@ public interface RepositoryApiClient {
     SearchesClient getSearchesClient();
 
     /**
+     * @return The Laserfiche Repository Server Session API client.
+     */
+    ServerSessionClient getServerSessionClient();
+
+    /**
      * @return The Laserfiche Repository Simple Searches API client.
      */
     SimpleSearchesClient getSimpleSearchesClient();

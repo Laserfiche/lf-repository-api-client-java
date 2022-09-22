@@ -17,7 +17,7 @@ class FieldDefinitionsApiTest extends BaseTest {
     }
 
     @Test
-    void getFieldDefinitionById_Success() {
+    void getFieldDefinitionById_ReturnField() {
         WFieldInfo fieldInfo = client
                 .getFieldDefinitionById(repoId, 1, null, null)
                 .join();
@@ -26,7 +26,7 @@ class FieldDefinitionsApiTest extends BaseTest {
     }
 
     @Test
-    void getFieldDefinitions_Success() {
+    void getFieldDefinitions_ReturnAllFields() {
         ODataValueContextOfIListOfWFieldInfo fieldInfoList = client
                 .getFieldDefinitions(repoId, null, null, null, null, null, null, false)
                 .join();

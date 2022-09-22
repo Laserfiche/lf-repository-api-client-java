@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class RepositoriesApiTest extends BaseTest {
     @Test
-    void getRepositoryList_Success() {
+    void getRepositoryList_ReturnSuccessful() {
         RepositoriesClient client = repositoryApiClient.getRepositoryClient();
         RepositoryInfo[] repositoryInfoList = client
                 .getRepositoryList()
