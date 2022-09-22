@@ -29,6 +29,9 @@ public interface TemplateDefinitionsClient {
             String templateName, String prefer, String culture, String select, String orderby, Integer top,
             Integer skip, Boolean count);
 
+    CompletableFuture<ODataValueContextOfIListOfWTemplateInfo> getTemplateDefinitionsNextLink(String nextLink,
+            int maxPageSize);
+
     /**
      * - Returns the field definitions assigned to a template definition.
      * - Provide a template definition name, and get a paged listing of the field definitions assigned to that template.
@@ -50,6 +53,9 @@ public interface TemplateDefinitionsClient {
             String repoId, String templateName, String prefer, String culture, String select, String orderby,
             Integer top, Integer skip, Boolean count);
 
+    CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo> getTemplateFieldDefinitionsByTemplateNameNextLink(
+            String nextLink, int maxPageSize);
+
     /**
      * - Returns the field definitions assigned to a template definition.
      * - Provide a template definition ID, and get a paged listing of the field definitions assigned to that template.
@@ -70,6 +76,9 @@ public interface TemplateDefinitionsClient {
     CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo> getTemplateFieldDefinitions(String repoId,
             Integer templateId, String prefer, String culture, String select, String orderby, Integer top, Integer skip,
             Boolean count);
+
+    CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo> getTemplateFieldDefinitionsNextLink(String nextLink,
+            int maxPageSize);
 
     /**
      * - Returns a single template definition (including field definitions, if relevant).
