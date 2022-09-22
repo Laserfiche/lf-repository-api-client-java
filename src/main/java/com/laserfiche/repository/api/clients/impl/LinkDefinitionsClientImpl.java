@@ -5,7 +5,6 @@ import com.laserfiche.repository.api.clients.impl.model.EntryLinkTypeInfo;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfEntryLinkTypeInfo;
 import kong.unirest.UnirestInstance;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
@@ -18,15 +17,15 @@ public class LinkDefinitionsClientImpl extends ApiClient implements LinkDefiniti
     @Override
     public CompletableFuture<EntryLinkTypeInfo> getLinkDefinitionById(String repoId, Integer linkTypeId,
             String select) {
-        Map<String, Object> queryParameters = new HashMap<>();
-        if (select != null) {
-            queryParameters.put("select", select);
-        }
+        Map<String, Object> queryParameters = getNonNullParameters(new String[]{"$select"}, new Object[]{select});
+        Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "linkTypeId"},
+                new Object[]{repoId, String.valueOf(linkTypeId)});
         return httpClient
                 .get(baseUrl + "/v1/Repositories/{repoId}/LinkDefinitions/{linkTypeId}")
                 .routeParam("repoId", repoId)
                 .routeParam("linkTypeId", String.valueOf(linkTypeId))
                 .queryString(queryParameters)
+                .routeParam(pathParameters)
                 .asObjectAsync(EntryLinkTypeInfo.class)
                 .thenApply(httpResponse -> {
                     if (httpResponse.getStatus() == 400) {
@@ -44,6 +43,9 @@ public class LinkDefinitionsClientImpl extends ApiClient implements LinkDefiniti
                     if (httpResponse.getStatus() == 429) {
                         throw new RuntimeException("Rate limit is reached.");
                     }
+                    if (httpResponse.getStatus() >= 299) {
+                        throw new RuntimeException(httpResponse.getStatusText());
+                    }
                     return httpResponse.getBody();
                 });
     }
@@ -51,26 +53,21 @@ public class LinkDefinitionsClientImpl extends ApiClient implements LinkDefiniti
     @Override
     public CompletableFuture<ODataValueContextOfIListOfEntryLinkTypeInfo> getLinkDefinitions(String repoId,
             String prefer, String select, String orderby, Integer top, Integer skip, Boolean count) {
-        Map<String, Object> queryParameters = new HashMap<>();
-        if (select != null) {
-            queryParameters.put("select", select);
-        }
-        if (orderby != null) {
-            queryParameters.put("orderby", orderby);
-        }
-        if (top != null) {
-            queryParameters.put("top", top);
-        }
-        if (skip != null) {
-            queryParameters.put("skip", skip);
-        }
-        if (count != null) {
-            queryParameters.put("count", count);
-        }
+        return doGetLinkDefinitions(baseUrl + "/v1/Repositories/{repoId}/LinkDefinitions", repoId, prefer, select,
+                orderby, top, skip, count);
+    }
+
+    private CompletableFuture<ODataValueContextOfIListOfEntryLinkTypeInfo> doGetLinkDefinitions(String url,
+            String repoId, String prefer, String select, String orderby, Integer top, Integer skip, Boolean count) {
+        Map<String, Object> queryParameters = getNonNullParameters(
+                new String[]{"$select", "$orderby", "$top", "$skip", "$count"},
+                new Object[]{select, orderby, String.valueOf(top), String.valueOf(skip), String.valueOf(count)});
+        Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId"}, new Object[]{repoId});
         return httpClient
-                .get(baseUrl + "/v1/Repositories/{repoId}/LinkDefinitions")
+                .get(url)
                 .routeParam("repoId", repoId)
                 .queryString(queryParameters)
+                .routeParam(pathParameters)
                 .header("prefer", prefer)
                 .asObjectAsync(ODataValueContextOfIListOfEntryLinkTypeInfo.class)
                 .thenApply(httpResponse -> {
@@ -86,7 +83,17 @@ public class LinkDefinitionsClientImpl extends ApiClient implements LinkDefiniti
                     if (httpResponse.getStatus() == 429) {
                         throw new RuntimeException("Rate limit is reached.");
                     }
+                    if (httpResponse.getStatus() >= 299) {
+                        throw new RuntimeException(httpResponse.getStatusText());
+                    }
                     return httpResponse.getBody();
                 });
+    }
+
+    @Override
+    public CompletableFuture<ODataValueContextOfIListOfEntryLinkTypeInfo> getLinkDefinitionsNextLink(String nextLink,
+            int maxPageSize) {
+        return doGetLinkDefinitions(nextLink, null, mergeMaxSizeIntoPrefer(maxPageSize, null), null, null, null, null,
+                null);
     }
 }

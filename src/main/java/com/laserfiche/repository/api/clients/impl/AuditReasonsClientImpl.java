@@ -4,6 +4,7 @@ import com.laserfiche.repository.api.clients.AuditReasonsClient;
 import com.laserfiche.repository.api.clients.impl.model.AuditReasons;
 import kong.unirest.UnirestInstance;
 
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 public class AuditReasonsClientImpl extends ApiClient implements AuditReasonsClient {
@@ -14,9 +15,11 @@ public class AuditReasonsClientImpl extends ApiClient implements AuditReasonsCli
 
     @Override
     public CompletableFuture<AuditReasons> getAuditReasons(String repoId) {
+        Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId"}, new Object[]{repoId});
         return httpClient
                 .get(baseUrl + "/v1/Repositories/{repoId}/AuditReasons")
                 .routeParam("repoId", repoId)
+                .routeParam(pathParameters)
                 .asObjectAsync(AuditReasons.class)
                 .thenApply(httpResponse -> {
                     if (httpResponse.getStatus() == 400) {
@@ -30,6 +33,9 @@ public class AuditReasonsClientImpl extends ApiClient implements AuditReasonsCli
                     }
                     if (httpResponse.getStatus() == 429) {
                         throw new RuntimeException("Rate limit is reached.");
+                    }
+                    if (httpResponse.getStatus() >= 299) {
+                        throw new RuntimeException(httpResponse.getStatusText());
                     }
                     return httpResponse.getBody();
                 });
