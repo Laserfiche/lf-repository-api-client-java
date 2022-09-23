@@ -6,6 +6,7 @@ import kong.unirest.UnirestInstance;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
@@ -202,7 +203,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override
     public CompletableFuture<ODataValueOfIListOfWEntryLinkInfo> assignEntryLinks(String repoId, Integer entryId,
-            PutLinksRequest requestBody) {
+            List<PutLinksRequest> requestBody) {
         Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "entryId"},
                 new Object[]{repoId, entryId});
         return httpClient
