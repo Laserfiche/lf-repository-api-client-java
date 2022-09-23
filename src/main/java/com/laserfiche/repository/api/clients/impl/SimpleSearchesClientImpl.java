@@ -20,8 +20,7 @@ public class SimpleSearchesClientImpl extends ApiClient implements SimpleSearche
             String culture) {
         Map<String, Object> queryParameters = getNonNullParameters(
                 new String[]{"fields", "formatFields", "culture", "$select", "$orderby", "$count"},
-                new Object[]{String.valueOf(fields), String.valueOf(
-                        formatFields), culture, select, orderby, String.valueOf(count)});
+                new Object[]{fields, formatFields, culture, select, orderby, count});
         Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId"}, new Object[]{repoId});
         return httpClient
                 .post(baseUrl + "/v1/Repositories/{repoId}/SimpleSearches")

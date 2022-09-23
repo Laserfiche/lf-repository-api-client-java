@@ -19,7 +19,7 @@ public class LinkDefinitionsClientImpl extends ApiClient implements LinkDefiniti
             String select) {
         Map<String, Object> queryParameters = getNonNullParameters(new String[]{"$select"}, new Object[]{select});
         Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "linkTypeId"},
-                new Object[]{repoId, String.valueOf(linkTypeId)});
+                new Object[]{repoId, linkTypeId});
         return httpClient
                 .get(baseUrl + "/v1/Repositories/{repoId}/LinkDefinitions/{linkTypeId}")
                 .queryString(queryParameters)
@@ -59,7 +59,7 @@ public class LinkDefinitionsClientImpl extends ApiClient implements LinkDefiniti
             String repoId, String prefer, String select, String orderby, Integer top, Integer skip, Boolean count) {
         Map<String, Object> queryParameters = getNonNullParameters(
                 new String[]{"$select", "$orderby", "$top", "$skip", "$count"},
-                new Object[]{select, orderby, String.valueOf(top), String.valueOf(skip), String.valueOf(count)});
+                new Object[]{select, orderby, top, skip, count});
         Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId"}, new Object[]{repoId});
         return httpClient
                 .get(url)

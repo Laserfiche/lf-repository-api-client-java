@@ -17,8 +17,7 @@ public class AttributesClientImpl extends ApiClient implements AttributesClient 
     @Override
     public CompletableFuture<Attribute> getTrusteeAttributeValueByKey(String repoId, String attributeKey,
             Boolean everyone) {
-        Map<String, Object> queryParameters = getNonNullParameters(new String[]{"everyone"},
-                new Object[]{String.valueOf(everyone)});
+        Map<String, Object> queryParameters = getNonNullParameters(new String[]{"everyone"}, new Object[]{everyone});
         Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "attributeKey"},
                 new Object[]{repoId, attributeKey});
         return httpClient
@@ -61,8 +60,7 @@ public class AttributesClientImpl extends ApiClient implements AttributesClient 
             Boolean count) {
         Map<String, Object> queryParameters = getNonNullParameters(
                 new String[]{"everyone", "$select", "$orderby", "$top", "$skip", "$count"},
-                new Object[]{String.valueOf(everyone), select, orderby, String.valueOf(top), String.valueOf(
-                        skip), String.valueOf(count)});
+                new Object[]{everyone, select, orderby, top, skip, count});
         Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId"}, new Object[]{repoId});
         return httpClient
                 .get(url)

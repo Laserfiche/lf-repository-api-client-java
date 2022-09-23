@@ -17,8 +17,7 @@ public class ApiClient {
     }
 
     protected String mergeMaxSizeIntoPrefer(int maxSize, String prefer) {
-        return prefer == null ? String.format("maxpagesize={%d}", maxSize) : String.format("%s; maxpagesize={%d}",
-                prefer, maxSize);
+        return prefer == null ? String.format("maxpagesize={%d}", maxSize) : String.format("%s; maxpagesize={%d}", prefer, maxSize);
     }
 
     protected Map<String, Object> getNonNullParameters(String[] parameterNames, Object[] parameters) {
@@ -31,7 +30,7 @@ public class ApiClient {
         Map<String, Object> paramKeyValuePairs = new HashMap<>();
         for (int i = 0; i < parameters.length; i++) {
             if (parameters[i] != null) {
-                paramKeyValuePairs.put(parameterNames[i], parameters[i]);
+                paramKeyValuePairs.put(parameterNames[i], parameters[i] instanceof String ? parameters[i] : String.valueOf(parameters[i]));
             }
         }
         return paramKeyValuePairs;

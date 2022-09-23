@@ -28,8 +28,7 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
             Integer top, Integer skip, Boolean count) {
         Map<String, Object> queryParameters = getNonNullParameters(
                 new String[]{"templateName", "culture", "$select", "$orderby", "$top", "$skip", "$count"},
-                new Object[]{templateName, culture, select, orderby, String.valueOf(top), String.valueOf(
-                        skip), String.valueOf(count)});
+                new Object[]{templateName, culture, select, orderby, top, skip, count});
         Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId"}, new Object[]{repoId});
         return httpClient
                 .get(url)
@@ -81,8 +80,7 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
             String orderby, Integer top, Integer skip, Boolean count) {
         Map<String, Object> queryParameters = getNonNullParameters(
                 new String[]{"templateName", "culture", "$select", "$orderby", "$top", "$skip", "$count"},
-                new Object[]{templateName, culture, select, orderby, String.valueOf(top), String.valueOf(
-                        skip), String.valueOf(count)});
+                new Object[]{templateName, culture, select, orderby, top, skip, count});
         Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId"}, new Object[]{repoId});
         return httpClient
                 .get(url)
@@ -134,10 +132,9 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
             Integer top, Integer skip, Boolean count) {
         Map<String, Object> queryParameters = getNonNullParameters(
                 new String[]{"culture", "$select", "$orderby", "$top", "$skip", "$count"},
-                new Object[]{culture, select, orderby, String.valueOf(top), String.valueOf(skip), String.valueOf(
-                        count)});
+                new Object[]{culture, select, orderby, top, skip, count});
         Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "templateId"},
-                new Object[]{repoId, String.valueOf(templateId)});
+                new Object[]{repoId, templateId});
         return httpClient
                 .get(url)
                 .queryString(queryParameters)
@@ -180,7 +177,7 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
         Map<String, Object> queryParameters = getNonNullParameters(new String[]{"culture", "$select"},
                 new Object[]{culture, select});
         Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "templateId"},
-                new Object[]{repoId, String.valueOf(templateId)});
+                new Object[]{repoId, templateId});
         return httpClient
                 .get(baseUrl + "/v1/Repositories/{repoId}/TemplateDefinitions/{templateId}")
                 .queryString(queryParameters)

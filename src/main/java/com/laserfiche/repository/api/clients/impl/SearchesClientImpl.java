@@ -89,9 +89,9 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
             Integer skip, Boolean count) {
         Map<String, Object> queryParameters = getNonNullParameters(
                 new String[]{"$select", "$orderby", "$top", "$skip", "$count"},
-                new Object[]{select, orderby, String.valueOf(top), String.valueOf(skip), String.valueOf(count)});
+                new Object[]{select, orderby, top, skip, count});
         Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "searchToken", "rowNumber"},
-                new Object[]{repoId, searchToken, String.valueOf(rowNumber)});
+                new Object[]{repoId, searchToken, rowNumber});
         return httpClient
                 .get(url)
                 .queryString(queryParameters)
@@ -172,9 +172,7 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
             String prefer, String culture, String select, String orderby, Integer top, Integer skip, Boolean count) {
         Map<String, Object> queryParameters = getNonNullParameters(
                 new String[]{"groupByEntryType", "refresh", "fields", "formatFields", "culture", "$select", "$orderby", "$top", "$skip", "$count"},
-                new Object[]{String.valueOf(groupByEntryType), String.valueOf(refresh), String.valueOf(
-                        fields), String.valueOf(formatFields), culture, select, orderby, String.valueOf(
-                        top), String.valueOf(skip), String.valueOf(count)});
+                new Object[]{groupByEntryType, refresh, fields, formatFields, culture, select, orderby, top, skip, count});
         Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "searchToken"},
                 new Object[]{repoId, searchToken});
         return httpClient

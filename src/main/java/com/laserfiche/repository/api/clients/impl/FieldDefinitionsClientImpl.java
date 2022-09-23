@@ -20,7 +20,7 @@ public class FieldDefinitionsClientImpl extends ApiClient implements FieldDefini
         Map<String, Object> queryParameters = getNonNullParameters(new String[]{"culture", "$select"},
                 new Object[]{culture, select});
         Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "fieldDefinitionId"},
-                new Object[]{repoId, String.valueOf(fieldDefinitionId)});
+                new Object[]{repoId, fieldDefinitionId});
         return httpClient
                 .get(baseUrl + "/v1/Repositories/{repoId}/FieldDefinitions/{fieldDefinitionId}")
                 .queryString(queryParameters)
@@ -60,8 +60,7 @@ public class FieldDefinitionsClientImpl extends ApiClient implements FieldDefini
             String prefer, String culture, String select, String orderby, Integer top, Integer skip, Boolean count) {
         Map<String, Object> queryParameters = getNonNullParameters(
                 new String[]{"culture", "$select", "$orderby", "$top", "$skip", "$count"},
-                new Object[]{culture, select, orderby, String.valueOf(top), String.valueOf(skip), String.valueOf(
-                        count)});
+                new Object[]{culture, select, orderby, top, skip, count});
         Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId"}, new Object[]{repoId});
         return httpClient
                 .get(url)

@@ -25,8 +25,7 @@ public class TagDefinitionsClientImpl extends ApiClient implements TagDefinition
             String prefer, String culture, String select, String orderby, Integer top, Integer skip, Boolean count) {
         Map<String, Object> queryParameters = getNonNullParameters(
                 new String[]{"culture", "$select", "$orderby", "$top", "$skip", "$count"},
-                new Object[]{culture, select, orderby, String.valueOf(top), String.valueOf(skip), String.valueOf(
-                        count)});
+                new Object[]{culture, select, orderby, top, skip, count});
         Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId"}, new Object[]{repoId});
         return httpClient
                 .get(url)
@@ -67,7 +66,7 @@ public class TagDefinitionsClientImpl extends ApiClient implements TagDefinition
         Map<String, Object> queryParameters = getNonNullParameters(new String[]{"culture", "$select"},
                 new Object[]{culture, select});
         Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "tagId"},
-                new Object[]{repoId, String.valueOf(tagId)});
+                new Object[]{repoId, tagId});
         return httpClient
                 .get(baseUrl + "/v1/Repositories/{repoId}/TagDefinitions/{tagId}")
                 .queryString(queryParameters)
