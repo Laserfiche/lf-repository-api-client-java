@@ -120,7 +120,7 @@ public class SearchApiTest extends BaseTest {
         String searchToken = searchOperationResponse.token;
         assertTrue(searchToken != null && !searchToken.trim().isEmpty());
 
-        TimeUnit.SECONDS.sleep(10);
+        TimeUnit.SECONDS.sleep(100);
 
         CompletableFuture<ODataValueContextOfIListOfEntry> searchResultResponse = client.getSearchResults(repoId, searchToken, null, null, null, null, String.format("maxpagesize=%d", maxPageSize), null, null, null, null, null, null);
         ODataValueContextOfIListOfEntry searchResults = searchResultResponse.join();
@@ -157,10 +157,11 @@ public class SearchApiTest extends BaseTest {
 
         TimeUnit.SECONDS.sleep(10);
 
-        Function<ODataValueContextOfIListOfEntry, CompletableFuture<Boolean>> callback = data -> {
-            if (data._atOdataNextLink != null) {
-                assertNotEquals(0, data.value.size());
-                assertTrue(data.value.size() <= maxPageSize);
+        Function<CompletableFuture<ODataValueContextOfIListOfEntry>, CompletableFuture<Boolean>> callback = data -> {
+            ODataValueContextOfIListOfEntry futureResult = data.join();
+            if (futureResult._atOdataNextLink != null) {
+                assertNotEquals(0, futureResult.value.size());
+                assertTrue(futureResult.value.size() <= maxPageSize);
                 return CompletableFuture.completedFuture(true);
             } else {
                 return CompletableFuture.completedFuture(false);
@@ -238,10 +239,11 @@ public class SearchApiTest extends BaseTest {
 
         assertNotNull(contextHitResponse);
 
-        Function<ODataValueContextOfIListOfContextHit, CompletableFuture<Boolean>> callback = data -> {
-            if (data._atOdataNextLink != null) {
-                assertNotEquals(0, data.value.size());
-                assertTrue(data.value.size() <= maxPageSize);
+        Function<CompletableFuture<ODataValueContextOfIListOfContextHit>, CompletableFuture<Boolean>> callback = data -> {
+            ODataValueContextOfIListOfContextHit futureResult = data.join();
+            if (futureResult._atOdataNextLink != null) {
+                assertNotEquals(0, futureResult.value.size());
+                assertTrue(futureResult.value.size() <= maxPageSize);
                 return CompletableFuture.completedFuture(true);
             } else {
                 return CompletableFuture.completedFuture(false);

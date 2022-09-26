@@ -63,10 +63,11 @@ class TemplateDefinitionsApiTest extends BaseTest {
         TimeUnit.SECONDS.sleep(10);
 
         int maxPageSize = 90;
-        Function<ODataValueContextOfIListOfWTemplateInfo, CompletableFuture<Boolean>> callback = data -> {
-            if (data._atOdataNextLink != null) {
-                assertNotEquals(0, data.value.size());
-                assertTrue(data.value.size() <= maxPageSize);
+        Function<CompletableFuture<ODataValueContextOfIListOfWTemplateInfo>, CompletableFuture<Boolean>> callback = data -> {
+            ODataValueContextOfIListOfWTemplateInfo result = data.join();
+            if (result._atOdataNextLink != null) {
+                assertNotEquals(0, result.value.size());
+                assertTrue(result.value.size() <= maxPageSize);
                 return CompletableFuture.completedFuture(true);
             } else {
                 return CompletableFuture.completedFuture(false);
@@ -147,10 +148,11 @@ class TemplateDefinitionsApiTest extends BaseTest {
         TimeUnit.SECONDS.sleep(10);
 
         int maxPageSize = 90;
-        Function<ODataValueContextOfIListOfTemplateFieldInfo, CompletableFuture<Boolean>> callback = data -> {
-            if (data._atOdataNextLink != null) {
-                assertNotEquals(0, data.value.size());
-                assertTrue(data.value.size() <= maxPageSize);
+        Function<CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo>, CompletableFuture<Boolean>> callback = data -> {
+            ODataValueContextOfIListOfTemplateFieldInfo futureResult = data.join();
+            if (futureResult._atOdataNextLink != null) {
+                assertNotEquals(0, futureResult.value.size());
+                assertTrue(futureResult.value.size() <= maxPageSize);
                 return CompletableFuture.completedFuture(true);
             } else {
                 return CompletableFuture.completedFuture(false);

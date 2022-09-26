@@ -71,10 +71,11 @@ class FieldDefinitionsApiTest extends BaseTest {
         TimeUnit.SECONDS.sleep(10);
 
         int maxPageSize = 90;
-        Function<ODataValueContextOfIListOfWFieldInfo, CompletableFuture<Boolean>> callback = data -> {
-            if (data._atOdataNextLink != null) {
-                assertNotEquals(0, data.value.size());
-                assertTrue(data.value.size() <= maxPageSize);
+        Function<CompletableFuture<ODataValueContextOfIListOfWFieldInfo>, CompletableFuture<Boolean>> callback = data -> {
+            ODataValueContextOfIListOfWFieldInfo result = data.join();
+            if (result._atOdataNextLink != null) {
+                assertNotEquals(0, result.value.size());
+                assertTrue(result.value.size() <= maxPageSize);
                 return CompletableFuture.completedFuture(true);
             } else {
                 return CompletableFuture.completedFuture(false);

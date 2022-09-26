@@ -82,10 +82,11 @@ class AttributesApiTest extends BaseTest {
 
         TimeUnit.SECONDS.sleep(10);
         int maxPageSize = 90;
-        Function<ODataValueContextOfListOfAttribute, CompletableFuture<Boolean>> callback = data -> {
-            if (data._atOdataNextLink != null) {
-                assertNotEquals(0, data.value.size());
-                assertTrue(data.value.size() <= maxPageSize);
+        Function<CompletableFuture<ODataValueContextOfListOfAttribute>, CompletableFuture<Boolean>> callback = data -> {
+            ODataValueContextOfListOfAttribute futureResult = data.join();
+            if (futureResult._atOdataNextLink != null) {
+                assertNotEquals(0, futureResult.value.size());
+                assertTrue(futureResult.value.size() <= maxPageSize);
                 return CompletableFuture.completedFuture(true);
             } else {
                 return CompletableFuture.completedFuture(false);

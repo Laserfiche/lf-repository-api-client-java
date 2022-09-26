@@ -76,10 +76,11 @@ class EntriesApiTest extends BaseTest {
         TimeUnit.SECONDS.sleep(10);
 
         int maxPageSize = 90;
-        Function<ODataValueContextOfIListOfEntry, CompletableFuture<Boolean>> callback = data -> {
-            if (data._atOdataNextLink != null) {
-                assertNotEquals(0, data.value.size());
-                assertTrue(data.value.size() <= maxPageSize);
+        Function<CompletableFuture<ODataValueContextOfIListOfEntry>, CompletableFuture<Boolean>> callback = data -> {
+            ODataValueContextOfIListOfEntry futureResult = data.join();
+            if (futureResult._atOdataNextLink != null) {
+                assertNotEquals(0, futureResult.value.size());
+                assertTrue(futureResult.value.size() <= maxPageSize);
                 return CompletableFuture.completedFuture(true);
             } else {
                 return CompletableFuture.completedFuture(false);
@@ -133,10 +134,11 @@ class EntriesApiTest extends BaseTest {
         TimeUnit.SECONDS.sleep(10);
 
         int maxPageSize = 90;
-        Function<ODataValueContextOfIListOfFieldValue, CompletableFuture<Boolean>> callback = data -> {
-            if (data._atOdataNextLink != null) {
-                assertNotEquals(0, data.value.size());
-                assertTrue(data.value.size() <= maxPageSize);
+        Function<CompletableFuture<ODataValueContextOfIListOfFieldValue>, CompletableFuture<Boolean>> callback = data -> {
+            ODataValueContextOfIListOfFieldValue futureResult = data.join();
+            if (futureResult._atOdataNextLink != null) {
+                assertNotEquals(0, futureResult.value.size());
+                assertTrue(futureResult.value.size() <= maxPageSize);
                 return CompletableFuture.completedFuture(true);
             } else {
                 return CompletableFuture.completedFuture(false);
@@ -190,10 +192,11 @@ class EntriesApiTest extends BaseTest {
         TimeUnit.SECONDS.sleep(10);
 
         int maxPageSize = 90;
-        Function<ODataValueContextOfIListOfWEntryLinkInfo, CompletableFuture<Boolean>> callback = data -> {
-            if (data._atOdataNextLink != null) {
-                assertNotEquals(0, data.value.size());
-                assertTrue(data.value.size() <= maxPageSize);
+        Function<CompletableFuture<ODataValueContextOfIListOfWEntryLinkInfo>, CompletableFuture<Boolean>> callback = data -> {
+            ODataValueContextOfIListOfWEntryLinkInfo futureResult = data.join();
+            if (futureResult._atOdataNextLink != null) {
+                assertNotEquals(0, futureResult.value.size());
+                assertTrue(futureResult.value.size() <= maxPageSize);
                 return CompletableFuture.completedFuture(true);
             } else {
                 return CompletableFuture.completedFuture(false);
@@ -252,10 +255,11 @@ class EntriesApiTest extends BaseTest {
         TimeUnit.SECONDS.sleep(10);
 
         int maxPageSize = 90;
-        Function<ODataValueContextOfIListOfWTagInfo, CompletableFuture<Boolean>> callback = data -> {
-            if (data._atOdataNextLink != null) {
-                assertNotEquals(0, data.value.size());
-                assertTrue(data.value.size() <= maxPageSize);
+        Function<CompletableFuture<ODataValueContextOfIListOfWTagInfo>, CompletableFuture<Boolean>> callback = data -> {
+            ODataValueContextOfIListOfWTagInfo futureResult = data.join();
+            if (futureResult._atOdataNextLink != null) {
+                assertNotEquals(0, futureResult.value.size());
+                assertTrue(futureResult.value.size() <= maxPageSize);
                 return CompletableFuture.completedFuture(true);
             } else {
                 return CompletableFuture.completedFuture(false);
