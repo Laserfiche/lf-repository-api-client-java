@@ -19,7 +19,7 @@ class EntriesApiTest extends BaseTest {
     RepositoryApiClient createEntryClient;
 
     @BeforeEach
-    void PerTestSetup() {
+    void perTestSetup() {
         client = repositoryApiClient.getEntriesClient();
         createEntryClient = repositoryApiClient;
     }

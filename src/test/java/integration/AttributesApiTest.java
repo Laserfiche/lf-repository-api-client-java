@@ -14,7 +14,7 @@ class AttributesApiTest extends BaseTest {
     AttributesClient client;
 
     @BeforeEach
-    void PerTestSetup() {
+    void perTestSetup() {
         client = repositoryApiClient.getAttributesClient();
     }
 

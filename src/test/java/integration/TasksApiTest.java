@@ -18,7 +18,7 @@ public class TasksApiTest extends BaseTest {
     RepositoryApiClient createEntryClient;
 
     @BeforeEach
-    void PerTestSetup() {
+    void perTestSetup() {
         client = repositoryApiClient.getTasksClient();
         createEntryClient = repositoryApiClient;
     }

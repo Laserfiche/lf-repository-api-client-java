@@ -12,7 +12,7 @@ class FieldDefinitionsApiTest extends BaseTest {
     FieldDefinitionsClient client;
 
     @BeforeEach
-    void PerTestSetup() {
+    void perTestSetup() {
         client = repositoryApiClient.getFieldDefinitionsClient();
     }
 

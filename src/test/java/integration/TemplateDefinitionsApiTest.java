@@ -19,7 +19,7 @@ class TemplateDefinitionsApiTest extends BaseTest {
     TemplateDefinitionsClient client;
 
     @BeforeEach
-    void PerTestSetup() {
+    void perTestSetup() {
         client = repositoryApiClient.getTemplateDefinitionClient();
     }
 

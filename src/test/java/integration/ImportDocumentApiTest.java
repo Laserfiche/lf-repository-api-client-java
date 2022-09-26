@@ -11,7 +11,7 @@ public class ImportDocumentApiTest extends BaseTest {
     int createdEntryId;
 
     @BeforeEach
-    void PerTestSetup() {
+    void perTestSetup() {
         client = repositoryApiClient.getEntriesClient();
         createdEntryId = 0;
     }

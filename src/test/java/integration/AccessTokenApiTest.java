@@ -18,7 +18,7 @@ public class AccessTokenApiTest extends BaseTest {
     ServerSessionClient client;
 
     @BeforeEach
-    void PerTestSetup() {
+    void perTestSetup() {
         client = repositoryApiClient.getServerSessionClient();
     }
 

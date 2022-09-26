@@ -16,7 +16,7 @@ public class LinkDefinitionsApiTest extends BaseTest {
     LinkDefinitionsClient client;
 
     @BeforeEach
-    void PerTestSetup() {
+    void perTestSetup() {
         client = repositoryApiClient.getLinkDefinitionsClient();
     }
 

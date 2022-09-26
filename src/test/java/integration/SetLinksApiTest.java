@@ -23,7 +23,7 @@ public class SetLinksApiTest extends BaseTest {
     List<Entry> createdEntries;
 
     @BeforeEach
-    void PerTestSetup() {
+    void perTestSetup() {
         client = repositoryApiClient;
         createdEntries = new ArrayList<Entry>();
     }

@@ -18,7 +18,7 @@ public class SearchApiTest extends BaseTest {
     private String searchToken = "";
 
     @BeforeEach
-    void PerTestSetup() {
+    void perTestSetup() {
         client = repositoryApiClient.getSearchesClient();
     }
 

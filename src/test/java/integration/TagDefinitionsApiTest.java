@@ -12,7 +12,7 @@ class TagDefinitionsApiTest extends BaseTest {
     TagDefinitionsClient client;
 
     @BeforeEach
-    void PerTestSetup() {
+    void perTestSetup() {
         client = repositoryApiClient.getTagDefinitionsClient();
     }
 

@@ -22,7 +22,7 @@ public class CreateCopyEntryApiTest extends BaseTest {
     RepositoryApiClient createEntryClient;
 
     @BeforeEach
-    public void PerTestSetup() {
+    public void perTestSetup() {
         client = repositoryApiClient.getEntriesClient();
         createEntryClient = repositoryApiClient;
     }
