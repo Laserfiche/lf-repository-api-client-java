@@ -30,12 +30,11 @@ public class AccessTokenApiTest extends BaseTest {
     }
 
     @Test
-    //fix this test case
     void refreshServerSession_RefreshSuccessful() {
         OffsetDateTime currentTime = OffsetDateTime.now();
         CompletableFuture<ODataValueOfDateTime> future = client.refreshServerSession(repoId);
         OffsetDateTime expireTime = future.join().value;
         assertNotNull(expireTime);
-        //Assertions.assertTrue(currentTime < expireTime);
+        Assertions.assertTrue(currentTime.compareTo(expireTime) < 0);
     }
 }

@@ -23,7 +23,7 @@ public class SearchApiTest extends BaseTest {
     }
 
     @AfterEach
-    void cancelCloseSearch_Success() {
+    void cancelCloseSearch() {
         if (searchToken != null) {
             client.cancelOrCloseSearch(repoId, searchToken);
         }
