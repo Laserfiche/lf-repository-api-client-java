@@ -120,6 +120,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 .routeParam(pathParameters)
                 .contentType("multipart/form-data")
                 .body(requestBody)
+                .field("electronicDocument", file)
                 .asObjectAsync(CreateEntryResult.class)
                 .thenApply(httpResponse -> {
                     if (httpResponse.getStatus() == 400) {
