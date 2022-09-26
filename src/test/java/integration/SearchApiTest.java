@@ -113,7 +113,7 @@ public class SearchApiTest extends BaseTest {
         int maxPageSize = 1;
 
         AdvancedSearchRequest request = new AdvancedSearchRequest();
-        request.searchCommand = "({LF:Basic ~= \\\"search text\\\", option=\\\"NLT\\\"})";
+        request.searchCommand = "({LF:Basic ~= \\\"search text\\\", option=\\\"DFANLT\\\"})";
 
         AcceptedOperation searchOperationResponse = client.createSearchOperation(repoId, request).join();
 
@@ -148,7 +148,7 @@ public class SearchApiTest extends BaseTest {
         int maxPageSize = 90;
 
         AdvancedSearchRequest request = new AdvancedSearchRequest();
-        request.searchCommand = "({LF:Basic ~= \\\"search text\\\", option=\\\"NLT\\\"})";
+        request.searchCommand = "({LF:Basic ~= \\\"search text\\\", option=\\\"DFANLT\\\"})";
 
         AcceptedOperation searchOperationResponse = client.createSearchOperation(repoId, request).join();
 
