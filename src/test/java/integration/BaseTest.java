@@ -39,7 +39,7 @@ public class BaseTest {
             repoId = dotenv.get("REPOSITORY_ID");
             testHeaderValue = dotenv.get("TEST_HEADER");
         }
-        accessKey = AccessKey.CreateFromBase64EncodedAccessKey(accessKeyBase64);
+        accessKey = AccessKey.createFromBase64EncodedAccessKey(accessKeyBase64);
         testHeaders = new HashMap<>();
         testHeaders.put(testHeaderValue, "true");
         repositoryApiClient = RepositoryApiClientImpl.CreateFromAccessKey(spKey, accessKey);

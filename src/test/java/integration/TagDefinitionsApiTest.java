@@ -6,7 +6,12 @@ import com.laserfiche.repository.api.clients.impl.model.WTagInfo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class TagDefinitionsApiTest extends BaseTest {
     TagDefinitionsClient client;
@@ -23,6 +28,54 @@ class TagDefinitionsApiTest extends BaseTest {
                 .join();
 
         assertNotNull(tagInfoList);
+    }
+
+    @Test
+    void getTagDefinitions_NextLink() throws InterruptedException {
+        ODataValueContextOfIListOfWTagInfo tagInfoList = client
+                .getTagDefinitions(repoId, null, null, null, null, null, null, false)
+                .join();
+
+        assertNotNull(tagInfoList);
+
+        String nextLink = tagInfoList._atOdataNextLink;
+        assertNotNull(nextLink);
+        int maxPageSize = 1;
+        assertTrue(tagInfoList.value.size() <= maxPageSize);
+
+        CompletableFuture<ODataValueContextOfIListOfWTagInfo> nextLinkResponse = client.getTagDefinitionsNextLink(nextLink, maxPageSize);
+        assertNotNull(nextLinkResponse);
+        TimeUnit.SECONDS.sleep(10);
+        ODataValueContextOfIListOfWTagInfo nextLinkResult = nextLinkResponse.join();
+        assertNotNull(nextLinkResult);
+        assertTrue(nextLinkResult.value.size() <= maxPageSize);
+    }
+
+    @Test
+    void getTagDefinitions_ForEach() throws InterruptedException {
+        ODataValueContextOfIListOfWTagInfo tagInfoList = client
+                .getTagDefinitions(repoId, null, null, null, null, null, null, false)
+                .join();
+
+        assertNotNull(tagInfoList);
+
+        TimeUnit.SECONDS.sleep(10);
+
+        int maxPageSize = 90;
+        Function<ODataValueContextOfIListOfWTagInfo, CompletableFuture<Boolean>> callback = data -> {
+            if (data._atOdataNextLink != null) {
+                assertNotEquals(0, data.value.size());
+                assertTrue(data.value.size() <= maxPageSize);
+                return CompletableFuture.completedFuture(true);
+            } else {
+                return CompletableFuture.completedFuture(false);
+            }
+        };
+        try {
+            client.getTagDefinitionsForEach(callback, maxPageSize, repoId, null, null, null, null, null, null, null);
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
