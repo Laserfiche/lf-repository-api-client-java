@@ -118,7 +118,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 .post(baseUrl + "/v1/Repositories/{repoId}/Entries/{parentEntryId}/{fileName}")
                 .queryString(queryParameters)
                 .routeParam(pathParameters)
-                .contentType("application/json")
+                .contentType("multipart/form-data")
                 .body(requestBody)
                 .asObjectAsync(CreateEntryResult.class)
                 .thenApply(httpResponse -> {
