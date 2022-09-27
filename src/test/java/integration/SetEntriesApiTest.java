@@ -35,7 +35,7 @@ public class SetEntriesApiTest extends BaseTest {
     }
 
     @Test
-    void setTags_Success() {
+    void setTags_ReturnTags() {
         CompletableFuture<ODataValueContextOfIListOfWTagInfo> tagDefinitionsResponse = repositoryApiClient
                 .getTagDefinitionsClient()
                 .getTagDefinitions(repoId, null, null, null, null, null, null, null);
@@ -61,7 +61,7 @@ public class SetEntriesApiTest extends BaseTest {
     }
 
     @Test
-    void setTemplates_Success() throws ExecutionException, InterruptedException {
+    void setTemplates_ReturnTemplates() throws ExecutionException, InterruptedException {
         WTemplateInfo template = null;
         CompletableFuture<ODataValueContextOfIListOfWTemplateInfo> templateDefinitionsResponse = repositoryApiClient
                 .getTemplateDefinitionClient()
@@ -98,7 +98,7 @@ public class SetEntriesApiTest extends BaseTest {
     }
 
     @Test
-    void setFields_Success() {
+    void setFields_ReturnFields() {
         WFieldInfo field = null;
         String fieldValue = "a";
 
@@ -146,7 +146,7 @@ public class SetEntriesApiTest extends BaseTest {
     }
 
     @Test
-    void removeTemplateFromEntryReturnEntry_Success() throws ExecutionException, InterruptedException {
+    void removeTemplateFromEntry_ReturnEntry() throws ExecutionException, InterruptedException {
         WTemplateInfo template = null;
 
         CompletableFuture<ODataValueContextOfIListOfWTemplateInfo> templateDefinitionsResponse = client

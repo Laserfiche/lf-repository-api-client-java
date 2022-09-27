@@ -19,13 +19,13 @@ class EntriesApiTest extends BaseTest {
     RepositoryApiClient createEntryClient;
 
     @BeforeEach
-    void PerTestSetup() {
+    void perTestSetup() {
         client = repositoryApiClient.getEntriesClient();
         createEntryClient = repositoryApiClient;
     }
 
     @Test
-    void getEntry_Success() {
+    void getEntry_ReturnRootFolder() {
         CompletableFuture<Entry> future = client.getEntry(repoId, 1, null);
         Entry entry = future.join();
 
@@ -33,7 +33,7 @@ class EntriesApiTest extends BaseTest {
     }
 
     @Test
-    void getEntryListing_Success() {
+    void getEntryListing_ReturnEntries() {
         ODataValueContextOfIListOfEntry entryList = client
                 .getEntryListing(repoId, 1, false, null, false, null, null, null, null, null, null, false)
                 .join();
@@ -42,7 +42,7 @@ class EntriesApiTest extends BaseTest {
     }
 
     @Test
-    void getFieldValues_Success() {
+    void getFieldValues_ReturnFields() {
         ODataValueContextOfIListOfFieldValue fieldValueList = client
                 .getFieldValues(repoId, 1, null, null, null, null, null, null, null, false)
                 .join();
@@ -51,7 +51,7 @@ class EntriesApiTest extends BaseTest {
     }
 
     @Test
-    void getLinkValuesFromEntry_Success() {
+    void getLinkValuesFromEntry_ReturnLinks() {
         ODataValueContextOfIListOfWEntryLinkInfo linkInfoList = client
                 .getLinkValuesFromEntry(repoId, 1, null, null, null, null, null, false)
                 .join();
@@ -60,7 +60,7 @@ class EntriesApiTest extends BaseTest {
     }
 
     @Test
-    void deleteEntry_Success() {
+    void deleteEntry_ReturnOperationToken() {
         Entry entryToDelete = createEntry(createEntryClient,
                 "RepositoryApiClientIntegrationTest Java DeleteFolder", 1, true)
                 .join();
@@ -74,7 +74,7 @@ class EntriesApiTest extends BaseTest {
     }
 
     @Test
-    void getTagsAssignedToEntry_Success() {
+    void getTagsAssignedToEntry_ReturnTags() {
         ODataValueContextOfIListOfWTagInfo tagInfoList = client
                 .getTagsAssignedToEntry(repoId, 1, null, null, null, null, null, false)
                 .join();
@@ -83,7 +83,7 @@ class EntriesApiTest extends BaseTest {
     }
 
     @Test
-    void getDynamicFieldsEntry_Success() {
+    void getDynamicFieldsEntry_ReturnDynamicFields() {
         ODataValueContextOfIListOfWTemplateInfo templateDefinitionsResponse = repositoryApiClient
                 .getTemplateDefinitionClient()
                 .getTemplateDefinitions(repoId, null, null, null, null, null, null, null, null)

@@ -18,14 +18,14 @@ public class TasksApiTest extends BaseTest {
     RepositoryApiClient createEntryClient;
 
     @BeforeEach
-    void PerTestSetup() {
+    void perTestSetup() {
         client = repositoryApiClient.getTasksClient();
         createEntryClient = repositoryApiClient;
     }
 
     @Disabled("We should enable it when we figure out how to design this test.")
     @Test
-    void cancelOperation_Success() throws InterruptedException {
+    void cancelOperation_OperationEndedBeforeCancel() throws InterruptedException {
         Entry deleteEntry = createEntry(createEntryClient, "RepositoryApiClientIntegrationTest Java CancelOperation", 1,
                 true).join();
 
@@ -48,7 +48,7 @@ public class TasksApiTest extends BaseTest {
     }
 
     @Test
-    void getOperationStatus_Success() throws InterruptedException {
+    void getOperationStatus_ReturnStatus() throws InterruptedException {
         Entry deleteEntry = createEntry(createEntryClient, "RepositoryApiClientIntegrationTest Java GetOperationStatus",
                 1, true).join();
 

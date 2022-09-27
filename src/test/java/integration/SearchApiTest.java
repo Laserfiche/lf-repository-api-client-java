@@ -18,19 +18,19 @@ public class SearchApiTest extends BaseTest {
     private String searchToken = "";
 
     @BeforeEach
-    void PerTestSetup() {
+    void perTestSetup() {
         client = repositoryApiClient.getSearchesClient();
     }
 
     @AfterEach
-    void cancelCloseSearch_Success() {
+    void cancelCloseSearch() {
         if (searchToken != null) {
             client.cancelOrCloseSearch(repoId, searchToken);
         }
     }
 
     @Test
-    void getSearchContextHits_Success() throws InterruptedException {
+    void getSearchContextHits_ReturnContextHits() throws InterruptedException {
         AdvancedSearchRequest request = new AdvancedSearchRequest();
         request.searchCommand = "({LF:Basic ~= \"*\", option=\"DFANLT\"})";
         request.fuzzyFactor = 2;
@@ -56,7 +56,7 @@ public class SearchApiTest extends BaseTest {
     }
 
     @Test
-    void getSearchResults_Success() throws InterruptedException {
+    void getSearchResults_ReturnSearchResults() throws InterruptedException {
         AdvancedSearchRequest request = new AdvancedSearchRequest();
         request.searchCommand = "({LF:Basic ~= \"search text\", option=\"DFANLT\"})";
 
@@ -74,8 +74,7 @@ public class SearchApiTest extends BaseTest {
     }
 
     @Test
-    @Disabled("Weird Exception Thrown")
-    void getSearchStatus_Success() throws InterruptedException {
+    void getSearchStatus_ReturnSearchStatus() throws InterruptedException {
         AdvancedSearchRequest request = new AdvancedSearchRequest();
         request.searchCommand = "({LF:Basic ~= \"search text\", option=\"DFANLT\"})";
 
@@ -92,7 +91,7 @@ public class SearchApiTest extends BaseTest {
     }
 
     @Test
-    void closeSearchOperations_Success() {
+    void closeSearchOperations_CloseSearch() {
         AdvancedSearchRequest request = new AdvancedSearchRequest();
         request.searchCommand = "({LF:Basic ~= \"search text\", option=\"DFANLT\"})";
 
@@ -105,5 +104,17 @@ public class SearchApiTest extends BaseTest {
         ODataValueOfBoolean closeSearchResponse = client.cancelOrCloseSearch(repoId, searchToken).join();
 
         assertTrue(closeSearchResponse.value);
+    }
+
+    @Test
+    void createSearchOperations_ReturnToken() {
+        AdvancedSearchRequest request = new AdvancedSearchRequest();
+        request.searchCommand = "({LF:Basic ~= \"search text\", option=\"DFANLT\"})";
+
+        AcceptedOperation searchOperationResponse = client.createSearchOperation(repoId, request).join();
+
+        String searchToken = searchOperationResponse.token;
+
+        assertNotNull(searchToken);
     }
 }
