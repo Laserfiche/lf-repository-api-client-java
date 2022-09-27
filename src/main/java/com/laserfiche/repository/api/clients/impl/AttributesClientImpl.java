@@ -5,7 +5,6 @@ import com.laserfiche.repository.api.clients.impl.model.Attribute;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfListOfAttribute;
 import kong.unirest.UnirestInstance;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
@@ -18,15 +17,13 @@ public class AttributesClientImpl extends ApiClient implements AttributesClient 
     @Override
     public CompletableFuture<Attribute> getTrusteeAttributeValueByKey(String repoId, String attributeKey,
             Boolean everyone) {
-        Map<String, Object> queryParameters = new HashMap<>();
-        if (everyone != null) {
-            queryParameters.put("everyone", everyone);
-        }
+        Map<String, Object> queryParameters = getNonNullParameters(new String[]{"everyone"}, new Object[]{everyone});
+        Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "attributeKey"},
+                new Object[]{repoId, attributeKey});
         return httpClient
                 .get(baseUrl + "/v1/Repositories/{repoId}/Attributes/{attributeKey}")
-                .routeParam("repoId", repoId)
-                .routeParam("attributeKey", attributeKey)
                 .queryString(queryParameters)
+                .routeParam(pathParameters)
                 .asObjectAsync(Attribute.class)
                 .thenApply(httpResponse -> {
                     if (httpResponse.getStatus() == 400) {
@@ -44,6 +41,9 @@ public class AttributesClientImpl extends ApiClient implements AttributesClient 
                     if (httpResponse.getStatus() == 429) {
                         throw new RuntimeException("Rate limit is reached.");
                     }
+                    if (httpResponse.getStatus() >= 299) {
+                        throw new RuntimeException(httpResponse.getStatusText());
+                    }
                     return httpResponse.getBody();
                 });
     }
@@ -51,29 +51,21 @@ public class AttributesClientImpl extends ApiClient implements AttributesClient 
     @Override
     public CompletableFuture<ODataValueContextOfListOfAttribute> getTrusteeAttributeKeyValuePairs(String repoId,
             Boolean everyone, String prefer, String select, String orderby, Integer top, Integer skip, Boolean count) {
-        Map<String, Object> queryParameters = new HashMap<>();
-        if (everyone != null) {
-            queryParameters.put("everyone", everyone);
-        }
-        if (select != null) {
-            queryParameters.put("select", select);
-        }
-        if (orderby != null) {
-            queryParameters.put("orderby", orderby);
-        }
-        if (top != null) {
-            queryParameters.put("top", top);
-        }
-        if (skip != null) {
-            queryParameters.put("skip", skip);
-        }
-        if (count != null) {
-            queryParameters.put("count", count);
-        }
+        return doGetTrusteeAttributeKeyValuePairs(baseUrl + "/v1/Repositories/{repoId}/Attributes", repoId, everyone,
+                prefer, select, orderby, top, skip, count);
+    }
+
+    private CompletableFuture<ODataValueContextOfListOfAttribute> doGetTrusteeAttributeKeyValuePairs(String url,
+            String repoId, Boolean everyone, String prefer, String select, String orderby, Integer top, Integer skip,
+            Boolean count) {
+        Map<String, Object> queryParameters = getNonNullParameters(
+                new String[]{"everyone", "$select", "$orderby", "$top", "$skip", "$count"},
+                new Object[]{everyone, select, orderby, top, skip, count});
+        Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId"}, new Object[]{repoId});
         return httpClient
-                .get(baseUrl + "/v1/Repositories/{repoId}/Attributes")
-                .routeParam("repoId", repoId)
+                .get(url)
                 .queryString(queryParameters)
+                .routeParam(pathParameters)
                 .header("prefer", prefer)
                 .asObjectAsync(ODataValueContextOfListOfAttribute.class)
                 .thenApply(httpResponse -> {
@@ -89,7 +81,17 @@ public class AttributesClientImpl extends ApiClient implements AttributesClient 
                     if (httpResponse.getStatus() == 429) {
                         throw new RuntimeException("Rate limit is reached.");
                     }
+                    if (httpResponse.getStatus() >= 299) {
+                        throw new RuntimeException(httpResponse.getStatusText());
+                    }
                     return httpResponse.getBody();
                 });
+    }
+
+    @Override
+    public CompletableFuture<ODataValueContextOfListOfAttribute> getTrusteeAttributeKeyValuePairsNextLink(
+            String nextLink, int maxPageSize) {
+        return doGetTrusteeAttributeKeyValuePairs(nextLink, null, null, mergeMaxSizeIntoPrefer(maxPageSize, null), null,
+                null, null, null, null);
     }
 }

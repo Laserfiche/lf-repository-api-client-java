@@ -4,7 +4,6 @@ import com.laserfiche.repository.api.clients.SearchesClient;
 import com.laserfiche.repository.api.clients.impl.model.*;
 import kong.unirest.UnirestInstance;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
@@ -16,10 +15,11 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
 
     @Override
     public CompletableFuture<OperationProgress> getSearchStatus(String repoId, String searchToken) {
+        Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "searchToken"},
+                new Object[]{repoId, searchToken});
         return httpClient
                 .get(baseUrl + "/v1/Repositories/{repoId}/Searches/{searchToken}")
-                .routeParam("repoId", repoId)
-                .routeParam("searchToken", searchToken)
+                .routeParam(pathParameters)
                 .asObjectAsync(OperationProgress.class)
                 .thenApply(httpResponse -> {
                     if (httpResponse.getStatus() == 400) {
@@ -37,16 +37,20 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
                     if (httpResponse.getStatus() == 429) {
                         throw new RuntimeException("Rate limit is reached.");
                     }
+                    if (httpResponse.getStatus() >= 299) {
+                        throw new RuntimeException(httpResponse.getStatusText());
+                    }
                     return httpResponse.getBody();
                 });
     }
 
     @Override
     public CompletableFuture<ODataValueOfBoolean> cancelOrCloseSearch(String repoId, String searchToken) {
+        Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "searchToken"},
+                new Object[]{repoId, searchToken});
         return httpClient
                 .delete(baseUrl + "/v1/Repositories/{repoId}/Searches/{searchToken}")
-                .routeParam("repoId", repoId)
-                .routeParam("searchToken", searchToken)
+                .routeParam(pathParameters)
                 .asObjectAsync(ODataValueOfBoolean.class)
                 .thenApply(httpResponse -> {
                     if (httpResponse.getStatus() == 400) {
@@ -64,6 +68,9 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
                     if (httpResponse.getStatus() == 429) {
                         throw new RuntimeException("Rate limit is reached.");
                     }
+                    if (httpResponse.getStatus() >= 299) {
+                        throw new RuntimeException(httpResponse.getStatusText());
+                    }
                     return httpResponse.getBody();
                 });
     }
@@ -72,28 +79,23 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
     public CompletableFuture<ODataValueContextOfIListOfContextHit> getSearchContextHits(String repoId,
             String searchToken, Integer rowNumber, String prefer, String select, String orderby, Integer top,
             Integer skip, Boolean count) {
-        Map<String, Object> queryParameters = new HashMap<>();
-        if (select != null) {
-            queryParameters.put("select", select);
-        }
-        if (orderby != null) {
-            queryParameters.put("orderby", orderby);
-        }
-        if (top != null) {
-            queryParameters.put("top", top);
-        }
-        if (skip != null) {
-            queryParameters.put("skip", skip);
-        }
-        if (count != null) {
-            queryParameters.put("count", count);
-        }
+        return doGetSearchContextHits(
+                baseUrl + "/v1/Repositories/{repoId}/Searches/{searchToken}/Results/{rowNumber}/ContextHits", repoId,
+                searchToken, rowNumber, prefer, select, orderby, top, skip, count);
+    }
+
+    private CompletableFuture<ODataValueContextOfIListOfContextHit> doGetSearchContextHits(String url, String repoId,
+            String searchToken, Integer rowNumber, String prefer, String select, String orderby, Integer top,
+            Integer skip, Boolean count) {
+        Map<String, Object> queryParameters = getNonNullParameters(
+                new String[]{"$select", "$orderby", "$top", "$skip", "$count"},
+                new Object[]{select, orderby, top, skip, count});
+        Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "searchToken", "rowNumber"},
+                new Object[]{repoId, searchToken, rowNumber});
         return httpClient
-                .get(baseUrl + "/v1/Repositories/{repoId}/Searches/{searchToken}/Results/{rowNumber}/ContextHits")
-                .routeParam("repoId", repoId)
-                .routeParam("searchToken", searchToken)
-                .routeParam("rowNumber", String.valueOf(rowNumber))
+                .get(url)
                 .queryString(queryParameters)
+                .routeParam(pathParameters)
                 .header("prefer", prefer)
                 .asObjectAsync(ODataValueContextOfIListOfContextHit.class)
                 .thenApply(httpResponse -> {
@@ -112,16 +114,27 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
                     if (httpResponse.getStatus() == 429) {
                         throw new RuntimeException("Rate limit is reached.");
                     }
+                    if (httpResponse.getStatus() >= 299) {
+                        throw new RuntimeException(httpResponse.getStatusText());
+                    }
                     return httpResponse.getBody();
                 });
     }
 
     @Override
+    public CompletableFuture<ODataValueContextOfIListOfContextHit> getSearchContextHitsNextLink(String nextLink,
+            int maxPageSize) {
+        return doGetSearchContextHits(nextLink, null, null, null, mergeMaxSizeIntoPrefer(maxPageSize, null), null, null,
+                null, null, null);
+    }
+
+    @Override
     public CompletableFuture<AcceptedOperation> createSearchOperation(String repoId,
             AdvancedSearchRequest requestBody) {
+        Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId"}, new Object[]{repoId});
         return httpClient
                 .post(baseUrl + "/v1/Repositories/{repoId}/Searches")
-                .routeParam("repoId", repoId)
+                .routeParam(pathParameters)
                 .contentType("application/json")
                 .body(requestBody)
                 .asObjectAsync(AcceptedOperation.class)
@@ -138,6 +151,9 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
                     if (httpResponse.getStatus() == 429) {
                         throw new RuntimeException("Operation limit or request limit reached.");
                     }
+                    if (httpResponse.getStatus() >= 299) {
+                        throw new RuntimeException(httpResponse.getStatusText());
+                    }
                     return httpResponse.getBody();
                 });
     }
@@ -146,42 +162,23 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
     public CompletableFuture<ODataValueContextOfIListOfEntry> getSearchResults(String repoId, String searchToken,
             Boolean groupByEntryType, Boolean refresh, String[] fields, Boolean formatFields, String prefer,
             String culture, String select, String orderby, Integer top, Integer skip, Boolean count) {
-        Map<String, Object> queryParameters = new HashMap<>();
-        if (groupByEntryType != null) {
-            queryParameters.put("groupByEntryType", groupByEntryType);
-        }
-        if (refresh != null) {
-            queryParameters.put("refresh", refresh);
-        }
-        if (fields != null) {
-            queryParameters.put("fields", fields);
-        }
-        if (formatFields != null) {
-            queryParameters.put("formatFields", formatFields);
-        }
-        if (culture != null) {
-            queryParameters.put("culture", culture);
-        }
-        if (select != null) {
-            queryParameters.put("select", select);
-        }
-        if (orderby != null) {
-            queryParameters.put("orderby", orderby);
-        }
-        if (top != null) {
-            queryParameters.put("top", top);
-        }
-        if (skip != null) {
-            queryParameters.put("skip", skip);
-        }
-        if (count != null) {
-            queryParameters.put("count", count);
-        }
+        return doGetSearchResults(baseUrl + "/v1/Repositories/{repoId}/Searches/{searchToken}/Results", repoId,
+                searchToken, groupByEntryType, refresh, fields, formatFields, prefer, culture, select, orderby, top,
+                skip, count);
+    }
+
+    private CompletableFuture<ODataValueContextOfIListOfEntry> doGetSearchResults(String url, String repoId,
+            String searchToken, Boolean groupByEntryType, Boolean refresh, String[] fields, Boolean formatFields,
+            String prefer, String culture, String select, String orderby, Integer top, Integer skip, Boolean count) {
+        Map<String, Object> queryParameters = getNonNullParameters(
+                new String[]{"groupByEntryType", "refresh", "fields", "formatFields", "culture", "$select", "$orderby", "$top", "$skip", "$count"},
+                new Object[]{groupByEntryType, refresh, fields, formatFields, culture, select, orderby, top, skip, count});
+        Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "searchToken"},
+                new Object[]{repoId, searchToken});
         return httpClient
-                .get(baseUrl + "/v1/Repositories/{repoId}/Searches/{searchToken}/Results")
-                .routeParam("repoId", repoId)
-                .routeParam("searchToken", searchToken)
+                .get(url)
                 .queryString(queryParameters)
+                .routeParam(pathParameters)
                 .header("prefer", prefer)
                 .asObjectAsync(ODataValueContextOfIListOfEntry.class)
                 .thenApply(httpResponse -> {
@@ -200,7 +197,17 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
                     if (httpResponse.getStatus() == 429) {
                         throw new RuntimeException("Rate limit is reached.");
                     }
+                    if (httpResponse.getStatus() >= 299) {
+                        throw new RuntimeException(httpResponse.getStatusText());
+                    }
                     return httpResponse.getBody();
                 });
+    }
+
+    @Override
+    public CompletableFuture<ODataValueContextOfIListOfEntry> getSearchResultsNextLink(String nextLink,
+            int maxPageSize) {
+        return doGetSearchResults(nextLink, null, null, null, null, null, null,
+                mergeMaxSizeIntoPrefer(maxPageSize, null), null, null, null, null, null, null);
     }
 }

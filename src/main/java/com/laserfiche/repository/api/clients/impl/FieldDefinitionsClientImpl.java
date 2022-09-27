@@ -5,7 +5,6 @@ import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIList
 import com.laserfiche.repository.api.clients.impl.model.WFieldInfo;
 import kong.unirest.UnirestInstance;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
@@ -18,18 +17,14 @@ public class FieldDefinitionsClientImpl extends ApiClient implements FieldDefini
     @Override
     public CompletableFuture<WFieldInfo> getFieldDefinitionById(String repoId, Integer fieldDefinitionId,
             String culture, String select) {
-        Map<String, Object> queryParameters = new HashMap<>();
-        if (culture != null) {
-            queryParameters.put("culture", culture);
-        }
-        if (select != null) {
-            queryParameters.put("select", select);
-        }
+        Map<String, Object> queryParameters = getNonNullParameters(new String[]{"culture", "$select"},
+                new Object[]{culture, select});
+        Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "fieldDefinitionId"},
+                new Object[]{repoId, fieldDefinitionId});
         return httpClient
                 .get(baseUrl + "/v1/Repositories/{repoId}/FieldDefinitions/{fieldDefinitionId}")
-                .routeParam("repoId", repoId)
-                .routeParam("fieldDefinitionId", String.valueOf(fieldDefinitionId))
                 .queryString(queryParameters)
+                .routeParam(pathParameters)
                 .asObjectAsync(WFieldInfo.class)
                 .thenApply(httpResponse -> {
                     if (httpResponse.getStatus() == 400) {
@@ -47,6 +42,9 @@ public class FieldDefinitionsClientImpl extends ApiClient implements FieldDefini
                     if (httpResponse.getStatus() == 429) {
                         throw new RuntimeException("Rate limit is reached.");
                     }
+                    if (httpResponse.getStatus() >= 299) {
+                        throw new RuntimeException(httpResponse.getStatusText());
+                    }
                     return httpResponse.getBody();
                 });
     }
@@ -54,29 +52,20 @@ public class FieldDefinitionsClientImpl extends ApiClient implements FieldDefini
     @Override
     public CompletableFuture<ODataValueContextOfIListOfWFieldInfo> getFieldDefinitions(String repoId, String prefer,
             String culture, String select, String orderby, Integer top, Integer skip, Boolean count) {
-        Map<String, Object> queryParameters = new HashMap<>();
-        if (culture != null) {
-            queryParameters.put("culture", culture);
-        }
-        if (select != null) {
-            queryParameters.put("select", select);
-        }
-        if (orderby != null) {
-            queryParameters.put("orderby", orderby);
-        }
-        if (top != null) {
-            queryParameters.put("top", top);
-        }
-        if (skip != null) {
-            queryParameters.put("skip", skip);
-        }
-        if (count != null) {
-            queryParameters.put("count", count);
-        }
+        return doGetFieldDefinitions(baseUrl + "/v1/Repositories/{repoId}/FieldDefinitions", repoId, prefer, culture,
+                select, orderby, top, skip, count);
+    }
+
+    private CompletableFuture<ODataValueContextOfIListOfWFieldInfo> doGetFieldDefinitions(String url, String repoId,
+            String prefer, String culture, String select, String orderby, Integer top, Integer skip, Boolean count) {
+        Map<String, Object> queryParameters = getNonNullParameters(
+                new String[]{"culture", "$select", "$orderby", "$top", "$skip", "$count"},
+                new Object[]{culture, select, orderby, top, skip, count});
+        Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId"}, new Object[]{repoId});
         return httpClient
-                .get(baseUrl + "/v1/Repositories/{repoId}/FieldDefinitions")
-                .routeParam("repoId", repoId)
+                .get(url)
                 .queryString(queryParameters)
+                .routeParam(pathParameters)
                 .header("prefer", prefer)
                 .asObjectAsync(ODataValueContextOfIListOfWFieldInfo.class)
                 .thenApply(httpResponse -> {
@@ -92,7 +81,17 @@ public class FieldDefinitionsClientImpl extends ApiClient implements FieldDefini
                     if (httpResponse.getStatus() == 429) {
                         throw new RuntimeException("Rate limit is reached.");
                     }
+                    if (httpResponse.getStatus() >= 299) {
+                        throw new RuntimeException(httpResponse.getStatusText());
+                    }
                     return httpResponse.getBody();
                 });
+    }
+
+    @Override
+    public CompletableFuture<ODataValueContextOfIListOfWFieldInfo> getFieldDefinitionsNextLink(String nextLink,
+            int maxPageSize) {
+        return doGetFieldDefinitions(nextLink, null, mergeMaxSizeIntoPrefer(maxPageSize, null), null, null, null, null,
+                null, null);
     }
 }

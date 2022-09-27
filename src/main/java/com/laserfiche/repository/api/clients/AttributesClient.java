@@ -35,4 +35,7 @@ public interface AttributesClient {
      */
     CompletableFuture<ODataValueContextOfListOfAttribute> getTrusteeAttributeKeyValuePairs(String repoId,
             Boolean everyone, String prefer, String select, String orderby, Integer top, Integer skip, Boolean count);
+
+    CompletableFuture<ODataValueContextOfListOfAttribute> getTrusteeAttributeKeyValuePairsNextLink(String nextLink,
+            int maxPageSize);
 }

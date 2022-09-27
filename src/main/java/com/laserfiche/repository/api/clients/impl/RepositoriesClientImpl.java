@@ -27,6 +27,9 @@ public class RepositoriesClientImpl extends ApiClient implements RepositoriesCli
                     if (httpResponse.getStatus() == 429) {
                         throw new RuntimeException("Rate limit is reached.");
                     }
+                    if (httpResponse.getStatus() >= 299) {
+                        throw new RuntimeException(httpResponse.getStatusText());
+                    }
                     return httpResponse.getBody();
                 });
     }

@@ -3,6 +3,7 @@ package com.laserfiche.repository.api.clients;
 import com.laserfiche.repository.api.clients.impl.model.*;
 
 import java.io.File;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
@@ -32,6 +33,8 @@ public interface EntriesClient {
             String prefer, Boolean formatValue, String culture, String select, String orderby, Integer top,
             Integer skip, Boolean count);
 
+    CompletableFuture<ODataValueContextOfIListOfFieldValue> getFieldValuesNextLink(String nextLink, int maxPageSize);
+
     /**
      * - Update the field values assigned to an entry.
      * - Provide the new field values to assign to the entry, and remove/reset all previously assigned field values.
@@ -52,7 +55,6 @@ public interface EntriesClient {
      * - Optionally sets metadata and electronic document component.
      * - Optional parameter: autoRename (default false). If an entry already exists with the given name, the entry will be automatically renamed. With this route, partial success is possible. The response returns multiple operation (entryCreate operation, setEdoc operation, setLinks operation, etc..) objects, which contain information about any errors that may have occurred during the creation. As long as the entryCreate operation succeeds, the entry will be created, even if all other operations fail.
      *
-     * @param requestBody   null
      * @param repoId        The requested repository ID.
      * @param parentEntryId The entry ID of the folder that the document will be created in.
      * @param fileName      The created document's file name.
@@ -60,10 +62,12 @@ public interface EntriesClient {
      *                      renamed if an entry already exists with the given name in the folder. The default value is false.
      * @param culture       An optional query parameter used to indicate the locale that should be used.
      *                      The value should be a standard language tag.
+     * @param file          The file that will be uploaded.
+     * @param requestBody   null
      * @return CompletableFuture<CreateEntryResult> The return value
      */
-    CompletableFuture<CreateEntryResult> importDocument(PostEntryWithEdocMetadataRequest requestBody, String repoId,
-            Integer parentEntryId, String fileName, Boolean autoRename, String culture);
+    CompletableFuture<CreateEntryResult> importDocument(String repoId, Integer parentEntryId, String fileName,
+            Boolean autoRename, String culture, File file, PostEntryWithEdocMetadataRequest requestBody);
 
     /**
      * - Returns the links assigned to an entry.
@@ -83,6 +87,9 @@ public interface EntriesClient {
     CompletableFuture<ODataValueContextOfIListOfWEntryLinkInfo> getLinkValuesFromEntry(String repoId, Integer entryId,
             String prefer, String select, String orderby, Integer top, Integer skip, Boolean count);
 
+    CompletableFuture<ODataValueContextOfIListOfWEntryLinkInfo> getLinkValuesFromEntryNextLink(String nextLink,
+            int maxPageSize);
+
     /**
      * - Assign links to an entry.
      * - Provide an entry ID and a list of links to assign to that entry.
@@ -94,7 +101,7 @@ public interface EntriesClient {
      * @return CompletableFuture<ODataValueOfIListOfWEntryLinkInfo> The return value
      */
     CompletableFuture<ODataValueOfIListOfWEntryLinkInfo> assignEntryLinks(String repoId, Integer entryId,
-            PutLinksRequest requestBody);
+            List<PutLinksRequest> requestBody);
 
     /**
      * - Assign a template to an entry.
@@ -198,6 +205,8 @@ public interface EntriesClient {
             Boolean groupByEntryType, String[] fields, Boolean formatFields, String prefer, String culture,
             String select, String orderby, Integer top, Integer skip, Boolean count);
 
+    CompletableFuture<ODataValueContextOfIListOfEntry> getEntryListingNextLink(String nextLink, int maxPageSize);
+
     /**
      * - Create/copy a new child entry in the designated folder.
      * - Provide the parent folder ID, and based on the request body, copy or create a folder/shortcut as a child entry of the designated folder.
@@ -263,6 +272,9 @@ public interface EntriesClient {
      */
     CompletableFuture<ODataValueContextOfIListOfWTagInfo> getTagsAssignedToEntry(String repoId, Integer entryId,
             String prefer, String select, String orderby, Integer top, Integer skip, Boolean count);
+
+    CompletableFuture<ODataValueContextOfIListOfWTagInfo> getTagsAssignedToEntryNextLink(String nextLink,
+            int maxPageSize);
 
     /**
      * - Assign tags to an entry.

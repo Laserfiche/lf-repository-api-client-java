@@ -46,6 +46,9 @@ public interface SearchesClient {
     CompletableFuture<ODataValueContextOfIListOfContextHit> getSearchContextHits(String repoId, String searchToken,
             Integer rowNumber, String prefer, String select, String orderby, Integer top, Integer skip, Boolean count);
 
+    CompletableFuture<ODataValueContextOfIListOfContextHit> getSearchContextHitsNextLink(String nextLink,
+            int maxPageSize);
+
     /**
      * - Runs a search operation on the repository.
      * - Optional body parameters: FuzzyType: (default none), which can be used to determine what is considered a match by number of letters or percentage. FuzzyFactor: integer value that determines the degree to which a search will be considered a match (integer value for NumberOfLetters, or int value representing a percentage). The status for search operations must be checked via the Search specific status checking route.
@@ -85,4 +88,6 @@ public interface SearchesClient {
     CompletableFuture<ODataValueContextOfIListOfEntry> getSearchResults(String repoId, String searchToken,
             Boolean groupByEntryType, Boolean refresh, String[] fields, Boolean formatFields, String prefer,
             String culture, String select, String orderby, Integer top, Integer skip, Boolean count);
+
+    CompletableFuture<ODataValueContextOfIListOfEntry> getSearchResultsNextLink(String nextLink, int maxPageSize);
 }
