@@ -17,12 +17,12 @@ class TagDefinitionsApiTest extends BaseTest {
     TagDefinitionsClient client;
 
     @BeforeEach
-    void PerTestSetup() {
+    void perTestSetup() {
         client = repositoryApiClient.getTagDefinitionsClient();
     }
 
     @Test
-    void getTagDefinitions_Success() {
+    void getTagDefinitions_ReturnAllTags() {
         ODataValueContextOfIListOfWTagInfo tagInfoList = client
                 .getTagDefinitions(repoId, null, null, null, null, null, null, false)
                 .join();
@@ -80,7 +80,7 @@ class TagDefinitionsApiTest extends BaseTest {
     }
 
     @Test
-    void getTagDefinitionById_Success() {
+    void getTagDefinitionById_ReturnTag() {
         ODataValueContextOfIListOfWTagInfo tagInfoList = client
                 .getTagDefinitions(repoId, null, null, null, null, null, null, false)
                 .join();

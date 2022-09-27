@@ -3,6 +3,7 @@ package integration;
 import com.laserfiche.repository.api.clients.TemplateDefinitionsClient;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfTemplateFieldInfo;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfWTemplateInfo;
+import com.laserfiche.repository.api.clients.impl.model.TemplateFieldInfo;
 import com.laserfiche.repository.api.clients.impl.model.WTemplateInfo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,19 +13,21 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
+import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class TemplateDefinitionsApiTest extends BaseTest {
     TemplateDefinitionsClient client;
 
     @BeforeEach
-    void PerTestSetup() {
+    void perTestSetup() {
         client = repositoryApiClient.getTemplateDefinitionClient();
     }
 
     @Test
-    void getTemplateDefinitions_Success() {
+    void getTemplateDefinitions_ReturnAllTemplates() {
         ODataValueContextOfIListOfWTemplateInfo templateInfoList = client
                 .getTemplateDefinitions(repoId, null, null, null, null, null, null, null, false)
                 .join();
@@ -81,7 +84,7 @@ class TemplateDefinitionsApiTest extends BaseTest {
     }
 
     @Test
-    void getTemplateDefinitionsFields_Success() {
+    void getTemplateDefinitionsFields_ReturnTemplateFields() {
         ODataValueContextOfIListOfWTemplateInfo templateInfoList = client
                 .getTemplateDefinitions(repoId, null, null, null, null, null, null, null, false)
                 .join();
@@ -166,7 +169,7 @@ class TemplateDefinitionsApiTest extends BaseTest {
     }
 
     @Test
-    void getTemplateDefinitionsFieldsById_Success() {
+    void getTemplateDefinitionsFieldsById_ReturnTemplate() {
         ODataValueContextOfIListOfWTemplateInfo templateInfoList = client
                 .getTemplateDefinitions(repoId, null, null, null, null, null, null, null, false)
                 .join();
@@ -184,7 +187,7 @@ class TemplateDefinitionsApiTest extends BaseTest {
     }
 
     @Test
-    void getTemplateDefinitionsByTemplateName_Success() {
+    void getTemplateDefinitionsByTemplateName_TemplateNameQueryParameter_ReturnSingleTemplate() {
         ODataValueContextOfIListOfWTemplateInfo templateInfoList = client
                 .getTemplateDefinitions(repoId, null, null, null, null, null, null, null, false)
                 .join();
@@ -198,5 +201,17 @@ class TemplateDefinitionsApiTest extends BaseTest {
                 .join();
 
         assertNotNull(result);
+    }
+
+    @Test
+    void getTemplateDefinitionsByTemplateName_ReturnTemplateFields() {
+        ODataValueContextOfIListOfWTemplateInfo allTemplateDefinitionsFuture = client.getTemplateDefinitions(repoId,null,null,null,null,null,null,null,null).join();
+        WTemplateInfo firstTemplateDefinitions = allTemplateDefinitionsFuture.value.get(0);
+        assertNotNull(firstTemplateDefinitions);
+
+        ODataValueContextOfIListOfTemplateFieldInfo result = client.getTemplateFieldDefinitionsByTemplateName(repoId, firstTemplateDefinitions.name, null, null, null, null, null, null, null).join();
+        List<TemplateFieldInfo> templateFieldDefinitions = result.value;
+        assertNotNull(templateFieldDefinitions);
+        assertEquals(templateFieldDefinitions.size(),firstTemplateDefinitions.fieldCount);
     }
 }

@@ -40,4 +40,7 @@ public interface FieldDefinitionsClient {
      */
     CompletableFuture<ODataValueContextOfIListOfWFieldInfo> getFieldDefinitions(String repoId, String prefer,
             String culture, String select, String orderby, Integer top, Integer skip, Boolean count);
+
+    CompletableFuture<ODataValueContextOfIListOfWFieldInfo> getFieldDefinitionsNextLink(String nextLink,
+            int maxPageSize);
 }

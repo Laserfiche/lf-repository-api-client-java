@@ -19,6 +19,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
     private final LinkDefinitionsClient linkDefinitionsClient;
     private final RepositoriesClient repositoriesClient;
     private final SearchesClient searchesClient;
+    private final ServerSessionClient serverSessionClient;
     private final SimpleSearchesClient simpleSearchesClient;
     private final TagDefinitionsClient tagDefinitionsClient;
     private final TasksClient tasksClient;
@@ -26,11 +27,11 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
 
     protected RepositoryApiClientImpl(String servicePrincipalKey, AccessKey accessKey, String baseUrlDebug) {
         String baseUrl = baseUrlDebug != null ? baseUrlDebug : "https://api." + accessKey.domain + "/repository";
-
         httpClient = Unirest.spawnInstance();
+
         httpClient.config()
-               .setObjectMapper(new RepositoryClientObjectMapper())
-               .interceptor(new OAuthInterceptor(servicePrincipalKey, accessKey));
+                .setObjectMapper(new RepositoryClientObjectMapper())
+                .interceptor(new OAuthInterceptor(servicePrincipalKey, accessKey));
 
         attributesClient = new AttributesClientImpl(baseUrl, httpClient);
         auditReasonsClient = new AuditReasonsClientImpl(baseUrl, httpClient);
@@ -39,6 +40,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
         linkDefinitionsClient = new LinkDefinitionsClientImpl(baseUrl, httpClient);
         repositoriesClient = new RepositoriesClientImpl(baseUrl, httpClient);
         searchesClient = new SearchesClientImpl(baseUrl, httpClient);
+        serverSessionClient = new ServerSessionClientImpl(baseUrl, httpClient);
         simpleSearchesClient = new SimpleSearchesClientImpl(baseUrl, httpClient);
         tagDefinitionsClient = new TagDefinitionsClientImpl(baseUrl, httpClient);
         tasksClient = new TasksClientImpl(baseUrl, httpClient);
@@ -56,6 +58,10 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
     @Override
     public void setDefaultRequestHeaders(Map<String, String> defaultRequestHeaders) {
         defaultHeaders = defaultRequestHeaders;
+        httpClient.config().clearDefaultHeaders();
+        for (String Key : defaultRequestHeaders.keySet()) {
+            httpClient.config().setDefaultHeader(Key, defaultHeaders.get(Key));
+        }
     }
 
     @Override

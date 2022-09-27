@@ -4,6 +4,7 @@ import com.laserfiche.repository.api.clients.TasksClient;
 import com.laserfiche.repository.api.clients.impl.model.OperationProgress;
 import kong.unirest.UnirestInstance;
 
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 public class TasksClientImpl extends ApiClient implements TasksClient {
@@ -14,10 +15,11 @@ public class TasksClientImpl extends ApiClient implements TasksClient {
 
     @Override
     public CompletableFuture<OperationProgress> getOperationStatusAndProgress(String repoId, String operationToken) {
+        Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "operationToken"},
+                new Object[]{repoId, operationToken});
         return httpClient
                 .get(baseUrl + "/v1/Repositories/{repoId}/Tasks/{operationToken}")
-                .routeParam("repoId", repoId)
-                .routeParam("operationToken", operationToken)
+                .routeParam(pathParameters)
                 .asObjectAsync(OperationProgress.class)
                 .thenApply(httpResponse -> {
                     if (httpResponse.getStatus() == 400) {
@@ -35,16 +37,20 @@ public class TasksClientImpl extends ApiClient implements TasksClient {
                     if (httpResponse.getStatus() == 429) {
                         throw new RuntimeException("Rate limit is reached.");
                     }
+                    if (httpResponse.getStatus() >= 299) {
+                        throw new RuntimeException(httpResponse.getStatusText());
+                    }
                     return httpResponse.getBody();
                 });
     }
 
     @Override
     public CompletableFuture<Void> cancelOperation(String repoId, String operationToken) {
+        Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "operationToken"},
+                new Object[]{repoId, operationToken});
         return httpClient
                 .delete(baseUrl + "/v1/Repositories/{repoId}/Tasks/{operationToken}")
-                .routeParam("repoId", repoId)
-                .routeParam("operationToken", operationToken)
+                .routeParam(pathParameters)
                 .asObjectAsync(Void.class)
                 .thenApply(httpResponse -> {
                     if (httpResponse.getStatus() == 400) {
@@ -61,6 +67,9 @@ public class TasksClientImpl extends ApiClient implements TasksClient {
                     }
                     if (httpResponse.getStatus() == 429) {
                         throw new RuntimeException("Rate limit is reached.");
+                    }
+                    if (httpResponse.getStatus() >= 299) {
+                        throw new RuntimeException(httpResponse.getStatusText());
                     }
                     return httpResponse.getBody();
                 });
