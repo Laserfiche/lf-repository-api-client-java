@@ -20,33 +20,22 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
     public CompletableFuture<ODataValueContextOfIListOfFieldValue> getFieldValues(String repoId, Integer entryId,
             String prefer, Boolean formatValue, String culture, String select, String orderby, Integer top,
             Integer skip, Boolean count) {
-        Map<String, Object> queryParameters = new HashMap<>();
-        if (formatValue != null) {
-            queryParameters.put("formatValue", formatValue);
-        }
-        if (culture != null) {
-            queryParameters.put("culture", culture);
-        }
-        if (select != null) {
-            queryParameters.put("select", select);
-        }
-        if (orderby != null) {
-            queryParameters.put("orderby", orderby);
-        }
-        if (top != null) {
-            queryParameters.put("top", top);
-        }
-        if (skip != null) {
-            queryParameters.put("skip", skip);
-        }
-        if (count != null) {
-            queryParameters.put("count", count);
-        }
+        return doGetFieldValues(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/fields", repoId, entryId, prefer,
+                formatValue, culture, select, orderby, top, skip, count);
+    }
+
+    private CompletableFuture<ODataValueContextOfIListOfFieldValue> doGetFieldValues(String url, String repoId,
+            Integer entryId, String prefer, Boolean formatValue, String culture, String select, String orderby,
+            Integer top, Integer skip, Boolean count) {
+        Map<String, Object> queryParameters = getNonNullParameters(
+                new String[]{"formatValue", "culture", "$select", "$orderby", "$top", "$skip", "$count"},
+                new Object[]{formatValue, culture, select, orderby, top, skip, count});
+        Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "entryId"},
+                new Object[]{repoId, entryId});
         return httpClient
-                .get(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/fields")
-                .routeParam("repoId", repoId)
-                .routeParam("entryId", String.valueOf(entryId))
+                .get(url)
                 .queryString(queryParameters)
+                .routeParam(pathParameters)
                 .header("prefer", prefer)
                 .asObjectAsync(ODataValueContextOfIListOfFieldValue.class)
                 .thenApply(httpResponse -> {
@@ -65,22 +54,30 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                     if (httpResponse.getStatus() == 429) {
                         throw new RuntimeException("Rate limit is reached.");
                     }
+                    if (httpResponse.getStatus() >= 299) {
+                        throw new RuntimeException(httpResponse.getStatusText());
+                    }
                     return httpResponse.getBody();
                 });
     }
 
     @Override
+    public CompletableFuture<ODataValueContextOfIListOfFieldValue> getFieldValuesNextLink(String nextLink,
+            int maxPageSize) {
+        return doGetFieldValues(nextLink, null, null, mergeMaxSizeIntoPrefer(maxPageSize, null), null, null, null, null,
+                null, null, null);
+    }
+
+    @Override
     public CompletableFuture<ODataValueOfIListOfFieldValue> assignFieldValues(String repoId, Integer entryId,
             Map<String, FieldToUpdate> requestBody, String culture) {
-        Map<String, Object> queryParameters = new HashMap<>();
-        if (culture != null) {
-            queryParameters.put("culture", culture);
-        }
+        Map<String, Object> queryParameters = getNonNullParameters(new String[]{"culture"}, new Object[]{culture});
+        Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "entryId"},
+                new Object[]{repoId, entryId});
         return httpClient
                 .put(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/fields")
-                .routeParam("repoId", repoId)
-                .routeParam("entryId", String.valueOf(entryId))
                 .queryString(queryParameters)
+                .routeParam(pathParameters)
                 .contentType("application/json")
                 .body(requestBody)
                 .asObjectAsync(ODataValueOfIListOfFieldValue.class)
@@ -103,28 +100,26 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                     if (httpResponse.getStatus() == 429) {
                         throw new RuntimeException("Rate limit is reached.");
                     }
+                    if (httpResponse.getStatus() >= 299) {
+                        throw new RuntimeException(httpResponse.getStatusText());
+                    }
                     return httpResponse.getBody();
                 });
     }
 
     @Override
-    public CompletableFuture<CreateEntryResult> importDocument(PostEntryWithEdocMetadataRequest requestBody,
-            String repoId, Integer parentEntryId, String fileName, Boolean autoRename, String culture) {
-        Map<String, Object> queryParameters = new HashMap<>();
-        if (autoRename != null) {
-            queryParameters.put("autoRename", autoRename);
-        }
-        if (culture != null) {
-            queryParameters.put("culture", culture);
-        }
+    public CompletableFuture<CreateEntryResult> importDocument(String repoId, Integer parentEntryId, String fileName,
+            Boolean autoRename, String culture, File file, PostEntryWithEdocMetadataRequest requestBody) {
+        Map<String, Object> queryParameters = getNonNullParameters(new String[]{"autoRename", "culture"},
+                new Object[]{autoRename, culture});
+        Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "parentEntryId", "fileName"},
+                new Object[]{repoId, parentEntryId, fileName});
         return httpClient
                 .post(baseUrl + "/v1/Repositories/{repoId}/Entries/{parentEntryId}/{fileName}")
-                .routeParam("repoId", repoId)
-                .routeParam("parentEntryId", String.valueOf(parentEntryId))
-                .routeParam("fileName", fileName)
+                .field("electronicDocument", file)
+                .field("request", toJson(requestBody))
                 .queryString(queryParameters)
-                .contentType("application/json")
-                .body(requestBody)
+                .routeParam(pathParameters)
                 .asObjectAsync(CreateEntryResult.class)
                 .thenApply(httpResponse -> {
                     if (httpResponse.getStatus() == 400) {
@@ -148,6 +143,9 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                     if (httpResponse.getStatus() == 500) {
                         throw new RuntimeException("Document creation is complete failure.");
                     }
+                    if (httpResponse.getStatus() >= 299) {
+                        throw new RuntimeException(httpResponse.getStatusText());
+                    }
                     return httpResponse.getBody();
                 });
     }
@@ -155,27 +153,22 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
     @Override
     public CompletableFuture<ODataValueContextOfIListOfWEntryLinkInfo> getLinkValuesFromEntry(String repoId,
             Integer entryId, String prefer, String select, String orderby, Integer top, Integer skip, Boolean count) {
-        Map<String, Object> queryParameters = new HashMap<>();
-        if (select != null) {
-            queryParameters.put("select", select);
-        }
-        if (orderby != null) {
-            queryParameters.put("orderby", orderby);
-        }
-        if (top != null) {
-            queryParameters.put("top", top);
-        }
-        if (skip != null) {
-            queryParameters.put("skip", skip);
-        }
-        if (count != null) {
-            queryParameters.put("count", count);
-        }
+        return doGetLinkValuesFromEntry(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/links", repoId, entryId,
+                prefer, select, orderby, top, skip, count);
+    }
+
+    private CompletableFuture<ODataValueContextOfIListOfWEntryLinkInfo> doGetLinkValuesFromEntry(String url,
+            String repoId, Integer entryId, String prefer, String select, String orderby, Integer top, Integer skip,
+            Boolean count) {
+        Map<String, Object> queryParameters = getNonNullParameters(
+                new String[]{"$select", "$orderby", "$top", "$skip", "$count"},
+                new Object[]{select, orderby, top, skip, count});
+        Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "entryId"},
+                new Object[]{repoId, entryId});
         return httpClient
-                .get(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/links")
-                .routeParam("repoId", repoId)
-                .routeParam("entryId", String.valueOf(entryId))
+                .get(url)
                 .queryString(queryParameters)
+                .routeParam(pathParameters)
                 .header("prefer", prefer)
                 .asObjectAsync(ODataValueContextOfIListOfWEntryLinkInfo.class)
                 .thenApply(httpResponse -> {
@@ -194,17 +187,28 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                     if (httpResponse.getStatus() == 429) {
                         throw new RuntimeException("Rate limit is reached.");
                     }
+                    if (httpResponse.getStatus() >= 299) {
+                        throw new RuntimeException(httpResponse.getStatusText());
+                    }
                     return httpResponse.getBody();
                 });
     }
 
     @Override
+    public CompletableFuture<ODataValueContextOfIListOfWEntryLinkInfo> getLinkValuesFromEntryNextLink(String nextLink,
+            int maxPageSize) {
+        return doGetLinkValuesFromEntry(nextLink, null, null, mergeMaxSizeIntoPrefer(maxPageSize, null), null, null,
+                null, null, null);
+    }
+
+    @Override
     public CompletableFuture<ODataValueOfIListOfWEntryLinkInfo> assignEntryLinks(String repoId, Integer entryId,
             List<PutLinksRequest> requestBody) {
+        Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "entryId"},
+                new Object[]{repoId, entryId});
         return httpClient
                 .put(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/links")
-                .routeParam("repoId", repoId)
-                .routeParam("entryId", String.valueOf(entryId))
+                .routeParam(pathParameters)
                 .contentType("application/json")
                 .body(requestBody)
                 .asObjectAsync(ODataValueOfIListOfWEntryLinkInfo.class)
@@ -227,6 +231,9 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                     if (httpResponse.getStatus() == 429) {
                         throw new RuntimeException("Rate limit is reached.");
                     }
+                    if (httpResponse.getStatus() >= 299) {
+                        throw new RuntimeException(httpResponse.getStatusText());
+                    }
                     return httpResponse.getBody();
                 });
     }
@@ -234,15 +241,13 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
     @Override
     public CompletableFuture<Entry> writeTemplateValueToEntry(String repoId, Integer entryId,
             PutTemplateRequest requestBody, String culture) {
-        Map<String, Object> queryParameters = new HashMap<>();
-        if (culture != null) {
-            queryParameters.put("culture", culture);
-        }
+        Map<String, Object> queryParameters = getNonNullParameters(new String[]{"culture"}, new Object[]{culture});
+        Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "entryId"},
+                new Object[]{repoId, entryId});
         return httpClient
                 .put(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/template")
-                .routeParam("repoId", repoId)
-                .routeParam("entryId", String.valueOf(entryId))
                 .queryString(queryParameters)
+                .routeParam(pathParameters)
                 .contentType("application/json")
                 .body(requestBody)
                 .asObjectAsync(Entry.class)
@@ -265,16 +270,20 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                     if (httpResponse.getStatus() == 429) {
                         throw new RuntimeException("Rate limit is reached.");
                     }
+                    if (httpResponse.getStatus() >= 299) {
+                        throw new RuntimeException(httpResponse.getStatusText());
+                    }
                     return httpResponse.getBody();
                 });
     }
 
     @Override
     public CompletableFuture<Entry> deleteAssignedTemplate(String repoId, Integer entryId) {
+        Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "entryId"},
+                new Object[]{repoId, entryId});
         return httpClient
                 .delete(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/template")
-                .routeParam("repoId", repoId)
-                .routeParam("entryId", String.valueOf(entryId))
+                .routeParam(pathParameters)
                 .asObjectAsync(Entry.class)
                 .thenApply(httpResponse -> {
                     if (httpResponse.getStatus() == 400) {
@@ -294,6 +303,9 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                     }
                     if (httpResponse.getStatus() == 429) {
                         throw new RuntimeException("Rate limit is reached.");
+                    }
+                    if (httpResponse.getStatus() >= 299) {
+                        throw new RuntimeException(httpResponse.getStatusText());
                     }
                     return httpResponse.getBody();
                 });
@@ -302,10 +314,11 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
     @Override
     public CompletableFuture<File> exportDocumentWithAuditReason(String repoId, Integer entryId,
             GetEdocWithAuditReasonRequest requestBody, String range) {
+        Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "entryId"},
+                new Object[]{repoId, entryId});
         return httpClient
                 .post(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Document/GetEdocWithAuditReason")
-                .routeParam("repoId", repoId)
-                .routeParam("entryId", String.valueOf(entryId))
+                .routeParam(pathParameters)
                 .header("range", range)
                 .contentType("application/json")
                 .body(requestBody)
@@ -329,16 +342,20 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                     if (httpResponse.getStatus() == 429) {
                         throw new RuntimeException("Rate limit is reached.");
                     }
+                    if (httpResponse.getStatus() >= 299) {
+                        throw new RuntimeException(httpResponse.getStatusText());
+                    }
                     return httpResponse.getBody();
                 });
     }
 
     @Override
     public CompletableFuture<File> exportDocument(String repoId, Integer entryId, String range) {
+        Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "entryId"},
+                new Object[]{repoId, entryId});
         return httpClient
                 .get(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Document/edoc")
-                .routeParam("repoId", repoId)
-                .routeParam("entryId", String.valueOf(entryId))
+                .routeParam(pathParameters)
                 .header("range", range)
                 .asObjectAsync(File.class)
                 .thenApply(httpResponse -> {
@@ -360,16 +377,20 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                     if (httpResponse.getStatus() == 429) {
                         throw new RuntimeException("Rate limit is reached.");
                     }
+                    if (httpResponse.getStatus() >= 299) {
+                        throw new RuntimeException(httpResponse.getStatusText());
+                    }
                     return httpResponse.getBody();
                 });
     }
 
     @Override
     public CompletableFuture<ODataValueOfBoolean> deleteDocument(String repoId, Integer entryId) {
+        Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "entryId"},
+                new Object[]{repoId, entryId});
         return httpClient
                 .delete(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Document/edoc")
-                .routeParam("repoId", repoId)
-                .routeParam("entryId", String.valueOf(entryId))
+                .routeParam(pathParameters)
                 .asObjectAsync(ODataValueOfBoolean.class)
                 .thenApply(httpResponse -> {
                     if (httpResponse.getStatus() == 400) {
@@ -389,6 +410,9 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                     }
                     if (httpResponse.getStatus() == 429) {
                         throw new RuntimeException("Rate limit is reached.");
+                    }
+                    if (httpResponse.getStatus() >= 299) {
+                        throw new RuntimeException(httpResponse.getStatusText());
                     }
                     return httpResponse.getBody();
                 });
@@ -396,15 +420,13 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override
     public CompletableFuture<ODataValueOfBoolean> deletePages(String repoId, Integer entryId, String pageRange) {
-        Map<String, Object> queryParameters = new HashMap<>();
-        if (pageRange != null) {
-            queryParameters.put("pageRange", pageRange);
-        }
+        Map<String, Object> queryParameters = getNonNullParameters(new String[]{"pageRange"}, new Object[]{pageRange});
+        Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "entryId"},
+                new Object[]{repoId, entryId});
         return httpClient
                 .delete(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Document/pages")
-                .routeParam("repoId", repoId)
-                .routeParam("entryId", String.valueOf(entryId))
                 .queryString(queryParameters)
+                .routeParam(pathParameters)
                 .asObjectAsync(ODataValueOfBoolean.class)
                 .thenApply(httpResponse -> {
                     if (httpResponse.getStatus() == 400) {
@@ -424,6 +446,9 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                     }
                     if (httpResponse.getStatus() == 429) {
                         throw new RuntimeException("Rate limit is reached.");
+                    }
+                    if (httpResponse.getStatus() >= 299) {
+                        throw new RuntimeException(httpResponse.getStatusText());
                     }
                     return httpResponse.getBody();
                 });
@@ -433,39 +458,23 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
     public CompletableFuture<ODataValueContextOfIListOfEntry> getEntryListing(String repoId, Integer entryId,
             Boolean groupByEntryType, String[] fields, Boolean formatFields, String prefer, String culture,
             String select, String orderby, Integer top, Integer skip, Boolean count) {
-        Map<String, Object> queryParameters = new HashMap<>();
-        if (groupByEntryType != null) {
-            queryParameters.put("groupByEntryType", groupByEntryType);
-        }
-        if (fields != null) {
-            queryParameters.put("fields", fields);
-        }
-        if (formatFields != null) {
-            queryParameters.put("formatFields", formatFields);
-        }
-        if (culture != null) {
-            queryParameters.put("culture", culture);
-        }
-        if (select != null) {
-            queryParameters.put("select", select);
-        }
-        if (orderby != null) {
-            queryParameters.put("orderby", orderby);
-        }
-        if (top != null) {
-            queryParameters.put("top", top);
-        }
-        if (skip != null) {
-            queryParameters.put("skip", skip);
-        }
-        if (count != null) {
-            queryParameters.put("count", count);
-        }
+        return doGetEntryListing(
+                baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Folder/children", repoId,
+                entryId, groupByEntryType, fields, formatFields, prefer, culture, select, orderby, top, skip, count);
+    }
+
+    private CompletableFuture<ODataValueContextOfIListOfEntry> doGetEntryListing(String url, String repoId,
+            Integer entryId, Boolean groupByEntryType, String[] fields, Boolean formatFields, String prefer,
+            String culture, String select, String orderby, Integer top, Integer skip, Boolean count) {
+        Map<String, Object> queryParameters = getNonNullParameters(
+                new String[]{"groupByEntryType", "fields", "formatFields", "culture", "$select", "$orderby", "$top", "$skip", "$count"},
+                new Object[]{groupByEntryType, fields, formatFields, culture, select, orderby, top, skip, count});
+        Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "entryId"},
+                new Object[]{repoId, entryId});
         return httpClient
-                .get(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Folder/children")
-                .routeParam("repoId", repoId)
-                .routeParam("entryId", String.valueOf(entryId))
+                .get(url)
                 .queryString(queryParameters)
+                .routeParam(pathParameters)
                 .header("prefer", prefer)
                 .asObjectAsync(ODataValueContextOfIListOfEntry.class)
                 .thenApply(httpResponse -> {
@@ -484,25 +493,31 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                     if (httpResponse.getStatus() == 429) {
                         throw new RuntimeException("Rate limit is reached.");
                     }
+                    if (httpResponse.getStatus() >= 299) {
+                        throw new RuntimeException(httpResponse.getStatusText());
+                    }
                     return httpResponse.getBody();
                 });
     }
 
     @Override
+    public CompletableFuture<ODataValueContextOfIListOfEntry> getEntryListingNextLink(String nextLink,
+            int maxPageSize) {
+        return doGetEntryListing(nextLink, null, null, null, null, null, mergeMaxSizeIntoPrefer(maxPageSize, null),
+                null, null, null, null, null, null);
+    }
+
+    @Override
     public CompletableFuture<Entry> createOrCopyEntry(String repoId, Integer entryId,
             PostEntryChildrenRequest requestBody, Boolean autoRename, String culture) {
-        Map<String, Object> queryParameters = new HashMap<>();
-        if (autoRename != null) {
-            queryParameters.put("autoRename", autoRename);
-        }
-        if (culture != null) {
-            queryParameters.put("culture", culture);
-        }
+        Map<String, Object> queryParameters = getNonNullParameters(new String[]{"autoRename", "culture"},
+                new Object[]{autoRename, culture});
+        Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "entryId"},
+                new Object[]{repoId, entryId});
         return httpClient
                 .post(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Folder/children")
-                .routeParam("repoId", repoId)
-                .routeParam("entryId", String.valueOf(entryId))
                 .queryString(queryParameters)
+                .routeParam(pathParameters)
                 .contentType("application/json")
                 .body(requestBody)
                 .asObjectAsync(Entry.class)
@@ -525,6 +540,9 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                     if (httpResponse.getStatus() == 429) {
                         throw new RuntimeException("Rate limit is reached.");
                     }
+                    if (httpResponse.getStatus() >= 299) {
+                        throw new RuntimeException(httpResponse.getStatusText());
+                    }
                     return httpResponse.getBody();
                 });
     }
@@ -532,10 +550,11 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
     @Override
     public CompletableFuture<Map<String, String[]>> getDynamicFieldValues(String repoId, Integer entryId,
             GetDynamicFieldLogicValueRequest requestBody) {
+        Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "entryId"},
+                new Object[]{repoId, entryId});
         return httpClient
                 .post(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/fields/GetDynamicFieldLogicValue")
-                .routeParam("repoId", repoId)
-                .routeParam("entryId", String.valueOf(entryId))
+                .routeParam(pathParameters)
                 .contentType("application/json")
                 .body(requestBody)
                 .asObjectAsync((new HashMap<String, String[]>()).getClass())
@@ -555,6 +574,9 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                     if (httpResponse.getStatus() == 429) {
                         throw new RuntimeException("Rate limit is reached.");
                     }
+                    if (httpResponse.getStatus() >= 299) {
+                        throw new RuntimeException(httpResponse.getStatusText());
+                    }
                     return httpResponse.getBody();
                 });
     }
@@ -562,18 +584,14 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
     @Override
     public CompletableFuture<AcceptedOperation> copyEntryAsync(String repoId, Integer entryId,
             CopyAsyncRequest requestBody, Boolean autoRename, String culture) {
-        Map<String, Object> queryParameters = new HashMap<>();
-        if (autoRename != null) {
-            queryParameters.put("autoRename", autoRename);
-        }
-        if (culture != null) {
-            queryParameters.put("culture", culture);
-        }
+        Map<String, Object> queryParameters = getNonNullParameters(new String[]{"autoRename", "culture"},
+                new Object[]{autoRename, culture});
+        Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "entryId"},
+                new Object[]{repoId, entryId});
         return httpClient
                 .post(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Folder/CopyAsync")
-                .routeParam("repoId", repoId)
-                .routeParam("entryId", String.valueOf(entryId))
                 .queryString(queryParameters)
+                .routeParam(pathParameters)
                 .contentType("application/json")
                 .body(requestBody)
                 .asObjectAsync(AcceptedOperation.class)
@@ -590,6 +608,9 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                     if (httpResponse.getStatus() == 429) {
                         throw new RuntimeException("Operation limit or request limit reached.");
                     }
+                    if (httpResponse.getStatus() >= 299) {
+                        throw new RuntimeException(httpResponse.getStatusText());
+                    }
                     return httpResponse.getBody();
                 });
     }
@@ -597,27 +618,21 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
     @Override
     public CompletableFuture<ODataValueContextOfIListOfWTagInfo> getTagsAssignedToEntry(String repoId, Integer entryId,
             String prefer, String select, String orderby, Integer top, Integer skip, Boolean count) {
-        Map<String, Object> queryParameters = new HashMap<>();
-        if (select != null) {
-            queryParameters.put("select", select);
-        }
-        if (orderby != null) {
-            queryParameters.put("orderby", orderby);
-        }
-        if (top != null) {
-            queryParameters.put("top", top);
-        }
-        if (skip != null) {
-            queryParameters.put("skip", skip);
-        }
-        if (count != null) {
-            queryParameters.put("count", count);
-        }
+        return doGetTagsAssignedToEntry(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/tags", repoId, entryId,
+                prefer, select, orderby, top, skip, count);
+    }
+
+    private CompletableFuture<ODataValueContextOfIListOfWTagInfo> doGetTagsAssignedToEntry(String url, String repoId,
+            Integer entryId, String prefer, String select, String orderby, Integer top, Integer skip, Boolean count) {
+        Map<String, Object> queryParameters = getNonNullParameters(
+                new String[]{"$select", "$orderby", "$top", "$skip", "$count"},
+                new Object[]{select, orderby, top, skip, count});
+        Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "entryId"},
+                new Object[]{repoId, entryId});
         return httpClient
-                .get(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/tags")
-                .routeParam("repoId", repoId)
-                .routeParam("entryId", String.valueOf(entryId))
+                .get(url)
                 .queryString(queryParameters)
+                .routeParam(pathParameters)
                 .header("prefer", prefer)
                 .asObjectAsync(ODataValueContextOfIListOfWTagInfo.class)
                 .thenApply(httpResponse -> {
@@ -636,17 +651,28 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                     if (httpResponse.getStatus() == 429) {
                         throw new RuntimeException("Rate limit is reached.");
                     }
+                    if (httpResponse.getStatus() >= 299) {
+                        throw new RuntimeException(httpResponse.getStatusText());
+                    }
                     return httpResponse.getBody();
                 });
     }
 
     @Override
+    public CompletableFuture<ODataValueContextOfIListOfWTagInfo> getTagsAssignedToEntryNextLink(String nextLink,
+            int maxPageSize) {
+        return doGetTagsAssignedToEntry(nextLink, null, null, mergeMaxSizeIntoPrefer(maxPageSize, null), null, null,
+                null, null, null);
+    }
+
+    @Override
     public CompletableFuture<ODataValueOfIListOfWTagInfo> assignTags(String repoId, Integer entryId,
             PutTagRequest requestBody) {
+        Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "entryId"},
+                new Object[]{repoId, entryId});
         return httpClient
                 .put(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/tags")
-                .routeParam("repoId", repoId)
-                .routeParam("entryId", String.valueOf(entryId))
+                .routeParam(pathParameters)
                 .contentType("application/json")
                 .body(requestBody)
                 .asObjectAsync(ODataValueOfIListOfWTagInfo.class)
@@ -669,21 +695,22 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                     if (httpResponse.getStatus() == 429) {
                         throw new RuntimeException("Rate limit is reached.");
                     }
+                    if (httpResponse.getStatus() >= 299) {
+                        throw new RuntimeException(httpResponse.getStatusText());
+                    }
                     return httpResponse.getBody();
                 });
     }
 
     @Override
     public CompletableFuture<Entry> getEntry(String repoId, Integer entryId, String select) {
-        Map<String, Object> queryParameters = new HashMap<>();
-        if (select != null) {
-            queryParameters.put("select", select);
-        }
+        Map<String, Object> queryParameters = getNonNullParameters(new String[]{"$select"}, new Object[]{select});
+        Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "entryId"},
+                new Object[]{repoId, entryId});
         return httpClient
                 .get(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}")
-                .routeParam("repoId", repoId)
-                .routeParam("entryId", String.valueOf(entryId))
                 .queryString(queryParameters)
+                .routeParam(pathParameters)
                 .asObjectAsync(Entry.class)
                 .thenApply(httpResponse -> {
                     if (httpResponse.getStatus() == 400) {
@@ -701,6 +728,9 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                     if (httpResponse.getStatus() == 429) {
                         throw new RuntimeException("Rate limit is reached.");
                     }
+                    if (httpResponse.getStatus() >= 299) {
+                        throw new RuntimeException(httpResponse.getStatusText());
+                    }
                     return httpResponse.getBody();
                 });
     }
@@ -708,18 +738,14 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
     @Override
     public CompletableFuture<Entry> moveOrRenameDocument(String repoId, Integer entryId, PatchEntryRequest requestBody,
             Boolean autoRename, String culture) {
-        Map<String, Object> queryParameters = new HashMap<>();
-        if (autoRename != null) {
-            queryParameters.put("autoRename", autoRename);
-        }
-        if (culture != null) {
-            queryParameters.put("culture", culture);
-        }
+        Map<String, Object> queryParameters = getNonNullParameters(new String[]{"autoRename", "culture"},
+                new Object[]{autoRename, culture});
+        Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "entryId"},
+                new Object[]{repoId, entryId});
         return httpClient
                 .patch(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}")
-                .routeParam("repoId", repoId)
-                .routeParam("entryId", String.valueOf(entryId))
                 .queryString(queryParameters)
+                .routeParam(pathParameters)
                 .contentType("application/json")
                 .body(requestBody)
                 .asObjectAsync(Entry.class)
@@ -745,6 +771,9 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                     if (httpResponse.getStatus() == 429) {
                         throw new RuntimeException("Rate limit is reached.");
                     }
+                    if (httpResponse.getStatus() >= 299) {
+                        throw new RuntimeException(httpResponse.getStatusText());
+                    }
                     return httpResponse.getBody();
                 });
     }
@@ -752,10 +781,11 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
     @Override
     public CompletableFuture<AcceptedOperation> deleteEntryInfo(String repoId, Integer entryId,
             DeleteEntryWithAuditReason requestBody) {
+        Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "entryId"},
+                new Object[]{repoId, entryId});
         return httpClient
                 .delete(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}")
-                .routeParam("repoId", repoId)
-                .routeParam("entryId", String.valueOf(entryId))
+                .routeParam(pathParameters)
                 .contentType("application/json")
                 .body(requestBody)
                 .asObjectAsync(AcceptedOperation.class)
@@ -771,6 +801,9 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                     }
                     if (httpResponse.getStatus() == 429) {
                         throw new RuntimeException("Operation limit or request limit reached.");
+                    }
+                    if (httpResponse.getStatus() >= 299) {
+                        throw new RuntimeException(httpResponse.getStatusText());
                     }
                     return httpResponse.getBody();
                 });

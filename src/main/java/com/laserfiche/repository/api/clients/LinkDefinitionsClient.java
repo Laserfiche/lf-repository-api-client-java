@@ -35,4 +35,7 @@ public interface LinkDefinitionsClient {
      */
     CompletableFuture<ODataValueContextOfIListOfEntryLinkTypeInfo> getLinkDefinitions(String repoId, String prefer,
             String select, String orderby, Integer top, Integer skip, Boolean count);
+
+    CompletableFuture<ODataValueContextOfIListOfEntryLinkTypeInfo> getLinkDefinitionsNextLink(String nextLink,
+            int maxPageSize);
 }
