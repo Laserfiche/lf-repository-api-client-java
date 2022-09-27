@@ -105,9 +105,6 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
     }
 
     @Override
-    public ServerSessionClient getServerSessionClient() { return serverSessionClient; }
-
-    @Override
     public SimpleSearchesClient getSimpleSearchesClient() {
         return simpleSearchesClient;
     }
