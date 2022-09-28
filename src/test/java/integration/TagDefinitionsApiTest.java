@@ -52,34 +52,6 @@ class TagDefinitionsApiTest extends BaseTest {
     }
 
     @Test
-    void getTagDefinitions_ForEach() throws InterruptedException {
-        ODataValueContextOfIListOfWTagInfo tagInfoList = client
-                .getTagDefinitions(repoId, null, null, null, null, null, null, false)
-                .join();
-
-        assertNotNull(tagInfoList);
-
-        TimeUnit.SECONDS.sleep(10);
-
-        int maxPageSize = 90;
-        Function<CompletableFuture<ODataValueContextOfIListOfWTagInfo>, CompletableFuture<Boolean>> callback = data -> {
-            ODataValueContextOfIListOfWTagInfo result = data.join();
-            if (result._atOdataNextLink != null) {
-                assertNotEquals(0, result.value.size());
-                assertTrue(result.value.size() <= maxPageSize);
-                return CompletableFuture.completedFuture(true);
-            } else {
-                return CompletableFuture.completedFuture(false);
-            }
-        };
-        try {
-            client.getTagDefinitionsForEach(callback, maxPageSize, repoId, null, null, null, null, null, null, null);
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Test
     void getTagDefinitionById_ReturnTag() {
         ODataValueContextOfIListOfWTagInfo tagInfoList = client
                 .getTagDefinitions(repoId, null, null, null, null, null, null, false)

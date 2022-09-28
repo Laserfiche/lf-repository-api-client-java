@@ -66,34 +66,6 @@ class EntriesApiTest extends BaseTest {
     }
 
     @Test
-    void getEntryListing_ForEach() throws InterruptedException {
-        ODataValueContextOfIListOfEntry entryList = client
-                .getEntryListing(repoId, 1, false, null, false, null, null, null, null, null, null, false)
-                .join();
-
-        assertNotNull(entryList);
-
-        TimeUnit.SECONDS.sleep(10);
-
-        int maxPageSize = 90;
-        Function<CompletableFuture<ODataValueContextOfIListOfEntry>, CompletableFuture<Boolean>> callback = data -> {
-            ODataValueContextOfIListOfEntry futureResult = data.join();
-            if (futureResult.getAtOdataNextLink() != null) {
-                assertNotEquals(0, futureResult.getValue().size());
-                assertTrue(futureResult.getValue().size() <= maxPageSize);
-                return CompletableFuture.completedFuture(true);
-            } else {
-                return CompletableFuture.completedFuture(false);
-            }
-        };
-        try {
-            client.getEntryListingForEach(callback, maxPageSize, repoId, null, null, null, null, null, null, null, null, null, null, null);
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Test
     void getFieldValues_ReturnFields() {
         ODataValueContextOfIListOfFieldValue fieldValueList = client
                 .getFieldValues(repoId, 1, null, null, null, null, null, null, null, false)
@@ -124,34 +96,6 @@ class EntriesApiTest extends BaseTest {
     }
 
     @Test
-    void getFieldValues_ForEach() throws InterruptedException {
-        ODataValueContextOfIListOfFieldValue fieldValueList = client
-                .getFieldValues(repoId, 1, null, null, null, null, null, null, null, false)
-                .join();
-
-        assertNotNull(fieldValueList);
-
-        TimeUnit.SECONDS.sleep(10);
-
-        int maxPageSize = 90;
-        Function<CompletableFuture<ODataValueContextOfIListOfFieldValue>, CompletableFuture<Boolean>> callback = data -> {
-            ODataValueContextOfIListOfFieldValue futureResult = data.join();
-            if (futureResult.getAtOdataNextLink() != null) {
-                assertNotEquals(0, futureResult.getValue().size());
-                assertTrue(futureResult.getValue().size() <= maxPageSize);
-                return CompletableFuture.completedFuture(true);
-            } else {
-                return CompletableFuture.completedFuture(false);
-            }
-        };
-        try {
-            client.getFieldValuesForEach(callback, maxPageSize, repoId, null, null, null, null, null, null, null, null, null);
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Test
     void getLinkValuesFromEntry_ReturnLinks() {
         ODataValueContextOfIListOfWEntryLinkInfo linkInfoList = client
                 .getLinkValuesFromEntry(repoId, 1, null, null, null, null, null, false)
@@ -179,34 +123,6 @@ class EntriesApiTest extends BaseTest {
         ODataValueContextOfIListOfWEntryLinkInfo nextLinkResult = nextLinkResponse.join();
         assertNotNull(nextLinkResult);
         assertTrue(nextLinkResult.getValue().size() <= maxPageSize);
-    }
-
-    @Test
-    void getLinkValuesFromEntry_ForEach() throws InterruptedException {
-        ODataValueContextOfIListOfWEntryLinkInfo linkInfoList = client
-                .getLinkValuesFromEntry(repoId, 1, null, null, null, null, null, false)
-                .join();
-
-        assertNotNull(linkInfoList);
-
-        TimeUnit.SECONDS.sleep(10);
-
-        int maxPageSize = 90;
-        Function<CompletableFuture<ODataValueContextOfIListOfWEntryLinkInfo>, CompletableFuture<Boolean>> callback = data -> {
-            ODataValueContextOfIListOfWEntryLinkInfo futureResult = data.join();
-            if (futureResult.getAtOdataNextLink() != null) {
-                assertNotEquals(0, futureResult.getValue().size());
-                assertTrue(futureResult.getValue().size() <= maxPageSize);
-                return CompletableFuture.completedFuture(true);
-            } else {
-                return CompletableFuture.completedFuture(false);
-            }
-        };
-        try {
-            client.getLinkValuesFromEntryForEach(callback, maxPageSize, repoId, null, null, null, null, null, null, null);
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
     }
 
     @Test
@@ -242,34 +158,6 @@ class EntriesApiTest extends BaseTest {
         ODataValueContextOfIListOfWTagInfo nextLinkResult = nextLinkResponse.join();
         assertNotNull(nextLinkResult);
         assertTrue(nextLinkResult.getValue().size() <= maxPageSize);
-    }
-
-    @Test
-    void getTagsAssignedToEntry_ForEach() throws InterruptedException {
-        ODataValueContextOfIListOfWTagInfo tagInfoList = client
-                .getTagsAssignedToEntry(repoId, 1, null, null, null, null, null, false)
-                .join();
-
-        assertNotNull(tagInfoList);
-
-        TimeUnit.SECONDS.sleep(10);
-
-        int maxPageSize = 90;
-        Function<CompletableFuture<ODataValueContextOfIListOfWTagInfo>, CompletableFuture<Boolean>> callback = data -> {
-            ODataValueContextOfIListOfWTagInfo futureResult = data.join();
-            if (futureResult.getAtOdataNextLink() != null) {
-                assertNotEquals(0, futureResult.getValue().size());
-                assertTrue(futureResult.getValue().size() <= maxPageSize);
-                return CompletableFuture.completedFuture(true);
-            } else {
-                return CompletableFuture.completedFuture(false);
-            }
-        };
-        try {
-            client.getTagsAssignedToEntryForEach(callback, maxPageSize, repoId, null, null, null, null, null, null, null);
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
     }
 
     @Test
