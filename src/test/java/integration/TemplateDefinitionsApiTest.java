@@ -55,34 +55,6 @@ class TemplateDefinitionsApiTest extends BaseTest {
     }
 
     @Test
-    void getTemplateDefinitions_ForEach() throws InterruptedException {
-        ODataValueContextOfIListOfWTemplateInfo templateInfoList = client
-                .getTemplateDefinitions(repoId, null, null, null, null, null, null, null, false)
-                .join();
-
-        assertNotNull(templateInfoList);
-
-        TimeUnit.SECONDS.sleep(10);
-
-        int maxPageSize = 90;
-        Function<CompletableFuture<ODataValueContextOfIListOfWTemplateInfo>, CompletableFuture<Boolean>> callback = data -> {
-            ODataValueContextOfIListOfWTemplateInfo result = data.join();
-            if (result.getAtOdataNextLink() != null) {
-                assertNotEquals(0, result.getValue().size());
-                assertTrue(result.getValue().size() <= maxPageSize);
-                return CompletableFuture.completedFuture(true);
-            } else {
-                return CompletableFuture.completedFuture(false);
-            }
-        };
-        try {
-            client.getTemplateDefinitionsForEach(callback, maxPageSize, repoId, null, null, null, null, null, null, null, null);
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Test
     void getTemplateDefinitionsFields_ReturnTemplateFields() {
         ODataValueContextOfIListOfWTemplateInfo templateInfoList = client
                 .getTemplateDefinitions(repoId, null, null, null, null, null, null, null, false)
@@ -128,43 +100,6 @@ class TemplateDefinitionsApiTest extends BaseTest {
         ODataValueContextOfIListOfTemplateFieldInfo nextLinkResult = nextLinkResponse.join();
         assertNotNull(nextLinkResult);
         assertTrue(nextLinkResult.getValue().size() <= maxPageSize);
-    }
-
-    @Test
-    void getTemplateDefinitionsFields_ForEach() throws InterruptedException {
-        ODataValueContextOfIListOfWTemplateInfo templateInfoList = client
-                .getTemplateDefinitions(repoId, null, null, null, null, null, null, null, false)
-                .join();
-
-        WTemplateInfo tempDef = templateInfoList.getValue().get(0);
-
-        assertNotNull(templateInfoList);
-
-        ODataValueContextOfIListOfTemplateFieldInfo result = client
-                .getTemplateFieldDefinitions(repoId, tempDef.getId(), null, null, null, null, null, null, false)
-                .join();
-
-        assertNotNull(result);
-        Assertions.assertSame(result.getValue().size(), tempDef.getFieldCount());
-
-        TimeUnit.SECONDS.sleep(10);
-
-        int maxPageSize = 90;
-        Function<CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo>, CompletableFuture<Boolean>> callback = data -> {
-            ODataValueContextOfIListOfTemplateFieldInfo futureResult = data.join();
-            if (futureResult.getAtOdataNextLink() != null) {
-                assertNotEquals(0, futureResult.getValue().size());
-                assertTrue(futureResult.getValue().size() <= maxPageSize);
-                return CompletableFuture.completedFuture(true);
-            } else {
-                return CompletableFuture.completedFuture(false);
-            }
-        };
-        try {
-            client.getTemplateFieldDefinitionsForEach(callback, maxPageSize, repoId, null, null, null, null, null, null, null, null);
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
     }
 
     @Test

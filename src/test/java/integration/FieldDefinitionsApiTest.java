@@ -59,32 +59,4 @@ class FieldDefinitionsApiTest extends BaseTest {
         assertNotNull(nextLinkResult);
         assertTrue(nextLinkResult.getValue().size() <= maxPageSize);
     }
-
-    @Test
-    void getFieldDefinitions_ForEach() throws InterruptedException {
-        ODataValueContextOfIListOfWFieldInfo fieldInfoList = client
-                .getFieldDefinitions(repoId, null, null, null, null, null, null, false)
-                .join();
-
-        assertNotNull(fieldInfoList);
-
-        TimeUnit.SECONDS.sleep(10);
-
-        int maxPageSize = 90;
-        Function<CompletableFuture<ODataValueContextOfIListOfWFieldInfo>, CompletableFuture<Boolean>> callback = data -> {
-            ODataValueContextOfIListOfWFieldInfo result = data.join();
-            if (result.getAtOdataNextLink() != null) {
-                assertNotEquals(0, result.getValue().size());
-                assertTrue(result.getValue().size() <= maxPageSize);
-                return CompletableFuture.completedFuture(true);
-            } else {
-                return CompletableFuture.completedFuture(false);
-            }
-        };
-        try {
-            client.getFieldDefinitionsForEach(callback, maxPageSize, repoId,null, null, null, null, null, null, null);
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-    }
 }
