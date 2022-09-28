@@ -38,17 +38,21 @@ class TagDefinitionsApiTest extends BaseTest {
 
         assertNotNull(tagInfoList);
 
-        String nextLink = tagInfoList._atOdataNextLink;
+        String nextLink = tagInfoList.getAtOdataNextLink();
         assertNotNull(nextLink);
         int maxPageSize = 1;
-        assertTrue(tagInfoList.value.size() <= maxPageSize);
+        assertTrue(tagInfoList
+                .getValue()
+                .size() <= maxPageSize);
 
         CompletableFuture<ODataValueContextOfIListOfWTagInfo> nextLinkResponse = client.getTagDefinitionsNextLink(nextLink, maxPageSize);
         assertNotNull(nextLinkResponse);
         TimeUnit.SECONDS.sleep(10);
         ODataValueContextOfIListOfWTagInfo nextLinkResult = nextLinkResponse.join();
         assertNotNull(nextLinkResult);
-        assertTrue(nextLinkResult.value.size() <= maxPageSize);
+        assertTrue(nextLinkResult
+                .getValue()
+                .size() <= maxPageSize);
     }
 
     @Test
@@ -60,7 +64,10 @@ class TagDefinitionsApiTest extends BaseTest {
         assertNotNull(tagInfoList);
 
         WTagInfo tagInfo = client
-                .getTagDefinitionById(repoId, tagInfoList.value.get(0).id, null, null)
+                .getTagDefinitionById(repoId, tagInfoList
+                        .getValue()
+                        .get(0)
+                        .getId(), null, null)
                 .join();
 
         assertNotNull(tagInfo);

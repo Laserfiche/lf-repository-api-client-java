@@ -13,7 +13,7 @@ class SimpleSearchesApiTest extends BaseTest {
         SimpleSearchesClient client = repositoryApiClient.getSimpleSearchesClient();
 
         SimpleSearchRequest searchRequest = new SimpleSearchRequest();
-        searchRequest.searchCommand = "({LF:Basic ~= \"search text\", option=\"DFANLT\"})";
+        searchRequest.setSearchCommand("({LF:Basic ~= \"search text\", option=\"DFANLT\"})");
 
         ODataValueOfIListOfEntry entryList = client
                 .createSimpleSearchOperation(null, null, null, repoId, null, null, searchRequest, null)

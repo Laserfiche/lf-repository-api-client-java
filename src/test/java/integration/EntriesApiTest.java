@@ -131,7 +131,7 @@ class EntriesApiTest extends BaseTest {
                 "RepositoryApiClientIntegrationTest Java DeleteFolder", 1, true)
                 .join();
 
-        CompletableFuture<AcceptedOperation> deleteEntryResponse = client.deleteEntryInfo(repoId, entryToDelete.id,
+        CompletableFuture<AcceptedOperation> deleteEntryResponse = client.deleteEntryInfo(repoId, entryToDelete.getId(),
                 new DeleteEntryWithAuditReason());
 
         String token = deleteEntryResponse.join().getToken();
