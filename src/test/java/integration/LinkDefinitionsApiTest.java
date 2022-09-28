@@ -3,7 +3,6 @@ package integration;
 import com.laserfiche.repository.api.clients.LinkDefinitionsClient;
 import com.laserfiche.repository.api.clients.impl.model.EntryLinkTypeInfo;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfEntryLinkTypeInfo;
-import com.laserfiche.repository.api.clients.impl.model.ODataValueOfBoolean;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
