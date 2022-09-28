@@ -19,19 +19,19 @@ public class SearchApiTest extends BaseTest {
     private String searchToken = "";
 
     @BeforeEach
-    void PerTestSetup() {
+    void perTestSetup() {
         client = repositoryApiClient.getSearchesClient();
     }
 
     @AfterEach
-    void cancelCloseSearch_Success() {
+    void cancelCloseSearch() {
         if (searchToken != null) {
             client.cancelOrCloseSearch(repoId, searchToken);
         }
     }
 
     @Test
-    void getSearchContextHits_Success() throws InterruptedException {
+    void getSearchContextHits_ReturnContextHits() throws InterruptedException {
         AdvancedSearchRequest request = new AdvancedSearchRequest();
         request.searchCommand = "({LF:Basic ~= \"*\", option=\"DFANLT\"})";
         request.fuzzyFactor = 2;
@@ -57,31 +57,29 @@ public class SearchApiTest extends BaseTest {
     }
 
     @Test
-    void getSearchResults_Success() throws InterruptedException {
+    void getSearchResults_ReturnSearchResults() throws InterruptedException {
         AdvancedSearchRequest request = new AdvancedSearchRequest();
         request.searchCommand = "({LF:Basic ~= \"search text\", option=\"DFANLT\"})";
 
         CompletableFuture<AcceptedOperation> searchResponse = client.createSearchOperation(repoId, request);
 
-        String searchToken = searchResponse.join().token;
+        searchToken = searchResponse.join().token;
 
         assertNotNull(searchToken);
 
         TimeUnit.SECONDS.sleep(5);
 
         CompletableFuture<ODataValueContextOfIListOfEntry> searchResultResponse = client.getSearchResults(repoId, searchToken, null, null, null, null, null, null, null, null, null, null, null);
-
         assertNotNull(searchResultResponse.join());
     }
 
     @Test
-    //@Disabled("Weird Exception Thrown")
-    void getSearchStatus_Success() throws InterruptedException {
+    void getSearchStatus_ReturnSearchStatus() throws InterruptedException {
         AdvancedSearchRequest request = new AdvancedSearchRequest();
         request.searchCommand = "({LF:Basic ~= \"search text\", option=\"DFANLT\"})";
 
         AcceptedOperation searchResponse = client.createSearchOperation(repoId, request).join();
-        String searchToken = searchResponse.token;
+        searchToken = searchResponse.token;
 
         assertNotNull(searchToken);
 
@@ -93,13 +91,13 @@ public class SearchApiTest extends BaseTest {
     }
 
     @Test
-    void closeSearchOperations_Success() {
+    void closeSearchOperations_CloseSearch() {
         AdvancedSearchRequest request = new AdvancedSearchRequest();
         request.searchCommand = "({LF:Basic ~= \"search text\", option=\"DFANLT\"})";
 
         AcceptedOperation searchOperationResponse = client.createSearchOperation(repoId, request).join();
 
-        String searchToken = searchOperationResponse.token;
+        searchToken = searchOperationResponse.token;
 
         assertNotNull(searchToken);
 
@@ -113,18 +111,17 @@ public class SearchApiTest extends BaseTest {
         int maxPageSize = 1;
 
         AdvancedSearchRequest request = new AdvancedSearchRequest();
-        request.searchCommand = "({LF:Basic ~= \\\"search text\\\", option=\\\"DFANLT\\\"})";
+        request.searchCommand = "({LF:Basic ~= \"search text\", option=\"NLT\"})";
 
-        AcceptedOperation searchOperationResponse = client.createSearchOperation(repoId, request).join();
+        CompletableFuture<AcceptedOperation> searchResponse = client.createSearchOperation(repoId, request);
 
-        String searchToken = searchOperationResponse.token;
+        searchToken = searchResponse.join().token;
         assertTrue(searchToken != null && !searchToken.trim().isEmpty());
 
-        TimeUnit.SECONDS.sleep(100);
+        TimeUnit.SECONDS.sleep(10);
 
         CompletableFuture<ODataValueContextOfIListOfEntry> searchResultResponse = client.getSearchResults(repoId, searchToken, null, null, null, null, String.format("maxpagesize=%d", maxPageSize), null, null, null, null, null, null);
         ODataValueContextOfIListOfEntry searchResults = searchResultResponse.join();
-
         assertNotNull(searchResults);
         if (searchResults.value.isEmpty()) {
             return; // There's no point testing if we don't have any such item.
@@ -136,8 +133,6 @@ public class SearchApiTest extends BaseTest {
 
         // Paging request
         searchResultResponse = client.getSearchResultsNextLink(nextLink, maxPageSize);
-        assertNotNull(searchResultResponse);
-        TimeUnit.SECONDS.sleep(10);
         searchResults = searchResultResponse.join();
         assertNotNull(searchResults);
         assertTrue(searchResults.value.size() <= maxPageSize);
@@ -148,11 +143,11 @@ public class SearchApiTest extends BaseTest {
         int maxPageSize = 90;
 
         AdvancedSearchRequest request = new AdvancedSearchRequest();
-        request.searchCommand = "({LF:Basic ~= \\\"search text\\\", option=\\\"DFANLT\\\"})";
+        request.searchCommand = "({LF:Basic ~= \"search text\", option=\"NLT\"})";
 
         AcceptedOperation searchOperationResponse = client.createSearchOperation(repoId, request).join();
 
-        String searchToken = searchOperationResponse.token;
+        searchToken = searchOperationResponse.token;
         assertTrue(searchToken != null && !searchToken.trim().isEmpty());
 
         TimeUnit.SECONDS.sleep(10);
@@ -188,7 +183,7 @@ public class SearchApiTest extends BaseTest {
 
         TimeUnit.SECONDS.sleep(5);
 
-        CompletableFuture<ODataValueContextOfIListOfEntry> searchResultResponse = client.getSearchResults(repoId, searchToken, null, null, null, null, null, null, null, null, null, null, null);
+        CompletableFuture<ODataValueContextOfIListOfEntry> searchResultResponse = client.getSearchResults(repoId, searchToken, null, null, null, null, String.format("maxpagesize=%d", maxPageSize), null, null, null, null, null, null);
         ODataValueContextOfIListOfEntry searchResults = searchResultResponse.join();
 
         assertNotNull(searchResults);
@@ -227,7 +222,7 @@ public class SearchApiTest extends BaseTest {
 
         TimeUnit.SECONDS.sleep(5);
 
-        CompletableFuture<ODataValueContextOfIListOfEntry> searchResultResponse = client.getSearchResults(repoId, searchToken, null, null, null, null, null, null, null, null, null, null, null);
+        CompletableFuture<ODataValueContextOfIListOfEntry> searchResultResponse = client.getSearchResults(repoId, searchToken, null, null, null, null, String.format("maxpagesize=%d", maxPageSize), null, null, null, null, null, null);
         ODataValueContextOfIListOfEntry searchResults = searchResultResponse.join();
 
         assertNotNull(searchResults);
@@ -250,9 +245,16 @@ public class SearchApiTest extends BaseTest {
             }
         };
         try {
-            client.getSearchContextHitsForEach(callback, maxPageSize, repoId, searchToken,null, null, null, null, null, null, null);
+            client.getSearchContextHitsForEach(callback, maxPageSize, repoId, searchToken,1, null, null, null, null, null, null);
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
+    }
+
+    void createSearchOperations_ReturnToken() {
+        AdvancedSearchRequest request = new AdvancedSearchRequest();
+        request.searchCommand = "({LF:Basic ~= \"search text\", option=\"DFANLT\"})";
+
+        assertNotNull(searchToken);
     }
 }
