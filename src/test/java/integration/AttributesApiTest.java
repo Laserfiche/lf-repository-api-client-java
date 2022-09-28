@@ -38,7 +38,7 @@ class AttributesApiTest extends BaseTest {
         assertNotNull(attributeList);
 
         CompletableFuture<Attribute> newFuture = client.getTrusteeAttributeValueByKey(repoId,
-                attributeList.value.get(0).key, true);
+                attributeList.getValue().get(0).getKey(), true);
         Attribute attributeObj = newFuture.join();
         assertNotNull(attributeObj);
     }
@@ -51,21 +51,21 @@ class AttributesApiTest extends BaseTest {
         assertNotNull(attributeList);
 
         CompletableFuture<Attribute> newFuture = client.getTrusteeAttributeValueByKey(repoId,
-                attributeList.value.get(0).key, true);
+                attributeList.getValue().get(0).getKey(), true);
         Attribute attributeObj = newFuture.join();
         assertNotNull(attributeObj);
 
-        String nextLink = attributeList._atOdataNextLink;
+        String nextLink = attributeList.getAtOdataNextLink();
         assertNotNull(nextLink);
         int maxPageSize = 1;
-        assertTrue(attributeList.value.size() <= maxPageSize);
+        assertTrue(attributeList.getValue().size() <= maxPageSize);
 
         CompletableFuture<ODataValueContextOfListOfAttribute> nextLinkResponse = client.getTrusteeAttributeKeyValuePairsNextLink(nextLink, maxPageSize);
         assertNotNull(nextLinkResponse);
         TimeUnit.SECONDS.sleep(10);
         ODataValueContextOfListOfAttribute nextLinkResult = nextLinkResponse.join();
         assertNotNull(nextLinkResult);
-        assertTrue(nextLinkResult.value.size() <= maxPageSize);
+        assertTrue(nextLinkResult.getValue().size() <= maxPageSize);
     }
 
     @Test
@@ -76,7 +76,7 @@ class AttributesApiTest extends BaseTest {
         assertNotNull(attributeList);
 
         CompletableFuture<Attribute> newFuture = client.getTrusteeAttributeValueByKey(repoId,
-                attributeList.value.get(0).key, true);
+                attributeList.getValue().get(0).getKey(), true);
         Attribute attributeObj = newFuture.join();
         assertNotNull(attributeObj);
 
@@ -84,9 +84,9 @@ class AttributesApiTest extends BaseTest {
         int maxPageSize = 90;
         Function<CompletableFuture<ODataValueContextOfListOfAttribute>, CompletableFuture<Boolean>> callback = data -> {
             ODataValueContextOfListOfAttribute futureResult = data.join();
-            if (futureResult._atOdataNextLink != null) {
-                assertNotEquals(0, futureResult.value.size());
-                assertTrue(futureResult.value.size() <= maxPageSize);
+            if (futureResult.getAtOdataNextLink() != null) {
+                assertNotEquals(0, futureResult.getValue().size());
+                assertTrue(futureResult.getValue().size() <= maxPageSize);
                 return CompletableFuture.completedFuture(true);
             } else {
                 return CompletableFuture.completedFuture(false);

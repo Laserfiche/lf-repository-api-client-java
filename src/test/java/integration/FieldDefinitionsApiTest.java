@@ -47,17 +47,17 @@ class FieldDefinitionsApiTest extends BaseTest {
 
         assertNotNull(fieldInfoList);
 
-        String nextLink = fieldInfoList._atOdataNextLink;
+        String nextLink = fieldInfoList.getAtOdataNextLink();
         assertNotNull(nextLink);
         int maxPageSize = 1;
-        assertTrue(fieldInfoList.value.size() <= maxPageSize);
+        assertTrue(fieldInfoList.getValue().size() <= maxPageSize);
 
         CompletableFuture<ODataValueContextOfIListOfWFieldInfo> nextLinkResponse = client.getFieldDefinitionsNextLink(nextLink, maxPageSize);
         assertNotNull(nextLinkResponse);
         TimeUnit.SECONDS.sleep(10);
         ODataValueContextOfIListOfWFieldInfo nextLinkResult = nextLinkResponse.join();
         assertNotNull(nextLinkResult);
-        assertTrue(nextLinkResult.value.size() <= maxPageSize);
+        assertTrue(nextLinkResult.getValue().size() <= maxPageSize);
     }
 
     @Test
@@ -73,9 +73,9 @@ class FieldDefinitionsApiTest extends BaseTest {
         int maxPageSize = 90;
         Function<CompletableFuture<ODataValueContextOfIListOfWFieldInfo>, CompletableFuture<Boolean>> callback = data -> {
             ODataValueContextOfIListOfWFieldInfo result = data.join();
-            if (result._atOdataNextLink != null) {
-                assertNotEquals(0, result.value.size());
-                assertTrue(result.value.size() <= maxPageSize);
+            if (result.getAtOdataNextLink() != null) {
+                assertNotEquals(0, result.getValue().size());
+                assertTrue(result.getValue().size() <= maxPageSize);
                 return CompletableFuture.completedFuture(true);
             } else {
                 return CompletableFuture.completedFuture(false);

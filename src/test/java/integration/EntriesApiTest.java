@@ -51,17 +51,17 @@ class EntriesApiTest extends BaseTest {
 
         assertNotNull(entryList);
 
-        String nextLink = entryList._atOdataNextLink;
+        String nextLink = entryList.getAtOdataNextLink();
         assertNotNull(nextLink);
         int maxPageSize = 1;
-        assertTrue(entryList.value.size() <= maxPageSize);
+        assertTrue(entryList.getValue().size() <= maxPageSize);
 
         CompletableFuture<ODataValueContextOfIListOfEntry> nextLinkResponse = client.getEntryListingNextLink(nextLink, maxPageSize);
         assertNotNull(nextLinkResponse);
         TimeUnit.SECONDS.sleep(10);
         ODataValueContextOfIListOfEntry nextLinkResult = nextLinkResponse.join();
         assertNotNull(nextLinkResult);
-        assertTrue(nextLinkResult.value.size() <= maxPageSize);
+        assertTrue(nextLinkResult.getValue().size() <= maxPageSize);
 
     }
 
@@ -78,9 +78,9 @@ class EntriesApiTest extends BaseTest {
         int maxPageSize = 90;
         Function<CompletableFuture<ODataValueContextOfIListOfEntry>, CompletableFuture<Boolean>> callback = data -> {
             ODataValueContextOfIListOfEntry futureResult = data.join();
-            if (futureResult._atOdataNextLink != null) {
-                assertNotEquals(0, futureResult.value.size());
-                assertTrue(futureResult.value.size() <= maxPageSize);
+            if (futureResult.getAtOdataNextLink() != null) {
+                assertNotEquals(0, futureResult.getValue().size());
+                assertTrue(futureResult.getValue().size() <= maxPageSize);
                 return CompletableFuture.completedFuture(true);
             } else {
                 return CompletableFuture.completedFuture(false);
@@ -110,17 +110,17 @@ class EntriesApiTest extends BaseTest {
 
         assertNotNull(fieldValueList);
 
-        String nextLink = fieldValueList._atOdataNextLink;
+        String nextLink = fieldValueList.getAtOdataNextLink();
         assertNotNull(nextLink);
         int maxPageSize = 1;
-        assertTrue(fieldValueList.value.size() <= maxPageSize);
+        assertTrue(fieldValueList.getValue().size() <= maxPageSize);
 
         CompletableFuture<ODataValueContextOfIListOfFieldValue> nextLinkResponse = client.getFieldValuesNextLink(nextLink, maxPageSize);
         assertNotNull(nextLinkResponse);
         TimeUnit.SECONDS.sleep(10);
         ODataValueContextOfIListOfFieldValue nextLinkResult = nextLinkResponse.join();
         assertNotNull(nextLinkResult);
-        assertTrue(nextLinkResult.value.size() <= maxPageSize);
+        assertTrue(nextLinkResult.getValue().size() <= maxPageSize);
     }
 
     @Test
@@ -136,9 +136,9 @@ class EntriesApiTest extends BaseTest {
         int maxPageSize = 90;
         Function<CompletableFuture<ODataValueContextOfIListOfFieldValue>, CompletableFuture<Boolean>> callback = data -> {
             ODataValueContextOfIListOfFieldValue futureResult = data.join();
-            if (futureResult._atOdataNextLink != null) {
-                assertNotEquals(0, futureResult.value.size());
-                assertTrue(futureResult.value.size() <= maxPageSize);
+            if (futureResult.getAtOdataNextLink() != null) {
+                assertNotEquals(0, futureResult.getValue().size());
+                assertTrue(futureResult.getValue().size() <= maxPageSize);
                 return CompletableFuture.completedFuture(true);
             } else {
                 return CompletableFuture.completedFuture(false);
@@ -168,17 +168,17 @@ class EntriesApiTest extends BaseTest {
 
         assertNotNull(linkInfoList);
 
-        String nextLink = linkInfoList._atOdataNextLink;
+        String nextLink = linkInfoList.getAtOdataNextLink();
         assertNotNull(nextLink);
         int maxPageSize = 1;
-        assertTrue(linkInfoList.value.size() <= maxPageSize);
+        assertTrue(linkInfoList.getValue().size() <= maxPageSize);
 
         CompletableFuture<ODataValueContextOfIListOfWEntryLinkInfo> nextLinkResponse = client.getLinkValuesFromEntryNextLink(nextLink, maxPageSize);
         assertNotNull(nextLinkResponse);
         TimeUnit.SECONDS.sleep(10);
         ODataValueContextOfIListOfWEntryLinkInfo nextLinkResult = nextLinkResponse.join();
         assertNotNull(nextLinkResult);
-        assertTrue(nextLinkResult.value.size() <= maxPageSize);
+        assertTrue(nextLinkResult.getValue().size() <= maxPageSize);
     }
 
     @Test
@@ -194,9 +194,9 @@ class EntriesApiTest extends BaseTest {
         int maxPageSize = 90;
         Function<CompletableFuture<ODataValueContextOfIListOfWEntryLinkInfo>, CompletableFuture<Boolean>> callback = data -> {
             ODataValueContextOfIListOfWEntryLinkInfo futureResult = data.join();
-            if (futureResult._atOdataNextLink != null) {
-                assertNotEquals(0, futureResult.value.size());
-                assertTrue(futureResult.value.size() <= maxPageSize);
+            if (futureResult.getAtOdataNextLink() != null) {
+                assertNotEquals(0, futureResult.getValue().size());
+                assertTrue(futureResult.getValue().size() <= maxPageSize);
                 return CompletableFuture.completedFuture(true);
             } else {
                 return CompletableFuture.completedFuture(false);
@@ -218,7 +218,7 @@ class EntriesApiTest extends BaseTest {
         CompletableFuture<AcceptedOperation> deleteEntryResponse = client.deleteEntryInfo(repoId, entryToDelete.id,
                 new DeleteEntryWithAuditReason());
 
-        String token = deleteEntryResponse.join().token;
+        String token = deleteEntryResponse.join().getToken();
 
         assertNotNull(token);
     }
@@ -231,17 +231,17 @@ class EntriesApiTest extends BaseTest {
 
         assertNotNull(tagInfoList);
 
-        String nextLink = tagInfoList._atOdataNextLink;
+        String nextLink = tagInfoList.getAtOdataNextLink();
         assertNotNull(nextLink);
         int maxPageSize = 1;
-        assertTrue(tagInfoList.value.size() <= maxPageSize);
+        assertTrue(tagInfoList.getValue().size() <= maxPageSize);
 
         CompletableFuture<ODataValueContextOfIListOfWTagInfo> nextLinkResponse = client.getTagsAssignedToEntryNextLink(nextLink, maxPageSize);
         assertNotNull(nextLinkResponse);
         TimeUnit.SECONDS.sleep(10);
         ODataValueContextOfIListOfWTagInfo nextLinkResult = nextLinkResponse.join();
         assertNotNull(nextLinkResult);
-        assertTrue(nextLinkResult.value.size() <= maxPageSize);
+        assertTrue(nextLinkResult.getValue().size() <= maxPageSize);
     }
 
     @Test
@@ -257,9 +257,9 @@ class EntriesApiTest extends BaseTest {
         int maxPageSize = 90;
         Function<CompletableFuture<ODataValueContextOfIListOfWTagInfo>, CompletableFuture<Boolean>> callback = data -> {
             ODataValueContextOfIListOfWTagInfo futureResult = data.join();
-            if (futureResult._atOdataNextLink != null) {
-                assertNotEquals(0, futureResult.value.size());
-                assertTrue(futureResult.value.size() <= maxPageSize);
+            if (futureResult.getAtOdataNextLink() != null) {
+                assertNotEquals(0, futureResult.getValue().size());
+                assertTrue(futureResult.getValue().size() <= maxPageSize);
                 return CompletableFuture.completedFuture(true);
             } else {
                 return CompletableFuture.completedFuture(false);
@@ -287,13 +287,13 @@ class EntriesApiTest extends BaseTest {
                 .getTemplateDefinitionClient()
                 .getTemplateDefinitions(repoId, null, null, null, null, null, null, null, null)
                 .join();
-        List<WTemplateInfo> templateDefinitions = templateDefinitionsResponse.value;
+        List<WTemplateInfo> templateDefinitions = templateDefinitionsResponse.getValue();
 
         assertNotNull(templateDefinitions);
         assertTrue(templateDefinitions.size() > 0);
 
         GetDynamicFieldLogicValueRequest request = new GetDynamicFieldLogicValueRequest();
-        request.templateId = templateDefinitions.get(0).id;
+        request.setTemplateId(templateDefinitions.get(0).getId());
 
         Map<String, String[]> dynamicFieldValueResponse = client
                 .getDynamicFieldValues(repoId, 1, request)
