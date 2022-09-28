@@ -45,8 +45,9 @@ class AttributesApiTest extends BaseTest {
 
     @Test
     void getAttributeValueByKey_NextLink() throws InterruptedException {
+        int maxPageSize = 1;
         CompletableFuture<ODataValueContextOfListOfAttribute> future = client.getTrusteeAttributeKeyValuePairs(repoId,
-                true, null, null, null, null, null, false);
+                true, String.format("maxpagesize=%d", maxPageSize), null, null, null, null, false);
         ODataValueContextOfListOfAttribute attributeList = future.join();
         assertNotNull(attributeList);
 
@@ -57,7 +58,7 @@ class AttributesApiTest extends BaseTest {
 
         String nextLink = attributeList._atOdataNextLink;
         assertNotNull(nextLink);
-        int maxPageSize = 1;
+
         assertTrue(attributeList.value.size() <= maxPageSize);
 
         CompletableFuture<ODataValueContextOfListOfAttribute> nextLinkResponse = client.getTrusteeAttributeKeyValuePairsNextLink(nextLink, maxPageSize);
@@ -70,8 +71,9 @@ class AttributesApiTest extends BaseTest {
 
     @Test
     void getAttributeValueByKey_ForEach() throws InterruptedException {
+        int maxPageSize = 90;
         CompletableFuture<ODataValueContextOfListOfAttribute> future = client.getTrusteeAttributeKeyValuePairs(repoId,
-                true, null, null, null, null, null, false);
+                true, String.format("maxpagesize=%d", maxPageSize), null, null, null, null, false);
         ODataValueContextOfListOfAttribute attributeList = future.join();
         assertNotNull(attributeList);
 
@@ -81,7 +83,6 @@ class AttributesApiTest extends BaseTest {
         assertNotNull(attributeObj);
 
         TimeUnit.SECONDS.sleep(10);
-        int maxPageSize = 90;
         Function<CompletableFuture<ODataValueContextOfListOfAttribute>, CompletableFuture<Boolean>> callback = data -> {
             ODataValueContextOfListOfAttribute futureResult = data.join();
             if (futureResult._atOdataNextLink != null) {
@@ -93,7 +94,7 @@ class AttributesApiTest extends BaseTest {
             }
         };
         try {
-            client.getTrusteeAttributeKeyValuePairsForEach(callback, maxPageSize, repoId, null, null,null, null, null, null, null);
+            client.getTrusteeAttributeKeyValuePairsForEach(callback, maxPageSize, repoId, true, null,null, null, null, null, null);
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
