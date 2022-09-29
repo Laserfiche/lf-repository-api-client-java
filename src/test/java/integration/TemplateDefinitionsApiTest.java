@@ -34,14 +34,15 @@ class TemplateDefinitionsApiTest extends BaseTest {
 
     @Test
     void getTemplateDefinitions_NextLink() throws InterruptedException {
+        int maxPageSize = 1;
         ODataValueContextOfIListOfWTemplateInfo templateInfoList = client
-                .getTemplateDefinitions(repoId, null, null, null, null, null, null, null, false)
+                .getTemplateDefinitions(repoId, null, String.format("maxpagesize=%d", maxPageSize), null, null, null, null, null, false)
                 .join();
 
         assertNotNull(templateInfoList);
         String nextLink = templateInfoList._atOdataNextLink;
         assertNotNull(nextLink);
-        int maxPageSize = 1;
+
         assertTrue(templateInfoList.value.size() <= maxPageSize);
 
         CompletableFuture<ODataValueContextOfIListOfWTemplateInfo> nextLinkResponse = client.getTemplateDefinitionsNextLink(nextLink, maxPageSize);
@@ -100,8 +101,9 @@ class TemplateDefinitionsApiTest extends BaseTest {
 
     @Test
     void getTemplateDefinitionsFields_NextLink() throws InterruptedException {
+        int maxPageSize = 1;
         ODataValueContextOfIListOfWTemplateInfo templateInfoList = client
-                .getTemplateDefinitions(repoId, null, null, null, null, null, null, null, false)
+                .getTemplateDefinitions(repoId, null, String.format("maxpagesize=%d", maxPageSize), null, null, null, null, null, false)
                 .join();
 
         WTemplateInfo tempDef = templateInfoList.value.get(0);
@@ -109,15 +111,14 @@ class TemplateDefinitionsApiTest extends BaseTest {
         assertNotNull(templateInfoList);
 
         ODataValueContextOfIListOfTemplateFieldInfo result = client
-                .getTemplateFieldDefinitions(repoId, tempDef.id, null, null, null, null, null, null, false)
+                .getTemplateFieldDefinitions(repoId, tempDef.id, String.format("maxpagesize=%d", maxPageSize), null, null, null, null, null, false)
                 .join();
 
         assertNotNull(result);
-        Assertions.assertSame(result.value.size(), tempDef.fieldCount);
+        Assertions.assertSame(maxPageSize, result.value.size());
 
         String nextLink = result._atOdataNextLink;
         assertNotNull(nextLink);
-        int maxPageSize = 1;
         assertTrue(result.value.size() <= maxPageSize);
 
         CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo> nextLinkResponse = client.getTemplateFieldDefinitionsNextLink(nextLink, maxPageSize);
@@ -159,7 +160,7 @@ class TemplateDefinitionsApiTest extends BaseTest {
             }
         };
         try {
-            client.getTemplateFieldDefinitionsForEach(callback, maxPageSize, repoId, null, null, null, null, null, null, null, null);
+            client.getTemplateFieldDefinitionsForEach(callback, maxPageSize, repoId, tempDef.id, null, null, null, null, null, null, false);
         } catch (ExecutionException e) {
             e.printStackTrace();
         }

@@ -45,15 +45,15 @@ class EntriesApiTest extends BaseTest {
 
     @Test
     void getEntryListing_NextLink() throws InterruptedException {
+        int maxPageSize = 1;
         ODataValueContextOfIListOfEntry entryList = client
-                .getEntryListing(repoId, 1, false, null, false, null, null, null, null, null, null, false)
+                .getEntryListing(repoId, 1, false, null, false, String.format("maxpagesize=%d", maxPageSize), null, null, null, null, null, false)
                 .join();
 
         assertNotNull(entryList);
 
         String nextLink = entryList._atOdataNextLink;
         assertNotNull(nextLink);
-        int maxPageSize = 1;
         assertTrue(entryList.value.size() <= maxPageSize);
 
         CompletableFuture<ODataValueContextOfIListOfEntry> nextLinkResponse = client.getEntryListingNextLink(nextLink, maxPageSize);
@@ -67,15 +67,7 @@ class EntriesApiTest extends BaseTest {
 
     @Test
     void getEntryListing_ForEach() throws InterruptedException {
-        ODataValueContextOfIListOfEntry entryList = client
-                .getEntryListing(repoId, 1, false, null, false, null, null, null, null, null, null, false)
-                .join();
-
-        assertNotNull(entryList);
-
-        TimeUnit.SECONDS.sleep(10);
-
-        int maxPageSize = 90;
+        int maxPageSize = 10;
         Function<CompletableFuture<ODataValueContextOfIListOfEntry>, CompletableFuture<Boolean>> callback = data -> {
             ODataValueContextOfIListOfEntry futureResult = data.join();
             if (futureResult._atOdataNextLink != null) {
@@ -87,7 +79,7 @@ class EntriesApiTest extends BaseTest {
             }
         };
         try {
-            client.getEntryListingForEach(callback, maxPageSize, repoId, null, null, null, null, null, null, null, null, null, null, null);
+            client.getEntryListingForEach(callback, maxPageSize, repoId, 1, false, null, false, null, null, null, null, null, null, false);
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
@@ -104,15 +96,16 @@ class EntriesApiTest extends BaseTest {
 
     @Test
     void getFieldValues_NextLink() throws InterruptedException {
+        int maxPageSize = 1;
         ODataValueContextOfIListOfFieldValue fieldValueList = client
-                .getFieldValues(repoId, 1, null, null, null, null, null, null, null, false)
+                .getFieldValues(repoId, 1, String.format("maxpagesize=%d", maxPageSize), null, null, null, null, null, null, false)
                 .join();
 
         assertNotNull(fieldValueList);
 
         String nextLink = fieldValueList._atOdataNextLink;
         assertNotNull(nextLink);
-        int maxPageSize = 1;
+
         assertTrue(fieldValueList.value.size() <= maxPageSize);
 
         CompletableFuture<ODataValueContextOfIListOfFieldValue> nextLinkResponse = client.getFieldValuesNextLink(nextLink, maxPageSize);
@@ -125,14 +118,6 @@ class EntriesApiTest extends BaseTest {
 
     @Test
     void getFieldValues_ForEach() throws InterruptedException {
-        ODataValueContextOfIListOfFieldValue fieldValueList = client
-                .getFieldValues(repoId, 1, null, null, null, null, null, null, null, false)
-                .join();
-
-        assertNotNull(fieldValueList);
-
-        TimeUnit.SECONDS.sleep(10);
-
         int maxPageSize = 90;
         Function<CompletableFuture<ODataValueContextOfIListOfFieldValue>, CompletableFuture<Boolean>> callback = data -> {
             ODataValueContextOfIListOfFieldValue futureResult = data.join();
@@ -145,7 +130,7 @@ class EntriesApiTest extends BaseTest {
             }
         };
         try {
-            client.getFieldValuesForEach(callback, maxPageSize, repoId, null, null, null, null, null, null, null, null, null);
+            client.getFieldValuesForEach(callback, maxPageSize, repoId, 1, null, null, null, null, null, null, null, false);
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
@@ -162,15 +147,20 @@ class EntriesApiTest extends BaseTest {
 
     @Test
     void getLinkValuesFromEntry_NextLink() throws InterruptedException {
+        int maxPageSize = 1;
         ODataValueContextOfIListOfWEntryLinkInfo linkInfoList = client
-                .getLinkValuesFromEntry(repoId, 1, null, null, null, null, null, false)
+                .getLinkValuesFromEntry(repoId, 1,  String.format("maxpagesize=%d", maxPageSize), null, null, null, null, false)
                 .join();
 
         assertNotNull(linkInfoList);
 
+        if (linkInfoList.value.isEmpty())
+        {
+            return; // There's no point testing if we don't have any such item.
+        }
         String nextLink = linkInfoList._atOdataNextLink;
         assertNotNull(nextLink);
-        int maxPageSize = 1;
+
         assertTrue(linkInfoList.value.size() <= maxPageSize);
 
         CompletableFuture<ODataValueContextOfIListOfWEntryLinkInfo> nextLinkResponse = client.getLinkValuesFromEntryNextLink(nextLink, maxPageSize);
@@ -183,14 +173,6 @@ class EntriesApiTest extends BaseTest {
 
     @Test
     void getLinkValuesFromEntry_ForEach() throws InterruptedException {
-        ODataValueContextOfIListOfWEntryLinkInfo linkInfoList = client
-                .getLinkValuesFromEntry(repoId, 1, null, null, null, null, null, false)
-                .join();
-
-        assertNotNull(linkInfoList);
-
-        TimeUnit.SECONDS.sleep(10);
-
         int maxPageSize = 90;
         Function<CompletableFuture<ODataValueContextOfIListOfWEntryLinkInfo>, CompletableFuture<Boolean>> callback = data -> {
             ODataValueContextOfIListOfWEntryLinkInfo futureResult = data.join();
@@ -203,7 +185,7 @@ class EntriesApiTest extends BaseTest {
             }
         };
         try {
-            client.getLinkValuesFromEntryForEach(callback, maxPageSize, repoId, null, null, null, null, null, null, null);
+            client.getLinkValuesFromEntryForEach(callback, maxPageSize, repoId, 1, null, null, null, null, null, false);
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
@@ -225,15 +207,20 @@ class EntriesApiTest extends BaseTest {
 
     @Test
     void getTagsAssignedToEntry_NextLink() throws InterruptedException {
+        int maxPageSize = 1;
         ODataValueContextOfIListOfWTagInfo tagInfoList = client
-                .getTagsAssignedToEntry(repoId, 1, null, null, null, null, null, false)
+                .getTagsAssignedToEntry(repoId, 1, String.format("maxpagesize=%d", maxPageSize), null, null, null, null, false)
                 .join();
 
         assertNotNull(tagInfoList);
 
+        if (tagInfoList.value.isEmpty())
+        {
+            return; // There's no point testing if we don't have any such item.
+        }
         String nextLink = tagInfoList._atOdataNextLink;
         assertNotNull(nextLink);
-        int maxPageSize = 1;
+
         assertTrue(tagInfoList.value.size() <= maxPageSize);
 
         CompletableFuture<ODataValueContextOfIListOfWTagInfo> nextLinkResponse = client.getTagsAssignedToEntryNextLink(nextLink, maxPageSize);
@@ -246,14 +233,6 @@ class EntriesApiTest extends BaseTest {
 
     @Test
     void getTagsAssignedToEntry_ForEach() throws InterruptedException {
-        ODataValueContextOfIListOfWTagInfo tagInfoList = client
-                .getTagsAssignedToEntry(repoId, 1, null, null, null, null, null, false)
-                .join();
-
-        assertNotNull(tagInfoList);
-
-        TimeUnit.SECONDS.sleep(10);
-
         int maxPageSize = 90;
         Function<CompletableFuture<ODataValueContextOfIListOfWTagInfo>, CompletableFuture<Boolean>> callback = data -> {
             ODataValueContextOfIListOfWTagInfo futureResult = data.join();
@@ -266,7 +245,7 @@ class EntriesApiTest extends BaseTest {
             }
         };
         try {
-            client.getTagsAssignedToEntryForEach(callback, maxPageSize, repoId, null, null, null, null, null, null, null);
+            client.getTagsAssignedToEntryForEach(callback, maxPageSize, repoId, 1, null, null, null, null, null, false);
         } catch (ExecutionException e) {
             e.printStackTrace();
         }

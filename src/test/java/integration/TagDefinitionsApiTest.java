@@ -32,15 +32,16 @@ class TagDefinitionsApiTest extends BaseTest {
 
     @Test
     void getTagDefinitions_NextLink() throws InterruptedException {
+        int maxPageSize = 1;
         ODataValueContextOfIListOfWTagInfo tagInfoList = client
-                .getTagDefinitions(repoId, null, null, null, null, null, null, false)
+                .getTagDefinitions(repoId, String.format("maxpagesize=%d", maxPageSize), null, null, null, null, null, false)
                 .join();
 
         assertNotNull(tagInfoList);
 
         String nextLink = tagInfoList._atOdataNextLink;
         assertNotNull(nextLink);
-        int maxPageSize = 1;
+
         assertTrue(tagInfoList.value.size() <= maxPageSize);
 
         CompletableFuture<ODataValueContextOfIListOfWTagInfo> nextLinkResponse = client.getTagDefinitionsNextLink(nextLink, maxPageSize);

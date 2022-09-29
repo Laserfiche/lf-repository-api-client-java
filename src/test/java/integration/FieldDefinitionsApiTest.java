@@ -41,15 +41,16 @@ class FieldDefinitionsApiTest extends BaseTest {
 
     @Test
     void getFieldDefinitions_NextLink() throws InterruptedException {
+        int maxPageSize = 1;
         ODataValueContextOfIListOfWFieldInfo fieldInfoList = client
-                .getFieldDefinitions(repoId, null, null, null, null, null, null, false)
+                .getFieldDefinitions(repoId, String.format("maxpagesize=%d", maxPageSize), null, null, null, null, null, false)
                 .join();
 
         assertNotNull(fieldInfoList);
 
         String nextLink = fieldInfoList._atOdataNextLink;
         assertNotNull(nextLink);
-        int maxPageSize = 1;
+
         assertTrue(fieldInfoList.value.size() <= maxPageSize);
 
         CompletableFuture<ODataValueContextOfIListOfWFieldInfo> nextLinkResponse = client.getFieldDefinitionsNextLink(nextLink, maxPageSize);
