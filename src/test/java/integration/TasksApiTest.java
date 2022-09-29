@@ -18,14 +18,14 @@ public class TasksApiTest extends BaseTest {
     RepositoryApiClient createEntryClient;
 
     @BeforeEach
-    void PerTestSetup() {
+    void perTestSetup() {
         client = repositoryApiClient.getTasksClient();
         createEntryClient = repositoryApiClient;
     }
 
     @Disabled("We should enable it when we figure out how to design this test.")
     @Test
-    void cancelOperation_Success() throws InterruptedException {
+    void cancelOperation_OperationEndedBeforeCancel() throws InterruptedException {
         Entry deleteEntry = createEntry(createEntryClient, "RepositoryApiClientIntegrationTest Java CancelOperation", 1,
                 true).join();
 
@@ -33,10 +33,10 @@ public class TasksApiTest extends BaseTest {
 
         AcceptedOperation result = repositoryApiClient
                 .getEntriesClient()
-                .deleteEntryInfo(repoId, deleteEntry.id, body)
+                .deleteEntryInfo(repoId, deleteEntry.getId(), body)
                 .join();
 
-        String token = result.token;
+        String token = result.getToken();
 
         assertNotNull(token);
 
@@ -48,7 +48,7 @@ public class TasksApiTest extends BaseTest {
     }
 
     @Test
-    void getOperationStatus_Success() throws InterruptedException {
+    void getOperationStatus_ReturnStatus() throws InterruptedException {
         Entry deleteEntry = createEntry(createEntryClient, "RepositoryApiClientIntegrationTest Java GetOperationStatus",
                 1, true).join();
 
@@ -56,9 +56,9 @@ public class TasksApiTest extends BaseTest {
 
         CompletableFuture<AcceptedOperation> result = repositoryApiClient
                 .getEntriesClient()
-                .deleteEntryInfo(repoId, deleteEntry.id, body);
+                .deleteEntryInfo(repoId, deleteEntry.getId(), body);
 
-        String token = result.join().token;
+        String token = result.join().getToken();
 
         assertNotNull(token);
 
@@ -68,7 +68,7 @@ public class TasksApiTest extends BaseTest {
                 token);
 
         assertNotNull(operationProgressResponse);
-        Assertions.assertSame(operationProgressResponse.join().status, OperationStatus.COMPLETED);
-        Assertions.assertSame(operationProgressResponse.join().percentComplete, 100);
+        Assertions.assertSame(operationProgressResponse.join().getStatus(), OperationStatus.COMPLETED);
+        Assertions.assertSame(operationProgressResponse.join().getPercentComplete(), 100);
     }
 }

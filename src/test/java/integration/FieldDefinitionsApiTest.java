@@ -7,22 +7,29 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.CompletableFuture;
+<<<<<<< HEAD
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.*;
+=======
+import java.util.concurrent.TimeUnit;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+>>>>>>> 1.x
 
 class FieldDefinitionsApiTest extends BaseTest {
     FieldDefinitionsClient client;
 
     @BeforeEach
-    void PerTestSetup() {
+    void perTestSetup() {
         client = repositoryApiClient.getFieldDefinitionsClient();
     }
 
     @Test
-    void getFieldDefinitionById_Success() {
+    void getFieldDefinitionById_ReturnField() {
         WFieldInfo fieldInfo = client
                 .getFieldDefinitionById(repoId, 1, null, null)
                 .join();
@@ -31,12 +38,33 @@ class FieldDefinitionsApiTest extends BaseTest {
     }
 
     @Test
-    void getFieldDefinitions_Success() {
+    void getFieldDefinitions_ReturnAllFields() {
         ODataValueContextOfIListOfWFieldInfo fieldInfoList = client
                 .getFieldDefinitions(repoId, null, null, null, null, null, null, false)
                 .join();
 
         assertNotNull(fieldInfoList);
+    }
+
+    @Test
+    void getFieldDefinitions_NextLink() throws InterruptedException {
+        ODataValueContextOfIListOfWFieldInfo fieldInfoList = client
+                .getFieldDefinitions(repoId, null, null, null, null, null, null, false)
+                .join();
+
+        assertNotNull(fieldInfoList);
+
+        String nextLink = fieldInfoList.getAtOdataNextLink();
+        assertNotNull(nextLink);
+        int maxPageSize = 1;
+        assertTrue(fieldInfoList.getValue().size() <= maxPageSize);
+
+        CompletableFuture<ODataValueContextOfIListOfWFieldInfo> nextLinkResponse = client.getFieldDefinitionsNextLink(nextLink, maxPageSize);
+        assertNotNull(nextLinkResponse);
+        TimeUnit.SECONDS.sleep(10);
+        ODataValueContextOfIListOfWFieldInfo nextLinkResult = nextLinkResponse.join();
+        assertNotNull(nextLinkResult);
+        assertTrue(nextLinkResult.getValue().size() <= maxPageSize);
     }
 
     @Test

@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class AuditReasonsApiTest extends BaseTest {
     @Test
-    void getAuditReasons_Success() {
+    void getAuditReasons_ReturnAuditReasons() {
         AuditReasonsClient client = repositoryApiClient.getAuditReasonsClient();
         CompletableFuture<AuditReasons> future = client.getAuditReasons(repoId);
         AuditReasons reasons = future.join();

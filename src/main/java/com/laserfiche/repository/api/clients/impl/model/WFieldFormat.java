@@ -1,48 +1,46 @@
 package com.laserfiche.repository.api.clients.impl.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum WFieldFormat {
 
-    @JsonProperty("None")
     NONE("None"),
-
-    @JsonProperty("ShortDate")
     SHORTDATE("ShortDate"),
-
-    @JsonProperty("LongDate")
     LONGDATE("LongDate"),
-
-    @JsonProperty("ShortDateTime")
     SHORTDATETIME("ShortDateTime"),
-
-    @JsonProperty("LongDateTime")
     LONGDATETIME("LongDateTime"),
-
-    @JsonProperty("ShortTime")
     SHORTTIME("ShortTime"),
-
-    @JsonProperty("LongTime")
     LONGTIME("LongTime"),
-
-    @JsonProperty("GeneralNumber")
     GENERALNUMBER("GeneralNumber"),
-
-    @JsonProperty("Currency")
     CURRENCY("Currency"),
-
-    @JsonProperty("Percent")
     PERCENT("Percent"),
-
-    @JsonProperty("Scientific")
     SCIENTIFIC("Scientific"),
-
-    @JsonProperty("Custom")
     CUSTOM("Custom");
 
-    public String value;
+    private String value;
 
     WFieldFormat(String value) {
         this.value = value;
+    }
+
+    @JsonCreator
+    public static WFieldFormat fromValue(String input) {
+        for (WFieldFormat b : WFieldFormat.values()) {
+            if (b.value.equals(input)) {
+                return b;
+            }
+        }
+        return null;
+    }
+
+    @JsonValue
+    public String getValue() {
+        return value;
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(value);
     }
 }

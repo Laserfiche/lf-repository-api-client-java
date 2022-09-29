@@ -1,14 +1,22 @@
 package integration;
 
 import com.laserfiche.repository.api.RepositoryApiClient;
+<<<<<<< HEAD
 import com.laserfiche.repository.api.clients.EntriesClient;
+=======
+>>>>>>> 1.x
 import com.laserfiche.repository.api.clients.impl.model.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+<<<<<<< HEAD
 import java.lang.annotation.Target;
 import java.util.*;
+=======
+import java.util.ArrayList;
+import java.util.List;
+>>>>>>> 1.x
 import java.util.concurrent.CompletableFuture;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -33,7 +41,11 @@ public class SetLinksApiTest extends BaseTest {
         for (Entry createdEntry : createdEntries) {
             if (createdEntry != null) {
                 DeleteEntryWithAuditReason body = new DeleteEntryWithAuditReason();
+<<<<<<< HEAD
                 client.getEntriesClient().deleteEntryInfo(repoId, createdEntry.id, body);
+=======
+                client.getEntriesClient().deleteEntryInfo(repoId, createdEntry.getId(), body);
+>>>>>>> 1.x
             }
         }
     }
@@ -45,6 +57,7 @@ public class SetLinksApiTest extends BaseTest {
         targetEntry = createEntry(client, "RepositoryApiClientIntegrationTest .Net SetLinks Target", 1, true);
         createdEntries.add(targetEntry.join());
         PutLinksRequest linkRequest = new PutLinksRequest();
+<<<<<<< HEAD
         linkRequest.targetId = targetEntry.join().id;
         linkRequest.linkTypeId = 1;
         List<PutLinksRequest> request = new ArrayList<PutLinksRequest>();
@@ -55,6 +68,18 @@ public class SetLinksApiTest extends BaseTest {
         assertEquals(request.size(), links.size());
         assertEquals(sourceEntry.join().id, links.get(0).sourceId);
         assertEquals(targetEntry.join().id, links.get(0).targetId);
+=======
+        linkRequest.setTargetId(targetEntry.join().getId());
+        linkRequest.setLinkTypeId(1);
+        List<PutLinksRequest> request = new ArrayList<PutLinksRequest>();
+        request.add(linkRequest);
+        ODataValueOfIListOfWEntryLinkInfo result = client.getEntriesClient().assignEntryLinks(repoId, sourceEntry.join().getId(), request).join();
+        List<WEntryLinkInfo> links = result.getValue();
+        assertNotNull(links);
+        assertEquals(request.size(), links.size());
+        assertEquals(sourceEntry.join().getId(), links.get(0).getSourceId());
+        assertEquals(targetEntry.join().getId(), links.get(0).getTargetId());
+>>>>>>> 1.x
     }
 
 }
