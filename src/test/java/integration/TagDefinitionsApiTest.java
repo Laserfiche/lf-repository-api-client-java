@@ -7,11 +7,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Function;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class TagDefinitionsApiTest extends BaseTest {
     TagDefinitionsClient client;
@@ -38,45 +37,21 @@ class TagDefinitionsApiTest extends BaseTest {
 
         assertNotNull(tagInfoList);
 
-        String nextLink = tagInfoList._atOdataNextLink;
+        String nextLink = tagInfoList.getAtOdataNextLink();
         assertNotNull(nextLink);
         int maxPageSize = 1;
-        assertTrue(tagInfoList.value.size() <= maxPageSize);
+        assertTrue(tagInfoList
+                .getValue()
+                .size() <= maxPageSize);
 
         CompletableFuture<ODataValueContextOfIListOfWTagInfo> nextLinkResponse = client.getTagDefinitionsNextLink(nextLink, maxPageSize);
         assertNotNull(nextLinkResponse);
         TimeUnit.SECONDS.sleep(10);
         ODataValueContextOfIListOfWTagInfo nextLinkResult = nextLinkResponse.join();
         assertNotNull(nextLinkResult);
-        assertTrue(nextLinkResult.value.size() <= maxPageSize);
-    }
-
-    @Test
-    void getTagDefinitions_ForEach() throws InterruptedException {
-        ODataValueContextOfIListOfWTagInfo tagInfoList = client
-                .getTagDefinitions(repoId, null, null, null, null, null, null, false)
-                .join();
-
-        assertNotNull(tagInfoList);
-
-        TimeUnit.SECONDS.sleep(10);
-
-        int maxPageSize = 90;
-        Function<CompletableFuture<ODataValueContextOfIListOfWTagInfo>, CompletableFuture<Boolean>> callback = data -> {
-            ODataValueContextOfIListOfWTagInfo result = data.join();
-            if (result._atOdataNextLink != null) {
-                assertNotEquals(0, result.value.size());
-                assertTrue(result.value.size() <= maxPageSize);
-                return CompletableFuture.completedFuture(true);
-            } else {
-                return CompletableFuture.completedFuture(false);
-            }
-        };
-        try {
-            client.getTagDefinitionsForEach(callback, maxPageSize, repoId, null, null, null, null, null, null, null);
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
+        assertTrue(nextLinkResult
+                .getValue()
+                .size() <= maxPageSize);
     }
 
     @Test
@@ -88,7 +63,10 @@ class TagDefinitionsApiTest extends BaseTest {
         assertNotNull(tagInfoList);
 
         WTagInfo tagInfo = client
-                .getTagDefinitionById(repoId, tagInfoList.value.get(0).id, null, null)
+                .getTagDefinitionById(repoId, tagInfoList
+                        .getValue()
+                        .get(0)
+                        .getId(), null, null)
                 .join();
 
         assertNotNull(tagInfo);

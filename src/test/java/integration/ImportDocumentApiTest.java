@@ -2,7 +2,6 @@ package integration;
 
 import com.laserfiche.repository.api.clients.EntriesClient;
 import com.laserfiche.repository.api.clients.impl.model.*;
-import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -51,28 +50,39 @@ public class ImportDocumentApiTest extends BaseTest {
         CreateEntryResult result = client.importDocument(repoId, 1, fileName, true, null,
                 toUpload, new PostEntryWithEdocMetadataRequest()).join();
 
-        CreateEntryOperations operations = result.operations;
+        CreateEntryOperations operations = result.getOperations();
 
         assertNotNull(result);
         assertNotNull(operations);
-        assertNotNull(result.documentLink);
-        assertNotEquals(0, operations.entryCreate.entryId);
-        assertEquals(0, operations.entryCreate.exceptions.size());
-        assertEquals(0, operations.setEdoc.exceptions.size());
-        createdEntryId = operations.entryCreate.entryId;
+        assertNotNull(result.getDocumentLink());
+        assertNotEquals(0, operations
+                .getEntryCreate()
+                .getEntryId());
+        assertEquals(0, operations
+                .getEntryCreate()
+                .getExceptions()
+                .size());
+        assertEquals(0, operations
+                .getSetEdoc()
+                .getExceptions()
+                .size());
+        createdEntryId = operations
+                .getEntryCreate()
+                .getEntryId();
     }
 
     @Test
     void importDocument_DocumentCreatedWithTemplate() throws ExecutionException, InterruptedException {
         WTemplateInfo template = null;
         ODataValueContextOfIListOfWTemplateInfo templateDefinitionResult = repositoryApiClient.getTemplateDefinitionClient().getTemplateDefinitions(repoId, null, null, null, null, null, null, null, null).join();
-        List<WTemplateInfo> templateDefinitions = templateDefinitionResult.value;
+        List<WTemplateInfo> templateDefinitions = templateDefinitionResult.getValue();
         assertNotNull(templateDefinitions);
         Assertions.assertTrue(templateDefinitions.size() > 0);
         for (WTemplateInfo templateDefinition : templateDefinitions) {
-            ODataValueContextOfIListOfTemplateFieldInfo templateDefinitionFieldsResult = repositoryApiClient.getTemplateDefinitionClient().getTemplateFieldDefinitions(repoId, templateDefinition.id, null, null, null, null, null, null, null).join();
-            if (templateDefinitionFieldsResult.value != null && allFalse(
-                    templateDefinitionFieldsResult.value).get()) {
+            ODataValueContextOfIListOfTemplateFieldInfo templateDefinitionFieldsResult = repositoryApiClient.getTemplateDefinitionClient().getTemplateFieldDefinitions(repoId,
+                    templateDefinition.getId(), null, null, null, null, null, null, null).join();
+            if (templateDefinitionFieldsResult.getValue() != null && allFalse(
+                    templateDefinitionFieldsResult.getValue()).get()) {
                 template = templateDefinition;
                 break;
             }
@@ -89,19 +99,34 @@ public class ImportDocumentApiTest extends BaseTest {
         }
         assertNotNull(toUpload);
         PostEntryWithEdocMetadataRequest request = new PostEntryWithEdocMetadataRequest();
-        request.template = template.name;
+        request.setTemplate(template.getName());
 
         CreateEntryResult result = client.importDocument(repoId, parentEntryId, fileName,
                 true, null, toUpload, request).join();
 
-        CreateEntryOperations operations = result.operations;
+        CreateEntryOperations operations = result.getOperations();
         assertNotNull(operations);
-        assertNotNull(result.documentLink);
-        assertEquals(0, operations.entryCreate.exceptions.size());
-        assertNotEquals(0, operations.entryCreate.entryId);
-        assertEquals(0, operations.setEdoc.exceptions.size());
-        assertEquals(0, operations.setTemplate.exceptions.size());
-        assertEquals(template.name, operations.setTemplate.template);
-        createdEntryId = operations.entryCreate.entryId;
+        assertNotNull(result.getDocumentLink());
+        assertEquals(0, operations
+                .getEntryCreate()
+                .getExceptions()
+                .size());
+        assertNotEquals(0, operations
+                .getEntryCreate()
+                .getEntryId());
+        assertEquals(0, operations
+                .getSetEdoc()
+                .getExceptions()
+                .size());
+        assertEquals(0, operations
+                .getSetTemplate()
+                .getExceptions()
+                .size());
+        assertEquals(template.getName(), operations
+                .getSetTemplate()
+                .getTemplate());
+        createdEntryId = operations
+                .getEntryCreate()
+                .getEntryId();
     }
 }

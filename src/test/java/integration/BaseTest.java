@@ -48,8 +48,8 @@ public class BaseTest {
 
     public static CompletableFuture<Entry> createEntry(RepositoryApiClient client, String entryName, Integer parentEntryId, Boolean autoRename) {
         PostEntryChildrenRequest request = new PostEntryChildrenRequest();
-        request.entryType = PostEntryChildrenEntryType.FOLDER;
-        request.name = entryName;
+        request.setEntryType(PostEntryChildrenEntryType.FOLDER);
+        request.setName(entryName);
 
         return client
                 .getEntriesClient()
@@ -58,7 +58,7 @@ public class BaseTest {
 
     public static CompletableFuture<Boolean> allFalse(List<TemplateFieldInfo> arr) {
         for (TemplateFieldInfo templateFieldInfo : arr) {
-            if (templateFieldInfo.isRequired) {
+            if (templateFieldInfo.isIsRequired()) {
                 return CompletableFuture.supplyAsync(() -> false);
             }
         }

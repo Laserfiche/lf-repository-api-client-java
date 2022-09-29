@@ -33,10 +33,10 @@ public class TasksApiTest extends BaseTest {
 
         AcceptedOperation result = repositoryApiClient
                 .getEntriesClient()
-                .deleteEntryInfo(repoId, deleteEntry.id, body)
+                .deleteEntryInfo(repoId, deleteEntry.getId(), body)
                 .join();
 
-        String token = result.token;
+        String token = result.getToken();
 
         assertNotNull(token);
 
@@ -56,9 +56,9 @@ public class TasksApiTest extends BaseTest {
 
         CompletableFuture<AcceptedOperation> result = repositoryApiClient
                 .getEntriesClient()
-                .deleteEntryInfo(repoId, deleteEntry.id, body);
+                .deleteEntryInfo(repoId, deleteEntry.getId(), body);
 
-        String token = result.join().token;
+        String token = result.join().getToken();
 
         assertNotNull(token);
 
@@ -68,7 +68,7 @@ public class TasksApiTest extends BaseTest {
                 token);
 
         assertNotNull(operationProgressResponse);
-        Assertions.assertSame(operationProgressResponse.join().status, OperationStatus.COMPLETED);
-        Assertions.assertSame(operationProgressResponse.join().percentComplete, 100);
+        Assertions.assertSame(operationProgressResponse.join().getStatus(), OperationStatus.COMPLETED);
+        Assertions.assertSame(operationProgressResponse.join().getPercentComplete(), 100);
     }
 }
