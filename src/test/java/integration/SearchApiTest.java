@@ -67,13 +67,7 @@ public class SearchApiTest extends BaseTest {
 
         CompletableFuture<AcceptedOperation> searchResponse = client.createSearchOperation(repoId, request);
 
-<<<<<<< HEAD
-        searchToken = searchResponse.join().token;
-=======
-        String searchToken = searchResponse
-                .join()
-                .getToken();
->>>>>>> 1.x
+        searchToken = searchResponse.join().getToken();
 
         assertNotNull(searchToken);
 
@@ -89,11 +83,7 @@ public class SearchApiTest extends BaseTest {
         request.setSearchCommand("({LF:Basic ~= \"search text\", option=\"DFANLT\"})");
 
         AcceptedOperation searchResponse = client.createSearchOperation(repoId, request).join();
-<<<<<<< HEAD
-        searchToken = searchResponse.token;
-=======
-        String searchToken = searchResponse.getToken();
->>>>>>> 1.x
+        searchToken = searchResponse.getToken();
 
         assertNotNull(searchToken);
 
@@ -111,11 +101,7 @@ public class SearchApiTest extends BaseTest {
 
         AcceptedOperation searchOperationResponse = client.createSearchOperation(repoId, request).join();
 
-<<<<<<< HEAD
-        searchToken = searchOperationResponse.token;
-=======
-        String searchToken = searchOperationResponse.getToken();
->>>>>>> 1.x
+        searchToken = searchOperationResponse.getToken();
 
         assertNotNull(searchToken);
 
@@ -124,112 +110,17 @@ public class SearchApiTest extends BaseTest {
         assertTrue(closeSearchResponse.isValue());
     }
 
-    @Test
-    void getSearchResults_NextLink() throws InterruptedException {
-        int maxPageSize = 1;
-
-        AdvancedSearchRequest request = new AdvancedSearchRequest();
-        request.setSearchCommand("({LF:Basic ~= \\\"search text\\\", option=\\\"DFANLT\\\"})");
-
-        AcceptedOperation searchOperationResponse = client.createSearchOperation(repoId, request).join();
-
-        String searchToken = searchOperationResponse.getToken();
-        assertTrue(searchToken != null && !searchToken.trim().isEmpty());
-
-        TimeUnit.SECONDS.sleep(100);
-
-        CompletableFuture<ODataValueContextOfIListOfEntry> searchResultResponse = client.getSearchResults(repoId, searchToken, null, null, null, null, String.format("maxpagesize=%d", maxPageSize), null, null, null, null, null, null);
-        ODataValueContextOfIListOfEntry searchResults = searchResultResponse.join();
-
-        assertNotNull(searchResults);
-        if (searchResults
-                .getValue()
-                .isEmpty()) {
-            return; // There's no point testing if we don't have any such item.
-        }
-
-        String nextLink = searchResults.getAtOdataNextLink();
-        assertNotNull(nextLink);
-        assertTrue(searchResults
-                .getValue()
-                .size() <= maxPageSize);
-
-        // Paging request
-        searchResultResponse = client.getSearchResultsNextLink(nextLink, maxPageSize);
-        assertNotNull(searchResultResponse);
-        TimeUnit.SECONDS.sleep(10);
-        searchResults = searchResultResponse.join();
-        assertNotNull(searchResults);
-        assertTrue(searchResults
-                .getValue()
-                .size() <= maxPageSize);
-    }
-
-    @Test
-    void getSearchContextHits_NextLink() throws InterruptedException {
-        int maxPageSize = 1;
-        AdvancedSearchRequest request = new AdvancedSearchRequest();
-        request.setSearchCommand("({LF:Basic ~= \"*\", option=\"DFANLT\"})");
-        request.setFuzzyFactor(2);
-
-        AcceptedOperation searchResponse = client.createSearchOperation(repoId, request).join();
-        searchToken = searchResponse.getToken();
-
-        assertNotNull(searchToken);
-
-        TimeUnit.SECONDS.sleep(5);
-
-        CompletableFuture<ODataValueContextOfIListOfEntry> searchResultResponse = client.getSearchResults(repoId, searchToken, null, null, null, null, null, null, null, null, null, null, null);
-        ODataValueContextOfIListOfEntry searchResults = searchResultResponse.join();
-
-        assertNotNull(searchResults);
-        assertTrue(searchResults
-                .getValue()
-                .size() > 0);
-
-        int rowNum = searchResults
-                .getValue()
-                .get(0)
-                .getRowNumber();
-
-        ODataValueContextOfIListOfContextHit contextHitResponse = client.getSearchContextHits(repoId, searchToken, rowNum, null, null, null, null, null, null).join();
-
-        assertNotNull(contextHitResponse);
-
-        String nextLink = searchResults.getAtOdataNextLink();
-        assertNotNull(nextLink);
-        assertTrue(searchResults
-                .getValue()
-                .size() <= maxPageSize);
-
-        // Paging request
-        CompletableFuture<ODataValueContextOfIListOfContextHit> nextLinkResponse = client.getSearchContextHitsNextLink(nextLink, maxPageSize);
-        assertNotNull(nextLinkResponse);
-        TimeUnit.SECONDS.sleep(10);
-        ODataValueContextOfIListOfContextHit nextLinkResult = nextLinkResponse.join();
-        assertNotNull(nextLinkResult);
-        assertTrue(nextLinkResult
-                .getValue()
-                .size() <= maxPageSize);
-    }
-
-    void createSearchOperations_ReturnToken() {
-        AdvancedSearchRequest request = new AdvancedSearchRequest();
-        request.setSearchCommand("({LF:Basic ~= \"search text\", option=\"DFANLT\"})");
-
-        assertNotNull(searchToken);
-    }
 
     @Test
     void getSearchResults_NextLink() throws InterruptedException {
         int maxPageSize = 1;
 
         AdvancedSearchRequest request = new AdvancedSearchRequest();
-        request.searchCommand = "({LF:Basic ~= \"search text\", option=\"NLT\"})";
+        request.setSearchCommand("({LF:Basic ~= \"search text\", option=\"NLT\"})");
 
         CompletableFuture<AcceptedOperation> searchResponse = client.createSearchOperation(repoId, request);
 
-        searchToken = searchResponse.join().token;
+        searchToken = searchResponse.join().getToken();
         assertTrue(searchToken != null && !searchToken.trim().isEmpty());
 
         TimeUnit.SECONDS.sleep(10);
@@ -237,19 +128,19 @@ public class SearchApiTest extends BaseTest {
         CompletableFuture<ODataValueContextOfIListOfEntry> searchResultResponse = client.getSearchResults(repoId, searchToken, null, null, null, null, String.format("maxpagesize=%d", maxPageSize), null, null, null, null, null, null);
         ODataValueContextOfIListOfEntry searchResults = searchResultResponse.join();
         assertNotNull(searchResults);
-        if (searchResults.value.isEmpty()) {
+        if (searchResults.getValue().isEmpty()) {
             return; // There's no point testing if we don't have any such item.
         }
 
-        String nextLink = searchResults._atOdataNextLink;
+        String nextLink = searchResults.getAtOdataNextLink();
         assertNotNull(nextLink);
-        assertTrue(searchResults.value.size() <= maxPageSize);
+        assertTrue(searchResults.getValue().size() <= maxPageSize);
 
         // Paging request
         searchResultResponse = client.getSearchResultsNextLink(nextLink, maxPageSize);
         searchResults = searchResultResponse.join();
         assertNotNull(searchResults);
-        assertTrue(searchResults.value.size() <= maxPageSize);
+        assertTrue(searchResults.getValue().size() <= maxPageSize);
     }
 
     @Test
@@ -257,20 +148,20 @@ public class SearchApiTest extends BaseTest {
         int maxPageSize = 90;
 
         AdvancedSearchRequest request = new AdvancedSearchRequest();
-        request.searchCommand = "({LF:Basic ~= \"search text\", option=\"NLT\"})";
+        request.setSearchCommand("({LF:Basic ~= \"search text\", option=\"NLT\"})");
 
         AcceptedOperation searchOperationResponse = client.createSearchOperation(repoId, request).join();
 
-        searchToken = searchOperationResponse.token;
+        searchToken = searchOperationResponse.getToken();
         assertTrue(searchToken != null && !searchToken.trim().isEmpty());
 
         TimeUnit.SECONDS.sleep(10);
 
         Function<CompletableFuture<ODataValueContextOfIListOfEntry>, CompletableFuture<Boolean>> callback = data -> {
             ODataValueContextOfIListOfEntry futureResult = data.join();
-            if (futureResult._atOdataNextLink != null) {
-                assertNotEquals(0, futureResult.value.size());
-                assertTrue(futureResult.value.size() <= maxPageSize);
+            if (futureResult.getAtOdataNextLink() != null) {
+                assertNotEquals(0, futureResult.getValue().size());
+                assertTrue(futureResult.getValue().size() <= maxPageSize);
                 return CompletableFuture.completedFuture(true);
             } else {
                 return CompletableFuture.completedFuture(false);
@@ -287,11 +178,11 @@ public class SearchApiTest extends BaseTest {
     void getSearchContextHits_NextLink() throws InterruptedException {
         int maxPageSize = 1;
         AdvancedSearchRequest request = new AdvancedSearchRequest();
-        request.searchCommand = "({LF:Basic ~= \"*\", option=\"DFANLT\"})";
-        request.fuzzyFactor = 2;
+        request.setSearchCommand("({LF:Basic ~= \"*\", option=\"DFANLT\"})");
+        request.setFuzzyFactor(2);
 
         AcceptedOperation searchResponse = client.createSearchOperation(repoId, request).join();
-        searchToken = searchResponse.token;
+        searchToken = searchResponse.getToken();
 
         assertNotNull(searchToken);
 
@@ -301,17 +192,17 @@ public class SearchApiTest extends BaseTest {
         ODataValueContextOfIListOfEntry searchResults = searchResultResponse.join();
 
         assertNotNull(searchResults);
-        assertTrue(searchResults.value.size() > 0);
+        assertTrue(searchResults.getValue().size() > 0);
 
-        int rowNum = searchResults.value.get(0).rowNumber;
+        int rowNum = searchResults.getValue().get(0).getRowNumber();
 
         ODataValueContextOfIListOfContextHit contextHitResponse = client.getSearchContextHits(repoId, searchToken, rowNum, null, null, null, null, null, null).join();
 
         assertNotNull(contextHitResponse);
 
-        String nextLink = searchResults._atOdataNextLink;
+        String nextLink = searchResults.getAtOdataNextLink();
         assertNotNull(nextLink);
-        assertTrue(searchResults.value.size() <= maxPageSize);
+        assertTrue(searchResults.getValue().size() <= maxPageSize);
 
         // Paging request
         CompletableFuture<ODataValueContextOfIListOfContextHit> nextLinkResponse = client.getSearchContextHitsNextLink(nextLink, maxPageSize);
@@ -319,18 +210,18 @@ public class SearchApiTest extends BaseTest {
         TimeUnit.SECONDS.sleep(10);
         ODataValueContextOfIListOfContextHit nextLinkResult = nextLinkResponse.join();
         assertNotNull(nextLinkResult);
-        assertTrue(nextLinkResult.value.size() <= maxPageSize);
+        assertTrue(nextLinkResult.getValue().size() <= maxPageSize);
     }
 
     @Test
     void getSearchContextHits_ForEach() throws InterruptedException {
         int maxPageSize = 1;
         AdvancedSearchRequest request = new AdvancedSearchRequest();
-        request.searchCommand = "({LF:Basic ~= \"*\", option=\"DFANLT\"})";
-        request.fuzzyFactor = 2;
+        request.setSearchCommand("({LF:Basic ~= \"*\", option=\"DFANLT\"})");
+        request.setFuzzyFactor(2);
 
         AcceptedOperation searchResponse = client.createSearchOperation(repoId, request).join();
-        searchToken = searchResponse.token;
+        searchToken = searchResponse.getToken();
 
         assertNotNull(searchToken);
 
@@ -340,9 +231,9 @@ public class SearchApiTest extends BaseTest {
         ODataValueContextOfIListOfEntry searchResults = searchResultResponse.join();
 
         assertNotNull(searchResults);
-        assertTrue(searchResults.value.size() > 0);
+        assertTrue(searchResults.getValue().size() > 0);
 
-        int rowNum = searchResults.value.get(0).rowNumber;
+        int rowNum = searchResults.getValue().get(0).getRowNumber();
 
         ODataValueContextOfIListOfContextHit contextHitResponse = client.getSearchContextHits(repoId, searchToken, rowNum, null, null, null, null, null, null).join();
 
@@ -350,9 +241,9 @@ public class SearchApiTest extends BaseTest {
 
         Function<CompletableFuture<ODataValueContextOfIListOfContextHit>, CompletableFuture<Boolean>> callback = data -> {
             ODataValueContextOfIListOfContextHit futureResult = data.join();
-            if (futureResult._atOdataNextLink != null) {
-                assertNotEquals(0, futureResult.value.size());
-                assertTrue(futureResult.value.size() <= maxPageSize);
+            if (futureResult.getAtOdataNextLink() != null) {
+                assertNotEquals(0, futureResult.getValue().size());
+                assertTrue(futureResult.getValue().size() <= maxPageSize);
                 return CompletableFuture.completedFuture(true);
             } else {
                 return CompletableFuture.completedFuture(false);
@@ -363,12 +254,5 @@ public class SearchApiTest extends BaseTest {
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
-    }
-
-    void createSearchOperations_ReturnToken() {
-        AdvancedSearchRequest request = new AdvancedSearchRequest();
-        request.searchCommand = "({LF:Basic ~= \"search text\", option=\"DFANLT\"})";
-
-        assertNotNull(searchToken);
     }
 }

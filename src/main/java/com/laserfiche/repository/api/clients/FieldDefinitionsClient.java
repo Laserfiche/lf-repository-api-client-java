@@ -70,9 +70,5 @@ public interface FieldDefinitionsClient {
      * @throws InterruptedException
      * @throws ExecutionException
      */
-    CompletableFuture<ODataValueContextOfIListOfWFieldInfo> getFieldDefinitions(String repoId, String prefer,
-            String culture, String select, String orderby, Integer top, Integer skip, Boolean count);
-
-    CompletableFuture<ODataValueContextOfIListOfWFieldInfo> getFieldDefinitionsNextLink(String nextLink,
-            int maxPageSize);
+    CompletableFuture<Void> getFieldDefinitionsForEach(Function<CompletableFuture<ODataValueContextOfIListOfWFieldInfo>, CompletableFuture<Boolean>> callback, Integer maxPageSize, String repoId, String prefer, String culture, String select, String orderby, Integer top, Integer skip, Boolean count) throws InterruptedException, ExecutionException;
 }

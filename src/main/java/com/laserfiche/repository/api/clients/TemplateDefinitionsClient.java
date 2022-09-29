@@ -60,9 +60,6 @@ public interface TemplateDefinitionsClient {
      */
     CompletableFuture<Void> getTemplateDefinitionsForEach(Function<CompletableFuture<ODataValueContextOfIListOfWTemplateInfo>, CompletableFuture<Boolean>> callback, Integer maxPageSize, String repoId, String templateName, String prefer, String culture, String select, String orderby, Integer top, Integer skip, Boolean count) throws InterruptedException, ExecutionException;
 
-    CompletableFuture<ODataValueContextOfIListOfWTemplateInfo> getTemplateDefinitionsNextLink(String nextLink,
-            int maxPageSize);
-
     /**
      *  - Returns the field definitions assigned to a template definition.
      * - Provide a template definition name, and get a paged listing of the field definitions assigned to that template.
@@ -90,9 +87,6 @@ public interface TemplateDefinitionsClient {
      * @return CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo> The return value
      */
     CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo> getTemplateFieldDefinitionsByTemplateNameNextLink(String nextLink, Integer maxPageSize);
-
-    CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo> getTemplateFieldDefinitionsByTemplateNameNextLink(
-            String nextLink, int maxPageSize);
 
     /**
      * Provides the functionality to iteratively (i.e. through paging) call <b>getTemplateFieldDefinitionsByTemplateName</b>, and apply a function on the response of each iteration.
@@ -163,9 +157,6 @@ public interface TemplateDefinitionsClient {
      * @throws ExecutionException
      */
     CompletableFuture<Void> getTemplateFieldDefinitionsForEach(Function<CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo>, CompletableFuture<Boolean>> callback, Integer maxPageSize, String repoId, Integer templateId, String prefer, String culture, String select, String orderby, Integer top, Integer skip, Boolean count) throws InterruptedException, ExecutionException;
-
-    CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo> getTemplateFieldDefinitionsNextLink(String nextLink,
-            int maxPageSize);
 
     /**
      *  - Returns a single template definition (including field definitions, if relevant).

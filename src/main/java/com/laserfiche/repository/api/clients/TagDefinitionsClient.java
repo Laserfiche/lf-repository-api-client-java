@@ -58,8 +58,6 @@ public interface TagDefinitionsClient {
      */
     CompletableFuture<Void> getTagDefinitionsForEach(Function<CompletableFuture<ODataValueContextOfIListOfWTagInfo>, CompletableFuture<Boolean>> callback, Integer maxPageSize, String repoId, String prefer, String culture, String select, String orderby, Integer top, Integer skip, Boolean count) throws InterruptedException, ExecutionException;
 
-    CompletableFuture<ODataValueContextOfIListOfWTagInfo> getTagDefinitionsNextLink(String nextLink, int maxPageSize);
-
     /**
      *  - Returns a single tag definition.
      * - Provide a tag definition ID, and get the single tag definition associated with that ID. Useful when another route provides a minimal amount of details, and more information about the specific tag is needed.
