@@ -68,7 +68,6 @@ class EntriesApiTest extends BaseTest {
         Function<CompletableFuture<ODataValueContextOfIListOfEntry>, CompletableFuture<Boolean>> callback = data -> {
             ODataValueContextOfIListOfEntry futureResult = data.join();
             if (futureResult.getOdataNextLink() != null) {
-                System.out.println(futureResult.getOdataNextLink());
                 assertNotEquals(0, futureResult.getValue().size());
                 assertTrue(futureResult.getValue().size() <= maxPageSize);
                 return CompletableFuture.completedFuture(true);
