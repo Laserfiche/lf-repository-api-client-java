@@ -83,7 +83,7 @@ public class AttributesClientImpl extends ApiClient implements AttributesClient 
         prefer = mergeMaxSizeIntoPrefer(maxPageSize, prefer);
         CompletableFuture<ODataValueContextOfListOfAttribute> response = getTrusteeAttributeKeyValuePairs(repoId, everyone, prefer, select, orderby, top, skip, count);
         while (response != null && callback.apply(response).get()) {
-            String nextLink = response.get().getAtOdataNextLink();
+            String nextLink = response.get().getOdataNextLink();
             response = getTrusteeAttributeKeyValuePairsNextLink(nextLink, maxPageSize);
         }
         return CompletableFuture.completedFuture(null);

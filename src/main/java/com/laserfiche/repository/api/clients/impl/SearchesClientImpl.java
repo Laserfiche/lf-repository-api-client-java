@@ -111,7 +111,7 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
         prefer = mergeMaxSizeIntoPrefer(maxPageSize, prefer);
         CompletableFuture<ODataValueContextOfIListOfContextHit> response = getSearchContextHits(repoId, searchToken, rowNumber, prefer, select, orderby, top, skip, count);
         while (response != null && callback.apply(response).get()) {
-            String nextLink = response.get().getAtOdataNextLink();
+            String nextLink = response.get().getOdataNextLink();
             response = getSearchContextHitsNextLink(nextLink, maxPageSize);
         }
         return CompletableFuture.completedFuture(null);
@@ -183,7 +183,7 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
         prefer = mergeMaxSizeIntoPrefer(maxPageSize, prefer);
         CompletableFuture<ODataValueContextOfIListOfEntry> response = getSearchResults(repoId, searchToken, groupByEntryType, refresh, fields, formatFields, prefer, culture, select, orderby, top, skip, count);
         while (response != null && callback.apply(response).get()) {
-            String nextLink = response.get().getAtOdataNextLink();
+            String nextLink = response.get().getOdataNextLink();
             response = getSearchResultsNextLink(nextLink, maxPageSize);
         }
         return CompletableFuture.completedFuture(null);

@@ -83,7 +83,7 @@ public class FieldDefinitionsClientImpl extends ApiClient implements FieldDefini
         prefer = mergeMaxSizeIntoPrefer(maxPageSize, prefer);
         CompletableFuture<ODataValueContextOfIListOfWFieldInfo> response = getFieldDefinitions(repoId, prefer, culture, select, orderby, top, skip, count);
         while (response != null && callback.apply(response).get()) {
-            String nextLink = response.get().getAtOdataNextLink();
+            String nextLink = response.get().getOdataNextLink();
             response = getFieldDefinitionsNextLink(nextLink, maxPageSize);
         }
         return CompletableFuture.completedFuture(null);

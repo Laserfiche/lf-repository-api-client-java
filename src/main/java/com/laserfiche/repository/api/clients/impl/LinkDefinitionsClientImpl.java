@@ -83,7 +83,7 @@ public class LinkDefinitionsClientImpl extends ApiClient implements LinkDefiniti
         prefer = mergeMaxSizeIntoPrefer(maxPageSize, prefer);
         CompletableFuture<ODataValueContextOfIListOfEntryLinkTypeInfo> response = getLinkDefinitions(repoId, prefer, select, orderby, top, skip, count);
         while (response != null && callback.apply(response).get()) {
-            String nextLink = response.get().getAtOdataNextLink();
+            String nextLink = response.get().getOdataNextLink();
             response = getLinkDefinitionsNextLink(nextLink, maxPageSize);
         }
         return CompletableFuture.completedFuture(null);

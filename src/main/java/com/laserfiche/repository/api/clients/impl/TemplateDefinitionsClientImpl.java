@@ -59,7 +59,7 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
         prefer = mergeMaxSizeIntoPrefer(maxPageSize, prefer);
         CompletableFuture<ODataValueContextOfIListOfWTemplateInfo> response = getTemplateDefinitions(repoId, templateName, prefer, culture, select, orderby, top, skip, count);
         while (response != null && callback.apply(response).get()) {
-            String nextLink = response.get().getAtOdataNextLink();
+            String nextLink = response.get().getOdataNextLink();
             response = getTemplateDefinitionsNextLink(nextLink, maxPageSize);
         }
         return CompletableFuture.completedFuture(null);
@@ -108,7 +108,7 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
         prefer = mergeMaxSizeIntoPrefer(maxPageSize, prefer);
         CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo> response = getTemplateFieldDefinitionsByTemplateName(repoId, templateName, prefer, culture, select, orderby, top, skip, count);
         while (response != null && callback.apply(response).get()) {
-            String nextLink = response.get().getAtOdataNextLink();
+            String nextLink = response.get().getOdataNextLink();
             response = getTemplateFieldDefinitionsByTemplateNameNextLink(nextLink, maxPageSize);
         }
         return CompletableFuture.completedFuture(null);
@@ -157,7 +157,7 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
         prefer = mergeMaxSizeIntoPrefer(maxPageSize, prefer);
         CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo> response = getTemplateFieldDefinitions(repoId, templateId, prefer, culture, select, orderby, top, skip, count);
         while (response != null && callback.apply(response).get()) {
-            String nextLink = response.get().getAtOdataNextLink();
+            String nextLink = response.get().getOdataNextLink();
             response = getTemplateFieldDefinitionsNextLink(nextLink, maxPageSize);
         }
         return CompletableFuture.completedFuture(null);

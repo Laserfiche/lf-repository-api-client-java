@@ -56,7 +56,7 @@ public class TagDefinitionsClientImpl extends ApiClient implements TagDefinition
         prefer = mergeMaxSizeIntoPrefer(maxPageSize, prefer);
         CompletableFuture<ODataValueContextOfIListOfWTagInfo> response = getTagDefinitions(repoId, prefer, culture, select, orderby, top, skip, count);
         while (response != null && callback.apply(response).get()) {
-            String nextLink = response.get().getAtOdataNextLink();
+            String nextLink = response.get().getOdataNextLink();
             response = getTagDefinitionsNextLink(nextLink, maxPageSize);
         }
         return CompletableFuture.completedFuture(null);

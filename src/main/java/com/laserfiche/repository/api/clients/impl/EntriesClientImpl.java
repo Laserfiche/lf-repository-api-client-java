@@ -59,7 +59,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
         prefer = mergeMaxSizeIntoPrefer(maxPageSize, prefer);
         CompletableFuture<ODataValueContextOfIListOfFieldValue> response = getFieldValues(repoId, entryId, prefer, formatValue, culture, select, orderby, top, skip, count);
         while (response != null && callback.apply(response).get()) {
-            String nextLink = response.get().getAtOdataNextLink();
+            String nextLink = response.get().getOdataNextLink();
             response = getFieldValuesNextLink(nextLink, maxPageSize);
         }
         return CompletableFuture.completedFuture(null);
@@ -99,9 +99,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
     public CompletableFuture<CreateEntryResult> importDocument(String repoId, Integer parentEntryId, String fileName, Boolean autoRename, String culture, File file, PostEntryWithEdocMetadataRequest requestBody) {
         Map<String, Object> queryParameters = getNonNullParameters(new String[] { "autoRename", "culture" }, new Object[] { autoRename, culture });
         Map<String, Object> pathParameters = getNonNullParameters(new String[] { "repoId", "parentEntryId", "fileName" }, new Object[] { repoId, parentEntryId, fileName });
-        return httpClient.post(baseUrl + "/v1/Repositories/{repoId}/Entries/{parentEntryId}/{fileName}")
-                .queryString(queryParameters).routeParam(pathParameters).body(requestBody)
-                .field("electronicDocument", file).asObjectAsync(CreateEntryResult.class).thenApply(httpResponse -> {
+        return httpClient.post(baseUrl + "/v1/Repositories/{repoId}/Entries/{parentEntryId}/{fileName}").field("electronicDocument", file).queryString(queryParameters).routeParam(pathParameters).body(requestBody).asObjectAsync(CreateEntryResult.class).thenApply(httpResponse -> {
             if (httpResponse.getStatus() == 400) {
                 throw new RuntimeException("Invalid or bad request.");
             }
@@ -173,7 +171,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
         prefer = mergeMaxSizeIntoPrefer(maxPageSize, prefer);
         CompletableFuture<ODataValueContextOfIListOfWEntryLinkInfo> response = getLinkValuesFromEntry(repoId, entryId, prefer, select, orderby, top, skip, count);
         while (response != null && callback.apply(response).get()) {
-            String nextLink = response.get().getAtOdataNextLink();
+            String nextLink = response.get().getOdataNextLink();
             response = getLinkValuesFromEntryNextLink(nextLink, maxPageSize);
         }
         return CompletableFuture.completedFuture(null);
@@ -431,7 +429,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
         prefer = mergeMaxSizeIntoPrefer(maxPageSize, prefer);
         CompletableFuture<ODataValueContextOfIListOfEntry> response = getEntryListing(repoId, entryId, groupByEntryType, fields, formatFields, prefer, culture, select, orderby, top, skip, count);
         while (response != null && callback.apply(response).get()) {
-            String nextLink = response.get().getAtOdataNextLink();
+            String nextLink = response.get().getOdataNextLink();
             response = getEntryListingNextLink(nextLink, maxPageSize);
         }
         return CompletableFuture.completedFuture(null);
@@ -560,7 +558,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
         prefer = mergeMaxSizeIntoPrefer(maxPageSize, prefer);
         CompletableFuture<ODataValueContextOfIListOfWTagInfo> response = getTagsAssignedToEntry(repoId, entryId, prefer, select, orderby, top, skip, count);
         while (response != null && callback.apply(response).get()) {
-            String nextLink = response.get().getAtOdataNextLink();
+            String nextLink = response.get().getOdataNextLink();
             response = getTagsAssignedToEntryNextLink(nextLink, maxPageSize);
         }
         return CompletableFuture.completedFuture(null);
