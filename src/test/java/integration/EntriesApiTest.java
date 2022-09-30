@@ -36,9 +36,8 @@ class EntriesApiTest extends BaseTest {
     @Test
     void getEntryListing_ReturnEntries() {
         ODataValueContextOfIListOfEntry entryList = client
-                .getEntryListing(repoId, 1, false, null, false, null, null, null, null, null, null, false)
+                .getEntryListing(repoId, 1, false, null, false, "maxpagesize=5", null, null, null, null, null, false)
                 .join();
-
         assertNotNull(entryList);
     }
 
@@ -51,7 +50,7 @@ class EntriesApiTest extends BaseTest {
 
         assertNotNull(entryList);
 
-        String nextLink = entryList.getAtOdataNextLink();
+        String nextLink = entryList.getOdataNextLink();
         assertNotNull(nextLink);
         assertTrue(entryList.getValue().size() <= maxPageSize);
 
@@ -68,7 +67,8 @@ class EntriesApiTest extends BaseTest {
         int maxPageSize = 10;
         Function<CompletableFuture<ODataValueContextOfIListOfEntry>, CompletableFuture<Boolean>> callback = data -> {
             ODataValueContextOfIListOfEntry futureResult = data.join();
-            if (futureResult.getAtOdataNextLink() != null) {
+            if (futureResult.getOdataNextLink() != null) {
+                System.out.println(futureResult.getOdataNextLink());
                 assertNotEquals(0, futureResult.getValue().size());
                 assertTrue(futureResult.getValue().size() <= maxPageSize);
                 return CompletableFuture.completedFuture(true);
@@ -110,7 +110,7 @@ class EntriesApiTest extends BaseTest {
 
         assertNotNull(fieldValueList);
 
-        String nextLink = fieldValueList.getAtOdataNextLink();
+        String nextLink = fieldValueList.getOdataNextLink();
         assertNotNull(nextLink);
 
         assertTrue(fieldValueList.getValue().size() <= maxPageSize);
@@ -128,7 +128,7 @@ class EntriesApiTest extends BaseTest {
         int maxPageSize = 90;
         Function<CompletableFuture<ODataValueContextOfIListOfFieldValue>, CompletableFuture<Boolean>> callback = data -> {
             ODataValueContextOfIListOfFieldValue futureResult = data.join();
-            if (futureResult.getAtOdataNextLink() != null) {
+            if (futureResult.getOdataNextLink() != null) {
                 assertNotEquals(0, futureResult.getValue().size());
                 assertTrue(futureResult.getValue().size() <= maxPageSize);
                 return CompletableFuture.completedFuture(true);
@@ -157,7 +157,7 @@ class EntriesApiTest extends BaseTest {
         {
             return; // There's no point testing if we don't have any such item.
         }
-        String nextLink = linkInfoList.getAtOdataNextLink();
+        String nextLink = linkInfoList.getOdataNextLink();
         assertNotNull(nextLink);
 
         assertTrue(linkInfoList.getValue().size() <= maxPageSize);
@@ -175,7 +175,7 @@ class EntriesApiTest extends BaseTest {
         int maxPageSize = 90;
         Function<CompletableFuture<ODataValueContextOfIListOfWEntryLinkInfo>, CompletableFuture<Boolean>> callback = data -> {
             ODataValueContextOfIListOfWEntryLinkInfo futureResult = data.join();
-            if (futureResult.getAtOdataNextLink() != null) {
+            if (futureResult.getOdataNextLink() != null) {
                 assertNotEquals(0, futureResult.getValue().size());
                 assertTrue(futureResult.getValue().size() <= maxPageSize);
                 return CompletableFuture.completedFuture(true);
@@ -217,7 +217,7 @@ class EntriesApiTest extends BaseTest {
         {
             return; // There's no point testing if we don't have any such item.
         }
-        String nextLink = tagInfoList.getAtOdataNextLink();
+        String nextLink = tagInfoList.getOdataNextLink();
         assertNotNull(nextLink);
 
         assertTrue(tagInfoList.getValue().size() <= maxPageSize);
@@ -235,7 +235,7 @@ class EntriesApiTest extends BaseTest {
         int maxPageSize = 90;
         Function<CompletableFuture<ODataValueContextOfIListOfWTagInfo>, CompletableFuture<Boolean>> callback = data -> {
             ODataValueContextOfIListOfWTagInfo futureResult = data.join();
-            if (futureResult.getAtOdataNextLink() != null) {
+            if (futureResult.getOdataNextLink() != null) {
                 assertNotEquals(0, futureResult.getValue().size());
                 assertTrue(futureResult.getValue().size() <= maxPageSize);
                 return CompletableFuture.completedFuture(true);

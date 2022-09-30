@@ -132,7 +132,7 @@ public class SearchApiTest extends BaseTest {
             return; // There's no point testing if we don't have any such item.
         }
 
-        String nextLink = searchResults.getAtOdataNextLink();
+        String nextLink = searchResults.getOdataNextLink();
         assertNotNull(nextLink);
         assertTrue(searchResults.getValue().size() <= maxPageSize);
 
@@ -145,7 +145,7 @@ public class SearchApiTest extends BaseTest {
 
     @Test
     void getSearchResults_ForEach() throws InterruptedException {
-        int maxPageSize = 90;
+        int maxPageSize = 1;
 
         AdvancedSearchRequest request = new AdvancedSearchRequest();
         request.setSearchCommand("({LF:Basic ~= \"search text\", option=\"NLT\"})");
@@ -159,7 +159,7 @@ public class SearchApiTest extends BaseTest {
 
         Function<CompletableFuture<ODataValueContextOfIListOfEntry>, CompletableFuture<Boolean>> callback = data -> {
             ODataValueContextOfIListOfEntry futureResult = data.join();
-            if (futureResult.getAtOdataNextLink() != null) {
+            if (futureResult.getOdataNextLink() != null) {
                 assertNotEquals(0, futureResult.getValue().size());
                 assertTrue(futureResult.getValue().size() <= maxPageSize);
                 return CompletableFuture.completedFuture(true);
@@ -200,7 +200,7 @@ public class SearchApiTest extends BaseTest {
 
         assertNotNull(contextHitResponse);
 
-        String nextLink = searchResults.getAtOdataNextLink();
+        String nextLink = searchResults.getOdataNextLink();
         assertNotNull(nextLink);
         assertTrue(searchResults.getValue().size() <= maxPageSize);
 
@@ -241,7 +241,7 @@ public class SearchApiTest extends BaseTest {
 
         Function<CompletableFuture<ODataValueContextOfIListOfContextHit>, CompletableFuture<Boolean>> callback = data -> {
             ODataValueContextOfIListOfContextHit futureResult = data.join();
-            if (futureResult.getAtOdataNextLink() != null) {
+            if (futureResult.getOdataNextLink() != null) {
                 assertNotEquals(0, futureResult.getValue().size());
                 assertTrue(futureResult.getValue().size() <= maxPageSize);
                 return CompletableFuture.completedFuture(true);

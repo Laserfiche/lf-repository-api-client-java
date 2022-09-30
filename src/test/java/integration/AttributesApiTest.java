@@ -56,7 +56,7 @@ class AttributesApiTest extends BaseTest {
         Attribute attributeObj = newFuture.join();
         assertNotNull(attributeObj);
 
-        String nextLink = attributeList.getAtOdataNextLink();
+        String nextLink = attributeList.getOdataNextLink();
         assertNotNull(nextLink);
 
         assertTrue(attributeList.getValue().size() <= maxPageSize);
@@ -85,7 +85,7 @@ class AttributesApiTest extends BaseTest {
         TimeUnit.SECONDS.sleep(10);
         Function<CompletableFuture<ODataValueContextOfListOfAttribute>, CompletableFuture<Boolean>> callback = data -> {
             ODataValueContextOfListOfAttribute futureResult = data.join();
-            if (futureResult.getAtOdataNextLink() != null) {
+            if (futureResult.getOdataNextLink() != null) {
                 assertNotEquals(0, futureResult.getValue().size());
                 assertTrue(futureResult.getValue().size() <= maxPageSize);
                 return CompletableFuture.completedFuture(true);

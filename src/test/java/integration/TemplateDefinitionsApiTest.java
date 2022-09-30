@@ -60,7 +60,7 @@ class TemplateDefinitionsApiTest extends BaseTest {
                 .join();
 
         assertNotNull(templateInfoList);
-        String nextLink = templateInfoList.getAtOdataNextLink();
+        String nextLink = templateInfoList.getOdataNextLink();
         assertNotNull(nextLink);
 
         assertTrue(templateInfoList.getValue().size() <= maxPageSize);
@@ -86,7 +86,7 @@ class TemplateDefinitionsApiTest extends BaseTest {
         int maxPageSize = 90;
         Function<CompletableFuture<ODataValueContextOfIListOfWTemplateInfo>, CompletableFuture<Boolean>> callback = data -> {
             ODataValueContextOfIListOfWTemplateInfo result = data.join();
-            if (result.getAtOdataNextLink() != null) {
+            if (result.getOdataNextLink() != null) {
                 assertNotEquals(0, result.getValue().size());
                 assertTrue(result.getValue().size() <= maxPageSize);
                 return CompletableFuture.completedFuture(true);
@@ -119,7 +119,7 @@ class TemplateDefinitionsApiTest extends BaseTest {
         assertNotNull(result);
         Assertions.assertSame(maxPageSize, result.getValue().size());
 
-        String nextLink = result.getAtOdataNextLink();
+        String nextLink = result.getOdataNextLink();
         assertNotNull(nextLink);
         assertTrue(result.getValue().size() <= maxPageSize);
 
@@ -153,7 +153,7 @@ class TemplateDefinitionsApiTest extends BaseTest {
         int maxPageSize = 90;
         Function<CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo>, CompletableFuture<Boolean>> callback = data -> {
             ODataValueContextOfIListOfTemplateFieldInfo futureResult = data.join();
-            if (futureResult.getAtOdataNextLink() != null) {
+            if (futureResult.getOdataNextLink() != null) {
                 assertNotEquals(0, futureResult.getValue().size());
                 assertTrue(futureResult.getValue().size() <= maxPageSize);
                 return CompletableFuture.completedFuture(true);

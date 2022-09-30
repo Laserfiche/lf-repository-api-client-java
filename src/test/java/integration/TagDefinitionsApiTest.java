@@ -39,7 +39,7 @@ class TagDefinitionsApiTest extends BaseTest {
 
         assertNotNull(tagInfoList);
 
-        String nextLink = tagInfoList.getAtOdataNextLink();
+        String nextLink = tagInfoList.getOdataNextLink();
         assertNotNull(nextLink);
 
         assertTrue(tagInfoList.getValue().size() <= maxPageSize);
@@ -65,7 +65,7 @@ class TagDefinitionsApiTest extends BaseTest {
         int maxPageSize = 90;
         Function<CompletableFuture<ODataValueContextOfIListOfWTagInfo>, CompletableFuture<Boolean>> callback = data -> {
             ODataValueContextOfIListOfWTagInfo result = data.join();
-            if (result.getAtOdataNextLink() != null) {
+            if (result.getOdataNextLink() != null) {
                 assertNotEquals(0, result.getValue().size());
                 assertTrue(result.getValue().size() <= maxPageSize);
                 return CompletableFuture.completedFuture(true);
