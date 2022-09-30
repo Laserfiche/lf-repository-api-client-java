@@ -32,7 +32,9 @@ public class SetLinksApiTest extends BaseTest {
         for (Entry createdEntry : createdEntries) {
             if (createdEntry != null) {
                 DeleteEntryWithAuditReason body = new DeleteEntryWithAuditReason();
-                client.getEntriesClient().deleteEntryInfo(repoId, createdEntry.getId(), body);
+                client
+                        .getEntriesClient()
+                        .deleteEntryInfo(repoId, createdEntry.getId(), body);
             }
         }
     }
@@ -44,16 +46,31 @@ public class SetLinksApiTest extends BaseTest {
         targetEntry = createEntry(client, "RepositoryApiClientIntegrationTest .Net SetLinks Target", 1, true);
         createdEntries.add(targetEntry.join());
         PutLinksRequest linkRequest = new PutLinksRequest();
-        linkRequest.setTargetId(targetEntry.join().getId());
+        linkRequest.setTargetId(targetEntry
+                .join()
+                .getId());
         linkRequest.setLinkTypeId(1);
         List<PutLinksRequest> request = new ArrayList<PutLinksRequest>();
         request.add(linkRequest);
-        ODataValueOfIListOfWEntryLinkInfo result = client.getEntriesClient().assignEntryLinks(repoId, sourceEntry.join().getId(), request).join();
+        ODataValueOfIListOfWEntryLinkInfo result = client
+                .getEntriesClient()
+                .assignEntryLinks(repoId, sourceEntry
+                        .join()
+                        .getId(), request)
+                .join();
         List<WEntryLinkInfo> links = result.getValue();
         assertNotNull(links);
         assertEquals(request.size(), links.size());
-        assertEquals(sourceEntry.join().getId(), links.get(0).getSourceId());
-        assertEquals(targetEntry.join().getId(), links.get(0).getTargetId());
+        assertEquals(sourceEntry
+                .join()
+                .getId(), links
+                .get(0)
+                .getSourceId());
+        assertEquals(targetEntry
+                .join()
+                .getId(), links
+                .get(0)
+                .getTargetId());
     }
 
 }

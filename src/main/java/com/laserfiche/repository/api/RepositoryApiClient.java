@@ -62,6 +62,7 @@ public interface RepositoryApiClient {
 
     /**
      * Set default headers that will be used for all requests.
+     *
      * @param defaultHeaders A key value pair of header name and value.
      */
     void setDefaultRequestHeaders(Map<String, String> defaultHeaders);

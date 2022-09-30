@@ -3,6 +3,7 @@ package com.laserfiche.repository.api.clients.impl.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -39,9 +40,9 @@ public class EntryFieldValue {
     }
 
     @Schema(description = "The name of the field.")
-public String getFieldName() {
-    return fieldName;
-}
+    public String getFieldName() {
+        return fieldName;
+    }
 
     public void setFieldName(String fieldName) {
         this.fieldName = fieldName;
@@ -61,9 +62,9 @@ public String getFieldName() {
     }
 
     @Schema(description = "The values assigned to the field.")
-public List<Map<String, Object>> getValues() {
-    return values;
-}
+    public List<Map<String, Object>> getValues() {
+        return values;
+    }
 
     public void setValues(List<Map<String, Object>> values) {
         this.values = values;
@@ -75,9 +76,9 @@ public List<Map<String, Object>> getValues() {
     }
 
     @Schema(description = "")
-public WFieldType getFieldType() {
-    return fieldType;
-}
+    public WFieldType getFieldType() {
+        return fieldType;
+    }
 
     public void setFieldType(WFieldType fieldType) {
         this.fieldType = fieldType;
@@ -89,9 +90,9 @@ public WFieldType getFieldType() {
     }
 
     @Schema(description = "The ID of the field.")
-public Integer getFieldId() {
-    return fieldId;
-}
+    public Integer getFieldId() {
+        return fieldId;
+    }
 
     public void setFieldId(Integer fieldId) {
         this.fieldId = fieldId;
@@ -103,9 +104,9 @@ public Integer getFieldId() {
     }
 
     @Schema(description = "A boolean indicating if the represented field supports multiple values.")
-public Boolean isIsMultiValue() {
-    return isMultiValue;
-}
+    public Boolean isIsMultiValue() {
+        return isMultiValue;
+    }
 
     public void setIsMultiValue(Boolean isMultiValue) {
         this.isMultiValue = isMultiValue;
@@ -117,9 +118,9 @@ public Boolean isIsMultiValue() {
     }
 
     @Schema(description = "A boolean indicating if the represented field must have a value set on entries assigned to a template that the field is a member of.")
-public Boolean isIsRequired() {
-    return isRequired;
-}
+    public Boolean isIsRequired() {
+        return isRequired;
+    }
 
     public void setIsRequired(Boolean isRequired) {
         this.isRequired = isRequired;
@@ -131,50 +132,77 @@ public Boolean isIsRequired() {
     }
 
     @Schema(description = "A boolean indicating if there are more field values.")
-public Boolean isHasMoreValues() {
-    return hasMoreValues;
-}
+    public Boolean isHasMoreValues() {
+        return hasMoreValues;
+    }
 
     public void setHasMoreValues(Boolean hasMoreValues) {
         this.hasMoreValues = hasMoreValues;
     }
 
     @Override
-public boolean equals(java.lang.Object o) {
-    if (this == o) {
-        return true;
+    public boolean equals(java.lang.Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        EntryFieldValue entryFieldValue = (EntryFieldValue) o;
+        return Objects.equals(this.fieldName, entryFieldValue.fieldName) && Objects.equals(this.values,
+                entryFieldValue.values) && Objects.equals(this.fieldType, entryFieldValue.fieldType) && Objects.equals(
+                this.fieldId, entryFieldValue.fieldId) && Objects.equals(this.isMultiValue,
+                entryFieldValue.isMultiValue) && Objects.equals(this.isRequired,
+                entryFieldValue.isRequired) && Objects.equals(this.hasMoreValues, entryFieldValue.hasMoreValues);
     }
-    if (o == null || getClass() != o.getClass()) {
-        return false;
-    }
-    EntryFieldValue entryFieldValue = (EntryFieldValue) o;
-    return Objects.equals(this.fieldName, entryFieldValue.fieldName) && Objects.equals(this.values, entryFieldValue.values) && Objects.equals(this.fieldType, entryFieldValue.fieldType) && Objects.equals(this.fieldId, entryFieldValue.fieldId) && Objects.equals(this.isMultiValue, entryFieldValue.isMultiValue) && Objects.equals(this.isRequired, entryFieldValue.isRequired) && Objects.equals(this.hasMoreValues, entryFieldValue.hasMoreValues);
-}
 
     @Override
-public int hashCode() {
-    return Objects.hash(fieldName, values, fieldType, fieldId, isMultiValue, isRequired, hasMoreValues);
-}
+    public int hashCode() {
+        return Objects.hash(fieldName, values, fieldType, fieldId, isMultiValue, isRequired, hasMoreValues);
+    }
 
     @Override
-public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class EntryFieldValue {\n");
-    sb.append("    fieldName: ").append(toIndentedString(fieldName)).append("\n");
-    sb.append("    values: ").append(toIndentedString(values)).append("\n");
-    sb.append("    fieldType: ").append(toIndentedString(fieldType)).append("\n");
-    sb.append("    fieldId: ").append(toIndentedString(fieldId)).append("\n");
-    sb.append("    isMultiValue: ").append(toIndentedString(isMultiValue)).append("\n");
-    sb.append("    isRequired: ").append(toIndentedString(isRequired)).append("\n");
-    sb.append("    hasMoreValues: ").append(toIndentedString(hasMoreValues)).append("\n");
-    sb.append("}");
-    return sb.toString();
-}
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("class EntryFieldValue {\n");
+        sb
+                .append("    fieldName: ")
+                .append(toIndentedString(fieldName))
+                .append("\n");
+        sb
+                .append("    values: ")
+                .append(toIndentedString(values))
+                .append("\n");
+        sb
+                .append("    fieldType: ")
+                .append(toIndentedString(fieldType))
+                .append("\n");
+        sb
+                .append("    fieldId: ")
+                .append(toIndentedString(fieldId))
+                .append("\n");
+        sb
+                .append("    isMultiValue: ")
+                .append(toIndentedString(isMultiValue))
+                .append("\n");
+        sb
+                .append("    isRequired: ")
+                .append(toIndentedString(isRequired))
+                .append("\n");
+        sb
+                .append("    hasMoreValues: ")
+                .append(toIndentedString(hasMoreValues))
+                .append("\n");
+        sb.append("}");
+        return sb.toString();
+    }
 
     private String toIndentedString(java.lang.Object o) {
         if (o == null) {
             return "null";
         }
-        return o.toString().replace("\n", "\n    ");
+        return o
+                .toString()
+                .replace("\n", "\n    ");
     }
 }

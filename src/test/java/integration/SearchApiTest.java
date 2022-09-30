@@ -35,14 +35,17 @@ public class SearchApiTest extends BaseTest {
         request.setSearchCommand("({LF:Basic ~= \"*\", option=\"DFANLT\"})");
         request.setFuzzyFactor(2);
 
-        AcceptedOperation searchResponse = client.createSearchOperation(repoId, request).join();
+        AcceptedOperation searchResponse = client
+                .createSearchOperation(repoId, request)
+                .join();
         searchToken = searchResponse.getToken();
 
         assertNotNull(searchToken);
 
         TimeUnit.SECONDS.sleep(5);
 
-        CompletableFuture<ODataValueContextOfIListOfEntry> searchResultResponse = client.getSearchResults(repoId, searchToken, null, null, null, null, null, null, null, null, null, null, null);
+        CompletableFuture<ODataValueContextOfIListOfEntry> searchResultResponse = client.getSearchResults(repoId,
+                searchToken, null, null, null, null, null, null, null, null, null, null, null);
         ODataValueContextOfIListOfEntry searchResults = searchResultResponse.join();
 
         assertNotNull(searchResults);
@@ -55,7 +58,9 @@ public class SearchApiTest extends BaseTest {
                 .get(0)
                 .getRowNumber();
 
-        ODataValueContextOfIListOfContextHit contextHitResponse = client.getSearchContextHits(repoId, searchToken, rowNum, null, null, null, null, null, null).join();
+        ODataValueContextOfIListOfContextHit contextHitResponse = client
+                .getSearchContextHits(repoId, searchToken, rowNum, null, null, null, null, null, null)
+                .join();
 
         assertNotNull(contextHitResponse);
     }
@@ -67,13 +72,16 @@ public class SearchApiTest extends BaseTest {
 
         CompletableFuture<AcceptedOperation> searchResponse = client.createSearchOperation(repoId, request);
 
-        searchToken = searchResponse.join().getToken();
+        searchToken = searchResponse
+                .join()
+                .getToken();
 
         assertNotNull(searchToken);
 
         TimeUnit.SECONDS.sleep(5);
 
-        CompletableFuture<ODataValueContextOfIListOfEntry> searchResultResponse = client.getSearchResults(repoId, searchToken, null, null, null, null, null, null, null, null, null, null, null);
+        CompletableFuture<ODataValueContextOfIListOfEntry> searchResultResponse = client.getSearchResults(repoId,
+                searchToken, null, null, null, null, null, null, null, null, null, null, null);
         assertNotNull(searchResultResponse.join());
     }
 
@@ -82,14 +90,18 @@ public class SearchApiTest extends BaseTest {
         AdvancedSearchRequest request = new AdvancedSearchRequest();
         request.setSearchCommand("({LF:Basic ~= \"search text\", option=\"DFANLT\"})");
 
-        AcceptedOperation searchResponse = client.createSearchOperation(repoId, request).join();
+        AcceptedOperation searchResponse = client
+                .createSearchOperation(repoId, request)
+                .join();
         searchToken = searchResponse.getToken();
 
         assertNotNull(searchToken);
 
         TimeUnit.SECONDS.sleep(5);
 
-        OperationProgress searchStatusResponse = client.getSearchStatus(repoId, searchToken).join();
+        OperationProgress searchStatusResponse = client
+                .getSearchStatus(repoId, searchToken)
+                .join();
 
         assertNotNull(searchStatusResponse);
     }
@@ -99,13 +111,17 @@ public class SearchApiTest extends BaseTest {
         AdvancedSearchRequest request = new AdvancedSearchRequest();
         request.setSearchCommand("({LF:Basic ~= \"search text\", option=\"DFANLT\"})");
 
-        AcceptedOperation searchOperationResponse = client.createSearchOperation(repoId, request).join();
+        AcceptedOperation searchOperationResponse = client
+                .createSearchOperation(repoId, request)
+                .join();
 
         searchToken = searchOperationResponse.getToken();
 
         assertNotNull(searchToken);
 
-        ODataValueOfBoolean closeSearchResponse = client.cancelOrCloseSearch(repoId, searchToken).join();
+        ODataValueOfBoolean closeSearchResponse = client
+                .cancelOrCloseSearch(repoId, searchToken)
+                .join();
 
         assertTrue(closeSearchResponse.isValue());
     }
@@ -120,27 +136,39 @@ public class SearchApiTest extends BaseTest {
 
         CompletableFuture<AcceptedOperation> searchResponse = client.createSearchOperation(repoId, request);
 
-        searchToken = searchResponse.join().getToken();
-        assertTrue(searchToken != null && !searchToken.trim().isEmpty());
+        searchToken = searchResponse
+                .join()
+                .getToken();
+        assertTrue(searchToken != null && !searchToken
+                .trim()
+                .isEmpty());
 
         TimeUnit.SECONDS.sleep(10);
 
-        CompletableFuture<ODataValueContextOfIListOfEntry> searchResultResponse = client.getSearchResults(repoId, searchToken, null, null, null, null, String.format("maxpagesize=%d", maxPageSize), null, null, null, null, null, null);
+        CompletableFuture<ODataValueContextOfIListOfEntry> searchResultResponse = client.getSearchResults(repoId,
+                searchToken, null, null, null, null, String.format("maxpagesize=%d", maxPageSize), null, null, null,
+                null, null, null);
         ODataValueContextOfIListOfEntry searchResults = searchResultResponse.join();
         assertNotNull(searchResults);
-        if (searchResults.getValue().isEmpty()) {
+        if (searchResults
+                .getValue()
+                .isEmpty()) {
             return; // There's no point testing if we don't have any such item.
         }
 
         String nextLink = searchResults.getOdataNextLink();
         assertNotNull(nextLink);
-        assertTrue(searchResults.getValue().size() <= maxPageSize);
+        assertTrue(searchResults
+                .getValue()
+                .size() <= maxPageSize);
 
         // Paging request
         searchResultResponse = client.getSearchResultsNextLink(nextLink, maxPageSize);
         searchResults = searchResultResponse.join();
         assertNotNull(searchResults);
-        assertTrue(searchResults.getValue().size() <= maxPageSize);
+        assertTrue(searchResults
+                .getValue()
+                .size() <= maxPageSize);
     }
 
     @Test
@@ -150,25 +178,34 @@ public class SearchApiTest extends BaseTest {
         AdvancedSearchRequest request = new AdvancedSearchRequest();
         request.setSearchCommand("({LF:Basic ~= \"search text\", option=\"NLT\"})");
 
-        AcceptedOperation searchOperationResponse = client.createSearchOperation(repoId, request).join();
+        AcceptedOperation searchOperationResponse = client
+                .createSearchOperation(repoId, request)
+                .join();
 
         searchToken = searchOperationResponse.getToken();
-        assertTrue(searchToken != null && !searchToken.trim().isEmpty());
+        assertTrue(searchToken != null && !searchToken
+                .trim()
+                .isEmpty());
 
         TimeUnit.SECONDS.sleep(10);
 
         Function<CompletableFuture<ODataValueContextOfIListOfEntry>, CompletableFuture<Boolean>> callback = data -> {
             ODataValueContextOfIListOfEntry futureResult = data.join();
             if (futureResult.getOdataNextLink() != null) {
-                assertNotEquals(0, futureResult.getValue().size());
-                assertTrue(futureResult.getValue().size() <= maxPageSize);
+                assertNotEquals(0, futureResult
+                        .getValue()
+                        .size());
+                assertTrue(futureResult
+                        .getValue()
+                        .size() <= maxPageSize);
                 return CompletableFuture.completedFuture(true);
             } else {
                 return CompletableFuture.completedFuture(false);
             }
         };
         try {
-            client.getSearchResultsForEach(callback, maxPageSize, repoId, searchToken, null, null, null, null, null, null, null, null, null, null, null);
+            client.getSearchResultsForEach(callback, maxPageSize, repoId, searchToken, null, null, null, null, null,
+                    null, null, null, null, null, null);
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
@@ -181,36 +218,52 @@ public class SearchApiTest extends BaseTest {
         request.setSearchCommand("({LF:Basic ~= \"*\", option=\"DFANLT\"})");
         request.setFuzzyFactor(2);
 
-        AcceptedOperation searchResponse = client.createSearchOperation(repoId, request).join();
+        AcceptedOperation searchResponse = client
+                .createSearchOperation(repoId, request)
+                .join();
         searchToken = searchResponse.getToken();
 
         assertNotNull(searchToken);
 
         TimeUnit.SECONDS.sleep(5);
 
-        CompletableFuture<ODataValueContextOfIListOfEntry> searchResultResponse = client.getSearchResults(repoId, searchToken, null, null, null, null, String.format("maxpagesize=%d", maxPageSize), null, null, null, null, null, null);
+        CompletableFuture<ODataValueContextOfIListOfEntry> searchResultResponse = client.getSearchResults(repoId,
+                searchToken, null, null, null, null, String.format("maxpagesize=%d", maxPageSize), null, null, null,
+                null, null, null);
         ODataValueContextOfIListOfEntry searchResults = searchResultResponse.join();
 
         assertNotNull(searchResults);
-        assertTrue(searchResults.getValue().size() > 0);
+        assertTrue(searchResults
+                .getValue()
+                .size() > 0);
 
-        int rowNum = searchResults.getValue().get(0).getRowNumber();
+        int rowNum = searchResults
+                .getValue()
+                .get(0)
+                .getRowNumber();
 
-        ODataValueContextOfIListOfContextHit contextHitResponse = client.getSearchContextHits(repoId, searchToken, rowNum, null, null, null, null, null, null).join();
+        ODataValueContextOfIListOfContextHit contextHitResponse = client
+                .getSearchContextHits(repoId, searchToken, rowNum, null, null, null, null, null, null)
+                .join();
 
         assertNotNull(contextHitResponse);
 
         String nextLink = searchResults.getOdataNextLink();
         assertNotNull(nextLink);
-        assertTrue(searchResults.getValue().size() <= maxPageSize);
+        assertTrue(searchResults
+                .getValue()
+                .size() <= maxPageSize);
 
         // Paging request
-        CompletableFuture<ODataValueContextOfIListOfContextHit> nextLinkResponse = client.getSearchContextHitsNextLink(nextLink, maxPageSize);
+        CompletableFuture<ODataValueContextOfIListOfContextHit> nextLinkResponse = client.getSearchContextHitsNextLink(
+                nextLink, maxPageSize);
         assertNotNull(nextLinkResponse);
         TimeUnit.SECONDS.sleep(10);
         ODataValueContextOfIListOfContextHit nextLinkResult = nextLinkResponse.join();
         assertNotNull(nextLinkResult);
-        assertTrue(nextLinkResult.getValue().size() <= maxPageSize);
+        assertTrue(nextLinkResult
+                .getValue()
+                .size() <= maxPageSize);
     }
 
     @Test
@@ -220,37 +273,53 @@ public class SearchApiTest extends BaseTest {
         request.setSearchCommand("({LF:Basic ~= \"*\", option=\"DFANLT\"})");
         request.setFuzzyFactor(2);
 
-        AcceptedOperation searchResponse = client.createSearchOperation(repoId, request).join();
+        AcceptedOperation searchResponse = client
+                .createSearchOperation(repoId, request)
+                .join();
         searchToken = searchResponse.getToken();
 
         assertNotNull(searchToken);
 
         TimeUnit.SECONDS.sleep(5);
 
-        CompletableFuture<ODataValueContextOfIListOfEntry> searchResultResponse = client.getSearchResults(repoId, searchToken, null, null, null, null, String.format("maxpagesize=%d", maxPageSize), null, null, null, null, null, null);
+        CompletableFuture<ODataValueContextOfIListOfEntry> searchResultResponse = client.getSearchResults(repoId,
+                searchToken, null, null, null, null, String.format("maxpagesize=%d", maxPageSize), null, null, null,
+                null, null, null);
         ODataValueContextOfIListOfEntry searchResults = searchResultResponse.join();
 
         assertNotNull(searchResults);
-        assertTrue(searchResults.getValue().size() > 0);
+        assertTrue(searchResults
+                .getValue()
+                .size() > 0);
 
-        int rowNum = searchResults.getValue().get(0).getRowNumber();
+        int rowNum = searchResults
+                .getValue()
+                .get(0)
+                .getRowNumber();
 
-        ODataValueContextOfIListOfContextHit contextHitResponse = client.getSearchContextHits(repoId, searchToken, rowNum, null, null, null, null, null, null).join();
+        ODataValueContextOfIListOfContextHit contextHitResponse = client
+                .getSearchContextHits(repoId, searchToken, rowNum, null, null, null, null, null, null)
+                .join();
 
         assertNotNull(contextHitResponse);
 
         Function<CompletableFuture<ODataValueContextOfIListOfContextHit>, CompletableFuture<Boolean>> callback = data -> {
             ODataValueContextOfIListOfContextHit futureResult = data.join();
             if (futureResult.getOdataNextLink() != null) {
-                assertNotEquals(0, futureResult.getValue().size());
-                assertTrue(futureResult.getValue().size() <= maxPageSize);
+                assertNotEquals(0, futureResult
+                        .getValue()
+                        .size());
+                assertTrue(futureResult
+                        .getValue()
+                        .size() <= maxPageSize);
                 return CompletableFuture.completedFuture(true);
             } else {
                 return CompletableFuture.completedFuture(false);
             }
         };
         try {
-            client.getSearchContextHitsForEach(callback, maxPageSize, repoId, searchToken,1, null, null, null, null, null, null);
+            client.getSearchContextHitsForEach(callback, maxPageSize, repoId, searchToken, 1, null, null, null, null,
+                    null, null);
         } catch (ExecutionException e) {
             e.printStackTrace();
         }

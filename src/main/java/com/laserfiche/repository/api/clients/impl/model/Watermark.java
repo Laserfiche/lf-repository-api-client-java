@@ -3,6 +3,7 @@ package com.laserfiche.repository.api.clients.impl.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.Objects;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-08-19T17:07:43.799-04:00[America/New_York]")
@@ -33,9 +34,9 @@ public class Watermark {
     }
 
     @Schema(description = "The watermark text associated with the tag defintion.")
-public String getWatermarkText() {
-    return watermarkText;
-}
+    public String getWatermarkText() {
+        return watermarkText;
+    }
 
     public void setWatermarkText(String watermarkText) {
         this.watermarkText = watermarkText;
@@ -47,9 +48,9 @@ public String getWatermarkText() {
     }
 
     @Schema(description = "The size of the watermark text, in points, associated with the tag definition.")
-public Integer getWatermarkTextSize() {
-    return watermarkTextSize;
-}
+    public Integer getWatermarkTextSize() {
+        return watermarkTextSize;
+    }
 
     public void setWatermarkTextSize(Integer watermarkTextSize) {
         this.watermarkTextSize = watermarkTextSize;
@@ -61,9 +62,9 @@ public Integer getWatermarkTextSize() {
     }
 
     @Schema(description = "")
-public WatermarkPosition getWatermarkPosition() {
-    return watermarkPosition;
-}
+    public WatermarkPosition getWatermarkPosition() {
+        return watermarkPosition;
+    }
 
     public void setWatermarkPosition(WatermarkPosition watermarkPosition) {
         this.watermarkPosition = watermarkPosition;
@@ -75,9 +76,9 @@ public WatermarkPosition getWatermarkPosition() {
     }
 
     @Schema(description = "The rotation angle, in degrees, of the watermark associated with the tag definition.")
-public Integer getWatermarkRotationAngle() {
-    return watermarkRotationAngle;
-}
+    public Integer getWatermarkRotationAngle() {
+        return watermarkRotationAngle;
+    }
 
     public void setWatermarkRotationAngle(Integer watermarkRotationAngle) {
         this.watermarkRotationAngle = watermarkRotationAngle;
@@ -89,9 +90,9 @@ public Integer getWatermarkRotationAngle() {
     }
 
     @Schema(description = "A boolean indicating whether or not the watermark associated with the tag is mandatory.")
-public Boolean isIsWatermarkMandatory() {
-    return isWatermarkMandatory;
-}
+    public Boolean isIsWatermarkMandatory() {
+        return isWatermarkMandatory;
+    }
 
     public void setIsWatermarkMandatory(Boolean isWatermarkMandatory) {
         this.isWatermarkMandatory = isWatermarkMandatory;
@@ -103,49 +104,75 @@ public Boolean isIsWatermarkMandatory() {
     }
 
     @Schema(description = "The intensity of the watermark associated with the tag definition. Valid value  ranges from 0 to 100, with -1 as the default values.")
-public Integer getWatermarkIntensity() {
-    return watermarkIntensity;
-}
+    public Integer getWatermarkIntensity() {
+        return watermarkIntensity;
+    }
 
     public void setWatermarkIntensity(Integer watermarkIntensity) {
         this.watermarkIntensity = watermarkIntensity;
     }
 
     @Override
-public boolean equals(java.lang.Object o) {
-    if (this == o) {
-        return true;
+    public boolean equals(java.lang.Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Watermark watermark = (Watermark) o;
+        return Objects.equals(this.watermarkText, watermark.watermarkText) && Objects.equals(this.watermarkTextSize,
+                watermark.watermarkTextSize) && Objects.equals(this.watermarkPosition,
+                watermark.watermarkPosition) && Objects.equals(this.watermarkRotationAngle,
+                watermark.watermarkRotationAngle) && Objects.equals(this.isWatermarkMandatory,
+                watermark.isWatermarkMandatory) && Objects.equals(this.watermarkIntensity,
+                watermark.watermarkIntensity);
     }
-    if (o == null || getClass() != o.getClass()) {
-        return false;
-    }
-    Watermark watermark = (Watermark) o;
-    return Objects.equals(this.watermarkText, watermark.watermarkText) && Objects.equals(this.watermarkTextSize, watermark.watermarkTextSize) && Objects.equals(this.watermarkPosition, watermark.watermarkPosition) && Objects.equals(this.watermarkRotationAngle, watermark.watermarkRotationAngle) && Objects.equals(this.isWatermarkMandatory, watermark.isWatermarkMandatory) && Objects.equals(this.watermarkIntensity, watermark.watermarkIntensity);
-}
 
     @Override
-public int hashCode() {
-    return Objects.hash(watermarkText, watermarkTextSize, watermarkPosition, watermarkRotationAngle, isWatermarkMandatory, watermarkIntensity);
-}
+    public int hashCode() {
+        return Objects.hash(watermarkText, watermarkTextSize, watermarkPosition, watermarkRotationAngle,
+                isWatermarkMandatory, watermarkIntensity);
+    }
 
     @Override
-public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class Watermark {\n");
-    sb.append("    watermarkText: ").append(toIndentedString(watermarkText)).append("\n");
-    sb.append("    watermarkTextSize: ").append(toIndentedString(watermarkTextSize)).append("\n");
-    sb.append("    watermarkPosition: ").append(toIndentedString(watermarkPosition)).append("\n");
-    sb.append("    watermarkRotationAngle: ").append(toIndentedString(watermarkRotationAngle)).append("\n");
-    sb.append("    isWatermarkMandatory: ").append(toIndentedString(isWatermarkMandatory)).append("\n");
-    sb.append("    watermarkIntensity: ").append(toIndentedString(watermarkIntensity)).append("\n");
-    sb.append("}");
-    return sb.toString();
-}
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("class Watermark {\n");
+        sb
+                .append("    watermarkText: ")
+                .append(toIndentedString(watermarkText))
+                .append("\n");
+        sb
+                .append("    watermarkTextSize: ")
+                .append(toIndentedString(watermarkTextSize))
+                .append("\n");
+        sb
+                .append("    watermarkPosition: ")
+                .append(toIndentedString(watermarkPosition))
+                .append("\n");
+        sb
+                .append("    watermarkRotationAngle: ")
+                .append(toIndentedString(watermarkRotationAngle))
+                .append("\n");
+        sb
+                .append("    isWatermarkMandatory: ")
+                .append(toIndentedString(isWatermarkMandatory))
+                .append("\n");
+        sb
+                .append("    watermarkIntensity: ")
+                .append(toIndentedString(watermarkIntensity))
+                .append("\n");
+        sb.append("}");
+        return sb.toString();
+    }
 
     private String toIndentedString(java.lang.Object o) {
         if (o == null) {
             return "null";
         }
-        return o.toString().replace("\n", "\n    ");
+        return o
+                .toString()
+                .replace("\n", "\n    ");
     }
 }

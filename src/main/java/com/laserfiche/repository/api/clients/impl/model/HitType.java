@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public enum HitType {
-    
+
     PAGECONTENT("PageContent"),
     NOTE("Note"),
     CALLOUT("Callout"),
@@ -31,22 +31,22 @@ public enum HitType {
     }
 
     @JsonCreator
-public static HitType fromValue(String input) {
-    for (HitType b : HitType.values()) {
-        if (b.value.equals(input)) {
-            return b;
+    public static HitType fromValue(String input) {
+        for (HitType b : HitType.values()) {
+            if (b.value.equals(input)) {
+                return b;
+            }
         }
+        return null;
     }
-    return null;
-}
 
     @JsonValue
-public String getValue() {
-    return value;
-}
+    public String getValue() {
+        return value;
+    }
 
     @Override
-public String toString() {
-    return String.valueOf(value);
-}
+    public String toString() {
+        return String.valueOf(value);
+    }
 }

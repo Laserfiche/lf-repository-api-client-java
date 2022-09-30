@@ -3,6 +3,7 @@ package com.laserfiche.repository.api.clients.impl.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -28,44 +29,49 @@ public class PutTagRequest {
     }
 
     @Schema(description = "The tag names to assign to the entry.")
-public List<String> getTags() {
-    return tags;
-}
+    public List<String> getTags() {
+        return tags;
+    }
 
     public void setTags(List<String> tags) {
         this.tags = tags;
     }
 
     @Override
-public boolean equals(java.lang.Object o) {
-    if (this == o) {
-        return true;
+    public boolean equals(java.lang.Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        PutTagRequest putTagRequest = (PutTagRequest) o;
+        return Objects.equals(this.tags, putTagRequest.tags);
     }
-    if (o == null || getClass() != o.getClass()) {
-        return false;
-    }
-    PutTagRequest putTagRequest = (PutTagRequest) o;
-    return Objects.equals(this.tags, putTagRequest.tags);
-}
 
     @Override
-public int hashCode() {
-    return Objects.hash(tags);
-}
+    public int hashCode() {
+        return Objects.hash(tags);
+    }
 
     @Override
-public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class PutTagRequest {\n");
-    sb.append("    tags: ").append(toIndentedString(tags)).append("\n");
-    sb.append("}");
-    return sb.toString();
-}
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("class PutTagRequest {\n");
+        sb
+                .append("    tags: ")
+                .append(toIndentedString(tags))
+                .append("\n");
+        sb.append("}");
+        return sb.toString();
+    }
 
     private String toIndentedString(java.lang.Object o) {
         if (o == null) {
             return "null";
         }
-        return o.toString().replace("\n", "\n    ");
+        return o
+                .toString()
+                .replace("\n", "\n    ");
     }
 }

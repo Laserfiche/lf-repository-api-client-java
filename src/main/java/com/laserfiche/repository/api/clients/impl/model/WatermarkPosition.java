@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public enum WatermarkPosition {
-    
+
     TOPLEFT("TopLeft"),
     TOPCENTER("TopCenter"),
     TOPRIGHT("TopRight"),
@@ -24,22 +24,22 @@ public enum WatermarkPosition {
     }
 
     @JsonCreator
-public static WatermarkPosition fromValue(String input) {
-    for (WatermarkPosition b : WatermarkPosition.values()) {
-        if (b.value.equals(input)) {
-            return b;
+    public static WatermarkPosition fromValue(String input) {
+        for (WatermarkPosition b : WatermarkPosition.values()) {
+            if (b.value.equals(input)) {
+                return b;
+            }
         }
+        return null;
     }
-    return null;
-}
 
     @JsonValue
-public String getValue() {
-    return value;
-}
+    public String getValue() {
+        return value;
+    }
 
     @Override
-public String toString() {
-    return String.valueOf(value);
-}
+    public String toString() {
+        return String.valueOf(value);
+    }
 }

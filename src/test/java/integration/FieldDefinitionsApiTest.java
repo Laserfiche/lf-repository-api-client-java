@@ -43,21 +43,27 @@ class FieldDefinitionsApiTest extends BaseTest {
     void getFieldDefinitions_NextLink() throws InterruptedException {
         int maxPageSize = 10;
         ODataValueContextOfIListOfWFieldInfo fieldInfoList = client
-                .getFieldDefinitions(repoId, String.format("maxpagesize=%d", maxPageSize), null, null, null, null, null, false)
+                .getFieldDefinitions(repoId, String.format("maxpagesize=%d", maxPageSize), null, null, null, null, null,
+                        false)
                 .join();
         assertNotNull(fieldInfoList);
 
         String nextLink = fieldInfoList.getOdataNextLink();
         assertNotNull(nextLink);
 
-        assertTrue(fieldInfoList.getValue().size() <= maxPageSize);
+        assertTrue(fieldInfoList
+                .getValue()
+                .size() <= maxPageSize);
 
-        CompletableFuture<ODataValueContextOfIListOfWFieldInfo> nextLinkResponse = client.getFieldDefinitionsNextLink(nextLink, maxPageSize);
+        CompletableFuture<ODataValueContextOfIListOfWFieldInfo> nextLinkResponse = client.getFieldDefinitionsNextLink(
+                nextLink, maxPageSize);
         assertNotNull(nextLinkResponse);
         TimeUnit.SECONDS.sleep(10);
         ODataValueContextOfIListOfWFieldInfo nextLinkResult = nextLinkResponse.join();
         assertNotNull(nextLinkResult);
-        assertTrue(nextLinkResult.getValue().size() <= maxPageSize);
+        assertTrue(nextLinkResult
+                .getValue()
+                .size() <= maxPageSize);
     }
 
     @Test
@@ -66,15 +72,19 @@ class FieldDefinitionsApiTest extends BaseTest {
         Function<CompletableFuture<ODataValueContextOfIListOfWFieldInfo>, CompletableFuture<Boolean>> callback = data -> {
             ODataValueContextOfIListOfWFieldInfo result = data.join();
             if (result.getOdataNextLink() != null) {
-                assertNotEquals(0, result.getValue().size());
-                assertTrue(result.getValue().size() <= maxPageSize);
+                assertNotEquals(0, result
+                        .getValue()
+                        .size());
+                assertTrue(result
+                        .getValue()
+                        .size() <= maxPageSize);
                 return CompletableFuture.completedFuture(true);
             } else {
                 return CompletableFuture.completedFuture(false);
             }
         };
         try {
-            client.getFieldDefinitionsForEach(callback, maxPageSize, repoId,null, null, null, null, null, null, null);
+            client.getFieldDefinitionsForEach(callback, maxPageSize, repoId, null, null, null, null, null, null, null);
         } catch (ExecutionException e) {
             e.printStackTrace();
         }

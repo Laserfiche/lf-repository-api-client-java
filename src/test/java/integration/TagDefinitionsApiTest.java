@@ -34,7 +34,8 @@ class TagDefinitionsApiTest extends BaseTest {
     void getTagDefinitions_NextLink() throws InterruptedException {
         int maxPageSize = 1;
         ODataValueContextOfIListOfWTagInfo tagInfoList = client
-                .getTagDefinitions(repoId, String.format("maxpagesize=%d", maxPageSize), null, null, null, null, null, false)
+                .getTagDefinitions(repoId, String.format("maxpagesize=%d", maxPageSize), null, null, null, null, null,
+                        false)
                 .join();
 
         assertNotNull(tagInfoList);
@@ -42,14 +43,19 @@ class TagDefinitionsApiTest extends BaseTest {
         String nextLink = tagInfoList.getOdataNextLink();
         assertNotNull(nextLink);
 
-        assertTrue(tagInfoList.getValue().size() <= maxPageSize);
+        assertTrue(tagInfoList
+                .getValue()
+                .size() <= maxPageSize);
 
-        CompletableFuture<ODataValueContextOfIListOfWTagInfo> nextLinkResponse = client.getTagDefinitionsNextLink(nextLink, maxPageSize);
+        CompletableFuture<ODataValueContextOfIListOfWTagInfo> nextLinkResponse = client.getTagDefinitionsNextLink(
+                nextLink, maxPageSize);
         assertNotNull(nextLinkResponse);
         TimeUnit.SECONDS.sleep(10);
         ODataValueContextOfIListOfWTagInfo nextLinkResult = nextLinkResponse.join();
         assertNotNull(nextLinkResult);
-        assertTrue(nextLinkResult.getValue().size() <= maxPageSize);
+        assertTrue(nextLinkResult
+                .getValue()
+                .size() <= maxPageSize);
     }
 
     @Test
@@ -66,8 +72,12 @@ class TagDefinitionsApiTest extends BaseTest {
         Function<CompletableFuture<ODataValueContextOfIListOfWTagInfo>, CompletableFuture<Boolean>> callback = data -> {
             ODataValueContextOfIListOfWTagInfo result = data.join();
             if (result.getOdataNextLink() != null) {
-                assertNotEquals(0, result.getValue().size());
-                assertTrue(result.getValue().size() <= maxPageSize);
+                assertNotEquals(0, result
+                        .getValue()
+                        .size());
+                assertTrue(result
+                        .getValue()
+                        .size() <= maxPageSize);
                 return CompletableFuture.completedFuture(true);
             } else {
                 return CompletableFuture.completedFuture(false);

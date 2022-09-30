@@ -21,19 +21,24 @@ public class LinkDefinitionsApiTest extends BaseTest {
 
     @Test
     void getLinkDefinitions_ReturnAllLinks() {
-        CompletableFuture<ODataValueContextOfIListOfEntryLinkTypeInfo> future = client.getLinkDefinitions(repoId, null, null, null, null, null, null);
+        CompletableFuture<ODataValueContextOfIListOfEntryLinkTypeInfo> future = client.getLinkDefinitions(repoId, null,
+                null, null, null, null, null);
         ODataValueContextOfIListOfEntryLinkTypeInfo linkDefinitionsResponse = future.join();
         assertNotNull(linkDefinitionsResponse.getValue());
     }
 
     @Test
     void getLinkDefinitionsById_ReturnLinkDefinition() {
-        CompletableFuture<ODataValueContextOfIListOfEntryLinkTypeInfo> linkDefinitionsFuture = client.getLinkDefinitions(repoId, null, null, null, null, null, null);
+        CompletableFuture<ODataValueContextOfIListOfEntryLinkTypeInfo> linkDefinitionsFuture = client.getLinkDefinitions(
+                repoId, null, null, null, null, null, null);
         ODataValueContextOfIListOfEntryLinkTypeInfo allLinkDefinitionsResult = linkDefinitionsFuture.join();
-        EntryLinkTypeInfo firstLinkDefinition = allLinkDefinitionsResult.getValue().get(0);
+        EntryLinkTypeInfo firstLinkDefinition = allLinkDefinitionsResult
+                .getValue()
+                .get(0);
         assertNotNull(firstLinkDefinition);
 
-        CompletableFuture<EntryLinkTypeInfo> linkDefinitionFuture = client.getLinkDefinitionById(repoId, firstLinkDefinition.getLinkTypeId(), null);
+        CompletableFuture<EntryLinkTypeInfo> linkDefinitionFuture = client.getLinkDefinitionById(repoId,
+                firstLinkDefinition.getLinkTypeId(), null);
         EntryLinkTypeInfo linkDefinitions = linkDefinitionFuture.join();
         assertNotNull(linkDefinitions);
 

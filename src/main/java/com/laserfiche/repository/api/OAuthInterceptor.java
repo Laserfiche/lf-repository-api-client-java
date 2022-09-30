@@ -23,6 +23,8 @@ public class OAuthInterceptor implements Interceptor {
         Request customRequest = new RequestImpl();
         CompletableFuture<BeforeSendResult> future = oauthHandler.beforeSendAsync(customRequest);
         future.join(); // We are blocked by the HTTP handler
-        request.header("Authorization", customRequest.headers().get("Authorization"));
+        request.header("Authorization", customRequest
+                .headers()
+                .get("Authorization"));
     }
 }
