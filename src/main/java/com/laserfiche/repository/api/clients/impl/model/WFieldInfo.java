@@ -3,7 +3,6 @@ package com.laserfiche.repository.api.clients.impl.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -63,9 +62,9 @@ public class WFieldInfo {
     }
 
     @Schema(description = "The name of the field.")
-    public String getName() {
-        return name;
-    }
+public String getName() {
+    return name;
+}
 
     public void setName(String name) {
         this.name = name;
@@ -77,9 +76,9 @@ public class WFieldInfo {
     }
 
     @Schema(description = "The localized name of the field.")
-    public String getDisplayName() {
-        return displayName;
-    }
+public String getDisplayName() {
+    return displayName;
+}
 
     public void setDisplayName(String displayName) {
         this.displayName = displayName;
@@ -91,9 +90,9 @@ public class WFieldInfo {
     }
 
     @Schema(description = "The ID of the field.")
-    public Integer getId() {
-        return id;
-    }
+public Integer getId() {
+    return id;
+}
 
     public void setId(Integer id) {
         this.id = id;
@@ -105,9 +104,9 @@ public class WFieldInfo {
     }
 
     @Schema(description = "The description of the field.")
-    public String getDescription() {
-        return description;
-    }
+public String getDescription() {
+    return description;
+}
 
     public void setDescription(String description) {
         this.description = description;
@@ -119,9 +118,9 @@ public class WFieldInfo {
     }
 
     @Schema(description = "")
-    public WFieldType getFieldType() {
-        return fieldType;
-    }
+public WFieldType getFieldType() {
+    return fieldType;
+}
 
     public void setFieldType(WFieldType fieldType) {
         this.fieldType = fieldType;
@@ -133,9 +132,9 @@ public class WFieldInfo {
     }
 
     @Schema(description = "The length of the field for variable length data types.")
-    public Integer getLength() {
-        return length;
-    }
+public Integer getLength() {
+    return length;
+}
 
     public void setLength(Integer length) {
         this.length = length;
@@ -147,9 +146,9 @@ public class WFieldInfo {
     }
 
     @Schema(description = "The default value of the field for new entries that are assigned to a template the represented field is a member of.")
-    public String getDefaultValue() {
-        return defaultValue;
-    }
+public String getDefaultValue() {
+    return defaultValue;
+}
 
     public void setDefaultValue(String defaultValue) {
         this.defaultValue = defaultValue;
@@ -161,9 +160,9 @@ public class WFieldInfo {
     }
 
     @Schema(description = "A boolean indicating if the represented template field supports multiple values.")
-    public Boolean isIsMultiValue() {
-        return isMultiValue;
-    }
+public Boolean isIsMultiValue() {
+    return isMultiValue;
+}
 
     public void setIsMultiValue(Boolean isMultiValue) {
         this.isMultiValue = isMultiValue;
@@ -175,9 +174,9 @@ public class WFieldInfo {
     }
 
     @Schema(description = "A boolean indicating if the represented field must have a value set on entries assigned to a template that the field is a member of.")
-    public Boolean isIsRequired() {
-        return isRequired;
-    }
+public Boolean isIsRequired() {
+    return isRequired;
+}
 
     public void setIsRequired(Boolean isRequired) {
         this.isRequired = isRequired;
@@ -189,9 +188,9 @@ public class WFieldInfo {
     }
 
     @Schema(description = "The constraint for values stored in the represented field.")
-    public String getConstraint() {
-        return constraint;
-    }
+public String getConstraint() {
+    return constraint;
+}
 
     public void setConstraint(String constraint) {
         this.constraint = constraint;
@@ -203,9 +202,9 @@ public class WFieldInfo {
     }
 
     @Schema(description = "The error string that will be returned when the field constraint is violated when setting a value for this field.")
-    public String getConstraintError() {
-        return constraintError;
-    }
+public String getConstraintError() {
+    return constraintError;
+}
 
     public void setConstraintError(String constraintError) {
         this.constraintError = constraintError;
@@ -225,9 +224,9 @@ public class WFieldInfo {
     }
 
     @Schema(description = "The list of items assigned to the represented field.")
-    public List<String> getListValues() {
-        return listValues;
-    }
+public List<String> getListValues() {
+    return listValues;
+}
 
     public void setListValues(List<String> listValues) {
         this.listValues = listValues;
@@ -239,9 +238,9 @@ public class WFieldInfo {
     }
 
     @Schema(description = "")
-    public WFieldFormat getFormat() {
-        return format;
-    }
+public WFieldFormat getFormat() {
+    return format;
+}
 
     public void setFormat(WFieldFormat format) {
         this.format = format;
@@ -253,9 +252,9 @@ public class WFieldInfo {
     }
 
     @Schema(description = "The name of the currency that will be using when formatting the represented field when the Format property is set to the Currency member of the WFieldFormat enumeration.")
-    public String getCurrency() {
-        return currency;
-    }
+public String getCurrency() {
+    return currency;
+}
 
     public void setCurrency(String currency) {
         this.currency = currency;
@@ -267,115 +266,58 @@ public class WFieldInfo {
     }
 
     @Schema(description = "The custom format pattern for fields that are configured to use a custom format.")
-    public String getFormatPattern() {
-        return formatPattern;
-    }
+public String getFormatPattern() {
+    return formatPattern;
+}
 
     public void setFormatPattern(String formatPattern) {
         this.formatPattern = formatPattern;
     }
 
     @Override
-    public boolean equals(java.lang.Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        WFieldInfo wfieldInfo = (WFieldInfo) o;
-        return Objects.equals(this.name, wfieldInfo.name) && Objects.equals(this.displayName,
-                wfieldInfo.displayName) && Objects.equals(this.id, wfieldInfo.id) && Objects.equals(this.description,
-                wfieldInfo.description) && Objects.equals(this.fieldType, wfieldInfo.fieldType) && Objects.equals(
-                this.length, wfieldInfo.length) && Objects.equals(this.defaultValue,
-                wfieldInfo.defaultValue) && Objects.equals(this.isMultiValue,
-                wfieldInfo.isMultiValue) && Objects.equals(this.isRequired, wfieldInfo.isRequired) && Objects.equals(
-                this.constraint, wfieldInfo.constraint) && Objects.equals(this.constraintError,
-                wfieldInfo.constraintError) && Objects.equals(this.listValues, wfieldInfo.listValues) && Objects.equals(
-                this.format, wfieldInfo.format) && Objects.equals(this.currency, wfieldInfo.currency) && Objects.equals(
-                this.formatPattern, wfieldInfo.formatPattern);
+public boolean equals(java.lang.Object o) {
+    if (this == o) {
+        return true;
     }
+    if (o == null || getClass() != o.getClass()) {
+        return false;
+    }
+    WFieldInfo wfieldInfo = (WFieldInfo) o;
+    return Objects.equals(this.name, wfieldInfo.name) && Objects.equals(this.displayName, wfieldInfo.displayName) && Objects.equals(this.id, wfieldInfo.id) && Objects.equals(this.description, wfieldInfo.description) && Objects.equals(this.fieldType, wfieldInfo.fieldType) && Objects.equals(this.length, wfieldInfo.length) && Objects.equals(this.defaultValue, wfieldInfo.defaultValue) && Objects.equals(this.isMultiValue, wfieldInfo.isMultiValue) && Objects.equals(this.isRequired, wfieldInfo.isRequired) && Objects.equals(this.constraint, wfieldInfo.constraint) && Objects.equals(this.constraintError, wfieldInfo.constraintError) && Objects.equals(this.listValues, wfieldInfo.listValues) && Objects.equals(this.format, wfieldInfo.format) && Objects.equals(this.currency, wfieldInfo.currency) && Objects.equals(this.formatPattern, wfieldInfo.formatPattern);
+}
 
     @Override
-    public int hashCode() {
-        return Objects.hash(name, displayName, id, description, fieldType, length, defaultValue, isMultiValue,
-                isRequired, constraint, constraintError, listValues, format, currency, formatPattern);
-    }
+public int hashCode() {
+    return Objects.hash(name, displayName, id, description, fieldType, length, defaultValue, isMultiValue, isRequired, constraint, constraintError, listValues, format, currency, formatPattern);
+}
 
     @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("class WFieldInfo {\n");
-        sb
-                .append("    name: ")
-                .append(toIndentedString(name))
-                .append("\n");
-        sb
-                .append("    displayName: ")
-                .append(toIndentedString(displayName))
-                .append("\n");
-        sb
-                .append("    id: ")
-                .append(toIndentedString(id))
-                .append("\n");
-        sb
-                .append("    description: ")
-                .append(toIndentedString(description))
-                .append("\n");
-        sb
-                .append("    fieldType: ")
-                .append(toIndentedString(fieldType))
-                .append("\n");
-        sb
-                .append("    length: ")
-                .append(toIndentedString(length))
-                .append("\n");
-        sb
-                .append("    defaultValue: ")
-                .append(toIndentedString(defaultValue))
-                .append("\n");
-        sb
-                .append("    isMultiValue: ")
-                .append(toIndentedString(isMultiValue))
-                .append("\n");
-        sb
-                .append("    isRequired: ")
-                .append(toIndentedString(isRequired))
-                .append("\n");
-        sb
-                .append("    constraint: ")
-                .append(toIndentedString(constraint))
-                .append("\n");
-        sb
-                .append("    constraintError: ")
-                .append(toIndentedString(constraintError))
-                .append("\n");
-        sb
-                .append("    listValues: ")
-                .append(toIndentedString(listValues))
-                .append("\n");
-        sb
-                .append("    format: ")
-                .append(toIndentedString(format))
-                .append("\n");
-        sb
-                .append("    currency: ")
-                .append(toIndentedString(currency))
-                .append("\n");
-        sb
-                .append("    formatPattern: ")
-                .append(toIndentedString(formatPattern))
-                .append("\n");
-        sb.append("}");
-        return sb.toString();
-    }
+public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("class WFieldInfo {\n");
+    sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    displayName: ").append(toIndentedString(displayName)).append("\n");
+    sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    description: ").append(toIndentedString(description)).append("\n");
+    sb.append("    fieldType: ").append(toIndentedString(fieldType)).append("\n");
+    sb.append("    length: ").append(toIndentedString(length)).append("\n");
+    sb.append("    defaultValue: ").append(toIndentedString(defaultValue)).append("\n");
+    sb.append("    isMultiValue: ").append(toIndentedString(isMultiValue)).append("\n");
+    sb.append("    isRequired: ").append(toIndentedString(isRequired)).append("\n");
+    sb.append("    constraint: ").append(toIndentedString(constraint)).append("\n");
+    sb.append("    constraintError: ").append(toIndentedString(constraintError)).append("\n");
+    sb.append("    listValues: ").append(toIndentedString(listValues)).append("\n");
+    sb.append("    format: ").append(toIndentedString(format)).append("\n");
+    sb.append("    currency: ").append(toIndentedString(currency)).append("\n");
+    sb.append("    formatPattern: ").append(toIndentedString(formatPattern)).append("\n");
+    sb.append("}");
+    return sb.toString();
+}
 
     private String toIndentedString(java.lang.Object o) {
         if (o == null) {
             return "null";
         }
-        return o
-                .toString()
-                .replace("\n", "\n    ");
+        return o.toString().replace("\n", "\n    ");
     }
 }

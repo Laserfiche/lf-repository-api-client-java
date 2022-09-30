@@ -2,9 +2,11 @@ package com.laserfiche.repository.api.clients.impl.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public enum OperationStatus {
-
+    
     NOTSTARTED("NotStarted"),
     INPROGRESS("InProgress"),
     COMPLETED("Completed"),
@@ -18,22 +20,22 @@ public enum OperationStatus {
     }
 
     @JsonCreator
-    public static OperationStatus fromValue(String input) {
-        for (OperationStatus b : OperationStatus.values()) {
-            if (b.value.equals(input)) {
-                return b;
-            }
+public static OperationStatus fromValue(String input) {
+    for (OperationStatus b : OperationStatus.values()) {
+        if (b.value.equals(input)) {
+            return b;
         }
-        return null;
     }
+    return null;
+}
 
     @JsonValue
-    public String getValue() {
-        return value;
-    }
+public String getValue() {
+    return value;
+}
 
     @Override
-    public String toString() {
-        return String.valueOf(value);
-    }
+public String toString() {
+    return String.valueOf(value);
+}
 }

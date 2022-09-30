@@ -2,9 +2,11 @@ package com.laserfiche.repository.api.clients.impl.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public enum WFieldType {
-
+    
     DATETIME("DateTime"),
     BLOB("Blob"),
     DATE("Date"),
@@ -22,22 +24,22 @@ public enum WFieldType {
     }
 
     @JsonCreator
-    public static WFieldType fromValue(String input) {
-        for (WFieldType b : WFieldType.values()) {
-            if (b.value.equals(input)) {
-                return b;
-            }
+public static WFieldType fromValue(String input) {
+    for (WFieldType b : WFieldType.values()) {
+        if (b.value.equals(input)) {
+            return b;
         }
-        return null;
     }
+    return null;
+}
 
     @JsonValue
-    public String getValue() {
-        return value;
-    }
+public String getValue() {
+    return value;
+}
 
     @Override
-    public String toString() {
-        return String.valueOf(value);
-    }
+public String toString() {
+    return String.valueOf(value);
+}
 }

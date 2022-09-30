@@ -3,7 +3,6 @@ package com.laserfiche.repository.api.clients.impl.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -30,49 +29,44 @@ public class SetEdoc {
     }
 
     @Schema(description = "The list of exceptions that occured when trying to perform the operation.")
-    public List<APIServerException> getExceptions() {
-        return exceptions;
-    }
+public List<APIServerException> getExceptions() {
+    return exceptions;
+}
 
     public void setExceptions(List<APIServerException> exceptions) {
         this.exceptions = exceptions;
     }
 
     @Override
-    public boolean equals(java.lang.Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        SetEdoc setEdoc = (SetEdoc) o;
-        return Objects.equals(this.exceptions, setEdoc.exceptions);
+public boolean equals(java.lang.Object o) {
+    if (this == o) {
+        return true;
     }
+    if (o == null || getClass() != o.getClass()) {
+        return false;
+    }
+    SetEdoc setEdoc = (SetEdoc) o;
+    return Objects.equals(this.exceptions, setEdoc.exceptions);
+}
 
     @Override
-    public int hashCode() {
-        return Objects.hash(exceptions);
-    }
+public int hashCode() {
+    return Objects.hash(exceptions);
+}
 
     @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("class SetEdoc {\n");
-        sb
-                .append("    exceptions: ")
-                .append(toIndentedString(exceptions))
-                .append("\n");
-        sb.append("}");
-        return sb.toString();
-    }
+public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("class SetEdoc {\n");
+    sb.append("    exceptions: ").append(toIndentedString(exceptions)).append("\n");
+    sb.append("}");
+    return sb.toString();
+}
 
     private String toIndentedString(java.lang.Object o) {
         if (o == null) {
             return "null";
         }
-        return o
-                .toString()
-                .replace("\n", "\n    ");
+        return o.toString().replace("\n", "\n    ");
     }
 }

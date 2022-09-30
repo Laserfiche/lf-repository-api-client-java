@@ -3,7 +3,6 @@ package com.laserfiche.repository.api.clients.impl.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -36,9 +35,9 @@ public class ProblemDetails extends HashMap<String, Object> {
     }
 
     @Schema(description = "")
-    public String getType() {
-        return type;
-    }
+public String getType() {
+    return type;
+}
 
     public void setType(String type) {
         this.type = type;
@@ -50,9 +49,9 @@ public class ProblemDetails extends HashMap<String, Object> {
     }
 
     @Schema(description = "")
-    public String getTitle() {
-        return title;
-    }
+public String getTitle() {
+    return title;
+}
 
     public void setTitle(String title) {
         this.title = title;
@@ -64,9 +63,9 @@ public class ProblemDetails extends HashMap<String, Object> {
     }
 
     @Schema(description = "")
-    public Integer getStatus() {
-        return status;
-    }
+public Integer getStatus() {
+    return status;
+}
 
     public void setStatus(Integer status) {
         this.status = status;
@@ -78,9 +77,9 @@ public class ProblemDetails extends HashMap<String, Object> {
     }
 
     @Schema(description = "")
-    public String getDetail() {
-        return detail;
-    }
+public String getDetail() {
+    return detail;
+}
 
     public void setDetail(String detail) {
         this.detail = detail;
@@ -92,9 +91,9 @@ public class ProblemDetails extends HashMap<String, Object> {
     }
 
     @Schema(description = "")
-    public String getInstance() {
-        return instance;
-    }
+public String getInstance() {
+    return instance;
+}
 
     public void setInstance(String instance) {
         this.instance = instance;
@@ -114,77 +113,50 @@ public class ProblemDetails extends HashMap<String, Object> {
     }
 
     @Schema(description = "")
-    public Map<String, Object> getExtensions() {
-        return extensions;
-    }
+public Map<String, Object> getExtensions() {
+    return extensions;
+}
 
     public void setExtensions(Map<String, Object> extensions) {
         this.extensions = extensions;
     }
 
     @Override
-    public boolean equals(java.lang.Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        ProblemDetails problemDetails = (ProblemDetails) o;
-        return Objects.equals(this.type, problemDetails.type) && Objects.equals(this.title,
-                problemDetails.title) && Objects.equals(this.status, problemDetails.status) && Objects.equals(
-                this.detail, problemDetails.detail) && Objects.equals(this.instance,
-                problemDetails.instance) && Objects.equals(this.extensions, problemDetails.extensions) && super.equals(
-                o);
+public boolean equals(java.lang.Object o) {
+    if (this == o) {
+        return true;
     }
+    if (o == null || getClass() != o.getClass()) {
+        return false;
+    }
+    ProblemDetails problemDetails = (ProblemDetails) o;
+    return Objects.equals(this.type, problemDetails.type) && Objects.equals(this.title, problemDetails.title) && Objects.equals(this.status, problemDetails.status) && Objects.equals(this.detail, problemDetails.detail) && Objects.equals(this.instance, problemDetails.instance) && Objects.equals(this.extensions, problemDetails.extensions) && super.equals(o);
+}
 
     @Override
-    public int hashCode() {
-        return Objects.hash(type, title, status, detail, instance, extensions, super.hashCode());
-    }
+public int hashCode() {
+    return Objects.hash(type, title, status, detail, instance, extensions, super.hashCode());
+}
 
     @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("class ProblemDetails {\n");
-        sb
-                .append("    ")
-                .append(toIndentedString(super.toString()))
-                .append("\n");
-        sb
-                .append("    type: ")
-                .append(toIndentedString(type))
-                .append("\n");
-        sb
-                .append("    title: ")
-                .append(toIndentedString(title))
-                .append("\n");
-        sb
-                .append("    status: ")
-                .append(toIndentedString(status))
-                .append("\n");
-        sb
-                .append("    detail: ")
-                .append(toIndentedString(detail))
-                .append("\n");
-        sb
-                .append("    instance: ")
-                .append(toIndentedString(instance))
-                .append("\n");
-        sb
-                .append("    extensions: ")
-                .append(toIndentedString(extensions))
-                .append("\n");
-        sb.append("}");
-        return sb.toString();
-    }
+public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("class ProblemDetails {\n");
+    sb.append("    ").append(toIndentedString(super.toString())).append("\n");
+    sb.append("    type: ").append(toIndentedString(type)).append("\n");
+    sb.append("    title: ").append(toIndentedString(title)).append("\n");
+    sb.append("    status: ").append(toIndentedString(status)).append("\n");
+    sb.append("    detail: ").append(toIndentedString(detail)).append("\n");
+    sb.append("    instance: ").append(toIndentedString(instance)).append("\n");
+    sb.append("    extensions: ").append(toIndentedString(extensions)).append("\n");
+    sb.append("}");
+    return sb.toString();
+}
 
     private String toIndentedString(java.lang.Object o) {
         if (o == null) {
             return "null";
         }
-        return o
-                .toString()
-                .replace("\n", "\n    ");
+        return o.toString().replace("\n", "\n    ");
     }
 }

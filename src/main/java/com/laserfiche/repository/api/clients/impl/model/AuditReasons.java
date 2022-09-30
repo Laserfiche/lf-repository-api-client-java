@@ -3,7 +3,6 @@ package com.laserfiche.repository.api.clients.impl.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -32,9 +31,9 @@ public class AuditReasons {
     }
 
     @Schema(description = "The audit reasons associated with delete entry.")
-    public List<WAuditReason> getDeleteEntry() {
-        return deleteEntry;
-    }
+public List<WAuditReason> getDeleteEntry() {
+    return deleteEntry;
+}
 
     public void setDeleteEntry(List<WAuditReason> deleteEntry) {
         this.deleteEntry = deleteEntry;
@@ -54,54 +53,45 @@ public class AuditReasons {
     }
 
     @Schema(description = "The audit reasons associated with export document.")
-    public List<WAuditReason> getExportDocument() {
-        return exportDocument;
-    }
+public List<WAuditReason> getExportDocument() {
+    return exportDocument;
+}
 
     public void setExportDocument(List<WAuditReason> exportDocument) {
         this.exportDocument = exportDocument;
     }
 
     @Override
-    public boolean equals(java.lang.Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        AuditReasons auditReasons = (AuditReasons) o;
-        return Objects.equals(this.deleteEntry, auditReasons.deleteEntry) && Objects.equals(this.exportDocument,
-                auditReasons.exportDocument);
+public boolean equals(java.lang.Object o) {
+    if (this == o) {
+        return true;
     }
+    if (o == null || getClass() != o.getClass()) {
+        return false;
+    }
+    AuditReasons auditReasons = (AuditReasons) o;
+    return Objects.equals(this.deleteEntry, auditReasons.deleteEntry) && Objects.equals(this.exportDocument, auditReasons.exportDocument);
+}
 
     @Override
-    public int hashCode() {
-        return Objects.hash(deleteEntry, exportDocument);
-    }
+public int hashCode() {
+    return Objects.hash(deleteEntry, exportDocument);
+}
 
     @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("class AuditReasons {\n");
-        sb
-                .append("    deleteEntry: ")
-                .append(toIndentedString(deleteEntry))
-                .append("\n");
-        sb
-                .append("    exportDocument: ")
-                .append(toIndentedString(exportDocument))
-                .append("\n");
-        sb.append("}");
-        return sb.toString();
-    }
+public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("class AuditReasons {\n");
+    sb.append("    deleteEntry: ").append(toIndentedString(deleteEntry)).append("\n");
+    sb.append("    exportDocument: ").append(toIndentedString(exportDocument)).append("\n");
+    sb.append("}");
+    return sb.toString();
+}
 
     private String toIndentedString(java.lang.Object o) {
         if (o == null) {
             return "null";
         }
-        return o
-                .toString()
-                .replace("\n", "\n    ");
+        return o.toString().replace("\n", "\n    ");
     }
 }

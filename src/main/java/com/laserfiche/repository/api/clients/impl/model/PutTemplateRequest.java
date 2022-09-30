@@ -3,7 +3,6 @@ package com.laserfiche.repository.api.clients.impl.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -24,9 +23,9 @@ public class PutTemplateRequest {
     }
 
     @Schema(description = "The template that will be assigned to the entry.")
-    public String getTemplateName() {
-        return templateName;
-    }
+public String getTemplateName() {
+    return templateName;
+}
 
     public void setTemplateName(String templateName) {
         this.templateName = templateName;
@@ -46,54 +45,45 @@ public class PutTemplateRequest {
     }
 
     @Schema(description = "The template fields that will be assigned to the entry.")
-    public Map<String, FieldToUpdate> getFields() {
-        return fields;
-    }
+public Map<String, FieldToUpdate> getFields() {
+    return fields;
+}
 
     public void setFields(Map<String, FieldToUpdate> fields) {
         this.fields = fields;
     }
 
     @Override
-    public boolean equals(java.lang.Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        PutTemplateRequest putTemplateRequest = (PutTemplateRequest) o;
-        return Objects.equals(this.templateName, putTemplateRequest.templateName) && Objects.equals(this.fields,
-                putTemplateRequest.fields);
+public boolean equals(java.lang.Object o) {
+    if (this == o) {
+        return true;
     }
+    if (o == null || getClass() != o.getClass()) {
+        return false;
+    }
+    PutTemplateRequest putTemplateRequest = (PutTemplateRequest) o;
+    return Objects.equals(this.templateName, putTemplateRequest.templateName) && Objects.equals(this.fields, putTemplateRequest.fields);
+}
 
     @Override
-    public int hashCode() {
-        return Objects.hash(templateName, fields);
-    }
+public int hashCode() {
+    return Objects.hash(templateName, fields);
+}
 
     @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("class PutTemplateRequest {\n");
-        sb
-                .append("    templateName: ")
-                .append(toIndentedString(templateName))
-                .append("\n");
-        sb
-                .append("    fields: ")
-                .append(toIndentedString(fields))
-                .append("\n");
-        sb.append("}");
-        return sb.toString();
-    }
+public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("class PutTemplateRequest {\n");
+    sb.append("    templateName: ").append(toIndentedString(templateName)).append("\n");
+    sb.append("    fields: ").append(toIndentedString(fields)).append("\n");
+    sb.append("}");
+    return sb.toString();
+}
 
     private String toIndentedString(java.lang.Object o) {
         if (o == null) {
             return "null";
         }
-        return o
-                .toString()
-                .replace("\n", "\n    ");
+        return o.toString().replace("\n", "\n    ");
     }
 }

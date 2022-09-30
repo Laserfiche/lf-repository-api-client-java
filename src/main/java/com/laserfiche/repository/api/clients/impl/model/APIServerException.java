@@ -3,7 +3,6 @@ package com.laserfiche.repository.api.clients.impl.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.util.Objects;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-08-19T17:07:43.799-04:00[America/New_York]")
@@ -34,9 +33,9 @@ public class APIServerException {
     }
 
     @Schema(description = "")
-    public String getOperationId() {
-        return operationId;
-    }
+public String getOperationId() {
+    return operationId;
+}
 
     public void setOperationId(String operationId) {
         this.operationId = operationId;
@@ -48,9 +47,9 @@ public class APIServerException {
     }
 
     @Schema(description = "")
-    public String getMessage() {
-        return message;
-    }
+public String getMessage() {
+    return message;
+}
 
     public void setMessage(String message) {
         this.message = message;
@@ -62,9 +61,9 @@ public class APIServerException {
     }
 
     @Schema(description = "")
-    public Integer getErrorCode() {
-        return errorCode;
-    }
+public Integer getErrorCode() {
+    return errorCode;
+}
 
     public void setErrorCode(Integer errorCode) {
         this.errorCode = errorCode;
@@ -76,9 +75,9 @@ public class APIServerException {
     }
 
     @Schema(description = "")
-    public String getErrorClass() {
-        return errorClass;
-    }
+public String getErrorClass() {
+    return errorClass;
+}
 
     public void setErrorClass(String errorClass) {
         this.errorClass = errorClass;
@@ -90,9 +89,9 @@ public class APIServerException {
     }
 
     @Schema(description = "")
-    public Integer getStatusCode() {
-        return statusCode;
-    }
+public Integer getStatusCode() {
+    return statusCode;
+}
 
     public void setStatusCode(Integer statusCode) {
         this.statusCode = statusCode;
@@ -104,73 +103,49 @@ public class APIServerException {
     }
 
     @Schema(description = "")
-    public String getErrorSource() {
-        return errorSource;
-    }
+public String getErrorSource() {
+    return errorSource;
+}
 
     public void setErrorSource(String errorSource) {
         this.errorSource = errorSource;
     }
 
     @Override
-    public boolean equals(java.lang.Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        APIServerException apIServerException = (APIServerException) o;
-        return Objects.equals(this.operationId, apIServerException.operationId) && Objects.equals(this.message,
-                apIServerException.message) && Objects.equals(this.errorCode,
-                apIServerException.errorCode) && Objects.equals(this.errorClass,
-                apIServerException.errorClass) && Objects.equals(this.statusCode,
-                apIServerException.statusCode) && Objects.equals(this.errorSource, apIServerException.errorSource);
+public boolean equals(java.lang.Object o) {
+    if (this == o) {
+        return true;
     }
+    if (o == null || getClass() != o.getClass()) {
+        return false;
+    }
+    APIServerException apIServerException = (APIServerException) o;
+    return Objects.equals(this.operationId, apIServerException.operationId) && Objects.equals(this.message, apIServerException.message) && Objects.equals(this.errorCode, apIServerException.errorCode) && Objects.equals(this.errorClass, apIServerException.errorClass) && Objects.equals(this.statusCode, apIServerException.statusCode) && Objects.equals(this.errorSource, apIServerException.errorSource);
+}
 
     @Override
-    public int hashCode() {
-        return Objects.hash(operationId, message, errorCode, errorClass, statusCode, errorSource);
-    }
+public int hashCode() {
+    return Objects.hash(operationId, message, errorCode, errorClass, statusCode, errorSource);
+}
 
     @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("class APIServerException {\n");
-        sb
-                .append("    operationId: ")
-                .append(toIndentedString(operationId))
-                .append("\n");
-        sb
-                .append("    message: ")
-                .append(toIndentedString(message))
-                .append("\n");
-        sb
-                .append("    errorCode: ")
-                .append(toIndentedString(errorCode))
-                .append("\n");
-        sb
-                .append("    errorClass: ")
-                .append(toIndentedString(errorClass))
-                .append("\n");
-        sb
-                .append("    statusCode: ")
-                .append(toIndentedString(statusCode))
-                .append("\n");
-        sb
-                .append("    errorSource: ")
-                .append(toIndentedString(errorSource))
-                .append("\n");
-        sb.append("}");
-        return sb.toString();
-    }
+public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("class APIServerException {\n");
+    sb.append("    operationId: ").append(toIndentedString(operationId)).append("\n");
+    sb.append("    message: ").append(toIndentedString(message)).append("\n");
+    sb.append("    errorCode: ").append(toIndentedString(errorCode)).append("\n");
+    sb.append("    errorClass: ").append(toIndentedString(errorClass)).append("\n");
+    sb.append("    statusCode: ").append(toIndentedString(statusCode)).append("\n");
+    sb.append("    errorSource: ").append(toIndentedString(errorSource)).append("\n");
+    sb.append("}");
+    return sb.toString();
+}
 
     private String toIndentedString(java.lang.Object o) {
         if (o == null) {
             return "null";
         }
-        return o
-                .toString()
-                .replace("\n", "\n    ");
+        return o.toString().replace("\n", "\n    ");
     }
 }

@@ -3,7 +3,6 @@ package com.laserfiche.repository.api.clients.impl.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.util.Objects;
 
 @Schema(description = "The results of each operation needed in order to create the electronic document with optional template and fields.")
@@ -35,9 +34,9 @@ public class CreateEntryOperations {
     }
 
     @Schema(description = "")
-    public EntryCreate getEntryCreate() {
-        return entryCreate;
-    }
+public EntryCreate getEntryCreate() {
+    return entryCreate;
+}
 
     public void setEntryCreate(EntryCreate entryCreate) {
         this.entryCreate = entryCreate;
@@ -49,9 +48,9 @@ public class CreateEntryOperations {
     }
 
     @Schema(description = "")
-    public SetEdoc getSetEdoc() {
-        return setEdoc;
-    }
+public SetEdoc getSetEdoc() {
+    return setEdoc;
+}
 
     public void setSetEdoc(SetEdoc setEdoc) {
         this.setEdoc = setEdoc;
@@ -63,9 +62,9 @@ public class CreateEntryOperations {
     }
 
     @Schema(description = "")
-    public SetTemplate getSetTemplate() {
-        return setTemplate;
-    }
+public SetTemplate getSetTemplate() {
+    return setTemplate;
+}
 
     public void setSetTemplate(SetTemplate setTemplate) {
         this.setTemplate = setTemplate;
@@ -77,9 +76,9 @@ public class CreateEntryOperations {
     }
 
     @Schema(description = "")
-    public SetFields getSetFields() {
-        return setFields;
-    }
+public SetFields getSetFields() {
+    return setFields;
+}
 
     public void setSetFields(SetFields setFields) {
         this.setFields = setFields;
@@ -91,9 +90,9 @@ public class CreateEntryOperations {
     }
 
     @Schema(description = "")
-    public SetTags getSetTags() {
-        return setTags;
-    }
+public SetTags getSetTags() {
+    return setTags;
+}
 
     public void setSetTags(SetTags setTags) {
         this.setTags = setTags;
@@ -105,73 +104,49 @@ public class CreateEntryOperations {
     }
 
     @Schema(description = "")
-    public SetLinks getSetLinks() {
-        return setLinks;
-    }
+public SetLinks getSetLinks() {
+    return setLinks;
+}
 
     public void setSetLinks(SetLinks setLinks) {
         this.setLinks = setLinks;
     }
 
     @Override
-    public boolean equals(java.lang.Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        CreateEntryOperations createEntryOperations = (CreateEntryOperations) o;
-        return Objects.equals(this.entryCreate, createEntryOperations.entryCreate) && Objects.equals(this.setEdoc,
-                createEntryOperations.setEdoc) && Objects.equals(this.setTemplate,
-                createEntryOperations.setTemplate) && Objects.equals(this.setFields,
-                createEntryOperations.setFields) && Objects.equals(this.setTags,
-                createEntryOperations.setTags) && Objects.equals(this.setLinks, createEntryOperations.setLinks);
+public boolean equals(java.lang.Object o) {
+    if (this == o) {
+        return true;
     }
+    if (o == null || getClass() != o.getClass()) {
+        return false;
+    }
+    CreateEntryOperations createEntryOperations = (CreateEntryOperations) o;
+    return Objects.equals(this.entryCreate, createEntryOperations.entryCreate) && Objects.equals(this.setEdoc, createEntryOperations.setEdoc) && Objects.equals(this.setTemplate, createEntryOperations.setTemplate) && Objects.equals(this.setFields, createEntryOperations.setFields) && Objects.equals(this.setTags, createEntryOperations.setTags) && Objects.equals(this.setLinks, createEntryOperations.setLinks);
+}
 
     @Override
-    public int hashCode() {
-        return Objects.hash(entryCreate, setEdoc, setTemplate, setFields, setTags, setLinks);
-    }
+public int hashCode() {
+    return Objects.hash(entryCreate, setEdoc, setTemplate, setFields, setTags, setLinks);
+}
 
     @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("class CreateEntryOperations {\n");
-        sb
-                .append("    entryCreate: ")
-                .append(toIndentedString(entryCreate))
-                .append("\n");
-        sb
-                .append("    setEdoc: ")
-                .append(toIndentedString(setEdoc))
-                .append("\n");
-        sb
-                .append("    setTemplate: ")
-                .append(toIndentedString(setTemplate))
-                .append("\n");
-        sb
-                .append("    setFields: ")
-                .append(toIndentedString(setFields))
-                .append("\n");
-        sb
-                .append("    setTags: ")
-                .append(toIndentedString(setTags))
-                .append("\n");
-        sb
-                .append("    setLinks: ")
-                .append(toIndentedString(setLinks))
-                .append("\n");
-        sb.append("}");
-        return sb.toString();
-    }
+public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("class CreateEntryOperations {\n");
+    sb.append("    entryCreate: ").append(toIndentedString(entryCreate)).append("\n");
+    sb.append("    setEdoc: ").append(toIndentedString(setEdoc)).append("\n");
+    sb.append("    setTemplate: ").append(toIndentedString(setTemplate)).append("\n");
+    sb.append("    setFields: ").append(toIndentedString(setFields)).append("\n");
+    sb.append("    setTags: ").append(toIndentedString(setTags)).append("\n");
+    sb.append("    setLinks: ").append(toIndentedString(setLinks)).append("\n");
+    sb.append("}");
+    return sb.toString();
+}
 
     private String toIndentedString(java.lang.Object o) {
         if (o == null) {
             return "null";
         }
-        return o
-                .toString()
-                .replace("\n", "\n    ");
+        return o.toString().replace("\n", "\n    ");
     }
 }

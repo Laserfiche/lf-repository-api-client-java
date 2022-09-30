@@ -2,9 +2,11 @@ package com.laserfiche.repository.api.clients.impl.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public enum EntryType {
-
+    
     FOLDER("Folder"),
     RECORDSERIES("RecordSeries"),
     DOCUMENT("Document"),
@@ -17,22 +19,22 @@ public enum EntryType {
     }
 
     @JsonCreator
-    public static EntryType fromValue(String input) {
-        for (EntryType b : EntryType.values()) {
-            if (b.value.equals(input)) {
-                return b;
-            }
+public static EntryType fromValue(String input) {
+    for (EntryType b : EntryType.values()) {
+        if (b.value.equals(input)) {
+            return b;
         }
-        return null;
     }
+    return null;
+}
 
     @JsonValue
-    public String getValue() {
-        return value;
-    }
+public String getValue() {
+    return value;
+}
 
     @Override
-    public String toString() {
-        return String.valueOf(value);
-    }
+public String toString() {
+    return String.valueOf(value);
+}
 }

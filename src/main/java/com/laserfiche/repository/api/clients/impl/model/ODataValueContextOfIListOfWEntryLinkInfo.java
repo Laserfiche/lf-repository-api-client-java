@@ -3,7 +3,6 @@ package com.laserfiche.repository.api.clients.impl.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.util.Objects;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-08-19T17:07:43.799-04:00[America/New_York]")
@@ -11,84 +10,71 @@ import java.util.Objects;
 public class ODataValueContextOfIListOfWEntryLinkInfo extends ODataValueOfIListOfWEntryLinkInfo {
 
     @JsonProperty("@odata.nextLink")
-    private String _atOdataNextLink = null;
+    private String odataNextLink = null;
 
     @JsonProperty("@odata.count")
-    private Integer _atOdataCount = null;
+    private Integer odataCount = null;
 
-    public ODataValueContextOfIListOfWEntryLinkInfo _atOdataNextLink(String _atOdataNextLink) {
-        this._atOdataNextLink = _atOdataNextLink;
+    public ODataValueContextOfIListOfWEntryLinkInfo odataNextLink(String odataNextLink) {
+        this.odataNextLink = odataNextLink;
         return this;
     }
 
     @Schema(description = "It contains a URL that allows retrieving the next subset of the requested collection.")
-    public String getAtOdataNextLink() {
-        return _atOdataNextLink;
+public String getOdataNextLink() {
+    return odataNextLink;
+}
+
+    public void setOdataNextLink(String odataNextLink) {
+        this.odataNextLink = odataNextLink;
     }
 
-    public void setAtOdataNextLink(String _atOdataNextLink) {
-        this._atOdataNextLink = _atOdataNextLink;
-    }
-
-    public ODataValueContextOfIListOfWEntryLinkInfo _atOdataCount(Integer _atOdataCount) {
-        this._atOdataCount = _atOdataCount;
+    public ODataValueContextOfIListOfWEntryLinkInfo odataCount(Integer odataCount) {
+        this.odataCount = odataCount;
         return this;
     }
 
     @Schema(description = "It contains the count of a collection of entities or a collection of entity references.")
-    public Integer getAtOdataCount() {
-        return _atOdataCount;
-    }
+public Integer getOdataCount() {
+    return odataCount;
+}
 
-    public void setAtOdataCount(Integer _atOdataCount) {
-        this._atOdataCount = _atOdataCount;
-    }
-
-    @Override
-    public boolean equals(java.lang.Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        ODataValueContextOfIListOfWEntryLinkInfo odataValueContextOfIListOfWEntryLinkInfo = (ODataValueContextOfIListOfWEntryLinkInfo) o;
-        return Objects.equals(this._atOdataNextLink,
-                odataValueContextOfIListOfWEntryLinkInfo._atOdataNextLink) && Objects.equals(this._atOdataCount,
-                odataValueContextOfIListOfWEntryLinkInfo._atOdataCount) && super.equals(o);
+    public void setOdataCount(Integer odataCount) {
+        this.odataCount = odataCount;
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(_atOdataNextLink, _atOdataCount, super.hashCode());
+public boolean equals(java.lang.Object o) {
+    if (this == o) {
+        return true;
     }
+    if (o == null || getClass() != o.getClass()) {
+        return false;
+    }
+    ODataValueContextOfIListOfWEntryLinkInfo odataValueContextOfIListOfWEntryLinkInfo = (ODataValueContextOfIListOfWEntryLinkInfo) o;
+    return Objects.equals(this.odataNextLink, odataValueContextOfIListOfWEntryLinkInfo.odataNextLink) && Objects.equals(this.odataCount, odataValueContextOfIListOfWEntryLinkInfo.odataCount) && super.equals(o);
+}
 
     @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("class ODataValueContextOfIListOfWEntryLinkInfo {\n");
-        sb
-                .append("    ")
-                .append(toIndentedString(super.toString()))
-                .append("\n");
-        sb
-                .append("    _atOdataNextLink: ")
-                .append(toIndentedString(_atOdataNextLink))
-                .append("\n");
-        sb
-                .append("    _atOdataCount: ")
-                .append(toIndentedString(_atOdataCount))
-                .append("\n");
-        sb.append("}");
-        return sb.toString();
-    }
+public int hashCode() {
+    return Objects.hash(odataNextLink, odataCount, super.hashCode());
+}
+
+    @Override
+public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("class ODataValueContextOfIListOfWEntryLinkInfo {\n");
+    sb.append("    ").append(toIndentedString(super.toString())).append("\n");
+    sb.append("    odataNextLink: ").append(toIndentedString(odataNextLink)).append("\n");
+    sb.append("    odataCount: ").append(toIndentedString(odataCount)).append("\n");
+    sb.append("}");
+    return sb.toString();
+}
 
     private String toIndentedString(java.lang.Object o) {
         if (o == null) {
             return "null";
         }
-        return o
-                .toString()
-                .replace("\n", "\n    ");
+        return o.toString().replace("\n", "\n    ");
     }
 }
