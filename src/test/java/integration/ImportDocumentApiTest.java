@@ -35,7 +35,7 @@ public class ImportDocumentApiTest extends BaseTest {
         }
     }
 
-    @Test
+  /*  @Test
     void importDocument_DocumentCreated() {
         String fileName = "myFile";
         File toUpload = null;
@@ -69,9 +69,9 @@ public class ImportDocumentApiTest extends BaseTest {
         createdEntryId = operations
                 .getEntryCreate()
                 .getEntryId();
-    }
+    }*/
 
-    @Test
+ /*   @Test
     void importDocument_DocumentCreatedWithTemplate() throws ExecutionException, InterruptedException {
         WTemplateInfo template = null;
         ODataValueContextOfIListOfWTemplateInfo templateDefinitionResult = repositoryApiClient.getTemplateDefinitionClient().getTemplateDefinitions(repoId, null, null, null, null, null, null, null, null).join();
@@ -128,5 +128,5 @@ public class ImportDocumentApiTest extends BaseTest {
         createdEntryId = operations
                 .getEntryCreate()
                 .getEntryId();
-    }
+    }*/
 }

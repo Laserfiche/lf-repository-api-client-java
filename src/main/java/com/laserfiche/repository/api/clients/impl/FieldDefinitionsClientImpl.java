@@ -7,6 +7,8 @@ import kong.unirest.UnirestInstance;
 
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class FieldDefinitionsClientImpl extends ApiClient implements FieldDefinitionsClient {
 
@@ -62,11 +64,16 @@ public class FieldDefinitionsClientImpl extends ApiClient implements FieldDefini
                 new String[]{"culture", "$select", "$orderby", "$top", "$skip", "$count"},
                 new Object[]{culture, select, orderby, top, skip, count});
         Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId"}, new Object[]{repoId});
+        Map<String, Object> headerParameters = getNonNullParameters(new String[]{"prefer"}, new Object[]{prefer});
+        Map<String, String> headerParametersWithStringTypeValue = headerParameters
+                .entrySet()
+                .stream()
+                .collect(Collectors.toMap(Map.Entry::getKey, e -> (String) e.getValue()));
         return httpClient
                 .get(url)
                 .queryString(queryParameters)
                 .routeParam(pathParameters)
-                .header("prefer", prefer)
+                .headers(headerParametersWithStringTypeValue)
                 .asObjectAsync(ODataValueContextOfIListOfWFieldInfo.class)
                 .thenApply(httpResponse -> {
                     if (httpResponse.getStatus() == 400) {
@@ -90,8 +97,27 @@ public class FieldDefinitionsClientImpl extends ApiClient implements FieldDefini
 
     @Override
     public CompletableFuture<ODataValueContextOfIListOfWFieldInfo> getFieldDefinitionsNextLink(String nextLink,
-            int maxPageSize) {
+            Integer maxPageSize) {
         return doGetFieldDefinitions(nextLink, null, mergeMaxSizeIntoPrefer(maxPageSize, null), null, null, null, null,
                 null, null);
+    }
+
+    @Override
+    public CompletableFuture<Void> getFieldDefinitionsForEach(
+            Function<CompletableFuture<ODataValueContextOfIListOfWFieldInfo>, CompletableFuture<Boolean>> callback,
+            Integer maxPageSize, String repoId, String prefer, String culture, String select, String orderby,
+            Integer top, Integer skip, Boolean count) {
+        prefer = mergeMaxSizeIntoPrefer(maxPageSize, prefer);
+        CompletableFuture<ODataValueContextOfIListOfWFieldInfo> response = getFieldDefinitions(repoId, prefer, culture,
+                select, orderby, top, skip, count);
+        while (response != null && callback
+                .apply(response)
+                .join()) {
+            String nextLink = response
+                    .join()
+                    .getOdataNextLink();
+            response = getFieldDefinitionsNextLink(nextLink, maxPageSize);
+        }
+        return CompletableFuture.completedFuture(null);
     }
 }

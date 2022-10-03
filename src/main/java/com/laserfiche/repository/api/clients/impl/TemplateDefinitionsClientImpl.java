@@ -8,6 +8,8 @@ import kong.unirest.UnirestInstance;
 
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class TemplateDefinitionsClientImpl extends ApiClient implements TemplateDefinitionsClient {
 
@@ -30,11 +32,16 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
                 new String[]{"templateName", "culture", "$select", "$orderby", "$top", "$skip", "$count"},
                 new Object[]{templateName, culture, select, orderby, top, skip, count});
         Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId"}, new Object[]{repoId});
+        Map<String, Object> headerParameters = getNonNullParameters(new String[]{"prefer"}, new Object[]{prefer});
+        Map<String, String> headerParametersWithStringTypeValue = headerParameters
+                .entrySet()
+                .stream()
+                .collect(Collectors.toMap(Map.Entry::getKey, e -> (String) e.getValue()));
         return httpClient
                 .get(url)
                 .queryString(queryParameters)
                 .routeParam(pathParameters)
-                .header("prefer", prefer)
+                .headers(headerParametersWithStringTypeValue)
                 .asObjectAsync(ODataValueContextOfIListOfWTemplateInfo.class)
                 .thenApply(httpResponse -> {
                     if (httpResponse.getStatus() == 400) {
@@ -61,9 +68,28 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
 
     @Override
     public CompletableFuture<ODataValueContextOfIListOfWTemplateInfo> getTemplateDefinitionsNextLink(String nextLink,
-            int maxPageSize) {
+            Integer maxPageSize) {
         return doGetTemplateDefinitions(nextLink, null, null, mergeMaxSizeIntoPrefer(maxPageSize, null), null, null,
                 null, null, null, null);
+    }
+
+    @Override
+    public CompletableFuture<Void> getTemplateDefinitionsForEach(
+            Function<CompletableFuture<ODataValueContextOfIListOfWTemplateInfo>, CompletableFuture<Boolean>> callback,
+            Integer maxPageSize, String repoId, String templateName, String prefer, String culture, String select,
+            String orderby, Integer top, Integer skip, Boolean count) {
+        prefer = mergeMaxSizeIntoPrefer(maxPageSize, prefer);
+        CompletableFuture<ODataValueContextOfIListOfWTemplateInfo> response = getTemplateDefinitions(repoId,
+                templateName, prefer, culture, select, orderby, top, skip, count);
+        while (response != null && callback
+                .apply(response)
+                .join()) {
+            String nextLink = response
+                    .join()
+                    .getOdataNextLink();
+            response = getTemplateDefinitionsNextLink(nextLink, maxPageSize);
+        }
+        return CompletableFuture.completedFuture(null);
     }
 
     @Override
@@ -82,11 +108,16 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
                 new String[]{"templateName", "culture", "$select", "$orderby", "$top", "$skip", "$count"},
                 new Object[]{templateName, culture, select, orderby, top, skip, count});
         Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId"}, new Object[]{repoId});
+        Map<String, Object> headerParameters = getNonNullParameters(new String[]{"prefer"}, new Object[]{prefer});
+        Map<String, String> headerParametersWithStringTypeValue = headerParameters
+                .entrySet()
+                .stream()
+                .collect(Collectors.toMap(Map.Entry::getKey, e -> (String) e.getValue()));
         return httpClient
                 .get(url)
                 .queryString(queryParameters)
                 .routeParam(pathParameters)
-                .header("prefer", prefer)
+                .headers(headerParametersWithStringTypeValue)
                 .asObjectAsync(ODataValueContextOfIListOfTemplateFieldInfo.class)
                 .thenApply(httpResponse -> {
                     if (httpResponse.getStatus() == 400) {
@@ -113,9 +144,28 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
 
     @Override
     public CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo> getTemplateFieldDefinitionsByTemplateNameNextLink(
-            String nextLink, int maxPageSize) {
+            String nextLink, Integer maxPageSize) {
         return doGetTemplateFieldDefinitionsByTemplateName(nextLink, null, null,
                 mergeMaxSizeIntoPrefer(maxPageSize, null), null, null, null, null, null, null);
+    }
+
+    @Override
+    public CompletableFuture<Void> getTemplateFieldDefinitionsByTemplateNameForEach(
+            Function<CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo>, CompletableFuture<Boolean>> callback,
+            Integer maxPageSize, String repoId, String templateName, String prefer, String culture, String select,
+            String orderby, Integer top, Integer skip, Boolean count) {
+        prefer = mergeMaxSizeIntoPrefer(maxPageSize, prefer);
+        CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo> response = getTemplateFieldDefinitionsByTemplateName(
+                repoId, templateName, prefer, culture, select, orderby, top, skip, count);
+        while (response != null && callback
+                .apply(response)
+                .join()) {
+            String nextLink = response
+                    .join()
+                    .getOdataNextLink();
+            response = getTemplateFieldDefinitionsByTemplateNameNextLink(nextLink, maxPageSize);
+        }
+        return CompletableFuture.completedFuture(null);
     }
 
     @Override
@@ -135,11 +185,16 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
                 new Object[]{culture, select, orderby, top, skip, count});
         Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "templateId"},
                 new Object[]{repoId, templateId});
+        Map<String, Object> headerParameters = getNonNullParameters(new String[]{"prefer"}, new Object[]{prefer});
+        Map<String, String> headerParametersWithStringTypeValue = headerParameters
+                .entrySet()
+                .stream()
+                .collect(Collectors.toMap(Map.Entry::getKey, e -> (String) e.getValue()));
         return httpClient
                 .get(url)
                 .queryString(queryParameters)
                 .routeParam(pathParameters)
-                .header("prefer", prefer)
+                .headers(headerParametersWithStringTypeValue)
                 .asObjectAsync(ODataValueContextOfIListOfTemplateFieldInfo.class)
                 .thenApply(httpResponse -> {
                     if (httpResponse.getStatus() == 400) {
@@ -166,9 +221,28 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
 
     @Override
     public CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo> getTemplateFieldDefinitionsNextLink(
-            String nextLink, int maxPageSize) {
+            String nextLink, Integer maxPageSize) {
         return doGetTemplateFieldDefinitions(nextLink, null, null, mergeMaxSizeIntoPrefer(maxPageSize, null), null,
                 null, null, null, null, null);
+    }
+
+    @Override
+    public CompletableFuture<Void> getTemplateFieldDefinitionsForEach(
+            Function<CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo>, CompletableFuture<Boolean>> callback,
+            Integer maxPageSize, String repoId, Integer templateId, String prefer, String culture, String select,
+            String orderby, Integer top, Integer skip, Boolean count) {
+        prefer = mergeMaxSizeIntoPrefer(maxPageSize, prefer);
+        CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo> response = getTemplateFieldDefinitions(repoId,
+                templateId, prefer, culture, select, orderby, top, skip, count);
+        while (response != null && callback
+                .apply(response)
+                .join()) {
+            String nextLink = response
+                    .join()
+                    .getOdataNextLink();
+            response = getTemplateFieldDefinitionsNextLink(nextLink, maxPageSize);
+        }
+        return CompletableFuture.completedFuture(null);
     }
 
     @Override

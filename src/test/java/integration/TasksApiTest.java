@@ -58,7 +58,9 @@ public class TasksApiTest extends BaseTest {
                 .getEntriesClient()
                 .deleteEntryInfo(repoId, deleteEntry.getId(), body);
 
-        String token = result.join().getToken();
+        String token = result
+                .join()
+                .getToken();
 
         assertNotNull(token);
 
@@ -68,7 +70,11 @@ public class TasksApiTest extends BaseTest {
                 token);
 
         assertNotNull(operationProgressResponse);
-        Assertions.assertSame(operationProgressResponse.join().getStatus(), OperationStatus.COMPLETED);
-        Assertions.assertSame(operationProgressResponse.join().getPercentComplete(), 100);
+        Assertions.assertSame(operationProgressResponse
+                .join()
+                .getStatus(), OperationStatus.COMPLETED);
+        Assertions.assertSame(operationProgressResponse
+                .join()
+                .getPercentComplete(), 100);
     }
 }

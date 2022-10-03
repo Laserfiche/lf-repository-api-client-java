@@ -7,10 +7,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class FieldDefinitionsApiTest extends BaseTest {
     FieldDefinitionsClient client;
@@ -40,22 +41,52 @@ class FieldDefinitionsApiTest extends BaseTest {
 
     @Test
     void getFieldDefinitions_NextLink() throws InterruptedException {
+        int maxPageSize = 10;
         ODataValueContextOfIListOfWFieldInfo fieldInfoList = client
-                .getFieldDefinitions(repoId, null, null, null, null, null, null, false)
+                .getFieldDefinitions(repoId, String.format("maxpagesize=%d", maxPageSize), null, null, null, null, null,
+                        false)
                 .join();
-
         assertNotNull(fieldInfoList);
 
-        String nextLink = fieldInfoList.getAtOdataNextLink();
+        String nextLink = fieldInfoList.getOdataNextLink();
         assertNotNull(nextLink);
-        int maxPageSize = 1;
-        assertTrue(fieldInfoList.getValue().size() <= maxPageSize);
 
-        CompletableFuture<ODataValueContextOfIListOfWFieldInfo> nextLinkResponse = client.getFieldDefinitionsNextLink(nextLink, maxPageSize);
+        assertTrue(fieldInfoList
+                .getValue()
+                .size() <= maxPageSize);
+
+        CompletableFuture<ODataValueContextOfIListOfWFieldInfo> nextLinkResponse = client.getFieldDefinitionsNextLink(
+                nextLink, maxPageSize);
         assertNotNull(nextLinkResponse);
         TimeUnit.SECONDS.sleep(10);
         ODataValueContextOfIListOfWFieldInfo nextLinkResult = nextLinkResponse.join();
         assertNotNull(nextLinkResult);
-        assertTrue(nextLinkResult.getValue().size() <= maxPageSize);
+        assertTrue(nextLinkResult
+                .getValue()
+                .size() <= maxPageSize);
+    }
+
+    @Test
+    void getFieldDefinitions_ForEach() throws InterruptedException {
+        int maxPageSize = 10;
+        Function<CompletableFuture<ODataValueContextOfIListOfWFieldInfo>, CompletableFuture<Boolean>> callback = data -> {
+            ODataValueContextOfIListOfWFieldInfo result = data.join();
+            if (result.getOdataNextLink() != null) {
+                assertNotEquals(0, result
+                        .getValue()
+                        .size());
+                assertTrue(result
+                        .getValue()
+                        .size() <= maxPageSize);
+                return CompletableFuture.completedFuture(true);
+            } else {
+                return CompletableFuture.completedFuture(false);
+            }
+        };
+        try {
+            client.getFieldDefinitionsForEach(callback, maxPageSize, repoId, null, null, null, null, null, null, null);
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
     }
 }

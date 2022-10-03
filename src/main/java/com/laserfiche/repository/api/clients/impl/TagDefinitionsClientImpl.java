@@ -7,6 +7,8 @@ import kong.unirest.UnirestInstance;
 
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class TagDefinitionsClientImpl extends ApiClient implements TagDefinitionsClient {
 
@@ -27,11 +29,16 @@ public class TagDefinitionsClientImpl extends ApiClient implements TagDefinition
                 new String[]{"culture", "$select", "$orderby", "$top", "$skip", "$count"},
                 new Object[]{culture, select, orderby, top, skip, count});
         Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId"}, new Object[]{repoId});
+        Map<String, Object> headerParameters = getNonNullParameters(new String[]{"prefer"}, new Object[]{prefer});
+        Map<String, String> headerParametersWithStringTypeValue = headerParameters
+                .entrySet()
+                .stream()
+                .collect(Collectors.toMap(Map.Entry::getKey, e -> (String) e.getValue()));
         return httpClient
                 .get(url)
                 .queryString(queryParameters)
                 .routeParam(pathParameters)
-                .header("prefer", prefer)
+                .headers(headerParametersWithStringTypeValue)
                 .asObjectAsync(ODataValueContextOfIListOfWTagInfo.class)
                 .thenApply(httpResponse -> {
                     if (httpResponse.getStatus() == 400) {
@@ -55,9 +62,28 @@ public class TagDefinitionsClientImpl extends ApiClient implements TagDefinition
 
     @Override
     public CompletableFuture<ODataValueContextOfIListOfWTagInfo> getTagDefinitionsNextLink(String nextLink,
-            int maxPageSize) {
+            Integer maxPageSize) {
         return doGetTagDefinitions(nextLink, null, mergeMaxSizeIntoPrefer(maxPageSize, null), null, null, null, null,
                 null, null);
+    }
+
+    @Override
+    public CompletableFuture<Void> getTagDefinitionsForEach(
+            Function<CompletableFuture<ODataValueContextOfIListOfWTagInfo>, CompletableFuture<Boolean>> callback,
+            Integer maxPageSize, String repoId, String prefer, String culture, String select, String orderby,
+            Integer top, Integer skip, Boolean count) {
+        prefer = mergeMaxSizeIntoPrefer(maxPageSize, prefer);
+        CompletableFuture<ODataValueContextOfIListOfWTagInfo> response = getTagDefinitions(repoId, prefer, culture,
+                select, orderby, top, skip, count);
+        while (response != null && callback
+                .apply(response)
+                .join()) {
+            String nextLink = response
+                    .join()
+                    .getOdataNextLink();
+            response = getTagDefinitionsNextLink(nextLink, maxPageSize);
+        }
+        return CompletableFuture.completedFuture(null);
     }
 
     @Override

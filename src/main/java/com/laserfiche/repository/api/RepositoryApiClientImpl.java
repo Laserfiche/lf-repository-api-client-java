@@ -29,7 +29,8 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
         String baseUrl = baseUrlDebug != null ? baseUrlDebug : "https://api." + accessKey.domain + "/repository";
         httpClient = Unirest.spawnInstance();
 
-        httpClient.config()
+        httpClient
+                .config()
                 .setObjectMapper(new RepositoryClientObjectMapper())
                 .interceptor(new OAuthInterceptor(servicePrincipalKey, accessKey));
 
@@ -47,7 +48,8 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
         templateDefinitionsClient = new TemplateDefinitionsClientImpl(baseUrl, httpClient);
     }
 
-    public static RepositoryApiClient CreateFromAccessKey(String servicePrincipalKey, AccessKey accessKey, String baseUrlDebug) {
+    public static RepositoryApiClient CreateFromAccessKey(String servicePrincipalKey, AccessKey accessKey,
+            String baseUrlDebug) {
         return new RepositoryApiClientImpl(servicePrincipalKey, accessKey, baseUrlDebug);
     }
 
@@ -58,9 +60,13 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
     @Override
     public void setDefaultRequestHeaders(Map<String, String> defaultRequestHeaders) {
         defaultHeaders = defaultRequestHeaders;
-        httpClient.config().clearDefaultHeaders();
+        httpClient
+                .config()
+                .clearDefaultHeaders();
         for (String Key : defaultRequestHeaders.keySet()) {
-            httpClient.config().setDefaultHeader(Key, defaultHeaders.get(Key));
+            httpClient
+                    .config()
+                    .setDefaultHeader(Key, defaultHeaders.get(Key));
         }
     }
 

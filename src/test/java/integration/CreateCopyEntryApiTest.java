@@ -38,7 +38,7 @@ public class CreateCopyEntryApiTest extends BaseTest {
                         .deleteEntryInfo(repoId, num, body);
             }
         }
-     createdEntries.clear();
+        createdEntries.clear();
     }
 
     @Test

@@ -6,6 +6,8 @@ import kong.unirest.UnirestInstance;
 
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class SearchesClientImpl extends ApiClient implements SearchesClient {
 
@@ -92,11 +94,16 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
                 new Object[]{select, orderby, top, skip, count});
         Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "searchToken", "rowNumber"},
                 new Object[]{repoId, searchToken, rowNumber});
+        Map<String, Object> headerParameters = getNonNullParameters(new String[]{"prefer"}, new Object[]{prefer});
+        Map<String, String> headerParametersWithStringTypeValue = headerParameters
+                .entrySet()
+                .stream()
+                .collect(Collectors.toMap(Map.Entry::getKey, e -> (String) e.getValue()));
         return httpClient
                 .get(url)
                 .queryString(queryParameters)
                 .routeParam(pathParameters)
-                .header("prefer", prefer)
+                .headers(headerParametersWithStringTypeValue)
                 .asObjectAsync(ODataValueContextOfIListOfContextHit.class)
                 .thenApply(httpResponse -> {
                     if (httpResponse.getStatus() == 400) {
@@ -123,9 +130,28 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
 
     @Override
     public CompletableFuture<ODataValueContextOfIListOfContextHit> getSearchContextHitsNextLink(String nextLink,
-            int maxPageSize) {
+            Integer maxPageSize) {
         return doGetSearchContextHits(nextLink, null, null, null, mergeMaxSizeIntoPrefer(maxPageSize, null), null, null,
                 null, null, null);
+    }
+
+    @Override
+    public CompletableFuture<Void> getSearchContextHitsForEach(
+            Function<CompletableFuture<ODataValueContextOfIListOfContextHit>, CompletableFuture<Boolean>> callback,
+            Integer maxPageSize, String repoId, String searchToken, Integer rowNumber, String prefer, String select,
+            String orderby, Integer top, Integer skip, Boolean count) {
+        prefer = mergeMaxSizeIntoPrefer(maxPageSize, prefer);
+        CompletableFuture<ODataValueContextOfIListOfContextHit> response = getSearchContextHits(repoId, searchToken,
+                rowNumber, prefer, select, orderby, top, skip, count);
+        while (response != null && callback
+                .apply(response)
+                .join()) {
+            String nextLink = response
+                    .join()
+                    .getOdataNextLink();
+            response = getSearchContextHitsNextLink(nextLink, maxPageSize);
+        }
+        return CompletableFuture.completedFuture(null);
     }
 
     @Override
@@ -175,11 +201,16 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
                 new Object[]{groupByEntryType, refresh, fields, formatFields, culture, select, orderby, top, skip, count});
         Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "searchToken"},
                 new Object[]{repoId, searchToken});
+        Map<String, Object> headerParameters = getNonNullParameters(new String[]{"prefer"}, new Object[]{prefer});
+        Map<String, String> headerParametersWithStringTypeValue = headerParameters
+                .entrySet()
+                .stream()
+                .collect(Collectors.toMap(Map.Entry::getKey, e -> (String) e.getValue()));
         return httpClient
                 .get(url)
                 .queryString(queryParameters)
                 .routeParam(pathParameters)
-                .header("prefer", prefer)
+                .headers(headerParametersWithStringTypeValue)
                 .asObjectAsync(ODataValueContextOfIListOfEntry.class)
                 .thenApply(httpResponse -> {
                     if (httpResponse.getStatus() == 400) {
@@ -206,8 +237,28 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
 
     @Override
     public CompletableFuture<ODataValueContextOfIListOfEntry> getSearchResultsNextLink(String nextLink,
-            int maxPageSize) {
+            Integer maxPageSize) {
         return doGetSearchResults(nextLink, null, null, null, null, null, null,
                 mergeMaxSizeIntoPrefer(maxPageSize, null), null, null, null, null, null, null);
+    }
+
+    @Override
+    public CompletableFuture<Void> getSearchResultsForEach(
+            Function<CompletableFuture<ODataValueContextOfIListOfEntry>, CompletableFuture<Boolean>> callback,
+            Integer maxPageSize, String repoId, String searchToken, Boolean groupByEntryType, Boolean refresh,
+            String[] fields, Boolean formatFields, String prefer, String culture, String select, String orderby,
+            Integer top, Integer skip, Boolean count) {
+        prefer = mergeMaxSizeIntoPrefer(maxPageSize, prefer);
+        CompletableFuture<ODataValueContextOfIListOfEntry> response = getSearchResults(repoId, searchToken,
+                groupByEntryType, refresh, fields, formatFields, prefer, culture, select, orderby, top, skip, count);
+        while (response != null && callback
+                .apply(response)
+                .join()) {
+            String nextLink = response
+                    .join()
+                    .getOdataNextLink();
+            response = getSearchResultsNextLink(nextLink, maxPageSize);
+        }
+        return CompletableFuture.completedFuture(null);
     }
 }

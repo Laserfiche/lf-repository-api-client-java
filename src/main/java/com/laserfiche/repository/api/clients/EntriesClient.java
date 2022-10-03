@@ -6,6 +6,7 @@ import java.io.File;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
+import java.util.function.Function;
 
 public interface EntriesClient {
 
@@ -33,7 +34,40 @@ public interface EntriesClient {
             String prefer, Boolean formatValue, String culture, String select, String orderby, Integer top,
             Integer skip, Boolean count);
 
-    CompletableFuture<ODataValueContextOfIListOfFieldValue> getFieldValuesNextLink(String nextLink, int maxPageSize);
+    /**
+     * Returns the next subset of the requested collection, using a nextlink url.
+     *
+     * @param nextLink    A url that allows retrieving the next subset of the requested collection.
+     * @param maxPageSize Optionally specify the maximum number of items to retrieve.
+     * @return CompletableFuture<ODataValueContextOfIListOfFieldValue> The return value
+     */
+    CompletableFuture<ODataValueContextOfIListOfFieldValue> getFieldValuesNextLink(String nextLink,
+            Integer maxPageSize);
+
+    /**
+     * Provides the functionality to iteratively (i.e. through paging) call <b>getFieldValues</b>, and apply a function on the response of each iteration.
+     *
+     * @param callback    A delegate that will be called each time new data is retrieved. Returns false to stop receiving more data; returns true to be called again if there's more data.
+     * @param maxPageSize Optionally specify the maximum number of items to retrieve.
+     * @param repoId      The requested repository ID.
+     * @param entryId     The requested entry ID.
+     * @param prefer      An optional OData header. Can be used to set the maximum page size using odata.maxpagesize.
+     * @param formatValue An optional query parameter used to indicate if the field values should be formatted.
+     *                    The default value is false.
+     * @param culture     An optional query parameter used to indicate the locale that should be used for formatting.
+     *                    The value should be a standard language tag. The formatValue query parameter must be set to true, otherwise
+     *                    culture will not be used for formatting.
+     * @param select      Limits the properties returned in the result.
+     * @param orderby     Specifies the order in which items are returned. The maximum number of expressions is 5.
+     * @param top         Limits the number of items returned from a collection.
+     * @param skip        Excludes the specified number of items of the queried collection from the result.
+     * @param count       Indicates whether the total count of items within a collection are returned in the result.
+     * @return CompletableFuture<Void> The return value
+     */
+    CompletableFuture<Void> getFieldValuesForEach(
+            Function<CompletableFuture<ODataValueContextOfIListOfFieldValue>, CompletableFuture<Boolean>> callback,
+            Integer maxPageSize, String repoId, Integer entryId, String prefer, Boolean formatValue, String culture,
+            String select, String orderby, Integer top, Integer skip, Boolean count);
 
     /**
      * - Update the field values assigned to an entry.
@@ -87,8 +121,35 @@ public interface EntriesClient {
     CompletableFuture<ODataValueContextOfIListOfWEntryLinkInfo> getLinkValuesFromEntry(String repoId, Integer entryId,
             String prefer, String select, String orderby, Integer top, Integer skip, Boolean count);
 
+    /**
+     * Returns the next subset of the requested collection, using a nextlink url.
+     *
+     * @param nextLink    A url that allows retrieving the next subset of the requested collection.
+     * @param maxPageSize Optionally specify the maximum number of items to retrieve.
+     * @return CompletableFuture<ODataValueContextOfIListOfWEntryLinkInfo> The return value
+     */
     CompletableFuture<ODataValueContextOfIListOfWEntryLinkInfo> getLinkValuesFromEntryNextLink(String nextLink,
-            int maxPageSize);
+            Integer maxPageSize);
+
+    /**
+     * Provides the functionality to iteratively (i.e. through paging) call <b>getLinkValuesFromEntry</b>, and apply a function on the response of each iteration.
+     *
+     * @param callback    A delegate that will be called each time new data is retrieved. Returns false to stop receiving more data; returns true to be called again if there's more data.
+     * @param maxPageSize Optionally specify the maximum number of items to retrieve.
+     * @param repoId      The requested repository ID.
+     * @param entryId     The requested entry ID.
+     * @param prefer      An optional odata header. Can be used to set the maximum page size using odata.maxpagesize.
+     * @param select      Limits the properties returned in the result.
+     * @param orderby     Specifies the order in which items are returned. The maximum number of expressions is 5.
+     * @param top         Limits the number of items returned from a collection.
+     * @param skip        Excludes the specified number of items of the queried collection from the result.
+     * @param count       Indicates whether the total count of items within a collection are returned in the result.
+     * @return CompletableFuture<Void> The return value
+     */
+    CompletableFuture<Void> getLinkValuesFromEntryForEach(
+            Function<CompletableFuture<ODataValueContextOfIListOfWEntryLinkInfo>, CompletableFuture<Boolean>> callback,
+            Integer maxPageSize, String repoId, Integer entryId, String prefer, String select, String orderby,
+            Integer top, Integer skip, Boolean count);
 
     /**
      * - Assign links to an entry.
@@ -205,7 +266,41 @@ public interface EntriesClient {
             Boolean groupByEntryType, String[] fields, Boolean formatFields, String prefer, String culture,
             String select, String orderby, Integer top, Integer skip, Boolean count);
 
-    CompletableFuture<ODataValueContextOfIListOfEntry> getEntryListingNextLink(String nextLink, int maxPageSize);
+    /**
+     * Returns the next subset of the requested collection, using a nextlink url.
+     *
+     * @param nextLink    A url that allows retrieving the next subset of the requested collection.
+     * @param maxPageSize Optionally specify the maximum number of items to retrieve.
+     * @return CompletableFuture<ODataValueContextOfIListOfEntry> The return value
+     */
+    CompletableFuture<ODataValueContextOfIListOfEntry> getEntryListingNextLink(String nextLink, Integer maxPageSize);
+
+    /**
+     * Provides the functionality to iteratively (i.e. through paging) call <b>getEntryListing</b>, and apply a function on the response of each iteration.
+     *
+     * @param callback         A delegate that will be called each time new data is retrieved. Returns false to stop receiving more data; returns true to be called again if there's more data.
+     * @param maxPageSize      Optionally specify the maximum number of items to retrieve.
+     * @param repoId           The requested repository ID.
+     * @param entryId          The folder ID.
+     * @param groupByEntryType An optional query parameter used to indicate if the result should be grouped by entry type or not.
+     * @param fields           Optional array of field names. Field values corresponding to the given field names will be returned for each entry.
+     * @param formatFields     Boolean for if field values should be formatted. Only applicable if Fields are specified.
+     * @param prefer           An optional OData header. Can be used to set the maximum page size using odata.maxpagesize.
+     * @param culture          An optional query parameter used to indicate the locale that should be used for formatting.
+     *                         The value should be a standard language tag. The formatFields query parameter must be set to true, otherwise
+     *                         culture will not be used for formatting.
+     * @param select           Limits the properties returned in the result.
+     * @param orderby          Specifies the order in which items are returned. The maximum number of expressions is 5.
+     * @param top              Limits the number of items returned from a collection.
+     * @param skip             Excludes the specified number of items of the queried collection from the result.
+     * @param count            Indicates whether the total count of items within a collection are returned in the result.
+     * @return CompletableFuture<Void> The return value
+     */
+    CompletableFuture<Void> getEntryListingForEach(
+            Function<CompletableFuture<ODataValueContextOfIListOfEntry>, CompletableFuture<Boolean>> callback,
+            Integer maxPageSize, String repoId, Integer entryId, Boolean groupByEntryType, String[] fields,
+            Boolean formatFields, String prefer, String culture, String select, String orderby, Integer top,
+            Integer skip, Boolean count);
 
     /**
      * - Create/copy a new child entry in the designated folder.
@@ -273,8 +368,35 @@ public interface EntriesClient {
     CompletableFuture<ODataValueContextOfIListOfWTagInfo> getTagsAssignedToEntry(String repoId, Integer entryId,
             String prefer, String select, String orderby, Integer top, Integer skip, Boolean count);
 
+    /**
+     * Returns the next subset of the requested collection, using a nextlink url.
+     *
+     * @param nextLink    A url that allows retrieving the next subset of the requested collection.
+     * @param maxPageSize Optionally specify the maximum number of items to retrieve.
+     * @return CompletableFuture<ODataValueContextOfIListOfWTagInfo> The return value
+     */
     CompletableFuture<ODataValueContextOfIListOfWTagInfo> getTagsAssignedToEntryNextLink(String nextLink,
-            int maxPageSize);
+            Integer maxPageSize);
+
+    /**
+     * Provides the functionality to iteratively (i.e. through paging) call <b>getTagsAssignedToEntry</b>, and apply a function on the response of each iteration.
+     *
+     * @param callback    A delegate that will be called each time new data is retrieved. Returns false to stop receiving more data; returns true to be called again if there's more data.
+     * @param maxPageSize Optionally specify the maximum number of items to retrieve.
+     * @param repoId      The requested repository ID.
+     * @param entryId     The requested entry ID.
+     * @param prefer      An optional OData header. Can be used to set the maximum page size using odata.maxpagesize.
+     * @param select      Limits the properties returned in the result.
+     * @param orderby     Specifies the order in which items are returned. The maximum number of expressions is 5.
+     * @param top         Limits the number of items returned from a collection.
+     * @param skip        Excludes the specified number of items of the queried collection from the result.
+     * @param count       Indicates whether the total count of items within a collection are returned in the result.
+     * @return CompletableFuture<Void> The return value
+     */
+    CompletableFuture<Void> getTagsAssignedToEntryForEach(
+            Function<CompletableFuture<ODataValueContextOfIListOfWTagInfo>, CompletableFuture<Boolean>> callback,
+            Integer maxPageSize, String repoId, Integer entryId, String prefer, String select, String orderby,
+            Integer top, Integer skip, Boolean count);
 
     /**
      * - Assign tags to an entry.

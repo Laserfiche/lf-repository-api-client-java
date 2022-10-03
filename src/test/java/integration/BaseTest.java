@@ -46,7 +46,8 @@ public class BaseTest {
         repositoryApiClient.setDefaultRequestHeaders(testHeaders);
     }
 
-    public static CompletableFuture<Entry> createEntry(RepositoryApiClient client, String entryName, Integer parentEntryId, Boolean autoRename) {
+    public static CompletableFuture<Entry> createEntry(RepositoryApiClient client, String entryName,
+            Integer parentEntryId, Boolean autoRename) {
         PostEntryChildrenRequest request = new PostEntryChildrenRequest();
         request.setEntryType(PostEntryChildrenEntryType.FOLDER);
         request.setName(entryName);

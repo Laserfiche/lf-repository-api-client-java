@@ -11,37 +11,37 @@ import java.util.Objects;
 public class ODataValueContextOfIListOfFieldValue extends ODataValueOfIListOfFieldValue {
 
     @JsonProperty("@odata.nextLink")
-    private String _atOdataNextLink = null;
+    private String odataNextLink = null;
 
     @JsonProperty("@odata.count")
-    private Integer _atOdataCount = null;
+    private Integer odataCount = null;
 
-    public ODataValueContextOfIListOfFieldValue _atOdataNextLink(String _atOdataNextLink) {
-        this._atOdataNextLink = _atOdataNextLink;
+    public ODataValueContextOfIListOfFieldValue odataNextLink(String odataNextLink) {
+        this.odataNextLink = odataNextLink;
         return this;
     }
 
     @Schema(description = "It contains a URL that allows retrieving the next subset of the requested collection.")
-    public String getAtOdataNextLink() {
-        return _atOdataNextLink;
+    public String getOdataNextLink() {
+        return odataNextLink;
     }
 
-    public void setAtOdataNextLink(String _atOdataNextLink) {
-        this._atOdataNextLink = _atOdataNextLink;
+    public void setOdataNextLink(String odataNextLink) {
+        this.odataNextLink = odataNextLink;
     }
 
-    public ODataValueContextOfIListOfFieldValue _atOdataCount(Integer _atOdataCount) {
-        this._atOdataCount = _atOdataCount;
+    public ODataValueContextOfIListOfFieldValue odataCount(Integer odataCount) {
+        this.odataCount = odataCount;
         return this;
     }
 
     @Schema(description = "It contains the count of a collection of entities or a collection of entity references.")
-    public Integer getAtOdataCount() {
-        return _atOdataCount;
+    public Integer getOdataCount() {
+        return odataCount;
     }
 
-    public void setAtOdataCount(Integer _atOdataCount) {
-        this._atOdataCount = _atOdataCount;
+    public void setOdataCount(Integer odataCount) {
+        this.odataCount = odataCount;
     }
 
     @Override
@@ -53,14 +53,13 @@ public class ODataValueContextOfIListOfFieldValue extends ODataValueOfIListOfFie
             return false;
         }
         ODataValueContextOfIListOfFieldValue odataValueContextOfIListOfFieldValue = (ODataValueContextOfIListOfFieldValue) o;
-        return Objects.equals(this._atOdataNextLink,
-                odataValueContextOfIListOfFieldValue._atOdataNextLink) && Objects.equals(this._atOdataCount,
-                odataValueContextOfIListOfFieldValue._atOdataCount) && super.equals(o);
+        return Objects.equals(this.odataNextLink, odataValueContextOfIListOfFieldValue.odataNextLink) && Objects.equals(
+                this.odataCount, odataValueContextOfIListOfFieldValue.odataCount) && super.equals(o);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(_atOdataNextLink, _atOdataCount, super.hashCode());
+        return Objects.hash(odataNextLink, odataCount, super.hashCode());
     }
 
     @Override
@@ -72,12 +71,12 @@ public class ODataValueContextOfIListOfFieldValue extends ODataValueOfIListOfFie
                 .append(toIndentedString(super.toString()))
                 .append("\n");
         sb
-                .append("    _atOdataNextLink: ")
-                .append(toIndentedString(_atOdataNextLink))
+                .append("    odataNextLink: ")
+                .append(toIndentedString(odataNextLink))
                 .append("\n");
         sb
-                .append("    _atOdataCount: ")
-                .append(toIndentedString(_atOdataCount))
+                .append("    odataCount: ")
+                .append(toIndentedString(odataCount))
                 .append("\n");
         sb.append("}");
         return sb.toString();

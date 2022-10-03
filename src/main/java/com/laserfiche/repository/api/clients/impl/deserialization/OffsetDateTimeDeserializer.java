@@ -19,9 +19,14 @@ public class OffsetDateTimeDeserializer extends StdDeserializer<OffsetDateTime> 
     }
 
     @Override
-    public OffsetDateTime deserialize(JsonParser parser, DeserializationContext ctx) throws IOException, JacksonException {
-        TreeNode tree = parser.getCodec().readTree(parser);
-        String dateString = tree.toString().replaceAll("\"", "");
+    public OffsetDateTime deserialize(JsonParser parser,
+            DeserializationContext ctx) throws IOException, JacksonException {
+        TreeNode tree = parser
+                .getCodec()
+                .readTree(parser);
+        String dateString = tree
+                .toString()
+                .replaceAll("\"", "");
         return OffsetDateTime.parse(dateString);
     }
 }

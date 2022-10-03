@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
@@ -32,11 +34,16 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 new Object[]{formatValue, culture, select, orderby, top, skip, count});
         Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "entryId"},
                 new Object[]{repoId, entryId});
+        Map<String, Object> headerParameters = getNonNullParameters(new String[]{"prefer"}, new Object[]{prefer});
+        Map<String, String> headerParametersWithStringTypeValue = headerParameters
+                .entrySet()
+                .stream()
+                .collect(Collectors.toMap(Map.Entry::getKey, e -> (String) e.getValue()));
         return httpClient
                 .get(url)
                 .queryString(queryParameters)
                 .routeParam(pathParameters)
-                .header("prefer", prefer)
+                .headers(headerParametersWithStringTypeValue)
                 .asObjectAsync(ODataValueContextOfIListOfFieldValue.class)
                 .thenApply(httpResponse -> {
                     if (httpResponse.getStatus() == 400) {
@@ -63,9 +70,28 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override
     public CompletableFuture<ODataValueContextOfIListOfFieldValue> getFieldValuesNextLink(String nextLink,
-            int maxPageSize) {
+            Integer maxPageSize) {
         return doGetFieldValues(nextLink, null, null, mergeMaxSizeIntoPrefer(maxPageSize, null), null, null, null, null,
                 null, null, null);
+    }
+
+    @Override
+    public CompletableFuture<Void> getFieldValuesForEach(
+            Function<CompletableFuture<ODataValueContextOfIListOfFieldValue>, CompletableFuture<Boolean>> callback,
+            Integer maxPageSize, String repoId, Integer entryId, String prefer, Boolean formatValue, String culture,
+            String select, String orderby, Integer top, Integer skip, Boolean count) {
+        prefer = mergeMaxSizeIntoPrefer(maxPageSize, prefer);
+        CompletableFuture<ODataValueContextOfIListOfFieldValue> response = getFieldValues(repoId, entryId, prefer,
+                formatValue, culture, select, orderby, top, skip, count);
+        while (response != null && callback
+                .apply(response)
+                .join()) {
+            String nextLink = response
+                    .join()
+                    .getOdataNextLink();
+            response = getFieldValuesNextLink(nextLink, maxPageSize);
+        }
+        return CompletableFuture.completedFuture(null);
     }
 
     @Override
@@ -117,9 +143,9 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
         return httpClient
                 .post(baseUrl + "/v1/Repositories/{repoId}/Entries/{parentEntryId}/{fileName}")
                 .field("electronicDocument", file)
-                .field("request", toJson(requestBody))
                 .queryString(queryParameters)
                 .routeParam(pathParameters)
+                .body(requestBody)
                 .asObjectAsync(CreateEntryResult.class)
                 .thenApply(httpResponse -> {
                     if (httpResponse.getStatus() == 400) {
@@ -165,11 +191,16 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 new Object[]{select, orderby, top, skip, count});
         Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "entryId"},
                 new Object[]{repoId, entryId});
+        Map<String, Object> headerParameters = getNonNullParameters(new String[]{"prefer"}, new Object[]{prefer});
+        Map<String, String> headerParametersWithStringTypeValue = headerParameters
+                .entrySet()
+                .stream()
+                .collect(Collectors.toMap(Map.Entry::getKey, e -> (String) e.getValue()));
         return httpClient
                 .get(url)
                 .queryString(queryParameters)
                 .routeParam(pathParameters)
-                .header("prefer", prefer)
+                .headers(headerParametersWithStringTypeValue)
                 .asObjectAsync(ODataValueContextOfIListOfWEntryLinkInfo.class)
                 .thenApply(httpResponse -> {
                     if (httpResponse.getStatus() == 400) {
@@ -196,9 +227,28 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override
     public CompletableFuture<ODataValueContextOfIListOfWEntryLinkInfo> getLinkValuesFromEntryNextLink(String nextLink,
-            int maxPageSize) {
+            Integer maxPageSize) {
         return doGetLinkValuesFromEntry(nextLink, null, null, mergeMaxSizeIntoPrefer(maxPageSize, null), null, null,
                 null, null, null);
+    }
+
+    @Override
+    public CompletableFuture<Void> getLinkValuesFromEntryForEach(
+            Function<CompletableFuture<ODataValueContextOfIListOfWEntryLinkInfo>, CompletableFuture<Boolean>> callback,
+            Integer maxPageSize, String repoId, Integer entryId, String prefer, String select, String orderby,
+            Integer top, Integer skip, Boolean count) {
+        prefer = mergeMaxSizeIntoPrefer(maxPageSize, prefer);
+        CompletableFuture<ODataValueContextOfIListOfWEntryLinkInfo> response = getLinkValuesFromEntry(repoId, entryId,
+                prefer, select, orderby, top, skip, count);
+        while (response != null && callback
+                .apply(response)
+                .join()) {
+            String nextLink = response
+                    .join()
+                    .getOdataNextLink();
+            response = getLinkValuesFromEntryNextLink(nextLink, maxPageSize);
+        }
+        return CompletableFuture.completedFuture(null);
     }
 
     @Override
@@ -316,10 +366,15 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
             GetEdocWithAuditReasonRequest requestBody, String range) {
         Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "entryId"},
                 new Object[]{repoId, entryId});
+        Map<String, Object> headerParameters = getNonNullParameters(new String[]{"range"}, new Object[]{range});
+        Map<String, String> headerParametersWithStringTypeValue = headerParameters
+                .entrySet()
+                .stream()
+                .collect(Collectors.toMap(Map.Entry::getKey, e -> (String) e.getValue()));
         return httpClient
                 .post(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Document/GetEdocWithAuditReason")
                 .routeParam(pathParameters)
-                .header("range", range)
+                .headers(headerParametersWithStringTypeValue)
                 .contentType("application/json")
                 .body(requestBody)
                 .asObjectAsync(File.class)
@@ -353,10 +408,15 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
     public CompletableFuture<File> exportDocument(String repoId, Integer entryId, String range) {
         Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "entryId"},
                 new Object[]{repoId, entryId});
+        Map<String, Object> headerParameters = getNonNullParameters(new String[]{"range"}, new Object[]{range});
+        Map<String, String> headerParametersWithStringTypeValue = headerParameters
+                .entrySet()
+                .stream()
+                .collect(Collectors.toMap(Map.Entry::getKey, e -> (String) e.getValue()));
         return httpClient
                 .get(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Document/edoc")
                 .routeParam(pathParameters)
-                .header("range", range)
+                .headers(headerParametersWithStringTypeValue)
                 .asObjectAsync(File.class)
                 .thenApply(httpResponse -> {
                     if (httpResponse.getStatus() == 400) {
@@ -471,11 +531,16 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 new Object[]{groupByEntryType, fields, formatFields, culture, select, orderby, top, skip, count});
         Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "entryId"},
                 new Object[]{repoId, entryId});
+        Map<String, Object> headerParameters = getNonNullParameters(new String[]{"prefer"}, new Object[]{prefer});
+        Map<String, String> headerParametersWithStringTypeValue = headerParameters
+                .entrySet()
+                .stream()
+                .collect(Collectors.toMap(Map.Entry::getKey, e -> (String) e.getValue()));
         return httpClient
                 .get(url)
                 .queryString(queryParameters)
                 .routeParam(pathParameters)
-                .header("prefer", prefer)
+                .headers(headerParametersWithStringTypeValue)
                 .asObjectAsync(ODataValueContextOfIListOfEntry.class)
                 .thenApply(httpResponse -> {
                     if (httpResponse.getStatus() == 400) {
@@ -502,9 +567,29 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override
     public CompletableFuture<ODataValueContextOfIListOfEntry> getEntryListingNextLink(String nextLink,
-            int maxPageSize) {
+            Integer maxPageSize) {
         return doGetEntryListing(nextLink, null, null, null, null, null, mergeMaxSizeIntoPrefer(maxPageSize, null),
                 null, null, null, null, null, null);
+    }
+
+    @Override
+    public CompletableFuture<Void> getEntryListingForEach(
+            Function<CompletableFuture<ODataValueContextOfIListOfEntry>, CompletableFuture<Boolean>> callback,
+            Integer maxPageSize, String repoId, Integer entryId, Boolean groupByEntryType, String[] fields,
+            Boolean formatFields, String prefer, String culture, String select, String orderby, Integer top,
+            Integer skip, Boolean count) {
+        prefer = mergeMaxSizeIntoPrefer(maxPageSize, prefer);
+        CompletableFuture<ODataValueContextOfIListOfEntry> response = getEntryListing(repoId, entryId, groupByEntryType,
+                fields, formatFields, prefer, culture, select, orderby, top, skip, count);
+        while (response != null && callback
+                .apply(response)
+                .join()) {
+            String nextLink = response
+                    .join()
+                    .getOdataNextLink();
+            response = getEntryListingNextLink(nextLink, maxPageSize);
+        }
+        return CompletableFuture.completedFuture(null);
     }
 
     @Override
@@ -629,11 +714,16 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 new Object[]{select, orderby, top, skip, count});
         Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "entryId"},
                 new Object[]{repoId, entryId});
+        Map<String, Object> headerParameters = getNonNullParameters(new String[]{"prefer"}, new Object[]{prefer});
+        Map<String, String> headerParametersWithStringTypeValue = headerParameters
+                .entrySet()
+                .stream()
+                .collect(Collectors.toMap(Map.Entry::getKey, e -> (String) e.getValue()));
         return httpClient
                 .get(url)
                 .queryString(queryParameters)
                 .routeParam(pathParameters)
-                .header("prefer", prefer)
+                .headers(headerParametersWithStringTypeValue)
                 .asObjectAsync(ODataValueContextOfIListOfWTagInfo.class)
                 .thenApply(httpResponse -> {
                     if (httpResponse.getStatus() == 400) {
@@ -660,9 +750,28 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override
     public CompletableFuture<ODataValueContextOfIListOfWTagInfo> getTagsAssignedToEntryNextLink(String nextLink,
-            int maxPageSize) {
+            Integer maxPageSize) {
         return doGetTagsAssignedToEntry(nextLink, null, null, mergeMaxSizeIntoPrefer(maxPageSize, null), null, null,
                 null, null, null);
+    }
+
+    @Override
+    public CompletableFuture<Void> getTagsAssignedToEntryForEach(
+            Function<CompletableFuture<ODataValueContextOfIListOfWTagInfo>, CompletableFuture<Boolean>> callback,
+            Integer maxPageSize, String repoId, Integer entryId, String prefer, String select, String orderby,
+            Integer top, Integer skip, Boolean count) {
+        prefer = mergeMaxSizeIntoPrefer(maxPageSize, prefer);
+        CompletableFuture<ODataValueContextOfIListOfWTagInfo> response = getTagsAssignedToEntry(repoId, entryId, prefer,
+                select, orderby, top, skip, count);
+        while (response != null && callback
+                .apply(response)
+                .join()) {
+            String nextLink = response
+                    .join()
+                    .getOdataNextLink();
+            response = getTagsAssignedToEntryNextLink(nextLink, maxPageSize);
+        }
+        return CompletableFuture.completedFuture(null);
     }
 
     @Override
