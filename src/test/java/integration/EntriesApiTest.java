@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
@@ -85,12 +84,8 @@ class EntriesApiTest extends BaseTest {
                 return CompletableFuture.completedFuture(false);
             }
         };
-        try {
-            client.getEntryListingForEach(callback, maxPageSize, repoId, 1, false, null, false, null, null, null, null,
-                    null, null, false);
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
+        client.getEntryListingForEach(callback, maxPageSize, repoId, 1, false, null, false, null, null, null, null,
+                null, null, false);
     }
 
     @Test
@@ -156,12 +151,8 @@ class EntriesApiTest extends BaseTest {
                 return CompletableFuture.completedFuture(false);
             }
         };
-        try {
-            client.getFieldValuesForEach(callback, maxPageSize, repoId, 1, null, null, null, null, null, null, null,
-                    false);
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
+        client.getFieldValuesForEach(callback, maxPageSize, repoId, 1, null, null, null, null, null, null, null,
+                false);
     }
 
 
@@ -215,11 +206,7 @@ class EntriesApiTest extends BaseTest {
                 return CompletableFuture.completedFuture(false);
             }
         };
-        try {
-            client.getLinkValuesFromEntryForEach(callback, maxPageSize, repoId, 1, null, null, null, null, null, false);
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
+        client.getLinkValuesFromEntryForEach(callback, maxPageSize, repoId, 1, null, null, null, null, null, false);
     }
 
     @Test
@@ -288,11 +275,7 @@ class EntriesApiTest extends BaseTest {
                 return CompletableFuture.completedFuture(false);
             }
         };
-        try {
-            client.getTagsAssignedToEntryForEach(callback, maxPageSize, repoId, 1, null, null, null, null, null, false);
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
+        client.getTagsAssignedToEntryForEach(callback, maxPageSize, repoId, 1, null, null, null, null, null, false);
     }
 
     @Test

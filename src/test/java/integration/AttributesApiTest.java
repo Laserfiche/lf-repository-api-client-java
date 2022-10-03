@@ -7,7 +7,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
@@ -111,11 +110,7 @@ class AttributesApiTest extends BaseTest {
                 return CompletableFuture.completedFuture(false);
             }
         };
-        try {
-            client.getTrusteeAttributeKeyValuePairsForEach(callback, maxPageSize, repoId, true, null, null, null, null,
-                    null, null);
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
+        client.getTrusteeAttributeKeyValuePairsForEach(callback, maxPageSize, repoId, true, null, null, null, null,
+                null, null);
     }
 }

@@ -7,7 +7,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
@@ -83,10 +82,6 @@ class FieldDefinitionsApiTest extends BaseTest {
                 return CompletableFuture.completedFuture(false);
             }
         };
-        try {
-            client.getFieldDefinitionsForEach(callback, maxPageSize, repoId, null, null, null, null, null, null, null);
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
+        client.getFieldDefinitionsForEach(callback, maxPageSize, repoId, null, null, null, null, null, null, null);
     }
 }

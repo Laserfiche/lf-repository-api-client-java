@@ -7,7 +7,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
@@ -203,12 +202,8 @@ public class SearchApiTest extends BaseTest {
                 return CompletableFuture.completedFuture(false);
             }
         };
-        try {
-            client.getSearchResultsForEach(callback, maxPageSize, repoId, searchToken, null, null, null, null, null,
-                    null, null, null, null, null, null);
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
+        client.getSearchResultsForEach(callback, maxPageSize, repoId, searchToken, null, null, null, null, null,
+                null, null, null, null, null, null);
     }
 
     @Test
@@ -317,11 +312,7 @@ public class SearchApiTest extends BaseTest {
                 return CompletableFuture.completedFuture(false);
             }
         };
-        try {
-            client.getSearchContextHitsForEach(callback, maxPageSize, repoId, searchToken, 1, null, null, null, null,
-                    null, null);
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
+        client.getSearchContextHitsForEach(callback, maxPageSize, repoId, searchToken, 1, null, null, null, null,
+                null, null);
     }
 }
