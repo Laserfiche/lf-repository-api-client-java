@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
@@ -108,12 +107,8 @@ class TemplateDefinitionsApiTest extends BaseTest {
                 return CompletableFuture.completedFuture(false);
             }
         };
-        try {
-            client.getTemplateDefinitionsForEach(callback, maxPageSize, repoId, null, null, null, null, null, null,
-                    null, null);
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
+        client.getTemplateDefinitionsForEach(callback, maxPageSize, repoId, null, null, null, null, null, null,
+                null, null);
     }
 
     @Test
@@ -195,12 +190,8 @@ class TemplateDefinitionsApiTest extends BaseTest {
                 return CompletableFuture.completedFuture(false);
             }
         };
-        try {
-            client.getTemplateFieldDefinitionsForEach(callback, maxPageSize, repoId, tempDef.getId(), null, null, null,
-                    null, null, null, false);
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
+        client.getTemplateFieldDefinitionsForEach(callback, maxPageSize, repoId, tempDef.getId(), null, null, null,
+                null, null, null, false);
     }
 
     @Test

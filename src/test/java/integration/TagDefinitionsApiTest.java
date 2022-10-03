@@ -7,7 +7,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
@@ -83,11 +82,7 @@ class TagDefinitionsApiTest extends BaseTest {
                 return CompletableFuture.completedFuture(false);
             }
         };
-        try {
-            client.getTagDefinitionsForEach(callback, maxPageSize, repoId, null, null, null, null, null, null, null);
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
+        client.getTagDefinitionsForEach(callback, maxPageSize, repoId, null, null, null, null, null, null, null);
     }
 
     @Test

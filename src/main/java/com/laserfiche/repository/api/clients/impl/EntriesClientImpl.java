@@ -143,9 +143,9 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
         return httpClient
                 .post(baseUrl + "/v1/Repositories/{repoId}/Entries/{parentEntryId}/{fileName}")
                 .field("electronicDocument", file)
+                .field("request", toJson(requestBody))
                 .queryString(queryParameters)
                 .routeParam(pathParameters)
-                .body(requestBody)
                 .asObjectAsync(CreateEntryResult.class)
                 .thenApply(httpResponse -> {
                     if (httpResponse.getStatus() == 400) {
