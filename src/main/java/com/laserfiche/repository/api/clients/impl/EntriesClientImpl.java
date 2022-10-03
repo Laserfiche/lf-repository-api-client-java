@@ -1,17 +1,17 @@
 package com.laserfiche.repository.api.clients.impl;
 
-import java.util.*;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-
-import kong.unirest.*;
+import com.laserfiche.repository.api.clients.EntriesClient;
+import com.laserfiche.repository.api.clients.impl.model.*;
+import kong.unirest.UnirestInstance;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
-
-import com.laserfiche.repository.api.clients.impl.model.*;
-import com.laserfiche.repository.api.clients.EntriesClient;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class EntriesClientImpl extends ApiClient implements EntriesClient {
 

@@ -1,12 +1,11 @@
 package com.laserfiche.repository.api.clients.impl;
 
-import java.util.*;
-
-import kong.unirest.*;
-import java.util.concurrent.CompletableFuture;
-
-import com.laserfiche.repository.api.clients.impl.model.*;
 import com.laserfiche.repository.api.clients.TasksClient;
+import com.laserfiche.repository.api.clients.impl.model.OperationProgress;
+import kong.unirest.UnirestInstance;
+
+import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 public class TasksClientImpl extends ApiClient implements TasksClient {
 

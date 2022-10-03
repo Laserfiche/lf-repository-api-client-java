@@ -1,8 +1,9 @@
 package com.laserfiche.repository.api.clients;
 
-import java.util.concurrent.CompletableFuture;
+import com.laserfiche.repository.api.clients.impl.model.ODataValueOfIListOfEntry;
+import com.laserfiche.repository.api.clients.impl.model.SimpleSearchRequest;
 
-import com.laserfiche.repository.api.clients.impl.model.*;
+import java.util.concurrent.CompletableFuture;
 
 public interface SimpleSearchesClient {
 

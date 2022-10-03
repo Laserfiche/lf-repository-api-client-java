@@ -1,11 +1,11 @@
 package com.laserfiche.repository.api.clients.impl;
 
-import kong.unirest.UnirestInstance;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
+import kong.unirest.UnirestInstance;
 
 import java.util.HashMap;
 import java.util.Map;

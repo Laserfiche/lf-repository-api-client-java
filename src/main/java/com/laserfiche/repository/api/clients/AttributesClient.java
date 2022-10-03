@@ -1,10 +1,11 @@
 package com.laserfiche.repository.api.clients;
 
-import java.util.function.Function;
+import com.laserfiche.repository.api.clients.impl.model.Attribute;
+import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfListOfAttribute;
+
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
-
-import com.laserfiche.repository.api.clients.impl.model.*;
+import java.util.function.Function;
 
 public interface AttributesClient {
 

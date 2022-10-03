@@ -1,8 +1,8 @@
 package com.laserfiche.repository.api.clients;
 
-import java.util.concurrent.CompletableFuture;
+import com.laserfiche.repository.api.clients.impl.model.RepositoryInfo;
 
-import com.laserfiche.repository.api.clients.impl.model.*;
+import java.util.concurrent.CompletableFuture;
 
 public interface RepositoriesClient {
 

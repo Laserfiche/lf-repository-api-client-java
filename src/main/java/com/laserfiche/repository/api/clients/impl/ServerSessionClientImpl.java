@@ -1,13 +1,12 @@
 package com.laserfiche.repository.api.clients.impl;
 
-import java.util.*;
-
-import kong.unirest.*;
-
-import java.util.concurrent.CompletableFuture;
-
-import com.laserfiche.repository.api.clients.impl.model.*;
 import com.laserfiche.repository.api.clients.ServerSessionClient;
+import com.laserfiche.repository.api.clients.impl.model.ODataValueOfBoolean;
+import com.laserfiche.repository.api.clients.impl.model.ODataValueOfDateTime;
+import kong.unirest.UnirestInstance;
+
+import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 public class ServerSessionClientImpl extends ApiClient implements ServerSessionClient {
 
