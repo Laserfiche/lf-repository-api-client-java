@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -80,16 +79,15 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
     public CompletableFuture<Void> getFieldValuesForEach(
             Function<CompletableFuture<ODataValueContextOfIListOfFieldValue>, CompletableFuture<Boolean>> callback,
             Integer maxPageSize, String repoId, Integer entryId, String prefer, Boolean formatValue, String culture,
-            String select, String orderby, Integer top, Integer skip,
-            Boolean count) throws InterruptedException, ExecutionException {
+            String select, String orderby, Integer top, Integer skip, Boolean count) {
         prefer = mergeMaxSizeIntoPrefer(maxPageSize, prefer);
         CompletableFuture<ODataValueContextOfIListOfFieldValue> response = getFieldValues(repoId, entryId, prefer,
                 formatValue, culture, select, orderby, top, skip, count);
         while (response != null && callback
                 .apply(response)
-                .get()) {
+                .join()) {
             String nextLink = response
-                    .get()
+                    .join()
                     .getOdataNextLink();
             response = getFieldValuesNextLink(nextLink, maxPageSize);
         }
@@ -238,15 +236,15 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
     public CompletableFuture<Void> getLinkValuesFromEntryForEach(
             Function<CompletableFuture<ODataValueContextOfIListOfWEntryLinkInfo>, CompletableFuture<Boolean>> callback,
             Integer maxPageSize, String repoId, Integer entryId, String prefer, String select, String orderby,
-            Integer top, Integer skip, Boolean count) throws InterruptedException, ExecutionException {
+            Integer top, Integer skip, Boolean count) {
         prefer = mergeMaxSizeIntoPrefer(maxPageSize, prefer);
         CompletableFuture<ODataValueContextOfIListOfWEntryLinkInfo> response = getLinkValuesFromEntry(repoId, entryId,
                 prefer, select, orderby, top, skip, count);
         while (response != null && callback
                 .apply(response)
-                .get()) {
+                .join()) {
             String nextLink = response
-                    .get()
+                    .join()
                     .getOdataNextLink();
             response = getLinkValuesFromEntryNextLink(nextLink, maxPageSize);
         }
@@ -579,15 +577,15 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
             Function<CompletableFuture<ODataValueContextOfIListOfEntry>, CompletableFuture<Boolean>> callback,
             Integer maxPageSize, String repoId, Integer entryId, Boolean groupByEntryType, String[] fields,
             Boolean formatFields, String prefer, String culture, String select, String orderby, Integer top,
-            Integer skip, Boolean count) throws InterruptedException, ExecutionException {
+            Integer skip, Boolean count) {
         prefer = mergeMaxSizeIntoPrefer(maxPageSize, prefer);
         CompletableFuture<ODataValueContextOfIListOfEntry> response = getEntryListing(repoId, entryId, groupByEntryType,
                 fields, formatFields, prefer, culture, select, orderby, top, skip, count);
         while (response != null && callback
                 .apply(response)
-                .get()) {
+                .join()) {
             String nextLink = response
-                    .get()
+                    .join()
                     .getOdataNextLink();
             response = getEntryListingNextLink(nextLink, maxPageSize);
         }
@@ -761,15 +759,15 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
     public CompletableFuture<Void> getTagsAssignedToEntryForEach(
             Function<CompletableFuture<ODataValueContextOfIListOfWTagInfo>, CompletableFuture<Boolean>> callback,
             Integer maxPageSize, String repoId, Integer entryId, String prefer, String select, String orderby,
-            Integer top, Integer skip, Boolean count) throws InterruptedException, ExecutionException {
+            Integer top, Integer skip, Boolean count) {
         prefer = mergeMaxSizeIntoPrefer(maxPageSize, prefer);
         CompletableFuture<ODataValueContextOfIListOfWTagInfo> response = getTagsAssignedToEntry(repoId, entryId, prefer,
                 select, orderby, top, skip, count);
         while (response != null && callback
                 .apply(response)
-                .get()) {
+                .join()) {
             String nextLink = response
-                    .get()
+                    .join()
                     .getOdataNextLink();
             response = getTagsAssignedToEntryNextLink(nextLink, maxPageSize);
         }

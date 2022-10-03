@@ -7,7 +7,6 @@ import kong.unirest.UnirestInstance;
 
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -107,15 +106,15 @@ public class AttributesClientImpl extends ApiClient implements AttributesClient 
     public CompletableFuture<Void> getTrusteeAttributeKeyValuePairsForEach(
             Function<CompletableFuture<ODataValueContextOfListOfAttribute>, CompletableFuture<Boolean>> callback,
             Integer maxPageSize, String repoId, Boolean everyone, String prefer, String select, String orderby,
-            Integer top, Integer skip, Boolean count) throws InterruptedException, ExecutionException {
+            Integer top, Integer skip, Boolean count) {
         prefer = mergeMaxSizeIntoPrefer(maxPageSize, prefer);
         CompletableFuture<ODataValueContextOfListOfAttribute> response = getTrusteeAttributeKeyValuePairs(repoId,
                 everyone, prefer, select, orderby, top, skip, count);
         while (response != null && callback
                 .apply(response)
-                .get()) {
+                .join()) {
             String nextLink = response
-                    .get()
+                    .join()
                     .getOdataNextLink();
             response = getTrusteeAttributeKeyValuePairsNextLink(nextLink, maxPageSize);
         }

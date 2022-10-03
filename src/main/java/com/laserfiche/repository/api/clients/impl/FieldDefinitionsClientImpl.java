@@ -7,7 +7,6 @@ import kong.unirest.UnirestInstance;
 
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -107,15 +106,15 @@ public class FieldDefinitionsClientImpl extends ApiClient implements FieldDefini
     public CompletableFuture<Void> getFieldDefinitionsForEach(
             Function<CompletableFuture<ODataValueContextOfIListOfWFieldInfo>, CompletableFuture<Boolean>> callback,
             Integer maxPageSize, String repoId, String prefer, String culture, String select, String orderby,
-            Integer top, Integer skip, Boolean count) throws InterruptedException, ExecutionException {
+            Integer top, Integer skip, Boolean count) {
         prefer = mergeMaxSizeIntoPrefer(maxPageSize, prefer);
         CompletableFuture<ODataValueContextOfIListOfWFieldInfo> response = getFieldDefinitions(repoId, prefer, culture,
                 select, orderby, top, skip, count);
         while (response != null && callback
                 .apply(response)
-                .get()) {
+                .join()) {
             String nextLink = response
-                    .get()
+                    .join()
                     .getOdataNextLink();
             response = getFieldDefinitionsNextLink(nextLink, maxPageSize);
         }

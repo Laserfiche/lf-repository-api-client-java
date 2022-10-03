@@ -8,7 +8,6 @@ import kong.unirest.UnirestInstance;
 
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -78,15 +77,15 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
     public CompletableFuture<Void> getTemplateDefinitionsForEach(
             Function<CompletableFuture<ODataValueContextOfIListOfWTemplateInfo>, CompletableFuture<Boolean>> callback,
             Integer maxPageSize, String repoId, String templateName, String prefer, String culture, String select,
-            String orderby, Integer top, Integer skip, Boolean count) throws InterruptedException, ExecutionException {
+            String orderby, Integer top, Integer skip, Boolean count) {
         prefer = mergeMaxSizeIntoPrefer(maxPageSize, prefer);
         CompletableFuture<ODataValueContextOfIListOfWTemplateInfo> response = getTemplateDefinitions(repoId,
                 templateName, prefer, culture, select, orderby, top, skip, count);
         while (response != null && callback
                 .apply(response)
-                .get()) {
+                .join()) {
             String nextLink = response
-                    .get()
+                    .join()
                     .getOdataNextLink();
             response = getTemplateDefinitionsNextLink(nextLink, maxPageSize);
         }
@@ -154,15 +153,15 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
     public CompletableFuture<Void> getTemplateFieldDefinitionsByTemplateNameForEach(
             Function<CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo>, CompletableFuture<Boolean>> callback,
             Integer maxPageSize, String repoId, String templateName, String prefer, String culture, String select,
-            String orderby, Integer top, Integer skip, Boolean count) throws InterruptedException, ExecutionException {
+            String orderby, Integer top, Integer skip, Boolean count) {
         prefer = mergeMaxSizeIntoPrefer(maxPageSize, prefer);
         CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo> response = getTemplateFieldDefinitionsByTemplateName(
                 repoId, templateName, prefer, culture, select, orderby, top, skip, count);
         while (response != null && callback
                 .apply(response)
-                .get()) {
+                .join()) {
             String nextLink = response
-                    .get()
+                    .join()
                     .getOdataNextLink();
             response = getTemplateFieldDefinitionsByTemplateNameNextLink(nextLink, maxPageSize);
         }
@@ -231,15 +230,15 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
     public CompletableFuture<Void> getTemplateFieldDefinitionsForEach(
             Function<CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo>, CompletableFuture<Boolean>> callback,
             Integer maxPageSize, String repoId, Integer templateId, String prefer, String culture, String select,
-            String orderby, Integer top, Integer skip, Boolean count) throws InterruptedException, ExecutionException {
+            String orderby, Integer top, Integer skip, Boolean count) {
         prefer = mergeMaxSizeIntoPrefer(maxPageSize, prefer);
         CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo> response = getTemplateFieldDefinitions(repoId,
                 templateId, prefer, culture, select, orderby, top, skip, count);
         while (response != null && callback
                 .apply(response)
-                .get()) {
+                .join()) {
             String nextLink = response
-                    .get()
+                    .join()
                     .getOdataNextLink();
             response = getTemplateFieldDefinitionsNextLink(nextLink, maxPageSize);
         }

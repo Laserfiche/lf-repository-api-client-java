@@ -5,7 +5,6 @@ import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIList
 import com.laserfiche.repository.api.clients.impl.model.WTemplateInfo;
 
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 import java.util.function.Function;
 
 public interface TemplateDefinitionsClient {
@@ -57,13 +56,11 @@ public interface TemplateDefinitionsClient {
      * @param skip         Excludes the specified number of items of the queried collection from the result.
      * @param count        Indicates whether the total count of items within a collection are returned in the result.
      * @return CompletableFuture<Void> The return value
-     * @throws InterruptedException
-     * @throws ExecutionException
      */
     CompletableFuture<Void> getTemplateDefinitionsForEach(
             Function<CompletableFuture<ODataValueContextOfIListOfWTemplateInfo>, CompletableFuture<Boolean>> callback,
             Integer maxPageSize, String repoId, String templateName, String prefer, String culture, String select,
-            String orderby, Integer top, Integer skip, Boolean count) throws InterruptedException, ExecutionException;
+            String orderby, Integer top, Integer skip, Boolean count);
 
     /**
      * - Returns the field definitions assigned to a template definition.
@@ -112,13 +109,11 @@ public interface TemplateDefinitionsClient {
      * @param skip         Excludes the specified number of items of the queried collection from the result.
      * @param count        Indicates whether the total count of items within a collection are returned in the result.
      * @return CompletableFuture<Void> The return value
-     * @throws InterruptedException
-     * @throws ExecutionException
      */
     CompletableFuture<Void> getTemplateFieldDefinitionsByTemplateNameForEach(
             Function<CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo>, CompletableFuture<Boolean>> callback,
             Integer maxPageSize, String repoId, String templateName, String prefer, String culture, String select,
-            String orderby, Integer top, Integer skip, Boolean count) throws InterruptedException, ExecutionException;
+            String orderby, Integer top, Integer skip, Boolean count);
 
     /**
      * - Returns the field definitions assigned to a template definition.
@@ -167,13 +162,11 @@ public interface TemplateDefinitionsClient {
      * @param skip        Excludes the specified number of items of the queried collection from the result.
      * @param count       Indicates whether the total count of items within a collection are returned in the result.
      * @return CompletableFuture<Void> The return value
-     * @throws InterruptedException
-     * @throws ExecutionException
      */
     CompletableFuture<Void> getTemplateFieldDefinitionsForEach(
             Function<CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo>, CompletableFuture<Boolean>> callback,
             Integer maxPageSize, String repoId, Integer templateId, String prefer, String culture, String select,
-            String orderby, Integer top, Integer skip, Boolean count) throws InterruptedException, ExecutionException;
+            String orderby, Integer top, Integer skip, Boolean count);
 
     /**
      * - Returns a single template definition (including field definitions, if relevant).

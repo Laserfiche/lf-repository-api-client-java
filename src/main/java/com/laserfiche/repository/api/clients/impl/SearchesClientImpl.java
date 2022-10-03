@@ -6,7 +6,6 @@ import kong.unirest.UnirestInstance;
 
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -140,15 +139,15 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
     public CompletableFuture<Void> getSearchContextHitsForEach(
             Function<CompletableFuture<ODataValueContextOfIListOfContextHit>, CompletableFuture<Boolean>> callback,
             Integer maxPageSize, String repoId, String searchToken, Integer rowNumber, String prefer, String select,
-            String orderby, Integer top, Integer skip, Boolean count) throws InterruptedException, ExecutionException {
+            String orderby, Integer top, Integer skip, Boolean count) {
         prefer = mergeMaxSizeIntoPrefer(maxPageSize, prefer);
         CompletableFuture<ODataValueContextOfIListOfContextHit> response = getSearchContextHits(repoId, searchToken,
                 rowNumber, prefer, select, orderby, top, skip, count);
         while (response != null && callback
                 .apply(response)
-                .get()) {
+                .join()) {
             String nextLink = response
-                    .get()
+                    .join()
                     .getOdataNextLink();
             response = getSearchContextHitsNextLink(nextLink, maxPageSize);
         }
@@ -248,15 +247,15 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
             Function<CompletableFuture<ODataValueContextOfIListOfEntry>, CompletableFuture<Boolean>> callback,
             Integer maxPageSize, String repoId, String searchToken, Boolean groupByEntryType, Boolean refresh,
             String[] fields, Boolean formatFields, String prefer, String culture, String select, String orderby,
-            Integer top, Integer skip, Boolean count) throws InterruptedException, ExecutionException {
+            Integer top, Integer skip, Boolean count) {
         prefer = mergeMaxSizeIntoPrefer(maxPageSize, prefer);
         CompletableFuture<ODataValueContextOfIListOfEntry> response = getSearchResults(repoId, searchToken,
                 groupByEntryType, refresh, fields, formatFields, prefer, culture, select, orderby, top, skip, count);
         while (response != null && callback
                 .apply(response)
-                .get()) {
+                .join()) {
             String nextLink = response
-                    .get()
+                    .join()
                     .getOdataNextLink();
             response = getSearchResultsNextLink(nextLink, maxPageSize);
         }

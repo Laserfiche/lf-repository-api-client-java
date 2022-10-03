@@ -6,7 +6,6 @@ import java.io.File;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 import java.util.function.Function;
 
 public interface EntriesClient {
@@ -64,14 +63,11 @@ public interface EntriesClient {
      * @param skip        Excludes the specified number of items of the queried collection from the result.
      * @param count       Indicates whether the total count of items within a collection are returned in the result.
      * @return CompletableFuture<Void> The return value
-     * @throws InterruptedException
-     * @throws ExecutionException
      */
     CompletableFuture<Void> getFieldValuesForEach(
             Function<CompletableFuture<ODataValueContextOfIListOfFieldValue>, CompletableFuture<Boolean>> callback,
             Integer maxPageSize, String repoId, Integer entryId, String prefer, Boolean formatValue, String culture,
-            String select, String orderby, Integer top, Integer skip,
-            Boolean count) throws InterruptedException, ExecutionException;
+            String select, String orderby, Integer top, Integer skip, Boolean count);
 
     /**
      * - Update the field values assigned to an entry.
@@ -149,13 +145,11 @@ public interface EntriesClient {
      * @param skip        Excludes the specified number of items of the queried collection from the result.
      * @param count       Indicates whether the total count of items within a collection are returned in the result.
      * @return CompletableFuture<Void> The return value
-     * @throws InterruptedException
-     * @throws ExecutionException
      */
     CompletableFuture<Void> getLinkValuesFromEntryForEach(
             Function<CompletableFuture<ODataValueContextOfIListOfWEntryLinkInfo>, CompletableFuture<Boolean>> callback,
             Integer maxPageSize, String repoId, Integer entryId, String prefer, String select, String orderby,
-            Integer top, Integer skip, Boolean count) throws InterruptedException, ExecutionException;
+            Integer top, Integer skip, Boolean count);
 
     /**
      * - Assign links to an entry.
@@ -301,14 +295,12 @@ public interface EntriesClient {
      * @param skip             Excludes the specified number of items of the queried collection from the result.
      * @param count            Indicates whether the total count of items within a collection are returned in the result.
      * @return CompletableFuture<Void> The return value
-     * @throws InterruptedException
-     * @throws ExecutionException
      */
     CompletableFuture<Void> getEntryListingForEach(
             Function<CompletableFuture<ODataValueContextOfIListOfEntry>, CompletableFuture<Boolean>> callback,
             Integer maxPageSize, String repoId, Integer entryId, Boolean groupByEntryType, String[] fields,
             Boolean formatFields, String prefer, String culture, String select, String orderby, Integer top,
-            Integer skip, Boolean count) throws InterruptedException, ExecutionException;
+            Integer skip, Boolean count);
 
     /**
      * - Create/copy a new child entry in the designated folder.
@@ -400,13 +392,11 @@ public interface EntriesClient {
      * @param skip        Excludes the specified number of items of the queried collection from the result.
      * @param count       Indicates whether the total count of items within a collection are returned in the result.
      * @return CompletableFuture<Void> The return value
-     * @throws InterruptedException
-     * @throws ExecutionException
      */
     CompletableFuture<Void> getTagsAssignedToEntryForEach(
             Function<CompletableFuture<ODataValueContextOfIListOfWTagInfo>, CompletableFuture<Boolean>> callback,
             Integer maxPageSize, String repoId, Integer entryId, String prefer, String select, String orderby,
-            Integer top, Integer skip, Boolean count) throws InterruptedException, ExecutionException;
+            Integer top, Integer skip, Boolean count);
 
     /**
      * - Assign tags to an entry.

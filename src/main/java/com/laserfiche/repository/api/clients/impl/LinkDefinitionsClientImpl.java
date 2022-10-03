@@ -7,7 +7,6 @@ import kong.unirest.UnirestInstance;
 
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -106,15 +105,15 @@ public class LinkDefinitionsClientImpl extends ApiClient implements LinkDefiniti
     public CompletableFuture<Void> getLinkDefinitionsForEach(
             Function<CompletableFuture<ODataValueContextOfIListOfEntryLinkTypeInfo>, CompletableFuture<Boolean>> callback,
             Integer maxPageSize, String repoId, String prefer, String select, String orderby, Integer top, Integer skip,
-            Boolean count) throws InterruptedException, ExecutionException {
+            Boolean count) {
         prefer = mergeMaxSizeIntoPrefer(maxPageSize, prefer);
         CompletableFuture<ODataValueContextOfIListOfEntryLinkTypeInfo> response = getLinkDefinitions(repoId, prefer,
                 select, orderby, top, skip, count);
         while (response != null && callback
                 .apply(response)
-                .get()) {
+                .join()) {
             String nextLink = response
-                    .get()
+                    .join()
                     .getOdataNextLink();
             response = getLinkDefinitionsNextLink(nextLink, maxPageSize);
         }

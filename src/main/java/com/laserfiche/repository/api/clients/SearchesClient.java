@@ -3,7 +3,6 @@ package com.laserfiche.repository.api.clients;
 import com.laserfiche.repository.api.clients.impl.model.*;
 
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 import java.util.function.Function;
 
 public interface SearchesClient {
@@ -73,13 +72,11 @@ public interface SearchesClient {
      * @param skip        Excludes the specified number of items of the queried collection from the result.
      * @param count       Indicates whether the total count of items within a collection are returned in the result.
      * @return CompletableFuture<Void> The return value
-     * @throws InterruptedException
-     * @throws ExecutionException
      */
     CompletableFuture<Void> getSearchContextHitsForEach(
             Function<CompletableFuture<ODataValueContextOfIListOfContextHit>, CompletableFuture<Boolean>> callback,
             Integer maxPageSize, String repoId, String searchToken, Integer rowNumber, String prefer, String select,
-            String orderby, Integer top, Integer skip, Boolean count) throws InterruptedException, ExecutionException;
+            String orderby, Integer top, Integer skip, Boolean count);
 
     /**
      * - Runs a search operation on the repository.
@@ -151,12 +148,10 @@ public interface SearchesClient {
      * @param skip             Excludes the specified number of items of the queried collection from the result.
      * @param count            Indicates whether the total count of items within a collection are returned in the result.
      * @return CompletableFuture<Void> The return value
-     * @throws InterruptedException
-     * @throws ExecutionException
      */
     CompletableFuture<Void> getSearchResultsForEach(
             Function<CompletableFuture<ODataValueContextOfIListOfEntry>, CompletableFuture<Boolean>> callback,
             Integer maxPageSize, String repoId, String searchToken, Boolean groupByEntryType, Boolean refresh,
             String[] fields, Boolean formatFields, String prefer, String culture, String select, String orderby,
-            Integer top, Integer skip, Boolean count) throws InterruptedException, ExecutionException;
+            Integer top, Integer skip, Boolean count);
 }

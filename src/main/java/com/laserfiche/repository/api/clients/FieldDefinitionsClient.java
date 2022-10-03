@@ -4,7 +4,6 @@ import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIList
 import com.laserfiche.repository.api.clients.impl.model.WFieldInfo;
 
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 import java.util.function.Function;
 
 public interface FieldDefinitionsClient {
@@ -68,11 +67,9 @@ public interface FieldDefinitionsClient {
      * @param skip        Excludes the specified number of items of the queried collection from the result.
      * @param count       Indicates whether the total count of items within a collection are returned in the result.
      * @return CompletableFuture<Void> The return value
-     * @throws InterruptedException
-     * @throws ExecutionException
      */
     CompletableFuture<Void> getFieldDefinitionsForEach(
             Function<CompletableFuture<ODataValueContextOfIListOfWFieldInfo>, CompletableFuture<Boolean>> callback,
             Integer maxPageSize, String repoId, String prefer, String culture, String select, String orderby,
-            Integer top, Integer skip, Boolean count) throws InterruptedException, ExecutionException;
+            Integer top, Integer skip, Boolean count);
 }
