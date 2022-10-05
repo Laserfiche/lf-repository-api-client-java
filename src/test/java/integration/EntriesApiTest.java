@@ -18,6 +18,10 @@ class EntriesApiTest extends BaseTest {
     EntriesClient client;
     RepositoryApiClient createEntryClient;
 
+    String rootPath = "\\";
+
+    String nonExistingPath = "\\Non Existing Path";
+
     @BeforeEach
     void perTestSetup() {
         client = repositoryApiClient.getEntriesClient();
@@ -307,5 +311,25 @@ class EntriesApiTest extends BaseTest {
                 .getDynamicFieldValues(repoId, 1, request)
                 .join();
         assertNotNull(dynamicFieldValueResponse);
+    }
+
+    @Test
+    void getEntryByFullPath_ReturnRootFolder(){
+        FindEntryResult entry = repositoryApiClient.getEntriesClient().getEntryByAncestorPath(repoId, rootPath, false).join();
+        assertNotNull(entry);
+        assertTrue(entry.getEntry().getId() == 1);
+        assertTrue(entry.getEntry().getFullPath() == rootPath);
+        assertTrue(entry.getEntry().getEntryType().toString() == "Folder");
+        assertNull(entry.getAncestorEntry());
+    }
+
+    @Test
+    void getEntryByFullPath_ReturnAncestorRootFolder(){
+        FindEntryResult entry = repositoryApiClient.getEntriesClient().getEntryByAncestorPath(repoId, nonExistingPath, true).join();
+        assertNotNull(entry);
+        assertTrue(entry.getAncestorEntry().getId() == 1);
+        assertTrue(entry.getAncestorEntry().getFullPath() == rootPath);
+        assertTrue(entry.getEntry().getEntryType().toString() == "Folder");
+        assertNull(entry.getAncestorEntry());
     }
 }

@@ -453,4 +453,17 @@ public interface EntriesClient {
      */
     CompletableFuture<AcceptedOperation> deleteEntryInfo(String repoId, Integer entryId,
             DeleteEntryWithAuditReason requestBody);
+
+    /**
+     * - Returns a single entry object using the entry path.
+     * - Optional query parameter: fallbackToClosestAncestor. Use the fallbackToClosestAncestor query parameter to return the closest existing ancestor if the initial entry path is not found.
+     *
+     * @param repoId      The requested repository ID.
+     * @param fullPath     The requested entry path.
+     * @param fallbackToClosestAncestor An optional query parameter used to indicate whether or not the closest
+     *                                  ancestor in the path should be returned if the initial entry path is not found.
+     *                                  The default value is false.
+     * @return CompletableFuture<FindEntryResult> The return value
+     */
+    CompletableFuture<FindEntryResult> getEntryByAncestorPath(String repoId, String fullPath, boolean fallbackToClosestAncestor);
 }
