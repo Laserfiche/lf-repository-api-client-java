@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
@@ -308,4 +309,27 @@ class EntriesApiTest extends BaseTest {
                 .join();
         assertNotNull(dynamicFieldValueResponse);
     }
+
+    @Test
+    void getDocumentContentType_ReturnsExpectedHeaders() throws InterruptedException {
+        ODataValueContextOfIListOfEntry entryList = client
+                .getEntryListing(repoId, 1, false, null, false, "maxpagesize=100", null, null, null, null, null, false)
+                .join();
+        assertNotNull(entryList);
+
+        Optional<Entry> optionalEntry = entryList
+                .getValue()
+                .stream()
+                .filter(entry -> entry.getEntryType() == EntryType.DOCUMENT)
+                .findFirst();
+        Entry entry = optionalEntry.get();
+        assertNotNull(entry);
+
+        Map<String, String> headers = client
+                .getDocumentContentType(repoId, entry.getId())
+                .join();
+        assertNotNull(headers.get("Content-Type"));
+        assertNotNull(headers.get("Content-Length"));
+    }
+
 }
