@@ -24,7 +24,7 @@ public interface TasksClient {
      *
      * @param repoId         The requested repository ID
      * @param operationToken The operation token
-     * @return CompletableFuture<Void> The return value
+     * @return CompletableFuture<Boolean> The return value
      */
-    CompletableFuture<Void> cancelOperation(String repoId, String operationToken);
+    CompletableFuture<Boolean> cancelOperation(String repoId, String operationToken);
 }

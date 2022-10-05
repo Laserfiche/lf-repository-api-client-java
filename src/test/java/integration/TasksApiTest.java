@@ -12,6 +12,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TasksApiTest extends BaseTest {
     TasksClient client;
@@ -23,7 +24,6 @@ public class TasksApiTest extends BaseTest {
         createEntryClient = repositoryApiClient;
     }
 
-    @Disabled("We should enable it when we figure out how to design this test.")
     @Test
     void cancelOperation_OperationEndedBeforeCancel() throws InterruptedException {
         Entry deleteEntry = createEntry(createEntryClient, "RepositoryApiClientIntegrationTest Java CancelOperation", 1,
@@ -40,11 +40,10 @@ public class TasksApiTest extends BaseTest {
 
         assertNotNull(token);
 
-        TimeUnit.SECONDS.sleep(5);
-
-        client
+        boolean cancellationResult = client
                 .cancelOperation(repoId, token)
-                .join(); // TODO: We probably need to manually override this API as by default it returns via HTTP headers.
+                .join();
+        assertTrue(cancellationResult);
     }
 
     @Test
