@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionException;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -38,6 +40,32 @@ public class TasksApiTest extends BaseTest {
 
         String token = result.getToken();
 
+        assertNotNull(token);
+
+        TimeUnit.SECONDS.sleep(10);
+
+        Exception thrown = Assertions.assertThrows(CompletionException.class, () -> {
+            client
+                    .cancelOperation(repoId, token)
+                    .join();
+        });
+
+        Assertions.assertEquals("java.lang.RuntimeException: Invalid or bad request.", thrown.getMessage());
+    }
+
+    @Test
+    void cancelOperation_OperationCancelledSuccessfully() throws InterruptedException {
+        Entry deleteEntry = createEntry(createEntryClient, "RepositoryApiClientIntegrationTest Java CancelOperation", 1,
+                true).join();
+
+        DeleteEntryWithAuditReason body = new DeleteEntryWithAuditReason();
+
+        AcceptedOperation result = repositoryApiClient
+                .getEntriesClient()
+                .deleteEntryInfo(repoId, deleteEntry.getId(), body)
+                .join();
+
+        String token = result.getToken();
         assertNotNull(token);
 
         boolean cancellationResult = client
