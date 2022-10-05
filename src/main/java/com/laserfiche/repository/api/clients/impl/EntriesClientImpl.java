@@ -513,11 +513,6 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                             .getHeaders()
                             .all()
                             .stream()
-                            .filter(header -> header
-                                    .getName()
-                                    .equalsIgnoreCase("Content-Type") || header
-                                    .getName()
-                                    .equalsIgnoreCase("Content-Length"))
                             .collect(Collectors.toMap(Header::getName, Header::getValue));
                 });
     }
