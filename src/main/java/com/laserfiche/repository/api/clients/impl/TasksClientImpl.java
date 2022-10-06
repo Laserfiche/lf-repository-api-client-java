@@ -45,13 +45,13 @@ public class TasksClientImpl extends ApiClient implements TasksClient {
     }
 
     @Override
-    public CompletableFuture<Void> cancelOperation(String repoId, String operationToken) {
+    public CompletableFuture<Boolean> cancelOperation(String repoId, String operationToken) {
         Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "operationToken"},
                 new Object[]{repoId, operationToken});
         return httpClient
                 .delete(baseUrl + "/v1/Repositories/{repoId}/Tasks/{operationToken}")
                 .routeParam(pathParameters)
-                .asObjectAsync(Void.class)
+                .asObjectAsync(Boolean.class)
                 .thenApply(httpResponse -> {
                     if (httpResponse.getStatus() == 400) {
                         throw new RuntimeException("Invalid or bad request.");
@@ -71,7 +71,7 @@ public class TasksClientImpl extends ApiClient implements TasksClient {
                     if (httpResponse.getStatus() >= 299) {
                         throw new RuntimeException(httpResponse.getStatusText());
                     }
-                    return httpResponse.getBody();
+                    return true;
                 });
     }
 }

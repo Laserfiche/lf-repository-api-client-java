@@ -2,6 +2,7 @@ package com.laserfiche.repository.api.clients.impl;
 
 import com.laserfiche.repository.api.clients.EntriesClient;
 import com.laserfiche.repository.api.clients.impl.model.*;
+import kong.unirest.Header;
 import kong.unirest.UnirestInstance;
 
 import java.io.File;
@@ -475,6 +476,44 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                         throw new RuntimeException(httpResponse.getStatusText());
                     }
                     return httpResponse.getBody();
+                });
+    }
+
+    @Override
+    public CompletableFuture<Map<String, String>> getDocumentContentType(String repoId, Integer entryId) {
+        Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "entryId"},
+                new Object[]{repoId, entryId});
+        return httpClient
+                .head(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Document/edoc")
+                .routeParam(pathParameters)
+                .asObjectAsync(new HashMap<String, String>().getClass())
+                .thenApply(httpResponse -> {
+                    if (httpResponse.getStatus() == 400) {
+                        throw new RuntimeException("Invalid or bad request.");
+                    }
+                    if (httpResponse.getStatus() == 401) {
+                        throw new RuntimeException("Access token is invalid or expired.");
+                    }
+                    if (httpResponse.getStatus() == 403) {
+                        throw new RuntimeException("Access denied for the operation.");
+                    }
+                    if (httpResponse.getStatus() == 404) {
+                        throw new RuntimeException("Request entry id not found.");
+                    }
+                    if (httpResponse.getStatus() == 423) {
+                        throw new RuntimeException("Entry is locked.");
+                    }
+                    if (httpResponse.getStatus() == 429) {
+                        throw new RuntimeException("Rate limit is reached.");
+                    }
+                    if (httpResponse.getStatus() >= 299) {
+                        throw new RuntimeException(httpResponse.getStatusText());
+                    }
+                    return httpResponse
+                            .getHeaders()
+                            .all()
+                            .stream()
+                            .collect(Collectors.toMap(Header::getName, Header::getValue));
                 });
     }
 
