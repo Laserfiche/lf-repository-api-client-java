@@ -13,7 +13,7 @@ import java.util.Objects;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-08-19T17:07:43.799-04:00[America/New_York]")
 @JsonTypeInfo(use = JsonTypeInfo.Id.DEDUCTION)
-@JsonSubTypes({@JsonSubTypes.Type(Folder.class), @JsonSubTypes.Type(Shortcut.class)})
+@JsonSubTypes({@JsonSubTypes.Type(Document.class), @JsonSubTypes.Type(Folder.class), @JsonSubTypes.Type(Shortcut.class)})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Entry {
 
