@@ -1,9 +1,20 @@
 package integration;
 
 import com.laserfiche.repository.api.clients.EntriesClient;
-import com.laserfiche.repository.api.clients.impl.model.DeleteEntryWithAuditReason;
+import com.laserfiche.repository.api.clients.impl.model.*;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import java.io.*;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.net.URL;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ImportDocumentApiTest extends BaseTest {
     EntriesClient client;
@@ -26,8 +37,8 @@ public class ImportDocumentApiTest extends BaseTest {
         }
     }
 
-  /*  @Test
-    void importDocument_DocumentCreated() {
+    @Test
+    void importDocument_DocumentCreated_FromFile() throws FileNotFoundException {
         String fileName = "myFile";
         File toUpload = null;
         try {
@@ -39,7 +50,7 @@ public class ImportDocumentApiTest extends BaseTest {
         assertNotNull(toUpload);
 
         CreateEntryResult result = client.importDocument(repoId, 1, fileName, true, null,
-                toUpload, new PostEntryWithEdocMetadataRequest()).join();
+                new FileInputStream(toUpload), new PostEntryWithEdocMetadataRequest()).join();
 
         CreateEntryOperations operations = result.getOperations();
 
@@ -60,10 +71,11 @@ public class ImportDocumentApiTest extends BaseTest {
         createdEntryId = operations
                 .getEntryCreate()
                 .getEntryId();
-    }*/
+        assertTrue(createdEntryId > 0);
+    }
 
- /*   @Test
-    void importDocument_DocumentCreatedWithTemplate() throws ExecutionException, InterruptedException {
+    @Test
+    void importDocument_DocumentCreated_FromFile_WithTemplate() throws ExecutionException, InterruptedException, FileNotFoundException {
         WTemplateInfo template = null;
         ODataValueContextOfIListOfWTemplateInfo templateDefinitionResult = repositoryApiClient.getTemplateDefinitionClient().getTemplateDefinitions(repoId, null, null, null, null, null, null, null, null).join();
         List<WTemplateInfo> templateDefinitions = templateDefinitionResult.getValue();
@@ -93,7 +105,7 @@ public class ImportDocumentApiTest extends BaseTest {
         request.setTemplate(template.getName());
 
         CreateEntryResult result = client.importDocument(repoId, parentEntryId, fileName,
-                true, null, toUpload, request).join();
+                true, null, new FileInputStream(toUpload), request).join();
 
         CreateEntryOperations operations = result.getOperations();
         assertNotNull(operations);
@@ -119,5 +131,74 @@ public class ImportDocumentApiTest extends BaseTest {
         createdEntryId = operations
                 .getEntryCreate()
                 .getEntryId();
-    }*/
+        assertTrue(createdEntryId > 0);
+    }
+
+    @Test
+    void importDocument_DocumentCreated_FromURL() throws IOException {
+        String fileName = "myFile";
+        CreateEntryResult result = null;
+        URL googleLogoUrl = new URL("https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png");
+        InputStream inputStream = googleLogoUrl.openStream();
+        assertNotNull(inputStream);
+
+        result = client.importDocument(repoId, 1, fileName, true, null,
+                inputStream, new PostEntryWithEdocMetadataRequest()).join();
+
+        assertNotNull(result);
+        CreateEntryOperations operations = result.getOperations();
+
+        assertNotNull(result);
+        assertNotNull(operations);
+        assertNotNull(result.getDocumentLink());
+        assertNotEquals(0, operations
+                .getEntryCreate()
+                .getEntryId());
+        assertEquals(0, operations
+                .getEntryCreate()
+                .getExceptions()
+                .size());
+        assertEquals(0, operations
+                .getSetEdoc()
+                .getExceptions()
+                .size());
+        createdEntryId = operations
+                .getEntryCreate()
+                .getEntryId();
+        assertTrue(createdEntryId > 0);
+    }
+
+    @Test
+    void importDocument_DocumentCreated_FromString() throws IOException {
+        String fileName = "myFile";
+        CreateEntryResult result = null;
+        String fileContent = "This is the file content";
+        InputStream inputStream =  new ByteArrayInputStream(fileContent.getBytes());
+        assertNotNull(inputStream);
+
+        result = client.importDocument(repoId, 1, fileName, true, null,
+                inputStream, new PostEntryWithEdocMetadataRequest()).join();
+
+        assertNotNull(result);
+        CreateEntryOperations operations = result.getOperations();
+
+        assertNotNull(result);
+        assertNotNull(operations);
+        assertNotNull(result.getDocumentLink());
+        assertNotEquals(0, operations
+                .getEntryCreate()
+                .getEntryId());
+        assertEquals(0, operations
+                .getEntryCreate()
+                .getExceptions()
+                .size());
+        assertEquals(0, operations
+                .getSetEdoc()
+                .getExceptions()
+                .size());
+        createdEntryId = operations
+                .getEntryCreate()
+                .getEntryId();
+        assertTrue(createdEntryId > 0);
+    }
 }
