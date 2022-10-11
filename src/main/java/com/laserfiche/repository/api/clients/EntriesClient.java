@@ -353,7 +353,8 @@ public interface EntriesClient {
      * @param fallbackToClosestAncestor An optional query parameter used to indicate whether or not the closest ancestor in the path should be returned if the initial entry path is not found. The default value is false.
      * @return CompletableFuture<FindEntryResult> The return value
      */
-    CompletableFuture<FindEntryResult> getEntryByPath(String repoId, String fullPath, Boolean fallbackToClosestAncestor);
+    CompletableFuture<FindEntryResult> getEntryByPath(String repoId, String fullPath,
+            Boolean fallbackToClosestAncestor);
 
     /**
      * - Copy a new child entry in the designated folder async, and potentially return an operationToken.

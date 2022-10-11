@@ -66,8 +66,14 @@ public class FindEntryResult {
         StringBuilder sb = new StringBuilder();
         sb.append("class FindEntryResult {\n");
 
-        sb.append("    entry: ").append(toIndentedString(entry)).append("\n");
-        sb.append("    ancestorEntry: ").append(toIndentedString(ancestorEntry)).append("\n");
+        sb
+                .append("    entry: ")
+                .append(toIndentedString(entry))
+                .append("\n");
+        sb
+                .append("    ancestorEntry: ")
+                .append(toIndentedString(ancestorEntry))
+                .append("\n");
         sb.append("}");
         return sb.toString();
     }
@@ -76,7 +82,9 @@ public class FindEntryResult {
         if (o == null) {
             return "null";
         }
-        return o.toString().replace("\n", "\n    ");
+        return o
+                .toString()
+                .replace("\n", "\n    ");
     }
 
 }

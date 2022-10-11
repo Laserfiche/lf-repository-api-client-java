@@ -320,8 +320,8 @@ class EntriesApiTest extends BaseTest {
 
         assertNotNull(entry);
         assertEquals(1, entry.getEntry().getId());
-        assertTrue(entry.getEntry().getFullPath().equals(rootPath));
-        assertTrue(entry.getEntry().getEntryType().toString().equals("Folder"));
+        assertEquals(rootPath, entry.getEntry().getFullPath());
+        assertEquals("Folder", entry.getEntry().getEntryType().toString());
         assertNull(entry.getAncestorEntry());
     }
 
@@ -331,8 +331,8 @@ class EntriesApiTest extends BaseTest {
 
         assertNotNull(entry);
         assertEquals(1, entry.getAncestorEntry().getId());
-        assertTrue(entry.getAncestorEntry().getFullPath().equals(rootPath));
-        assertTrue(entry.getAncestorEntry().getEntryType().toString().equals("Folder"));
+        assertEquals(rootPath, entry.getAncestorEntry().getFullPath());
+        assertEquals("Folder", entry.getAncestorEntry().getEntryType().toString());
         assertNull(entry.getEntry());
     }
 
