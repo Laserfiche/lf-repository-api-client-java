@@ -97,7 +97,7 @@ public interface EntriesClient {
      *                      renamed if an entry already exists with the given name in the folder. The default value is false.
      * @param culture       An optional query parameter used to indicate the locale that should be used.
      *                      The value should be a standard language tag.
-     * @param file          The file that will be uploaded.
+     * @param inputStream   An InputStream object to read the raw bytes for the file to be uploaded.
      * @param requestBody   null
      * @return CompletableFuture<CreateEntryResult> The return value
      */
