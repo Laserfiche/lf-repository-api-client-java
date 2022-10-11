@@ -315,7 +315,7 @@ class EntriesApiTest extends BaseTest {
     }
 
     @Test
-    void getEntryByFullPath_ReturnRootFolder(){
+    void getEntryByFullPath_ReturnRootFolder() {
         FindEntryResult entry = repositoryApiClient.getEntriesClient().getEntryByAncestorPath(repoId, rootPath, false).join();
         assertNotNull(entry);
         assertTrue(entry.getEntry().getId() == 1);
@@ -325,7 +325,7 @@ class EntriesApiTest extends BaseTest {
     }
 
     @Test
-    void getEntryByFullPath_ReturnAncestorRootFolder(){
+    void getEntryByFullPath_ReturnAncestorRootFolder() {
         FindEntryResult entry = repositoryApiClient.getEntriesClient().getEntryByAncestorPath(repoId, nonExistingPath, true).join();
         assertNotNull(entry);
         assertTrue(entry.getAncestorEntry().getId() == 1);
