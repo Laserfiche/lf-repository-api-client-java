@@ -6,6 +6,7 @@ import kong.unirest.Header;
 import kong.unirest.UnirestInstance;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -136,14 +137,14 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override
     public CompletableFuture<CreateEntryResult> importDocument(String repoId, Integer parentEntryId, String fileName,
-            Boolean autoRename, String culture, File file, PostEntryWithEdocMetadataRequest requestBody) {
+            Boolean autoRename, String culture, InputStream inputStream, PostEntryWithEdocMetadataRequest requestBody) {
         Map<String, Object> queryParameters = getNonNullParameters(new String[]{"autoRename", "culture"},
                 new Object[]{autoRename, culture});
         Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "parentEntryId", "fileName"},
                 new Object[]{repoId, parentEntryId, fileName});
         return httpClient
                 .post(baseUrl + "/v1/Repositories/{repoId}/Entries/{parentEntryId}/{fileName}")
-                .field("electronicDocument", file)
+                .field("electronicDocument", inputStream, fileName)
                 .field("request", toJson(requestBody))
                 .queryString(queryParameters)
                 .routeParam(pathParameters)
