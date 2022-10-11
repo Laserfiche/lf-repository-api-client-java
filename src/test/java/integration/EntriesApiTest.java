@@ -316,23 +316,43 @@ class EntriesApiTest extends BaseTest {
 
     @Test
     void getEntryByFullPath_ReturnRootFolder() {
-        FindEntryResult entry = repositoryApiClient.getEntriesClient().getEntryByPath(repoId, rootPath, false).join();
+        FindEntryResult entry = repositoryApiClient
+                .getEntriesClient()
+                .getEntryByPath(repoId, rootPath, false)
+                .join();
 
         assertNotNull(entry);
-        assertEquals(1, entry.getEntry().getId());
-        assertEquals(rootPath, entry.getEntry().getFullPath());
-        assertEquals("Folder", entry.getEntry().getEntryType().toString());
+        assertEquals(1, entry
+                .getEntry()
+                .getId());
+        assertEquals(rootPath, entry
+                .getEntry()
+                .getFullPath());
+        assertEquals("Folder", entry
+                .getEntry()
+                .getEntryType()
+                .toString());
         assertNull(entry.getAncestorEntry());
     }
 
     @Test
     void getEntryByFullPath_ReturnAncestorRootFolder() {
-        FindEntryResult entry = repositoryApiClient.getEntriesClient().getEntryByPath(repoId, nonExistingPath, true).join();
+        FindEntryResult entry = repositoryApiClient
+                .getEntriesClient()
+                .getEntryByPath(repoId, nonExistingPath, true)
+                .join();
 
         assertNotNull(entry);
-        assertEquals(1, entry.getAncestorEntry().getId());
-        assertEquals(rootPath, entry.getAncestorEntry().getFullPath());
-        assertEquals("Folder", entry.getAncestorEntry().getEntryType().toString());
+        assertEquals(1, entry
+                .getAncestorEntry()
+                .getId());
+        assertEquals(rootPath, entry
+                .getAncestorEntry()
+                .getFullPath());
+        assertEquals("Folder", entry
+                .getAncestorEntry()
+                .getEntryType()
+                .toString());
         assertNull(entry.getEntry());
     }
 
