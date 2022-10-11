@@ -1,9 +1,9 @@
 package com.laserfiche.repository.api.clients.impl.model;
 
-import java.util.Objects;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
+
+import java.util.Objects;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-05T16:07:18.617065500-04:00[America/New_York]")
 public class FindEntryResult {

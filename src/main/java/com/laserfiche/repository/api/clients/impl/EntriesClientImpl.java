@@ -22,15 +22,15 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override
     public CompletableFuture<ODataValueContextOfIListOfFieldValue> getFieldValues(String repoId, Integer entryId,
-            String prefer, Boolean formatValue, String culture, String select, String orderby, Integer top,
-            Integer skip, Boolean count) {
+                                                                                  String prefer, Boolean formatValue, String culture, String select, String orderby, Integer top,
+                                                                                  Integer skip, Boolean count) {
         return doGetFieldValues(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/fields", repoId, entryId, prefer,
                 formatValue, culture, select, orderby, top, skip, count);
     }
 
     private CompletableFuture<ODataValueContextOfIListOfFieldValue> doGetFieldValues(String url, String repoId,
-            Integer entryId, String prefer, Boolean formatValue, String culture, String select, String orderby,
-            Integer top, Integer skip, Boolean count) {
+                                                                                     Integer entryId, String prefer, Boolean formatValue, String culture, String select, String orderby,
+                                                                                     Integer top, Integer skip, Boolean count) {
         Map<String, Object> queryParameters = getNonNullParameters(
                 new String[]{"formatValue", "culture", "$select", "$orderby", "$top", "$skip", "$count"},
                 new Object[]{formatValue, culture, select, orderby, top, skip, count});
@@ -72,7 +72,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override
     public CompletableFuture<ODataValueContextOfIListOfFieldValue> getFieldValuesNextLink(String nextLink,
-            Integer maxPageSize) {
+                                                                                          Integer maxPageSize) {
         return doGetFieldValues(nextLink, null, null, mergeMaxSizeIntoPrefer(maxPageSize, null), null, null, null, null,
                 null, null, null);
     }
@@ -98,7 +98,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override
     public CompletableFuture<ODataValueOfIListOfFieldValue> assignFieldValues(String repoId, Integer entryId,
-            Map<String, FieldToUpdate> requestBody, String culture) {
+                                                                              Map<String, FieldToUpdate> requestBody, String culture) {
         Map<String, Object> queryParameters = getNonNullParameters(new String[]{"culture"}, new Object[]{culture});
         Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "entryId"},
                 new Object[]{repoId, entryId});
@@ -137,7 +137,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override
     public CompletableFuture<CreateEntryResult> importDocument(String repoId, Integer parentEntryId, String fileName,
-            Boolean autoRename, String culture, InputStream inputStream, PostEntryWithEdocMetadataRequest requestBody) {
+                                                               Boolean autoRename, String culture, InputStream inputStream, PostEntryWithEdocMetadataRequest requestBody) {
         Map<String, Object> queryParameters = getNonNullParameters(new String[]{"autoRename", "culture"},
                 new Object[]{autoRename, culture});
         Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "parentEntryId", "fileName"},
@@ -180,14 +180,14 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override
     public CompletableFuture<ODataValueContextOfIListOfWEntryLinkInfo> getLinkValuesFromEntry(String repoId,
-            Integer entryId, String prefer, String select, String orderby, Integer top, Integer skip, Boolean count) {
+                                                                                              Integer entryId, String prefer, String select, String orderby, Integer top, Integer skip, Boolean count) {
         return doGetLinkValuesFromEntry(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/links", repoId, entryId,
                 prefer, select, orderby, top, skip, count);
     }
 
     private CompletableFuture<ODataValueContextOfIListOfWEntryLinkInfo> doGetLinkValuesFromEntry(String url,
-            String repoId, Integer entryId, String prefer, String select, String orderby, Integer top, Integer skip,
-            Boolean count) {
+                                                                                                 String repoId, Integer entryId, String prefer, String select, String orderby, Integer top, Integer skip,
+                                                                                                 Boolean count) {
         Map<String, Object> queryParameters = getNonNullParameters(
                 new String[]{"$select", "$orderby", "$top", "$skip", "$count"},
                 new Object[]{select, orderby, top, skip, count});
@@ -229,7 +229,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override
     public CompletableFuture<ODataValueContextOfIListOfWEntryLinkInfo> getLinkValuesFromEntryNextLink(String nextLink,
-            Integer maxPageSize) {
+                                                                                                      Integer maxPageSize) {
         return doGetLinkValuesFromEntry(nextLink, null, null, mergeMaxSizeIntoPrefer(maxPageSize, null), null, null,
                 null, null, null);
     }
@@ -255,7 +255,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override
     public CompletableFuture<ODataValueOfIListOfWEntryLinkInfo> assignEntryLinks(String repoId, Integer entryId,
-            List<PutLinksRequest> requestBody) {
+                                                                                 List<PutLinksRequest> requestBody) {
         Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "entryId"},
                 new Object[]{repoId, entryId});
         return httpClient
@@ -292,7 +292,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override
     public CompletableFuture<Entry> writeTemplateValueToEntry(String repoId, Integer entryId,
-            PutTemplateRequest requestBody, String culture) {
+                                                              PutTemplateRequest requestBody, String culture) {
         Map<String, Object> queryParameters = getNonNullParameters(new String[]{"culture"}, new Object[]{culture});
         Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "entryId"},
                 new Object[]{repoId, entryId});
@@ -365,7 +365,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override
     public CompletableFuture<File> exportDocumentWithAuditReason(String repoId, Integer entryId,
-            GetEdocWithAuditReasonRequest requestBody, String range) {
+                                                                 GetEdocWithAuditReasonRequest requestBody, String range) {
         Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "entryId"},
                 new Object[]{repoId, entryId});
         Map<String, Object> headerParameters = getNonNullParameters(new String[]{"range"}, new Object[]{range});
@@ -556,16 +556,16 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override
     public CompletableFuture<ODataValueContextOfIListOfEntry> getEntryListing(String repoId, Integer entryId,
-            Boolean groupByEntryType, String[] fields, Boolean formatFields, String prefer, String culture,
-            String select, String orderby, Integer top, Integer skip, Boolean count) {
+                                                                              Boolean groupByEntryType, String[] fields, Boolean formatFields, String prefer, String culture,
+                                                                              String select, String orderby, Integer top, Integer skip, Boolean count) {
         return doGetEntryListing(
                 baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Folder/children", repoId,
                 entryId, groupByEntryType, fields, formatFields, prefer, culture, select, orderby, top, skip, count);
     }
 
     private CompletableFuture<ODataValueContextOfIListOfEntry> doGetEntryListing(String url, String repoId,
-            Integer entryId, Boolean groupByEntryType, String[] fields, Boolean formatFields, String prefer,
-            String culture, String select, String orderby, Integer top, Integer skip, Boolean count) {
+                                                                                 Integer entryId, Boolean groupByEntryType, String[] fields, Boolean formatFields, String prefer,
+                                                                                 String culture, String select, String orderby, Integer top, Integer skip, Boolean count) {
         Map<String, Object> queryParameters = getNonNullParameters(
                 new String[]{"groupByEntryType", "fields", "formatFields", "culture", "$select", "$orderby", "$top", "$skip", "$count"},
                 new Object[]{groupByEntryType, fields, formatFields, culture, select, orderby, top, skip, count});
@@ -607,7 +607,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override
     public CompletableFuture<ODataValueContextOfIListOfEntry> getEntryListingNextLink(String nextLink,
-            Integer maxPageSize) {
+                                                                                      Integer maxPageSize) {
         return doGetEntryListing(nextLink, null, null, null, null, null, mergeMaxSizeIntoPrefer(maxPageSize, null),
                 null, null, null, null, null, null);
     }
@@ -634,7 +634,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override
     public CompletableFuture<Entry> createOrCopyEntry(String repoId, Integer entryId,
-            PostEntryChildrenRequest requestBody, Boolean autoRename, String culture) {
+                                                      PostEntryChildrenRequest requestBody, Boolean autoRename, String culture) {
         Map<String, Object> queryParameters = getNonNullParameters(new String[]{"autoRename", "culture"},
                 new Object[]{autoRename, culture});
         Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "entryId"},
@@ -674,7 +674,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override
     public CompletableFuture<Map<String, String[]>> getDynamicFieldValues(String repoId, Integer entryId,
-            GetDynamicFieldLogicValueRequest requestBody) {
+                                                                          GetDynamicFieldLogicValueRequest requestBody) {
         Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "entryId"},
                 new Object[]{repoId, entryId});
         return httpClient
@@ -735,7 +735,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override
     public CompletableFuture<AcceptedOperation> copyEntryAsync(String repoId, Integer entryId,
-            CopyAsyncRequest requestBody, Boolean autoRename, String culture) {
+                                                               CopyAsyncRequest requestBody, Boolean autoRename, String culture) {
         Map<String, Object> queryParameters = getNonNullParameters(new String[]{"autoRename", "culture"},
                 new Object[]{autoRename, culture});
         Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "entryId"},
@@ -769,13 +769,13 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override
     public CompletableFuture<ODataValueContextOfIListOfWTagInfo> getTagsAssignedToEntry(String repoId, Integer entryId,
-            String prefer, String select, String orderby, Integer top, Integer skip, Boolean count) {
+                                                                                        String prefer, String select, String orderby, Integer top, Integer skip, Boolean count) {
         return doGetTagsAssignedToEntry(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/tags", repoId, entryId,
                 prefer, select, orderby, top, skip, count);
     }
 
     private CompletableFuture<ODataValueContextOfIListOfWTagInfo> doGetTagsAssignedToEntry(String url, String repoId,
-            Integer entryId, String prefer, String select, String orderby, Integer top, Integer skip, Boolean count) {
+                                                                                           Integer entryId, String prefer, String select, String orderby, Integer top, Integer skip, Boolean count) {
         Map<String, Object> queryParameters = getNonNullParameters(
                 new String[]{"$select", "$orderby", "$top", "$skip", "$count"},
                 new Object[]{select, orderby, top, skip, count});
@@ -817,7 +817,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override
     public CompletableFuture<ODataValueContextOfIListOfWTagInfo> getTagsAssignedToEntryNextLink(String nextLink,
-            Integer maxPageSize) {
+                                                                                                Integer maxPageSize) {
         return doGetTagsAssignedToEntry(nextLink, null, null, mergeMaxSizeIntoPrefer(maxPageSize, null), null, null,
                 null, null, null);
     }
@@ -843,7 +843,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override
     public CompletableFuture<ODataValueOfIListOfWTagInfo> assignTags(String repoId, Integer entryId,
-            PutTagRequest requestBody) {
+                                                                     PutTagRequest requestBody) {
         Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "entryId"},
                 new Object[]{repoId, entryId});
         return httpClient
@@ -913,7 +913,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override
     public CompletableFuture<Entry> moveOrRenameDocument(String repoId, Integer entryId, PatchEntryRequest requestBody,
-            Boolean autoRename, String culture) {
+                                                         Boolean autoRename, String culture) {
         Map<String, Object> queryParameters = getNonNullParameters(new String[]{"autoRename", "culture"},
                 new Object[]{autoRename, culture});
         Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "entryId"},
@@ -956,7 +956,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override
     public CompletableFuture<AcceptedOperation> deleteEntryInfo(String repoId, Integer entryId,
-            DeleteEntryWithAuditReason requestBody) {
+                                                                DeleteEntryWithAuditReason requestBody) {
         Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "entryId"},
                 new Object[]{repoId, entryId});
         return httpClient
