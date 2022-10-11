@@ -42,7 +42,6 @@ public class CreateCopyEntryApiTest extends BaseTest {
     }
 
     @Test
-    @Disabled("Ignore for now because of the APIServer's entry related serialization bug.")
     void createCopyEntry_CreateFolder() {
         String newEntryName = "RepositoryApiClientIntegrationTest Java CreateFolder";
         Integer parentEntryId = 1;
@@ -66,7 +65,6 @@ public class CreateCopyEntryApiTest extends BaseTest {
     }
 
     @Test
-    @Disabled("Ignore for now because of the APIServer's entry related serialization bug.")
     void createCopyEntry_CreateShortcut() {
         String newEntryName = "RepositoryApiClientIntegrationTest Java CreateFolder";
         Integer parentEntryId = 1;

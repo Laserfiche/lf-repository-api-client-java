@@ -228,6 +228,17 @@ public interface EntriesClient {
     CompletableFuture<ODataValueOfBoolean> deleteDocument(String repoId, Integer entryId);
 
     /**
+     * - Returns information about the edoc content of an entry, without downloading the edoc in its entirety.
+     * - Provide an entry ID, and get back the Content-Type and Content-Length in the response headers.
+     * - This route does not provide a way to download the actual edoc. Instead, it just gives metadata information about the edoc associated with the entry.
+     *
+     * @param repoId  The requested repository ID.
+     * @param entryId The requested document ID.
+     * @return CompletableFuture<Map < String, String>> The return value
+     */
+    CompletableFuture<Map<String, String>> getDocumentContentType(String repoId, Integer entryId);
+
+    /**
      * - Delete the pages associated with the provided entry ID. If no pageRange is specified, all pages will be deleted.
      * - Optional parameter: pageRange (default empty). The value should be a comma-seperated string which contains non-overlapping single values, or page ranges. Ex: "1,2,3", "1-3,5", "2-7,10-12."
      *
