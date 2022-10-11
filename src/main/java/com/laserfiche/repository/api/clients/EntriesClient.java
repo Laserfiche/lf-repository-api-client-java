@@ -345,6 +345,18 @@ public interface EntriesClient {
             GetDynamicFieldLogicValueRequest requestBody);
 
     /**
+     * - Returns a single entry object using the entry path.
+     * - Optional query parameter: fallbackToClosestAncestor. Use the fallbackToClosestAncestor query parameter to return the closest existing ancestor if the initial entry path is not found.
+     *
+     * @param repoId                    The requested repository ID.
+     * @param fullPath                  The requested entry path.
+     * @param fallbackToClosestAncestor An optional query parameter used to indicate whether or not the closest ancestor in the path should be returned if the initial entry path is not found. The default value is false.
+     * @return CompletableFuture<FindEntryResult> The return value
+     */
+    CompletableFuture<FindEntryResult> getEntryByPath(String repoId, String fullPath,
+            Boolean fallbackToClosestAncestor);
+
+    /**
      * - Copy a new child entry in the designated folder async, and potentially return an operationToken.
      * - Provide the parent folder ID, and copy an entry as a child of the designated folder.
      * - Optional parameter: autoRename (default false). If an entry already exists with the given name, the entry will be automatically renamed.

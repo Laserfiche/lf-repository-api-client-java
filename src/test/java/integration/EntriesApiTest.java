@@ -19,6 +19,10 @@ class EntriesApiTest extends BaseTest {
     EntriesClient client;
     RepositoryApiClient createEntryClient;
 
+    String rootPath = "\\";
+
+    String nonExistingPath = "\\Non Existing Path";
+
     @BeforeEach
     void perTestSetup() {
         client = repositoryApiClient.getEntriesClient();
@@ -311,6 +315,47 @@ class EntriesApiTest extends BaseTest {
     }
 
     @Test
+    void getEntryByFullPath_ReturnRootFolder() {
+        FindEntryResult entry = repositoryApiClient
+                .getEntriesClient()
+                .getEntryByPath(repoId, rootPath, false)
+                .join();
+
+        assertNotNull(entry);
+        assertEquals(1, entry
+                .getEntry()
+                .getId());
+        assertEquals(rootPath, entry
+                .getEntry()
+                .getFullPath());
+        assertEquals("Folder", entry
+                .getEntry()
+                .getEntryType()
+                .toString());
+        assertNull(entry.getAncestorEntry());
+    }
+
+    @Test
+    void getEntryByFullPath_ReturnAncestorRootFolder() {
+        FindEntryResult entry = repositoryApiClient
+                .getEntriesClient()
+                .getEntryByPath(repoId, nonExistingPath, true)
+                .join();
+
+        assertNotNull(entry);
+        assertEquals(1, entry
+                .getAncestorEntry()
+                .getId());
+        assertEquals(rootPath, entry
+                .getAncestorEntry()
+                .getFullPath());
+        assertEquals("Folder", entry
+                .getAncestorEntry()
+                .getEntryType()
+                .toString());
+        assertNull(entry.getEntry());
+    }
+
     void getDocumentContentType_ReturnsExpectedHeaders() throws InterruptedException {
         ODataValueContextOfIListOfEntry entryList = client
                 .getEntryListing(repoId, 1, false, null, false, "maxpagesize=100", null, null, null, null, null, false)
