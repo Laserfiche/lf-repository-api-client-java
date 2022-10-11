@@ -3,6 +3,7 @@ package com.laserfiche.repository.api.clients;
 import com.laserfiche.repository.api.clients.impl.model.*;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -101,7 +102,7 @@ public interface EntriesClient {
      * @return CompletableFuture<CreateEntryResult> The return value
      */
     CompletableFuture<CreateEntryResult> importDocument(String repoId, Integer parentEntryId, String fileName,
-            Boolean autoRename, String culture, File file, PostEntryWithEdocMetadataRequest requestBody);
+            Boolean autoRename, String culture, InputStream inputStream, PostEntryWithEdocMetadataRequest requestBody);
 
     /**
      * - Returns the links assigned to an entry.
