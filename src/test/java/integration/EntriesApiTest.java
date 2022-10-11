@@ -316,22 +316,22 @@ class EntriesApiTest extends BaseTest {
 
     @Test
     void getEntryByFullPath_ReturnRootFolder() {
-        FindEntryResult entry = repositoryApiClient.getEntriesClient().getEntryByAncestorPath(repoId, rootPath, false).join();
+        FindEntryResult entry = repositoryApiClient.getEntriesClient().getEntryByPath(repoId, rootPath, false).join();
         assertNotNull(entry);
         assertTrue(entry.getEntry().getId() == 1);
-        assertTrue(entry.getEntry().getFullPath() == rootPath);
+        assertTrue(entry.getEntry().getFullPath().equals(rootPath));
         assertTrue(entry.getEntry().getEntryType().toString() == "Folder");
         assertNull(entry.getAncestorEntry());
     }
 
     @Test
     void getEntryByFullPath_ReturnAncestorRootFolder() {
-        FindEntryResult entry = repositoryApiClient.getEntriesClient().getEntryByAncestorPath(repoId, nonExistingPath, true).join();
+        FindEntryResult entry = repositoryApiClient.getEntriesClient().getEntryByPath(repoId, nonExistingPath, true).join();
         assertNotNull(entry);
         assertTrue(entry.getAncestorEntry().getId() == 1);
-        assertTrue(entry.getAncestorEntry().getFullPath() == rootPath);
-        assertTrue(entry.getEntry().getEntryType().toString() == "Folder");
-        assertNull(entry.getAncestorEntry());
+        assertTrue(entry.getAncestorEntry().getFullPath().equals(rootPath));
+        assertTrue(entry.getAncestorEntry().getEntryType().toString() == "Folder");
+        assertNull(entry.getEntry());
     }
 
     void getDocumentContentType_ReturnsExpectedHeaders() throws InterruptedException {
