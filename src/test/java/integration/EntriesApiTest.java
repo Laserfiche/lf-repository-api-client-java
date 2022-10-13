@@ -58,8 +58,6 @@ class EntriesApiTest extends BaseTest {
                     break;
             }
         }
-
-        assertTrue(true);
     }
 
     @Test
