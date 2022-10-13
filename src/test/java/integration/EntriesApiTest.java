@@ -39,10 +39,30 @@ class EntriesApiTest extends BaseTest {
 
     @Test
     void getEntryListing_ReturnEntries() {
-        ODataValueContextOfIListOfEntry entryList = client
+        ODataValueContextOfIListOfEntry entries = client
                 .getEntryListing(repoId, 1, false, null, false, "maxpagesize=5", null, null, null, null, null, false)
                 .join();
-        assertNotNull(entryList);
+
+        assertNotNull(entries);
+
+        for (Entry entry : entries.getValue()) {
+            switch (entry.getEntryType()) {
+                case FOLDER:
+                    Folder folder = (Folder) entry;
+                    assertNotNull(folder);
+                    break;
+                case SHORTCUT:
+                    Shortcut shortcut = (Shortcut) entry;
+                    assertNotNull(shortcut);
+                    break;
+                case DOCUMENT:
+                    Document document = (Document) entry;
+                    assertNotNull(document);
+                    break;
+            }
+        }
+
+        assertTrue(true);
     }
 
     @Test
