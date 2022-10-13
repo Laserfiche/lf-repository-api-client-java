@@ -48,16 +48,13 @@ class EntriesApiTest extends BaseTest {
         for (Entry entry : entries.getValue()) {
             switch (entry.getEntryType()) {
                 case FOLDER:
-                    Folder folder = (Folder) entry;
-                    assertNotNull(folder);
+                    assertTrue(entry instanceof Folder);
                     break;
                 case SHORTCUT:
-                    Shortcut shortcut = (Shortcut) entry;
-                    assertNotNull(shortcut);
+                    assertTrue(entry instanceof Shortcut);
                     break;
                 case DOCUMENT:
-                    Document document = (Document) entry;
-                    assertNotNull(document);
+                    assertTrue(entry instanceof Document);
                     break;
             }
         }
