@@ -17,16 +17,6 @@ public enum OperationStatus {
         this.value = value;
     }
 
-    @JsonCreator
-    public static OperationStatus fromValue(String input) {
-        for (OperationStatus b : OperationStatus.values()) {
-            if (b.value.equals(input)) {
-                return b;
-            }
-        }
-        return null;
-    }
-
     @JsonValue
     public String getValue() {
         return value;
@@ -35,5 +25,15 @@ public enum OperationStatus {
     @Override
     public String toString() {
         return String.valueOf(value);
+    }
+
+    @JsonCreator
+    public static OperationStatus fromValue(String input) {
+        for (OperationStatus b : OperationStatus.values()) {
+            if (b.value.equals(input)) {
+                return b;
+            }
+        }
+        return null;
     }
 }

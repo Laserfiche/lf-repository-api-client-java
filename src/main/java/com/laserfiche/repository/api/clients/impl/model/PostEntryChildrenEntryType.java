@@ -14,16 +14,6 @@ public enum PostEntryChildrenEntryType {
         this.value = value;
     }
 
-    @JsonCreator
-    public static PostEntryChildrenEntryType fromValue(String input) {
-        for (PostEntryChildrenEntryType b : PostEntryChildrenEntryType.values()) {
-            if (b.value.equals(input)) {
-                return b;
-            }
-        }
-        return null;
-    }
-
     @JsonValue
     public String getValue() {
         return value;
@@ -32,5 +22,15 @@ public enum PostEntryChildrenEntryType {
     @Override
     public String toString() {
         return String.valueOf(value);
+    }
+
+    @JsonCreator
+    public static PostEntryChildrenEntryType fromValue(String input) {
+        for (PostEntryChildrenEntryType b : PostEntryChildrenEntryType.values()) {
+            if (b.value.equals(input)) {
+                return b;
+            }
+        }
+        return null;
     }
 }

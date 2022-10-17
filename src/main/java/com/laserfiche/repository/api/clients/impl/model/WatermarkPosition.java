@@ -21,16 +21,6 @@ public enum WatermarkPosition {
         this.value = value;
     }
 
-    @JsonCreator
-    public static WatermarkPosition fromValue(String input) {
-        for (WatermarkPosition b : WatermarkPosition.values()) {
-            if (b.value.equals(input)) {
-                return b;
-            }
-        }
-        return null;
-    }
-
     @JsonValue
     public String getValue() {
         return value;
@@ -39,5 +29,15 @@ public enum WatermarkPosition {
     @Override
     public String toString() {
         return String.valueOf(value);
+    }
+
+    @JsonCreator
+    public static WatermarkPosition fromValue(String input) {
+        for (WatermarkPosition b : WatermarkPosition.values()) {
+            if (b.value.equals(input)) {
+                return b;
+            }
+        }
+        return null;
     }
 }

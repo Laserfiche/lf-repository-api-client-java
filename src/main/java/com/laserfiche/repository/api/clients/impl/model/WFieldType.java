@@ -21,16 +21,6 @@ public enum WFieldType {
         this.value = value;
     }
 
-    @JsonCreator
-    public static WFieldType fromValue(String input) {
-        for (WFieldType b : WFieldType.values()) {
-            if (b.value.equals(input)) {
-                return b;
-            }
-        }
-        return null;
-    }
-
     @JsonValue
     public String getValue() {
         return value;
@@ -39,5 +29,15 @@ public enum WFieldType {
     @Override
     public String toString() {
         return String.valueOf(value);
+    }
+
+    @JsonCreator
+    public static WFieldType fromValue(String input) {
+        for (WFieldType b : WFieldType.values()) {
+            if (b.value.equals(input)) {
+                return b;
+            }
+        }
+        return null;
     }
 }

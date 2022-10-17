@@ -1,12 +1,15 @@
 package com.laserfiche.repository.api.clients.impl.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.Objects;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-05T16:07:18.617065500-04:00[America/New_York]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-17T11:38:41.655-04:00[America/New_York]")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class FindEntryResult {
+
     @JsonProperty("entry")
     private Entry entry = null;
 
@@ -41,7 +44,6 @@ public class FindEntryResult {
         this.ancestorEntry = ancestorEntry;
     }
 
-
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -51,8 +53,8 @@ public class FindEntryResult {
             return false;
         }
         FindEntryResult findEntryResult = (FindEntryResult) o;
-        return Objects.equals(this.entry, findEntryResult.entry) &&
-                Objects.equals(this.ancestorEntry, findEntryResult.ancestorEntry);
+        return Objects.equals(this.entry, findEntryResult.entry) && Objects.equals(this.ancestorEntry,
+                findEntryResult.ancestorEntry);
     }
 
     @Override
@@ -60,12 +62,10 @@ public class FindEntryResult {
         return Objects.hash(entry, ancestorEntry);
     }
 
-
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class FindEntryResult {\n");
-
         sb
                 .append("    entry: ")
                 .append(toIndentedString(entry))
@@ -86,5 +86,4 @@ public class FindEntryResult {
                 .toString()
                 .replace("\n", "\n    ");
     }
-
 }

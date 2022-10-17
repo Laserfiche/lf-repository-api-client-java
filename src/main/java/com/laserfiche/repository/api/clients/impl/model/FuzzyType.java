@@ -15,16 +15,6 @@ public enum FuzzyType {
         this.value = value;
     }
 
-    @JsonCreator
-    public static FuzzyType fromValue(Integer input) {
-        for (FuzzyType b : FuzzyType.values()) {
-            if (b.value.equals(input)) {
-                return b;
-            }
-        }
-        return null;
-    }
-
     @JsonValue
     public Integer getValue() {
         return value;
@@ -33,5 +23,15 @@ public enum FuzzyType {
     @Override
     public String toString() {
         return String.valueOf(value);
+    }
+
+    @JsonCreator
+    public static FuzzyType fromValue(Integer input) {
+        for (FuzzyType b : FuzzyType.values()) {
+            if (b.value.equals(input)) {
+                return b;
+            }
+        }
+        return null;
     }
 }

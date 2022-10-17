@@ -11,9 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-08-19T17:07:43.799-04:00[America/New_York]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-17T11:38:41.655-04:00[America/New_York]")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "entryType", visible = true)
-@JsonSubTypes({@JsonSubTypes.Type(value = Document.class, name = "Document"), @JsonSubTypes.Type(value = Folder.class, name = "Folder"), @JsonSubTypes.Type(value = Shortcut.class, name = "Shortcut")})
+@JsonSubTypes({@JsonSubTypes.Type(value = Document.class, name = "Document"), @JsonSubTypes.Type(value = Folder.class, name = "Folder"), @JsonSubTypes.Type(value = Shortcut.class, name = "Shortcut"), @JsonSubTypes.Type(value = RecordSeries.class, name = "RecordSeries")})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Entry {
 

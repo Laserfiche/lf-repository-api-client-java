@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-08-19T17:07:43.799-04:00[America/New_York]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-17T11:38:41.655-04:00[America/New_York]")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ODataValueOfIListOfWEntryLinkInfo {
 

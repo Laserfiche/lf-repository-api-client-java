@@ -6,7 +6,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.Objects;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-08-19T17:07:43.799-04:00[America/New_York]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-17T11:38:41.655-04:00[America/New_York]")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class PostEntryChildrenRequest {
 
@@ -21,6 +21,9 @@ public class PostEntryChildrenRequest {
 
     @JsonProperty("sourceId")
     private Integer sourceId = null;
+
+    @JsonProperty("volumeName")
+    private String volumeName = null;
 
     public PostEntryChildrenRequest name(String name) {
         this.name = name;
@@ -78,6 +81,20 @@ public class PostEntryChildrenRequest {
         this.sourceId = sourceId;
     }
 
+    public PostEntryChildrenRequest volumeName(String volumeName) {
+        this.volumeName = volumeName;
+        return this;
+    }
+
+    @Schema(description = "The name of the volume to use. Will use the default parent entry volume if not specified. This is ignored in Laserfiche Cloud.")
+    public String getVolumeName() {
+        return volumeName;
+    }
+
+    public void setVolumeName(String volumeName) {
+        this.volumeName = volumeName;
+    }
+
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -89,12 +106,14 @@ public class PostEntryChildrenRequest {
         PostEntryChildrenRequest postEntryChildrenRequest = (PostEntryChildrenRequest) o;
         return Objects.equals(this.name, postEntryChildrenRequest.name) && Objects.equals(this.entryType,
                 postEntryChildrenRequest.entryType) && Objects.equals(this.targetId,
-                postEntryChildrenRequest.targetId) && Objects.equals(this.sourceId, postEntryChildrenRequest.sourceId);
+                postEntryChildrenRequest.targetId) && Objects.equals(this.sourceId,
+                postEntryChildrenRequest.sourceId) && Objects.equals(this.volumeName,
+                postEntryChildrenRequest.volumeName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, entryType, targetId, sourceId);
+        return Objects.hash(name, entryType, targetId, sourceId, volumeName);
     }
 
     @Override
@@ -116,6 +135,10 @@ public class PostEntryChildrenRequest {
         sb
                 .append("    sourceId: ")
                 .append(toIndentedString(sourceId))
+                .append("\n");
+        sb
+                .append("    volumeName: ")
+                .append(toIndentedString(volumeName))
                 .append("\n");
         sb.append("}");
         return sb.toString();
