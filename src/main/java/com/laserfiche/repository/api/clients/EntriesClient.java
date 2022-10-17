@@ -79,7 +79,7 @@ public interface EntriesClient {
      * @param entryId     The entry ID of the entry that will have its fields updated.
      * @param requestBody
      * @param culture     An optional query parameter used to indicate the locale that should be used.
-     *                    The value should be a standard language tag.
+     *                    The value should be a standard language tag. This may be used when setting field values with tokens.
      * @return CompletableFuture<ODataValueOfIListOfFieldValue> The return value
      */
     CompletableFuture<ODataValueOfIListOfFieldValue> assignFieldValues(String repoId, Integer entryId,
@@ -96,7 +96,7 @@ public interface EntriesClient {
      * @param autoRename    An optional query parameter used to indicate if the new document should be automatically
      *                      renamed if an entry already exists with the given name in the folder. The default value is false.
      * @param culture       An optional query parameter used to indicate the locale that should be used.
-     *                      The value should be a standard language tag.
+     *                      The value should be a standard language tag. This may be used when setting field values with tokens.
      * @param inputStream   An InputStream object to read the raw bytes for the file to be uploaded.
      * @param requestBody   null
      * @return CompletableFuture<CreateEntryResult> The return value
@@ -174,7 +174,7 @@ public interface EntriesClient {
      * @param entryId     The ID of entry that will have its template updated.
      * @param requestBody The template and template fields that will be assigned to the entry.
      * @param culture     An optional query parameter used to indicate the locale that should be used.
-     *                    The value should be a standard language tag.
+     *                    The value should be a standard language tag. This may be used when setting field values with tokens.
      * @return CompletableFuture<Entry> The return value
      */
     CompletableFuture<Entry> writeTemplateValueToEntry(String repoId, Integer entryId, PutTemplateRequest requestBody,
@@ -190,6 +190,92 @@ public interface EntriesClient {
      * @return CompletableFuture<Entry> The return value
      */
     CompletableFuture<Entry> deleteAssignedTemplate(String repoId, Integer entryId);
+
+    /**
+     * - Returns dynamic field logic values with the current values of the fields in the template.
+     * - Provide an entry ID and field values in the JSON body to get dynamic field logic values.
+     * Independent and non-dynamic fields in the request body will be ignored, and only related dynamic field logic values for the assigned template will be returned.
+     *
+     * @param repoId      The requested repository ID.
+     * @param entryId     The requested entry ID.
+     * @param requestBody null
+     * @return CompletableFuture<Map < String, String [ ]>> The return value
+     */
+    CompletableFuture<Map<String, String[]>> getDynamicFieldValues(String repoId, Integer entryId,
+            GetDynamicFieldLogicValueRequest requestBody);
+
+    /**
+     * - Returns a single entry object using the entry path.
+     * - Optional query parameter: fallbackToClosestAncestor. Use the fallbackToClosestAncestor query parameter to return the closest existing ancestor if the initial entry path is not found.
+     *
+     * @param repoId                    The requested repository ID.
+     * @param fullPath                  The requested entry path.
+     * @param fallbackToClosestAncestor An optional query parameter used to indicate whether or not the closest ancestor in the path should be returned if the initial entry path is not found. The default value is false.
+     * @return CompletableFuture<FindEntryResult> The return value
+     */
+    CompletableFuture<FindEntryResult> getEntryByPath(String repoId, String fullPath,
+            Boolean fallbackToClosestAncestor);
+
+    /**
+     * - Copy a new child entry in the designated folder async, and potentially return an operationToken.
+     * - Provide the parent folder ID, and copy an entry as a child of the designated folder.
+     * - Optional parameter: autoRename (default false). If an entry already exists with the given name, the entry will be automatically renamed.
+     * - The status of the operation can be checked via the Tasks/{operationToken} route.
+     *
+     * @param repoId      The requested repository ID.
+     * @param entryId     The folder ID that the entry will be created in.
+     * @param requestBody Copy entry request.
+     * @param autoRename  An optional query parameter used to indicate if the new entry should be automatically
+     *                    renamed if an entry already exists with the given name in the folder. The default value is false.
+     * @param culture     An optional query parameter used to indicate the locale that should be used.
+     *                    The value should be a standard language tag.
+     * @return CompletableFuture<AcceptedOperation> The return value
+     */
+    CompletableFuture<AcceptedOperation> copyEntryAsync(String repoId, Integer entryId, CopyAsyncRequest requestBody,
+            Boolean autoRename, String culture);
+
+    /**
+     * - Returns a single entry object.
+     * - Provide an entry ID, and get the entry associated with that ID. Useful when detailed information about the entry is required, such as metadata, path information, etc.
+     * - Allowed OData query options: Select. If the entry is a subtype (Folder, Document, or Shortcut), the entry will automatically be converted to include those model-specific properties.
+     *
+     * @param repoId  The requested repository ID.
+     * @param entryId The requested entry ID.
+     * @param select  Limits the properties returned in the result.
+     * @return CompletableFuture<Entry> The return value
+     */
+    CompletableFuture<Entry> getEntry(String repoId, Integer entryId, String select);
+
+    /**
+     * - Moves and/or renames an entry.
+     * - Move and/or rename an entry by passing in the new parent folder ID or name in the JSON body.
+     * - Optional parameter: autoRename (default false). If an entry already exists with the given name, the entry will be automatically renamed.
+     *
+     * @param repoId      The requested repository ID.
+     * @param entryId     The requested entry ID.
+     * @param requestBody The request containing the folder ID that the entry will be moved to and the new name
+     *                    the entry will be renamed to.
+     * @param autoRename  An optional query parameter used to indicate if the entry should be automatically
+     *                    renamed if another entry already exists with the same name in the folder. The default value is false.
+     * @param culture     An optional query parameter used to indicate the locale that should be used.
+     *                    The value should be a standard language tag.
+     * @return CompletableFuture<Entry> The return value
+     */
+    CompletableFuture<Entry> moveOrRenameDocument(String repoId, Integer entryId, PatchEntryRequest requestBody,
+            Boolean autoRename, String culture);
+
+    /**
+     * - Begins a task to delete an entry, and returns an operationToken.
+     * - Provide an entry ID, and queue a delete task to remove it from the repository (includes nested objects if the entry is a Folder type). The entry will not be deleted immediately.
+     * - Optionally include an audit reason ID and comment in the JSON body. This route returns an operationToken, and will run as an asynchronous operation. Check the progress via the Tasks/{operationToken} route.
+     *
+     * @param repoId      The requested repository ID.
+     * @param entryId     The requested entry ID.
+     * @param requestBody The submitted audit reason.
+     * @return CompletableFuture<AcceptedOperation> The return value
+     */
+    CompletableFuture<AcceptedOperation> deleteEntryInfo(String repoId, Integer entryId,
+            DeleteEntryWithAuditReason requestBody);
 
     /**
      * - Returns an entry's edoc resource in a stream format while including an audit reason.
@@ -332,49 +418,6 @@ public interface EntriesClient {
             Boolean autoRename, String culture);
 
     /**
-     * - Returns dynamic field logic values with the current values of the fields in the template.
-     * - Provide an entry ID and field values in the JSON body to get dynamic field logic values.
-     * Independent and non-dynamic fields in the request body will be ignored, and only related dynamic field logic values for the assigned template will be returned.
-     *
-     * @param repoId      The requested repository ID.
-     * @param entryId     The requested entry ID.
-     * @param requestBody null
-     * @return CompletableFuture<Map < String, String [ ]>> The return value
-     */
-    CompletableFuture<Map<String, String[]>> getDynamicFieldValues(String repoId, Integer entryId,
-            GetDynamicFieldLogicValueRequest requestBody);
-
-    /**
-     * - Returns a single entry object using the entry path.
-     * - Optional query parameter: fallbackToClosestAncestor. Use the fallbackToClosestAncestor query parameter to return the closest existing ancestor if the initial entry path is not found.
-     *
-     * @param repoId                    The requested repository ID.
-     * @param fullPath                  The requested entry path.
-     * @param fallbackToClosestAncestor An optional query parameter used to indicate whether or not the closest ancestor in the path should be returned if the initial entry path is not found. The default value is false.
-     * @return CompletableFuture<FindEntryResult> The return value
-     */
-    CompletableFuture<FindEntryResult> getEntryByPath(String repoId, String fullPath,
-            Boolean fallbackToClosestAncestor);
-
-    /**
-     * - Copy a new child entry in the designated folder async, and potentially return an operationToken.
-     * - Provide the parent folder ID, and copy an entry as a child of the designated folder.
-     * - Optional parameter: autoRename (default false). If an entry already exists with the given name, the entry will be automatically renamed.
-     * - The status of the operation can be checked via the Tasks/{operationToken} route.
-     *
-     * @param repoId      The requested repository ID.
-     * @param entryId     The folder ID that the entry will be created in.
-     * @param requestBody Copy entry request.
-     * @param autoRename  An optional query parameter used to indicate if the new entry should be automatically
-     *                    renamed if an entry already exists with the given name in the folder. The default value is false.
-     * @param culture     An optional query parameter used to indicate the locale that should be used.
-     *                    The value should be a standard language tag.
-     * @return CompletableFuture<AcceptedOperation> The return value
-     */
-    CompletableFuture<AcceptedOperation> copyEntryAsync(String repoId, Integer entryId, CopyAsyncRequest requestBody,
-            Boolean autoRename, String culture);
-
-    /**
      * - Returns the tags assigned to an entry.
      * - Provide an entry ID, and get a paged listing of tags assigned to that entry.
      * - Default page size: 100. Allowed OData query options: Select | Count | OrderBy | Skip | Top | SkipToken | Prefer.
@@ -434,47 +477,4 @@ public interface EntriesClient {
      */
     CompletableFuture<ODataValueOfIListOfWTagInfo> assignTags(String repoId, Integer entryId,
             PutTagRequest requestBody);
-
-    /**
-     * - Returns a single entry object.
-     * - Provide an entry ID, and get the entry associated with that ID. Useful when detailed information about the entry is required, such as metadata, path information, etc.
-     * - Allowed OData query options: Select. If the entry is a subtype (Folder, Document, or Shortcut), the entry will automatically be converted to include those model-specific properties.
-     *
-     * @param repoId  The requested repository ID.
-     * @param entryId The requested entry ID.
-     * @param select  Limits the properties returned in the result.
-     * @return CompletableFuture<Entry> The return value
-     */
-    CompletableFuture<Entry> getEntry(String repoId, Integer entryId, String select);
-
-    /**
-     * - Moves and/or renames an entry.
-     * - Move and/or rename an entry by passing in the new parent folder ID or name in the JSON body.
-     * - Optional parameter: autoRename (default false). If an entry already exists with the given name, the entry will be automatically renamed.
-     *
-     * @param repoId      The requested repository ID.
-     * @param entryId     The requested entry ID.
-     * @param requestBody The request containing the folder ID that the entry will be moved to and the new name
-     *                    the entry will be renamed to.
-     * @param autoRename  An optional query parameter used to indicate if the entry should be automatically
-     *                    renamed if another entry already exists with the same name in the folder. The default value is false.
-     * @param culture     An optional query parameter used to indicate the locale that should be used.
-     *                    The value should be a standard language tag.
-     * @return CompletableFuture<Entry> The return value
-     */
-    CompletableFuture<Entry> moveOrRenameDocument(String repoId, Integer entryId, PatchEntryRequest requestBody,
-            Boolean autoRename, String culture);
-
-    /**
-     * - Begins a task to delete an entry, and returns an operationToken.
-     * - Provide an entry ID, and queue a delete task to remove it from the repository (includes nested objects if the entry is a Folder type). The entry will not be deleted immediately.
-     * - Optionally include an audit reason ID and comment in the JSON body. This route returns an operationToken, and will run as an asynchronous operation. Check the progress via the Tasks/{operationToken} route.
-     *
-     * @param repoId      The requested repository ID.
-     * @param entryId     The requested entry ID.
-     * @param requestBody The submitted audit reason.
-     * @return CompletableFuture<AcceptedOperation> The return value
-     */
-    CompletableFuture<AcceptedOperation> deleteEntryInfo(String repoId, Integer entryId,
-            DeleteEntryWithAuditReason requestBody);
 }

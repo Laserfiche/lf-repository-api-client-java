@@ -6,7 +6,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.Objects;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-08-19T17:07:43.799-04:00[America/New_York]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-17T11:38:41.655-04:00[America/New_York]")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CopyAsyncRequest {
 
@@ -15,6 +15,9 @@ public class CopyAsyncRequest {
 
     @JsonProperty("sourceId")
     private Integer sourceId = null;
+
+    @JsonProperty("volumeName")
+    private String volumeName = null;
 
     public CopyAsyncRequest name(String name) {
         this.name = name;
@@ -44,6 +47,20 @@ public class CopyAsyncRequest {
         this.sourceId = sourceId;
     }
 
+    public CopyAsyncRequest volumeName(String volumeName) {
+        this.volumeName = volumeName;
+        return this;
+    }
+
+    @Schema(description = "The name of the volume to use. Will use the default parent entry volume if not specified. This is ignored in Laserfiche Cloud.")
+    public String getVolumeName() {
+        return volumeName;
+    }
+
+    public void setVolumeName(String volumeName) {
+        this.volumeName = volumeName;
+    }
+
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -54,12 +71,12 @@ public class CopyAsyncRequest {
         }
         CopyAsyncRequest copyAsyncRequest = (CopyAsyncRequest) o;
         return Objects.equals(this.name, copyAsyncRequest.name) && Objects.equals(this.sourceId,
-                copyAsyncRequest.sourceId);
+                copyAsyncRequest.sourceId) && Objects.equals(this.volumeName, copyAsyncRequest.volumeName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, sourceId);
+        return Objects.hash(name, sourceId, volumeName);
     }
 
     @Override
@@ -73,6 +90,10 @@ public class CopyAsyncRequest {
         sb
                 .append("    sourceId: ")
                 .append(toIndentedString(sourceId))
+                .append("\n");
+        sb
+                .append("    volumeName: ")
+                .append(toIndentedString(volumeName))
                 .append("\n");
         sb.append("}");
         return sb.toString();

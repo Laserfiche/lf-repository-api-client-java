@@ -8,6 +8,7 @@ import java.util.concurrent.CompletableFuture;
 public interface ServerSessionClient {
 
     /**
+     * - Deprecated.
      * - Invalidates the server session.
      * - Acts as a "logout" operation, and invalidates the session associated with the provided access token. This method should be used when the client wants to clean up the current session.
      * - Only available in Laserfiche Cloud.
@@ -27,6 +28,7 @@ public interface ServerSessionClient {
     CompletableFuture<ODataValueOfBoolean> createServerSession(String repoId);
 
     /**
+     * - Deprecated.
      * - Refreshes the session associated with the access token. This is only necessary if you want to keep the same session alive, otherwise a new session will be automatically created when the session expires.
      * - When a client application wants to keep a session alive that has been idle for an hour, this route can be used to refresh the expiration timer associated with the access token.
      * - Only available in Laserfiche Cloud.

@@ -28,16 +28,6 @@ public enum HitType {
         this.value = value;
     }
 
-    @JsonCreator
-    public static HitType fromValue(String input) {
-        for (HitType b : HitType.values()) {
-            if (b.value.equals(input)) {
-                return b;
-            }
-        }
-        return null;
-    }
-
     @JsonValue
     public String getValue() {
         return value;
@@ -46,5 +36,15 @@ public enum HitType {
     @Override
     public String toString() {
         return String.valueOf(value);
+    }
+
+    @JsonCreator
+    public static HitType fromValue(String input) {
+        for (HitType b : HitType.values()) {
+            if (b.value.equals(input)) {
+                return b;
+            }
+        }
+        return null;
     }
 }

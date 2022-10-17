@@ -16,16 +16,6 @@ public enum EntryType {
         this.value = value;
     }
 
-    @JsonCreator
-    public static EntryType fromValue(String input) {
-        for (EntryType b : EntryType.values()) {
-            if (b.value.equals(input)) {
-                return b;
-            }
-        }
-        return null;
-    }
-
     @JsonValue
     public String getValue() {
         return value;
@@ -34,5 +24,15 @@ public enum EntryType {
     @Override
     public String toString() {
         return String.valueOf(value);
+    }
+
+    @JsonCreator
+    public static EntryType fromValue(String input) {
+        for (EntryType b : EntryType.values()) {
+            if (b.value.equals(input)) {
+                return b;
+            }
+        }
+        return null;
     }
 }

@@ -24,16 +24,6 @@ public enum WFieldFormat {
         this.value = value;
     }
 
-    @JsonCreator
-    public static WFieldFormat fromValue(String input) {
-        for (WFieldFormat b : WFieldFormat.values()) {
-            if (b.value.equals(input)) {
-                return b;
-            }
-        }
-        return null;
-    }
-
     @JsonValue
     public String getValue() {
         return value;
@@ -42,5 +32,15 @@ public enum WFieldFormat {
     @Override
     public String toString() {
         return String.valueOf(value);
+    }
+
+    @JsonCreator
+    public static WFieldFormat fromValue(String input) {
+        for (WFieldFormat b : WFieldFormat.values()) {
+            if (b.value.equals(input)) {
+                return b;
+            }
+        }
+        return null;
     }
 }

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-08-19T17:07:43.799-04:00[America/New_York]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-17T11:38:41.655-04:00[America/New_York]")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class OperationProgress {
 
@@ -30,6 +30,9 @@ public class OperationProgress {
 
     @JsonProperty("redirectUri")
     private String redirectUri = null;
+
+    @JsonProperty("entryId")
+    private Integer entryId = null;
 
     @JsonProperty("startTimestamp")
     private OffsetDateTime startTimestamp = null;
@@ -129,6 +132,20 @@ public class OperationProgress {
         this.redirectUri = redirectUri;
     }
 
+    public OperationProgress entryId(Integer entryId) {
+        this.entryId = entryId;
+        return this;
+    }
+
+    @Schema(description = "The ID of the entry affected (e.g. created or modified) by the execution of the associated operation.")
+    public Integer getEntryId() {
+        return entryId;
+    }
+
+    public void setEntryId(Integer entryId) {
+        this.entryId = entryId;
+    }
+
     public OperationProgress startTimestamp(OffsetDateTime startTimestamp) {
         this.startTimestamp = startTimestamp;
         return this;
@@ -170,15 +187,16 @@ public class OperationProgress {
                 this.operationType, operationProgress.operationType) && Objects.equals(this.percentComplete,
                 operationProgress.percentComplete) && Objects.equals(this.status,
                 operationProgress.status) && Objects.equals(this.errors, operationProgress.errors) && Objects.equals(
-                this.redirectUri, operationProgress.redirectUri) && Objects.equals(this.startTimestamp,
+                this.redirectUri, operationProgress.redirectUri) && Objects.equals(this.entryId,
+                operationProgress.entryId) && Objects.equals(this.startTimestamp,
                 operationProgress.startTimestamp) && Objects.equals(this.statusTimestamp,
                 operationProgress.statusTimestamp);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(operationToken, operationType, percentComplete, status, errors, redirectUri, startTimestamp,
-                statusTimestamp);
+        return Objects.hash(operationToken, operationType, percentComplete, status, errors, redirectUri, entryId,
+                startTimestamp, statusTimestamp);
     }
 
     @Override
@@ -208,6 +226,10 @@ public class OperationProgress {
         sb
                 .append("    redirectUri: ")
                 .append(toIndentedString(redirectUri))
+                .append("\n");
+        sb
+                .append("    entryId: ")
+                .append(toIndentedString(entryId))
                 .append("\n");
         sb
                 .append("    startTimestamp: ")
