@@ -31,6 +31,9 @@ public class ServerSessionClientImpl extends ApiClient implements ServerSessionC
                     if (httpResponse.getStatus() == 403) {
                         throw new RuntimeException("Access denied for the operation.");
                     }
+                    if (httpResponse.getStatus() == 404) {
+                        throw new RuntimeException("Not found.");
+                    }
                     if (httpResponse.getStatus() == 429) {
                         throw new RuntimeException("Rate limit is reached.");
                     }
@@ -51,6 +54,9 @@ public class ServerSessionClientImpl extends ApiClient implements ServerSessionC
                 .thenApply(httpResponse -> {
                     if (httpResponse.getStatus() == 401) {
                         throw new RuntimeException("Access token is invalid or expired.");
+                    }
+                    if (httpResponse.getStatus() == 403) {
+                        throw new RuntimeException("Access denied for the operation.");
                     }
                     if (httpResponse.getStatus() >= 299) {
                         throw new RuntimeException(httpResponse.getStatusText());
@@ -75,6 +81,9 @@ public class ServerSessionClientImpl extends ApiClient implements ServerSessionC
                     }
                     if (httpResponse.getStatus() == 403) {
                         throw new RuntimeException("Access denied for the operation.");
+                    }
+                    if (httpResponse.getStatus() == 404) {
+                        throw new RuntimeException("Not found.");
                     }
                     if (httpResponse.getStatus() == 429) {
                         throw new RuntimeException("Rate limit is reached.");

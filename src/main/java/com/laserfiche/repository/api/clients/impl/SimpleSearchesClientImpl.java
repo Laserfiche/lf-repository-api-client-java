@@ -39,6 +39,9 @@ public class SimpleSearchesClientImpl extends ApiClient implements SimpleSearche
                     if (httpResponse.getStatus() == 403) {
                         throw new RuntimeException("Access denied for the operation.");
                     }
+                    if (httpResponse.getStatus() == 404) {
+                        throw new RuntimeException("Not found.");
+                    }
                     if (httpResponse.getStatus() == 429) {
                         throw new RuntimeException("Operation limit or request limit reached.");
                     }

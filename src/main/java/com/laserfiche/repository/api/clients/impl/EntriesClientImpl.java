@@ -364,6 +364,222 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
     }
 
     @Override
+    public CompletableFuture<Map<String, String[]>> getDynamicFieldValues(String repoId, Integer entryId,
+            GetDynamicFieldLogicValueRequest requestBody) {
+        Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "entryId"},
+                new Object[]{repoId, entryId});
+        return httpClient
+                .post(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/fields/GetDynamicFieldLogicValue")
+                .routeParam(pathParameters)
+                .contentType("application/json")
+                .body(requestBody)
+                .asObjectAsync((new HashMap<String, String[]>()).getClass())
+                .thenApply(httpResponse -> {
+                    if (httpResponse.getStatus() == 400) {
+                        throw new RuntimeException("Invalid or bad request.");
+                    }
+                    if (httpResponse.getStatus() == 401) {
+                        throw new RuntimeException("Access token is invalid or expired.");
+                    }
+                    if (httpResponse.getStatus() == 403) {
+                        throw new RuntimeException("Access denied for the operation.");
+                    }
+                    if (httpResponse.getStatus() == 404) {
+                        throw new RuntimeException("Request entry not found.");
+                    }
+                    if (httpResponse.getStatus() == 429) {
+                        throw new RuntimeException("Rate limit is reached.");
+                    }
+                    if (httpResponse.getStatus() >= 299) {
+                        throw new RuntimeException(httpResponse.getStatusText());
+                    }
+                    return httpResponse.getBody();
+                });
+    }
+
+    @Override
+    public CompletableFuture<FindEntryResult> getEntryByPath(String repoId, String fullPath,
+            Boolean fallbackToClosestAncestor) {
+        Map<String, Object> queryParameters = getNonNullParameters(
+                new String[]{"fullPath", "fallbackToClosestAncestor"},
+                new Object[]{fullPath, fallbackToClosestAncestor});
+        Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId"}, new Object[]{repoId});
+        return httpClient
+                .get(baseUrl + "/v1/Repositories/{repoId}/Entries/ByPath")
+                .queryString(queryParameters)
+                .routeParam(pathParameters)
+                .asObjectAsync(FindEntryResult.class)
+                .thenApply(httpResponse -> {
+                    if (httpResponse.getStatus() == 400) {
+                        throw new RuntimeException("Invalid or bad request.");
+                    }
+                    if (httpResponse.getStatus() == 401) {
+                        throw new RuntimeException("Access token is invalid or expired.");
+                    }
+                    if (httpResponse.getStatus() == 403) {
+                        throw new RuntimeException("Access denied for the operation.");
+                    }
+                    if (httpResponse.getStatus() == 404) {
+                        throw new RuntimeException("Requested entry path not found");
+                    }
+                    if (httpResponse.getStatus() == 429) {
+                        throw new RuntimeException("Rate limit is reached.");
+                    }
+                    if (httpResponse.getStatus() >= 299) {
+                        throw new RuntimeException(httpResponse.getStatusText());
+                    }
+                    return httpResponse.getBody();
+                });
+    }
+
+    @Override
+    public CompletableFuture<AcceptedOperation> copyEntryAsync(String repoId, Integer entryId,
+            CopyAsyncRequest requestBody, Boolean autoRename, String culture) {
+        Map<String, Object> queryParameters = getNonNullParameters(new String[]{"autoRename", "culture"},
+                new Object[]{autoRename, culture});
+        Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "entryId"},
+                new Object[]{repoId, entryId});
+        return httpClient
+                .post(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Folder/CopyAsync")
+                .queryString(queryParameters)
+                .routeParam(pathParameters)
+                .contentType("application/json")
+                .body(requestBody)
+                .asObjectAsync(AcceptedOperation.class)
+                .thenApply(httpResponse -> {
+                    if (httpResponse.getStatus() == 400) {
+                        throw new RuntimeException("Invalid or bad request.");
+                    }
+                    if (httpResponse.getStatus() == 401) {
+                        throw new RuntimeException("Access token is invalid or expired.");
+                    }
+                    if (httpResponse.getStatus() == 403) {
+                        throw new RuntimeException("Access denied for the operation.");
+                    }
+                    if (httpResponse.getStatus() == 404) {
+                        throw new RuntimeException("Not found.");
+                    }
+                    if (httpResponse.getStatus() == 429) {
+                        throw new RuntimeException("Operation limit or request limit reached.");
+                    }
+                    if (httpResponse.getStatus() >= 299) {
+                        throw new RuntimeException(httpResponse.getStatusText());
+                    }
+                    return httpResponse.getBody();
+                });
+    }
+
+    @Override
+    public CompletableFuture<Entry> getEntry(String repoId, Integer entryId, String select) {
+        Map<String, Object> queryParameters = getNonNullParameters(new String[]{"$select"}, new Object[]{select});
+        Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "entryId"},
+                new Object[]{repoId, entryId});
+        return httpClient
+                .get(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}")
+                .queryString(queryParameters)
+                .routeParam(pathParameters)
+                .asObjectAsync(Entry.class)
+                .thenApply(httpResponse -> {
+                    if (httpResponse.getStatus() == 400) {
+                        throw new RuntimeException("Invalid or bad request.");
+                    }
+                    if (httpResponse.getStatus() == 401) {
+                        throw new RuntimeException("Access token is invalid or expired.");
+                    }
+                    if (httpResponse.getStatus() == 403) {
+                        throw new RuntimeException("Access denied for the operation.");
+                    }
+                    if (httpResponse.getStatus() == 404) {
+                        throw new RuntimeException("Requested entry id not found.");
+                    }
+                    if (httpResponse.getStatus() == 429) {
+                        throw new RuntimeException("Rate limit is reached.");
+                    }
+                    if (httpResponse.getStatus() >= 299) {
+                        throw new RuntimeException(httpResponse.getStatusText());
+                    }
+                    return httpResponse.getBody();
+                });
+    }
+
+    @Override
+    public CompletableFuture<Entry> moveOrRenameDocument(String repoId, Integer entryId, PatchEntryRequest requestBody,
+            Boolean autoRename, String culture) {
+        Map<String, Object> queryParameters = getNonNullParameters(new String[]{"autoRename", "culture"},
+                new Object[]{autoRename, culture});
+        Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "entryId"},
+                new Object[]{repoId, entryId});
+        return httpClient
+                .patch(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}")
+                .queryString(queryParameters)
+                .routeParam(pathParameters)
+                .contentType("application/json")
+                .body(requestBody)
+                .asObjectAsync(Entry.class)
+                .thenApply(httpResponse -> {
+                    if (httpResponse.getStatus() == 400) {
+                        throw new RuntimeException("Invalid or bad request.");
+                    }
+                    if (httpResponse.getStatus() == 401) {
+                        throw new RuntimeException("Access token is invalid or expired.");
+                    }
+                    if (httpResponse.getStatus() == 403) {
+                        throw new RuntimeException("Access denied for the operation.");
+                    }
+                    if (httpResponse.getStatus() == 404) {
+                        throw new RuntimeException("Request entry id not found.");
+                    }
+                    if (httpResponse.getStatus() == 409) {
+                        throw new RuntimeException("Entry name conflicts.");
+                    }
+                    if (httpResponse.getStatus() == 423) {
+                        throw new RuntimeException("Entry is locked.");
+                    }
+                    if (httpResponse.getStatus() == 429) {
+                        throw new RuntimeException("Rate limit is reached.");
+                    }
+                    if (httpResponse.getStatus() >= 299) {
+                        throw new RuntimeException(httpResponse.getStatusText());
+                    }
+                    return httpResponse.getBody();
+                });
+    }
+
+    @Override
+    public CompletableFuture<AcceptedOperation> deleteEntryInfo(String repoId, Integer entryId,
+            DeleteEntryWithAuditReason requestBody) {
+        Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "entryId"},
+                new Object[]{repoId, entryId});
+        return httpClient
+                .delete(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}")
+                .routeParam(pathParameters)
+                .contentType("application/json")
+                .body(requestBody)
+                .asObjectAsync(AcceptedOperation.class)
+                .thenApply(httpResponse -> {
+                    if (httpResponse.getStatus() == 400) {
+                        throw new RuntimeException("Invalid or bad request.");
+                    }
+                    if (httpResponse.getStatus() == 401) {
+                        throw new RuntimeException("Access token is invalid or expired.");
+                    }
+                    if (httpResponse.getStatus() == 403) {
+                        throw new RuntimeException("Access denied for the operation.");
+                    }
+                    if (httpResponse.getStatus() == 404) {
+                        throw new RuntimeException("Not found.");
+                    }
+                    if (httpResponse.getStatus() == 429) {
+                        throw new RuntimeException("Operation limit or request limit reached.");
+                    }
+                    if (httpResponse.getStatus() >= 299) {
+                        throw new RuntimeException(httpResponse.getStatusText());
+                    }
+                    return httpResponse.getBody();
+                });
+    }
+
+    @Override
     public CompletableFuture<File> exportDocumentWithAuditReason(String repoId, Integer entryId,
             GetEdocWithAuditReasonRequest requestBody, String range) {
         Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "entryId"},
@@ -673,109 +889,6 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
     }
 
     @Override
-    public CompletableFuture<Map<String, String[]>> getDynamicFieldValues(String repoId, Integer entryId,
-            GetDynamicFieldLogicValueRequest requestBody) {
-        Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "entryId"},
-                new Object[]{repoId, entryId});
-        return httpClient
-                .post(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/fields/GetDynamicFieldLogicValue")
-                .routeParam(pathParameters)
-                .contentType("application/json")
-                .body(requestBody)
-                .asObjectAsync((new HashMap<String, String[]>()).getClass())
-                .thenApply(httpResponse -> {
-                    if (httpResponse.getStatus() == 400) {
-                        throw new RuntimeException("Invalid or bad request.");
-                    }
-                    if (httpResponse.getStatus() == 401) {
-                        throw new RuntimeException("Access token is invalid or expired.");
-                    }
-                    if (httpResponse.getStatus() == 403) {
-                        throw new RuntimeException("Access denied for the operation.");
-                    }
-                    if (httpResponse.getStatus() == 404) {
-                        throw new RuntimeException("Request entry not found.");
-                    }
-                    if (httpResponse.getStatus() == 429) {
-                        throw new RuntimeException("Rate limit is reached.");
-                    }
-                    if (httpResponse.getStatus() >= 299) {
-                        throw new RuntimeException(httpResponse.getStatusText());
-                    }
-                    return httpResponse.getBody();
-                });
-    }
-
-    @Override
-    public CompletableFuture<FindEntryResult> getEntryByPath(String repoId, String fullPath,
-            Boolean fallbackToClosestAncestor) {
-        Map<String, Object> queryParameters = getNonNullParameters(
-                new String[]{"fullPath", "fallbackToClosestAncestor"},
-                new Object[]{fullPath, fallbackToClosestAncestor});
-        Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId"}, new Object[]{repoId});
-        return httpClient
-                .get(baseUrl + "/v1/Repositories/{repoId}/Entries/ByPath")
-                .queryString(queryParameters)
-                .routeParam(pathParameters)
-                .asObjectAsync(FindEntryResult.class)
-                .thenApply(httpResponse -> {
-                    if (httpResponse.getStatus() == 400) {
-                        throw new RuntimeException("Invalid or bad request.");
-                    }
-                    if (httpResponse.getStatus() == 401) {
-                        throw new RuntimeException("Access token is invalid or expired.");
-                    }
-                    if (httpResponse.getStatus() == 403) {
-                        throw new RuntimeException("Access denied for the operation.");
-                    }
-                    if (httpResponse.getStatus() == 404) {
-                        throw new RuntimeException("Requested entry path not found");
-                    }
-                    if (httpResponse.getStatus() == 429) {
-                        throw new RuntimeException("Rate limit is reached.");
-                    }
-                    if (httpResponse.getStatus() >= 299) {
-                        throw new RuntimeException(httpResponse.getStatusText());
-                    }
-                    return httpResponse.getBody();
-                });
-    }
-
-    @Override
-    public CompletableFuture<AcceptedOperation> copyEntryAsync(String repoId, Integer entryId,
-            CopyAsyncRequest requestBody, Boolean autoRename, String culture) {
-        Map<String, Object> queryParameters = getNonNullParameters(new String[]{"autoRename", "culture"},
-                new Object[]{autoRename, culture});
-        Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "entryId"},
-                new Object[]{repoId, entryId});
-        return httpClient
-                .post(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Folder/CopyAsync")
-                .queryString(queryParameters)
-                .routeParam(pathParameters)
-                .contentType("application/json")
-                .body(requestBody)
-                .asObjectAsync(AcceptedOperation.class)
-                .thenApply(httpResponse -> {
-                    if (httpResponse.getStatus() == 400) {
-                        throw new RuntimeException("Invalid or bad request.");
-                    }
-                    if (httpResponse.getStatus() == 401) {
-                        throw new RuntimeException("Access token is invalid or expired.");
-                    }
-                    if (httpResponse.getStatus() == 403) {
-                        throw new RuntimeException("Access denied for the operation.");
-                    }
-                    if (httpResponse.getStatus() == 429) {
-                        throw new RuntimeException("Operation limit or request limit reached.");
-                    }
-                    if (httpResponse.getStatus() >= 299) {
-                        throw new RuntimeException(httpResponse.getStatusText());
-                    }
-                    return httpResponse.getBody();
-                });
-    }
-
-    @Override
     public CompletableFuture<ODataValueContextOfIListOfWTagInfo> getTagsAssignedToEntry(String repoId, Integer entryId,
             String prefer, String select, String orderby, Integer top, Integer skip, Boolean count) {
         return doGetTagsAssignedToEntry(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/tags", repoId, entryId,
@@ -878,113 +991,6 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                     }
                     if (httpResponse.getStatus() == 429) {
                         throw new RuntimeException("Rate limit is reached.");
-                    }
-                    if (httpResponse.getStatus() >= 299) {
-                        throw new RuntimeException(httpResponse.getStatusText());
-                    }
-                    return httpResponse.getBody();
-                });
-    }
-
-    @Override
-    public CompletableFuture<Entry> getEntry(String repoId, Integer entryId, String select) {
-        Map<String, Object> queryParameters = getNonNullParameters(new String[]{"$select"}, new Object[]{select});
-        Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "entryId"},
-                new Object[]{repoId, entryId});
-        return httpClient
-                .get(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}")
-                .queryString(queryParameters)
-                .routeParam(pathParameters)
-                .asObjectAsync(Entry.class)
-                .thenApply(httpResponse -> {
-                    if (httpResponse.getStatus() == 400) {
-                        throw new RuntimeException("Invalid or bad request.");
-                    }
-                    if (httpResponse.getStatus() == 401) {
-                        throw new RuntimeException("Access token is invalid or expired.");
-                    }
-                    if (httpResponse.getStatus() == 403) {
-                        throw new RuntimeException("Access denied for the operation.");
-                    }
-                    if (httpResponse.getStatus() == 404) {
-                        throw new RuntimeException("Requested entry id not found.");
-                    }
-                    if (httpResponse.getStatus() == 429) {
-                        throw new RuntimeException("Rate limit is reached.");
-                    }
-                    if (httpResponse.getStatus() >= 299) {
-                        throw new RuntimeException(httpResponse.getStatusText());
-                    }
-                    return httpResponse.getBody();
-                });
-    }
-
-    @Override
-    public CompletableFuture<Entry> moveOrRenameDocument(String repoId, Integer entryId, PatchEntryRequest requestBody,
-            Boolean autoRename, String culture) {
-        Map<String, Object> queryParameters = getNonNullParameters(new String[]{"autoRename", "culture"},
-                new Object[]{autoRename, culture});
-        Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "entryId"},
-                new Object[]{repoId, entryId});
-        return httpClient
-                .patch(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}")
-                .queryString(queryParameters)
-                .routeParam(pathParameters)
-                .contentType("application/json")
-                .body(requestBody)
-                .asObjectAsync(Entry.class)
-                .thenApply(httpResponse -> {
-                    if (httpResponse.getStatus() == 400) {
-                        throw new RuntimeException("Invalid or bad request.");
-                    }
-                    if (httpResponse.getStatus() == 401) {
-                        throw new RuntimeException("Access token is invalid or expired.");
-                    }
-                    if (httpResponse.getStatus() == 403) {
-                        throw new RuntimeException("Access denied for the operation.");
-                    }
-                    if (httpResponse.getStatus() == 404) {
-                        throw new RuntimeException("Request entry id not found.");
-                    }
-                    if (httpResponse.getStatus() == 409) {
-                        throw new RuntimeException("Entry name conflicts.");
-                    }
-                    if (httpResponse.getStatus() == 423) {
-                        throw new RuntimeException("Entry is locked.");
-                    }
-                    if (httpResponse.getStatus() == 429) {
-                        throw new RuntimeException("Rate limit is reached.");
-                    }
-                    if (httpResponse.getStatus() >= 299) {
-                        throw new RuntimeException(httpResponse.getStatusText());
-                    }
-                    return httpResponse.getBody();
-                });
-    }
-
-    @Override
-    public CompletableFuture<AcceptedOperation> deleteEntryInfo(String repoId, Integer entryId,
-            DeleteEntryWithAuditReason requestBody) {
-        Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "entryId"},
-                new Object[]{repoId, entryId});
-        return httpClient
-                .delete(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}")
-                .routeParam(pathParameters)
-                .contentType("application/json")
-                .body(requestBody)
-                .asObjectAsync(AcceptedOperation.class)
-                .thenApply(httpResponse -> {
-                    if (httpResponse.getStatus() == 400) {
-                        throw new RuntimeException("Invalid or bad request.");
-                    }
-                    if (httpResponse.getStatus() == 401) {
-                        throw new RuntimeException("Access token is invalid or expired.");
-                    }
-                    if (httpResponse.getStatus() == 403) {
-                        throw new RuntimeException("Access denied for the operation.");
-                    }
-                    if (httpResponse.getStatus() == 429) {
-                        throw new RuntimeException("Operation limit or request limit reached.");
                     }
                     if (httpResponse.getStatus() >= 299) {
                         throw new RuntimeException(httpResponse.getStatusText());
