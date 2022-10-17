@@ -371,6 +371,7 @@ class EntriesApiTest extends BaseTest {
         assertNull(entry.getEntry());
     }
 
+    @Test
     void getDocumentContentType_ReturnsExpectedHeaders() throws InterruptedException {
         ODataValueContextOfIListOfEntry entryList = client
                 .getEntryListing(repoId, 1, false, null, false, "maxpagesize=100", null, null, null, null, null, false)
