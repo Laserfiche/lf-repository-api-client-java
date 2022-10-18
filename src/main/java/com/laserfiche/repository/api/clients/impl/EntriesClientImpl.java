@@ -503,7 +503,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
     }
 
     @Override
-    public CompletableFuture<Entry> moveOrRenameDocument(String repoId, Integer entryId, PatchEntryRequest requestBody,
+    public CompletableFuture<Entry> moveOrRenameEntry(String repoId, Integer entryId, PatchEntryRequest requestBody,
             Boolean autoRename, String culture) {
         Map<String, Object> queryParameters = getNonNullParameters(new String[]{"autoRename", "culture"},
                 new Object[]{autoRename, culture});
