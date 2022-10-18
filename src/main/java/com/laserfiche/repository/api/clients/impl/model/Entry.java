@@ -200,7 +200,7 @@ public class Entry {
     }
 
     @Schema(description = "A boolean indicating if this entry is a container object; it can have other entries as children.")
-    public Boolean isIsContainer() {
+    public Boolean getIsContainer() {
         return isContainer;
     }
 
@@ -214,7 +214,7 @@ public class Entry {
     }
 
     @Schema(description = "A boolean indicating if this entry is a leaf object; it cannot have other entries as children.")
-    public Boolean isIsLeaf() {
+    public Boolean getIsLeaf() {
         return isLeaf;
     }
 
