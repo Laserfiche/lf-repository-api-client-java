@@ -71,7 +71,7 @@ public class Document extends Entry {
     }
 
     @Schema(description = "A boolean indicating if there is an electronic document attached to the represented document.")
-    public Boolean isIsElectronicDocument() {
+    public Boolean getIsElectronicDocument() {
         return isElectronicDocument;
     }
 
@@ -85,7 +85,7 @@ public class Document extends Entry {
     }
 
     @Schema(description = "A boolean indicating if the represented document is a record.")
-    public Boolean isIsRecord() {
+    public Boolean getIsRecord() {
         return isRecord;
     }
 
@@ -127,7 +127,7 @@ public class Document extends Entry {
     }
 
     @Schema(description = "A boolean indicating if the represented document is checked out.")
-    public Boolean isIsCheckedOut() {
+    public Boolean getIsCheckedOut() {
         return isCheckedOut;
     }
 
@@ -141,7 +141,7 @@ public class Document extends Entry {
     }
 
     @Schema(description = "A boolean indicating if the represented document is under version control.")
-    public Boolean isIsUnderVersionControl() {
+    public Boolean getIsUnderVersionControl() {
         return isUnderVersionControl;
     }
 

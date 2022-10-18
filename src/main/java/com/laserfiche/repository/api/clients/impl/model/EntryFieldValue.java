@@ -104,7 +104,7 @@ public class EntryFieldValue {
     }
 
     @Schema(description = "A boolean indicating if the represented field supports multiple values.")
-    public Boolean isIsMultiValue() {
+    public Boolean getIsMultiValue() {
         return isMultiValue;
     }
 
@@ -118,7 +118,7 @@ public class EntryFieldValue {
     }
 
     @Schema(description = "A boolean indicating if the represented field must have a value set on entries assigned to a template that the field is a member of.")
-    public Boolean isIsRequired() {
+    public Boolean getIsRequired() {
         return isRequired;
     }
 

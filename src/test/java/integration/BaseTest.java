@@ -59,7 +59,7 @@ public class BaseTest {
 
     public static CompletableFuture<Boolean> allFalse(List<TemplateFieldInfo> arr) {
         for (TemplateFieldInfo templateFieldInfo : arr) {
-            if (templateFieldInfo.isIsRequired()) {
+            if (templateFieldInfo.getIsRequired()) {
                 return CompletableFuture.supplyAsync(() -> false);
             }
         }

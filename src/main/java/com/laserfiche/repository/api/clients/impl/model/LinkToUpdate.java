@@ -53,7 +53,7 @@ public class LinkToUpdate {
     }
 
     @Schema(description = "Whether the entry is the source for the link.")
-    public Boolean isIsSource() {
+    public Boolean getIsSource() {
         return isSource;
     }
 
