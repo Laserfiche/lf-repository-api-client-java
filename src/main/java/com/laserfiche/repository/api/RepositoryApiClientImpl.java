@@ -26,7 +26,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
     private final TemplateDefinitionsClient templateDefinitionsClient;
 
     protected RepositoryApiClientImpl(String servicePrincipalKey, AccessKey accessKey, String baseUrlDebug) {
-        String baseUrl = baseUrlDebug != null ? baseUrlDebug : "https://api." + accessKey.domain + "/repository";
+        String baseUrl = baseUrlDebug != null ? baseUrlDebug : "https://api." + accessKey.getDomain() + "/repository";
         httpClient = Unirest.spawnInstance();
 
         httpClient

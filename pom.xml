@@ -263,7 +263,7 @@
     <dependency>
       <groupId>com.laserfiche</groupId>
       <artifactId>lf-api-client-core</artifactId>
-      <version>1.0.0</version>
+      <version>1.0.0-preview-3274168162-SNAPSHOT</version>
     </dependency>
 
     
