@@ -220,7 +220,7 @@ public class CreateCopyEntryApiTest extends BaseTest {
         request.setName("RepositoryApiClientIntegrationTest Java MovedFolder");
 
         Entry movedEntry = client
-                .moveOrRenameDocument(repoId, childFolder.getId(), request, true, null)
+                .moveOrRenameEntry(repoId, childFolder.getId(), request, true, null)
                 .join();
 
         assertNotNull(movedEntry);

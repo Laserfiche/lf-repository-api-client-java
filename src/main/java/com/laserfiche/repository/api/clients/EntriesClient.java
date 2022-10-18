@@ -261,7 +261,7 @@ public interface EntriesClient {
      *                    The value should be a standard language tag.
      * @return CompletableFuture<Entry> The return value
      */
-    CompletableFuture<Entry> moveOrRenameDocument(String repoId, Integer entryId, PatchEntryRequest requestBody,
+    CompletableFuture<Entry> moveOrRenameEntry(String repoId, Integer entryId, PatchEntryRequest requestBody,
             Boolean autoRename, String culture);
 
     /**
