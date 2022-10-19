@@ -35,6 +35,19 @@ class EntriesApiTest extends BaseTest {
         Entry entry = future.join();
 
         assertNotNull(entry);
+        assertTrue(entry instanceof Folder); // We know the root folder is of type Folder.
+    }
+
+    @Test
+    void getEntry_ReturnEntryWhenTypeInfoMissing() {
+        CompletableFuture<Entry> future = client.getEntry(repoId, 1, "name");
+        Entry entry = future.join();
+
+        assertNotNull(entry);
+        assertFalse(entry instanceof Folder
+                || entry instanceof Shortcut
+                || entry instanceof Document
+                || entry instanceof RecordSeries); // When no type information, the data is deserialized to Entry.
     }
 
     @Test
