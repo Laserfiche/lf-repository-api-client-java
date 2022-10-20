@@ -22,7 +22,7 @@ public interface TagDefinitionsClient {
      * @param top     Limits the number of items returned from a collection.
      * @param skip    Excludes the specified number of items of the queried collection from the result.
      * @param count   Indicates whether the total count of items within a collection are returned in the result.
-     * @return CompletableFuture<ODataValueContextOfIListOfWTagInfo> The return value
+     * @return CompletableFuture&lt;ODataValueContextOfIListOfWTagInfo&gt; The return value
      */
     CompletableFuture<ODataValueContextOfIListOfWTagInfo> getTagDefinitions(String repoId, String prefer,
             String culture, String select, String orderby, Integer top, Integer skip, Boolean count);
@@ -32,7 +32,7 @@ public interface TagDefinitionsClient {
      *
      * @param nextLink    A url that allows retrieving the next subset of the requested collection.
      * @param maxPageSize Optionally specify the maximum number of items to retrieve.
-     * @return CompletableFuture<ODataValueContextOfIListOfWTagInfo> The return value
+     * @return CompletableFuture&lt;ODataValueContextOfIListOfWTagInfo&gt; The return value
      */
     CompletableFuture<ODataValueContextOfIListOfWTagInfo> getTagDefinitionsNextLink(String nextLink,
             Integer maxPageSize);
@@ -51,7 +51,7 @@ public interface TagDefinitionsClient {
      * @param top         Limits the number of items returned from a collection.
      * @param skip        Excludes the specified number of items of the queried collection from the result.
      * @param count       Indicates whether the total count of items within a collection are returned in the result.
-     * @return CompletableFuture<Void> The return value
+     * @return CompletableFuture&lt;Void&gt; The return value
      */
     CompletableFuture<Void> getTagDefinitionsForEach(
             Function<CompletableFuture<ODataValueContextOfIListOfWTagInfo>, CompletableFuture<Boolean>> callback,
@@ -68,7 +68,7 @@ public interface TagDefinitionsClient {
      * @param culture An optional query parameter used to indicate the locale that should be used for formatting.
      *                The value should be a standard language tag.
      * @param select  Limits the properties returned in the result.
-     * @return CompletableFuture<WTagInfo> The return value
+     * @return CompletableFuture&lt;WTagInfo&gt; The return value
      */
     CompletableFuture<WTagInfo> getTagDefinitionById(String repoId, Integer tagId, String culture, String select);
 }

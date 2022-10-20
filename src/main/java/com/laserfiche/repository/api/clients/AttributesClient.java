@@ -15,7 +15,7 @@ public interface AttributesClient {
      * @param repoId       The requested repository ID.
      * @param attributeKey The requested attribute key.
      * @param everyone     Boolean value that indicates whether to return attributes associated with everyone or the currently authenticated user.
-     * @return CompletableFuture<Attribute> The return value
+     * @return CompletableFuture&lt;Attribute&gt; The return value
      */
     CompletableFuture<Attribute> getTrusteeAttributeValueByKey(String repoId, String attributeKey, Boolean everyone);
 
@@ -32,7 +32,7 @@ public interface AttributesClient {
      * @param top      Limits the number of items returned from a collection.
      * @param skip     Excludes the specified number of items of the queried collection from the result.
      * @param count    Indicates whether the total count of items within a collection are returned in the result.
-     * @return CompletableFuture<ODataValueContextOfListOfAttribute> The return value
+     * @return CompletableFuture&lt;ODataValueContextOfListOfAttribute&gt; The return value
      */
     CompletableFuture<ODataValueContextOfListOfAttribute> getTrusteeAttributeKeyValuePairs(String repoId,
             Boolean everyone, String prefer, String select, String orderby, Integer top, Integer skip, Boolean count);
@@ -42,7 +42,7 @@ public interface AttributesClient {
      *
      * @param nextLink    A url that allows retrieving the next subset of the requested collection.
      * @param maxPageSize Optionally specify the maximum number of items to retrieve.
-     * @return CompletableFuture<ODataValueContextOfListOfAttribute> The return value
+     * @return CompletableFuture&lt;ODataValueContextOfListOfAttribute&gt; The return value
      */
     CompletableFuture<ODataValueContextOfListOfAttribute> getTrusteeAttributeKeyValuePairsNextLink(String nextLink,
             Integer maxPageSize);
@@ -60,7 +60,7 @@ public interface AttributesClient {
      * @param top         Limits the number of items returned from a collection.
      * @param skip        Excludes the specified number of items of the queried collection from the result.
      * @param count       Indicates whether the total count of items within a collection are returned in the result.
-     * @return CompletableFuture<Void> The return value
+     * @return CompletableFuture&lt;Void&gt; The return value
      */
     CompletableFuture<Void> getTrusteeAttributeKeyValuePairsForEach(
             Function<CompletableFuture<ODataValueContextOfListOfAttribute>, CompletableFuture<Boolean>> callback,

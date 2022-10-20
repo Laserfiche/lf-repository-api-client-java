@@ -14,7 +14,7 @@ public interface SearchesClient {
      *
      * @param repoId      The requested repository ID.
      * @param searchToken The requested searchToken.
-     * @return CompletableFuture<OperationProgress> The return value
+     * @return CompletableFuture&lt;OperationProgress&gt; The return value
      */
     CompletableFuture<OperationProgress> getSearchStatus(String repoId, String searchToken);
 
@@ -24,7 +24,7 @@ public interface SearchesClient {
      *
      * @param repoId      The requested repository ID.
      * @param searchToken The requested searchToken.
-     * @return CompletableFuture<ODataValueOfBoolean> The return value
+     * @return CompletableFuture&lt;ODataValueOfBoolean&gt; The return value
      */
     CompletableFuture<ODataValueOfBoolean> cancelOrCloseSearch(String repoId, String searchToken);
 
@@ -42,7 +42,7 @@ public interface SearchesClient {
      * @param top         Limits the number of items returned from a collection.
      * @param skip        Excludes the specified number of items of the queried collection from the result.
      * @param count       Indicates whether the total count of items within a collection are returned in the result.
-     * @return CompletableFuture<ODataValueContextOfIListOfContextHit> The return value
+     * @return CompletableFuture&lt;ODataValueContextOfIListOfContextHit&gt; The return value
      */
     CompletableFuture<ODataValueContextOfIListOfContextHit> getSearchContextHits(String repoId, String searchToken,
             Integer rowNumber, String prefer, String select, String orderby, Integer top, Integer skip, Boolean count);
@@ -52,7 +52,7 @@ public interface SearchesClient {
      *
      * @param nextLink    A url that allows retrieving the next subset of the requested collection.
      * @param maxPageSize Optionally specify the maximum number of items to retrieve.
-     * @return CompletableFuture<ODataValueContextOfIListOfContextHit> The return value
+     * @return CompletableFuture&lt;ODataValueContextOfIListOfContextHit&gt; The return value
      */
     CompletableFuture<ODataValueContextOfIListOfContextHit> getSearchContextHitsNextLink(String nextLink,
             Integer maxPageSize);
@@ -71,7 +71,7 @@ public interface SearchesClient {
      * @param top         Limits the number of items returned from a collection.
      * @param skip        Excludes the specified number of items of the queried collection from the result.
      * @param count       Indicates whether the total count of items within a collection are returned in the result.
-     * @return CompletableFuture<Void> The return value
+     * @return CompletableFuture&lt;Void&gt; The return value
      */
     CompletableFuture<Void> getSearchContextHitsForEach(
             Function<CompletableFuture<ODataValueContextOfIListOfContextHit>, CompletableFuture<Boolean>> callback,
@@ -84,7 +84,7 @@ public interface SearchesClient {
      *
      * @param repoId      The requested repository ID.
      * @param requestBody The Laserfiche search command to run, optionally include fuzzy search settings.
-     * @return CompletableFuture<AcceptedOperation> The return value
+     * @return CompletableFuture&lt;AcceptedOperation&gt; The return value
      */
     CompletableFuture<AcceptedOperation> createSearchOperation(String repoId, AdvancedSearchRequest requestBody);
 
@@ -112,7 +112,7 @@ public interface SearchesClient {
      * @param top              Limits the number of items returned from a collection.
      * @param skip             Excludes the specified number of items of the queried collection from the result.
      * @param count            Indicates whether the total count of items within a collection are returned in the result.
-     * @return CompletableFuture<ODataValueContextOfIListOfEntry> The return value
+     * @return CompletableFuture&lt;ODataValueContextOfIListOfEntry&gt; The return value
      */
     CompletableFuture<ODataValueContextOfIListOfEntry> getSearchResults(String repoId, String searchToken,
             Boolean groupByEntryType, Boolean refresh, String[] fields, Boolean formatFields, String prefer,
@@ -123,7 +123,7 @@ public interface SearchesClient {
      *
      * @param nextLink    A url that allows retrieving the next subset of the requested collection.
      * @param maxPageSize Optionally specify the maximum number of items to retrieve.
-     * @return CompletableFuture<ODataValueContextOfIListOfEntry> The return value
+     * @return CompletableFuture&lt;ODataValueContextOfIListOfEntry&gt; The return value
      */
     CompletableFuture<ODataValueContextOfIListOfEntry> getSearchResultsNextLink(String nextLink, Integer maxPageSize);
 
@@ -147,7 +147,7 @@ public interface SearchesClient {
      * @param top              Limits the number of items returned from a collection.
      * @param skip             Excludes the specified number of items of the queried collection from the result.
      * @param count            Indicates whether the total count of items within a collection are returned in the result.
-     * @return CompletableFuture<Void> The return value
+     * @return CompletableFuture&lt;Void&gt; The return value
      */
     CompletableFuture<Void> getSearchResultsForEach(
             Function<CompletableFuture<ODataValueContextOfIListOfEntry>, CompletableFuture<Boolean>> callback,

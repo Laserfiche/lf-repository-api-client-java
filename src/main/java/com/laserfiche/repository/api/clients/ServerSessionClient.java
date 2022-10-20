@@ -14,7 +14,7 @@ public interface ServerSessionClient {
      * - Only available in Laserfiche Cloud.
      *
      * @param repoId The requested repository ID.
-     * @return CompletableFuture<ODataValueOfBoolean> The return value
+     * @return CompletableFuture&lt;ODataValueOfBoolean&gt; The return value
      */
     CompletableFuture<ODataValueOfBoolean> invalidateServerSession(String repoId);
 
@@ -23,7 +23,7 @@ public interface ServerSessionClient {
      * - Only available in Laserfiche Cloud.
      *
      * @param repoId The requested repository ID.
-     * @return CompletableFuture<ODataValueOfBoolean> The return value
+     * @return CompletableFuture&lt;ODataValueOfBoolean&gt; The return value
      */
     CompletableFuture<ODataValueOfBoolean> createServerSession(String repoId);
 
@@ -34,7 +34,7 @@ public interface ServerSessionClient {
      * - Only available in Laserfiche Cloud.
      *
      * @param repoId The requested repository ID.
-     * @return CompletableFuture<ODataValueOfDateTime> The return value
+     * @return CompletableFuture&lt;ODataValueOfDateTime&gt; The return value
      */
     CompletableFuture<ODataValueOfDateTime> refreshServerSession(String repoId);
 }

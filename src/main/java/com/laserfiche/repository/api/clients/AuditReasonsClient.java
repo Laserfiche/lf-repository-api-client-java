@@ -12,7 +12,7 @@ public interface AuditReasonsClient {
      * - If the authenticated user does not have the appropriate Laserfiche feature right, the audit reasons associated with that feature right will not be included.
      *
      * @param repoId The requested repository ID.
-     * @return CompletableFuture<AuditReasons> The return value
+     * @return CompletableFuture&lt;AuditReasons&gt; The return value
      */
     CompletableFuture<AuditReasons> getAuditReasons(String repoId);
 }
