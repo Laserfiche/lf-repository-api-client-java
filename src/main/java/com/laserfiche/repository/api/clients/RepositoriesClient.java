@@ -9,7 +9,7 @@ public interface RepositoriesClient {
     /**
      * - Returns the repository resource list that current user has access to.
      *
-     * @return CompletableFuture<RepositoryInfo [ ]> The return value
+     * @return CompletableFuture&lt;RepositoryInfo[]&gt; The return value
      */
     CompletableFuture<RepositoryInfo[]> getRepositoryList();
 }

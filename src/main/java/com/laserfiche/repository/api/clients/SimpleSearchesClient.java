@@ -25,7 +25,7 @@ public interface SimpleSearchesClient {
      * @param culture      An optional query parameter used to indicate the locale that should be used for formatting.
      *                     The value should be a standard language tag. The formatFields query parameter must be set to true, otherwise
      *                     culture will not be used for formatting.
-     * @return CompletableFuture<ODataValueOfIListOfEntry> The return value
+     * @return CompletableFuture&lt;ODataValueOfIListOfEntry&gt; The return value
      */
     CompletableFuture<ODataValueOfIListOfEntry> createSimpleSearchOperation(String select, String orderby,
             Boolean count, String repoId, String[] fields, Boolean formatFields, SimpleSearchRequest requestBody,

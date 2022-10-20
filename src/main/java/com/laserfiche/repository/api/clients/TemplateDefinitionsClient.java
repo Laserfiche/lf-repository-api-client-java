@@ -24,7 +24,7 @@ public interface TemplateDefinitionsClient {
      * @param top          Limits the number of items returned from a collection.
      * @param skip         Excludes the specified number of items of the queried collection from the result.
      * @param count        Indicates whether the total count of items within a collection are returned in the result.
-     * @return CompletableFuture<ODataValueContextOfIListOfWTemplateInfo> The return value
+     * @return CompletableFuture&lt;ODataValueContextOfIListOfWTemplateInfo&gt; The return value
      */
     CompletableFuture<ODataValueContextOfIListOfWTemplateInfo> getTemplateDefinitions(String repoId,
             String templateName, String prefer, String culture, String select, String orderby, Integer top,
@@ -35,7 +35,7 @@ public interface TemplateDefinitionsClient {
      *
      * @param nextLink    A url that allows retrieving the next subset of the requested collection.
      * @param maxPageSize Optionally specify the maximum number of items to retrieve.
-     * @return CompletableFuture<ODataValueContextOfIListOfWTemplateInfo> The return value
+     * @return CompletableFuture&lt;ODataValueContextOfIListOfWTemplateInfo&gt; The return value
      */
     CompletableFuture<ODataValueContextOfIListOfWTemplateInfo> getTemplateDefinitionsNextLink(String nextLink,
             Integer maxPageSize);
@@ -55,7 +55,7 @@ public interface TemplateDefinitionsClient {
      * @param top          Limits the number of items returned from a collection.
      * @param skip         Excludes the specified number of items of the queried collection from the result.
      * @param count        Indicates whether the total count of items within a collection are returned in the result.
-     * @return CompletableFuture<Void> The return value
+     * @return CompletableFuture&lt;Void&gt; The return value
      */
     CompletableFuture<Void> getTemplateDefinitionsForEach(
             Function<CompletableFuture<ODataValueContextOfIListOfWTemplateInfo>, CompletableFuture<Boolean>> callback,
@@ -77,7 +77,7 @@ public interface TemplateDefinitionsClient {
      * @param top          Limits the number of items returned from a collection.
      * @param skip         Excludes the specified number of items of the queried collection from the result.
      * @param count        Indicates whether the total count of items within a collection are returned in the result.
-     * @return CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo> The return value
+     * @return CompletableFuture&lt;ODataValueContextOfIListOfTemplateFieldInfo&gt; The return value
      */
     CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo> getTemplateFieldDefinitionsByTemplateName(
             String repoId, String templateName, String prefer, String culture, String select, String orderby,
@@ -88,7 +88,7 @@ public interface TemplateDefinitionsClient {
      *
      * @param nextLink    A url that allows retrieving the next subset of the requested collection.
      * @param maxPageSize Optionally specify the maximum number of items to retrieve.
-     * @return CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo> The return value
+     * @return CompletableFuture&lt;ODataValueContextOfIListOfTemplateFieldInfo&gt; The return value
      */
     CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo> getTemplateFieldDefinitionsByTemplateNameNextLink(
             String nextLink, Integer maxPageSize);
@@ -108,7 +108,7 @@ public interface TemplateDefinitionsClient {
      * @param top          Limits the number of items returned from a collection.
      * @param skip         Excludes the specified number of items of the queried collection from the result.
      * @param count        Indicates whether the total count of items within a collection are returned in the result.
-     * @return CompletableFuture<Void> The return value
+     * @return CompletableFuture&lt;Void&gt; The return value
      */
     CompletableFuture<Void> getTemplateFieldDefinitionsByTemplateNameForEach(
             Function<CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo>, CompletableFuture<Boolean>> callback,
@@ -130,7 +130,7 @@ public interface TemplateDefinitionsClient {
      * @param top        Limits the number of items returned from a collection.
      * @param skip       Excludes the specified number of items of the queried collection from the result.
      * @param count      Indicates whether the total count of items within a collection are returned in the result.
-     * @return CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo> The return value
+     * @return CompletableFuture&lt;ODataValueContextOfIListOfTemplateFieldInfo&gt; The return value
      */
     CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo> getTemplateFieldDefinitions(String repoId,
             Integer templateId, String prefer, String culture, String select, String orderby, Integer top, Integer skip,
@@ -141,7 +141,7 @@ public interface TemplateDefinitionsClient {
      *
      * @param nextLink    A url that allows retrieving the next subset of the requested collection.
      * @param maxPageSize Optionally specify the maximum number of items to retrieve.
-     * @return CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo> The return value
+     * @return CompletableFuture&lt;ODataValueContextOfIListOfTemplateFieldInfo&gt; The return value
      */
     CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo> getTemplateFieldDefinitionsNextLink(String nextLink,
             Integer maxPageSize);
@@ -161,7 +161,7 @@ public interface TemplateDefinitionsClient {
      * @param top         Limits the number of items returned from a collection.
      * @param skip        Excludes the specified number of items of the queried collection from the result.
      * @param count       Indicates whether the total count of items within a collection are returned in the result.
-     * @return CompletableFuture<Void> The return value
+     * @return CompletableFuture&lt;Void&gt; The return value
      */
     CompletableFuture<Void> getTemplateFieldDefinitionsForEach(
             Function<CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo>, CompletableFuture<Boolean>> callback,
@@ -178,7 +178,7 @@ public interface TemplateDefinitionsClient {
      * @param culture    An optional query parameter used to indicate the locale that should be used for formatting.
      *                   The value should be a standard language tag.
      * @param select     Limits the properties returned in the result.
-     * @return CompletableFuture<WTemplateInfo> The return value
+     * @return CompletableFuture&lt;WTemplateInfo&gt; The return value
      */
     CompletableFuture<WTemplateInfo> getTemplateDefinitionById(String repoId, Integer templateId, String culture,
             String select);

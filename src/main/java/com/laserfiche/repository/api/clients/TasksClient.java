@@ -13,7 +13,7 @@ public interface TasksClient {
      *
      * @param repoId         The requested repository ID
      * @param operationToken The operation token
-     * @return CompletableFuture<OperationProgress> The return value
+     * @return CompletableFuture&lt;OperationProgress&gt; The return value
      */
     CompletableFuture<OperationProgress> getOperationStatusAndProgress(String repoId, String operationToken);
 
@@ -24,7 +24,7 @@ public interface TasksClient {
      *
      * @param repoId         The requested repository ID
      * @param operationToken The operation token
-     * @return CompletableFuture<Boolean> The return value
+     * @return CompletableFuture&lt;Boolean&gt; The return value
      */
     CompletableFuture<Boolean> cancelOperation(String repoId, String operationToken);
 }
