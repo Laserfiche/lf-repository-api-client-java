@@ -2,6 +2,7 @@ package integration;
 
 import com.laserfiche.repository.api.RepositoryApiClient;
 import com.laserfiche.repository.api.clients.TasksClient;
+import com.laserfiche.repository.api.clients.impl.ApiException;
 import com.laserfiche.repository.api.clients.impl.model.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -48,7 +49,8 @@ public class TasksApiTest extends BaseTest {
                     .join();
         });
 
-        Assertions.assertEquals("java.lang.RuntimeException: Invalid or bad request.", thrown.getMessage());
+        Assertions.assertEquals(String.format("%s: Invalid or bad request.", ApiException.class.getCanonicalName()),
+                thrown.getMessage());
     }
 
     @Test

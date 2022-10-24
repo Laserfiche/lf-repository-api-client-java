@@ -47,8 +47,10 @@ public class ImportDocumentApiTest extends BaseTest {
 
         assertNotNull(toUpload);
 
-        CreateEntryResult result = client.importDocument(repoId, 1, fileName, true, null,
-                new FileInputStream(toUpload), new PostEntryWithEdocMetadataRequest()).join();
+        CreateEntryResult result = client
+                .importDocument(repoId, 1, fileName, true, null,
+                        new FileInputStream(toUpload), new PostEntryWithEdocMetadataRequest())
+                .join();
 
         CreateEntryOperations operations = result.getOperations();
 
@@ -75,13 +77,19 @@ public class ImportDocumentApiTest extends BaseTest {
     @Test
     void importDocument_DocumentCreated_FromFile_WithTemplate() throws ExecutionException, InterruptedException, FileNotFoundException {
         WTemplateInfo template = null;
-        ODataValueContextOfIListOfWTemplateInfo templateDefinitionResult = repositoryApiClient.getTemplateDefinitionClient().getTemplateDefinitions(repoId, null, null, null, null, null, null, null, null).join();
+        ODataValueContextOfIListOfWTemplateInfo templateDefinitionResult = repositoryApiClient
+                .getTemplateDefinitionClient()
+                .getTemplateDefinitions(repoId, null, null, null, null, null, null, null, null)
+                .join();
         List<WTemplateInfo> templateDefinitions = templateDefinitionResult.getValue();
         assertNotNull(templateDefinitions);
         Assertions.assertTrue(templateDefinitions.size() > 0);
         for (WTemplateInfo templateDefinition : templateDefinitions) {
-            ODataValueContextOfIListOfTemplateFieldInfo templateDefinitionFieldsResult = repositoryApiClient.getTemplateDefinitionClient().getTemplateFieldDefinitions(repoId,
-                    templateDefinition.getId(), null, null, null, null, null, null, null).join();
+            ODataValueContextOfIListOfTemplateFieldInfo templateDefinitionFieldsResult = repositoryApiClient
+                    .getTemplateDefinitionClient()
+                    .getTemplateFieldDefinitions(repoId,
+                            templateDefinition.getId(), null, null, null, null, null, null, null)
+                    .join();
             if (templateDefinitionFieldsResult.getValue() != null && allFalse(
                     templateDefinitionFieldsResult.getValue()).get()) {
                 template = templateDefinition;
@@ -102,8 +110,10 @@ public class ImportDocumentApiTest extends BaseTest {
         PostEntryWithEdocMetadataRequest request = new PostEntryWithEdocMetadataRequest();
         request.setTemplate(template.getName());
 
-        CreateEntryResult result = client.importDocument(repoId, parentEntryId, fileName,
-                true, null, new FileInputStream(toUpload), request).join();
+        CreateEntryResult result = client
+                .importDocument(repoId, parentEntryId, fileName,
+                        true, null, new FileInputStream(toUpload), request)
+                .join();
 
         CreateEntryOperations operations = result.getOperations();
         assertNotNull(operations);
@@ -136,12 +146,15 @@ public class ImportDocumentApiTest extends BaseTest {
     void importDocument_DocumentCreated_FromURL() throws IOException {
         String fileName = "myFile";
         CreateEntryResult result = null;
-        URL googleLogoUrl = new URL("https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png");
+        URL googleLogoUrl = new URL(
+                "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png");
         InputStream inputStream = googleLogoUrl.openStream();
         assertNotNull(inputStream);
 
-        result = client.importDocument(repoId, 1, fileName, true, null,
-                inputStream, new PostEntryWithEdocMetadataRequest()).join();
+        result = client
+                .importDocument(repoId, 1, fileName, true, null,
+                        inputStream, new PostEntryWithEdocMetadataRequest())
+                .join();
 
         assertNotNull(result);
         CreateEntryOperations operations = result.getOperations();
@@ -171,11 +184,13 @@ public class ImportDocumentApiTest extends BaseTest {
         String fileName = "myFile";
         CreateEntryResult result = null;
         String fileContent = "This is the file content";
-        InputStream inputStream =  new ByteArrayInputStream(fileContent.getBytes());
+        InputStream inputStream = new ByteArrayInputStream(fileContent.getBytes());
         assertNotNull(inputStream);
 
-        result = client.importDocument(repoId, 1, fileName, true, null,
-                inputStream, new PostEntryWithEdocMetadataRequest()).join();
+        result = client
+                .importDocument(repoId, 1, fileName, true, null,
+                        inputStream, new PostEntryWithEdocMetadataRequest())
+                .join();
 
         assertNotNull(result);
         CreateEntryOperations operations = result.getOperations();

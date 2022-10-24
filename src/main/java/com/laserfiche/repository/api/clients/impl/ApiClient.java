@@ -5,10 +5,16 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.laserfiche.repository.api.clients.impl.deserialization.OffsetDateTimeDeserializer;
+import kong.unirest.Header;
+import kong.unirest.HttpResponse;
 import kong.unirest.UnirestInstance;
+import org.threeten.bp.OffsetDateTime;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ApiClient {
 
@@ -16,13 +22,16 @@ public class ApiClient {
 
     protected UnirestInstance httpClient;
 
-    private ObjectMapper jacksonMapper;
+    protected ObjectMapper objectMapper;
 
     public ApiClient(String baseUrl, UnirestInstance httpClient) {
         this.baseUrl = baseUrl;
         this.httpClient = httpClient;
-        this.jacksonMapper = JsonMapper
+        SimpleModule module = new SimpleModule();
+        module.addDeserializer(OffsetDateTime.class, new OffsetDateTimeDeserializer());
+        this.objectMapper = JsonMapper
                 .builder()
+                .addModule(module)
                 .disable(MapperFeature.CAN_OVERRIDE_ACCESS_MODIFIERS)
                 .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
                 .enable(MapperFeature.ACCEPT_CASE_INSENSITIVE_ENUMS)
@@ -57,10 +66,18 @@ public class ApiClient {
     protected String toJson(Object object) {
         String json = null;
         try {
-            json = jacksonMapper.writeValueAsString(object);
+            json = objectMapper.writeValueAsString(object);
         } catch (JsonProcessingException e) {
             System.err.println(e);
         }
         return json;
+    }
+
+    protected Map<String, String> getHeadersMap(HttpResponse httpResponse) {
+        return httpResponse
+                .getHeaders()
+                .all()
+                .stream()
+                .collect(Collectors.toMap(Header::getName, Header::getValue));
     }
 }

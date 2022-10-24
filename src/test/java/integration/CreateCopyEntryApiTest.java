@@ -5,7 +5,6 @@ import com.laserfiche.repository.api.clients.EntriesClient;
 import com.laserfiche.repository.api.clients.impl.model.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -103,7 +102,6 @@ public class CreateCopyEntryApiTest extends BaseTest {
     }
 
     @Test
-    @Disabled("Test is failing: We need to update it to match the new implementation.")
     void createCopyEntry_CopyEntry() throws InterruptedException {
         String testFolderName = "RepositoryApiClientIntegrationTest Java CreateCopyEntry_CopyEntry_test_folder";
         String newEntryName = "RepositoryApiClientIntegrationTest Java CreateFolder";

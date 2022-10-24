@@ -1,10 +1,13 @@
 package com.laserfiche.repository.api.clients.impl;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.laserfiche.repository.api.clients.TemplateDefinitionsClient;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfTemplateFieldInfo;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfWTemplateInfo;
+import com.laserfiche.repository.api.clients.impl.model.ProblemDetails;
 import com.laserfiche.repository.api.clients.impl.model.WTemplateInfo;
 import kong.unirest.UnirestInstance;
+import kong.unirest.json.JSONObject;
 
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -42,27 +45,44 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
                 .queryString(queryParameters)
                 .routeParam(pathParameters)
                 .headers(headerParametersWithStringTypeValue)
-                .asObjectAsync(ODataValueContextOfIListOfWTemplateInfo.class)
+                .asObjectAsync(Object.class)
                 .thenApply(httpResponse -> {
-                    if (httpResponse.getStatus() == 400) {
-                        throw new RuntimeException("Invalid or bad request.");
+                    if (httpResponse.getStatus() == 200) {
+                        try {
+                            Object body = httpResponse.getBody();
+                            String jsonString = new JSONObject(body).toString();
+                            return objectMapper.readValue(jsonString, ODataValueContextOfIListOfWTemplateInfo.class);
+                        } catch (JsonProcessingException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        try {
+                            Object body = httpResponse.getBody();
+                            String jsonString = new JSONObject(body).toString();
+                            ProblemDetails problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
+                            Map<String, String> headersMap = getHeadersMap(httpResponse);
+                            if (httpResponse.getStatus() == 400)
+                                throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
+                                        httpResponse.getStatusText(), headersMap, problemDetails);
+                            else if (httpResponse.getStatus() == 401)
+                                throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
+                                        httpResponse.getStatusText(), headersMap, problemDetails);
+                            else if (httpResponse.getStatus() == 403)
+                                throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
+                                        httpResponse.getStatusText(), headersMap, problemDetails);
+                            else if (httpResponse.getStatus() == 404)
+                                throw new ApiException("Request template name not found.", httpResponse.getStatus(),
+                                        httpResponse.getStatusText(), headersMap, problemDetails);
+                            else if (httpResponse.getStatus() == 429)
+                                throw new ApiException("Rate limit is reached.", httpResponse.getStatus(),
+                                        httpResponse.getStatusText(), headersMap, problemDetails);
+                            else
+                                throw new RuntimeException(httpResponse.getStatusText());
+                        } catch (JsonProcessingException e) {
+                            e.printStackTrace();
+                        }
                     }
-                    if (httpResponse.getStatus() == 401) {
-                        throw new RuntimeException("Access token is invalid or expired.");
-                    }
-                    if (httpResponse.getStatus() == 403) {
-                        throw new RuntimeException("Access denied for the operation.");
-                    }
-                    if (httpResponse.getStatus() == 404) {
-                        throw new RuntimeException("Request template name not found.");
-                    }
-                    if (httpResponse.getStatus() == 429) {
-                        throw new RuntimeException("Rate limit is reached.");
-                    }
-                    if (httpResponse.getStatus() >= 299) {
-                        throw new RuntimeException(httpResponse.getStatusText());
-                    }
-                    return httpResponse.getBody();
+                    return null;
                 });
     }
 
@@ -118,27 +138,45 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
                 .queryString(queryParameters)
                 .routeParam(pathParameters)
                 .headers(headerParametersWithStringTypeValue)
-                .asObjectAsync(ODataValueContextOfIListOfTemplateFieldInfo.class)
+                .asObjectAsync(Object.class)
                 .thenApply(httpResponse -> {
-                    if (httpResponse.getStatus() == 400) {
-                        throw new RuntimeException("Invalid or bad request.");
+                    if (httpResponse.getStatus() == 200) {
+                        try {
+                            Object body = httpResponse.getBody();
+                            String jsonString = new JSONObject(body).toString();
+                            return objectMapper.readValue(jsonString,
+                                    ODataValueContextOfIListOfTemplateFieldInfo.class);
+                        } catch (JsonProcessingException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        try {
+                            Object body = httpResponse.getBody();
+                            String jsonString = new JSONObject(body).toString();
+                            ProblemDetails problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
+                            Map<String, String> headersMap = getHeadersMap(httpResponse);
+                            if (httpResponse.getStatus() == 400)
+                                throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
+                                        httpResponse.getStatusText(), headersMap, problemDetails);
+                            else if (httpResponse.getStatus() == 401)
+                                throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
+                                        httpResponse.getStatusText(), headersMap, problemDetails);
+                            else if (httpResponse.getStatus() == 403)
+                                throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
+                                        httpResponse.getStatusText(), headersMap, problemDetails);
+                            else if (httpResponse.getStatus() == 404)
+                                throw new ApiException("Request template name not found.", httpResponse.getStatus(),
+                                        httpResponse.getStatusText(), headersMap, problemDetails);
+                            else if (httpResponse.getStatus() == 429)
+                                throw new ApiException("Rate limit is reached.", httpResponse.getStatus(),
+                                        httpResponse.getStatusText(), headersMap, problemDetails);
+                            else
+                                throw new RuntimeException(httpResponse.getStatusText());
+                        } catch (JsonProcessingException e) {
+                            e.printStackTrace();
+                        }
                     }
-                    if (httpResponse.getStatus() == 401) {
-                        throw new RuntimeException("Access token is invalid or expired.");
-                    }
-                    if (httpResponse.getStatus() == 403) {
-                        throw new RuntimeException("Access denied for the operation.");
-                    }
-                    if (httpResponse.getStatus() == 404) {
-                        throw new RuntimeException("Request template name not found.");
-                    }
-                    if (httpResponse.getStatus() == 429) {
-                        throw new RuntimeException("Rate limit is reached.");
-                    }
-                    if (httpResponse.getStatus() >= 299) {
-                        throw new RuntimeException(httpResponse.getStatusText());
-                    }
-                    return httpResponse.getBody();
+                    return null;
                 });
     }
 
@@ -195,27 +233,45 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
                 .queryString(queryParameters)
                 .routeParam(pathParameters)
                 .headers(headerParametersWithStringTypeValue)
-                .asObjectAsync(ODataValueContextOfIListOfTemplateFieldInfo.class)
+                .asObjectAsync(Object.class)
                 .thenApply(httpResponse -> {
-                    if (httpResponse.getStatus() == 400) {
-                        throw new RuntimeException("Invalid or bad request.");
+                    if (httpResponse.getStatus() == 200) {
+                        try {
+                            Object body = httpResponse.getBody();
+                            String jsonString = new JSONObject(body).toString();
+                            return objectMapper.readValue(jsonString,
+                                    ODataValueContextOfIListOfTemplateFieldInfo.class);
+                        } catch (JsonProcessingException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        try {
+                            Object body = httpResponse.getBody();
+                            String jsonString = new JSONObject(body).toString();
+                            ProblemDetails problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
+                            Map<String, String> headersMap = getHeadersMap(httpResponse);
+                            if (httpResponse.getStatus() == 400)
+                                throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
+                                        httpResponse.getStatusText(), headersMap, problemDetails);
+                            else if (httpResponse.getStatus() == 401)
+                                throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
+                                        httpResponse.getStatusText(), headersMap, problemDetails);
+                            else if (httpResponse.getStatus() == 403)
+                                throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
+                                        httpResponse.getStatusText(), headersMap, problemDetails);
+                            else if (httpResponse.getStatus() == 404)
+                                throw new ApiException("Request template id not found.", httpResponse.getStatus(),
+                                        httpResponse.getStatusText(), headersMap, problemDetails);
+                            else if (httpResponse.getStatus() == 429)
+                                throw new ApiException("Rate limit is reached.", httpResponse.getStatus(),
+                                        httpResponse.getStatusText(), headersMap, problemDetails);
+                            else
+                                throw new RuntimeException(httpResponse.getStatusText());
+                        } catch (JsonProcessingException e) {
+                            e.printStackTrace();
+                        }
                     }
-                    if (httpResponse.getStatus() == 401) {
-                        throw new RuntimeException("Access token is invalid or expired.");
-                    }
-                    if (httpResponse.getStatus() == 403) {
-                        throw new RuntimeException("Access denied for the operation.");
-                    }
-                    if (httpResponse.getStatus() == 404) {
-                        throw new RuntimeException("Request template id not found.");
-                    }
-                    if (httpResponse.getStatus() == 429) {
-                        throw new RuntimeException("Rate limit is reached.");
-                    }
-                    if (httpResponse.getStatus() >= 299) {
-                        throw new RuntimeException(httpResponse.getStatusText());
-                    }
-                    return httpResponse.getBody();
+                    return null;
                 });
     }
 
@@ -256,27 +312,44 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
                 .get(baseUrl + "/v1/Repositories/{repoId}/TemplateDefinitions/{templateId}")
                 .queryString(queryParameters)
                 .routeParam(pathParameters)
-                .asObjectAsync(WTemplateInfo.class)
+                .asObjectAsync(Object.class)
                 .thenApply(httpResponse -> {
-                    if (httpResponse.getStatus() == 400) {
-                        throw new RuntimeException("Invalid or bad request.");
+                    if (httpResponse.getStatus() == 200) {
+                        try {
+                            Object body = httpResponse.getBody();
+                            String jsonString = new JSONObject(body).toString();
+                            return objectMapper.readValue(jsonString, WTemplateInfo.class);
+                        } catch (JsonProcessingException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        try {
+                            Object body = httpResponse.getBody();
+                            String jsonString = new JSONObject(body).toString();
+                            ProblemDetails problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
+                            Map<String, String> headersMap = getHeadersMap(httpResponse);
+                            if (httpResponse.getStatus() == 400)
+                                throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
+                                        httpResponse.getStatusText(), headersMap, problemDetails);
+                            else if (httpResponse.getStatus() == 401)
+                                throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
+                                        httpResponse.getStatusText(), headersMap, problemDetails);
+                            else if (httpResponse.getStatus() == 403)
+                                throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
+                                        httpResponse.getStatusText(), headersMap, problemDetails);
+                            else if (httpResponse.getStatus() == 404)
+                                throw new ApiException("Request template id not found.", httpResponse.getStatus(),
+                                        httpResponse.getStatusText(), headersMap, problemDetails);
+                            else if (httpResponse.getStatus() == 429)
+                                throw new ApiException("Rate limit is reached.", httpResponse.getStatus(),
+                                        httpResponse.getStatusText(), headersMap, problemDetails);
+                            else
+                                throw new RuntimeException(httpResponse.getStatusText());
+                        } catch (JsonProcessingException e) {
+                            e.printStackTrace();
+                        }
                     }
-                    if (httpResponse.getStatus() == 401) {
-                        throw new RuntimeException("Access token is invalid or expired.");
-                    }
-                    if (httpResponse.getStatus() == 403) {
-                        throw new RuntimeException("Access denied for the operation.");
-                    }
-                    if (httpResponse.getStatus() == 404) {
-                        throw new RuntimeException("Request template id not found.");
-                    }
-                    if (httpResponse.getStatus() == 429) {
-                        throw new RuntimeException("Rate limit is reached.");
-                    }
-                    if (httpResponse.getStatus() >= 299) {
-                        throw new RuntimeException(httpResponse.getStatusText());
-                    }
-                    return httpResponse.getBody();
+                    return null;
                 });
     }
 }
