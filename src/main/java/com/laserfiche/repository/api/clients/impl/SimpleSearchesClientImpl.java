@@ -1,9 +1,12 @@
 package com.laserfiche.repository.api.clients.impl;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.laserfiche.repository.api.clients.SimpleSearchesClient;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueOfIListOfEntry;
+import com.laserfiche.repository.api.clients.impl.model.ProblemDetails;
 import com.laserfiche.repository.api.clients.impl.model.SimpleSearchRequest;
 import kong.unirest.UnirestInstance;
+import kong.unirest.json.JSONObject;
 
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -28,27 +31,46 @@ public class SimpleSearchesClientImpl extends ApiClient implements SimpleSearche
                 .routeParam(pathParameters)
                 .contentType("application/json")
                 .body(requestBody)
-                .asObjectAsync(ODataValueOfIListOfEntry.class)
+                .asObjectAsync(Object.class)
                 .thenApply(httpResponse -> {
-                    if (httpResponse.getStatus() == 400) {
-                        throw new RuntimeException("Invalid or bad request.");
+                    if (httpResponse.getStatus() == 200 || httpResponse.getStatus() == 204 || httpResponse.getStatus() == 206) {
+                        try {
+                            Object body = httpResponse.getBody();
+                            String jsonString = new JSONObject(body).toString();
+                            return objectMapper.readValue(jsonString, ODataValueOfIListOfEntry.class);
+                        } catch (JsonProcessingException e) {
+                            e.printStackTrace();
+                            return null;
+                        }
+                    } else {
+                        Object body = httpResponse.getBody();
+                        ProblemDetails problemDetails;
+                        try {
+                            String jsonString = new JSONObject(body).toString();
+                            problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
+                        } catch (JsonProcessingException e) {
+                            e.printStackTrace();
+                            return null;
+                        }
+                        Map<String, String> headersMap = getHeadersMap(httpResponse);
+                        if (httpResponse.getStatus() == 400)
+                            throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 401)
+                            throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 403)
+                            throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 404)
+                            throw new ApiException("Not found.", httpResponse.getStatus(), httpResponse.getStatusText(),
+                                    headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 429)
+                            throw new ApiException("Operation limit or request limit reached.",
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
+                        else
+                            throw new RuntimeException(httpResponse.getStatusText());
                     }
-                    if (httpResponse.getStatus() == 401) {
-                        throw new RuntimeException("Access token is invalid or expired.");
-                    }
-                    if (httpResponse.getStatus() == 403) {
-                        throw new RuntimeException("Access denied for the operation.");
-                    }
-                    if (httpResponse.getStatus() == 404) {
-                        throw new RuntimeException("Not found.");
-                    }
-                    if (httpResponse.getStatus() == 429) {
-                        throw new RuntimeException("Operation limit or request limit reached.");
-                    }
-                    if (httpResponse.getStatus() >= 299) {
-                        throw new RuntimeException(httpResponse.getStatusText());
-                    }
-                    return httpResponse.getBody();
                 });
     }
 }
