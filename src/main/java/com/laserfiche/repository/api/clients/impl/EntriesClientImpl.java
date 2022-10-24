@@ -57,35 +57,37 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                             return objectMapper.readValue(jsonString, ODataValueContextOfIListOfFieldValue.class);
                         } catch (JsonProcessingException e) {
                             e.printStackTrace();
+                            return null;
                         }
                     } else {
+                        Object body = httpResponse.getBody();
+                        ProblemDetails problemDetails;
                         try {
-                            Object body = httpResponse.getBody();
                             String jsonString = new JSONObject(body).toString();
-                            ProblemDetails problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
-                            Map<String, String> headersMap = getHeadersMap(httpResponse);
-                            if (httpResponse.getStatus() == 400)
-                                throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 401)
-                                throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 403)
-                                throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 404)
-                                throw new ApiException("Request entry id not found.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 429)
-                                throw new ApiException("Rate limit is reached.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else
-                                throw new RuntimeException(httpResponse.getStatusText());
+                            problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
                         } catch (JsonProcessingException e) {
                             e.printStackTrace();
+                            return null;
                         }
+                        Map<String, String> headersMap = getHeadersMap(httpResponse);
+                        if (httpResponse.getStatus() == 400)
+                            throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 401)
+                            throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 403)
+                            throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 404)
+                            throw new ApiException("Request entry id not found.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 429)
+                            throw new ApiException("Rate limit is reached.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else
+                            throw new RuntimeException(httpResponse.getStatusText());
                     }
-                    return null;
                 });
     }
 
@@ -136,38 +138,40 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                             return objectMapper.readValue(jsonString, ODataValueOfIListOfFieldValue.class);
                         } catch (JsonProcessingException e) {
                             e.printStackTrace();
+                            return null;
                         }
                     } else {
+                        Object body = httpResponse.getBody();
+                        ProblemDetails problemDetails;
                         try {
-                            Object body = httpResponse.getBody();
                             String jsonString = new JSONObject(body).toString();
-                            ProblemDetails problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
-                            Map<String, String> headersMap = getHeadersMap(httpResponse);
-                            if (httpResponse.getStatus() == 400)
-                                throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 401)
-                                throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 403)
-                                throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 404)
-                                throw new ApiException("Requested entry id not found.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 423)
-                                throw new ApiException("Entry is locked.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 429)
-                                throw new ApiException("Rate limit is reached.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else
-                                throw new RuntimeException(httpResponse.getStatusText());
+                            problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
                         } catch (JsonProcessingException e) {
                             e.printStackTrace();
+                            return null;
                         }
+                        Map<String, String> headersMap = getHeadersMap(httpResponse);
+                        if (httpResponse.getStatus() == 400)
+                            throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 401)
+                            throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 403)
+                            throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 404)
+                            throw new ApiException("Requested entry id not found.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 423)
+                            throw new ApiException("Entry is locked.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 429)
+                            throw new ApiException("Rate limit is reached.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else
+                            throw new RuntimeException(httpResponse.getStatusText());
                     }
-                    return null;
                 });
     }
 
@@ -193,43 +197,43 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                             return objectMapper.readValue(jsonString, CreateEntryResult.class);
                         } catch (JsonProcessingException e) {
                             e.printStackTrace();
+                            return null;
                         }
                     } else {
+                        Object body = httpResponse.getBody();
+                        ProblemDetails problemDetails;
                         try {
-                            Object body = httpResponse.getBody();
                             String jsonString = new JSONObject(body).toString();
-                            ProblemDetails problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
-                            Map<String, String> headersMap = getHeadersMap(httpResponse);
-                            if (httpResponse.getStatus() == 400)
-                                throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 401)
-                                throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 403)
-                                throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 404)
-                                throw new ApiException("Parent entry is not found.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 409)
-                                throw new ApiException("Document creation is partial success.",
-                                        httpResponse.getStatus(), httpResponse.getStatusText(), headersMap,
-                                        problemDetails);
-                            else if (httpResponse.getStatus() == 429)
-                                throw new ApiException("Rate limit is reached.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 500)
-                                throw new ApiException("Document creation is complete failure.",
-                                        httpResponse.getStatus(), httpResponse.getStatusText(), headersMap,
-                                        problemDetails);
-                            else
-                                throw new RuntimeException(httpResponse.getStatusText());
+                            problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
                         } catch (JsonProcessingException e) {
                             e.printStackTrace();
+                            return null;
                         }
+                        Map<String, String> headersMap = getHeadersMap(httpResponse);
+                        if (httpResponse.getStatus() == 400)
+                            throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 401)
+                            throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 403)
+                            throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 404)
+                            throw new ApiException("Parent entry is not found.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 409)
+                            throw new ApiException("Document creation is partial success.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 429)
+                            throw new ApiException("Rate limit is reached.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 500)
+                            throw new ApiException("Document creation is complete failure.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else
+                            throw new RuntimeException(httpResponse.getStatusText());
                     }
-                    return null;
                 });
     }
 
@@ -267,35 +271,37 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                             return objectMapper.readValue(jsonString, ODataValueContextOfIListOfWEntryLinkInfo.class);
                         } catch (JsonProcessingException e) {
                             e.printStackTrace();
+                            return null;
                         }
                     } else {
+                        Object body = httpResponse.getBody();
+                        ProblemDetails problemDetails;
                         try {
-                            Object body = httpResponse.getBody();
                             String jsonString = new JSONObject(body).toString();
-                            ProblemDetails problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
-                            Map<String, String> headersMap = getHeadersMap(httpResponse);
-                            if (httpResponse.getStatus() == 400)
-                                throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 401)
-                                throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 403)
-                                throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 404)
-                                throw new ApiException("Request entry id not found.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 429)
-                                throw new ApiException("Rate limit is reached.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else
-                                throw new RuntimeException(httpResponse.getStatusText());
+                            problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
                         } catch (JsonProcessingException e) {
                             e.printStackTrace();
+                            return null;
                         }
+                        Map<String, String> headersMap = getHeadersMap(httpResponse);
+                        if (httpResponse.getStatus() == 400)
+                            throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 401)
+                            throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 403)
+                            throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 404)
+                            throw new ApiException("Request entry id not found.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 429)
+                            throw new ApiException("Rate limit is reached.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else
+                            throw new RuntimeException(httpResponse.getStatusText());
                     }
-                    return null;
                 });
     }
 
@@ -344,38 +350,40 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                             return objectMapper.readValue(jsonString, ODataValueOfIListOfWEntryLinkInfo.class);
                         } catch (JsonProcessingException e) {
                             e.printStackTrace();
+                            return null;
                         }
                     } else {
+                        Object body = httpResponse.getBody();
+                        ProblemDetails problemDetails;
                         try {
-                            Object body = httpResponse.getBody();
                             String jsonString = new JSONObject(body).toString();
-                            ProblemDetails problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
-                            Map<String, String> headersMap = getHeadersMap(httpResponse);
-                            if (httpResponse.getStatus() == 400)
-                                throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 401)
-                                throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 403)
-                                throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 404)
-                                throw new ApiException("Request entry id not found.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 423)
-                                throw new ApiException("Entry is locked.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 429)
-                                throw new ApiException("Rate limit is reached.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else
-                                throw new RuntimeException(httpResponse.getStatusText());
+                            problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
                         } catch (JsonProcessingException e) {
                             e.printStackTrace();
+                            return null;
                         }
+                        Map<String, String> headersMap = getHeadersMap(httpResponse);
+                        if (httpResponse.getStatus() == 400)
+                            throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 401)
+                            throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 403)
+                            throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 404)
+                            throw new ApiException("Request entry id not found.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 423)
+                            throw new ApiException("Entry is locked.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 429)
+                            throw new ApiException("Rate limit is reached.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else
+                            throw new RuntimeException(httpResponse.getStatusText());
                     }
-                    return null;
                 });
     }
 
@@ -400,38 +408,40 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                             return objectMapper.readValue(jsonString, Entry.class);
                         } catch (JsonProcessingException e) {
                             e.printStackTrace();
+                            return null;
                         }
                     } else {
+                        Object body = httpResponse.getBody();
+                        ProblemDetails problemDetails;
                         try {
-                            Object body = httpResponse.getBody();
                             String jsonString = new JSONObject(body).toString();
-                            ProblemDetails problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
-                            Map<String, String> headersMap = getHeadersMap(httpResponse);
-                            if (httpResponse.getStatus() == 400)
-                                throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 401)
-                                throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 403)
-                                throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 404)
-                                throw new ApiException("Request entry id not found.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 423)
-                                throw new ApiException("Entry is locked.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 429)
-                                throw new ApiException("Rate limit is reached.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else
-                                throw new RuntimeException(httpResponse.getStatusText());
+                            problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
                         } catch (JsonProcessingException e) {
                             e.printStackTrace();
+                            return null;
                         }
+                        Map<String, String> headersMap = getHeadersMap(httpResponse);
+                        if (httpResponse.getStatus() == 400)
+                            throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 401)
+                            throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 403)
+                            throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 404)
+                            throw new ApiException("Request entry id not found.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 423)
+                            throw new ApiException("Entry is locked.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 429)
+                            throw new ApiException("Rate limit is reached.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else
+                            throw new RuntimeException(httpResponse.getStatusText());
                     }
-                    return null;
                 });
     }
 
@@ -451,38 +461,40 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                             return objectMapper.readValue(jsonString, Entry.class);
                         } catch (JsonProcessingException e) {
                             e.printStackTrace();
+                            return null;
                         }
                     } else {
+                        Object body = httpResponse.getBody();
+                        ProblemDetails problemDetails;
                         try {
-                            Object body = httpResponse.getBody();
                             String jsonString = new JSONObject(body).toString();
-                            ProblemDetails problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
-                            Map<String, String> headersMap = getHeadersMap(httpResponse);
-                            if (httpResponse.getStatus() == 400)
-                                throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 401)
-                                throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 403)
-                                throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 404)
-                                throw new ApiException("Request entry id not found.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 423)
-                                throw new ApiException("Entry is locked.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 429)
-                                throw new ApiException("Rate limit is reached.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else
-                                throw new RuntimeException(httpResponse.getStatusText());
+                            problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
                         } catch (JsonProcessingException e) {
                             e.printStackTrace();
+                            return null;
                         }
+                        Map<String, String> headersMap = getHeadersMap(httpResponse);
+                        if (httpResponse.getStatus() == 400)
+                            throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 401)
+                            throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 403)
+                            throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 404)
+                            throw new ApiException("Request entry id not found.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 423)
+                            throw new ApiException("Entry is locked.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 429)
+                            throw new ApiException("Rate limit is reached.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else
+                            throw new RuntimeException(httpResponse.getStatusText());
                     }
-                    return null;
                 });
     }
 
@@ -505,35 +517,37 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                             return objectMapper.readValue(jsonString, new HashMap<String, String[]>().getClass());
                         } catch (JsonProcessingException e) {
                             e.printStackTrace();
+                            return null;
                         }
                     } else {
+                        Object body = httpResponse.getBody();
+                        ProblemDetails problemDetails;
                         try {
-                            Object body = httpResponse.getBody();
                             String jsonString = new JSONObject(body).toString();
-                            ProblemDetails problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
-                            Map<String, String> headersMap = getHeadersMap(httpResponse);
-                            if (httpResponse.getStatus() == 400)
-                                throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 401)
-                                throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 403)
-                                throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 404)
-                                throw new ApiException("Request entry not found.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 429)
-                                throw new ApiException("Rate limit is reached.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else
-                                throw new RuntimeException(httpResponse.getStatusText());
+                            problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
                         } catch (JsonProcessingException e) {
                             e.printStackTrace();
+                            return null;
                         }
+                        Map<String, String> headersMap = getHeadersMap(httpResponse);
+                        if (httpResponse.getStatus() == 400)
+                            throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 401)
+                            throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 403)
+                            throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 404)
+                            throw new ApiException("Request entry not found.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 429)
+                            throw new ApiException("Rate limit is reached.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else
+                            throw new RuntimeException(httpResponse.getStatusText());
                     }
-                    return null;
                 });
     }
 
@@ -557,35 +571,37 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                             return objectMapper.readValue(jsonString, FindEntryResult.class);
                         } catch (JsonProcessingException e) {
                             e.printStackTrace();
+                            return null;
                         }
                     } else {
+                        Object body = httpResponse.getBody();
+                        ProblemDetails problemDetails;
                         try {
-                            Object body = httpResponse.getBody();
                             String jsonString = new JSONObject(body).toString();
-                            ProblemDetails problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
-                            Map<String, String> headersMap = getHeadersMap(httpResponse);
-                            if (httpResponse.getStatus() == 400)
-                                throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 401)
-                                throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 403)
-                                throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 404)
-                                throw new ApiException("Requested entry path not found", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 429)
-                                throw new ApiException("Rate limit is reached.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else
-                                throw new RuntimeException(httpResponse.getStatusText());
+                            problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
                         } catch (JsonProcessingException e) {
                             e.printStackTrace();
+                            return null;
                         }
+                        Map<String, String> headersMap = getHeadersMap(httpResponse);
+                        if (httpResponse.getStatus() == 400)
+                            throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 401)
+                            throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 403)
+                            throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 404)
+                            throw new ApiException("Requested entry path not found", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 429)
+                            throw new ApiException("Rate limit is reached.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else
+                            throw new RuntimeException(httpResponse.getStatusText());
                     }
-                    return null;
                 });
     }
 
@@ -611,36 +627,37 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                             return objectMapper.readValue(jsonString, AcceptedOperation.class);
                         } catch (JsonProcessingException e) {
                             e.printStackTrace();
+                            return null;
                         }
                     } else {
+                        Object body = httpResponse.getBody();
+                        ProblemDetails problemDetails;
                         try {
-                            Object body = httpResponse.getBody();
                             String jsonString = new JSONObject(body).toString();
-                            ProblemDetails problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
-                            Map<String, String> headersMap = getHeadersMap(httpResponse);
-                            if (httpResponse.getStatus() == 400)
-                                throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 401)
-                                throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 403)
-                                throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 404)
-                                throw new ApiException("Not found.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 429)
-                                throw new ApiException("Operation limit or request limit reached.",
-                                        httpResponse.getStatus(), httpResponse.getStatusText(), headersMap,
-                                        problemDetails);
-                            else
-                                throw new RuntimeException(httpResponse.getStatusText());
+                            problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
                         } catch (JsonProcessingException e) {
                             e.printStackTrace();
+                            return null;
                         }
+                        Map<String, String> headersMap = getHeadersMap(httpResponse);
+                        if (httpResponse.getStatus() == 400)
+                            throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 401)
+                            throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 403)
+                            throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 404)
+                            throw new ApiException("Not found.", httpResponse.getStatus(), httpResponse.getStatusText(),
+                                    headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 429)
+                            throw new ApiException("Operation limit or request limit reached.",
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
+                        else
+                            throw new RuntimeException(httpResponse.getStatusText());
                     }
-                    return null;
                 });
     }
 
@@ -662,35 +679,37 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                             return objectMapper.readValue(jsonString, Entry.class);
                         } catch (JsonProcessingException e) {
                             e.printStackTrace();
+                            return null;
                         }
                     } else {
+                        Object body = httpResponse.getBody();
+                        ProblemDetails problemDetails;
                         try {
-                            Object body = httpResponse.getBody();
                             String jsonString = new JSONObject(body).toString();
-                            ProblemDetails problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
-                            Map<String, String> headersMap = getHeadersMap(httpResponse);
-                            if (httpResponse.getStatus() == 400)
-                                throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 401)
-                                throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 403)
-                                throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 404)
-                                throw new ApiException("Requested entry id not found.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 429)
-                                throw new ApiException("Rate limit is reached.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else
-                                throw new RuntimeException(httpResponse.getStatusText());
+                            problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
                         } catch (JsonProcessingException e) {
                             e.printStackTrace();
+                            return null;
                         }
+                        Map<String, String> headersMap = getHeadersMap(httpResponse);
+                        if (httpResponse.getStatus() == 400)
+                            throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 401)
+                            throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 403)
+                            throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 404)
+                            throw new ApiException("Requested entry id not found.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 429)
+                            throw new ApiException("Rate limit is reached.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else
+                            throw new RuntimeException(httpResponse.getStatusText());
                     }
-                    return null;
                 });
     }
 
@@ -716,41 +735,43 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                             return objectMapper.readValue(jsonString, Entry.class);
                         } catch (JsonProcessingException e) {
                             e.printStackTrace();
+                            return null;
                         }
                     } else {
+                        Object body = httpResponse.getBody();
+                        ProblemDetails problemDetails;
                         try {
-                            Object body = httpResponse.getBody();
                             String jsonString = new JSONObject(body).toString();
-                            ProblemDetails problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
-                            Map<String, String> headersMap = getHeadersMap(httpResponse);
-                            if (httpResponse.getStatus() == 400)
-                                throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 401)
-                                throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 403)
-                                throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 404)
-                                throw new ApiException("Request entry id not found.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 409)
-                                throw new ApiException("Entry name conflicts.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 423)
-                                throw new ApiException("Entry is locked.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 429)
-                                throw new ApiException("Rate limit is reached.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else
-                                throw new RuntimeException(httpResponse.getStatusText());
+                            problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
                         } catch (JsonProcessingException e) {
                             e.printStackTrace();
+                            return null;
                         }
+                        Map<String, String> headersMap = getHeadersMap(httpResponse);
+                        if (httpResponse.getStatus() == 400)
+                            throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 401)
+                            throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 403)
+                            throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 404)
+                            throw new ApiException("Request entry id not found.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 409)
+                            throw new ApiException("Entry name conflicts.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 423)
+                            throw new ApiException("Entry is locked.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 429)
+                            throw new ApiException("Rate limit is reached.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else
+                            throw new RuntimeException(httpResponse.getStatusText());
                     }
-                    return null;
                 });
     }
 
@@ -773,36 +794,37 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                             return objectMapper.readValue(jsonString, AcceptedOperation.class);
                         } catch (JsonProcessingException e) {
                             e.printStackTrace();
+                            return null;
                         }
                     } else {
+                        Object body = httpResponse.getBody();
+                        ProblemDetails problemDetails;
                         try {
-                            Object body = httpResponse.getBody();
                             String jsonString = new JSONObject(body).toString();
-                            ProblemDetails problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
-                            Map<String, String> headersMap = getHeadersMap(httpResponse);
-                            if (httpResponse.getStatus() == 400)
-                                throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 401)
-                                throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 403)
-                                throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 404)
-                                throw new ApiException("Not found.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 429)
-                                throw new ApiException("Operation limit or request limit reached.",
-                                        httpResponse.getStatus(), httpResponse.getStatusText(), headersMap,
-                                        problemDetails);
-                            else
-                                throw new RuntimeException(httpResponse.getStatusText());
+                            problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
                         } catch (JsonProcessingException e) {
                             e.printStackTrace();
+                            return null;
                         }
+                        Map<String, String> headersMap = getHeadersMap(httpResponse);
+                        if (httpResponse.getStatus() == 400)
+                            throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 401)
+                            throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 403)
+                            throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 404)
+                            throw new ApiException("Not found.", httpResponse.getStatus(), httpResponse.getStatusText(),
+                                    headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 429)
+                            throw new ApiException("Operation limit or request limit reached.",
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
+                        else
+                            throw new RuntimeException(httpResponse.getStatusText());
                     }
-                    return null;
                 });
     }
 
@@ -831,38 +853,40 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                             return objectMapper.readValue(jsonString, File.class);
                         } catch (JsonProcessingException e) {
                             e.printStackTrace();
+                            return null;
                         }
                     } else {
+                        Object body = httpResponse.getBody();
+                        ProblemDetails problemDetails;
                         try {
-                            Object body = httpResponse.getBody();
                             String jsonString = new JSONObject(body).toString();
-                            ProblemDetails problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
-                            Map<String, String> headersMap = getHeadersMap(httpResponse);
-                            if (httpResponse.getStatus() == 400)
-                                throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 401)
-                                throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 403)
-                                throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 404)
-                                throw new ApiException("Request entry id not found.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 423)
-                                throw new ApiException("Entry is locked.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 429)
-                                throw new ApiException("Rate limit is reached.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else
-                                throw new RuntimeException(httpResponse.getStatusText());
+                            problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
                         } catch (JsonProcessingException e) {
                             e.printStackTrace();
+                            return null;
                         }
+                        Map<String, String> headersMap = getHeadersMap(httpResponse);
+                        if (httpResponse.getStatus() == 400)
+                            throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 401)
+                            throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 403)
+                            throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 404)
+                            throw new ApiException("Request entry id not found.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 423)
+                            throw new ApiException("Entry is locked.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 429)
+                            throw new ApiException("Rate limit is reached.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else
+                            throw new RuntimeException(httpResponse.getStatusText());
                     }
-                    return null;
                 });
     }
 
@@ -888,38 +912,40 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                             return objectMapper.readValue(jsonString, File.class);
                         } catch (JsonProcessingException e) {
                             e.printStackTrace();
+                            return null;
                         }
                     } else {
+                        Object body = httpResponse.getBody();
+                        ProblemDetails problemDetails;
                         try {
-                            Object body = httpResponse.getBody();
                             String jsonString = new JSONObject(body).toString();
-                            ProblemDetails problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
-                            Map<String, String> headersMap = getHeadersMap(httpResponse);
-                            if (httpResponse.getStatus() == 400)
-                                throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 401)
-                                throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 403)
-                                throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 404)
-                                throw new ApiException("Request entry id not found.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 423)
-                                throw new ApiException("Entry is locked.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 429)
-                                throw new ApiException("Rate limit is reached.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else
-                                throw new RuntimeException(httpResponse.getStatusText());
+                            problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
                         } catch (JsonProcessingException e) {
                             e.printStackTrace();
+                            return null;
                         }
+                        Map<String, String> headersMap = getHeadersMap(httpResponse);
+                        if (httpResponse.getStatus() == 400)
+                            throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 401)
+                            throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 403)
+                            throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 404)
+                            throw new ApiException("Request entry id not found.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 423)
+                            throw new ApiException("Entry is locked.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 429)
+                            throw new ApiException("Rate limit is reached.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else
+                            throw new RuntimeException(httpResponse.getStatusText());
                     }
-                    return null;
                 });
     }
 
@@ -939,38 +965,40 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                             return objectMapper.readValue(jsonString, ODataValueOfBoolean.class);
                         } catch (JsonProcessingException e) {
                             e.printStackTrace();
+                            return null;
                         }
                     } else {
+                        Object body = httpResponse.getBody();
+                        ProblemDetails problemDetails;
                         try {
-                            Object body = httpResponse.getBody();
                             String jsonString = new JSONObject(body).toString();
-                            ProblemDetails problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
-                            Map<String, String> headersMap = getHeadersMap(httpResponse);
-                            if (httpResponse.getStatus() == 400)
-                                throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 401)
-                                throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 403)
-                                throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 404)
-                                throw new ApiException("Request entry id not found.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 423)
-                                throw new ApiException("Entry is locked.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 429)
-                                throw new ApiException("Rate limit is reached.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else
-                                throw new RuntimeException(httpResponse.getStatusText());
+                            problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
                         } catch (JsonProcessingException e) {
                             e.printStackTrace();
+                            return null;
                         }
+                        Map<String, String> headersMap = getHeadersMap(httpResponse);
+                        if (httpResponse.getStatus() == 400)
+                            throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 401)
+                            throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 403)
+                            throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 404)
+                            throw new ApiException("Request entry id not found.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 423)
+                            throw new ApiException("Entry is locked.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 429)
+                            throw new ApiException("Rate limit is reached.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else
+                            throw new RuntimeException(httpResponse.getStatusText());
                     }
-                    return null;
                 });
     }
 
@@ -990,36 +1018,37 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                                 .stream()
                                 .collect(Collectors.toMap(Header::getName, Header::getValue));
                     } else {
+                        Object body = httpResponse.getBody();
+                        ProblemDetails problemDetails;
                         try {
-                            Object body = httpResponse.getBody();
                             String jsonString = new JSONObject(body).toString();
-                            ProblemDetails problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
-                            Map<String, String> headersMap = getHeadersMap(httpResponse);
-                            if (httpResponse.getStatus() == 400)
-                                throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 401)
-                                throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 403)
-                                throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 404)
-                                throw new ApiException("Request entry id not found.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 423)
-                                throw new ApiException("Entry is locked.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 429)
-                                throw new ApiException("Rate limit is reached.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else
-                                throw new RuntimeException(httpResponse.getStatusText());
+                            problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
                         } catch (JsonProcessingException e) {
                             e.printStackTrace();
+                            return null;
                         }
+                        Map<String, String> headersMap = getHeadersMap(httpResponse);
+                        if (httpResponse.getStatus() == 400)
+                            throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 401)
+                            throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 403)
+                            throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 404)
+                            throw new ApiException("Request entry id not found.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 423)
+                            throw new ApiException("Entry is locked.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 429)
+                            throw new ApiException("Rate limit is reached.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else
+                            throw new RuntimeException(httpResponse.getStatusText());
                     }
-                    return null;
                 });
     }
 
@@ -1041,38 +1070,40 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                             return objectMapper.readValue(jsonString, ODataValueOfBoolean.class);
                         } catch (JsonProcessingException e) {
                             e.printStackTrace();
+                            return null;
                         }
                     } else {
+                        Object body = httpResponse.getBody();
+                        ProblemDetails problemDetails;
                         try {
-                            Object body = httpResponse.getBody();
                             String jsonString = new JSONObject(body).toString();
-                            ProblemDetails problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
-                            Map<String, String> headersMap = getHeadersMap(httpResponse);
-                            if (httpResponse.getStatus() == 400)
-                                throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 401)
-                                throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 403)
-                                throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 404)
-                                throw new ApiException("Request entry id not found.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 423)
-                                throw new ApiException("Entry is locked.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 429)
-                                throw new ApiException("Rate limit is reached.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else
-                                throw new RuntimeException(httpResponse.getStatusText());
+                            problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
                         } catch (JsonProcessingException e) {
                             e.printStackTrace();
+                            return null;
                         }
+                        Map<String, String> headersMap = getHeadersMap(httpResponse);
+                        if (httpResponse.getStatus() == 400)
+                            throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 401)
+                            throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 403)
+                            throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 404)
+                            throw new ApiException("Request entry id not found.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 423)
+                            throw new ApiException("Entry is locked.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 429)
+                            throw new ApiException("Rate limit is reached.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else
+                            throw new RuntimeException(httpResponse.getStatusText());
                     }
-                    return null;
                 });
     }
 
@@ -1112,35 +1143,37 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                             return objectMapper.readValue(jsonString, ODataValueContextOfIListOfEntry.class);
                         } catch (JsonProcessingException e) {
                             e.printStackTrace();
+                            return null;
                         }
                     } else {
+                        Object body = httpResponse.getBody();
+                        ProblemDetails problemDetails;
                         try {
-                            Object body = httpResponse.getBody();
                             String jsonString = new JSONObject(body).toString();
-                            ProblemDetails problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
-                            Map<String, String> headersMap = getHeadersMap(httpResponse);
-                            if (httpResponse.getStatus() == 400)
-                                throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 401)
-                                throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 403)
-                                throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 404)
-                                throw new ApiException("Request entry id not found.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 429)
-                                throw new ApiException("Rate limit is reached.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else
-                                throw new RuntimeException(httpResponse.getStatusText());
+                            problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
                         } catch (JsonProcessingException e) {
                             e.printStackTrace();
+                            return null;
                         }
+                        Map<String, String> headersMap = getHeadersMap(httpResponse);
+                        if (httpResponse.getStatus() == 400)
+                            throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 401)
+                            throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 403)
+                            throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 404)
+                            throw new ApiException("Request entry id not found.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 429)
+                            throw new ApiException("Rate limit is reached.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else
+                            throw new RuntimeException(httpResponse.getStatusText());
                     }
-                    return null;
                 });
     }
 
@@ -1193,38 +1226,40 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                             return objectMapper.readValue(jsonString, Entry.class);
                         } catch (JsonProcessingException e) {
                             e.printStackTrace();
+                            return null;
                         }
                     } else {
+                        Object body = httpResponse.getBody();
+                        ProblemDetails problemDetails;
                         try {
-                            Object body = httpResponse.getBody();
                             String jsonString = new JSONObject(body).toString();
-                            ProblemDetails problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
-                            Map<String, String> headersMap = getHeadersMap(httpResponse);
-                            if (httpResponse.getStatus() == 400)
-                                throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 401)
-                                throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 403)
-                                throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 404)
-                                throw new ApiException("Request entry id not found.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 409)
-                                throw new ApiException("Entry name conflicts.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 429)
-                                throw new ApiException("Rate limit is reached.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else
-                                throw new RuntimeException(httpResponse.getStatusText());
+                            problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
                         } catch (JsonProcessingException e) {
                             e.printStackTrace();
+                            return null;
                         }
+                        Map<String, String> headersMap = getHeadersMap(httpResponse);
+                        if (httpResponse.getStatus() == 400)
+                            throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 401)
+                            throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 403)
+                            throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 404)
+                            throw new ApiException("Request entry id not found.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 409)
+                            throw new ApiException("Entry name conflicts.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 429)
+                            throw new ApiException("Rate limit is reached.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else
+                            throw new RuntimeException(httpResponse.getStatusText());
                     }
-                    return null;
                 });
     }
 
@@ -1261,35 +1296,37 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                             return objectMapper.readValue(jsonString, ODataValueContextOfIListOfWTagInfo.class);
                         } catch (JsonProcessingException e) {
                             e.printStackTrace();
+                            return null;
                         }
                     } else {
+                        Object body = httpResponse.getBody();
+                        ProblemDetails problemDetails;
                         try {
-                            Object body = httpResponse.getBody();
                             String jsonString = new JSONObject(body).toString();
-                            ProblemDetails problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
-                            Map<String, String> headersMap = getHeadersMap(httpResponse);
-                            if (httpResponse.getStatus() == 400)
-                                throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 401)
-                                throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 403)
-                                throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 404)
-                                throw new ApiException("Request entry id not found.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 429)
-                                throw new ApiException("Rate limit is reached.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else
-                                throw new RuntimeException(httpResponse.getStatusText());
+                            problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
                         } catch (JsonProcessingException e) {
                             e.printStackTrace();
+                            return null;
                         }
+                        Map<String, String> headersMap = getHeadersMap(httpResponse);
+                        if (httpResponse.getStatus() == 400)
+                            throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 401)
+                            throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 403)
+                            throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 404)
+                            throw new ApiException("Request entry id not found.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 429)
+                            throw new ApiException("Rate limit is reached.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else
+                            throw new RuntimeException(httpResponse.getStatusText());
                     }
-                    return null;
                 });
     }
 
@@ -1338,38 +1375,40 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                             return objectMapper.readValue(jsonString, ODataValueOfIListOfWTagInfo.class);
                         } catch (JsonProcessingException e) {
                             e.printStackTrace();
+                            return null;
                         }
                     } else {
+                        Object body = httpResponse.getBody();
+                        ProblemDetails problemDetails;
                         try {
-                            Object body = httpResponse.getBody();
                             String jsonString = new JSONObject(body).toString();
-                            ProblemDetails problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
-                            Map<String, String> headersMap = getHeadersMap(httpResponse);
-                            if (httpResponse.getStatus() == 400)
-                                throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 401)
-                                throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 403)
-                                throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 404)
-                                throw new ApiException("Request id not found.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 423)
-                                throw new ApiException("Entry is locked.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 429)
-                                throw new ApiException("Rate limit is reached.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else
-                                throw new RuntimeException(httpResponse.getStatusText());
+                            problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
                         } catch (JsonProcessingException e) {
                             e.printStackTrace();
+                            return null;
                         }
+                        Map<String, String> headersMap = getHeadersMap(httpResponse);
+                        if (httpResponse.getStatus() == 400)
+                            throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 401)
+                            throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 403)
+                            throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 404)
+                            throw new ApiException("Request id not found.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 423)
+                            throw new ApiException("Entry is locked.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 429)
+                            throw new ApiException("Rate limit is reached.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else
+                            throw new RuntimeException(httpResponse.getStatusText());
                     }
-                    return null;
                 });
     }
 }

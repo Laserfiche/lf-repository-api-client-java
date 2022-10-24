@@ -32,35 +32,37 @@ public class ServerSessionClientImpl extends ApiClient implements ServerSessionC
                             return objectMapper.readValue(jsonString, ODataValueOfBoolean.class);
                         } catch (JsonProcessingException e) {
                             e.printStackTrace();
+                            return null;
                         }
                     } else {
+                        Object body = httpResponse.getBody();
+                        ProblemDetails problemDetails;
                         try {
-                            Object body = httpResponse.getBody();
                             String jsonString = new JSONObject(body).toString();
-                            ProblemDetails problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
-                            Map<String, String> headersMap = getHeadersMap(httpResponse);
-                            if (httpResponse.getStatus() == 400)
-                                throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 401)
-                                throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 403)
-                                throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 404)
-                                throw new ApiException("Not found.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 429)
-                                throw new ApiException("Rate limit is reached.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else
-                                throw new RuntimeException(httpResponse.getStatusText());
+                            problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
                         } catch (JsonProcessingException e) {
                             e.printStackTrace();
+                            return null;
                         }
+                        Map<String, String> headersMap = getHeadersMap(httpResponse);
+                        if (httpResponse.getStatus() == 400)
+                            throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 401)
+                            throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 403)
+                            throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 404)
+                            throw new ApiException("Not found.", httpResponse.getStatus(), httpResponse.getStatusText(),
+                                    headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 429)
+                            throw new ApiException("Rate limit is reached.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else
+                            throw new RuntimeException(httpResponse.getStatusText());
                     }
-                    return null;
                 });
     }
 
@@ -79,26 +81,28 @@ public class ServerSessionClientImpl extends ApiClient implements ServerSessionC
                             return objectMapper.readValue(jsonString, ODataValueOfBoolean.class);
                         } catch (JsonProcessingException e) {
                             e.printStackTrace();
+                            return null;
                         }
                     } else {
+                        Object body = httpResponse.getBody();
+                        ProblemDetails problemDetails;
                         try {
-                            Object body = httpResponse.getBody();
                             String jsonString = new JSONObject(body).toString();
-                            ProblemDetails problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
-                            Map<String, String> headersMap = getHeadersMap(httpResponse);
-                            if (httpResponse.getStatus() == 401)
-                                throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 403)
-                                throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else
-                                throw new RuntimeException(httpResponse.getStatusText());
+                            problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
                         } catch (JsonProcessingException e) {
                             e.printStackTrace();
+                            return null;
                         }
+                        Map<String, String> headersMap = getHeadersMap(httpResponse);
+                        if (httpResponse.getStatus() == 401)
+                            throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 403)
+                            throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else
+                            throw new RuntimeException(httpResponse.getStatusText());
                     }
-                    return null;
                 });
     }
 
@@ -117,35 +121,37 @@ public class ServerSessionClientImpl extends ApiClient implements ServerSessionC
                             return objectMapper.readValue(jsonString, ODataValueOfDateTime.class);
                         } catch (JsonProcessingException e) {
                             e.printStackTrace();
+                            return null;
                         }
                     } else {
+                        Object body = httpResponse.getBody();
+                        ProblemDetails problemDetails;
                         try {
-                            Object body = httpResponse.getBody();
                             String jsonString = new JSONObject(body).toString();
-                            ProblemDetails problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
-                            Map<String, String> headersMap = getHeadersMap(httpResponse);
-                            if (httpResponse.getStatus() == 400)
-                                throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 401)
-                                throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 403)
-                                throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 404)
-                                throw new ApiException("Not found.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else if (httpResponse.getStatus() == 429)
-                                throw new ApiException("Rate limit is reached.", httpResponse.getStatus(),
-                                        httpResponse.getStatusText(), headersMap, problemDetails);
-                            else
-                                throw new RuntimeException(httpResponse.getStatusText());
+                            problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
                         } catch (JsonProcessingException e) {
                             e.printStackTrace();
+                            return null;
                         }
+                        Map<String, String> headersMap = getHeadersMap(httpResponse);
+                        if (httpResponse.getStatus() == 400)
+                            throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 401)
+                            throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 403)
+                            throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 404)
+                            throw new ApiException("Not found.", httpResponse.getStatus(), httpResponse.getStatusText(),
+                                    headersMap, problemDetails);
+                        else if (httpResponse.getStatus() == 429)
+                            throw new ApiException("Rate limit is reached.", httpResponse.getStatus(),
+                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                        else
+                            throw new RuntimeException(httpResponse.getStatusText());
                     }
-                    return null;
                 });
     }
 }
