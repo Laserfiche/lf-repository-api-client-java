@@ -5,7 +5,7 @@
   <artifactId>lf-repository-api-client</artifactId>
   <packaging>jar</packaging>
   <name>Laserfiche Repository API Client</name>
-  <version>1.0.0</version>
+  <version>1.0.0-SNAPSHOT</version>
   <url>https://github.com/Laserfiche/lf-repository-api-client-java</url>
   <description>Java implementation of various foundational APIs for Laserfiche, including Repository APIs such as
     Entry API flows for secure and easy access to Laserfiche Repository Entries.</description>
@@ -186,7 +186,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-gpg-plugin</artifactId>
-        <version>1.5</version>
+        <version>1.6</version>
         <executions>
           <execution>
             <id>sign-artifacts</id>
@@ -197,6 +197,7 @@
           </execution>
         </executions>
         <configuration>
+          <!-- Prevent gpg from using pinentry programs -->
           <gpgArguments>
             <arg>--pinentry-mode</arg>
             <arg>loopback</arg>
@@ -263,7 +264,7 @@
     <dependency>
       <groupId>com.laserfiche</groupId>
       <artifactId>lf-api-client-core</artifactId>
-      <version>1.0.0</version>
+      <version>1.0.0-SNAPSHOT</version>
     </dependency>
 
     
