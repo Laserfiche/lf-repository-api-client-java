@@ -31,21 +31,23 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
                             Object body = httpResponse.getBody();
                             String jsonString = new JSONObject(body).toString();
                             return objectMapper.readValue(jsonString, OperationProgress.class);
-                        } catch (JsonProcessingException e) {
+                        } catch (JsonProcessingException | IllegalStateException e) {
                             e.printStackTrace();
                             return null;
                         }
                     } else {
                         Object body = httpResponse.getBody();
                         ProblemDetails problemDetails;
+                        Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
                             String jsonString = new JSONObject(body).toString();
                             problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
-                        } catch (JsonProcessingException e) {
-                            e.printStackTrace();
-                            return null;
+                        } catch (JsonProcessingException | IllegalStateException e) {
+                            throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(), httpResponse
+                                    .getParsingError()
+                                    .get()
+                                    .getOriginalBody(), headersMap, null);
                         }
-                        Map<String, String> headersMap = getHeadersMap(httpResponse);
                         if (httpResponse.getStatus() == 400)
                             throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
                                     httpResponse.getStatusText(), headersMap, problemDetails);
@@ -81,21 +83,23 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
                             Object body = httpResponse.getBody();
                             String jsonString = new JSONObject(body).toString();
                             return objectMapper.readValue(jsonString, ODataValueOfBoolean.class);
-                        } catch (JsonProcessingException e) {
+                        } catch (JsonProcessingException | IllegalStateException e) {
                             e.printStackTrace();
                             return null;
                         }
                     } else {
                         Object body = httpResponse.getBody();
                         ProblemDetails problemDetails;
+                        Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
                             String jsonString = new JSONObject(body).toString();
                             problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
-                        } catch (JsonProcessingException e) {
-                            e.printStackTrace();
-                            return null;
+                        } catch (JsonProcessingException | IllegalStateException e) {
+                            throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(), httpResponse
+                                    .getParsingError()
+                                    .get()
+                                    .getOriginalBody(), headersMap, null);
                         }
-                        Map<String, String> headersMap = getHeadersMap(httpResponse);
                         if (httpResponse.getStatus() == 400)
                             throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
                                     httpResponse.getStatusText(), headersMap, problemDetails);
@@ -151,21 +155,23 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
                             Object body = httpResponse.getBody();
                             String jsonString = new JSONObject(body).toString();
                             return objectMapper.readValue(jsonString, ODataValueContextOfIListOfContextHit.class);
-                        } catch (JsonProcessingException e) {
+                        } catch (JsonProcessingException | IllegalStateException e) {
                             e.printStackTrace();
                             return null;
                         }
                     } else {
                         Object body = httpResponse.getBody();
                         ProblemDetails problemDetails;
+                        Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
                             String jsonString = new JSONObject(body).toString();
                             problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
-                        } catch (JsonProcessingException e) {
-                            e.printStackTrace();
-                            return null;
+                        } catch (JsonProcessingException | IllegalStateException e) {
+                            throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(), httpResponse
+                                    .getParsingError()
+                                    .get()
+                                    .getOriginalBody(), headersMap, null);
                         }
-                        Map<String, String> headersMap = getHeadersMap(httpResponse);
                         if (httpResponse.getStatus() == 400)
                             throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
                                     httpResponse.getStatusText(), headersMap, problemDetails);
@@ -229,21 +235,23 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
                             Object body = httpResponse.getBody();
                             String jsonString = new JSONObject(body).toString();
                             return objectMapper.readValue(jsonString, AcceptedOperation.class);
-                        } catch (JsonProcessingException e) {
+                        } catch (JsonProcessingException | IllegalStateException e) {
                             e.printStackTrace();
                             return null;
                         }
                     } else {
                         Object body = httpResponse.getBody();
                         ProblemDetails problemDetails;
+                        Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
                             String jsonString = new JSONObject(body).toString();
                             problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
-                        } catch (JsonProcessingException e) {
-                            e.printStackTrace();
-                            return null;
+                        } catch (JsonProcessingException | IllegalStateException e) {
+                            throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(), httpResponse
+                                    .getParsingError()
+                                    .get()
+                                    .getOriginalBody(), headersMap, null);
                         }
-                        Map<String, String> headersMap = getHeadersMap(httpResponse);
                         if (httpResponse.getStatus() == 400)
                             throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
                                     httpResponse.getStatusText(), headersMap, problemDetails);
@@ -299,21 +307,23 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
                             Object body = httpResponse.getBody();
                             String jsonString = new JSONObject(body).toString();
                             return objectMapper.readValue(jsonString, ODataValueContextOfIListOfEntry.class);
-                        } catch (JsonProcessingException e) {
+                        } catch (JsonProcessingException | IllegalStateException e) {
                             e.printStackTrace();
                             return null;
                         }
                     } else {
                         Object body = httpResponse.getBody();
                         ProblemDetails problemDetails;
+                        Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
                             String jsonString = new JSONObject(body).toString();
                             problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
-                        } catch (JsonProcessingException e) {
-                            e.printStackTrace();
-                            return null;
+                        } catch (JsonProcessingException | IllegalStateException e) {
+                            throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(), httpResponse
+                                    .getParsingError()
+                                    .get()
+                                    .getOriginalBody(), headersMap, null);
                         }
-                        Map<String, String> headersMap = getHeadersMap(httpResponse);
                         if (httpResponse.getStatus() == 400)
                             throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
                                     httpResponse.getStatusText(), headersMap, problemDetails);

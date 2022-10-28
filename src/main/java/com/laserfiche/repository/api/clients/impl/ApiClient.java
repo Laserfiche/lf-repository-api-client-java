@@ -8,10 +8,11 @@ import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.laserfiche.repository.api.clients.impl.deserialization.OffsetDateTimeDeserializer;
 import kong.unirest.Header;
-import kong.unirest.HttpResponse;
+import kong.unirest.Headers;
 import kong.unirest.UnirestInstance;
 import org.threeten.bp.OffsetDateTime;
 
+import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -73,11 +74,26 @@ public class ApiClient {
         return json;
     }
 
-    protected Map<String, String> getHeadersMap(HttpResponse httpResponse) {
-        return httpResponse
-                .getHeaders()
+    protected Map<String, String> getHeadersMap(Headers headers) {
+        return headers
                 .all()
                 .stream()
                 .collect(Collectors.toMap(Header::getName, Header::getValue));
+    }
+
+    protected void saveFile(InputStream inputStream, File outputFile) {
+        try (BufferedOutputStream fileOutputStream = new BufferedOutputStream(new FileOutputStream(outputFile))) {
+            byte[] buffer = new byte[1024];
+            while (true) {
+                int readCount = inputStream.read(buffer);
+                if (readCount <= 0) {
+                    break;
+                }
+                fileOutputStream.write(buffer, 0, readCount);
+            }
+            fileOutputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

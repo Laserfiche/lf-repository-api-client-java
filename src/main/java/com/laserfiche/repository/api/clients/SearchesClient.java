@@ -58,7 +58,7 @@ public interface SearchesClient {
             Integer maxPageSize);
 
     /**
-     * Provides the functionality to iteratively (i.e. through paging) call <b>getSearchContextHits</b>, and apply a function on the response of each iteration.
+     * Provides the functionality to iteratively (i.e. through paging) call &lt;b&gt;getSearchContextHits&lt;/b&gt;, and apply a function on the response of each iteration.
      *
      * @param callback    A delegate that will be called each time new data is retrieved. Returns false to stop receiving more data; returns true to be called again if there's more data.
      * @param maxPageSize Optionally specify the maximum number of items to retrieve.
@@ -92,7 +92,7 @@ public interface SearchesClient {
      * - Returns a search result listing if the search is completed.
      * - Optional query parameter: groupByOrderType (default false). This query parameter decides whether or not results are returned in groups based on their entry type.
      * - Optional query parameter: refresh (default false). If the search listing should be refreshed to show updated values.
-     * - Default page size: 150. Allowed OData query options: Select | Count | OrderBy | Skip | Top | SkipToken | Prefer. OData $OrderBy syntax should follow: "PropertyName direction,PropertyName2 direction". sort order can be either "asc" or "desc". Search results expire after 5 minutes, but can be refreshed by retrieving the results again.
+     * - Default page size: 150. Allowed OData query options: Select | Count | OrderBy | Skip | Top | SkipToken | Prefer. OData $OrderBy syntax should follow: &quot;PropertyName direction,PropertyName2 direction&quot;. sort order can be either &quot;asc&quot; or &quot;desc&quot;. Search results expire after 5 minutes, but can be refreshed by retrieving the results again.
      * - Optionally returns field values for the entries in the search result listing. Each field name needs to be specified in the request. Maximum limit of 10 field names.
      * - If field values are requested, only the first value is returned if it is a multi value field.
      * - Null or Empty field values should not be used to determine if a field is assigned to the entry.
@@ -128,7 +128,7 @@ public interface SearchesClient {
     CompletableFuture<ODataValueContextOfIListOfEntry> getSearchResultsNextLink(String nextLink, Integer maxPageSize);
 
     /**
-     * Provides the functionality to iteratively (i.e. through paging) call <b>getSearchResults</b>, and apply a function on the response of each iteration.
+     * Provides the functionality to iteratively (i.e. through paging) call &lt;b&gt;getSearchResults&lt;/b&gt;, and apply a function on the response of each iteration.
      *
      * @param callback         A delegate that will be called each time new data is retrieved. Returns false to stop receiving more data; returns true to be called again if there's more data.
      * @param maxPageSize      Optionally specify the maximum number of items to retrieve.

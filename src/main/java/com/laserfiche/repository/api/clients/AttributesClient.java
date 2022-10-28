@@ -9,7 +9,7 @@ import java.util.function.Function;
 public interface AttributesClient {
 
     /**
-     * - Returns the attribute associated with the key. Alternatively, return the attribute associated with the key within "Everyone" group.
+     * - Returns the attribute associated with the key. Alternatively, return the attribute associated with the key within &quot;Everyone&quot; group.
      * - Optional query parameters: everyone (bool, default false). When true, the server only searches for the attribute value with the given key upon the authenticated users attributes. If false, only the authenticated users attributes will be queried.
      *
      * @param repoId       The requested repository ID.
@@ -20,9 +20,9 @@ public interface AttributesClient {
     CompletableFuture<Attribute> getTrusteeAttributeValueByKey(String repoId, String attributeKey, Boolean everyone);
 
     /**
-     * - Returns the attribute key value pairs associated with the authenticated user. Alternatively, return only the attribute key value pairs that are associated with the "Everyone" group.
+     * - Returns the attribute key value pairs associated with the authenticated user. Alternatively, return only the attribute key value pairs that are associated with the &quot;Everyone&quot; group.
      * - Attribute keys can be used with subsequent calls to get specific attribute values.
-     * - Default page size: 100. Allowed OData query options: Select, Count, OrderBy, Skip, Top, SkipToken, Prefer. Optional query parameters: everyone (bool, default false). When true, this route does not return the attributes that are tied to the currently authenticated user, but rather the attributes assigned to the "Everyone" group. Note when this is true, the response does not include both the "Everyone" groups attribute and the currently authenticated user, but only the "Everyone" groups.
+     * - Default page size: 100. Allowed OData query options: Select, Count, OrderBy, Skip, Top, SkipToken, Prefer. Optional query parameters: everyone (bool, default false). When true, this route does not return the attributes that are tied to the currently authenticated user, but rather the attributes assigned to the &quot;Everyone&quot; group. Note when this is true, the response does not include both the &quot;Everyone&quot; groups attribute and the currently authenticated user, but only the &quot;Everyone&quot; groups.
      *
      * @param repoId   The requested repository ID.
      * @param everyone Boolean value that indicates whether to return attributes key value pairs associated with everyone or the currently authenticated user.
@@ -48,7 +48,7 @@ public interface AttributesClient {
             Integer maxPageSize);
 
     /**
-     * Provides the functionality to iteratively (i.e. through paging) call <b>getTrusteeAttributeKeyValuePairs</b>, and apply a function on the response of each iteration.
+     * Provides the functionality to iteratively (i.e. through paging) call &lt;b&gt;getTrusteeAttributeKeyValuePairs&lt;/b&gt;, and apply a function on the response of each iteration.
      *
      * @param callback    A delegate that will be called each time new data is retrieved. Returns false to stop receiving more data; returns true to be called again if there's more data.
      * @param maxPageSize Optionally specify the maximum number of items to retrieve.

@@ -36,21 +36,23 @@ public class AttributesClientImpl extends ApiClient implements AttributesClient 
                             Object body = httpResponse.getBody();
                             String jsonString = new JSONObject(body).toString();
                             return objectMapper.readValue(jsonString, Attribute.class);
-                        } catch (JsonProcessingException e) {
+                        } catch (JsonProcessingException | IllegalStateException e) {
                             e.printStackTrace();
                             return null;
                         }
                     } else {
                         Object body = httpResponse.getBody();
                         ProblemDetails problemDetails;
+                        Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
                             String jsonString = new JSONObject(body).toString();
                             problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
-                        } catch (JsonProcessingException e) {
-                            e.printStackTrace();
-                            return null;
+                        } catch (JsonProcessingException | IllegalStateException e) {
+                            throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(), httpResponse
+                                    .getParsingError()
+                                    .get()
+                                    .getOriginalBody(), headersMap, null);
                         }
-                        Map<String, String> headersMap = getHeadersMap(httpResponse);
                         if (httpResponse.getStatus() == 400)
                             throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
                                     httpResponse.getStatusText(), headersMap, problemDetails);
@@ -103,21 +105,23 @@ public class AttributesClientImpl extends ApiClient implements AttributesClient 
                             Object body = httpResponse.getBody();
                             String jsonString = new JSONObject(body).toString();
                             return objectMapper.readValue(jsonString, ODataValueContextOfListOfAttribute.class);
-                        } catch (JsonProcessingException e) {
+                        } catch (JsonProcessingException | IllegalStateException e) {
                             e.printStackTrace();
                             return null;
                         }
                     } else {
                         Object body = httpResponse.getBody();
                         ProblemDetails problemDetails;
+                        Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
                             String jsonString = new JSONObject(body).toString();
                             problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
-                        } catch (JsonProcessingException e) {
-                            e.printStackTrace();
-                            return null;
+                        } catch (JsonProcessingException | IllegalStateException e) {
+                            throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(), httpResponse
+                                    .getParsingError()
+                                    .get()
+                                    .getOriginalBody(), headersMap, null);
                         }
-                        Map<String, String> headersMap = getHeadersMap(httpResponse);
                         if (httpResponse.getStatus() == 400)
                             throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
                                     httpResponse.getStatusText(), headersMap, problemDetails);
