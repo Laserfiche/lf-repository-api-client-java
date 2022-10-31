@@ -11,9 +11,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
+import java.util.function.Consumer;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -40,29 +39,46 @@ public class ExportDocumentApiTest extends BaseTest {
 
     @Test
     void exportDocument_Returns_Exported_File() {
-        File exportedFile = new File("exportDocument_temp_file.txt");
-        File file = client
-                .exportDocument(repoId, createdEntryId, null, exportedFile)
+        final String FILE_NAME = "exportDocument_temp_file.txt";
+        Consumer<InputStream> c = inputStream -> {
+            File exportedFile = new File(FILE_NAME);
+            try (FileOutputStream f = new FileOutputStream(exportedFile)) {
+                byte[] buffer = new byte[1024];
+                while (true) {
+                    int length = inputStream.read(buffer);
+                    if (length <= 0) {
+                        break;
+                    }
+                    f.write(buffer, 0, length);
+                }
+                inputStream.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        };
+
+        client
+                .exportDocument(repoId, createdEntryId, null, c)
                 .join();
-        assertNotNull(file);
-        assertNotNull(exportedFile);
-        assertTrue(file.exists());
+        File exportedFile = new File(FILE_NAME);
         assertTrue(exportedFile.exists());
-        assertEquals(file.getAbsolutePath(), exportedFile.getAbsolutePath());
-        assertEquals(file.length(), exportedFile.length());
-        boolean exportedFileIsDeletedSuccessfully = file.delete();
+        assertEquals(0, exportedFile.length());
+        boolean exportedFileIsDeletedSuccessfully = exportedFile.delete();
         assertTrue(exportedFileIsDeletedSuccessfully);
     }
 
     @Test
     void exportDocument_Returns_Error_For_Invalid_EntryId() {
-        File exportedFile = new File("exportDocument_temp_file.txt");
+        final String FILE_NAME = "exportDocument_temp_file.txt";
+        Consumer<InputStream> consumer = inputStream -> {
+            assertTrue(false, "Consumer should not have been called.");
+        };
         Exception thrown = Assertions.assertThrows(ApiException.class, () -> {
             client
-                    .exportDocument(repoId, -createdEntryId, null, exportedFile);
+                    .exportDocument(repoId, -createdEntryId, null, null);
         });
         Assertions.assertEquals("Invalid or bad request.", thrown.getMessage());
-
+        File exportedFile = new File(FILE_NAME);
         assertNotNull(exportedFile);
         assertFalse(exportedFile.exists());
     }

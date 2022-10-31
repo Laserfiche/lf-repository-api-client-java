@@ -7,12 +7,12 @@ import kong.unirest.Header;
 import kong.unirest.UnirestInstance;
 import kong.unirest.json.JSONObject;
 
-import java.io.File;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -855,8 +855,8 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
     }
 
     @Override
-    public CompletableFuture<File> exportDocumentWithAuditReason(String repoId, Integer entryId,
-            GetEdocWithAuditReasonRequest requestBody, String range, File exportedFile) {
+    public CompletableFuture<Void> exportDocumentWithAuditReason(String repoId, Integer entryId,
+            GetEdocWithAuditReasonRequest requestBody, String range, Consumer<InputStream> inputStreamConsumer) {
         Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "entryId"},
                 new Object[]{repoId, entryId});
         Map<String, Object> headerParameters = getNonNullParameters(new String[]{"range"}, new Object[]{range});
@@ -874,7 +874,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                     .body(requestBody)
                     .thenConsume(rawResponse -> {
                         if (rawResponse.getStatus() == 200 || rawResponse.getStatus() == 206) {
-                            saveFile(rawResponse.getContent(), exportedFile);
+                            inputStreamConsumer.accept(rawResponse.getContent());
                         } else {
                             ProblemDetails problemDetails = null;
                             Map<String, String> headersMap = getHeadersMap(rawResponse.getHeaders());
@@ -912,13 +912,14 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
             if (exception[0] != null) {
                 throw exception[0];
             } else {
-                return CompletableFuture.completedFuture(exportedFile);
+                return CompletableFuture.completedFuture(null);
             }
         }
     }
 
     @Override
-    public CompletableFuture<File> exportDocument(String repoId, Integer entryId, String range, File exportedFile) {
+    public CompletableFuture<Void> exportDocument(String repoId, Integer entryId, String range,
+            Consumer<InputStream> inputStreamConsumer) {
         Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "entryId"},
                 new Object[]{repoId, entryId});
         Map<String, Object> headerParameters = getNonNullParameters(new String[]{"range"}, new Object[]{range});
@@ -934,7 +935,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                     .headers(headerParametersWithStringTypeValue)
                     .thenConsume(rawResponse -> {
                         if (rawResponse.getStatus() == 200 || rawResponse.getStatus() == 206) {
-                            saveFile(rawResponse.getContent(), exportedFile);
+                            inputStreamConsumer.accept(rawResponse.getContent());
                         } else {
                             ProblemDetails problemDetails = null;
                             Map<String, String> headersMap = getHeadersMap(rawResponse.getHeaders());
@@ -972,7 +973,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
             if (exception[0] != null) {
                 throw exception[0];
             } else {
-                return CompletableFuture.completedFuture(exportedFile);
+                return CompletableFuture.completedFuture(null);
             }
         }
     }

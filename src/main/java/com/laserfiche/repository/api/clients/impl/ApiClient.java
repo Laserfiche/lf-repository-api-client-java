@@ -12,7 +12,6 @@ import kong.unirest.Headers;
 import kong.unirest.UnirestInstance;
 import org.threeten.bp.OffsetDateTime;
 
-import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -79,21 +78,5 @@ public class ApiClient {
                 .all()
                 .stream()
                 .collect(Collectors.toMap(Header::getName, Header::getValue));
-    }
-
-    protected void saveFile(InputStream inputStream, File outputFile) {
-        try (BufferedOutputStream fileOutputStream = new BufferedOutputStream(new FileOutputStream(outputFile))) {
-            byte[] buffer = new byte[1024];
-            while (true) {
-                int readCount = inputStream.read(buffer);
-                if (readCount <= 0) {
-                    break;
-                }
-                fileOutputStream.write(buffer, 0, readCount);
-            }
-            fileOutputStream.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }

@@ -2,11 +2,11 @@ package com.laserfiche.repository.api.clients;
 
 import com.laserfiche.repository.api.clients.impl.model.*;
 
-import java.io.File;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 public interface EntriesClient {
@@ -279,29 +279,30 @@ public interface EntriesClient {
      * - Provide an entry ID and audit reason/comment in the request body, and get the edoc resource as part of the response content.
      * - Optional header: Range. Use the Range header (single range with byte unit) to retrieve partial content of the edoc, rather than the entire edoc. This route is identical to the GET edoc route, but allows clients to include an audit reason when downloading the edoc.
      *
-     * @param repoId       The requested repository ID.
-     * @param entryId      The requested document ID.
-     * @param range        An optional header used to retrieve partial content of the edoc. Only supports single
-     *                     range with byte unit.
-     * @param exportedFile A File object used to store the exported file into. If the file already exists, it will be overwritten.
-     * @return CompletableFuture&lt;File&gt; The return value
+     * @param repoId              The requested repository ID.
+     * @param entryId             The requested document ID.
+     * @param range               An optional header used to retrieve partial content of the edoc. Only supports single
+     *                            range with byte unit.
+     * @param inputStreamConsumer A Consumer&lt;InputStream&gt; object that the is provided with the response's inputStream to consume it, if the request has been successful.
+     * @return CompletableFuture&lt;Void&gt; The return value
      */
-    CompletableFuture<File> exportDocumentWithAuditReason(String repoId, Integer entryId,
-            GetEdocWithAuditReasonRequest requestBody, String range, File exportedFile);
+    CompletableFuture<Void> exportDocumentWithAuditReason(String repoId, Integer entryId,
+            GetEdocWithAuditReasonRequest requestBody, String range, Consumer<InputStream> inputStreamConsumer);
 
     /**
      * - Returns an entry's edoc resource in a stream format.
      * - Provide an entry ID, and get the edoc resource as part of the response content.
      * - Optional header: Range. Use the Range header (single range with byte unit) to retrieve partial content of the edoc, rather than the entire edoc.
      *
-     * @param repoId       The requested repository ID.
-     * @param entryId      The requested document ID.
-     * @param range        An optional header used to retrieve partial content of the edoc. Only supports single
-     *                     range with byte unit.
-     * @param exportedFile A File object used to store the exported file into. If the file already exists, it will be overwritten.
-     * @return CompletableFuture&lt;File&gt; The return value
+     * @param repoId              The requested repository ID.
+     * @param entryId             The requested document ID.
+     * @param range               An optional header used to retrieve partial content of the edoc. Only supports single
+     *                            range with byte unit.
+     * @param inputStreamConsumer A Consumer&lt;InputStream&gt; object that the is provided with the response's inputStream to consume it, if the request has been successful.
+     * @return CompletableFuture&lt;Void&gt; The return value
      */
-    CompletableFuture<File> exportDocument(String repoId, Integer entryId, String range, File exportedFile);
+    CompletableFuture<Void> exportDocument(String repoId, Integer entryId, String range,
+            Consumer<InputStream> inputStreamConsumer);
 
     /**
      * - Delete the edoc associated with the provided entry ID.
