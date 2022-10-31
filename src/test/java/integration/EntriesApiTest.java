@@ -394,7 +394,7 @@ class EntriesApiTest extends BaseTest {
         Optional<Entry> optionalEntry = entryList
                 .getValue()
                 .stream()
-                .filter(entry -> entry.getEntryType() == EntryType.DOCUMENT)
+                .filter(entry -> entry.getEntryType() == EntryType.DOCUMENT && entry.getId() < 5000)
                 .findFirst();
         Entry entry = optionalEntry.get();
         assertNotNull(entry);
@@ -405,5 +405,6 @@ class EntriesApiTest extends BaseTest {
         assertNotNull(headers.get("Content-Type"));
         assertNotNull(headers.get("Content-Length"));
     }
+
 
 }
