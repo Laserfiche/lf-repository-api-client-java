@@ -28,14 +28,8 @@
 
   <developers>
     <developer>
-      <name>Jason Jia</name>
-      <email>jason.jia@laserfiche.com</email>
-      <organization>Laserfiche</organization>
-      <organizationUrl>https://www.laserfiche.com/</organizationUrl>
-    </developer>
-    <developer>
-      <name>Steven Xu</name>
-      <email>steven.xu@laserfiche.com</email>
+      <name>Laserfiche</name>
+      <email>api@laserfiche.com</email>
       <organization>Laserfiche</organization>
       <organizationUrl>https://www.laserfiche.com/</organizationUrl>
     </developer>
