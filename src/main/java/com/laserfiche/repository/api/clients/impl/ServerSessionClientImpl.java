@@ -6,6 +6,7 @@ import com.laserfiche.repository.api.clients.impl.model.ODataValueOfBoolean;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueOfDateTime;
 import com.laserfiche.repository.api.clients.impl.model.ProblemDetails;
 import kong.unirest.UnirestInstance;
+import kong.unirest.UnirestParsingException;
 import kong.unirest.json.JSONObject;
 
 import java.util.Map;
@@ -30,21 +31,25 @@ public class ServerSessionClientImpl extends ApiClient implements ServerSessionC
                             Object body = httpResponse.getBody();
                             String jsonString = new JSONObject(body).toString();
                             return objectMapper.readValue(jsonString, ODataValueOfBoolean.class);
-                        } catch (JsonProcessingException e) {
+                        } catch (JsonProcessingException | IllegalStateException e) {
                             e.printStackTrace();
                             return null;
                         }
                     } else {
                         Object body = httpResponse.getBody();
                         ProblemDetails problemDetails;
+                        Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
                             String jsonString = new JSONObject(body).toString();
                             problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
-                        } catch (JsonProcessingException e) {
-                            e.printStackTrace();
-                            return null;
+                        } catch (JsonProcessingException | IllegalStateException e) {
+                            UnirestParsingException parsingException = httpResponse
+                                    .getParsingError()
+                                    .orElseGet(null);
+                            throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(),
+                                    (parsingException == null) ? null : parsingException.getOriginalBody(), headersMap,
+                                    null);
                         }
-                        Map<String, String> headersMap = getHeadersMap(httpResponse);
                         if (httpResponse.getStatus() == 400)
                             throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
                                     httpResponse.getStatusText(), headersMap, problemDetails);
@@ -79,21 +84,25 @@ public class ServerSessionClientImpl extends ApiClient implements ServerSessionC
                             Object body = httpResponse.getBody();
                             String jsonString = new JSONObject(body).toString();
                             return objectMapper.readValue(jsonString, ODataValueOfBoolean.class);
-                        } catch (JsonProcessingException e) {
+                        } catch (JsonProcessingException | IllegalStateException e) {
                             e.printStackTrace();
                             return null;
                         }
                     } else {
                         Object body = httpResponse.getBody();
                         ProblemDetails problemDetails;
+                        Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
                             String jsonString = new JSONObject(body).toString();
                             problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
-                        } catch (JsonProcessingException e) {
-                            e.printStackTrace();
-                            return null;
+                        } catch (JsonProcessingException | IllegalStateException e) {
+                            UnirestParsingException parsingException = httpResponse
+                                    .getParsingError()
+                                    .orElseGet(null);
+                            throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(),
+                                    (parsingException == null) ? null : parsingException.getOriginalBody(), headersMap,
+                                    null);
                         }
-                        Map<String, String> headersMap = getHeadersMap(httpResponse);
                         if (httpResponse.getStatus() == 401)
                             throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
                                     httpResponse.getStatusText(), headersMap, problemDetails);
@@ -119,21 +128,25 @@ public class ServerSessionClientImpl extends ApiClient implements ServerSessionC
                             Object body = httpResponse.getBody();
                             String jsonString = new JSONObject(body).toString();
                             return objectMapper.readValue(jsonString, ODataValueOfDateTime.class);
-                        } catch (JsonProcessingException e) {
+                        } catch (JsonProcessingException | IllegalStateException e) {
                             e.printStackTrace();
                             return null;
                         }
                     } else {
                         Object body = httpResponse.getBody();
                         ProblemDetails problemDetails;
+                        Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
                             String jsonString = new JSONObject(body).toString();
                             problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
-                        } catch (JsonProcessingException e) {
-                            e.printStackTrace();
-                            return null;
+                        } catch (JsonProcessingException | IllegalStateException e) {
+                            UnirestParsingException parsingException = httpResponse
+                                    .getParsingError()
+                                    .orElseGet(null);
+                            throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(),
+                                    (parsingException == null) ? null : parsingException.getOriginalBody(), headersMap,
+                                    null);
                         }
-                        Map<String, String> headersMap = getHeadersMap(httpResponse);
                         if (httpResponse.getStatus() == 400)
                             throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
                                     httpResponse.getStatusText(), headersMap, problemDetails);

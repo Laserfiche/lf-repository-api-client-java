@@ -10,7 +10,7 @@ public interface ServerSessionClient {
     /**
      * - Deprecated.
      * - Invalidates the server session.
-     * - Acts as a "logout" operation, and invalidates the session associated with the provided access token. This method should be used when the client wants to clean up the current session.
+     * - Acts as a &quot;logout&quot; operation, and invalidates the session associated with the provided access token. This method should be used when the client wants to clean up the current session.
      * - Only available in Laserfiche Cloud.
      *
      * @param repoId The requested repository ID.

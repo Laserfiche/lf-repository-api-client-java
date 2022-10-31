@@ -5,6 +5,7 @@ import com.laserfiche.repository.api.clients.TasksClient;
 import com.laserfiche.repository.api.clients.impl.model.OperationProgress;
 import com.laserfiche.repository.api.clients.impl.model.ProblemDetails;
 import kong.unirest.UnirestInstance;
+import kong.unirest.UnirestParsingException;
 import kong.unirest.json.JSONObject;
 
 import java.util.Map;
@@ -30,21 +31,25 @@ public class TasksClientImpl extends ApiClient implements TasksClient {
                             Object body = httpResponse.getBody();
                             String jsonString = new JSONObject(body).toString();
                             return objectMapper.readValue(jsonString, OperationProgress.class);
-                        } catch (JsonProcessingException e) {
+                        } catch (JsonProcessingException | IllegalStateException e) {
                             e.printStackTrace();
                             return null;
                         }
                     } else {
                         Object body = httpResponse.getBody();
                         ProblemDetails problemDetails;
+                        Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
                             String jsonString = new JSONObject(body).toString();
                             problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
-                        } catch (JsonProcessingException e) {
-                            e.printStackTrace();
-                            return null;
+                        } catch (JsonProcessingException | IllegalStateException e) {
+                            UnirestParsingException parsingException = httpResponse
+                                    .getParsingError()
+                                    .orElseGet(null);
+                            throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(),
+                                    (parsingException == null) ? null : parsingException.getOriginalBody(), headersMap,
+                                    null);
                         }
-                        Map<String, String> headersMap = getHeadersMap(httpResponse);
                         if (httpResponse.getStatus() == 400)
                             throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
                                     httpResponse.getStatusText(), headersMap, problemDetails);
@@ -80,14 +85,18 @@ public class TasksClientImpl extends ApiClient implements TasksClient {
                     } else {
                         Object body = httpResponse.getBody();
                         ProblemDetails problemDetails;
+                        Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
                             String jsonString = new JSONObject(body).toString();
                             problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
-                        } catch (JsonProcessingException e) {
-                            e.printStackTrace();
-                            return null;
+                        } catch (JsonProcessingException | IllegalStateException e) {
+                            UnirestParsingException parsingException = httpResponse
+                                    .getParsingError()
+                                    .orElseGet(null);
+                            throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(),
+                                    (parsingException == null) ? null : parsingException.getOriginalBody(), headersMap,
+                                    null);
                         }
-                        Map<String, String> headersMap = getHeadersMap(httpResponse);
                         if (httpResponse.getStatus() == 400)
                             throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
                                     httpResponse.getStatusText(), headersMap, problemDetails);

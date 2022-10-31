@@ -2,11 +2,11 @@ package com.laserfiche.repository.api.clients;
 
 import com.laserfiche.repository.api.clients.impl.model.*;
 
-import java.io.File;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 public interface EntriesClient {
@@ -46,7 +46,7 @@ public interface EntriesClient {
             Integer maxPageSize);
 
     /**
-     * Provides the functionality to iteratively (i.e. through paging) call <b>getFieldValues</b>, and apply a function on the response of each iteration.
+     * Provides the functionality to iteratively (i.e. through paging) call &lt;b&gt;getFieldValues&lt;/b&gt;, and apply a function on the response of each iteration.
      *
      * @param callback    A delegate that will be called each time new data is retrieved. Returns false to stop receiving more data; returns true to be called again if there's more data.
      * @param maxPageSize Optionally specify the maximum number of items to retrieve.
@@ -97,6 +97,7 @@ public interface EntriesClient {
      *                      renamed if an entry already exists with the given name in the folder. The default value is false.
      * @param culture       An optional query parameter used to indicate the locale that should be used.
      *                      The value should be a standard language tag. This may be used when setting field values with tokens.
+     * @param inputStream   An InputStream object to read the raw bytes for the file to be uploaded.
      * @return CompletableFuture&lt;CreateEntryResult&gt; The return value
      */
     CompletableFuture<CreateEntryResult> importDocument(String repoId, Integer parentEntryId, String fileName,
@@ -131,7 +132,7 @@ public interface EntriesClient {
             Integer maxPageSize);
 
     /**
-     * Provides the functionality to iteratively (i.e. through paging) call <b>getLinkValuesFromEntry</b>, and apply a function on the response of each iteration.
+     * Provides the functionality to iteratively (i.e. through paging) call &lt;b&gt;getLinkValuesFromEntry&lt;/b&gt;, and apply a function on the response of each iteration.
      *
      * @param callback    A delegate that will be called each time new data is retrieved. Returns false to stop receiving more data; returns true to be called again if there's more data.
      * @param maxPageSize Optionally specify the maximum number of items to retrieve.
@@ -278,27 +279,30 @@ public interface EntriesClient {
      * - Provide an entry ID and audit reason/comment in the request body, and get the edoc resource as part of the response content.
      * - Optional header: Range. Use the Range header (single range with byte unit) to retrieve partial content of the edoc, rather than the entire edoc. This route is identical to the GET edoc route, but allows clients to include an audit reason when downloading the edoc.
      *
-     * @param repoId  The requested repository ID.
-     * @param entryId The requested document ID.
-     * @param range   An optional header used to retrieve partial content of the edoc. Only supports single
-     *                range with byte unit.
-     * @return CompletableFuture&lt;File&gt; The return value
+     * @param repoId              The requested repository ID.
+     * @param entryId             The requested document ID.
+     * @param range               An optional header used to retrieve partial content of the edoc. Only supports single
+     *                            range with byte unit.
+     * @param inputStreamConsumer A Consumer&lt;InputStream&gt; object that the is provided with the response's inputStream to consume it, if the request has been successful.
+     * @return CompletableFuture&lt;Void&gt; The return value
      */
-    CompletableFuture<File> exportDocumentWithAuditReason(String repoId, Integer entryId,
-            GetEdocWithAuditReasonRequest requestBody, String range);
+    CompletableFuture<Void> exportDocumentWithAuditReason(String repoId, Integer entryId,
+            GetEdocWithAuditReasonRequest requestBody, String range, Consumer<InputStream> inputStreamConsumer);
 
     /**
      * - Returns an entry's edoc resource in a stream format.
      * - Provide an entry ID, and get the edoc resource as part of the response content.
      * - Optional header: Range. Use the Range header (single range with byte unit) to retrieve partial content of the edoc, rather than the entire edoc.
      *
-     * @param repoId  The requested repository ID.
-     * @param entryId The requested document ID.
-     * @param range   An optional header used to retrieve partial content of the edoc. Only supports single
-     *                range with byte unit.
-     * @return CompletableFuture&lt;File&gt; The return value
+     * @param repoId              The requested repository ID.
+     * @param entryId             The requested document ID.
+     * @param range               An optional header used to retrieve partial content of the edoc. Only supports single
+     *                            range with byte unit.
+     * @param inputStreamConsumer A Consumer&lt;InputStream&gt; object that the is provided with the response's inputStream to consume it, if the request has been successful.
+     * @return CompletableFuture&lt;Void&gt; The return value
      */
-    CompletableFuture<File> exportDocument(String repoId, Integer entryId, String range);
+    CompletableFuture<Void> exportDocument(String repoId, Integer entryId, String range,
+            Consumer<InputStream> inputStreamConsumer);
 
     /**
      * - Delete the edoc associated with the provided entry ID.
@@ -322,7 +326,7 @@ public interface EntriesClient {
 
     /**
      * - Delete the pages associated with the provided entry ID. If no pageRange is specified, all pages will be deleted.
-     * - Optional parameter: pageRange (default empty). The value should be a comma-seperated string which contains non-overlapping single values, or page ranges. Ex: "1,2,3", "1-3,5", "2-7,10-12."
+     * - Optional parameter: pageRange (default empty). The value should be a comma-seperated string which contains non-overlapping single values, or page ranges. Ex: &quot;1,2,3&quot;, &quot;1-3,5&quot;, &quot;2-7,10-12.&quot;
      *
      * @param repoId    The requested repository ID.
      * @param entryId   The requested document ID.
@@ -334,7 +338,7 @@ public interface EntriesClient {
     /**
      * - Returns the children entries of a folder in the repository.
      * - Provide an entry ID (must be a folder), and get a paged listing of entries in that folder. Used as a way of navigating through the repository.
-     * - Default page size: 100. Allowed OData query options: Select | Count | OrderBy | Skip | Top | SkipToken | Prefer. OData $OrderBy syntax should follow: "PropertyName direction,PropertyName2 direction". Sort order can be either value "asc" or "desc". Optional query parameters: groupByOrderType (bool). This query parameter decides if results are returned in groups based on their entry type. Entries returned in the listing are not automatically converted to their subtype (Folder, Shortcut, Document), so clients who want model-specific information should request it via the GET entry by ID route.
+     * - Default page size: 100. Allowed OData query options: Select | Count | OrderBy | Skip | Top | SkipToken | Prefer. OData $OrderBy syntax should follow: &quot;PropertyName direction,PropertyName2 direction&quot;. Sort order can be either value &quot;asc&quot; or &quot;desc&quot;. Optional query parameters: groupByOrderType (bool). This query parameter decides if results are returned in groups based on their entry type. Entries returned in the listing are not automatically converted to their subtype (Folder, Shortcut, Document), so clients who want model-specific information should request it via the GET entry by ID route.
      * - Optionally returns field values for the entries in the folder. Each field name needs to be specified in the request. Maximum limit of 10 field names.
      * - If field values are requested, only the first value is returned if it is a multi value field.
      * - Null or Empty field values should not be used to determine if a field is assigned to the entry.
@@ -369,7 +373,7 @@ public interface EntriesClient {
     CompletableFuture<ODataValueContextOfIListOfEntry> getEntryListingNextLink(String nextLink, Integer maxPageSize);
 
     /**
-     * Provides the functionality to iteratively (i.e. through paging) call <b>getEntryListing</b>, and apply a function on the response of each iteration.
+     * Provides the functionality to iteratively (i.e. through paging) call &lt;b&gt;getEntryListing&lt;/b&gt;, and apply a function on the response of each iteration.
      *
      * @param callback         A delegate that will be called each time new data is retrieved. Returns false to stop receiving more data; returns true to be called again if there's more data.
      * @param maxPageSize      Optionally specify the maximum number of items to retrieve.
@@ -441,7 +445,7 @@ public interface EntriesClient {
             Integer maxPageSize);
 
     /**
-     * Provides the functionality to iteratively (i.e. through paging) call <b>getTagsAssignedToEntry</b>, and apply a function on the response of each iteration.
+     * Provides the functionality to iteratively (i.e. through paging) call &lt;b&gt;getTagsAssignedToEntry&lt;/b&gt;, and apply a function on the response of each iteration.
      *
      * @param callback    A delegate that will be called each time new data is retrieved. Returns false to stop receiving more data; returns true to be called again if there's more data.
      * @param maxPageSize Optionally specify the maximum number of items to retrieve.

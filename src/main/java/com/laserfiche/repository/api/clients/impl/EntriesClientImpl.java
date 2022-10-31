@@ -5,14 +5,15 @@ import com.laserfiche.repository.api.clients.EntriesClient;
 import com.laserfiche.repository.api.clients.impl.model.*;
 import kong.unirest.Header;
 import kong.unirest.UnirestInstance;
+import kong.unirest.UnirestParsingException;
 import kong.unirest.json.JSONObject;
 
-import java.io.File;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -55,21 +56,25 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                             Object body = httpResponse.getBody();
                             String jsonString = new JSONObject(body).toString();
                             return objectMapper.readValue(jsonString, ODataValueContextOfIListOfFieldValue.class);
-                        } catch (JsonProcessingException e) {
+                        } catch (JsonProcessingException | IllegalStateException e) {
                             e.printStackTrace();
                             return null;
                         }
                     } else {
                         Object body = httpResponse.getBody();
                         ProblemDetails problemDetails;
+                        Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
                             String jsonString = new JSONObject(body).toString();
                             problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
-                        } catch (JsonProcessingException e) {
-                            e.printStackTrace();
-                            return null;
+                        } catch (JsonProcessingException | IllegalStateException e) {
+                            UnirestParsingException parsingException = httpResponse
+                                    .getParsingError()
+                                    .orElseGet(null);
+                            throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(),
+                                    (parsingException == null) ? null : parsingException.getOriginalBody(), headersMap,
+                                    null);
                         }
-                        Map<String, String> headersMap = getHeadersMap(httpResponse);
                         if (httpResponse.getStatus() == 400)
                             throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
                                     httpResponse.getStatusText(), headersMap, problemDetails);
@@ -136,21 +141,25 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                             Object body = httpResponse.getBody();
                             String jsonString = new JSONObject(body).toString();
                             return objectMapper.readValue(jsonString, ODataValueOfIListOfFieldValue.class);
-                        } catch (JsonProcessingException e) {
+                        } catch (JsonProcessingException | IllegalStateException e) {
                             e.printStackTrace();
                             return null;
                         }
                     } else {
                         Object body = httpResponse.getBody();
                         ProblemDetails problemDetails;
+                        Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
                             String jsonString = new JSONObject(body).toString();
                             problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
-                        } catch (JsonProcessingException e) {
-                            e.printStackTrace();
-                            return null;
+                        } catch (JsonProcessingException | IllegalStateException e) {
+                            UnirestParsingException parsingException = httpResponse
+                                    .getParsingError()
+                                    .orElseGet(null);
+                            throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(),
+                                    (parsingException == null) ? null : parsingException.getOriginalBody(), headersMap,
+                                    null);
                         }
-                        Map<String, String> headersMap = getHeadersMap(httpResponse);
                         if (httpResponse.getStatus() == 400)
                             throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
                                     httpResponse.getStatusText(), headersMap, problemDetails);
@@ -195,21 +204,25 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                             Object body = httpResponse.getBody();
                             String jsonString = new JSONObject(body).toString();
                             return objectMapper.readValue(jsonString, CreateEntryResult.class);
-                        } catch (JsonProcessingException e) {
+                        } catch (JsonProcessingException | IllegalStateException e) {
                             e.printStackTrace();
                             return null;
                         }
                     } else {
                         Object body = httpResponse.getBody();
                         ProblemDetails problemDetails;
+                        Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
                             String jsonString = new JSONObject(body).toString();
                             problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
-                        } catch (JsonProcessingException e) {
-                            e.printStackTrace();
-                            return null;
+                        } catch (JsonProcessingException | IllegalStateException e) {
+                            UnirestParsingException parsingException = httpResponse
+                                    .getParsingError()
+                                    .orElseGet(null);
+                            throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(),
+                                    (parsingException == null) ? null : parsingException.getOriginalBody(), headersMap,
+                                    null);
                         }
-                        Map<String, String> headersMap = getHeadersMap(httpResponse);
                         if (httpResponse.getStatus() == 400)
                             throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
                                     httpResponse.getStatusText(), headersMap, problemDetails);
@@ -269,21 +282,25 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                             Object body = httpResponse.getBody();
                             String jsonString = new JSONObject(body).toString();
                             return objectMapper.readValue(jsonString, ODataValueContextOfIListOfWEntryLinkInfo.class);
-                        } catch (JsonProcessingException e) {
+                        } catch (JsonProcessingException | IllegalStateException e) {
                             e.printStackTrace();
                             return null;
                         }
                     } else {
                         Object body = httpResponse.getBody();
                         ProblemDetails problemDetails;
+                        Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
                             String jsonString = new JSONObject(body).toString();
                             problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
-                        } catch (JsonProcessingException e) {
-                            e.printStackTrace();
-                            return null;
+                        } catch (JsonProcessingException | IllegalStateException e) {
+                            UnirestParsingException parsingException = httpResponse
+                                    .getParsingError()
+                                    .orElseGet(null);
+                            throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(),
+                                    (parsingException == null) ? null : parsingException.getOriginalBody(), headersMap,
+                                    null);
                         }
-                        Map<String, String> headersMap = getHeadersMap(httpResponse);
                         if (httpResponse.getStatus() == 400)
                             throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
                                     httpResponse.getStatusText(), headersMap, problemDetails);
@@ -348,21 +365,25 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                             Object body = httpResponse.getBody();
                             String jsonString = new JSONObject(body).toString();
                             return objectMapper.readValue(jsonString, ODataValueOfIListOfWEntryLinkInfo.class);
-                        } catch (JsonProcessingException e) {
+                        } catch (JsonProcessingException | IllegalStateException e) {
                             e.printStackTrace();
                             return null;
                         }
                     } else {
                         Object body = httpResponse.getBody();
                         ProblemDetails problemDetails;
+                        Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
                             String jsonString = new JSONObject(body).toString();
                             problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
-                        } catch (JsonProcessingException e) {
-                            e.printStackTrace();
-                            return null;
+                        } catch (JsonProcessingException | IllegalStateException e) {
+                            UnirestParsingException parsingException = httpResponse
+                                    .getParsingError()
+                                    .orElseGet(null);
+                            throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(),
+                                    (parsingException == null) ? null : parsingException.getOriginalBody(), headersMap,
+                                    null);
                         }
-                        Map<String, String> headersMap = getHeadersMap(httpResponse);
                         if (httpResponse.getStatus() == 400)
                             throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
                                     httpResponse.getStatusText(), headersMap, problemDetails);
@@ -406,21 +427,25 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                             Object body = httpResponse.getBody();
                             String jsonString = new JSONObject(body).toString();
                             return objectMapper.readValue(jsonString, Entry.class);
-                        } catch (JsonProcessingException e) {
+                        } catch (JsonProcessingException | IllegalStateException e) {
                             e.printStackTrace();
                             return null;
                         }
                     } else {
                         Object body = httpResponse.getBody();
                         ProblemDetails problemDetails;
+                        Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
                             String jsonString = new JSONObject(body).toString();
                             problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
-                        } catch (JsonProcessingException e) {
-                            e.printStackTrace();
-                            return null;
+                        } catch (JsonProcessingException | IllegalStateException e) {
+                            UnirestParsingException parsingException = httpResponse
+                                    .getParsingError()
+                                    .orElseGet(null);
+                            throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(),
+                                    (parsingException == null) ? null : parsingException.getOriginalBody(), headersMap,
+                                    null);
                         }
-                        Map<String, String> headersMap = getHeadersMap(httpResponse);
                         if (httpResponse.getStatus() == 400)
                             throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
                                     httpResponse.getStatusText(), headersMap, problemDetails);
@@ -459,21 +484,25 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                             Object body = httpResponse.getBody();
                             String jsonString = new JSONObject(body).toString();
                             return objectMapper.readValue(jsonString, Entry.class);
-                        } catch (JsonProcessingException e) {
+                        } catch (JsonProcessingException | IllegalStateException e) {
                             e.printStackTrace();
                             return null;
                         }
                     } else {
                         Object body = httpResponse.getBody();
                         ProblemDetails problemDetails;
+                        Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
                             String jsonString = new JSONObject(body).toString();
                             problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
-                        } catch (JsonProcessingException e) {
-                            e.printStackTrace();
-                            return null;
+                        } catch (JsonProcessingException | IllegalStateException e) {
+                            UnirestParsingException parsingException = httpResponse
+                                    .getParsingError()
+                                    .orElseGet(null);
+                            throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(),
+                                    (parsingException == null) ? null : parsingException.getOriginalBody(), headersMap,
+                                    null);
                         }
-                        Map<String, String> headersMap = getHeadersMap(httpResponse);
                         if (httpResponse.getStatus() == 400)
                             throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
                                     httpResponse.getStatusText(), headersMap, problemDetails);
@@ -515,21 +544,25 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                             Object body = httpResponse.getBody();
                             String jsonString = new JSONObject(body).toString();
                             return objectMapper.readValue(jsonString, new HashMap<String, String[]>().getClass());
-                        } catch (JsonProcessingException e) {
+                        } catch (JsonProcessingException | IllegalStateException e) {
                             e.printStackTrace();
                             return null;
                         }
                     } else {
                         Object body = httpResponse.getBody();
                         ProblemDetails problemDetails;
+                        Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
                             String jsonString = new JSONObject(body).toString();
                             problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
-                        } catch (JsonProcessingException e) {
-                            e.printStackTrace();
-                            return null;
+                        } catch (JsonProcessingException | IllegalStateException e) {
+                            UnirestParsingException parsingException = httpResponse
+                                    .getParsingError()
+                                    .orElseGet(null);
+                            throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(),
+                                    (parsingException == null) ? null : parsingException.getOriginalBody(), headersMap,
+                                    null);
                         }
-                        Map<String, String> headersMap = getHeadersMap(httpResponse);
                         if (httpResponse.getStatus() == 400)
                             throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
                                     httpResponse.getStatusText(), headersMap, problemDetails);
@@ -569,21 +602,25 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                             Object body = httpResponse.getBody();
                             String jsonString = new JSONObject(body).toString();
                             return objectMapper.readValue(jsonString, FindEntryResult.class);
-                        } catch (JsonProcessingException e) {
+                        } catch (JsonProcessingException | IllegalStateException e) {
                             e.printStackTrace();
                             return null;
                         }
                     } else {
                         Object body = httpResponse.getBody();
                         ProblemDetails problemDetails;
+                        Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
                             String jsonString = new JSONObject(body).toString();
                             problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
-                        } catch (JsonProcessingException e) {
-                            e.printStackTrace();
-                            return null;
+                        } catch (JsonProcessingException | IllegalStateException e) {
+                            UnirestParsingException parsingException = httpResponse
+                                    .getParsingError()
+                                    .orElseGet(null);
+                            throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(),
+                                    (parsingException == null) ? null : parsingException.getOriginalBody(), headersMap,
+                                    null);
                         }
-                        Map<String, String> headersMap = getHeadersMap(httpResponse);
                         if (httpResponse.getStatus() == 400)
                             throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
                                     httpResponse.getStatusText(), headersMap, problemDetails);
@@ -625,21 +662,25 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                             Object body = httpResponse.getBody();
                             String jsonString = new JSONObject(body).toString();
                             return objectMapper.readValue(jsonString, AcceptedOperation.class);
-                        } catch (JsonProcessingException e) {
+                        } catch (JsonProcessingException | IllegalStateException e) {
                             e.printStackTrace();
                             return null;
                         }
                     } else {
                         Object body = httpResponse.getBody();
                         ProblemDetails problemDetails;
+                        Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
                             String jsonString = new JSONObject(body).toString();
                             problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
-                        } catch (JsonProcessingException e) {
-                            e.printStackTrace();
-                            return null;
+                        } catch (JsonProcessingException | IllegalStateException e) {
+                            UnirestParsingException parsingException = httpResponse
+                                    .getParsingError()
+                                    .orElseGet(null);
+                            throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(),
+                                    (parsingException == null) ? null : parsingException.getOriginalBody(), headersMap,
+                                    null);
                         }
-                        Map<String, String> headersMap = getHeadersMap(httpResponse);
                         if (httpResponse.getStatus() == 400)
                             throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
                                     httpResponse.getStatusText(), headersMap, problemDetails);
@@ -677,21 +718,25 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                             Object body = httpResponse.getBody();
                             String jsonString = new JSONObject(body).toString();
                             return objectMapper.readValue(jsonString, Entry.class);
-                        } catch (JsonProcessingException e) {
+                        } catch (JsonProcessingException | IllegalStateException e) {
                             e.printStackTrace();
                             return null;
                         }
                     } else {
                         Object body = httpResponse.getBody();
                         ProblemDetails problemDetails;
+                        Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
                             String jsonString = new JSONObject(body).toString();
                             problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
-                        } catch (JsonProcessingException e) {
-                            e.printStackTrace();
-                            return null;
+                        } catch (JsonProcessingException | IllegalStateException e) {
+                            UnirestParsingException parsingException = httpResponse
+                                    .getParsingError()
+                                    .orElseGet(null);
+                            throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(),
+                                    (parsingException == null) ? null : parsingException.getOriginalBody(), headersMap,
+                                    null);
                         }
-                        Map<String, String> headersMap = getHeadersMap(httpResponse);
                         if (httpResponse.getStatus() == 400)
                             throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
                                     httpResponse.getStatusText(), headersMap, problemDetails);
@@ -733,21 +778,25 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                             Object body = httpResponse.getBody();
                             String jsonString = new JSONObject(body).toString();
                             return objectMapper.readValue(jsonString, Entry.class);
-                        } catch (JsonProcessingException e) {
+                        } catch (JsonProcessingException | IllegalStateException e) {
                             e.printStackTrace();
                             return null;
                         }
                     } else {
                         Object body = httpResponse.getBody();
                         ProblemDetails problemDetails;
+                        Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
                             String jsonString = new JSONObject(body).toString();
                             problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
-                        } catch (JsonProcessingException e) {
-                            e.printStackTrace();
-                            return null;
+                        } catch (JsonProcessingException | IllegalStateException e) {
+                            UnirestParsingException parsingException = httpResponse
+                                    .getParsingError()
+                                    .orElseGet(null);
+                            throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(),
+                                    (parsingException == null) ? null : parsingException.getOriginalBody(), headersMap,
+                                    null);
                         }
-                        Map<String, String> headersMap = getHeadersMap(httpResponse);
                         if (httpResponse.getStatus() == 400)
                             throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
                                     httpResponse.getStatusText(), headersMap, problemDetails);
@@ -792,21 +841,25 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                             Object body = httpResponse.getBody();
                             String jsonString = new JSONObject(body).toString();
                             return objectMapper.readValue(jsonString, AcceptedOperation.class);
-                        } catch (JsonProcessingException e) {
+                        } catch (JsonProcessingException | IllegalStateException e) {
                             e.printStackTrace();
                             return null;
                         }
                     } else {
                         Object body = httpResponse.getBody();
                         ProblemDetails problemDetails;
+                        Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
                             String jsonString = new JSONObject(body).toString();
                             problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
-                        } catch (JsonProcessingException e) {
-                            e.printStackTrace();
-                            return null;
+                        } catch (JsonProcessingException | IllegalStateException e) {
+                            UnirestParsingException parsingException = httpResponse
+                                    .getParsingError()
+                                    .orElseGet(null);
+                            throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(),
+                                    (parsingException == null) ? null : parsingException.getOriginalBody(), headersMap,
+                                    null);
                         }
-                        Map<String, String> headersMap = getHeadersMap(httpResponse);
                         if (httpResponse.getStatus() == 400)
                             throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
                                     httpResponse.getStatusText(), headersMap, problemDetails);
@@ -829,8 +882,8 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
     }
 
     @Override
-    public CompletableFuture<File> exportDocumentWithAuditReason(String repoId, Integer entryId,
-            GetEdocWithAuditReasonRequest requestBody, String range) {
+    public CompletableFuture<Void> exportDocumentWithAuditReason(String repoId, Integer entryId,
+            GetEdocWithAuditReasonRequest requestBody, String range, Consumer<InputStream> inputStreamConsumer) {
         Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "entryId"},
                 new Object[]{repoId, entryId});
         Map<String, Object> headerParameters = getNonNullParameters(new String[]{"range"}, new Object[]{range});
@@ -838,60 +891,62 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 .entrySet()
                 .stream()
                 .collect(Collectors.toMap(Map.Entry::getKey, e -> (String) e.getValue()));
-        return httpClient
-                .post(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Document/GetEdocWithAuditReason")
-                .routeParam(pathParameters)
-                .headers(headerParametersWithStringTypeValue)
-                .contentType("application/json")
-                .body(requestBody)
-                .asObjectAsync(Object.class)
-                .thenApply(httpResponse -> {
-                    if (httpResponse.getStatus() == 200 || httpResponse.getStatus() == 206) {
-                        try {
-                            Object body = httpResponse.getBody();
-                            String jsonString = new JSONObject(body).toString();
-                            return objectMapper.readValue(jsonString, File.class);
-                        } catch (JsonProcessingException e) {
-                            e.printStackTrace();
-                            return null;
+        {
+            final RuntimeException[] exception = {null};
+            httpClient
+                    .post(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Document/GetEdocWithAuditReason")
+                    .routeParam(pathParameters)
+                    .headers(headerParametersWithStringTypeValue)
+                    .contentType("application/json")
+                    .body(requestBody)
+                    .thenConsume(rawResponse -> {
+                        if (rawResponse.getStatus() == 200 || rawResponse.getStatus() == 206) {
+                            inputStreamConsumer.accept(rawResponse.getContent());
+                        } else {
+                            ProblemDetails problemDetails = null;
+                            Map<String, String> headersMap = getHeadersMap(rawResponse.getHeaders());
+                            try {
+                                String jsonString = rawResponse.getContentAsString();
+                                problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
+                            } catch (JsonProcessingException | IllegalStateException e) {
+                                exception[0] = new ApiException(rawResponse.getStatusText(), rawResponse.getStatus(),
+                                        rawResponse.getContentAsString(), headersMap, null);
+                            }
+                            if (rawResponse.getStatus() == 400)
+                                exception[0] = new ApiException("Invalid or bad request.", rawResponse.getStatus(),
+                                        rawResponse.getStatusText(), headersMap, problemDetails);
+                            else if (rawResponse.getStatus() == 401)
+                                exception[0] = new ApiException("Access token is invalid or expired.",
+                                        rawResponse.getStatus(), rawResponse.getStatusText(), headersMap,
+                                        problemDetails);
+                            else if (rawResponse.getStatus() == 403)
+                                exception[0] = new ApiException("Access denied for the operation.",
+                                        rawResponse.getStatus(), rawResponse.getStatusText(), headersMap,
+                                        problemDetails);
+                            else if (rawResponse.getStatus() == 404)
+                                exception[0] = new ApiException("Request entry id not found.", rawResponse.getStatus(),
+                                        rawResponse.getStatusText(), headersMap, problemDetails);
+                            else if (rawResponse.getStatus() == 423)
+                                exception[0] = new ApiException("Entry is locked.", rawResponse.getStatus(),
+                                        rawResponse.getStatusText(), headersMap, problemDetails);
+                            else if (rawResponse.getStatus() == 429)
+                                exception[0] = new ApiException("Rate limit is reached.", rawResponse.getStatus(),
+                                        rawResponse.getStatusText(), headersMap, problemDetails);
+                            else
+                                exception[0] = new RuntimeException(rawResponse.getStatusText());
                         }
-                    } else {
-                        Object body = httpResponse.getBody();
-                        ProblemDetails problemDetails;
-                        try {
-                            String jsonString = new JSONObject(body).toString();
-                            problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
-                        } catch (JsonProcessingException e) {
-                            e.printStackTrace();
-                            return null;
-                        }
-                        Map<String, String> headersMap = getHeadersMap(httpResponse);
-                        if (httpResponse.getStatus() == 400)
-                            throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
-                        else if (httpResponse.getStatus() == 401)
-                            throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
-                        else if (httpResponse.getStatus() == 403)
-                            throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
-                        else if (httpResponse.getStatus() == 404)
-                            throw new ApiException("Request entry id not found.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
-                        else if (httpResponse.getStatus() == 423)
-                            throw new ApiException("Entry is locked.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
-                        else if (httpResponse.getStatus() == 429)
-                            throw new ApiException("Rate limit is reached.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
-                        else
-                            throw new RuntimeException(httpResponse.getStatusText());
-                    }
-                });
+                    });
+            if (exception[0] != null) {
+                throw exception[0];
+            } else {
+                return CompletableFuture.completedFuture(null);
+            }
+        }
     }
 
     @Override
-    public CompletableFuture<File> exportDocument(String repoId, Integer entryId, String range) {
+    public CompletableFuture<Void> exportDocument(String repoId, Integer entryId, String range,
+            Consumer<InputStream> inputStreamConsumer) {
         Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "entryId"},
                 new Object[]{repoId, entryId});
         Map<String, Object> headerParameters = getNonNullParameters(new String[]{"range"}, new Object[]{range});
@@ -899,54 +954,55 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 .entrySet()
                 .stream()
                 .collect(Collectors.toMap(Map.Entry::getKey, e -> (String) e.getValue()));
-        return httpClient
-                .get(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Document/edoc")
-                .routeParam(pathParameters)
-                .headers(headerParametersWithStringTypeValue)
-                .asObjectAsync(Object.class)
-                .thenApply(httpResponse -> {
-                    if (httpResponse.getStatus() == 200 || httpResponse.getStatus() == 206) {
-                        try {
-                            Object body = httpResponse.getBody();
-                            String jsonString = new JSONObject(body).toString();
-                            return objectMapper.readValue(jsonString, File.class);
-                        } catch (JsonProcessingException e) {
-                            e.printStackTrace();
-                            return null;
+        {
+            final RuntimeException[] exception = {null};
+            httpClient
+                    .get(baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Document/edoc")
+                    .routeParam(pathParameters)
+                    .headers(headerParametersWithStringTypeValue)
+                    .thenConsume(rawResponse -> {
+                        if (rawResponse.getStatus() == 200 || rawResponse.getStatus() == 206) {
+                            inputStreamConsumer.accept(rawResponse.getContent());
+                        } else {
+                            ProblemDetails problemDetails = null;
+                            Map<String, String> headersMap = getHeadersMap(rawResponse.getHeaders());
+                            try {
+                                String jsonString = rawResponse.getContentAsString();
+                                problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
+                            } catch (JsonProcessingException | IllegalStateException e) {
+                                exception[0] = new ApiException(rawResponse.getStatusText(), rawResponse.getStatus(),
+                                        rawResponse.getContentAsString(), headersMap, null);
+                            }
+                            if (rawResponse.getStatus() == 400)
+                                exception[0] = new ApiException("Invalid or bad request.", rawResponse.getStatus(),
+                                        rawResponse.getStatusText(), headersMap, problemDetails);
+                            else if (rawResponse.getStatus() == 401)
+                                exception[0] = new ApiException("Access token is invalid or expired.",
+                                        rawResponse.getStatus(), rawResponse.getStatusText(), headersMap,
+                                        problemDetails);
+                            else if (rawResponse.getStatus() == 403)
+                                exception[0] = new ApiException("Access denied for the operation.",
+                                        rawResponse.getStatus(), rawResponse.getStatusText(), headersMap,
+                                        problemDetails);
+                            else if (rawResponse.getStatus() == 404)
+                                exception[0] = new ApiException("Request entry id not found.", rawResponse.getStatus(),
+                                        rawResponse.getStatusText(), headersMap, problemDetails);
+                            else if (rawResponse.getStatus() == 423)
+                                exception[0] = new ApiException("Entry is locked.", rawResponse.getStatus(),
+                                        rawResponse.getStatusText(), headersMap, problemDetails);
+                            else if (rawResponse.getStatus() == 429)
+                                exception[0] = new ApiException("Rate limit is reached.", rawResponse.getStatus(),
+                                        rawResponse.getStatusText(), headersMap, problemDetails);
+                            else
+                                exception[0] = new RuntimeException(rawResponse.getStatusText());
                         }
-                    } else {
-                        Object body = httpResponse.getBody();
-                        ProblemDetails problemDetails;
-                        try {
-                            String jsonString = new JSONObject(body).toString();
-                            problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
-                        } catch (JsonProcessingException e) {
-                            e.printStackTrace();
-                            return null;
-                        }
-                        Map<String, String> headersMap = getHeadersMap(httpResponse);
-                        if (httpResponse.getStatus() == 400)
-                            throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
-                        else if (httpResponse.getStatus() == 401)
-                            throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
-                        else if (httpResponse.getStatus() == 403)
-                            throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
-                        else if (httpResponse.getStatus() == 404)
-                            throw new ApiException("Request entry id not found.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
-                        else if (httpResponse.getStatus() == 423)
-                            throw new ApiException("Entry is locked.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
-                        else if (httpResponse.getStatus() == 429)
-                            throw new ApiException("Rate limit is reached.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
-                        else
-                            throw new RuntimeException(httpResponse.getStatusText());
-                    }
-                });
+                    });
+            if (exception[0] != null) {
+                throw exception[0];
+            } else {
+                return CompletableFuture.completedFuture(null);
+            }
+        }
     }
 
     @Override
@@ -963,21 +1019,25 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                             Object body = httpResponse.getBody();
                             String jsonString = new JSONObject(body).toString();
                             return objectMapper.readValue(jsonString, ODataValueOfBoolean.class);
-                        } catch (JsonProcessingException e) {
+                        } catch (JsonProcessingException | IllegalStateException e) {
                             e.printStackTrace();
                             return null;
                         }
                     } else {
                         Object body = httpResponse.getBody();
                         ProblemDetails problemDetails;
+                        Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
                             String jsonString = new JSONObject(body).toString();
                             problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
-                        } catch (JsonProcessingException e) {
-                            e.printStackTrace();
-                            return null;
+                        } catch (JsonProcessingException | IllegalStateException e) {
+                            UnirestParsingException parsingException = httpResponse
+                                    .getParsingError()
+                                    .orElseGet(null);
+                            throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(),
+                                    (parsingException == null) ? null : parsingException.getOriginalBody(), headersMap,
+                                    null);
                         }
-                        Map<String, String> headersMap = getHeadersMap(httpResponse);
                         if (httpResponse.getStatus() == 400)
                             throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
                                     httpResponse.getStatusText(), headersMap, problemDetails);
@@ -1020,14 +1080,18 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                     } else {
                         Object body = httpResponse.getBody();
                         ProblemDetails problemDetails;
+                        Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
                             String jsonString = new JSONObject(body).toString();
                             problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
-                        } catch (JsonProcessingException e) {
-                            e.printStackTrace();
-                            return null;
+                        } catch (JsonProcessingException | IllegalStateException e) {
+                            UnirestParsingException parsingException = httpResponse
+                                    .getParsingError()
+                                    .orElseGet(null);
+                            throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(),
+                                    (parsingException == null) ? null : parsingException.getOriginalBody(), headersMap,
+                                    null);
                         }
-                        Map<String, String> headersMap = getHeadersMap(httpResponse);
                         if (httpResponse.getStatus() == 400)
                             throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
                                     httpResponse.getStatusText(), headersMap, problemDetails);
@@ -1068,21 +1132,25 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                             Object body = httpResponse.getBody();
                             String jsonString = new JSONObject(body).toString();
                             return objectMapper.readValue(jsonString, ODataValueOfBoolean.class);
-                        } catch (JsonProcessingException e) {
+                        } catch (JsonProcessingException | IllegalStateException e) {
                             e.printStackTrace();
                             return null;
                         }
                     } else {
                         Object body = httpResponse.getBody();
                         ProblemDetails problemDetails;
+                        Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
                             String jsonString = new JSONObject(body).toString();
                             problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
-                        } catch (JsonProcessingException e) {
-                            e.printStackTrace();
-                            return null;
+                        } catch (JsonProcessingException | IllegalStateException e) {
+                            UnirestParsingException parsingException = httpResponse
+                                    .getParsingError()
+                                    .orElseGet(null);
+                            throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(),
+                                    (parsingException == null) ? null : parsingException.getOriginalBody(), headersMap,
+                                    null);
                         }
-                        Map<String, String> headersMap = getHeadersMap(httpResponse);
                         if (httpResponse.getStatus() == 400)
                             throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
                                     httpResponse.getStatusText(), headersMap, problemDetails);
@@ -1141,21 +1209,25 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                             Object body = httpResponse.getBody();
                             String jsonString = new JSONObject(body).toString();
                             return objectMapper.readValue(jsonString, ODataValueContextOfIListOfEntry.class);
-                        } catch (JsonProcessingException e) {
+                        } catch (JsonProcessingException | IllegalStateException e) {
                             e.printStackTrace();
                             return null;
                         }
                     } else {
                         Object body = httpResponse.getBody();
                         ProblemDetails problemDetails;
+                        Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
                             String jsonString = new JSONObject(body).toString();
                             problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
-                        } catch (JsonProcessingException e) {
-                            e.printStackTrace();
-                            return null;
+                        } catch (JsonProcessingException | IllegalStateException e) {
+                            UnirestParsingException parsingException = httpResponse
+                                    .getParsingError()
+                                    .orElseGet(null);
+                            throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(),
+                                    (parsingException == null) ? null : parsingException.getOriginalBody(), headersMap,
+                                    null);
                         }
-                        Map<String, String> headersMap = getHeadersMap(httpResponse);
                         if (httpResponse.getStatus() == 400)
                             throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
                                     httpResponse.getStatusText(), headersMap, problemDetails);
@@ -1224,21 +1296,25 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                             Object body = httpResponse.getBody();
                             String jsonString = new JSONObject(body).toString();
                             return objectMapper.readValue(jsonString, Entry.class);
-                        } catch (JsonProcessingException e) {
+                        } catch (JsonProcessingException | IllegalStateException e) {
                             e.printStackTrace();
                             return null;
                         }
                     } else {
                         Object body = httpResponse.getBody();
                         ProblemDetails problemDetails;
+                        Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
                             String jsonString = new JSONObject(body).toString();
                             problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
-                        } catch (JsonProcessingException e) {
-                            e.printStackTrace();
-                            return null;
+                        } catch (JsonProcessingException | IllegalStateException e) {
+                            UnirestParsingException parsingException = httpResponse
+                                    .getParsingError()
+                                    .orElseGet(null);
+                            throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(),
+                                    (parsingException == null) ? null : parsingException.getOriginalBody(), headersMap,
+                                    null);
                         }
-                        Map<String, String> headersMap = getHeadersMap(httpResponse);
                         if (httpResponse.getStatus() == 400)
                             throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
                                     httpResponse.getStatusText(), headersMap, problemDetails);
@@ -1294,21 +1370,25 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                             Object body = httpResponse.getBody();
                             String jsonString = new JSONObject(body).toString();
                             return objectMapper.readValue(jsonString, ODataValueContextOfIListOfWTagInfo.class);
-                        } catch (JsonProcessingException e) {
+                        } catch (JsonProcessingException | IllegalStateException e) {
                             e.printStackTrace();
                             return null;
                         }
                     } else {
                         Object body = httpResponse.getBody();
                         ProblemDetails problemDetails;
+                        Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
                             String jsonString = new JSONObject(body).toString();
                             problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
-                        } catch (JsonProcessingException e) {
-                            e.printStackTrace();
-                            return null;
+                        } catch (JsonProcessingException | IllegalStateException e) {
+                            UnirestParsingException parsingException = httpResponse
+                                    .getParsingError()
+                                    .orElseGet(null);
+                            throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(),
+                                    (parsingException == null) ? null : parsingException.getOriginalBody(), headersMap,
+                                    null);
                         }
-                        Map<String, String> headersMap = getHeadersMap(httpResponse);
                         if (httpResponse.getStatus() == 400)
                             throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
                                     httpResponse.getStatusText(), headersMap, problemDetails);
@@ -1373,21 +1453,25 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                             Object body = httpResponse.getBody();
                             String jsonString = new JSONObject(body).toString();
                             return objectMapper.readValue(jsonString, ODataValueOfIListOfWTagInfo.class);
-                        } catch (JsonProcessingException e) {
+                        } catch (JsonProcessingException | IllegalStateException e) {
                             e.printStackTrace();
                             return null;
                         }
                     } else {
                         Object body = httpResponse.getBody();
                         ProblemDetails problemDetails;
+                        Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
                             String jsonString = new JSONObject(body).toString();
                             problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
-                        } catch (JsonProcessingException e) {
-                            e.printStackTrace();
-                            return null;
+                        } catch (JsonProcessingException | IllegalStateException e) {
+                            UnirestParsingException parsingException = httpResponse
+                                    .getParsingError()
+                                    .orElseGet(null);
+                            throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(),
+                                    (parsingException == null) ? null : parsingException.getOriginalBody(), headersMap,
+                                    null);
                         }
-                        Map<String, String> headersMap = getHeadersMap(httpResponse);
                         if (httpResponse.getStatus() == 400)
                             throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
                                     httpResponse.getStatusText(), headersMap, problemDetails);

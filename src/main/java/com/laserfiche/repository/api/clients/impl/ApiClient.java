@@ -8,7 +8,7 @@ import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.laserfiche.repository.api.clients.impl.deserialization.OffsetDateTimeDeserializer;
 import kong.unirest.Header;
-import kong.unirest.HttpResponse;
+import kong.unirest.Headers;
 import kong.unirest.UnirestInstance;
 import org.threeten.bp.OffsetDateTime;
 
@@ -73,9 +73,8 @@ public class ApiClient {
         return json;
     }
 
-    protected Map<String, String> getHeadersMap(HttpResponse httpResponse) {
-        return httpResponse
-                .getHeaders()
+    protected Map<String, String> getHeadersMap(Headers headers) {
+        return headers
                 .all()
                 .stream()
                 .collect(Collectors.toMap(Header::getName, Header::getValue));

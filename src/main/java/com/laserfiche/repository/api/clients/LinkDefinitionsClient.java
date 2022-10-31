@@ -48,7 +48,7 @@ public interface LinkDefinitionsClient {
             Integer maxPageSize);
 
     /**
-     * Provides the functionality to iteratively (i.e. through paging) call <b>getLinkDefinitions</b>, and apply a function on the response of each iteration.
+     * Provides the functionality to iteratively (i.e. through paging) call &lt;b&gt;getLinkDefinitions&lt;/b&gt;, and apply a function on the response of each iteration.
      *
      * @param callback    A delegate that will be called each time new data is retrieved. Returns false to stop receiving more data; returns true to be called again if there's more data.
      * @param maxPageSize Optionally specify the maximum number of items to retrieve.
