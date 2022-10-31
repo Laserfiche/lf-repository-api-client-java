@@ -6,6 +6,7 @@ import com.laserfiche.repository.api.clients.impl.model.ODataValueOfIListOfEntry
 import com.laserfiche.repository.api.clients.impl.model.ProblemDetails;
 import com.laserfiche.repository.api.clients.impl.model.SimpleSearchRequest;
 import kong.unirest.UnirestInstance;
+import kong.unirest.UnirestParsingException;
 import kong.unirest.json.JSONObject;
 
 import java.util.Map;
@@ -50,10 +51,12 @@ public class SimpleSearchesClientImpl extends ApiClient implements SimpleSearche
                             String jsonString = new JSONObject(body).toString();
                             problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
                         } catch (JsonProcessingException | IllegalStateException e) {
-                            throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(), httpResponse
+                            UnirestParsingException parsingException = httpResponse
                                     .getParsingError()
-                                    .get()
-                                    .getOriginalBody(), headersMap, null);
+                                    .orElseGet(null);
+                            throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(),
+                                    (parsingException == null) ? null : parsingException.getOriginalBody(), headersMap,
+                                    null);
                         }
                         if (httpResponse.getStatus() == 400)
                             throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),

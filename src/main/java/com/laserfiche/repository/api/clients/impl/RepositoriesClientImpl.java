@@ -5,6 +5,7 @@ import com.laserfiche.repository.api.clients.RepositoriesClient;
 import com.laserfiche.repository.api.clients.impl.model.ProblemDetails;
 import com.laserfiche.repository.api.clients.impl.model.RepositoryInfo;
 import kong.unirest.UnirestInstance;
+import kong.unirest.UnirestParsingException;
 import kong.unirest.json.JSONArray;
 import kong.unirest.json.JSONObject;
 
@@ -41,10 +42,12 @@ public class RepositoriesClientImpl extends ApiClient implements RepositoriesCli
                             String jsonString = new JSONObject(body).toString();
                             problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
                         } catch (JsonProcessingException | IllegalStateException e) {
-                            throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(), httpResponse
+                            UnirestParsingException parsingException = httpResponse
                                     .getParsingError()
-                                    .get()
-                                    .getOriginalBody(), headersMap, null);
+                                    .orElseGet(null);
+                            throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(),
+                                    (parsingException == null) ? null : parsingException.getOriginalBody(), headersMap,
+                                    null);
                         }
                         if (httpResponse.getStatus() == 400)
                             throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),

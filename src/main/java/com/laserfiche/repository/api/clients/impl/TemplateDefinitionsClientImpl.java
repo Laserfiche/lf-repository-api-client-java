@@ -7,6 +7,7 @@ import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIList
 import com.laserfiche.repository.api.clients.impl.model.ProblemDetails;
 import com.laserfiche.repository.api.clients.impl.model.WTemplateInfo;
 import kong.unirest.UnirestInstance;
+import kong.unirest.UnirestParsingException;
 import kong.unirest.json.JSONObject;
 
 import java.util.Map;
@@ -64,10 +65,12 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
                             String jsonString = new JSONObject(body).toString();
                             problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
                         } catch (JsonProcessingException | IllegalStateException e) {
-                            throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(), httpResponse
+                            UnirestParsingException parsingException = httpResponse
                                     .getParsingError()
-                                    .get()
-                                    .getOriginalBody(), headersMap, null);
+                                    .orElseGet(null);
+                            throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(),
+                                    (parsingException == null) ? null : parsingException.getOriginalBody(), headersMap,
+                                    null);
                         }
                         if (httpResponse.getStatus() == 400)
                             throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
@@ -162,10 +165,12 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
                             String jsonString = new JSONObject(body).toString();
                             problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
                         } catch (JsonProcessingException | IllegalStateException e) {
-                            throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(), httpResponse
+                            UnirestParsingException parsingException = httpResponse
                                     .getParsingError()
-                                    .get()
-                                    .getOriginalBody(), headersMap, null);
+                                    .orElseGet(null);
+                            throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(),
+                                    (parsingException == null) ? null : parsingException.getOriginalBody(), headersMap,
+                                    null);
                         }
                         if (httpResponse.getStatus() == 400)
                             throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
@@ -261,10 +266,12 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
                             String jsonString = new JSONObject(body).toString();
                             problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
                         } catch (JsonProcessingException | IllegalStateException e) {
-                            throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(), httpResponse
+                            UnirestParsingException parsingException = httpResponse
                                     .getParsingError()
-                                    .get()
-                                    .getOriginalBody(), headersMap, null);
+                                    .orElseGet(null);
+                            throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(),
+                                    (parsingException == null) ? null : parsingException.getOriginalBody(), headersMap,
+                                    null);
                         }
                         if (httpResponse.getStatus() == 400)
                             throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
@@ -343,10 +350,12 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
                             String jsonString = new JSONObject(body).toString();
                             problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
                         } catch (JsonProcessingException | IllegalStateException e) {
-                            throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(), httpResponse
+                            UnirestParsingException parsingException = httpResponse
                                     .getParsingError()
-                                    .get()
-                                    .getOriginalBody(), headersMap, null);
+                                    .orElseGet(null);
+                            throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(),
+                                    (parsingException == null) ? null : parsingException.getOriginalBody(), headersMap,
+                                    null);
                         }
                         if (httpResponse.getStatus() == 400)
                             throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
