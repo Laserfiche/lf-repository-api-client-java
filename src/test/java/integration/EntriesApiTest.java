@@ -2,7 +2,9 @@ package integration;
 
 import com.laserfiche.repository.api.RepositoryApiClient;
 import com.laserfiche.repository.api.clients.EntriesClient;
+import com.laserfiche.repository.api.clients.impl.ApiException;
 import com.laserfiche.repository.api.clients.impl.model.*;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -10,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionException;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
@@ -406,5 +409,23 @@ class EntriesApiTest extends BaseTest {
         assertNotNull(headers.get("Content-Length"));
     }
 
+    @Test
+    void getDocumentContentType_ProblemDetails_Fields_Are_Valid_When_Exception_Thrown() throws InterruptedException {
+        Exception thrown = Assertions.assertThrows(CompletionException.class, () -> {
+            client
+                    .getEntryListing(repoId, -1, false, null, false, "maxpagesize=100", null, null, null, null, null,
+                            false)
+                    .join();
+        });
+        assertNotNull(thrown);
+        assertTrue(thrown.getCause() instanceof ApiException);
+        ApiException apiException = (ApiException) thrown.getCause();
+        ProblemDetails problemDetails = apiException.getProblemDetails();
+        assertNotNull(problemDetails);
+        assertNotNull(problemDetails.getTitle());
+        assertNotNull(problemDetails.getType());
+        assertNotNull(problemDetails.getInstance());
+        assertNotNull(problemDetails.getStatus());
+    }
 
 }

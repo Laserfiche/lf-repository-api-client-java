@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.laserfiche.repository.api.clients.impl.deserialization.OffsetDateTimeDeserializer;
+import com.laserfiche.repository.api.clients.impl.model.ProblemDetails;
 import kong.unirest.Header;
 import kong.unirest.Headers;
 import kong.unirest.UnirestInstance;
@@ -78,5 +79,30 @@ public class ApiClient {
                 .all()
                 .stream()
                 .collect(Collectors.toMap(Header::getName, Header::getValue));
+    }
+
+    protected ProblemDetails deserializeToProblemDetails(String jsonString) throws JsonProcessingException {
+        ProblemDetails problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
+        if (problemDetails.get("title") != null)
+            problemDetails.setTitle(problemDetails
+                    .get("title")
+                    .toString());
+        if (problemDetails.get("type") != null)
+            problemDetails.setType(problemDetails
+                    .get("type")
+                    .toString());
+        if (problemDetails.get("instance") != null)
+            problemDetails.setInstance(problemDetails
+                    .get("instance")
+                    .toString());
+        if (problemDetails.get("detail") != null)
+            problemDetails.setDetail(problemDetails
+                    .get("detail")
+                    .toString());
+        problemDetails.setStatus(Integer.parseInt(problemDetails
+                .get("status")
+                .toString()));
+        problemDetails.setExtensions((Map<String, Object>) problemDetails.get("extensions"));
+        return problemDetails;
     }
 }
