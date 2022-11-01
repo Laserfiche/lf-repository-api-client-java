@@ -22,6 +22,11 @@ public class BaseTest {
     protected static Map<String, String> testHeaders;
     protected static RepositoryApiClient repositoryApiClient;
 
+    private enum AuthorizationType{
+        CloudAccessKey,
+        APIServerUsernamePassword
+    }
+
     @BeforeAll
     public static void setUp() {
         spKey = System.getenv("SERVICE_PRINCIPAL_KEY");
