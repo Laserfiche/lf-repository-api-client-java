@@ -66,7 +66,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                         Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
                             String jsonString = new JSONObject(body).toString();
-                            problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
+                            problemDetails = deserializeToProblemDetails(jsonString);
                         } catch (JsonProcessingException | IllegalStateException e) {
                             UnirestParsingException parsingException = httpResponse
                                     .getParsingError()
@@ -151,7 +151,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                         Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
                             String jsonString = new JSONObject(body).toString();
-                            problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
+                            problemDetails = deserializeToProblemDetails(jsonString);
                         } catch (JsonProcessingException | IllegalStateException e) {
                             UnirestParsingException parsingException = httpResponse
                                     .getParsingError()
@@ -214,7 +214,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                         Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
                             String jsonString = new JSONObject(body).toString();
-                            problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
+                            problemDetails = deserializeToProblemDetails(jsonString);
                         } catch (JsonProcessingException | IllegalStateException e) {
                             UnirestParsingException parsingException = httpResponse
                                     .getParsingError()
@@ -292,7 +292,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                         Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
                             String jsonString = new JSONObject(body).toString();
-                            problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
+                            problemDetails = deserializeToProblemDetails(jsonString);
                         } catch (JsonProcessingException | IllegalStateException e) {
                             UnirestParsingException parsingException = httpResponse
                                     .getParsingError()
@@ -375,7 +375,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                         Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
                             String jsonString = new JSONObject(body).toString();
-                            problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
+                            problemDetails = deserializeToProblemDetails(jsonString);
                         } catch (JsonProcessingException | IllegalStateException e) {
                             UnirestParsingException parsingException = httpResponse
                                     .getParsingError()
@@ -437,7 +437,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                         Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
                             String jsonString = new JSONObject(body).toString();
-                            problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
+                            problemDetails = deserializeToProblemDetails(jsonString);
                         } catch (JsonProcessingException | IllegalStateException e) {
                             UnirestParsingException parsingException = httpResponse
                                     .getParsingError()
@@ -494,7 +494,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                         Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
                             String jsonString = new JSONObject(body).toString();
-                            problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
+                            problemDetails = deserializeToProblemDetails(jsonString);
                         } catch (JsonProcessingException | IllegalStateException e) {
                             UnirestParsingException parsingException = httpResponse
                                     .getParsingError()
@@ -554,7 +554,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                         Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
                             String jsonString = new JSONObject(body).toString();
-                            problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
+                            problemDetails = deserializeToProblemDetails(jsonString);
                         } catch (JsonProcessingException | IllegalStateException e) {
                             UnirestParsingException parsingException = httpResponse
                                     .getParsingError()
@@ -612,7 +612,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                         Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
                             String jsonString = new JSONObject(body).toString();
-                            problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
+                            problemDetails = deserializeToProblemDetails(jsonString);
                         } catch (JsonProcessingException | IllegalStateException e) {
                             UnirestParsingException parsingException = httpResponse
                                     .getParsingError()
@@ -672,7 +672,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                         Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
                             String jsonString = new JSONObject(body).toString();
-                            problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
+                            problemDetails = deserializeToProblemDetails(jsonString);
                         } catch (JsonProcessingException | IllegalStateException e) {
                             UnirestParsingException parsingException = httpResponse
                                     .getParsingError()
@@ -728,7 +728,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                         Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
                             String jsonString = new JSONObject(body).toString();
-                            problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
+                            problemDetails = deserializeToProblemDetails(jsonString);
                         } catch (JsonProcessingException | IllegalStateException e) {
                             UnirestParsingException parsingException = httpResponse
                                     .getParsingError()
@@ -788,7 +788,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                         Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
                             String jsonString = new JSONObject(body).toString();
-                            problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
+                            problemDetails = deserializeToProblemDetails(jsonString);
                         } catch (JsonProcessingException | IllegalStateException e) {
                             UnirestParsingException parsingException = httpResponse
                                     .getParsingError()
@@ -851,7 +851,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                         Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
                             String jsonString = new JSONObject(body).toString();
-                            problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
+                            problemDetails = deserializeToProblemDetails(jsonString);
                         } catch (JsonProcessingException | IllegalStateException e) {
                             UnirestParsingException parsingException = httpResponse
                                     .getParsingError()
@@ -907,7 +907,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                             Map<String, String> headersMap = getHeadersMap(rawResponse.getHeaders());
                             try {
                                 String jsonString = rawResponse.getContentAsString();
-                                problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
+                                problemDetails = deserializeToProblemDetails(jsonString);
                             } catch (JsonProcessingException | IllegalStateException e) {
                                 exception[0] = new ApiException(rawResponse.getStatusText(), rawResponse.getStatus(),
                                         rawResponse.getContentAsString(), headersMap, null);
@@ -968,7 +968,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                             Map<String, String> headersMap = getHeadersMap(rawResponse.getHeaders());
                             try {
                                 String jsonString = rawResponse.getContentAsString();
-                                problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
+                                problemDetails = deserializeToProblemDetails(jsonString);
                             } catch (JsonProcessingException | IllegalStateException e) {
                                 exception[0] = new ApiException(rawResponse.getStatusText(), rawResponse.getStatus(),
                                         rawResponse.getContentAsString(), headersMap, null);
@@ -1029,7 +1029,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                         Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
                             String jsonString = new JSONObject(body).toString();
-                            problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
+                            problemDetails = deserializeToProblemDetails(jsonString);
                         } catch (JsonProcessingException | IllegalStateException e) {
                             UnirestParsingException parsingException = httpResponse
                                     .getParsingError()
@@ -1083,7 +1083,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                         Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
                             String jsonString = new JSONObject(body).toString();
-                            problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
+                            problemDetails = deserializeToProblemDetails(jsonString);
                         } catch (JsonProcessingException | IllegalStateException e) {
                             UnirestParsingException parsingException = httpResponse
                                     .getParsingError()
@@ -1142,7 +1142,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                         Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
                             String jsonString = new JSONObject(body).toString();
-                            problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
+                            problemDetails = deserializeToProblemDetails(jsonString);
                         } catch (JsonProcessingException | IllegalStateException e) {
                             UnirestParsingException parsingException = httpResponse
                                     .getParsingError()
@@ -1219,7 +1219,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                         Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
                             String jsonString = new JSONObject(body).toString();
-                            problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
+                            problemDetails = deserializeToProblemDetails(jsonString);
                         } catch (JsonProcessingException | IllegalStateException e) {
                             UnirestParsingException parsingException = httpResponse
                                     .getParsingError()
@@ -1306,7 +1306,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                         Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
                             String jsonString = new JSONObject(body).toString();
-                            problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
+                            problemDetails = deserializeToProblemDetails(jsonString);
                         } catch (JsonProcessingException | IllegalStateException e) {
                             UnirestParsingException parsingException = httpResponse
                                     .getParsingError()
@@ -1380,7 +1380,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                         Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
                             String jsonString = new JSONObject(body).toString();
-                            problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
+                            problemDetails = deserializeToProblemDetails(jsonString);
                         } catch (JsonProcessingException | IllegalStateException e) {
                             UnirestParsingException parsingException = httpResponse
                                     .getParsingError()
@@ -1463,7 +1463,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                         Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
                             String jsonString = new JSONObject(body).toString();
-                            problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
+                            problemDetails = deserializeToProblemDetails(jsonString);
                         } catch (JsonProcessingException | IllegalStateException e) {
                             UnirestParsingException parsingException = httpResponse
                                     .getParsingError()

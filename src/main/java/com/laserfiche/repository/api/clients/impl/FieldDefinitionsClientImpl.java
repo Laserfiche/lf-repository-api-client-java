@@ -48,7 +48,7 @@ public class FieldDefinitionsClientImpl extends ApiClient implements FieldDefini
                         Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
                             String jsonString = new JSONObject(body).toString();
-                            problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
+                            problemDetails = deserializeToProblemDetails(jsonString);
                         } catch (JsonProcessingException | IllegalStateException e) {
                             UnirestParsingException parsingException = httpResponse
                                     .getParsingError()
@@ -118,7 +118,7 @@ public class FieldDefinitionsClientImpl extends ApiClient implements FieldDefini
                         Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
                             String jsonString = new JSONObject(body).toString();
-                            problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
+                            problemDetails = deserializeToProblemDetails(jsonString);
                         } catch (JsonProcessingException | IllegalStateException e) {
                             UnirestParsingException parsingException = httpResponse
                                     .getParsingError()
