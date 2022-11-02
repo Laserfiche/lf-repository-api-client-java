@@ -21,34 +21,69 @@ public class BaseTest {
     protected static String repoId;
     protected static Map<String, String> testHeaders;
     protected static RepositoryApiClient repositoryApiClient;
+    protected static String username;
+    protected static String password;
+    protected static String baseUrl;
 
-    private enum AuthorizationType{
-        CloudAccessKey,
-        APIServerUsernamePassword
-    }
+    protected static String authorizationType;
 
     @BeforeAll
     public static void setUp() {
         spKey = System.getenv("SERVICE_PRINCIPAL_KEY");
         String accessKeyBase64 = System.getenv("ACCESS_KEY");
         repoId = System.getenv("REPOSITORY_ID");
+        username = System.getenv("APISERVER_USERNAME");
+        password = System.getenv("APISERVER_PASSWORD");
+        baseUrl = System.getenv("APISERVER_REPOSITORY_API_BASE_URL");
+        authorizationType = System.getenv("AUTHORIZATION_TYPE");
         String testHeaderValue = System.getenv("TEST_HEADER");
-        if (spKey == null && accessKeyBase64 == null && repoId == null && testHeaderValue == null) {
+        if (nullOrEmpty(authorizationType)) {
             // Load environment variables
             Dotenv dotenv = Dotenv
                     .configure()
                     .filename(".env")
                     .load();
-            accessKeyBase64 = dotenv.get("ACCESS_KEY");
-            spKey = dotenv.get("SERVICE_PRINCIPAL_KEY");
-            repoId = dotenv.get("REPOSITORY_ID");
+            authorizationType = dotenv.get("AUTHORIZATION_TYPE");
             testHeaderValue = dotenv.get("TEST_HEADER");
+            if (authorizationType.equalsIgnoreCase("CloudAccessKey")) {
+                if (nullOrEmpty(spKey) && nullOrEmpty(accessKeyBase64) && nullOrEmpty(repoId) && nullOrEmpty(
+                        testHeaderValue)) {
+                    accessKeyBase64 = dotenv.get("ACCESS_KEY");
+                    spKey = dotenv.get("SERVICE_PRINCIPAL_KEY");
+                    repoId = dotenv.get("REPOSITORY_ID");
+                    accessKey = AccessKey.createFromBase64EncodedAccessKey(accessKeyBase64);
+                }
+            } else if (authorizationType.equalsIgnoreCase("APIServerUsernamePassword")) {
+                if (nullOrEmpty(repoId) && nullOrEmpty(username) && nullOrEmpty(password) && nullOrEmpty(baseUrl)) {
+                    repoId = dotenv.get("REPOSITORY_ID");
+                    username = dotenv.get("APISERVER_USERNAME");
+                    password = dotenv.get("APISERVER_PASSWORD");
+                    baseUrl = dotenv.get("APISERVER_REPOSITORY_API_BASE_URL");
+                }
+            } else {
+                throw new IllegalArgumentException("Invalid Authorization Type Value");
+            }
         }
-        accessKey = AccessKey.createFromBase64EncodedAccessKey(accessKeyBase64);
         testHeaders = new HashMap<>();
         testHeaders.put(testHeaderValue, "true");
-        repositoryApiClient = RepositoryApiClientImpl.CreateFromAccessKey(spKey, accessKey);
-        repositoryApiClient.setDefaultRequestHeaders(testHeaders);
+        repositoryApiClient = createClient();
+    }
+
+    public static RepositoryApiClient createClient() {
+        if (repositoryApiClient == null) {
+            if (authorizationType.equalsIgnoreCase("CloudAccessKey")) {
+                if (nullOrEmpty(spKey) || accessKey == null)
+                    return null;
+                repositoryApiClient = RepositoryApiClientImpl.CreateFromAccessKey(spKey, accessKey);
+            } else if (authorizationType.equalsIgnoreCase("APIServerUsernamePassword")) {
+                if (nullOrEmpty(repoId) || nullOrEmpty(username) || nullOrEmpty(password) || nullOrEmpty(baseUrl))
+                    return null;
+                repositoryApiClient = RepositoryApiClientImpl.CreateFromUsernamePassword(repoId, username, password,
+                        baseUrl);
+            }
+            repositoryApiClient.setDefaultRequestHeaders(testHeaders);
+        }
+        return repositoryApiClient;
     }
 
     public static CompletableFuture<Entry> createEntry(RepositoryApiClient client, String entryName,

@@ -1,8 +1,6 @@
 package com.laserfiche.repository.api;
 
 import com.laserfiche.api.client.apiserver.TokenClient;
-import com.laserfiche.api.client.httphandlers.HttpRequestHandler;
-import com.laserfiche.api.client.httphandlers.UsernamePasswordHandler;
 import com.laserfiche.api.client.model.AccessKey;
 import com.laserfiche.repository.api.clients.*;
 import com.laserfiche.repository.api.clients.impl.*;
@@ -43,7 +41,8 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
         templateDefinitionsClient = new TemplateDefinitionsClientImpl(baseUrl, httpClient);
     }
 
-    public static RepositoryApiClient CreateFromHttpRequestHandler(String servicePrincipalKey, AccessKey accessKey, String baseUrl){
+    public static RepositoryApiClient CreateFromHttpRequestHandler(String servicePrincipalKey, AccessKey accessKey,
+            String baseUrl) {
         String baseUrlDebug = baseUrl != null ? baseUrl : "https://api." + accessKey.getDomain() + "/repository";
         httpClient = Unirest.spawnInstance();
         httpClient
@@ -53,13 +52,14 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
         return new RepositoryApiClientImpl(httpClient, baseUrlDebug);
     }
 
-    public static RepositoryApiClient CreateFromHttpRequestHandler(String repositoryId, String username, String password,
-            TokenClient client, String baseUrl){
-            httpClient = Unirest.spawnInstance();
-            httpClient
-                    .config()
-                    .setObjectMapper(new RepositoryClientObjectMapper())
-                    .interceptor(new SelfHostedInterceptor(repositoryId,username,password,baseUrl,client));
+    public static RepositoryApiClient CreateFromHttpRequestHandler(String repositoryId, String username,
+            String password,
+            TokenClient client, String baseUrl) {
+        httpClient = Unirest.spawnInstance();
+        httpClient
+                .config()
+                .setObjectMapper(new RepositoryClientObjectMapper())
+                .interceptor(new SelfHostedInterceptor(repositoryId, username, password, baseUrl, client));
         return new RepositoryApiClientImpl(httpClient, baseUrl);
     }
 
@@ -67,8 +67,9 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
         return CreateFromHttpRequestHandler(servicePrincipalKey, accessKey, null);
     }
 
-    public static RepositoryApiClient CreateFromUsernamePassword(String repoId, String username, String password, String baseUrl){
-        String baseUrlWithSlash = baseUrl.endsWith("/") ? baseUrl.substring(0, baseUrl.lastIndexOf("/")) : baseUrl;;
+    public static RepositoryApiClient CreateFromUsernamePassword(String repoId, String username, String password,
+            String baseUrl) {
+        String baseUrlWithSlash = baseUrl.endsWith("/") ? baseUrl.substring(0, baseUrl.lastIndexOf("/")) : baseUrl;
         return CreateFromHttpRequestHandler(repoId, username, password, null, baseUrlWithSlash);
     }
 
