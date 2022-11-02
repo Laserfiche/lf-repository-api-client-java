@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseable {
     private Map<String, String> defaultHeaders;
-    private static UnirestInstance httpClient;
+    private static UnirestInstance httpClient = Unirest.spawnInstance();
     private final AttributesClient attributesClient;
     private final AuditReasonsClient auditReasonsClient;
     private final EntriesClient entriesClient;
@@ -44,7 +44,6 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
     public static RepositoryApiClient CreateFromHttpRequestHandler(String servicePrincipalKey, AccessKey accessKey,
             String baseUrl) {
         String baseUrlDebug = baseUrl != null ? baseUrl : "https://api." + accessKey.getDomain() + "/repository";
-        httpClient = Unirest.spawnInstance();
         httpClient
                 .config()
                 .setObjectMapper(new RepositoryClientObjectMapper())
@@ -55,7 +54,6 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
     public static RepositoryApiClient CreateFromHttpRequestHandler(String repositoryId, String username,
             String password,
             TokenClient client, String baseUrl) {
-        httpClient = Unirest.spawnInstance();
         httpClient
                 .config()
                 .setObjectMapper(new RepositoryClientObjectMapper())
