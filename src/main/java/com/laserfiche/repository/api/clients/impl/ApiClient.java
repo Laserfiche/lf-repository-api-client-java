@@ -13,7 +13,9 @@ import kong.unirest.Headers;
 import kong.unirest.UnirestInstance;
 import org.threeten.bp.OffsetDateTime;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -57,8 +59,20 @@ public class ApiClient {
         Map<String, Object> paramKeyValuePairs = new HashMap<>();
         for (int i = 0; i < parameters.length; i++) {
             if (parameters[i] != null) {
-                paramKeyValuePairs.put(parameterNames[i],
-                        parameters[i] instanceof String ? parameters[i] : String.valueOf(parameters[i]));
+                List<Object> values = new ArrayList<>();
+                if (parameters[i] instanceof Object[]) {
+                    Object[] objects = (Object[]) parameters[i];
+                    for (Object object : objects) {
+                        values.add(object);
+                    }
+                } else {
+                    values.add(parameters[i]);
+                }
+                if (values.size() == 1) {
+                    paramKeyValuePairs.put(parameterNames[i], values.get(0));
+                } else {
+                    paramKeyValuePairs.put(parameterNames[i], values);
+                }
             }
         }
         return paramKeyValuePairs;

@@ -9,6 +9,8 @@ import kong.unirest.UnirestInstance;
 import kong.unirest.UnirestParsingException;
 import kong.unirest.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
@@ -28,6 +30,8 @@ public class SimpleSearchesClientImpl extends ApiClient implements SimpleSearche
         Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId"}, new Object[]{repoId});
         return httpClient
                 .post(baseUrl + "/v1/Repositories/{repoId}/SimpleSearches")
+                .queryString("fields", (queryParameters.get("fields") != null) ? (List) queryParameters.remove(
+                        "fields") : new ArrayList())
                 .queryString(queryParameters)
                 .routeParam(pathParameters)
                 .contentType("application/json")
