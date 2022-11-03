@@ -55,13 +55,13 @@ public class BaseTest {
                 throw new IllegalStateException("Environment variable REPOSITORY_ID does not exist.");
             }
             if (authorizationType.equalsIgnoreCase(authorizationTypes.CLOUDACCESSKEY.name())) {
-                if (nullOrEmpty(spKey) && nullOrEmpty(accessKeyBase64) && nullOrEmpty(repoId)) {
+                if (nullOrEmpty(spKey) && nullOrEmpty(accessKeyBase64)) {
                     accessKeyBase64 = dotenv.get("ACCESS_KEY");
                     spKey = dotenv.get("SERVICE_PRINCIPAL_KEY");
                     accessKey = AccessKey.createFromBase64EncodedAccessKey(accessKeyBase64);
                 }
             } else if (authorizationType.equalsIgnoreCase(authorizationTypes.APISERVERUSERNAMEPASSWORD.name())) {
-                if (nullOrEmpty(repoId) && nullOrEmpty(username) && nullOrEmpty(password) && nullOrEmpty(baseUrl)) {
+                if (nullOrEmpty(username) && nullOrEmpty(password) && nullOrEmpty(baseUrl)) {
                     username = dotenv.get("APISERVER_USERNAME");
                     password = dotenv.get("APISERVER_PASSWORD");
                     baseUrl = dotenv.get("APISERVER_REPOSITORY_API_BASE_URL");
