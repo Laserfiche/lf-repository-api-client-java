@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -47,12 +48,11 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
                             String jsonString = new JSONObject(body).toString();
                             problemDetails = deserializeToProblemDetails(jsonString);
                         } catch (JsonProcessingException | IllegalStateException e) {
-                            UnirestParsingException parsingException = httpResponse
-                                    .getParsingError()
-                                    .orElseGet(null);
+                            Optional<UnirestParsingException> parsingException = httpResponse.getParsingError();
                             throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(),
-                                    (parsingException == null) ? null : parsingException.getOriginalBody(), headersMap,
-                                    null);
+                                    (parsingException.isPresent() ? parsingException
+                                            .get()
+                                            .getOriginalBody() : null), headersMap, null);
                         }
                         if (httpResponse.getStatus() == 400)
                             throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
@@ -101,12 +101,11 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
                             String jsonString = new JSONObject(body).toString();
                             problemDetails = deserializeToProblemDetails(jsonString);
                         } catch (JsonProcessingException | IllegalStateException e) {
-                            UnirestParsingException parsingException = httpResponse
-                                    .getParsingError()
-                                    .orElseGet(null);
+                            Optional<UnirestParsingException> parsingException = httpResponse.getParsingError();
                             throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(),
-                                    (parsingException == null) ? null : parsingException.getOriginalBody(), headersMap,
-                                    null);
+                                    (parsingException.isPresent() ? parsingException
+                                            .get()
+                                            .getOriginalBody() : null), headersMap, null);
                         }
                         if (httpResponse.getStatus() == 400)
                             throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
@@ -175,12 +174,11 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
                             String jsonString = new JSONObject(body).toString();
                             problemDetails = deserializeToProblemDetails(jsonString);
                         } catch (JsonProcessingException | IllegalStateException e) {
-                            UnirestParsingException parsingException = httpResponse
-                                    .getParsingError()
-                                    .orElseGet(null);
+                            Optional<UnirestParsingException> parsingException = httpResponse.getParsingError();
                             throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(),
-                                    (parsingException == null) ? null : parsingException.getOriginalBody(), headersMap,
-                                    null);
+                                    (parsingException.isPresent() ? parsingException
+                                            .get()
+                                            .getOriginalBody() : null), headersMap, null);
                         }
                         if (httpResponse.getStatus() == 400)
                             throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
@@ -257,12 +255,11 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
                             String jsonString = new JSONObject(body).toString();
                             problemDetails = deserializeToProblemDetails(jsonString);
                         } catch (JsonProcessingException | IllegalStateException e) {
-                            UnirestParsingException parsingException = httpResponse
-                                    .getParsingError()
-                                    .orElseGet(null);
+                            Optional<UnirestParsingException> parsingException = httpResponse.getParsingError();
                             throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(),
-                                    (parsingException == null) ? null : parsingException.getOriginalBody(), headersMap,
-                                    null);
+                                    (parsingException.isPresent() ? parsingException
+                                            .get()
+                                            .getOriginalBody() : null), headersMap, null);
                         }
                         if (httpResponse.getStatus() == 400)
                             throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
@@ -334,12 +331,11 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
                             String jsonString = new JSONObject(body).toString();
                             problemDetails = deserializeToProblemDetails(jsonString);
                         } catch (JsonProcessingException | IllegalStateException e) {
-                            UnirestParsingException parsingException = httpResponse
-                                    .getParsingError()
-                                    .orElseGet(null);
+                            Optional<UnirestParsingException> parsingException = httpResponse.getParsingError();
                             throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(),
-                                    (parsingException == null) ? null : parsingException.getOriginalBody(), headersMap,
-                                    null);
+                                    (parsingException.isPresent() ? parsingException
+                                            .get()
+                                            .getOriginalBody() : null), headersMap, null);
                         }
                         if (httpResponse.getStatus() == 400)
                             throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),

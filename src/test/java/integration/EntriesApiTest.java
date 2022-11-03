@@ -471,4 +471,19 @@ class EntriesApiTest extends BaseTest {
             assertEquals(fieldNames.length, numberOfReturnedFields);
         }
     }
+
+    @Test
+    void getDocumentContentType_Returns_Valid_Error_Message_ForInvalidRepoId() {
+        String invalidRepoId = String.format("%s-%s", repoId, repoId);
+        Exception thrown = Assertions.assertThrows(CompletionException.class, () -> client
+                .getDocumentContentType(invalidRepoId, 1)
+                .join());
+        assertNotNull(thrown);
+        assertTrue(thrown.getCause() instanceof ApiException);
+        ApiException apiException = (ApiException) thrown.getCause();
+        assertEquals(404, apiException.getStatusCode());
+        assertEquals("Not Found", apiException.getMessage());
+        ProblemDetails problemDetails = apiException.getProblemDetails();
+        assertNull(problemDetails);
+    }
 }

@@ -10,6 +10,7 @@ import kong.unirest.UnirestParsingException;
 import kong.unirest.json.JSONObject;
 
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -49,12 +50,11 @@ public class LinkDefinitionsClientImpl extends ApiClient implements LinkDefiniti
                             String jsonString = new JSONObject(body).toString();
                             problemDetails = deserializeToProblemDetails(jsonString);
                         } catch (JsonProcessingException | IllegalStateException e) {
-                            UnirestParsingException parsingException = httpResponse
-                                    .getParsingError()
-                                    .orElseGet(null);
+                            Optional<UnirestParsingException> parsingException = httpResponse.getParsingError();
                             throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(),
-                                    (parsingException == null) ? null : parsingException.getOriginalBody(), headersMap,
-                                    null);
+                                    (parsingException.isPresent() ? parsingException
+                                            .get()
+                                            .getOriginalBody() : null), headersMap, null);
                         }
                         if (httpResponse.getStatus() == 400)
                             throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
@@ -120,12 +120,11 @@ public class LinkDefinitionsClientImpl extends ApiClient implements LinkDefiniti
                             String jsonString = new JSONObject(body).toString();
                             problemDetails = deserializeToProblemDetails(jsonString);
                         } catch (JsonProcessingException | IllegalStateException e) {
-                            UnirestParsingException parsingException = httpResponse
-                                    .getParsingError()
-                                    .orElseGet(null);
+                            Optional<UnirestParsingException> parsingException = httpResponse.getParsingError();
                             throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(),
-                                    (parsingException == null) ? null : parsingException.getOriginalBody(), headersMap,
-                                    null);
+                                    (parsingException.isPresent() ? parsingException
+                                            .get()
+                                            .getOriginalBody() : null), headersMap, null);
                         }
                         if (httpResponse.getStatus() == 400)
                             throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
