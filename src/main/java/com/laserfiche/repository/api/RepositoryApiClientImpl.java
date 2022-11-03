@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseable {
     private Map<String, String> defaultHeaders;
-    private static UnirestInstance httpClient = Unirest.spawnInstance();
+    private static UnirestInstance httpClient;
     private final AttributesClient attributesClient;
     private final AuditReasonsClient auditReasonsClient;
     private final EntriesClient entriesClient;
@@ -67,7 +67,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
 
     public static RepositoryApiClient createFromUsernamePassword(String repoId, String username, String password,
             String baseUrl) {
-        String baseUrlWithSlash = baseUrl.endsWith("/") ? baseUrl.substring(0, baseUrl.lastIndexOf("/")) : baseUrl;
+        String baseUrlWithSlash = baseUrl.endsWith("/") ? baseUrl.substring(0, baseUrl.length()) : baseUrl;
         return createFromHttpRequestHandler(repoId, username, password, null, baseUrlWithSlash);
     }
 
