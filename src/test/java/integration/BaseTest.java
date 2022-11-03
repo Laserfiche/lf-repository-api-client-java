@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
-
+//use enumerators
 public class BaseTest {
     protected static String spKey;
     protected static AccessKey accessKey;
@@ -74,11 +74,11 @@ public class BaseTest {
             if (authorizationType.equalsIgnoreCase("CloudAccessKey")) {
                 if (nullOrEmpty(spKey) || accessKey == null)
                     return null;
-                repositoryApiClient = RepositoryApiClientImpl.CreateFromAccessKey(spKey, accessKey);
+                repositoryApiClient = RepositoryApiClientImpl.createFromAccessKey(spKey, accessKey);
             } else if (authorizationType.equalsIgnoreCase("APIServerUsernamePassword")) {
                 if (nullOrEmpty(repoId) || nullOrEmpty(username) || nullOrEmpty(password) || nullOrEmpty(baseUrl))
                     return null;
-                repositoryApiClient = RepositoryApiClientImpl.CreateFromUsernamePassword(repoId, username, password,
+                repositoryApiClient = RepositoryApiClientImpl.createFromUsernamePassword(repoId, username, password,
                         baseUrl);
             }
             repositoryApiClient.setDefaultRequestHeaders(testHeaders);

@@ -41,7 +41,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
         templateDefinitionsClient = new TemplateDefinitionsClientImpl(baseUrl, httpClient);
     }
 
-    public static RepositoryApiClient CreateFromHttpRequestHandler(String servicePrincipalKey, AccessKey accessKey,
+    public static RepositoryApiClient createFromHttpRequestHandler(String servicePrincipalKey, AccessKey accessKey,
             String baseUrl) {
         String baseUrlDebug = baseUrl != null ? baseUrl : "https://api." + accessKey.getDomain() + "/repository";
         httpClient
@@ -51,7 +51,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
         return new RepositoryApiClientImpl(httpClient, baseUrlDebug);
     }
 
-    public static RepositoryApiClient CreateFromHttpRequestHandler(String repositoryId, String username,
+    public static RepositoryApiClient createFromHttpRequestHandler(String repositoryId, String username,
             String password,
             TokenClient client, String baseUrl) {
         httpClient
@@ -61,14 +61,14 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
         return new RepositoryApiClientImpl(httpClient, baseUrl);
     }
 
-    public static RepositoryApiClient CreateFromAccessKey(String servicePrincipalKey, AccessKey accessKey) {
-        return CreateFromHttpRequestHandler(servicePrincipalKey, accessKey, null);
+    public static RepositoryApiClient createFromAccessKey(String servicePrincipalKey, AccessKey accessKey) {
+        return createFromHttpRequestHandler(servicePrincipalKey, accessKey, null);
     }
 
-    public static RepositoryApiClient CreateFromUsernamePassword(String repoId, String username, String password,
+    public static RepositoryApiClient createFromUsernamePassword(String repoId, String username, String password,
             String baseUrl) {
         String baseUrlWithSlash = baseUrl.endsWith("/") ? baseUrl.substring(0, baseUrl.lastIndexOf("/")) : baseUrl;
-        return CreateFromHttpRequestHandler(repoId, username, password, null, baseUrlWithSlash);
+        return createFromHttpRequestHandler(repoId, username, password, null, baseUrlWithSlash);
     }
 
     @Override
