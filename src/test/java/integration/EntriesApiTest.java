@@ -429,6 +429,28 @@ class EntriesApiTest extends BaseTest {
     }
 
     @Test
+    void getEntryListing_WithOneField_ReturnEntries() {
+        String[] fieldNames = {"Sender"};
+        ODataValueContextOfIListOfEntry entries = client
+                .getEntryListing(repoId, 1, false, fieldNames, false, "maxpagesize=5", null, null, null, null, null,
+                        false)
+                .join();
+        assertNotNull(entries);
+        for (Entry entry : entries.getValue()) {
+            int numberOfReturnedFields = (int) entry
+                    .getFields()
+                    .stream()
+                    .filter(entryFieldValue -> entryFieldValue
+                            .getFieldName()
+                            .equalsIgnoreCase(fieldNames[0]) || entryFieldValue
+                            .getFieldName()
+                            .equalsIgnoreCase(fieldNames[1]))
+                    .count();
+            assertEquals(fieldNames.length, numberOfReturnedFields);
+        }
+    }
+
+    @Test
     void getEntryListing_WithFields_ReturnEntries() {
         String[] fieldNames = {"Sender", "Subject"};
         ODataValueContextOfIListOfEntry entries = client

@@ -9,10 +9,7 @@ import kong.unirest.UnirestParsingException;
 import kong.unirest.json.JSONObject;
 
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -1200,8 +1197,9 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 .collect(Collectors.toMap(Map.Entry::getKey, e -> (String) e.getValue()));
         return httpClient
                 .get(url)
-                .queryString("fields", (queryParameters.get("fields") != null) ? (List) queryParameters.remove(
-                        "fields") : new ArrayList())
+                .queryString("fields", (queryParameters.get("fields") != null) ? (queryParameters.get(
+                        "fields") instanceof String ? Arrays.asList(
+                        queryParameters.remove("fields")) : (List) queryParameters.remove("fields")) : new ArrayList())
                 .queryString(queryParameters)
                 .routeParam(pathParameters)
                 .headers(headerParametersWithStringTypeValue)
