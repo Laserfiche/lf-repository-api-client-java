@@ -5,7 +5,6 @@ import com.laserfiche.api.client.model.AccessKey;
 import com.laserfiche.repository.api.clients.*;
 import com.laserfiche.repository.api.clients.impl.*;
 import com.laserfiche.repository.api.clients.impl.deserialization.RepositoryClientObjectMapper;
-import kong.unirest.Unirest;
 import kong.unirest.UnirestInstance;
 
 import java.util.Map;
@@ -67,7 +66,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
 
     public static RepositoryApiClient createFromUsernamePassword(String repoId, String username, String password,
             String baseUrl) {
-        String baseUrlWithSlash = baseUrl.endsWith("/") ? baseUrl.substring(0, baseUrl.length()) : baseUrl;
+        String baseUrlWithSlash = baseUrl.endsWith("/") ? baseUrl.substring(0, baseUrl.length() - 1) : baseUrl;
         return createFromHttpRequestHandler(repoId, username, password, null, baseUrlWithSlash);
     }
 
