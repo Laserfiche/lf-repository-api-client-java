@@ -98,6 +98,7 @@ public interface EntriesClient {
      * @param culture       An optional query parameter used to indicate the locale that should be used.
      *                      The value should be a standard language tag. This may be used when setting field values with tokens.
      * @param inputStream   An InputStream object to read the raw bytes for the file to be uploaded.
+     * @param requestBody   A value of type PostEntryWithEdocMetadataRequest.
      * @return CompletableFuture&lt;CreateEntryResult&gt; The return value
      */
     CompletableFuture<CreateEntryResult> importDocument(String repoId, Integer parentEntryId, String fileName,
@@ -156,8 +157,9 @@ public interface EntriesClient {
      * - Provide an entry ID and a list of links to assign to that entry.
      * - This is an overwrite action. The request must include all links to assign to the entry, including existing links that should remain assigned to the entry.
      *
-     * @param repoId  The request repository ID.
-     * @param entryId The requested entry ID.
+     * @param repoId      The request repository ID.
+     * @param entryId     The requested entry ID.
+     * @param requestBody A value of type List<PutLinksRequest>.
      * @return CompletableFuture&lt;ODataValueOfIListOfWEntryLinkInfo&gt; The return value
      */
     CompletableFuture<ODataValueOfIListOfWEntryLinkInfo> assignEntryLinks(String repoId, Integer entryId,
@@ -194,8 +196,9 @@ public interface EntriesClient {
      * - Provide an entry ID and field values in the JSON body to get dynamic field logic values.
      * Independent and non-dynamic fields in the request body will be ignored, and only related dynamic field logic values for the assigned template will be returned.
      *
-     * @param repoId  The requested repository ID.
-     * @param entryId The requested entry ID.
+     * @param repoId      The requested repository ID.
+     * @param entryId     The requested entry ID.
+     * @param requestBody A value of type GetDynamicFieldLogicValueRequest.
      * @return CompletableFuture&lt;Map&lt;String,String[]&gt;&gt; The return value
      */
     CompletableFuture<Map<String, String[]>> getDynamicFieldValues(String repoId, Integer entryId,
@@ -281,6 +284,7 @@ public interface EntriesClient {
      *
      * @param repoId              The requested repository ID.
      * @param entryId             The requested document ID.
+     * @param requestBody         A value of type GetEdocWithAuditReasonRequest.
      * @param range               An optional header used to retrieve partial content of the edoc. Only supports single
      *                            range with byte unit.
      * @param inputStreamConsumer A Consumer&lt;InputStream&gt; object that the is provided with the response's inputStream to consume it, if the request has been successful.
