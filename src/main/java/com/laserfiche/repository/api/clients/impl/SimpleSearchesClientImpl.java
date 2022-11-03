@@ -12,6 +12,7 @@ import kong.unirest.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 public class SimpleSearchesClientImpl extends ApiClient implements SimpleSearchesClient {
@@ -55,12 +56,11 @@ public class SimpleSearchesClientImpl extends ApiClient implements SimpleSearche
                             String jsonString = new JSONObject(body).toString();
                             problemDetails = deserializeToProblemDetails(jsonString);
                         } catch (JsonProcessingException | IllegalStateException e) {
-                            UnirestParsingException parsingException = httpResponse
-                                    .getParsingError()
-                                    .orElseGet(null);
+                            Optional<UnirestParsingException> parsingException = httpResponse.getParsingError();
                             throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(),
-                                    (parsingException == null) ? null : parsingException.getOriginalBody(), headersMap,
-                                    null);
+                                    (parsingException.isPresent() ? parsingException
+                                            .get()
+                                            .getOriginalBody() : null), headersMap, null);
                         }
                         if (httpResponse.getStatus() == 400)
                             throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),

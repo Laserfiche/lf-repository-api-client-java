@@ -10,6 +10,7 @@ import kong.unirest.UnirestParsingException;
 import kong.unirest.json.JSONObject;
 
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 public class ServerSessionClientImpl extends ApiClient implements ServerSessionClient {
@@ -43,12 +44,11 @@ public class ServerSessionClientImpl extends ApiClient implements ServerSessionC
                             String jsonString = new JSONObject(body).toString();
                             problemDetails = deserializeToProblemDetails(jsonString);
                         } catch (JsonProcessingException | IllegalStateException e) {
-                            UnirestParsingException parsingException = httpResponse
-                                    .getParsingError()
-                                    .orElseGet(null);
+                            Optional<UnirestParsingException> parsingException = httpResponse.getParsingError();
                             throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(),
-                                    (parsingException == null) ? null : parsingException.getOriginalBody(), headersMap,
-                                    null);
+                                    (parsingException.isPresent() ? parsingException
+                                            .get()
+                                            .getOriginalBody() : null), headersMap, null);
                         }
                         if (httpResponse.getStatus() == 400)
                             throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
@@ -96,12 +96,11 @@ public class ServerSessionClientImpl extends ApiClient implements ServerSessionC
                             String jsonString = new JSONObject(body).toString();
                             problemDetails = deserializeToProblemDetails(jsonString);
                         } catch (JsonProcessingException | IllegalStateException e) {
-                            UnirestParsingException parsingException = httpResponse
-                                    .getParsingError()
-                                    .orElseGet(null);
+                            Optional<UnirestParsingException> parsingException = httpResponse.getParsingError();
                             throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(),
-                                    (parsingException == null) ? null : parsingException.getOriginalBody(), headersMap,
-                                    null);
+                                    (parsingException.isPresent() ? parsingException
+                                            .get()
+                                            .getOriginalBody() : null), headersMap, null);
                         }
                         if (httpResponse.getStatus() == 401)
                             throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
@@ -140,12 +139,11 @@ public class ServerSessionClientImpl extends ApiClient implements ServerSessionC
                             String jsonString = new JSONObject(body).toString();
                             problemDetails = deserializeToProblemDetails(jsonString);
                         } catch (JsonProcessingException | IllegalStateException e) {
-                            UnirestParsingException parsingException = httpResponse
-                                    .getParsingError()
-                                    .orElseGet(null);
+                            Optional<UnirestParsingException> parsingException = httpResponse.getParsingError();
                             throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(),
-                                    (parsingException == null) ? null : parsingException.getOriginalBody(), headersMap,
-                                    null);
+                                    (parsingException.isPresent() ? parsingException
+                                            .get()
+                                            .getOriginalBody() : null), headersMap, null);
                         }
                         if (httpResponse.getStatus() == 400)
                             throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
