@@ -5,6 +5,7 @@ import com.laserfiche.api.client.model.AccessKey;
 import com.laserfiche.repository.api.clients.*;
 import com.laserfiche.repository.api.clients.impl.*;
 import com.laserfiche.repository.api.clients.impl.deserialization.RepositoryClientObjectMapper;
+import kong.unirest.Unirest;
 import kong.unirest.UnirestInstance;
 
 import java.util.Map;
@@ -25,7 +26,21 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
     private final TasksClient tasksClient;
     private final TemplateDefinitionsClient templateDefinitionsClient;
 
-    protected RepositoryApiClientImpl(UnirestInstance httpClient, String baseUrl) {
+    protected RepositoryApiClientImpl(String servicePrincipalKey, AccessKey accessKey, String repositoryId,
+            String username,
+            String password, TokenClient client, String baseUrl) {
+        httpClient = Unirest.spawnInstance();
+        if (servicePrincipalKey == null && accessKey == null) {
+            httpClient
+                    .config()
+                    .setObjectMapper(new RepositoryClientObjectMapper())
+                    .interceptor(new SelfHostedInterceptor(repositoryId, username, password, baseUrl, client));
+        } else {
+            httpClient
+                    .config()
+                    .setObjectMapper(new RepositoryClientObjectMapper())
+                    .interceptor(new OAuthInterceptor(servicePrincipalKey, accessKey));
+        }
         attributesClient = new AttributesClientImpl(baseUrl, httpClient);
         auditReasonsClient = new AuditReasonsClientImpl(baseUrl, httpClient);
         entriesClient = new EntriesClientImpl(baseUrl, httpClient);
@@ -40,34 +55,19 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
         templateDefinitionsClient = new TemplateDefinitionsClientImpl(baseUrl, httpClient);
     }
 
-    public static RepositoryApiClient createFromHttpRequestHandler(String servicePrincipalKey, AccessKey accessKey,
-            String baseUrl) {
-        String baseUrlDebug = baseUrl != null ? baseUrl : "https://api." + accessKey.getDomain() + "/repository";
-        httpClient
-                .config()
-                .setObjectMapper(new RepositoryClientObjectMapper())
-                .interceptor(new OAuthInterceptor(servicePrincipalKey, accessKey));
-        return new RepositoryApiClientImpl(httpClient, baseUrlDebug);
-    }
-
-    public static RepositoryApiClient createFromHttpRequestHandler(String repositoryId, String username,
-            String password,
-            TokenClient client, String baseUrl) {
-        httpClient
-                .config()
-                .setObjectMapper(new RepositoryClientObjectMapper())
-                .interceptor(new SelfHostedInterceptor(repositoryId, username, password, baseUrl, client));
-        return new RepositoryApiClientImpl(httpClient, baseUrl);
+    public static RepositoryApiClient createFromAccessKey(String servicePrincipalKey, AccessKey accessKey,
+            String baseUrlDebug) {
+        return new RepositoryApiClientImpl(servicePrincipalKey, accessKey, null, null, null, null, baseUrlDebug);
     }
 
     public static RepositoryApiClient createFromAccessKey(String servicePrincipalKey, AccessKey accessKey) {
-        return createFromHttpRequestHandler(servicePrincipalKey, accessKey, null);
+        return createFromAccessKey(servicePrincipalKey, accessKey, null);
     }
 
     public static RepositoryApiClient createFromUsernamePassword(String repoId, String username, String password,
             String baseUrl) {
         String baseUrlWithSlash = baseUrl.endsWith("/") ? baseUrl.substring(0, baseUrl.length() - 1) : baseUrl;
-        return createFromHttpRequestHandler(repoId, username, password, null, baseUrlWithSlash);
+        return new RepositoryApiClientImpl(null, null, repoId, username, password, null, baseUrlWithSlash);
     }
 
     @Override
