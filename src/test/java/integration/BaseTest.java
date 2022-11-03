@@ -14,7 +14,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
-//use enumerators
+
+enum authorizationTypes {
+    CLOUDACCESSKEY,
+    APISERVERUSERNAMEPASSWORD
+}
+
 public class BaseTest {
     protected static String spKey;
     protected static AccessKey accessKey;
@@ -45,15 +50,14 @@ public class BaseTest {
                     .load();
             authorizationType = dotenv.get("AUTHORIZATION_TYPE");
             testHeaderValue = dotenv.get("TEST_HEADER");
-            if (authorizationType.equalsIgnoreCase("CloudAccessKey")) {
-                if (nullOrEmpty(spKey) && nullOrEmpty(accessKeyBase64) && nullOrEmpty(repoId) && nullOrEmpty(
-                        testHeaderValue)) {
+            if (authorizationType.equalsIgnoreCase(authorizationTypes.CLOUDACCESSKEY.name())) {
+                if (nullOrEmpty(spKey) && nullOrEmpty(accessKeyBase64) && nullOrEmpty(repoId)) {
                     accessKeyBase64 = dotenv.get("ACCESS_KEY");
                     spKey = dotenv.get("SERVICE_PRINCIPAL_KEY");
                     repoId = dotenv.get("REPOSITORY_ID");
                     accessKey = AccessKey.createFromBase64EncodedAccessKey(accessKeyBase64);
                 }
-            } else if (authorizationType.equalsIgnoreCase("APIServerUsernamePassword")) {
+            } else if (authorizationType.equalsIgnoreCase(authorizationTypes.APISERVERUSERNAMEPASSWORD.name())) {
                 if (nullOrEmpty(repoId) && nullOrEmpty(username) && nullOrEmpty(password) && nullOrEmpty(baseUrl)) {
                     repoId = dotenv.get("REPOSITORY_ID");
                     username = dotenv.get("APISERVER_USERNAME");
