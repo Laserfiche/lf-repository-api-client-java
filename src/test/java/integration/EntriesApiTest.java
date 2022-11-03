@@ -451,7 +451,7 @@ class EntriesApiTest extends BaseTest {
     }
 
     @Test
-    void getDocumentContentType_Returns_Valid_Error_Message_ForInvalidRepoId() throws InterruptedException {
+    void getDocumentContentType_Returns_Valid_Error_Message_ForInvalidRepoId() {
         String invalidRepoId = String.format("%s-%s", repoId, repoId);
         Exception thrown = Assertions.assertThrows(CompletionException.class, () -> client
                 .getDocumentContentType(invalidRepoId, 1)
