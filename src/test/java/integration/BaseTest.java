@@ -50,22 +50,24 @@ public class BaseTest {
                     .load();
             authorizationType = dotenv.get("AUTHORIZATION_TYPE");
             testHeaderValue = dotenv.get("TEST_HEADER");
+            repoId = dotenv.get("REPOSITORY_ID");
+            if (nullOrEmpty(repoId)) {
+                throw new IllegalStateException("Environment variable REPOSITORY_ID does not exist.");
+            }
             if (authorizationType.equalsIgnoreCase(authorizationTypes.CLOUDACCESSKEY.name())) {
                 if (nullOrEmpty(spKey) && nullOrEmpty(accessKeyBase64) && nullOrEmpty(repoId)) {
                     accessKeyBase64 = dotenv.get("ACCESS_KEY");
                     spKey = dotenv.get("SERVICE_PRINCIPAL_KEY");
-                    repoId = dotenv.get("REPOSITORY_ID");
                     accessKey = AccessKey.createFromBase64EncodedAccessKey(accessKeyBase64);
                 }
             } else if (authorizationType.equalsIgnoreCase(authorizationTypes.APISERVERUSERNAMEPASSWORD.name())) {
                 if (nullOrEmpty(repoId) && nullOrEmpty(username) && nullOrEmpty(password) && nullOrEmpty(baseUrl)) {
-                    repoId = dotenv.get("REPOSITORY_ID");
                     username = dotenv.get("APISERVER_USERNAME");
                     password = dotenv.get("APISERVER_PASSWORD");
                     baseUrl = dotenv.get("APISERVER_REPOSITORY_API_BASE_URL");
                 }
             } else {
-                throw new IllegalArgumentException("Invalid Authorization Type Value");
+                throw new IllegalStateException("Invalid Authorization Type Value");
             }
         }
         testHeaders = new HashMap<>();
