@@ -71,8 +71,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
 
     public static RepositoryApiClient createFromUsernamePassword(String repoId, String username, String password,
             String baseUrl) {
-        String baseUrlWithSlash = baseUrl.endsWith("/") ? baseUrl.substring(0, baseUrl.length() - 1) : baseUrl;
-        return new RepositoryApiClientImpl(null, null, repoId, username, password, null, baseUrlWithSlash);
+        return new RepositoryApiClientImpl(null, null, repoId, username, password, null, baseUrl);
     }
 
     @Override
