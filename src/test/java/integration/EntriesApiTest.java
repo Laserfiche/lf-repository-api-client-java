@@ -2,7 +2,9 @@ package integration;
 
 import com.laserfiche.repository.api.RepositoryApiClient;
 import com.laserfiche.repository.api.clients.EntriesClient;
+import com.laserfiche.repository.api.clients.impl.ApiException;
 import com.laserfiche.repository.api.clients.impl.model.*;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -10,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionException;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
@@ -406,5 +409,81 @@ class EntriesApiTest extends BaseTest {
         assertNotNull(headers.get("Content-Length"));
     }
 
+    @Test
+    void getDocumentContentType_ProblemDetails_Fields_Are_Valid_When_Exception_Thrown() throws InterruptedException {
+        Exception thrown = Assertions.assertThrows(CompletionException.class, () -> {
+            client
+                    .getEntryListing(repoId, -1, false, null, false, "maxpagesize=100", null, null, null, null, null,
+                            false)
+                    .join();
+        });
+        assertNotNull(thrown);
+        assertTrue(thrown.getCause() instanceof ApiException);
+        ApiException apiException = (ApiException) thrown.getCause();
+        ProblemDetails problemDetails = apiException.getProblemDetails();
+        assertNotNull(problemDetails);
+        assertNotNull(problemDetails.getTitle());
+        assertNotNull(problemDetails.getType());
+        assertNotNull(problemDetails.getInstance());
+        assertNotNull(problemDetails.getStatus());
+    }
 
+    @Test
+    void getEntryListing_WithOneField_ReturnEntries() {
+        String[] fieldNames = {"Sender"};
+        ODataValueContextOfIListOfEntry entries = client
+                .getEntryListing(repoId, 1, false, fieldNames, false, "maxpagesize=5", null, null, null, null, null,
+                        false)
+                .join();
+        assertNotNull(entries);
+        for (Entry entry : entries.getValue()) {
+            int numberOfReturnedFields = (int) entry
+                    .getFields()
+                    .stream()
+                    .filter(entryFieldValue -> entryFieldValue
+                            .getFieldName()
+                            .equalsIgnoreCase(fieldNames[0]) || entryFieldValue
+                            .getFieldName()
+                            .equalsIgnoreCase(fieldNames[1]))
+                    .count();
+            assertEquals(fieldNames.length, numberOfReturnedFields);
+        }
+    }
+
+    @Test
+    void getEntryListing_WithFields_ReturnEntries() {
+        String[] fieldNames = {"Sender", "Subject"};
+        ODataValueContextOfIListOfEntry entries = client
+                .getEntryListing(repoId, 1, false, fieldNames, false, "maxpagesize=5", null, null, null, null, null,
+                        false)
+                .join();
+        assertNotNull(entries);
+        for (Entry entry : entries.getValue()) {
+            int numberOfReturnedFields = (int) entry
+                    .getFields()
+                    .stream()
+                    .filter(entryFieldValue -> entryFieldValue
+                            .getFieldName()
+                            .equalsIgnoreCase(fieldNames[0]) || entryFieldValue
+                            .getFieldName()
+                            .equalsIgnoreCase(fieldNames[1]))
+                    .count();
+            assertEquals(fieldNames.length, numberOfReturnedFields);
+        }
+    }
+
+    @Test
+    void getDocumentContentType_Returns_Valid_Error_Message_ForInvalidRepoId() {
+        String invalidRepoId = String.format("%s-%s", repoId, repoId);
+        Exception thrown = Assertions.assertThrows(CompletionException.class, () -> client
+                .getDocumentContentType(invalidRepoId, 1)
+                .join());
+        assertNotNull(thrown);
+        assertTrue(thrown.getCause() instanceof ApiException);
+        ApiException apiException = (ApiException) thrown.getCause();
+        assertEquals(404, apiException.getStatusCode());
+        assertEquals("Not Found", apiException.getMessage());
+        ProblemDetails problemDetails = apiException.getProblemDetails();
+        assertNull(problemDetails);
+    }
 }

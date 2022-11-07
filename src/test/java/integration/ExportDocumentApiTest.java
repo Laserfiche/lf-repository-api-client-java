@@ -75,7 +75,7 @@ public class ExportDocumentApiTest extends BaseTest {
         };
         Exception thrown = Assertions.assertThrows(ApiException.class, () -> {
             client
-                    .exportDocument(repoId, -createdEntryId, null, null);
+                    .exportDocument(repoId, -createdEntryId, null, consumer);
         });
         Assertions.assertEquals("Invalid or bad request.", thrown.getMessage());
         File exportedFile = new File(FILE_NAME);

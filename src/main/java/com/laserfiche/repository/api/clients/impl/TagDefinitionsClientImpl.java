@@ -10,6 +10,7 @@ import kong.unirest.UnirestParsingException;
 import kong.unirest.json.JSONObject;
 
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -60,14 +61,13 @@ public class TagDefinitionsClientImpl extends ApiClient implements TagDefinition
                         Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
                             String jsonString = new JSONObject(body).toString();
-                            problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
+                            problemDetails = deserializeToProblemDetails(jsonString);
                         } catch (JsonProcessingException | IllegalStateException e) {
-                            UnirestParsingException parsingException = httpResponse
-                                    .getParsingError()
-                                    .orElseGet(null);
+                            Optional<UnirestParsingException> parsingException = httpResponse.getParsingError();
                             throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(),
-                                    (parsingException == null) ? null : parsingException.getOriginalBody(), headersMap,
-                                    null);
+                                    (parsingException.isPresent() ? parsingException
+                                            .get()
+                                            .getOriginalBody() : null), headersMap, null);
                         }
                         if (httpResponse.getStatus() == 400)
                             throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
@@ -144,14 +144,13 @@ public class TagDefinitionsClientImpl extends ApiClient implements TagDefinition
                         Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
                             String jsonString = new JSONObject(body).toString();
-                            problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
+                            problemDetails = deserializeToProblemDetails(jsonString);
                         } catch (JsonProcessingException | IllegalStateException e) {
-                            UnirestParsingException parsingException = httpResponse
-                                    .getParsingError()
-                                    .orElseGet(null);
+                            Optional<UnirestParsingException> parsingException = httpResponse.getParsingError();
                             throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(),
-                                    (parsingException == null) ? null : parsingException.getOriginalBody(), headersMap,
-                                    null);
+                                    (parsingException.isPresent() ? parsingException
+                                            .get()
+                                            .getOriginalBody() : null), headersMap, null);
                         }
                         if (httpResponse.getStatus() == 400)
                             throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
