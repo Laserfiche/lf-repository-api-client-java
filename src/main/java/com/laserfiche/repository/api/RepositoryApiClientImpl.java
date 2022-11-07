@@ -62,9 +62,9 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
         return createFromAccessKey(servicePrincipalKey, accessKey, null);
     }
 
-    public static RepositoryApiClient createFromUsernamePassword(String repoId, String username, String password,
+    public static RepositoryApiClient createFromUsernamePassword(String repositoryId, String username, String password,
             String baseUrl) {
-        Interceptor interceptor = new SelfHostedInterceptor(repoId, username, password, baseUrl, null);
+        Interceptor interceptor = new SelfHostedInterceptor(repositoryId, username, password, baseUrl, null);
         return new RepositoryApiClientImpl(interceptor, baseUrl);
     }
 
