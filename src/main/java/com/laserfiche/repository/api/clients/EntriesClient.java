@@ -159,7 +159,7 @@ public interface EntriesClient {
      *
      * @param repoId      The request repository ID.
      * @param entryId     The requested entry ID.
-     * @param requestBody A value of type List<PutLinksRequest>.
+     * @param requestBody A value of type List&lt;PutLinksRequest&gt;.
      * @return CompletableFuture&lt;ODataValueOfIListOfWEntryLinkInfo&gt; The return value
      */
     CompletableFuture<ODataValueOfIListOfWEntryLinkInfo> assignEntryLinks(String repoId, Integer entryId,
