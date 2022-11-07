@@ -16,8 +16,8 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 enum AuthorizationType {
-    CLOUDACCESSKEY,
-    APISERVERUSERNAMEPASSWORD
+    CLOUD_ACCESS_KEY,
+    API_SERVER_USERNAME_PASSWORD
 }
 
 public class BaseTest {
@@ -54,13 +54,13 @@ public class BaseTest {
             if (nullOrEmpty(repoId)) {
                 throw new IllegalStateException("Environment variable REPOSITORY_ID does not exist.");
             }
-            if (authorizationType.equalsIgnoreCase(AuthorizationType.CLOUDACCESSKEY.name())) {
+            if (authorizationType.equalsIgnoreCase(AuthorizationType.CLOUD_ACCESS_KEY.name())) {
                 if (nullOrEmpty(spKey) && nullOrEmpty(accessKeyBase64)) {
                     accessKeyBase64 = dotenv.get("ACCESS_KEY");
                     spKey = dotenv.get("SERVICE_PRINCIPAL_KEY");
                     accessKey = AccessKey.createFromBase64EncodedAccessKey(accessKeyBase64);
                 }
-            } else if (authorizationType.equalsIgnoreCase(AuthorizationType.APISERVERUSERNAMEPASSWORD.name())) {
+            } else if (authorizationType.equalsIgnoreCase(AuthorizationType.API_SERVER_USERNAME_PASSWORD.name())) {
                 if (nullOrEmpty(username) && nullOrEmpty(password) && nullOrEmpty(baseUrl)) {
                     username = dotenv.get("APISERVER_USERNAME");
                     password = dotenv.get("APISERVER_PASSWORD");
@@ -77,11 +77,11 @@ public class BaseTest {
 
     public static RepositoryApiClient createClient() {
         if (repositoryApiClient == null) {
-            if (authorizationType.equalsIgnoreCase("CloudAccessKey")) {
+            if (authorizationType.equalsIgnoreCase("Cloud_Access_Key")) {
                 if (nullOrEmpty(spKey) || accessKey == null)
                     return null;
                 repositoryApiClient = RepositoryApiClientImpl.createFromAccessKey(spKey, accessKey);
-            } else if (authorizationType.equalsIgnoreCase("APIServerUsernamePassword")) {
+            } else if (authorizationType.equalsIgnoreCase("API_Server_Username_Password")) {
                 if (nullOrEmpty(repoId) || nullOrEmpty(username) || nullOrEmpty(password) || nullOrEmpty(baseUrl))
                     return null;
                 repositoryApiClient = RepositoryApiClientImpl.createFromUsernamePassword(repoId, username, password,
