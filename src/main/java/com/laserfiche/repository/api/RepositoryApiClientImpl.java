@@ -33,7 +33,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
         if (baseUrl == null) {
             baseUrl = "https://api." + accessKey.getDomain() + "/repository";
         } else if (baseUrl.endsWith("/")) {
-            baseUrl.substring(0, baseUrl.length() - 1);
+            baseUrl = baseUrl.substring(0, baseUrl.length() - 1);
         }
         if (servicePrincipalKey == null && accessKey == null) {
             httpClient
