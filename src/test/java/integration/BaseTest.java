@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
-enum authorizationType {
+enum AuthorizationType {
     CLOUDACCESSKEY,
     APISERVERUSERNAMEPASSWORD
 }
@@ -54,13 +54,13 @@ public class BaseTest {
             if (nullOrEmpty(repoId)) {
                 throw new IllegalStateException("Environment variable REPOSITORY_ID does not exist.");
             }
-            if (authorizationType.equalsIgnoreCase(integration.authorizationType.CLOUDACCESSKEY.name())) {
+            if (authorizationType.equalsIgnoreCase(AuthorizationType.CLOUDACCESSKEY.name())) {
                 if (nullOrEmpty(spKey) && nullOrEmpty(accessKeyBase64)) {
                     accessKeyBase64 = dotenv.get("ACCESS_KEY");
                     spKey = dotenv.get("SERVICE_PRINCIPAL_KEY");
                     accessKey = AccessKey.createFromBase64EncodedAccessKey(accessKeyBase64);
                 }
-            } else if (authorizationType.equalsIgnoreCase(integration.authorizationType.APISERVERUSERNAMEPASSWORD.name())) {
+            } else if (authorizationType.equalsIgnoreCase(AuthorizationType.APISERVERUSERNAMEPASSWORD.name())) {
                 if (nullOrEmpty(username) && nullOrEmpty(password) && nullOrEmpty(baseUrl)) {
                     username = dotenv.get("APISERVER_USERNAME");
                     password = dotenv.get("APISERVER_PASSWORD");
