@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseable {
     private Map<String, String> defaultHeaders;
-    private static UnirestInstance httpClient;
+    private UnirestInstance httpClient;
     private final AttributesClient attributesClient;
     private final AuditReasonsClient auditReasonsClient;
     private final EntriesClient entriesClient;

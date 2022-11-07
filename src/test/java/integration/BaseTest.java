@@ -77,11 +77,11 @@ public class BaseTest {
 
     public static RepositoryApiClient createClient() {
         if (repositoryApiClient == null) {
-            if (authorizationType.equalsIgnoreCase("Cloud_Access_Key")) {
+            if (authorizationType.equalsIgnoreCase(AuthorizationType.CLOUD_ACCESS_KEY.name())) {
                 if (nullOrEmpty(spKey) || accessKey == null)
                     return null;
                 repositoryApiClient = RepositoryApiClientImpl.createFromAccessKey(spKey, accessKey);
-            } else if (authorizationType.equalsIgnoreCase("API_Server_Username_Password")) {
+            } else if (authorizationType.equalsIgnoreCase(AuthorizationType.API_SERVER_USERNAME_PASSWORD.name())) {
                 if (nullOrEmpty(repoId) || nullOrEmpty(username) || nullOrEmpty(password) || nullOrEmpty(baseUrl))
                     return null;
                 repositoryApiClient = RepositoryApiClientImpl.createFromUsernamePassword(repoId, username, password,
