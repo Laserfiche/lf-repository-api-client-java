@@ -9,11 +9,7 @@ import kong.unirest.UnirestInstance;
 import kong.unirest.UnirestParsingException;
 import kong.unirest.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 
 public class SimpleSearchesClientImpl extends ApiClient implements SimpleSearchesClient {
@@ -65,19 +61,22 @@ public class SimpleSearchesClientImpl extends ApiClient implements SimpleSearche
                                             .getOriginalBody() : null), headersMap, null);
                         }
                         if (httpResponse.getStatus() == 400)
-                            throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(decideErrorMessage(problemDetails, "Invalid or bad request."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 401)
-                            throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(
+                                    decideErrorMessage(problemDetails, "Access token is invalid or expired."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 403)
-                            throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(
+                                    decideErrorMessage(problemDetails, "Access denied for the operation."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 404)
-                            throw new ApiException("Not found.", httpResponse.getStatus(), httpResponse.getStatusText(),
-                                    headersMap, problemDetails);
+                            throw new ApiException(decideErrorMessage(problemDetails, "Not found."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 429)
-                            throw new ApiException("Operation limit or request limit reached.",
+                            throw new ApiException(
+                                    decideErrorMessage(problemDetails, "Operation limit or request limit reached."),
                                     httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else
                             throw new RuntimeException(httpResponse.getStatusText());

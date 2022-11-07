@@ -119,4 +119,11 @@ public class ApiClient {
         problemDetails.setExtensions((Map<String, Object>) problemDetails.get("extensions"));
         return problemDetails;
     }
+
+    protected String decideErrorMessage(ProblemDetails problemDetails, String genericErrorMessage) {
+        return (problemDetails != null && problemDetails.getTitle() != null && problemDetails
+                .getTitle()
+                .trim()
+                .length() > 0) ? problemDetails.getTitle() : genericErrorMessage;
+    }
 }

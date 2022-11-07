@@ -73,20 +73,22 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                                             .getOriginalBody() : null), headersMap, null);
                         }
                         if (httpResponse.getStatus() == 400)
-                            throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(decideErrorMessage(problemDetails, "Invalid or bad request."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 401)
-                            throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(
+                                    decideErrorMessage(problemDetails, "Access token is invalid or expired."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 403)
-                            throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(
+                                    decideErrorMessage(problemDetails, "Access denied for the operation."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 404)
-                            throw new ApiException("Request entry id not found.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(decideErrorMessage(problemDetails, "Request entry id not found."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 429)
-                            throw new ApiException("Rate limit is reached.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(decideErrorMessage(problemDetails, "Rate limit is reached."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else
                             throw new RuntimeException(httpResponse.getStatusText());
                     }
@@ -157,23 +159,25 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                                             .getOriginalBody() : null), headersMap, null);
                         }
                         if (httpResponse.getStatus() == 400)
-                            throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(decideErrorMessage(problemDetails, "Invalid or bad request."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 401)
-                            throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(
+                                    decideErrorMessage(problemDetails, "Access token is invalid or expired."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 403)
-                            throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(
+                                    decideErrorMessage(problemDetails, "Access denied for the operation."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 404)
-                            throw new ApiException("Requested entry id not found.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(decideErrorMessage(problemDetails, "Requested entry id not found."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 423)
-                            throw new ApiException("Entry is locked.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(decideErrorMessage(problemDetails, "Entry is locked."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 429)
-                            throw new ApiException("Rate limit is reached.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(decideErrorMessage(problemDetails, "Rate limit is reached."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else
                             throw new RuntimeException(httpResponse.getStatusText());
                     }
@@ -219,26 +223,30 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                                             .getOriginalBody() : null), headersMap, null);
                         }
                         if (httpResponse.getStatus() == 400)
-                            throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(decideErrorMessage(problemDetails, "Invalid or bad request."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 401)
-                            throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(
+                                    decideErrorMessage(problemDetails, "Access token is invalid or expired."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 403)
-                            throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(
+                                    decideErrorMessage(problemDetails, "Access denied for the operation."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 404)
-                            throw new ApiException("Parent entry is not found.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(decideErrorMessage(problemDetails, "Parent entry is not found."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 409)
-                            throw new ApiException("Document creation is partial success.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(
+                                    decideErrorMessage(problemDetails, "Document creation is partial success."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 429)
-                            throw new ApiException("Rate limit is reached.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(decideErrorMessage(problemDetails, "Rate limit is reached."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 500)
-                            throw new ApiException("Document creation is complete failure.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(
+                                    decideErrorMessage(problemDetails, "Document creation is complete failure."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else
                             throw new RuntimeException(httpResponse.getStatusText());
                     }
@@ -296,20 +304,22 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                                             .getOriginalBody() : null), headersMap, null);
                         }
                         if (httpResponse.getStatus() == 400)
-                            throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(decideErrorMessage(problemDetails, "Invalid or bad request."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 401)
-                            throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(
+                                    decideErrorMessage(problemDetails, "Access token is invalid or expired."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 403)
-                            throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(
+                                    decideErrorMessage(problemDetails, "Access denied for the operation."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 404)
-                            throw new ApiException("Request entry id not found.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(decideErrorMessage(problemDetails, "Request entry id not found."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 429)
-                            throw new ApiException("Rate limit is reached.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(decideErrorMessage(problemDetails, "Rate limit is reached."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else
                             throw new RuntimeException(httpResponse.getStatusText());
                     }
@@ -378,23 +388,25 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                                             .getOriginalBody() : null), headersMap, null);
                         }
                         if (httpResponse.getStatus() == 400)
-                            throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(decideErrorMessage(problemDetails, "Invalid or bad request."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 401)
-                            throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(
+                                    decideErrorMessage(problemDetails, "Access token is invalid or expired."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 403)
-                            throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(
+                                    decideErrorMessage(problemDetails, "Access denied for the operation."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 404)
-                            throw new ApiException("Request entry id not found.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(decideErrorMessage(problemDetails, "Request entry id not found."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 423)
-                            throw new ApiException("Entry is locked.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(decideErrorMessage(problemDetails, "Entry is locked."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 429)
-                            throw new ApiException("Rate limit is reached.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(decideErrorMessage(problemDetails, "Rate limit is reached."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else
                             throw new RuntimeException(httpResponse.getStatusText());
                     }
@@ -439,23 +451,25 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                                             .getOriginalBody() : null), headersMap, null);
                         }
                         if (httpResponse.getStatus() == 400)
-                            throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(decideErrorMessage(problemDetails, "Invalid or bad request."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 401)
-                            throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(
+                                    decideErrorMessage(problemDetails, "Access token is invalid or expired."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 403)
-                            throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(
+                                    decideErrorMessage(problemDetails, "Access denied for the operation."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 404)
-                            throw new ApiException("Request entry id not found.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(decideErrorMessage(problemDetails, "Request entry id not found."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 423)
-                            throw new ApiException("Entry is locked.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(decideErrorMessage(problemDetails, "Entry is locked."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 429)
-                            throw new ApiException("Rate limit is reached.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(decideErrorMessage(problemDetails, "Rate limit is reached."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else
                             throw new RuntimeException(httpResponse.getStatusText());
                     }
@@ -495,23 +509,25 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                                             .getOriginalBody() : null), headersMap, null);
                         }
                         if (httpResponse.getStatus() == 400)
-                            throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(decideErrorMessage(problemDetails, "Invalid or bad request."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 401)
-                            throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(
+                                    decideErrorMessage(problemDetails, "Access token is invalid or expired."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 403)
-                            throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(
+                                    decideErrorMessage(problemDetails, "Access denied for the operation."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 404)
-                            throw new ApiException("Request entry id not found.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(decideErrorMessage(problemDetails, "Request entry id not found."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 423)
-                            throw new ApiException("Entry is locked.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(decideErrorMessage(problemDetails, "Entry is locked."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 429)
-                            throw new ApiException("Rate limit is reached.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(decideErrorMessage(problemDetails, "Rate limit is reached."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else
                             throw new RuntimeException(httpResponse.getStatusText());
                     }
@@ -554,20 +570,22 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                                             .getOriginalBody() : null), headersMap, null);
                         }
                         if (httpResponse.getStatus() == 400)
-                            throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(decideErrorMessage(problemDetails, "Invalid or bad request."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 401)
-                            throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(
+                                    decideErrorMessage(problemDetails, "Access token is invalid or expired."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 403)
-                            throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(
+                                    decideErrorMessage(problemDetails, "Access denied for the operation."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 404)
-                            throw new ApiException("Request entry not found.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(decideErrorMessage(problemDetails, "Request entry not found."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 429)
-                            throw new ApiException("Rate limit is reached.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(decideErrorMessage(problemDetails, "Rate limit is reached."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else
                             throw new RuntimeException(httpResponse.getStatusText());
                     }
@@ -611,20 +629,22 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                                             .getOriginalBody() : null), headersMap, null);
                         }
                         if (httpResponse.getStatus() == 400)
-                            throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(decideErrorMessage(problemDetails, "Invalid or bad request."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 401)
-                            throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(
+                                    decideErrorMessage(problemDetails, "Access token is invalid or expired."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 403)
-                            throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(
+                                    decideErrorMessage(problemDetails, "Access denied for the operation."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 404)
-                            throw new ApiException("Requested entry path not found", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(decideErrorMessage(problemDetails, "Requested entry path not found"),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 429)
-                            throw new ApiException("Rate limit is reached.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(decideErrorMessage(problemDetails, "Rate limit is reached."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else
                             throw new RuntimeException(httpResponse.getStatusText());
                     }
@@ -670,19 +690,22 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                                             .getOriginalBody() : null), headersMap, null);
                         }
                         if (httpResponse.getStatus() == 400)
-                            throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(decideErrorMessage(problemDetails, "Invalid or bad request."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 401)
-                            throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(
+                                    decideErrorMessage(problemDetails, "Access token is invalid or expired."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 403)
-                            throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(
+                                    decideErrorMessage(problemDetails, "Access denied for the operation."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 404)
-                            throw new ApiException("Not found.", httpResponse.getStatus(), httpResponse.getStatusText(),
-                                    headersMap, problemDetails);
+                            throw new ApiException(decideErrorMessage(problemDetails, "Not found."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 429)
-                            throw new ApiException("Operation limit or request limit reached.",
+                            throw new ApiException(
+                                    decideErrorMessage(problemDetails, "Operation limit or request limit reached."),
                                     httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else
                             throw new RuntimeException(httpResponse.getStatusText());
@@ -725,20 +748,22 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                                             .getOriginalBody() : null), headersMap, null);
                         }
                         if (httpResponse.getStatus() == 400)
-                            throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(decideErrorMessage(problemDetails, "Invalid or bad request."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 401)
-                            throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(
+                                    decideErrorMessage(problemDetails, "Access token is invalid or expired."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 403)
-                            throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(
+                                    decideErrorMessage(problemDetails, "Access denied for the operation."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 404)
-                            throw new ApiException("Requested entry id not found.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(decideErrorMessage(problemDetails, "Requested entry id not found."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 429)
-                            throw new ApiException("Rate limit is reached.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(decideErrorMessage(problemDetails, "Rate limit is reached."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else
                             throw new RuntimeException(httpResponse.getStatusText());
                     }
@@ -784,26 +809,28 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                                             .getOriginalBody() : null), headersMap, null);
                         }
                         if (httpResponse.getStatus() == 400)
-                            throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(decideErrorMessage(problemDetails, "Invalid or bad request."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 401)
-                            throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(
+                                    decideErrorMessage(problemDetails, "Access token is invalid or expired."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 403)
-                            throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(
+                                    decideErrorMessage(problemDetails, "Access denied for the operation."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 404)
-                            throw new ApiException("Request entry id not found.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(decideErrorMessage(problemDetails, "Request entry id not found."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 409)
-                            throw new ApiException("Entry name conflicts.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(decideErrorMessage(problemDetails, "Entry name conflicts."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 423)
-                            throw new ApiException("Entry is locked.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(decideErrorMessage(problemDetails, "Entry is locked."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 429)
-                            throw new ApiException("Rate limit is reached.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(decideErrorMessage(problemDetails, "Rate limit is reached."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else
                             throw new RuntimeException(httpResponse.getStatusText());
                     }
@@ -846,19 +873,22 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                                             .getOriginalBody() : null), headersMap, null);
                         }
                         if (httpResponse.getStatus() == 400)
-                            throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(decideErrorMessage(problemDetails, "Invalid or bad request."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 401)
-                            throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(
+                                    decideErrorMessage(problemDetails, "Access token is invalid or expired."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 403)
-                            throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(
+                                    decideErrorMessage(problemDetails, "Access denied for the operation."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 404)
-                            throw new ApiException("Not found.", httpResponse.getStatus(), httpResponse.getStatusText(),
-                                    headersMap, problemDetails);
+                            throw new ApiException(decideErrorMessage(problemDetails, "Not found."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 429)
-                            throw new ApiException("Operation limit or request limit reached.",
+                            throw new ApiException(
+                                    decideErrorMessage(problemDetails, "Operation limit or request limit reached."),
                                     httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else
                             throw new RuntimeException(httpResponse.getStatusText());
@@ -898,25 +928,34 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                                         rawResponse.getContentAsString(), headersMap, null);
                             }
                             if (rawResponse.getStatus() == 400)
-                                exception[0] = new ApiException("Invalid or bad request.", rawResponse.getStatus(),
-                                        rawResponse.getStatusText(), headersMap, problemDetails);
+                                exception[0] = new ApiException(
+                                        decideErrorMessage(problemDetails, "Invalid or bad request."),
+                                        rawResponse.getStatus(), rawResponse.getStatusText(), headersMap,
+                                        problemDetails);
                             else if (rawResponse.getStatus() == 401)
-                                exception[0] = new ApiException("Access token is invalid or expired.",
+                                exception[0] = new ApiException(
+                                        decideErrorMessage(problemDetails, "Access token is invalid or expired."),
                                         rawResponse.getStatus(), rawResponse.getStatusText(), headersMap,
                                         problemDetails);
                             else if (rawResponse.getStatus() == 403)
-                                exception[0] = new ApiException("Access denied for the operation.",
+                                exception[0] = new ApiException(
+                                        decideErrorMessage(problemDetails, "Access denied for the operation."),
                                         rawResponse.getStatus(), rawResponse.getStatusText(), headersMap,
                                         problemDetails);
                             else if (rawResponse.getStatus() == 404)
-                                exception[0] = new ApiException("Request entry id not found.", rawResponse.getStatus(),
-                                        rawResponse.getStatusText(), headersMap, problemDetails);
+                                exception[0] = new ApiException(
+                                        decideErrorMessage(problemDetails, "Request entry id not found."),
+                                        rawResponse.getStatus(), rawResponse.getStatusText(), headersMap,
+                                        problemDetails);
                             else if (rawResponse.getStatus() == 423)
-                                exception[0] = new ApiException("Entry is locked.", rawResponse.getStatus(),
-                                        rawResponse.getStatusText(), headersMap, problemDetails);
+                                exception[0] = new ApiException(decideErrorMessage(problemDetails, "Entry is locked."),
+                                        rawResponse.getStatus(), rawResponse.getStatusText(), headersMap,
+                                        problemDetails);
                             else if (rawResponse.getStatus() == 429)
-                                exception[0] = new ApiException("Rate limit is reached.", rawResponse.getStatus(),
-                                        rawResponse.getStatusText(), headersMap, problemDetails);
+                                exception[0] = new ApiException(
+                                        decideErrorMessage(problemDetails, "Rate limit is reached."),
+                                        rawResponse.getStatus(), rawResponse.getStatusText(), headersMap,
+                                        problemDetails);
                             else
                                 exception[0] = new RuntimeException(rawResponse.getStatusText());
                         }
@@ -959,25 +998,34 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                                         rawResponse.getContentAsString(), headersMap, null);
                             }
                             if (rawResponse.getStatus() == 400)
-                                exception[0] = new ApiException("Invalid or bad request.", rawResponse.getStatus(),
-                                        rawResponse.getStatusText(), headersMap, problemDetails);
+                                exception[0] = new ApiException(
+                                        decideErrorMessage(problemDetails, "Invalid or bad request."),
+                                        rawResponse.getStatus(), rawResponse.getStatusText(), headersMap,
+                                        problemDetails);
                             else if (rawResponse.getStatus() == 401)
-                                exception[0] = new ApiException("Access token is invalid or expired.",
+                                exception[0] = new ApiException(
+                                        decideErrorMessage(problemDetails, "Access token is invalid or expired."),
                                         rawResponse.getStatus(), rawResponse.getStatusText(), headersMap,
                                         problemDetails);
                             else if (rawResponse.getStatus() == 403)
-                                exception[0] = new ApiException("Access denied for the operation.",
+                                exception[0] = new ApiException(
+                                        decideErrorMessage(problemDetails, "Access denied for the operation."),
                                         rawResponse.getStatus(), rawResponse.getStatusText(), headersMap,
                                         problemDetails);
                             else if (rawResponse.getStatus() == 404)
-                                exception[0] = new ApiException("Request entry id not found.", rawResponse.getStatus(),
-                                        rawResponse.getStatusText(), headersMap, problemDetails);
+                                exception[0] = new ApiException(
+                                        decideErrorMessage(problemDetails, "Request entry id not found."),
+                                        rawResponse.getStatus(), rawResponse.getStatusText(), headersMap,
+                                        problemDetails);
                             else if (rawResponse.getStatus() == 423)
-                                exception[0] = new ApiException("Entry is locked.", rawResponse.getStatus(),
-                                        rawResponse.getStatusText(), headersMap, problemDetails);
+                                exception[0] = new ApiException(decideErrorMessage(problemDetails, "Entry is locked."),
+                                        rawResponse.getStatus(), rawResponse.getStatusText(), headersMap,
+                                        problemDetails);
                             else if (rawResponse.getStatus() == 429)
-                                exception[0] = new ApiException("Rate limit is reached.", rawResponse.getStatus(),
-                                        rawResponse.getStatusText(), headersMap, problemDetails);
+                                exception[0] = new ApiException(
+                                        decideErrorMessage(problemDetails, "Rate limit is reached."),
+                                        rawResponse.getStatus(), rawResponse.getStatusText(), headersMap,
+                                        problemDetails);
                             else
                                 exception[0] = new RuntimeException(rawResponse.getStatusText());
                         }
@@ -1023,23 +1071,25 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                                             .getOriginalBody() : null), headersMap, null);
                         }
                         if (httpResponse.getStatus() == 400)
-                            throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(decideErrorMessage(problemDetails, "Invalid or bad request."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 401)
-                            throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(
+                                    decideErrorMessage(problemDetails, "Access token is invalid or expired."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 403)
-                            throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(
+                                    decideErrorMessage(problemDetails, "Access denied for the operation."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 404)
-                            throw new ApiException("Request entry id not found.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(decideErrorMessage(problemDetails, "Request entry id not found."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 423)
-                            throw new ApiException("Entry is locked.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(decideErrorMessage(problemDetails, "Entry is locked."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 429)
-                            throw new ApiException("Rate limit is reached.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(decideErrorMessage(problemDetails, "Rate limit is reached."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else
                             throw new RuntimeException(httpResponse.getStatusText());
                     }
@@ -1076,23 +1126,25 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                                             .getOriginalBody() : null), headersMap, null);
                         }
                         if (httpResponse.getStatus() == 400)
-                            throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(decideErrorMessage(problemDetails, "Invalid or bad request."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 401)
-                            throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(
+                                    decideErrorMessage(problemDetails, "Access token is invalid or expired."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 403)
-                            throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(
+                                    decideErrorMessage(problemDetails, "Access denied for the operation."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 404)
-                            throw new ApiException("Request entry id not found.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(decideErrorMessage(problemDetails, "Request entry id not found."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 423)
-                            throw new ApiException("Entry is locked.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(decideErrorMessage(problemDetails, "Entry is locked."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 429)
-                            throw new ApiException("Rate limit is reached.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(decideErrorMessage(problemDetails, "Rate limit is reached."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else
                             throw new RuntimeException(httpResponse.getStatusText());
                     }
@@ -1134,23 +1186,25 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                                             .getOriginalBody() : null), headersMap, null);
                         }
                         if (httpResponse.getStatus() == 400)
-                            throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(decideErrorMessage(problemDetails, "Invalid or bad request."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 401)
-                            throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(
+                                    decideErrorMessage(problemDetails, "Access token is invalid or expired."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 403)
-                            throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(
+                                    decideErrorMessage(problemDetails, "Access denied for the operation."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 404)
-                            throw new ApiException("Request entry id not found.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(decideErrorMessage(problemDetails, "Request entry id not found."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 423)
-                            throw new ApiException("Entry is locked.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(decideErrorMessage(problemDetails, "Entry is locked."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 429)
-                            throw new ApiException("Rate limit is reached.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(decideErrorMessage(problemDetails, "Rate limit is reached."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else
                             throw new RuntimeException(httpResponse.getStatusText());
                     }
@@ -1213,20 +1267,22 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                                             .getOriginalBody() : null), headersMap, null);
                         }
                         if (httpResponse.getStatus() == 400)
-                            throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(decideErrorMessage(problemDetails, "Invalid or bad request."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 401)
-                            throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(
+                                    decideErrorMessage(problemDetails, "Access token is invalid or expired."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 403)
-                            throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(
+                                    decideErrorMessage(problemDetails, "Access denied for the operation."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 404)
-                            throw new ApiException("Request entry id not found.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(decideErrorMessage(problemDetails, "Request entry id not found."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 429)
-                            throw new ApiException("Rate limit is reached.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(decideErrorMessage(problemDetails, "Rate limit is reached."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else
                             throw new RuntimeException(httpResponse.getStatusText());
                     }
@@ -1299,23 +1355,25 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                                             .getOriginalBody() : null), headersMap, null);
                         }
                         if (httpResponse.getStatus() == 400)
-                            throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(decideErrorMessage(problemDetails, "Invalid or bad request."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 401)
-                            throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(
+                                    decideErrorMessage(problemDetails, "Access token is invalid or expired."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 403)
-                            throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(
+                                    decideErrorMessage(problemDetails, "Access denied for the operation."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 404)
-                            throw new ApiException("Request entry id not found.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(decideErrorMessage(problemDetails, "Request entry id not found."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 409)
-                            throw new ApiException("Entry name conflicts.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(decideErrorMessage(problemDetails, "Entry name conflicts."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 429)
-                            throw new ApiException("Rate limit is reached.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(decideErrorMessage(problemDetails, "Rate limit is reached."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else
                             throw new RuntimeException(httpResponse.getStatusText());
                     }
@@ -1372,20 +1430,22 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                                             .getOriginalBody() : null), headersMap, null);
                         }
                         if (httpResponse.getStatus() == 400)
-                            throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(decideErrorMessage(problemDetails, "Invalid or bad request."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 401)
-                            throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(
+                                    decideErrorMessage(problemDetails, "Access token is invalid or expired."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 403)
-                            throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(
+                                    decideErrorMessage(problemDetails, "Access denied for the operation."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 404)
-                            throw new ApiException("Request entry id not found.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(decideErrorMessage(problemDetails, "Request entry id not found."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 429)
-                            throw new ApiException("Rate limit is reached.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(decideErrorMessage(problemDetails, "Rate limit is reached."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else
                             throw new RuntimeException(httpResponse.getStatusText());
                     }
@@ -1454,23 +1514,25 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                                             .getOriginalBody() : null), headersMap, null);
                         }
                         if (httpResponse.getStatus() == 400)
-                            throw new ApiException("Invalid or bad request.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(decideErrorMessage(problemDetails, "Invalid or bad request."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 401)
-                            throw new ApiException("Access token is invalid or expired.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(
+                                    decideErrorMessage(problemDetails, "Access token is invalid or expired."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 403)
-                            throw new ApiException("Access denied for the operation.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(
+                                    decideErrorMessage(problemDetails, "Access denied for the operation."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 404)
-                            throw new ApiException("Request id not found.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(decideErrorMessage(problemDetails, "Request id not found."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 423)
-                            throw new ApiException("Entry is locked.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(decideErrorMessage(problemDetails, "Entry is locked."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 429)
-                            throw new ApiException("Rate limit is reached.", httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
+                            throw new ApiException(decideErrorMessage(problemDetails, "Rate limit is reached."),
+                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else
                             throw new RuntimeException(httpResponse.getStatusText());
                     }
