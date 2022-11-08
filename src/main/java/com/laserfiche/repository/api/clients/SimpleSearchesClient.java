@@ -1,6 +1,6 @@
 package com.laserfiche.repository.api.clients;
 
-import com.laserfiche.repository.api.clients.impl.model.ODataValueOfIListOfEntry;
+import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfEntry;
 import com.laserfiche.repository.api.clients.impl.model.SimpleSearchRequest;
 
 import java.util.concurrent.CompletableFuture;
@@ -25,9 +25,9 @@ public interface SimpleSearchesClient {
      * @param culture      An optional query parameter used to indicate the locale that should be used for formatting.
      *                     The value should be a standard language tag. The formatFields query parameter must be set to true, otherwise
      *                     culture will not be used for formatting.
-     * @return CompletableFuture&lt;ODataValueOfIListOfEntry&gt; The return value
+     * @return CompletableFuture&lt;ODataValueContextOfIListOfEntry&gt; The return value
      */
-    CompletableFuture<ODataValueOfIListOfEntry> createSimpleSearchOperation(String select, String orderby,
+    CompletableFuture<ODataValueContextOfIListOfEntry> createSimpleSearchOperation(String select, String orderby,
             Boolean count, String repoId, String[] fields, Boolean formatFields, SimpleSearchRequest requestBody,
             String culture);
 }

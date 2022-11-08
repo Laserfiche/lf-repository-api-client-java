@@ -6,7 +6,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.Objects;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-17T11:38:41.655-04:00[America/New_York]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-11-07T15:57:30.539-05:00[America/New_York]")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class LinkToUpdate {
 
@@ -53,7 +53,7 @@ public class LinkToUpdate {
     }
 
     @Schema(description = "Whether the entry is the source for the link.")
-    public Boolean getIsSource() {
+    public Boolean isSource() {
         return isSource;
     }
 

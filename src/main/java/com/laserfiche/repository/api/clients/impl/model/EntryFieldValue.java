@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-17T11:38:41.655-04:00[America/New_York]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-11-07T15:57:30.539-05:00[America/New_York]")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class EntryFieldValue {
 
@@ -104,7 +104,7 @@ public class EntryFieldValue {
     }
 
     @Schema(description = "A boolean indicating if the represented field supports multiple values.")
-    public Boolean getIsMultiValue() {
+    public Boolean isMultiValue() {
         return isMultiValue;
     }
 
@@ -118,7 +118,7 @@ public class EntryFieldValue {
     }
 
     @Schema(description = "A boolean indicating if the represented field must have a value set on entries assigned to a template that the field is a member of.")
-    public Boolean getIsRequired() {
+    public Boolean isRequired() {
         return isRequired;
     }
 

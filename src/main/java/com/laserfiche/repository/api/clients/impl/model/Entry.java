@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-17T11:38:41.655-04:00[America/New_York]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-11-07T15:57:30.539-05:00[America/New_York]")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "entryType", visible = true, defaultImpl = Entry.class)
 @JsonSubTypes({@JsonSubTypes.Type(value = Document.class, name = "Document"), @JsonSubTypes.Type(value = Folder.class, name = "Folder"), @JsonSubTypes.Type(value = Shortcut.class, name = "Shortcut"), @JsonSubTypes.Type(value = RecordSeries.class, name = "RecordSeries")})
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -200,7 +200,7 @@ public class Entry {
     }
 
     @Schema(description = "A boolean indicating if this entry is a container object; it can have other entries as children.")
-    public Boolean getIsContainer() {
+    public Boolean isContainer() {
         return isContainer;
     }
 
@@ -214,7 +214,7 @@ public class Entry {
     }
 
     @Schema(description = "A boolean indicating if this entry is a leaf object; it cannot have other entries as children.")
-    public Boolean getIsLeaf() {
+    public Boolean isLeaf() {
         return isLeaf;
     }
 
