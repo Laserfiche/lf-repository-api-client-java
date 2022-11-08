@@ -7,7 +7,7 @@ public enum FuzzyType {
 
     NONE("None"),
     PERCENTAGE("Percentage"),
-    NUMBEROFLETTERS("NumberOfLetters");
+    NUMBER_OF_LETTERS("NumberOfLetters");
 
     private String value;
 
