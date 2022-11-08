@@ -6,7 +6,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.Objects;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-17T11:38:41.655-04:00[America/New_York]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-11-07T15:57:30.539-05:00[America/New_York]")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Document extends Entry {
 
@@ -71,7 +71,7 @@ public class Document extends Entry {
     }
 
     @Schema(description = "A boolean indicating if there is an electronic document attached to the represented document.")
-    public Boolean getIsElectronicDocument() {
+    public Boolean isElectronicDocument() {
         return isElectronicDocument;
     }
 
@@ -85,7 +85,7 @@ public class Document extends Entry {
     }
 
     @Schema(description = "A boolean indicating if the represented document is a record.")
-    public Boolean getIsRecord() {
+    public Boolean isRecord() {
         return isRecord;
     }
 
@@ -127,7 +127,7 @@ public class Document extends Entry {
     }
 
     @Schema(description = "A boolean indicating if the represented document is checked out.")
-    public Boolean getIsCheckedOut() {
+    public Boolean isCheckedOut() {
         return isCheckedOut;
     }
 
@@ -141,7 +141,7 @@ public class Document extends Entry {
     }
 
     @Schema(description = "A boolean indicating if the represented document is under version control.")
-    public Boolean getIsUnderVersionControl() {
+    public Boolean isUnderVersionControl() {
         return isUnderVersionControl;
     }
 

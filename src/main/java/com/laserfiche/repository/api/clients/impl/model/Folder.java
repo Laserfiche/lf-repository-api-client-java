@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-17T11:38:41.655-04:00[America/New_York]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-11-07T15:57:30.539-05:00[America/New_York]")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Folder extends Entry {
 
@@ -27,7 +27,7 @@ public class Folder extends Entry {
     }
 
     @Schema(description = "A boolean indicating if the folder that this instance represents is known to be a record folder.")
-    public Boolean getIsRecordFolder() {
+    public Boolean isRecordFolder() {
         return isRecordFolder;
     }
 
@@ -41,7 +41,7 @@ public class Folder extends Entry {
     }
 
     @Schema(description = "A boolean indicating if the folder that this instance represents is known to directly or indirectly under a record series in the repository.")
-    public Boolean getIsUnderRecordSeries() {
+    public Boolean isUnderRecordSeries() {
         return isUnderRecordSeries;
     }
 

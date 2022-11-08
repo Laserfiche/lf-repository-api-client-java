@@ -6,7 +6,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.Objects;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-17T11:38:41.655-04:00[America/New_York]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-11-07T15:57:30.539-05:00[America/New_York]")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Watermark {
 
@@ -90,7 +90,7 @@ public class Watermark {
     }
 
     @Schema(description = "A boolean indicating whether or not the watermark associated with the tag is mandatory.")
-    public Boolean getIsWatermarkMandatory() {
+    public Boolean isWatermarkMandatory() {
         return isWatermarkMandatory;
     }
 

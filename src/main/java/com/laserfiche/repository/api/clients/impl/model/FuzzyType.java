@@ -5,18 +5,18 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum FuzzyType {
 
-    NUMBER_0(0),
-    NUMBER_1(1),
-    NUMBER_2(2);
+    NONE("None"),
+    PERCENTAGE("Percentage"),
+    NUMBEROFLETTERS("NumberOfLetters");
 
-    private Integer value;
+    private String value;
 
-    FuzzyType(Integer value) {
+    FuzzyType(String value) {
         this.value = value;
     }
 
     @JsonValue
-    public Integer getValue() {
+    public String getValue() {
         return value;
     }
 
@@ -26,7 +26,7 @@ public enum FuzzyType {
     }
 
     @JsonCreator
-    public static FuzzyType fromValue(Integer input) {
+    public static FuzzyType fromValue(String input) {
         for (FuzzyType b : FuzzyType.values()) {
             if (b.value.equals(input)) {
                 return b;
