@@ -2,7 +2,7 @@ package com.laserfiche.repository.api.clients.impl;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.laserfiche.repository.api.clients.SimpleSearchesClient;
-import com.laserfiche.repository.api.clients.impl.model.ODataValueOfIListOfEntry;
+import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfEntry;
 import com.laserfiche.repository.api.clients.impl.model.ProblemDetails;
 import com.laserfiche.repository.api.clients.impl.model.SimpleSearchRequest;
 import kong.unirest.UnirestInstance;
@@ -19,7 +19,7 @@ public class SimpleSearchesClientImpl extends ApiClient implements SimpleSearche
     }
 
     @Override
-    public CompletableFuture<ODataValueOfIListOfEntry> createSimpleSearchOperation(String select, String orderby,
+    public CompletableFuture<ODataValueContextOfIListOfEntry> createSimpleSearchOperation(String select, String orderby,
             Boolean count, String repoId, String[] fields, Boolean formatFields, SimpleSearchRequest requestBody,
             String culture) {
         Map<String, Object> queryParameters = getNonNullParameters(
@@ -41,7 +41,7 @@ public class SimpleSearchesClientImpl extends ApiClient implements SimpleSearche
                         try {
                             Object body = httpResponse.getBody();
                             String jsonString = new JSONObject(body).toString();
-                            return objectMapper.readValue(jsonString, ODataValueOfIListOfEntry.class);
+                            return objectMapper.readValue(jsonString, ODataValueContextOfIListOfEntry.class);
                         } catch (JsonProcessingException | IllegalStateException e) {
                             e.printStackTrace();
                             return null;
