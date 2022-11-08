@@ -2,18 +2,20 @@ package integration;
 
 import com.laserfiche.repository.api.RepositoryApiClient;
 import com.laserfiche.repository.api.clients.EntriesClient;
+import com.laserfiche.repository.api.clients.impl.ApiException;
 import com.laserfiche.repository.api.clients.impl.model.*;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionException;
 import java.util.concurrent.TimeUnit;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class CreateCopyEntryApiTest extends BaseTest {
     List<Entry> createdEntries = new ArrayList<>();
@@ -225,5 +227,36 @@ public class CreateCopyEntryApiTest extends BaseTest {
         assertEquals(movedEntry.getId(), childFolder.getId());
         assertEquals(movedEntry.getParentId(), parentFolder.getId());
         assertEquals(movedEntry.getName(), request.getName());
+    }
+
+    @Test
+    void moveAndRenameEntry_ReturnsCorrectErrorMessage_For_InvalidRepoId() {
+        Entry parentFolder = createEntry(createEntryClient, "RepositoryApiClientIntegrationTest Java ParentFolder", 1,
+                true).join();
+
+        createdEntries.add(parentFolder);
+
+        Entry childFolder = createEntry(createEntryClient, "RepositoryApiClientIntegrationTest Java ChildFolder", 1,
+                true).join();
+
+        createdEntries.add(childFolder);
+
+        PatchEntryRequest request = new PatchEntryRequest();
+        request.setParentId(parentFolder.getId());
+        request.setName("RepositoryApiClientIntegrationTest Java MovedFolder");
+
+        String invalidRepoId = String.format("%s-%s", repoId, repoId);
+        Exception thrown = Assertions.assertThrows(CompletionException.class, () -> client
+                .moveOrRenameEntry(invalidRepoId, childFolder.getId(), request, true, null)
+                .join());
+
+        assertNotNull(thrown);
+        assertTrue(thrown.getCause() instanceof ApiException);
+        ApiException apiException = (ApiException) thrown.getCause();
+        assertEquals(404, apiException.getStatusCode());
+        assertEquals(String.format("Error: Repository with Id %s not found.", invalidRepoId),
+                apiException.getMessage());
+        ProblemDetails problemDetails = apiException.getProblemDetails();
+        assertNotNull(problemDetails);
     }
 }

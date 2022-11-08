@@ -486,4 +486,22 @@ class EntriesApiTest extends BaseTest {
         ProblemDetails problemDetails = apiException.getProblemDetails();
         assertNull(problemDetails);
     }
+
+    @Test
+    void writeTemplateValueToEntry_ReturnsCorrectErrorMessage_For_Invalid_TemplateName() {
+        PutTemplateRequest request = new PutTemplateRequest();
+        request.setTemplateName("fake_template");
+        Exception thrown = Assertions.assertThrows(CompletionException.class, () -> client
+                .writeTemplateValueToEntry(repoId, 3, request, null)
+                .join());
+        assertNotNull(thrown);
+        assertTrue(thrown.getCause() instanceof ApiException);
+        ApiException apiException = (ApiException) thrown.getCause();
+        assertEquals(404, apiException.getStatusCode());
+        assertTrue(apiException
+                .getMessage()
+                .startsWith("Template not found."), apiException.getMessage());
+        ProblemDetails problemDetails = apiException.getProblemDetails();
+        assertNotNull(problemDetails);
+    }
 }
