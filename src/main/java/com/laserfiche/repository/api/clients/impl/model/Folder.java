@@ -27,6 +27,7 @@ public class Folder extends Entry {
     }
 
     @Schema(description = "A boolean indicating if the folder that this instance represents is known to be a record folder.")
+    @JsonProperty("isRecordFolder")
     public Boolean isRecordFolder() {
         return isRecordFolder;
     }
@@ -41,6 +42,7 @@ public class Folder extends Entry {
     }
 
     @Schema(description = "A boolean indicating if the folder that this instance represents is known to directly or indirectly under a record series in the repository.")
+    @JsonProperty("isUnderRecordSeries")
     public Boolean isUnderRecordSeries() {
         return isUnderRecordSeries;
     }

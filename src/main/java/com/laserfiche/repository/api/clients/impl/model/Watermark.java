@@ -90,6 +90,7 @@ public class Watermark {
     }
 
     @Schema(description = "A boolean indicating whether or not the watermark associated with the tag is mandatory.")
+    @JsonProperty("isWatermarkMandatory")
     public Boolean isWatermarkMandatory() {
         return isWatermarkMandatory;
     }

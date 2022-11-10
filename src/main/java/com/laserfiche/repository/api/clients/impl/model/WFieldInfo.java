@@ -161,6 +161,7 @@ public class WFieldInfo {
     }
 
     @Schema(description = "A boolean indicating if the represented template field supports multiple values.")
+    @JsonProperty("isMultiValue")
     public Boolean isMultiValue() {
         return isMultiValue;
     }
@@ -175,6 +176,7 @@ public class WFieldInfo {
     }
 
     @Schema(description = "A boolean indicating if the represented field must have a value set on entries assigned to a template that the field is a member of.")
+    @JsonProperty("isRequired")
     public Boolean isRequired() {
         return isRequired;
     }

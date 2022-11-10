@@ -53,6 +53,7 @@ public class LinkToUpdate {
     }
 
     @Schema(description = "Whether the entry is the source for the link.")
+    @JsonProperty("isSource")
     public Boolean isSource() {
         return isSource;
     }

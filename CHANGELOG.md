@@ -1,3 +1,9 @@
+## 1.1.1
+
+### Fixes
+
+- Serialization on models where there's at least one boolean getter no longer fails.
+
 ## 1.1.0
 
 ### Features
