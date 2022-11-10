@@ -75,6 +75,7 @@ public class ContextHit {
     }
 
     @Schema(description = "A boolean indicating if this context hit occurs on an annotation.")
+    @JsonProperty("isAnnotationHit")
     public Boolean isAnnotationHit() {
         return isAnnotationHit;
     }

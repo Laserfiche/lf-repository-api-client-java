@@ -200,6 +200,7 @@ public class Entry {
     }
 
     @Schema(description = "A boolean indicating if this entry is a container object; it can have other entries as children.")
+    @JsonProperty("isContainer")
     public Boolean isContainer() {
         return isContainer;
     }
@@ -214,6 +215,7 @@ public class Entry {
     }
 
     @Schema(description = "A boolean indicating if this entry is a leaf object; it cannot have other entries as children.")
+    @JsonProperty("isLeaf")
     public Boolean isLeaf() {
         return isLeaf;
     }

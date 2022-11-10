@@ -71,6 +71,7 @@ public class Document extends Entry {
     }
 
     @Schema(description = "A boolean indicating if there is an electronic document attached to the represented document.")
+    @JsonProperty("isElectronicDocument")
     public Boolean isElectronicDocument() {
         return isElectronicDocument;
     }
@@ -85,6 +86,7 @@ public class Document extends Entry {
     }
 
     @Schema(description = "A boolean indicating if the represented document is a record.")
+    @JsonProperty("isRecord")
     public Boolean isRecord() {
         return isRecord;
     }
@@ -127,6 +129,7 @@ public class Document extends Entry {
     }
 
     @Schema(description = "A boolean indicating if the represented document is checked out.")
+    @JsonProperty("isCheckedOut")
     public Boolean isCheckedOut() {
         return isCheckedOut;
     }
@@ -141,6 +144,7 @@ public class Document extends Entry {
     }
 
     @Schema(description = "A boolean indicating if the represented document is under version control.")
+    @JsonProperty("isUnderVersionControl")
     public Boolean isUnderVersionControl() {
         return isUnderVersionControl;
     }

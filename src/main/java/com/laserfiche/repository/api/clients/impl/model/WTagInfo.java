@@ -90,6 +90,7 @@ public class WTagInfo {
     }
 
     @Schema(description = "A boolean indicating whether or not the tag definition is classified as a security tag (true) or an informational tag (false).")
+    @JsonProperty("isSecure")
     public Boolean isSecure() {
         return isSecure;
     }
