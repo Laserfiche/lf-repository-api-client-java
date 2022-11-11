@@ -26,9 +26,9 @@ public class RepositoriesClientImpl extends ApiClient implements RepositoriesCli
                 .get(baseUrl + "/v1/Repositories")
                 .asObjectAsync(Object.class)
                 .thenApply(httpResponse -> {
+                    Object body = httpResponse.getBody();
                     if (httpResponse.getStatus() == 200) {
                         try {
-                            Object body = httpResponse.getBody();
                             String jsonString = new JSONArray(((ArrayList) body).toArray()).toString();
                             return objectMapper.readValue(jsonString, RepositoryInfo[].class);
                         } catch (JsonProcessingException | IllegalStateException e) {
@@ -36,7 +36,6 @@ public class RepositoriesClientImpl extends ApiClient implements RepositoriesCli
                             return null;
                         }
                     } else {
-                        Object body = httpResponse.getBody();
                         ProblemDetails problemDetails;
                         Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {

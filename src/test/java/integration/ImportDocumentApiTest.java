@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.*;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -52,14 +53,15 @@ public class ImportDocumentApiTest extends BaseTest {
                         new FileInputStream(toUpload), new PostEntryWithEdocMetadataRequest())
                 .join();
 
+        assertNotNull(result);
         CreateEntryOperations operations = result.getOperations();
 
-        assertNotNull(result);
         assertNotNull(operations);
         assertNotNull(result.getDocumentLink());
-        assertNotEquals(0, operations
+        createdEntryId = operations
                 .getEntryCreate()
-                .getEntryId());
+                .getEntryId();
+        assertTrue(createdEntryId > 0);
         assertEquals(0, operations
                 .getEntryCreate()
                 .getExceptions()
@@ -68,10 +70,6 @@ public class ImportDocumentApiTest extends BaseTest {
                 .getSetEdoc()
                 .getExceptions()
                 .size());
-        createdEntryId = operations
-                .getEntryCreate()
-                .getEntryId();
-        assertTrue(createdEntryId > 0);
     }
 
     @Test
@@ -122,9 +120,10 @@ public class ImportDocumentApiTest extends BaseTest {
                 .getEntryCreate()
                 .getExceptions()
                 .size());
-        assertNotEquals(0, operations
+        createdEntryId = operations
                 .getEntryCreate()
-                .getEntryId());
+                .getEntryId();
+        assertTrue(createdEntryId > 0);
         assertEquals(0, operations
                 .getSetEdoc()
                 .getExceptions()
@@ -136,10 +135,6 @@ public class ImportDocumentApiTest extends BaseTest {
         assertEquals(template.getName(), operations
                 .getSetTemplate()
                 .getTemplate());
-        createdEntryId = operations
-                .getEntryCreate()
-                .getEntryId();
-        assertTrue(createdEntryId > 0);
     }
 
     @Test
@@ -159,12 +154,12 @@ public class ImportDocumentApiTest extends BaseTest {
         assertNotNull(result);
         CreateEntryOperations operations = result.getOperations();
 
-        assertNotNull(result);
         assertNotNull(operations);
         assertNotNull(result.getDocumentLink());
-        assertNotEquals(0, operations
+        createdEntryId = operations
                 .getEntryCreate()
-                .getEntryId());
+                .getEntryId();
+        assertTrue(createdEntryId > 0);
         assertEquals(0, operations
                 .getEntryCreate()
                 .getExceptions()
@@ -173,14 +168,10 @@ public class ImportDocumentApiTest extends BaseTest {
                 .getSetEdoc()
                 .getExceptions()
                 .size());
-        createdEntryId = operations
-                .getEntryCreate()
-                .getEntryId();
-        assertTrue(createdEntryId > 0);
     }
 
     @Test
-    void importDocument_DocumentCreated_FromString() throws IOException {
+    void importDocument_DocumentCreated_FromString() {
         String fileName = "myFile";
         CreateEntryResult result = null;
         String fileContent = "This is the file content";
@@ -195,12 +186,12 @@ public class ImportDocumentApiTest extends BaseTest {
         assertNotNull(result);
         CreateEntryOperations operations = result.getOperations();
 
-        assertNotNull(result);
         assertNotNull(operations);
         assertNotNull(result.getDocumentLink());
-        assertNotEquals(0, operations
+        createdEntryId = operations
                 .getEntryCreate()
-                .getEntryId());
+                .getEntryId();
+        assertTrue(createdEntryId > 0);
         assertEquals(0, operations
                 .getEntryCreate()
                 .getExceptions()
@@ -209,9 +200,52 @@ public class ImportDocumentApiTest extends BaseTest {
                 .getSetEdoc()
                 .getExceptions()
                 .size());
+    }
+
+    @Test
+    void importDocument_Returns_Detail_When_PartialSuccess_Happens() {
+        String fileName = "myFile";
+        CreateEntryResult result = null;
+        String fileContent = "This is the file content";
+        InputStream inputStream = new ByteArrayInputStream(fileContent.getBytes());
+        assertNotNull(inputStream);
+
+        PostEntryWithEdocMetadataRequest request = new PostEntryWithEdocMetadataRequest();
+        request.setTemplate("invalidTemplateName");
+        result = client
+                .importDocument(repoId, 1, fileName, true, null,
+                        inputStream, request)
+                .join();
+
+        assertNotNull(result);
+        CreateEntryOperations operations = result.getOperations();
+
+        assertNotNull(operations);
+        assertNotNull(result.getDocumentLink());
         createdEntryId = operations
                 .getEntryCreate()
                 .getEntryId();
         assertTrue(createdEntryId > 0);
+        assertEquals(0, operations
+                .getEntryCreate()
+                .getExceptions()
+                .size());
+        assertEquals(0, operations
+                .getSetEdoc()
+                .getExceptions()
+                .size());
+        assertEquals(1, operations
+                .getSetTemplate()
+                .getExceptions()
+                .size());
+        APIServerException setTemplateException = operations
+                .getSetTemplate()
+                .getExceptions()
+                .get(0);
+        assertTrue(setTemplateException
+                .getMessage()
+                .startsWith("Template not found."), setTemplateException.getMessage());
+        assertEquals(HttpURLConnection.HTTP_CONFLICT, setTemplateException.getStatusCode());
+        assertEquals(ErrorSource.LASERFICHE_SERVER.getName(), setTemplateException.getErrorSource());
     }
 }

@@ -27,9 +27,9 @@ public class ServerSessionClientImpl extends ApiClient implements ServerSessionC
                 .routeParam(pathParameters)
                 .asObjectAsync(Object.class)
                 .thenApply(httpResponse -> {
+                    Object body = httpResponse.getBody();
                     if (httpResponse.getStatus() == 200) {
                         try {
-                            Object body = httpResponse.getBody();
                             String jsonString = new JSONObject(body).toString();
                             return objectMapper.readValue(jsonString, ODataValueOfBoolean.class);
                         } catch (JsonProcessingException | IllegalStateException e) {
@@ -37,7 +37,6 @@ public class ServerSessionClientImpl extends ApiClient implements ServerSessionC
                             return null;
                         }
                     } else {
-                        Object body = httpResponse.getBody();
                         ProblemDetails problemDetails;
                         Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
@@ -81,9 +80,9 @@ public class ServerSessionClientImpl extends ApiClient implements ServerSessionC
                 .routeParam(pathParameters)
                 .asObjectAsync(Object.class)
                 .thenApply(httpResponse -> {
+                    Object body = httpResponse.getBody();
                     if (httpResponse.getStatus() == 200) {
                         try {
-                            Object body = httpResponse.getBody();
                             String jsonString = new JSONObject(body).toString();
                             return objectMapper.readValue(jsonString, ODataValueOfBoolean.class);
                         } catch (JsonProcessingException | IllegalStateException e) {
@@ -91,7 +90,6 @@ public class ServerSessionClientImpl extends ApiClient implements ServerSessionC
                             return null;
                         }
                     } else {
-                        Object body = httpResponse.getBody();
                         ProblemDetails problemDetails;
                         Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
@@ -126,9 +124,9 @@ public class ServerSessionClientImpl extends ApiClient implements ServerSessionC
                 .routeParam(pathParameters)
                 .asObjectAsync(Object.class)
                 .thenApply(httpResponse -> {
+                    Object body = httpResponse.getBody();
                     if (httpResponse.getStatus() == 200) {
                         try {
-                            Object body = httpResponse.getBody();
                             String jsonString = new JSONObject(body).toString();
                             return objectMapper.readValue(jsonString, ODataValueOfDateTime.class);
                         } catch (JsonProcessingException | IllegalStateException e) {
@@ -136,7 +134,6 @@ public class ServerSessionClientImpl extends ApiClient implements ServerSessionC
                             return null;
                         }
                     } else {
-                        Object body = httpResponse.getBody();
                         ProblemDetails problemDetails;
                         Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {

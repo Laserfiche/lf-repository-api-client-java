@@ -26,9 +26,9 @@ public class AuditReasonsClientImpl extends ApiClient implements AuditReasonsCli
                 .routeParam(pathParameters)
                 .asObjectAsync(Object.class)
                 .thenApply(httpResponse -> {
+                    Object body = httpResponse.getBody();
                     if (httpResponse.getStatus() == 200) {
                         try {
-                            Object body = httpResponse.getBody();
                             String jsonString = new JSONObject(body).toString();
                             return objectMapper.readValue(jsonString, AuditReasons.class);
                         } catch (JsonProcessingException | IllegalStateException e) {
@@ -36,7 +36,6 @@ public class AuditReasonsClientImpl extends ApiClient implements AuditReasonsCli
                             return null;
                         }
                     } else {
-                        Object body = httpResponse.getBody();
                         ProblemDetails problemDetails;
                         Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {

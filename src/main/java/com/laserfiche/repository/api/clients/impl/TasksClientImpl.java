@@ -27,9 +27,9 @@ public class TasksClientImpl extends ApiClient implements TasksClient {
                 .routeParam(pathParameters)
                 .asObjectAsync(Object.class)
                 .thenApply(httpResponse -> {
+                    Object body = httpResponse.getBody();
                     if (httpResponse.getStatus() == 200 || httpResponse.getStatus() == 201 || httpResponse.getStatus() == 202) {
                         try {
-                            Object body = httpResponse.getBody();
                             String jsonString = new JSONObject(body).toString();
                             return objectMapper.readValue(jsonString, OperationProgress.class);
                         } catch (JsonProcessingException | IllegalStateException e) {
@@ -37,7 +37,6 @@ public class TasksClientImpl extends ApiClient implements TasksClient {
                             return null;
                         }
                     } else {
-                        Object body = httpResponse.getBody();
                         ProblemDetails problemDetails;
                         Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
@@ -83,10 +82,10 @@ public class TasksClientImpl extends ApiClient implements TasksClient {
                 .routeParam(pathParameters)
                 .asObjectAsync(Object.class)
                 .thenApply(httpResponse -> {
+                    Object body = httpResponse.getBody();
                     if (httpResponse.getStatus() == 204) {
                         return true;
                     } else {
-                        Object body = httpResponse.getBody();
                         ProblemDetails problemDetails;
                         Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {

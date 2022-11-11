@@ -34,9 +34,9 @@ public class FieldDefinitionsClientImpl extends ApiClient implements FieldDefini
                 .routeParam(pathParameters)
                 .asObjectAsync(Object.class)
                 .thenApply(httpResponse -> {
+                    Object body = httpResponse.getBody();
                     if (httpResponse.getStatus() == 200) {
                         try {
-                            Object body = httpResponse.getBody();
                             String jsonString = new JSONObject(body).toString();
                             return objectMapper.readValue(jsonString, WFieldInfo.class);
                         } catch (JsonProcessingException | IllegalStateException e) {
@@ -44,7 +44,6 @@ public class FieldDefinitionsClientImpl extends ApiClient implements FieldDefini
                             return null;
                         }
                     } else {
-                        Object body = httpResponse.getBody();
                         ProblemDetails problemDetails;
                         Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
@@ -106,9 +105,9 @@ public class FieldDefinitionsClientImpl extends ApiClient implements FieldDefini
                 .headers(headerParametersWithStringTypeValue)
                 .asObjectAsync(Object.class)
                 .thenApply(httpResponse -> {
+                    Object body = httpResponse.getBody();
                     if (httpResponse.getStatus() == 200) {
                         try {
-                            Object body = httpResponse.getBody();
                             String jsonString = new JSONObject(body).toString();
                             return objectMapper.readValue(jsonString, ODataValueContextOfIListOfWFieldInfo.class);
                         } catch (JsonProcessingException | IllegalStateException e) {
@@ -116,7 +115,6 @@ public class FieldDefinitionsClientImpl extends ApiClient implements FieldDefini
                             return null;
                         }
                     } else {
-                        Object body = httpResponse.getBody();
                         ProblemDetails problemDetails;
                         Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {

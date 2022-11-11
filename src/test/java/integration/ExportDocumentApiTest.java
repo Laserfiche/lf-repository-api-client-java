@@ -77,7 +77,8 @@ public class ExportDocumentApiTest extends BaseTest {
             client
                     .exportDocument(repoId, -createdEntryId, null, consumer);
         });
-        Assertions.assertEquals("Specified argument was out of the range of valid values. (Parameter 'entryId')", thrown.getMessage());
+        Assertions.assertEquals("Specified argument was out of the range of valid values. (Parameter 'entryId')",
+                thrown.getMessage());
         File exportedFile = new File(FILE_NAME);
         assertNotNull(exportedFile);
         assertFalse(exportedFile.exists());

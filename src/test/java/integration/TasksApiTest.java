@@ -49,12 +49,13 @@ public class TasksApiTest extends BaseTest {
                     .join();
         });
 
-        Assertions.assertEquals(String.format("%s: Error: Cannot cancel ended operation.", ApiException.class.getCanonicalName()),
+        Assertions.assertEquals(
+                String.format("%s: Error: Cannot cancel ended operation.", ApiException.class.getCanonicalName()),
                 thrown.getMessage());
     }
 
     @Test
-    void cancelOperation_OperationCancelledSuccessfully() throws InterruptedException {
+    void cancelOperation_OperationCancelledSuccessfully() {
         Entry deleteEntry = createEntry(createEntryClient, "RepositoryApiClientIntegrationTest Java CancelOperation", 1,
                 true).join();
 

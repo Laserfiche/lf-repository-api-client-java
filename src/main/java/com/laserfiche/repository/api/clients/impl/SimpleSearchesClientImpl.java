@@ -37,9 +37,9 @@ public class SimpleSearchesClientImpl extends ApiClient implements SimpleSearche
                 .body(requestBody)
                 .asObjectAsync(Object.class)
                 .thenApply(httpResponse -> {
+                    Object body = httpResponse.getBody();
                     if (httpResponse.getStatus() == 200 || httpResponse.getStatus() == 204 || httpResponse.getStatus() == 206) {
                         try {
-                            Object body = httpResponse.getBody();
                             String jsonString = new JSONObject(body).toString();
                             return objectMapper.readValue(jsonString, ODataValueContextOfIListOfEntry.class);
                         } catch (JsonProcessingException | IllegalStateException e) {
@@ -47,7 +47,6 @@ public class SimpleSearchesClientImpl extends ApiClient implements SimpleSearche
                             return null;
                         }
                     } else {
-                        Object body = httpResponse.getBody();
                         ProblemDetails problemDetails;
                         Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {

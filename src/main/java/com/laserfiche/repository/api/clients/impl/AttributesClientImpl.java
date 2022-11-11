@@ -33,9 +33,9 @@ public class AttributesClientImpl extends ApiClient implements AttributesClient 
                 .routeParam(pathParameters)
                 .asObjectAsync(Object.class)
                 .thenApply(httpResponse -> {
+                    Object body = httpResponse.getBody();
                     if (httpResponse.getStatus() == 200) {
                         try {
-                            Object body = httpResponse.getBody();
                             String jsonString = new JSONObject(body).toString();
                             return objectMapper.readValue(jsonString, Attribute.class);
                         } catch (JsonProcessingException | IllegalStateException e) {
@@ -43,7 +43,6 @@ public class AttributesClientImpl extends ApiClient implements AttributesClient 
                             return null;
                         }
                     } else {
-                        Object body = httpResponse.getBody();
                         ProblemDetails problemDetails;
                         Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
@@ -106,9 +105,9 @@ public class AttributesClientImpl extends ApiClient implements AttributesClient 
                 .headers(headerParametersWithStringTypeValue)
                 .asObjectAsync(Object.class)
                 .thenApply(httpResponse -> {
+                    Object body = httpResponse.getBody();
                     if (httpResponse.getStatus() == 200) {
                         try {
-                            Object body = httpResponse.getBody();
                             String jsonString = new JSONObject(body).toString();
                             return objectMapper.readValue(jsonString, ODataValueContextOfListOfAttribute.class);
                         } catch (JsonProcessingException | IllegalStateException e) {
@@ -116,7 +115,6 @@ public class AttributesClientImpl extends ApiClient implements AttributesClient 
                             return null;
                         }
                     } else {
-                        Object body = httpResponse.getBody();
                         ProblemDetails problemDetails;
                         Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {

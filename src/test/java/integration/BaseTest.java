@@ -36,6 +36,9 @@ public class BaseTest {
     public static void setUp() {
         spKey = System.getenv("SERVICE_PRINCIPAL_KEY");
         String accessKeyBase64 = System.getenv("ACCESS_KEY");
+        if (!nullOrEmpty(accessKeyBase64)) {
+            accessKey = AccessKey.createFromBase64EncodedAccessKey(accessKeyBase64);
+        }
         repoId = System.getenv("REPOSITORY_ID");
         username = System.getenv("APISERVER_USERNAME");
         password = System.getenv("APISERVER_PASSWORD");

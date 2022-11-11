@@ -33,9 +33,9 @@ public class LinkDefinitionsClientImpl extends ApiClient implements LinkDefiniti
                 .routeParam(pathParameters)
                 .asObjectAsync(Object.class)
                 .thenApply(httpResponse -> {
+                    Object body = httpResponse.getBody();
                     if (httpResponse.getStatus() == 200) {
                         try {
-                            Object body = httpResponse.getBody();
                             String jsonString = new JSONObject(body).toString();
                             return objectMapper.readValue(jsonString, EntryLinkTypeInfo.class);
                         } catch (JsonProcessingException | IllegalStateException e) {
@@ -43,7 +43,6 @@ public class LinkDefinitionsClientImpl extends ApiClient implements LinkDefiniti
                             return null;
                         }
                     } else {
-                        Object body = httpResponse.getBody();
                         ProblemDetails problemDetails;
                         Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
@@ -105,9 +104,9 @@ public class LinkDefinitionsClientImpl extends ApiClient implements LinkDefiniti
                 .headers(headerParametersWithStringTypeValue)
                 .asObjectAsync(Object.class)
                 .thenApply(httpResponse -> {
+                    Object body = httpResponse.getBody();
                     if (httpResponse.getStatus() == 200) {
                         try {
-                            Object body = httpResponse.getBody();
                             String jsonString = new JSONObject(body).toString();
                             return objectMapper.readValue(jsonString,
                                     ODataValueContextOfIListOfEntryLinkTypeInfo.class);
@@ -116,7 +115,6 @@ public class LinkDefinitionsClientImpl extends ApiClient implements LinkDefiniti
                             return null;
                         }
                     } else {
-                        Object body = httpResponse.getBody();
                         ProblemDetails problemDetails;
                         Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {

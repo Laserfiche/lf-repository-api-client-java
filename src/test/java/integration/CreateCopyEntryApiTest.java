@@ -254,7 +254,8 @@ public class CreateCopyEntryApiTest extends BaseTest {
         assertTrue(thrown.getCause() instanceof ApiException);
         ApiException apiException = (ApiException) thrown.getCause();
         assertEquals(404, apiException.getStatusCode());
-        assertEquals(String.format("Error: Repository with Id %s not found or no connection could be made.", invalidRepoId),
+        assertEquals(
+                String.format("Error: Repository with Id %s not found or no connection could be made.", invalidRepoId),
                 apiException.getMessage());
         ProblemDetails problemDetails = apiException.getProblemDetails();
         assertNotNull(problemDetails);

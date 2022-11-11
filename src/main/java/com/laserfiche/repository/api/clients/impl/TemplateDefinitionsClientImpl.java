@@ -49,9 +49,9 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
                 .headers(headerParametersWithStringTypeValue)
                 .asObjectAsync(Object.class)
                 .thenApply(httpResponse -> {
+                    Object body = httpResponse.getBody();
                     if (httpResponse.getStatus() == 200) {
                         try {
-                            Object body = httpResponse.getBody();
                             String jsonString = new JSONObject(body).toString();
                             return objectMapper.readValue(jsonString, ODataValueContextOfIListOfWTemplateInfo.class);
                         } catch (JsonProcessingException | IllegalStateException e) {
@@ -59,7 +59,6 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
                             return null;
                         }
                     } else {
-                        Object body = httpResponse.getBody();
                         ProblemDetails problemDetails;
                         Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
@@ -150,9 +149,9 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
                 .headers(headerParametersWithStringTypeValue)
                 .asObjectAsync(Object.class)
                 .thenApply(httpResponse -> {
+                    Object body = httpResponse.getBody();
                     if (httpResponse.getStatus() == 200) {
                         try {
-                            Object body = httpResponse.getBody();
                             String jsonString = new JSONObject(body).toString();
                             return objectMapper.readValue(jsonString,
                                     ODataValueContextOfIListOfTemplateFieldInfo.class);
@@ -161,7 +160,6 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
                             return null;
                         }
                     } else {
-                        Object body = httpResponse.getBody();
                         ProblemDetails problemDetails;
                         Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
@@ -253,9 +251,9 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
                 .headers(headerParametersWithStringTypeValue)
                 .asObjectAsync(Object.class)
                 .thenApply(httpResponse -> {
+                    Object body = httpResponse.getBody();
                     if (httpResponse.getStatus() == 200) {
                         try {
-                            Object body = httpResponse.getBody();
                             String jsonString = new JSONObject(body).toString();
                             return objectMapper.readValue(jsonString,
                                     ODataValueContextOfIListOfTemplateFieldInfo.class);
@@ -264,7 +262,6 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
                             return null;
                         }
                     } else {
-                        Object body = httpResponse.getBody();
                         ProblemDetails problemDetails;
                         Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
@@ -339,9 +336,9 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
                 .routeParam(pathParameters)
                 .asObjectAsync(Object.class)
                 .thenApply(httpResponse -> {
+                    Object body = httpResponse.getBody();
                     if (httpResponse.getStatus() == 200) {
                         try {
-                            Object body = httpResponse.getBody();
                             String jsonString = new JSONObject(body).toString();
                             return objectMapper.readValue(jsonString, WTemplateInfo.class);
                         } catch (JsonProcessingException | IllegalStateException e) {
@@ -349,7 +346,6 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
                             return null;
                         }
                     } else {
-                        Object body = httpResponse.getBody();
                         ProblemDetails problemDetails;
                         Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {

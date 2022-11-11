@@ -104,7 +104,7 @@ class EntriesApiTest extends BaseTest {
     }
 
     @Test
-    void getEntryListing_ForEach() throws InterruptedException {
+    void getEntryListing_ForEach() {
         int maxPageSize = 10;
         Function<CompletableFuture<ODataValueContextOfIListOfEntry>, CompletableFuture<Boolean>> callback = data -> {
             ODataValueContextOfIListOfEntry futureResult = data.join();
@@ -171,7 +171,7 @@ class EntriesApiTest extends BaseTest {
     }
 
     @Test
-    void getFieldValues_ForEach() throws InterruptedException {
+    void getFieldValues_ForEach() {
         int maxPageSize = 90;
         Function<CompletableFuture<ODataValueContextOfIListOfFieldValue>, CompletableFuture<Boolean>> callback = data -> {
             ODataValueContextOfIListOfFieldValue futureResult = data.join();
@@ -226,7 +226,7 @@ class EntriesApiTest extends BaseTest {
     }
 
     @Test
-    void getLinkValuesFromEntry_ForEach() throws InterruptedException {
+    void getLinkValuesFromEntry_ForEach() {
         int maxPageSize = 90;
         Function<CompletableFuture<ODataValueContextOfIListOfWEntryLinkInfo>, CompletableFuture<Boolean>> callback = data -> {
             ODataValueContextOfIListOfWEntryLinkInfo futureResult = data.join();
@@ -295,7 +295,7 @@ class EntriesApiTest extends BaseTest {
     }
 
     @Test
-    void getTagsAssignedToEntry_ForEach() throws InterruptedException {
+    void getTagsAssignedToEntry_ForEach() {
         int maxPageSize = 90;
         Function<CompletableFuture<ODataValueContextOfIListOfWTagInfo>, CompletableFuture<Boolean>> callback = data -> {
             ODataValueContextOfIListOfWTagInfo futureResult = data.join();
@@ -388,7 +388,7 @@ class EntriesApiTest extends BaseTest {
     }
 
     @Test
-    void getDocumentContentType_ReturnsExpectedHeaders() throws InterruptedException {
+    void getDocumentContentType_ReturnsExpectedHeaders() {
         ODataValueContextOfIListOfEntry entryList = client
                 .getEntryListing(repoId, 1, false, null, false, "maxpagesize=100", null, null, null, null, null, false)
                 .join();
@@ -410,7 +410,7 @@ class EntriesApiTest extends BaseTest {
     }
 
     @Test
-    void getDocumentContentType_ProblemDetails_Fields_Are_Valid_When_Exception_Thrown() throws InterruptedException {
+    void getDocumentContentType_ProblemDetails_Fields_Are_Valid_When_Exception_Thrown() {
         Exception thrown = Assertions.assertThrows(CompletionException.class, () -> {
             client
                     .getEntryListing(repoId, -1, false, null, false, "maxpagesize=100", null, null, null, null, null,
