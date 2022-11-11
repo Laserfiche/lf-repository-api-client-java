@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.*;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -213,5 +214,52 @@ public class ImportDocumentApiTest extends BaseTest {
                 .getEntryCreate()
                 .getEntryId();
         assertTrue(createdEntryId > 0);
+    }
+
+    @Test
+    void importDocument_Returns_Detail_When_PartialSuccess_Happens() throws IOException {
+        String fileName = "myFile";
+        CreateEntryResult result = null;
+        String fileContent = "This is the file content";
+        InputStream inputStream = new ByteArrayInputStream(fileContent.getBytes());
+        assertNotNull(inputStream);
+
+        PostEntryWithEdocMetadataRequest request = new PostEntryWithEdocMetadataRequest();
+        request.setTemplate("invalidTemplateName");
+        result = client
+                .importDocument(repoId, 1, fileName, true, null,
+                        inputStream, request)
+                .join();
+
+        assertNotNull(result);
+        CreateEntryOperations operations = result.getOperations();
+
+        assertNotNull(operations);
+        assertNotNull(result.getDocumentLink());
+        createdEntryId = operations
+                .getEntryCreate()
+                .getEntryId();
+        assertTrue(createdEntryId > 0);
+        assertEquals(0, operations
+                .getEntryCreate()
+                .getExceptions()
+                .size());
+        assertEquals(0, operations
+                .getSetEdoc()
+                .getExceptions()
+                .size());
+        assertEquals(1, operations
+                .getSetTemplate()
+                .getExceptions()
+                .size());
+        APIServerException setTemplateException = operations
+                .getSetTemplate()
+                .getExceptions()
+                .get(0);
+        assertTrue(setTemplateException
+                .getMessage()
+                .startsWith("Template not found."), setTemplateException.getMessage());
+        assertEquals(HttpURLConnection.HTTP_CONFLICT, setTemplateException.getStatusCode());
+        assertEquals(ErrorSource.LASERFICHE_SERVER.getName(), setTemplateException.getErrorSource());
     }
 }
