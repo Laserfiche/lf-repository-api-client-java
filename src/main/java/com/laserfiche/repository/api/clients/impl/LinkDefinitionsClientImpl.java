@@ -34,10 +34,9 @@ public class LinkDefinitionsClientImpl extends ApiClient implements LinkDefiniti
                 .asObjectAsync(Object.class)
                 .thenApply(httpResponse -> {
                     Object body = httpResponse.getBody();
-                    String jsonString = null;
                     if (httpResponse.getStatus() == 200) {
                         try {
-                            jsonString = new JSONObject(body).toString();
+                            String jsonString = new JSONObject(body).toString();
                             return objectMapper.readValue(jsonString, EntryLinkTypeInfo.class);
                         } catch (JsonProcessingException | IllegalStateException e) {
                             e.printStackTrace();
@@ -47,7 +46,7 @@ public class LinkDefinitionsClientImpl extends ApiClient implements LinkDefiniti
                         ProblemDetails problemDetails;
                         Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
-                            jsonString = new JSONObject(body).toString();
+                            String jsonString = new JSONObject(body).toString();
                             problemDetails = deserializeToProblemDetails(jsonString);
                         } catch (JsonProcessingException | IllegalStateException e) {
                             Optional<UnirestParsingException> parsingException = httpResponse.getParsingError();
@@ -106,10 +105,9 @@ public class LinkDefinitionsClientImpl extends ApiClient implements LinkDefiniti
                 .asObjectAsync(Object.class)
                 .thenApply(httpResponse -> {
                     Object body = httpResponse.getBody();
-                    String jsonString = null;
                     if (httpResponse.getStatus() == 200) {
                         try {
-                            jsonString = new JSONObject(body).toString();
+                            String jsonString = new JSONObject(body).toString();
                             return objectMapper.readValue(jsonString,
                                     ODataValueContextOfIListOfEntryLinkTypeInfo.class);
                         } catch (JsonProcessingException | IllegalStateException e) {
@@ -120,7 +118,7 @@ public class LinkDefinitionsClientImpl extends ApiClient implements LinkDefiniti
                         ProblemDetails problemDetails;
                         Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
-                            jsonString = new JSONObject(body).toString();
+                            String jsonString = new JSONObject(body).toString();
                             problemDetails = deserializeToProblemDetails(jsonString);
                         } catch (JsonProcessingException | IllegalStateException e) {
                             Optional<UnirestParsingException> parsingException = httpResponse.getParsingError();

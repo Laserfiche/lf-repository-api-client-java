@@ -28,10 +28,9 @@ public class TasksClientImpl extends ApiClient implements TasksClient {
                 .asObjectAsync(Object.class)
                 .thenApply(httpResponse -> {
                     Object body = httpResponse.getBody();
-                    String jsonString = null;
                     if (httpResponse.getStatus() == 200 || httpResponse.getStatus() == 201 || httpResponse.getStatus() == 202) {
                         try {
-                            jsonString = new JSONObject(body).toString();
+                            String jsonString = new JSONObject(body).toString();
                             return objectMapper.readValue(jsonString, OperationProgress.class);
                         } catch (JsonProcessingException | IllegalStateException e) {
                             e.printStackTrace();
@@ -41,7 +40,7 @@ public class TasksClientImpl extends ApiClient implements TasksClient {
                         ProblemDetails problemDetails;
                         Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
-                            jsonString = new JSONObject(body).toString();
+                            String jsonString = new JSONObject(body).toString();
                             problemDetails = deserializeToProblemDetails(jsonString);
                         } catch (JsonProcessingException | IllegalStateException e) {
                             Optional<UnirestParsingException> parsingException = httpResponse.getParsingError();
@@ -84,14 +83,13 @@ public class TasksClientImpl extends ApiClient implements TasksClient {
                 .asObjectAsync(Object.class)
                 .thenApply(httpResponse -> {
                     Object body = httpResponse.getBody();
-                    String jsonString = null;
                     if (httpResponse.getStatus() == 204) {
                         return true;
                     } else {
                         ProblemDetails problemDetails;
                         Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
-                            jsonString = new JSONObject(body).toString();
+                            String jsonString = new JSONObject(body).toString();
                             problemDetails = deserializeToProblemDetails(jsonString);
                         } catch (JsonProcessingException | IllegalStateException e) {
                             Optional<UnirestParsingException> parsingException = httpResponse.getParsingError();

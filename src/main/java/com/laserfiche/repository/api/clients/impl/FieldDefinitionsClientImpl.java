@@ -35,10 +35,9 @@ public class FieldDefinitionsClientImpl extends ApiClient implements FieldDefini
                 .asObjectAsync(Object.class)
                 .thenApply(httpResponse -> {
                     Object body = httpResponse.getBody();
-                    String jsonString = null;
                     if (httpResponse.getStatus() == 200) {
                         try {
-                            jsonString = new JSONObject(body).toString();
+                            String jsonString = new JSONObject(body).toString();
                             return objectMapper.readValue(jsonString, WFieldInfo.class);
                         } catch (JsonProcessingException | IllegalStateException e) {
                             e.printStackTrace();
@@ -48,7 +47,7 @@ public class FieldDefinitionsClientImpl extends ApiClient implements FieldDefini
                         ProblemDetails problemDetails;
                         Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
-                            jsonString = new JSONObject(body).toString();
+                            String jsonString = new JSONObject(body).toString();
                             problemDetails = deserializeToProblemDetails(jsonString);
                         } catch (JsonProcessingException | IllegalStateException e) {
                             Optional<UnirestParsingException> parsingException = httpResponse.getParsingError();
@@ -107,10 +106,9 @@ public class FieldDefinitionsClientImpl extends ApiClient implements FieldDefini
                 .asObjectAsync(Object.class)
                 .thenApply(httpResponse -> {
                     Object body = httpResponse.getBody();
-                    String jsonString = null;
                     if (httpResponse.getStatus() == 200) {
                         try {
-                            jsonString = new JSONObject(body).toString();
+                            String jsonString = new JSONObject(body).toString();
                             return objectMapper.readValue(jsonString, ODataValueContextOfIListOfWFieldInfo.class);
                         } catch (JsonProcessingException | IllegalStateException e) {
                             e.printStackTrace();
@@ -120,7 +118,7 @@ public class FieldDefinitionsClientImpl extends ApiClient implements FieldDefini
                         ProblemDetails problemDetails;
                         Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
-                            jsonString = new JSONObject(body).toString();
+                            String jsonString = new JSONObject(body).toString();
                             problemDetails = deserializeToProblemDetails(jsonString);
                         } catch (JsonProcessingException | IllegalStateException e) {
                             Optional<UnirestParsingException> parsingException = httpResponse.getParsingError();
