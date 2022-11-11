@@ -49,21 +49,21 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 .headers(headerParametersWithStringTypeValue)
                 .asObjectAsync(Object.class)
                 .thenApply(httpResponse -> {
+                    Object body = httpResponse.getBody();
+                    String jsonString = null;
                     if (httpResponse.getStatus() == 200) {
                         try {
-                            Object body = httpResponse.getBody();
-                            String jsonString = new JSONObject(body).toString();
+                            jsonString = new JSONObject(body).toString();
                             return objectMapper.readValue(jsonString, ODataValueContextOfIListOfFieldValue.class);
                         } catch (JsonProcessingException | IllegalStateException e) {
                             e.printStackTrace();
                             return null;
                         }
                     } else {
-                        Object body = httpResponse.getBody();
                         ProblemDetails problemDetails;
                         Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
-                            String jsonString = new JSONObject(body).toString();
+                            jsonString = new JSONObject(body).toString();
                             problemDetails = deserializeToProblemDetails(jsonString);
                         } catch (JsonProcessingException | IllegalStateException e) {
                             Optional<UnirestParsingException> parsingException = httpResponse.getParsingError();
@@ -135,21 +135,21 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 .body(requestBody)
                 .asObjectAsync(Object.class)
                 .thenApply(httpResponse -> {
+                    Object body = httpResponse.getBody();
+                    String jsonString = null;
                     if (httpResponse.getStatus() == 200) {
                         try {
-                            Object body = httpResponse.getBody();
-                            String jsonString = new JSONObject(body).toString();
+                            jsonString = new JSONObject(body).toString();
                             return objectMapper.readValue(jsonString, ODataValueOfIListOfFieldValue.class);
                         } catch (JsonProcessingException | IllegalStateException e) {
                             e.printStackTrace();
                             return null;
                         }
                     } else {
-                        Object body = httpResponse.getBody();
                         ProblemDetails problemDetails;
                         Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
-                            String jsonString = new JSONObject(body).toString();
+                            jsonString = new JSONObject(body).toString();
                             problemDetails = deserializeToProblemDetails(jsonString);
                         } catch (JsonProcessingException | IllegalStateException e) {
                             Optional<UnirestParsingException> parsingException = httpResponse.getParsingError();
@@ -199,21 +199,21 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 .routeParam(pathParameters)
                 .asObjectAsync(Object.class)
                 .thenApply(httpResponse -> {
-                    if (httpResponse.getStatus() == 201) {
+                    Object body = httpResponse.getBody();
+                    String jsonString = null;
+                    if (httpResponse.getStatus() == 201 || httpResponse.getStatus() == 409) {
                         try {
-                            Object body = httpResponse.getBody();
-                            String jsonString = new JSONObject(body).toString();
+                            jsonString = new JSONObject(body).toString();
                             return objectMapper.readValue(jsonString, CreateEntryResult.class);
                         } catch (JsonProcessingException | IllegalStateException e) {
                             e.printStackTrace();
                             return null;
                         }
                     } else {
-                        Object body = httpResponse.getBody();
                         ProblemDetails problemDetails;
                         Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
-                            String jsonString = new JSONObject(body).toString();
+                            jsonString = new JSONObject(body).toString();
                             problemDetails = deserializeToProblemDetails(jsonString);
                         } catch (JsonProcessingException | IllegalStateException e) {
                             Optional<UnirestParsingException> parsingException = httpResponse.getParsingError();
@@ -235,10 +235,6 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                                     httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 404)
                             throw new ApiException(decideErrorMessage(problemDetails, "Parent entry is not found."),
-                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
-                        else if (httpResponse.getStatus() == 409)
-                            throw new ApiException(
-                                    decideErrorMessage(problemDetails, "Document creation is partial success."),
                                     httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
                         else if (httpResponse.getStatus() == 429)
                             throw new ApiException(decideErrorMessage(problemDetails, "Rate limit is reached."),
@@ -280,21 +276,21 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 .headers(headerParametersWithStringTypeValue)
                 .asObjectAsync(Object.class)
                 .thenApply(httpResponse -> {
+                    Object body = httpResponse.getBody();
+                    String jsonString = null;
                     if (httpResponse.getStatus() == 200) {
                         try {
-                            Object body = httpResponse.getBody();
-                            String jsonString = new JSONObject(body).toString();
+                            jsonString = new JSONObject(body).toString();
                             return objectMapper.readValue(jsonString, ODataValueContextOfIListOfWEntryLinkInfo.class);
                         } catch (JsonProcessingException | IllegalStateException e) {
                             e.printStackTrace();
                             return null;
                         }
                     } else {
-                        Object body = httpResponse.getBody();
                         ProblemDetails problemDetails;
                         Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
-                            String jsonString = new JSONObject(body).toString();
+                            jsonString = new JSONObject(body).toString();
                             problemDetails = deserializeToProblemDetails(jsonString);
                         } catch (JsonProcessingException | IllegalStateException e) {
                             Optional<UnirestParsingException> parsingException = httpResponse.getParsingError();
@@ -364,21 +360,21 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 .body(requestBody)
                 .asObjectAsync(Object.class)
                 .thenApply(httpResponse -> {
+                    Object body = httpResponse.getBody();
+                    String jsonString = null;
                     if (httpResponse.getStatus() == 200) {
                         try {
-                            Object body = httpResponse.getBody();
-                            String jsonString = new JSONObject(body).toString();
+                            jsonString = new JSONObject(body).toString();
                             return objectMapper.readValue(jsonString, ODataValueOfIListOfWEntryLinkInfo.class);
                         } catch (JsonProcessingException | IllegalStateException e) {
                             e.printStackTrace();
                             return null;
                         }
                     } else {
-                        Object body = httpResponse.getBody();
                         ProblemDetails problemDetails;
                         Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
-                            String jsonString = new JSONObject(body).toString();
+                            jsonString = new JSONObject(body).toString();
                             problemDetails = deserializeToProblemDetails(jsonString);
                         } catch (JsonProcessingException | IllegalStateException e) {
                             Optional<UnirestParsingException> parsingException = httpResponse.getParsingError();
@@ -427,21 +423,21 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 .body(requestBody)
                 .asObjectAsync(Object.class)
                 .thenApply(httpResponse -> {
+                    Object body = httpResponse.getBody();
+                    String jsonString = null;
                     if (httpResponse.getStatus() == 200) {
                         try {
-                            Object body = httpResponse.getBody();
-                            String jsonString = new JSONObject(body).toString();
+                            jsonString = new JSONObject(body).toString();
                             return objectMapper.readValue(jsonString, Entry.class);
                         } catch (JsonProcessingException | IllegalStateException e) {
                             e.printStackTrace();
                             return null;
                         }
                     } else {
-                        Object body = httpResponse.getBody();
                         ProblemDetails problemDetails;
                         Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
-                            String jsonString = new JSONObject(body).toString();
+                            jsonString = new JSONObject(body).toString();
                             problemDetails = deserializeToProblemDetails(jsonString);
                         } catch (JsonProcessingException | IllegalStateException e) {
                             Optional<UnirestParsingException> parsingException = httpResponse.getParsingError();
@@ -485,21 +481,21 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 .routeParam(pathParameters)
                 .asObjectAsync(Object.class)
                 .thenApply(httpResponse -> {
+                    Object body = httpResponse.getBody();
+                    String jsonString = null;
                     if (httpResponse.getStatus() == 200) {
                         try {
-                            Object body = httpResponse.getBody();
-                            String jsonString = new JSONObject(body).toString();
+                            jsonString = new JSONObject(body).toString();
                             return objectMapper.readValue(jsonString, Entry.class);
                         } catch (JsonProcessingException | IllegalStateException e) {
                             e.printStackTrace();
                             return null;
                         }
                     } else {
-                        Object body = httpResponse.getBody();
                         ProblemDetails problemDetails;
                         Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
-                            String jsonString = new JSONObject(body).toString();
+                            jsonString = new JSONObject(body).toString();
                             problemDetails = deserializeToProblemDetails(jsonString);
                         } catch (JsonProcessingException | IllegalStateException e) {
                             Optional<UnirestParsingException> parsingException = httpResponse.getParsingError();
@@ -546,21 +542,21 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 .body(requestBody)
                 .asObjectAsync((new HashMap<String, String[]>()).getClass())
                 .thenApply(httpResponse -> {
+                    Object body = httpResponse.getBody();
+                    String jsonString = null;
                     if (httpResponse.getStatus() == 200) {
                         try {
-                            Object body = httpResponse.getBody();
-                            String jsonString = new JSONObject(body).toString();
+                            jsonString = new JSONObject(body).toString();
                             return objectMapper.readValue(jsonString, new HashMap<String, String[]>().getClass());
                         } catch (JsonProcessingException | IllegalStateException e) {
                             e.printStackTrace();
                             return null;
                         }
                     } else {
-                        Object body = httpResponse.getBody();
                         ProblemDetails problemDetails;
                         Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
-                            String jsonString = new JSONObject(body).toString();
+                            jsonString = new JSONObject(body).toString();
                             problemDetails = deserializeToProblemDetails(jsonString);
                         } catch (JsonProcessingException | IllegalStateException e) {
                             Optional<UnirestParsingException> parsingException = httpResponse.getParsingError();
@@ -605,21 +601,21 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 .routeParam(pathParameters)
                 .asObjectAsync(Object.class)
                 .thenApply(httpResponse -> {
+                    Object body = httpResponse.getBody();
+                    String jsonString = null;
                     if (httpResponse.getStatus() == 200) {
                         try {
-                            Object body = httpResponse.getBody();
-                            String jsonString = new JSONObject(body).toString();
+                            jsonString = new JSONObject(body).toString();
                             return objectMapper.readValue(jsonString, FindEntryResult.class);
                         } catch (JsonProcessingException | IllegalStateException e) {
                             e.printStackTrace();
                             return null;
                         }
                     } else {
-                        Object body = httpResponse.getBody();
                         ProblemDetails problemDetails;
                         Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
-                            String jsonString = new JSONObject(body).toString();
+                            jsonString = new JSONObject(body).toString();
                             problemDetails = deserializeToProblemDetails(jsonString);
                         } catch (JsonProcessingException | IllegalStateException e) {
                             Optional<UnirestParsingException> parsingException = httpResponse.getParsingError();
@@ -666,21 +662,21 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 .body(requestBody)
                 .asObjectAsync(Object.class)
                 .thenApply(httpResponse -> {
+                    Object body = httpResponse.getBody();
+                    String jsonString = null;
                     if (httpResponse.getStatus() == 201) {
                         try {
-                            Object body = httpResponse.getBody();
-                            String jsonString = new JSONObject(body).toString();
+                            jsonString = new JSONObject(body).toString();
                             return objectMapper.readValue(jsonString, AcceptedOperation.class);
                         } catch (JsonProcessingException | IllegalStateException e) {
                             e.printStackTrace();
                             return null;
                         }
                     } else {
-                        Object body = httpResponse.getBody();
                         ProblemDetails problemDetails;
                         Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
-                            String jsonString = new JSONObject(body).toString();
+                            jsonString = new JSONObject(body).toString();
                             problemDetails = deserializeToProblemDetails(jsonString);
                         } catch (JsonProcessingException | IllegalStateException e) {
                             Optional<UnirestParsingException> parsingException = httpResponse.getParsingError();
@@ -724,21 +720,21 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 .routeParam(pathParameters)
                 .asObjectAsync(Object.class)
                 .thenApply(httpResponse -> {
+                    Object body = httpResponse.getBody();
+                    String jsonString = null;
                     if (httpResponse.getStatus() == 200) {
                         try {
-                            Object body = httpResponse.getBody();
-                            String jsonString = new JSONObject(body).toString();
+                            jsonString = new JSONObject(body).toString();
                             return objectMapper.readValue(jsonString, Entry.class);
                         } catch (JsonProcessingException | IllegalStateException e) {
                             e.printStackTrace();
                             return null;
                         }
                     } else {
-                        Object body = httpResponse.getBody();
                         ProblemDetails problemDetails;
                         Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
-                            String jsonString = new JSONObject(body).toString();
+                            jsonString = new JSONObject(body).toString();
                             problemDetails = deserializeToProblemDetails(jsonString);
                         } catch (JsonProcessingException | IllegalStateException e) {
                             Optional<UnirestParsingException> parsingException = httpResponse.getParsingError();
@@ -785,21 +781,21 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 .body(requestBody)
                 .asObjectAsync(Object.class)
                 .thenApply(httpResponse -> {
+                    Object body = httpResponse.getBody();
+                    String jsonString = null;
                     if (httpResponse.getStatus() == 200) {
                         try {
-                            Object body = httpResponse.getBody();
-                            String jsonString = new JSONObject(body).toString();
+                            jsonString = new JSONObject(body).toString();
                             return objectMapper.readValue(jsonString, Entry.class);
                         } catch (JsonProcessingException | IllegalStateException e) {
                             e.printStackTrace();
                             return null;
                         }
                     } else {
-                        Object body = httpResponse.getBody();
                         ProblemDetails problemDetails;
                         Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
-                            String jsonString = new JSONObject(body).toString();
+                            jsonString = new JSONObject(body).toString();
                             problemDetails = deserializeToProblemDetails(jsonString);
                         } catch (JsonProcessingException | IllegalStateException e) {
                             Optional<UnirestParsingException> parsingException = httpResponse.getParsingError();
@@ -849,21 +845,21 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 .body(requestBody)
                 .asObjectAsync(Object.class)
                 .thenApply(httpResponse -> {
+                    Object body = httpResponse.getBody();
+                    String jsonString = null;
                     if (httpResponse.getStatus() == 201) {
                         try {
-                            Object body = httpResponse.getBody();
-                            String jsonString = new JSONObject(body).toString();
+                            jsonString = new JSONObject(body).toString();
                             return objectMapper.readValue(jsonString, AcceptedOperation.class);
                         } catch (JsonProcessingException | IllegalStateException e) {
                             e.printStackTrace();
                             return null;
                         }
                     } else {
-                        Object body = httpResponse.getBody();
                         ProblemDetails problemDetails;
                         Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
-                            String jsonString = new JSONObject(body).toString();
+                            jsonString = new JSONObject(body).toString();
                             problemDetails = deserializeToProblemDetails(jsonString);
                         } catch (JsonProcessingException | IllegalStateException e) {
                             Optional<UnirestParsingException> parsingException = httpResponse.getParsingError();
@@ -1047,21 +1043,21 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 .routeParam(pathParameters)
                 .asObjectAsync(Object.class)
                 .thenApply(httpResponse -> {
+                    Object body = httpResponse.getBody();
+                    String jsonString = null;
                     if (httpResponse.getStatus() == 200) {
                         try {
-                            Object body = httpResponse.getBody();
-                            String jsonString = new JSONObject(body).toString();
+                            jsonString = new JSONObject(body).toString();
                             return objectMapper.readValue(jsonString, ODataValueOfBoolean.class);
                         } catch (JsonProcessingException | IllegalStateException e) {
                             e.printStackTrace();
                             return null;
                         }
                     } else {
-                        Object body = httpResponse.getBody();
                         ProblemDetails problemDetails;
                         Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
-                            String jsonString = new JSONObject(body).toString();
+                            jsonString = new JSONObject(body).toString();
                             problemDetails = deserializeToProblemDetails(jsonString);
                         } catch (JsonProcessingException | IllegalStateException e) {
                             Optional<UnirestParsingException> parsingException = httpResponse.getParsingError();
@@ -1105,6 +1101,8 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 .routeParam(pathParameters)
                 .asObjectAsync(new HashMap<String, String>().getClass())
                 .thenApply(httpResponse -> {
+                    Object body = httpResponse.getBody();
+                    String jsonString = null;
                     if (httpResponse.getStatus() == 200) {
                         return httpResponse
                                 .getHeaders()
@@ -1112,11 +1110,10 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                                 .stream()
                                 .collect(Collectors.toMap(Header::getName, Header::getValue));
                     } else {
-                        Object body = httpResponse.getBody();
                         ProblemDetails problemDetails;
                         Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
-                            String jsonString = new JSONObject(body).toString();
+                            jsonString = new JSONObject(body).toString();
                             problemDetails = deserializeToProblemDetails(jsonString);
                         } catch (JsonProcessingException | IllegalStateException e) {
                             Optional<UnirestParsingException> parsingException = httpResponse.getParsingError();
@@ -1162,21 +1159,21 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 .routeParam(pathParameters)
                 .asObjectAsync(Object.class)
                 .thenApply(httpResponse -> {
+                    Object body = httpResponse.getBody();
+                    String jsonString = null;
                     if (httpResponse.getStatus() == 200) {
                         try {
-                            Object body = httpResponse.getBody();
-                            String jsonString = new JSONObject(body).toString();
+                            jsonString = new JSONObject(body).toString();
                             return objectMapper.readValue(jsonString, ODataValueOfBoolean.class);
                         } catch (JsonProcessingException | IllegalStateException e) {
                             e.printStackTrace();
                             return null;
                         }
                     } else {
-                        Object body = httpResponse.getBody();
                         ProblemDetails problemDetails;
                         Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
-                            String jsonString = new JSONObject(body).toString();
+                            jsonString = new JSONObject(body).toString();
                             problemDetails = deserializeToProblemDetails(jsonString);
                         } catch (JsonProcessingException | IllegalStateException e) {
                             Optional<UnirestParsingException> parsingException = httpResponse.getParsingError();
@@ -1243,21 +1240,21 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 .headers(headerParametersWithStringTypeValue)
                 .asObjectAsync(Object.class)
                 .thenApply(httpResponse -> {
+                    Object body = httpResponse.getBody();
+                    String jsonString = null;
                     if (httpResponse.getStatus() == 200) {
                         try {
-                            Object body = httpResponse.getBody();
-                            String jsonString = new JSONObject(body).toString();
+                            jsonString = new JSONObject(body).toString();
                             return objectMapper.readValue(jsonString, ODataValueContextOfIListOfEntry.class);
                         } catch (JsonProcessingException | IllegalStateException e) {
                             e.printStackTrace();
                             return null;
                         }
                     } else {
-                        Object body = httpResponse.getBody();
                         ProblemDetails problemDetails;
                         Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
-                            String jsonString = new JSONObject(body).toString();
+                            jsonString = new JSONObject(body).toString();
                             problemDetails = deserializeToProblemDetails(jsonString);
                         } catch (JsonProcessingException | IllegalStateException e) {
                             Optional<UnirestParsingException> parsingException = httpResponse.getParsingError();
@@ -1331,21 +1328,21 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 .body(requestBody)
                 .asObjectAsync(Object.class)
                 .thenApply(httpResponse -> {
+                    Object body = httpResponse.getBody();
+                    String jsonString = null;
                     if (httpResponse.getStatus() == 201) {
                         try {
-                            Object body = httpResponse.getBody();
-                            String jsonString = new JSONObject(body).toString();
+                            jsonString = new JSONObject(body).toString();
                             return objectMapper.readValue(jsonString, Entry.class);
                         } catch (JsonProcessingException | IllegalStateException e) {
                             e.printStackTrace();
                             return null;
                         }
                     } else {
-                        Object body = httpResponse.getBody();
                         ProblemDetails problemDetails;
                         Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
-                            String jsonString = new JSONObject(body).toString();
+                            jsonString = new JSONObject(body).toString();
                             problemDetails = deserializeToProblemDetails(jsonString);
                         } catch (JsonProcessingException | IllegalStateException e) {
                             Optional<UnirestParsingException> parsingException = httpResponse.getParsingError();
@@ -1406,21 +1403,21 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 .headers(headerParametersWithStringTypeValue)
                 .asObjectAsync(Object.class)
                 .thenApply(httpResponse -> {
+                    Object body = httpResponse.getBody();
+                    String jsonString = null;
                     if (httpResponse.getStatus() == 200) {
                         try {
-                            Object body = httpResponse.getBody();
-                            String jsonString = new JSONObject(body).toString();
+                            jsonString = new JSONObject(body).toString();
                             return objectMapper.readValue(jsonString, ODataValueContextOfIListOfWTagInfo.class);
                         } catch (JsonProcessingException | IllegalStateException e) {
                             e.printStackTrace();
                             return null;
                         }
                     } else {
-                        Object body = httpResponse.getBody();
                         ProblemDetails problemDetails;
                         Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
-                            String jsonString = new JSONObject(body).toString();
+                            jsonString = new JSONObject(body).toString();
                             problemDetails = deserializeToProblemDetails(jsonString);
                         } catch (JsonProcessingException | IllegalStateException e) {
                             Optional<UnirestParsingException> parsingException = httpResponse.getParsingError();
@@ -1490,21 +1487,21 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 .body(requestBody)
                 .asObjectAsync(Object.class)
                 .thenApply(httpResponse -> {
+                    Object body = httpResponse.getBody();
+                    String jsonString = null;
                     if (httpResponse.getStatus() == 200) {
                         try {
-                            Object body = httpResponse.getBody();
-                            String jsonString = new JSONObject(body).toString();
+                            jsonString = new JSONObject(body).toString();
                             return objectMapper.readValue(jsonString, ODataValueOfIListOfWTagInfo.class);
                         } catch (JsonProcessingException | IllegalStateException e) {
                             e.printStackTrace();
                             return null;
                         }
                     } else {
-                        Object body = httpResponse.getBody();
                         ProblemDetails problemDetails;
                         Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
-                            String jsonString = new JSONObject(body).toString();
+                            jsonString = new JSONObject(body).toString();
                             problemDetails = deserializeToProblemDetails(jsonString);
                         } catch (JsonProcessingException | IllegalStateException e) {
                             Optional<UnirestParsingException> parsingException = httpResponse.getParsingError();
