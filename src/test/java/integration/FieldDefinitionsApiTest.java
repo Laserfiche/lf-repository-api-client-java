@@ -66,7 +66,7 @@ class FieldDefinitionsApiTest extends BaseTest {
     }
 
     @Test
-    void getFieldDefinitions_ForEach() throws InterruptedException {
+    void getFieldDefinitions_ForEach() {
         int maxPageSize = 10;
         Function<CompletableFuture<ODataValueContextOfIListOfWFieldInfo>, CompletableFuture<Boolean>> callback = data -> {
             ODataValueContextOfIListOfWFieldInfo result = data.join();

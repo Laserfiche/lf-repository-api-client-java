@@ -53,14 +53,15 @@ public class ImportDocumentApiTest extends BaseTest {
                         new FileInputStream(toUpload), new PostEntryWithEdocMetadataRequest())
                 .join();
 
+        assertNotNull(result);
         CreateEntryOperations operations = result.getOperations();
 
-        assertNotNull(result);
         assertNotNull(operations);
         assertNotNull(result.getDocumentLink());
-        assertNotEquals(0, operations
+        createdEntryId = operations
                 .getEntryCreate()
-                .getEntryId());
+                .getEntryId();
+        assertTrue(createdEntryId > 0);
         assertEquals(0, operations
                 .getEntryCreate()
                 .getExceptions()
@@ -69,10 +70,6 @@ public class ImportDocumentApiTest extends BaseTest {
                 .getSetEdoc()
                 .getExceptions()
                 .size());
-        createdEntryId = operations
-                .getEntryCreate()
-                .getEntryId();
-        assertTrue(createdEntryId > 0);
     }
 
     @Test
@@ -123,9 +120,10 @@ public class ImportDocumentApiTest extends BaseTest {
                 .getEntryCreate()
                 .getExceptions()
                 .size());
-        assertNotEquals(0, operations
+        createdEntryId = operations
                 .getEntryCreate()
-                .getEntryId());
+                .getEntryId();
+        assertTrue(createdEntryId > 0);
         assertEquals(0, operations
                 .getSetEdoc()
                 .getExceptions()
@@ -137,10 +135,6 @@ public class ImportDocumentApiTest extends BaseTest {
         assertEquals(template.getName(), operations
                 .getSetTemplate()
                 .getTemplate());
-        createdEntryId = operations
-                .getEntryCreate()
-                .getEntryId();
-        assertTrue(createdEntryId > 0);
     }
 
     @Test
@@ -160,12 +154,12 @@ public class ImportDocumentApiTest extends BaseTest {
         assertNotNull(result);
         CreateEntryOperations operations = result.getOperations();
 
-        assertNotNull(result);
         assertNotNull(operations);
         assertNotNull(result.getDocumentLink());
-        assertNotEquals(0, operations
+        createdEntryId = operations
                 .getEntryCreate()
-                .getEntryId());
+                .getEntryId();
+        assertTrue(createdEntryId > 0);
         assertEquals(0, operations
                 .getEntryCreate()
                 .getExceptions()
@@ -174,14 +168,10 @@ public class ImportDocumentApiTest extends BaseTest {
                 .getSetEdoc()
                 .getExceptions()
                 .size());
-        createdEntryId = operations
-                .getEntryCreate()
-                .getEntryId();
-        assertTrue(createdEntryId > 0);
     }
 
     @Test
-    void importDocument_DocumentCreated_FromString() throws IOException {
+    void importDocument_DocumentCreated_FromString() {
         String fileName = "myFile";
         CreateEntryResult result = null;
         String fileContent = "This is the file content";
@@ -196,12 +186,12 @@ public class ImportDocumentApiTest extends BaseTest {
         assertNotNull(result);
         CreateEntryOperations operations = result.getOperations();
 
-        assertNotNull(result);
         assertNotNull(operations);
         assertNotNull(result.getDocumentLink());
-        assertNotEquals(0, operations
+        createdEntryId = operations
                 .getEntryCreate()
-                .getEntryId());
+                .getEntryId();
+        assertTrue(createdEntryId > 0);
         assertEquals(0, operations
                 .getEntryCreate()
                 .getExceptions()
@@ -210,14 +200,10 @@ public class ImportDocumentApiTest extends BaseTest {
                 .getSetEdoc()
                 .getExceptions()
                 .size());
-        createdEntryId = operations
-                .getEntryCreate()
-                .getEntryId();
-        assertTrue(createdEntryId > 0);
     }
 
     @Test
-    void importDocument_Returns_Detail_When_PartialSuccess_Happens() throws IOException {
+    void importDocument_Returns_Detail_When_PartialSuccess_Happens() {
         String fileName = "myFile";
         CreateEntryResult result = null;
         String fileContent = "This is the file content";

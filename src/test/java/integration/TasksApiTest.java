@@ -55,7 +55,7 @@ public class TasksApiTest extends BaseTest {
     }
 
     @Test
-    void cancelOperation_OperationCancelledSuccessfully() throws InterruptedException {
+    void cancelOperation_OperationCancelledSuccessfully() {
         Entry deleteEntry = createEntry(createEntryClient, "RepositoryApiClientIntegrationTest Java CancelOperation", 1,
                 true).join();
 
