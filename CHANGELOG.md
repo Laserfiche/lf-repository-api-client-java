@@ -3,6 +3,9 @@
 ### Fixes
 
 - Serialization on models where there's at least one boolean getter no longer fails.
+- Return type of `createSimpleSearchOperation ` becomes `ODataValueContextOfIListOfEntry` to contain more OData information compared to the previous `ODataValueOfIListOfEntry` class.
+- FuzzyType `enum` now has a better named constants.
+- **[BREAKING]** Boolean getter names have been updated to follow Java's convention.
 
 ## 1.1.0
 
