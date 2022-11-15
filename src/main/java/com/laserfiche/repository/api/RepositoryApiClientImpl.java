@@ -12,7 +12,8 @@ import java.util.Map;
 
 public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseable {
     private Map<String, String> defaultHeaders;
-    private UnirestInstance httpClient;
+    private final RepositoryApiClientInterceptor interceptor;
+    private final UnirestInstance httpClient;
     private final AttributesClient attributesClient;
     private final AuditReasonsClient auditReasonsClient;
     private final EntriesClient entriesClient;
@@ -26,15 +27,20 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
     private final TasksClient tasksClient;
     private final TemplateDefinitionsClient templateDefinitionsClient;
 
-    protected RepositoryApiClientImpl(Interceptor interceptor, String baseUrl) {
+    protected RepositoryApiClientImpl(RepositoryApiClientInterceptor interceptor, String baseUrl) {
         if (baseUrl.endsWith("/")) {
             baseUrl = baseUrl.substring(0, baseUrl.length() - 1);
         }
+
+        // Initialize HTTP client
         httpClient = Unirest.spawnInstance();
         httpClient
                 .config()
                 .setObjectMapper(new RepositoryClientObjectMapper())
                 .interceptor(interceptor);
+        this.interceptor = interceptor;
+
+        // Initialize repository API clients
         attributesClient = new AttributesClientImpl(baseUrl, httpClient);
         auditReasonsClient = new AuditReasonsClientImpl(baseUrl, httpClient);
         entriesClient = new EntriesClientImpl(baseUrl, httpClient);
@@ -54,7 +60,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
         if (baseUrlDebug == null) {
             baseUrlDebug = "https://api." + accessKey.getDomain() + "/repository";
         }
-        Interceptor interceptor = new OAuthInterceptor(servicePrincipalKey, accessKey);
+        RepositoryApiClientInterceptor interceptor = new OAuthInterceptor(servicePrincipalKey, accessKey);
         return new RepositoryApiClientImpl(interceptor, baseUrlDebug);
     }
 
@@ -64,7 +70,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
 
     public static RepositoryApiClient createFromUsernamePassword(String repositoryId, String username, String password,
             String baseUrl) {
-        Interceptor interceptor = new SelfHostedInterceptor(repositoryId, username, password, baseUrl, null);
+        RepositoryApiClientInterceptor interceptor = new SelfHostedInterceptor(repositoryId, username, password, baseUrl, null);
         return new RepositoryApiClientImpl(interceptor, baseUrl);
     }
 
@@ -142,10 +148,13 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
     }
 
     /**
-     * From the AutoCloseable interface
+     * Release the thread pool held by the underlying HTTP clients.
      */
     @Override
     public void close() {
-        httpClient.shutDown();
+        if (interceptor != null) {
+            interceptor.close();
+        }
+        httpClient.close();
     }
 }

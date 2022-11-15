@@ -5,13 +5,13 @@ import com.laserfiche.api.client.httphandlers.OAuthClientCredentialsHandler;
 import com.laserfiche.api.client.httphandlers.Request;
 import com.laserfiche.api.client.httphandlers.RequestImpl;
 import com.laserfiche.api.client.model.AccessKey;
+import com.laserfiche.repository.api.clients.RepositoryApiClientInterceptor;
 import kong.unirest.Config;
 import kong.unirest.HttpRequest;
-import kong.unirest.Interceptor;
 
 import java.util.concurrent.CompletableFuture;
 
-public class OAuthInterceptor implements Interceptor {
+public class OAuthInterceptor implements RepositoryApiClientInterceptor {
     private final OAuthClientCredentialsHandler oauthHandler;
 
     public OAuthInterceptor(String servicePrincipalKey, AccessKey accessKey) {
@@ -26,5 +26,10 @@ public class OAuthInterceptor implements Interceptor {
         request.header("Authorization", customRequest
                 .headers()
                 .get("Authorization"));
+    }
+
+    @Override
+    public void close() {
+        oauthHandler.close();
     }
 }

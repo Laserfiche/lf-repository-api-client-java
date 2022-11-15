@@ -7,7 +7,7 @@ import java.util.Map;
 /**
  * The Laserfiche Repository API client.
  */
-public interface RepositoryApiClient {
+public interface RepositoryApiClient extends AutoCloseable {
     /**
      * @return The Laserfiche Repository Attributes API client.
      */
@@ -71,4 +71,11 @@ public interface RepositoryApiClient {
      * @return Default request headers in a key value pair of header name and value.
      */
     Map<String, String> getDefaultRequestHeaders();
+
+    /**
+     * Since the underlying resource (the HTTP client) won't throw any exception during its close() invocation.
+     * We override the signature of the close() to not include any checked exception.
+     */
+    @Override
+    void close();
 }
