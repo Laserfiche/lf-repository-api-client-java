@@ -8,6 +8,7 @@ import com.laserfiche.repository.api.clients.impl.model.PostEntryChildrenEntryTy
 import com.laserfiche.repository.api.clients.impl.model.PostEntryChildrenRequest;
 import com.laserfiche.repository.api.clients.impl.model.TemplateFieldInfo;
 import io.github.cdimascio.dotenv.Dotenv;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 
 import java.util.HashMap;
@@ -76,6 +77,11 @@ public class BaseTest {
         testHeaders = new HashMap<>();
         testHeaders.put(testHeaderValue, "true");
         repositoryApiClient = createClient();
+    }
+
+    @AfterAll
+    public static void tearDown() {
+        repositoryApiClient.close();
     }
 
     public static RepositoryApiClient createClient() {
