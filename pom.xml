@@ -5,7 +5,7 @@
   <artifactId>lf-repository-api-client</artifactId>
   <packaging>jar</packaging>
   <name>Laserfiche Repository API Client</name>
-  <version>1.1.1</version>
+  <version>1.2.0</version>
   <url>https://github.com/Laserfiche/lf-repository-api-client-java</url>
   <description>Java implementation of various foundational APIs for Laserfiche, including Repository APIs such as
     Entry API flows for secure and easy access to Laserfiche Repository Entries.</description>
