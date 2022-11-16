@@ -1,3 +1,9 @@
+## 1.2.0
+
+### Features
+
+- Add support for AutoCloseable for automatic managing of resources held by the underlying HTTP client.
+
 ## 1.1.1
 
 ### Fixes
@@ -11,7 +17,7 @@
 
 ### Features
 
-Add support for self-hosted API Server.
+- Add support for self-hosted API Server.
 
 ### Fixes
 
