@@ -121,12 +121,10 @@ public class SetEntriesApiTest extends BaseTest {
         String fieldValue = "a";
 
         // Find a field definition that accepts String and has constraint.
-        CompletableFuture<ODataValueContextOfIListOfWFieldInfo> fieldDefinitionsResponse = repositoryApiClient
+        ODataValueContextOfIListOfWFieldInfo fieldDefinitionsResponse = repositoryApiClient
                 .getFieldDefinitionsClient()
                 .getFieldDefinitions(repoId, null, null, null, null, null, null, null);
-        List<WFieldInfo> fieldDefinitions = fieldDefinitionsResponse
-                .join()
-                .getValue();
+        List<WFieldInfo> fieldDefinitions = fieldDefinitionsResponse.getValue();
         for (WFieldInfo fieldDefinition : fieldDefinitions) {
             if (fieldDefinition
                     .getFieldType()
