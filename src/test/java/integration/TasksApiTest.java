@@ -8,8 +8,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.CompletionException;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -42,10 +40,8 @@ public class TasksApiTest extends BaseTest {
 
         TimeUnit.SECONDS.sleep(10);
 
-        Exception thrown = Assertions.assertThrows(CompletionException.class, () -> {
-            client
-                    .cancelOperation(repoId, token)
-                    .join();
+        Exception thrown = Assertions.assertThrows(ApiException.class, () -> {
+            client.cancelOperation(repoId, token);
         });
 
         Assertions.assertEquals(
@@ -67,9 +63,7 @@ public class TasksApiTest extends BaseTest {
         String token = result.getToken();
         assertNotNull(token);
 
-        boolean cancellationResult = client
-                .cancelOperation(repoId, token)
-                .join();
+        boolean cancellationResult = client.cancelOperation(repoId, token);
         assertTrue(cancellationResult);
     }
 
@@ -90,15 +84,10 @@ public class TasksApiTest extends BaseTest {
 
         TimeUnit.SECONDS.sleep(5);
 
-        CompletableFuture<OperationProgress> operationProgressResponse = client.getOperationStatusAndProgress(repoId,
-                token);
+        OperationProgress operationProgressResponse = client.getOperationStatusAndProgress(repoId, token);
 
         assertNotNull(operationProgressResponse);
-        Assertions.assertSame(operationProgressResponse
-                .join()
-                .getStatus(), OperationStatus.COMPLETED);
-        Assertions.assertSame(operationProgressResponse
-                .join()
-                .getPercentComplete(), 100);
+        Assertions.assertSame(operationProgressResponse.getStatus(), OperationStatus.COMPLETED);
+        Assertions.assertSame(operationProgressResponse.getPercentComplete(), 100);
     }
 }

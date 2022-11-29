@@ -2,8 +2,6 @@ package com.laserfiche.repository.api.clients;
 
 import com.laserfiche.repository.api.clients.impl.model.OperationProgress;
 
-import java.util.concurrent.CompletableFuture;
-
 public interface TasksClient {
 
     /**
@@ -13,9 +11,9 @@ public interface TasksClient {
      *
      * @param repoId         The requested repository ID
      * @param operationToken The operation token
-     * @return CompletableFuture&lt;OperationProgress&gt; The return value
+     * @return OperationProgress The return value
      */
-    CompletableFuture<OperationProgress> getOperationStatusAndProgress(String repoId, String operationToken);
+    OperationProgress getOperationStatusAndProgress(String repoId, String operationToken);
 
     /**
      * - Cancels an operation.
@@ -24,7 +22,7 @@ public interface TasksClient {
      *
      * @param repoId         The requested repository ID
      * @param operationToken The operation token
-     * @return CompletableFuture&lt;Boolean&gt; The return value
+     * @return Boolean The return value
      */
-    CompletableFuture<Boolean> cancelOperation(String repoId, String operationToken);
+    Boolean cancelOperation(String repoId, String operationToken);
 }
