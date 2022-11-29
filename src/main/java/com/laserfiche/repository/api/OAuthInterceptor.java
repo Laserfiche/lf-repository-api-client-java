@@ -1,6 +1,5 @@
 package com.laserfiche.repository.api;
 
-import com.laserfiche.api.client.httphandlers.BeforeSendResult;
 import com.laserfiche.api.client.httphandlers.OAuthClientCredentialsHandler;
 import com.laserfiche.api.client.httphandlers.Request;
 import com.laserfiche.api.client.httphandlers.RequestImpl;
@@ -8,8 +7,6 @@ import com.laserfiche.api.client.model.AccessKey;
 import com.laserfiche.repository.api.clients.RepositoryApiClientInterceptor;
 import kong.unirest.Config;
 import kong.unirest.HttpRequest;
-
-import java.util.concurrent.CompletableFuture;
 
 public class OAuthInterceptor implements RepositoryApiClientInterceptor {
     private final OAuthClientCredentialsHandler oauthHandler;
@@ -21,8 +18,7 @@ public class OAuthInterceptor implements RepositoryApiClientInterceptor {
     @Override
     public void onRequest(HttpRequest<?> request, Config config) {
         Request customRequest = new RequestImpl();
-        CompletableFuture<BeforeSendResult> future = oauthHandler.beforeSendAsync(customRequest);
-        future.join(); // We are blocked by the HTTP handler
+        oauthHandler.beforeSend(customRequest);
         request.header("Authorization", customRequest
                 .headers()
                 .get("Authorization"));

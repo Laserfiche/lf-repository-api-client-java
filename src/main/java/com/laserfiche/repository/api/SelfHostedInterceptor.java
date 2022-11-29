@@ -22,8 +22,7 @@ public class SelfHostedInterceptor implements RepositoryApiClientInterceptor {
     @Override
     public void onRequest(HttpRequest<?> request, Config config) {
         Request customRequest = new RequestImpl();
-        CompletableFuture<BeforeSendResult> future = usernamePasswordHandler.beforeSendAsync(customRequest);
-        future.join(); // We are blocked by the HTTP handler
+        usernamePasswordHandler.beforeSend(customRequest);
         request.header("Authorization", customRequest
                 .headers()
                 .get("Authorization"));
