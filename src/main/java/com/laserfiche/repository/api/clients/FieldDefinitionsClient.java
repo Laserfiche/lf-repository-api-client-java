@@ -3,7 +3,6 @@ package com.laserfiche.repository.api.clients;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfWFieldInfo;
 import com.laserfiche.repository.api.clients.impl.model.WFieldInfo;
 
-import java.util.concurrent.CompletableFuture;
 import java.util.function.Function;
 
 public interface FieldDefinitionsClient {
@@ -18,10 +17,9 @@ public interface FieldDefinitionsClient {
      * @param culture           An optional query parameter used to indicate the locale that should be used for formatting.
      *                          The value should be a standard language tag.
      * @param select            Limits the properties returned in the result.
-     * @return CompletableFuture&lt;WFieldInfo&gt; The return value
+     * @return WFieldInfo The return value
      */
-    CompletableFuture<WFieldInfo> getFieldDefinitionById(String repoId, Integer fieldDefinitionId, String culture,
-            String select);
+    WFieldInfo getFieldDefinitionById(String repoId, Integer fieldDefinitionId, String culture, String select);
 
     /**
      * - Returns a paged listing of field definitions available in the specified repository.
@@ -37,20 +35,19 @@ public interface FieldDefinitionsClient {
      * @param top     Limits the number of items returned from a collection.
      * @param skip    Excludes the specified number of items of the queried collection from the result.
      * @param count   Indicates whether the total count of items within a collection are returned in the result.
-     * @return CompletableFuture&lt;ODataValueContextOfIListOfWFieldInfo&gt; The return value
+     * @return ODataValueContextOfIListOfWFieldInfo The return value
      */
-    CompletableFuture<ODataValueContextOfIListOfWFieldInfo> getFieldDefinitions(String repoId, String prefer,
-            String culture, String select, String orderby, Integer top, Integer skip, Boolean count);
+    ODataValueContextOfIListOfWFieldInfo getFieldDefinitions(String repoId, String prefer, String culture,
+            String select, String orderby, Integer top, Integer skip, Boolean count);
 
     /**
      * Returns the next subset of the requested collection, using a nextlink url.
      *
      * @param nextLink    A url that allows retrieving the next subset of the requested collection.
      * @param maxPageSize Optionally specify the maximum number of items to retrieve.
-     * @return CompletableFuture&lt;ODataValueContextOfIListOfWFieldInfo&gt; The return value
+     * @return ODataValueContextOfIListOfWFieldInfo The return value
      */
-    CompletableFuture<ODataValueContextOfIListOfWFieldInfo> getFieldDefinitionsNextLink(String nextLink,
-            Integer maxPageSize);
+    ODataValueContextOfIListOfWFieldInfo getFieldDefinitionsNextLink(String nextLink, Integer maxPageSize);
 
     /**
      * Provides the functionality to iteratively (i.e. through paging) call &lt;b&gt;getFieldDefinitions&lt;/b&gt;, and apply a function on the response of each iteration.
@@ -66,10 +63,8 @@ public interface FieldDefinitionsClient {
      * @param top         Limits the number of items returned from a collection.
      * @param skip        Excludes the specified number of items of the queried collection from the result.
      * @param count       Indicates whether the total count of items within a collection are returned in the result.
-     * @return CompletableFuture&lt;Void&gt; The return value
      */
-    CompletableFuture<Void> getFieldDefinitionsForEach(
-            Function<CompletableFuture<ODataValueContextOfIListOfWFieldInfo>, CompletableFuture<Boolean>> callback,
+    void getFieldDefinitionsForEach(Function<ODataValueContextOfIListOfWFieldInfo, Boolean> callback,
             Integer maxPageSize, String repoId, String prefer, String culture, String select, String orderby,
             Integer top, Integer skip, Boolean count);
 }
