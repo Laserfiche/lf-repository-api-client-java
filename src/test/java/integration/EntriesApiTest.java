@@ -313,8 +313,7 @@ class EntriesApiTest extends BaseTest {
     void getDynamicFieldsEntry_ReturnDynamicFields() {
         ODataValueContextOfIListOfWTemplateInfo templateDefinitionsResponse = repositoryApiClient
                 .getTemplateDefinitionClient()
-                .getTemplateDefinitions(repoId, null, null, null, null, null, null, null, null)
-                .join();
+                .getTemplateDefinitions(repoId, null, null, null, null, null, null, null, null);
         List<WTemplateInfo> templateDefinitions = templateDefinitionsResponse.getValue();
 
         assertNotNull(templateDefinitions);
