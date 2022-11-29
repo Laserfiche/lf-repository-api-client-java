@@ -19,19 +19,17 @@ public class SetEntriesApiTest extends BaseTest {
 
     RepositoryApiClient createEntryClient = repositoryApiClient;
 
-    CompletableFuture<Entry> entry = null;
+    Entry entry = null;
 
     @AfterEach
     void deleteEntry() {
         if (entry != null) {
             DeleteEntryWithAuditReason body = new DeleteEntryWithAuditReason();
             Integer num = entry
-                    .join()
                     .getId();
             repositoryApiClient
                     .getEntriesClient()
-                    .deleteEntryInfo(repoId, num, body)
-                    .join();
+                    .deleteEntryInfo(repoId, num, body);
         }
         entry = null;
     }
@@ -58,14 +56,12 @@ public class SetEntriesApiTest extends BaseTest {
                 .add(tag);
         entry = createEntry(client, "RepositoryApiClientIntegrationTest Java SetTags", 1, true);
         Integer num = entry
-                .join()
                 .getId();
 
-        CompletableFuture<ODataValueOfIListOfWTagInfo> assignTagsResponse = repositoryApiClient
+        ODataValueOfIListOfWTagInfo assignTagsResponse = repositoryApiClient
                 .getEntriesClient()
                 .assignTags(repoId, num, request);
         List<WTagInfo> tags = assignTagsResponse
-                .join()
                 .getValue();
 
         assertNotNull(tags);
@@ -97,7 +93,7 @@ public class SetEntriesApiTest extends BaseTest {
                     .getValue() != null && allFalse(
                     templateDefinitionsFieldsResponse
                             .join()
-                            .getValue()).get()) {
+                            .getValue())) {
                 template = templateDefinition;
                 break;
             }
@@ -109,15 +105,13 @@ public class SetEntriesApiTest extends BaseTest {
         request.setTemplateName(template.getName());
         entry = createEntry(client, "RepositoryApiClientIntegrationTest Java DeleteTemplate", 1, true);
 
-        CompletableFuture<Entry> setTemplateResponse = repositoryApiClient
+        Entry setTemplateResponse = repositoryApiClient
                 .getEntriesClient()
                 .writeTemplateValueToEntry(repoId, entry
-                        .get()
                         .getId(), request, null);
 
-        assertNotNull(setTemplateResponse.join());
+        assertNotNull(setTemplateResponse);
         assertEquals(setTemplateResponse
-                .join()
                 .getTemplateName(), template.getName());
     }
 
@@ -164,14 +158,12 @@ public class SetEntriesApiTest extends BaseTest {
 
         entry = createEntry(client, "RepositoryApiClientIntegrationTest Java SetFields", 1, true);
         Integer entryId = entry
-                .join()
                 .getId();
 
-        CompletableFuture<ODataValueOfIListOfFieldValue> assignFieldValuesResponse = repositoryApiClient
+        ODataValueOfIListOfFieldValue assignFieldValuesResponse = repositoryApiClient
                 .getEntriesClient()
                 .assignFieldValues(repoId, entryId, requestBody, null);
         List<FieldValue> fields = assignFieldValuesResponse
-                .join()
                 .getValue();
 
         assertNotNull(fields);
@@ -205,7 +197,7 @@ public class SetEntriesApiTest extends BaseTest {
                     .getValue() != null && allFalse(
                     templateDefinitionsFieldsResponse
                             .join()
-                            .getValue()).get()) {
+                            .getValue())) {
                 template = templateDefinition;
                 break;
             }
@@ -218,15 +210,13 @@ public class SetEntriesApiTest extends BaseTest {
 
         entry = createEntry(createEntryClient, "RepositoryApiClientIntegrationTest Java DeleteTemplate", 1, true);
 
-        CompletableFuture<Entry> writeTemplateValueToEntryResponse = client
+        Entry writeTemplateValueToEntryResponse = client
                 .getEntriesClient()
                 .writeTemplateValueToEntry(repoId, entry
-                        .join()
                         .getId(), request, null);
 
         assertNotNull(writeTemplateValueToEntryResponse);
         assertEquals(writeTemplateValueToEntryResponse
-                .join()
                 .getTemplateName(), template.getName());
     }
 }

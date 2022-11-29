@@ -5,7 +5,6 @@ import com.laserfiche.repository.api.clients.impl.model.*;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -29,21 +28,20 @@ public interface EntriesClient {
      * @param top         Limits the number of items returned from a collection.
      * @param skip        Excludes the specified number of items of the queried collection from the result.
      * @param count       Indicates whether the total count of items within a collection are returned in the result.
-     * @return CompletableFuture&lt;ODataValueContextOfIListOfFieldValue&gt; The return value
+     * @return ODataValueContextOfIListOfFieldValue The return value
      */
-    CompletableFuture<ODataValueContextOfIListOfFieldValue> getFieldValues(String repoId, Integer entryId,
-            String prefer, Boolean formatValue, String culture, String select, String orderby, Integer top,
-            Integer skip, Boolean count);
+    ODataValueContextOfIListOfFieldValue getFieldValues(String repoId, Integer entryId, String prefer,
+            Boolean formatValue, String culture, String select, String orderby, Integer top, Integer skip,
+            Boolean count);
 
     /**
      * Returns the next subset of the requested collection, using a nextlink url.
      *
      * @param nextLink    A url that allows retrieving the next subset of the requested collection.
      * @param maxPageSize Optionally specify the maximum number of items to retrieve.
-     * @return CompletableFuture&lt;ODataValueContextOfIListOfFieldValue&gt; The return value
+     * @return ODataValueContextOfIListOfFieldValue The return value
      */
-    CompletableFuture<ODataValueContextOfIListOfFieldValue> getFieldValuesNextLink(String nextLink,
-            Integer maxPageSize);
+    ODataValueContextOfIListOfFieldValue getFieldValuesNextLink(String nextLink, Integer maxPageSize);
 
     /**
      * Provides the functionality to iteratively (i.e. through paging) call &lt;b&gt;getFieldValues&lt;/b&gt;, and apply a function on the response of each iteration.
@@ -63,12 +61,10 @@ public interface EntriesClient {
      * @param top         Limits the number of items returned from a collection.
      * @param skip        Excludes the specified number of items of the queried collection from the result.
      * @param count       Indicates whether the total count of items within a collection are returned in the result.
-     * @return CompletableFuture&lt;Void&gt; The return value
      */
-    CompletableFuture<Void> getFieldValuesForEach(
-            Function<CompletableFuture<ODataValueContextOfIListOfFieldValue>, CompletableFuture<Boolean>> callback,
-            Integer maxPageSize, String repoId, Integer entryId, String prefer, Boolean formatValue, String culture,
-            String select, String orderby, Integer top, Integer skip, Boolean count);
+    void getFieldValuesForEach(Function<ODataValueContextOfIListOfFieldValue, Boolean> callback, Integer maxPageSize,
+            String repoId, Integer entryId, String prefer, Boolean formatValue, String culture, String select,
+            String orderby, Integer top, Integer skip, Boolean count);
 
     /**
      * - Update the field values assigned to an entry.
@@ -80,9 +76,9 @@ public interface EntriesClient {
      * @param requestBody
      * @param culture     An optional query parameter used to indicate the locale that should be used.
      *                    The value should be a standard language tag. This may be used when setting field values with tokens.
-     * @return CompletableFuture&lt;ODataValueOfIListOfFieldValue&gt; The return value
+     * @return ODataValueOfIListOfFieldValue The return value
      */
-    CompletableFuture<ODataValueOfIListOfFieldValue> assignFieldValues(String repoId, Integer entryId,
+    ODataValueOfIListOfFieldValue assignFieldValues(String repoId, Integer entryId,
             Map<String, FieldToUpdate> requestBody, String culture);
 
     /**
@@ -99,10 +95,10 @@ public interface EntriesClient {
      *                      The value should be a standard language tag. This may be used when setting field values with tokens.
      * @param inputStream   An InputStream object to read the raw bytes for the file to be uploaded.
      * @param requestBody   A value of type PostEntryWithEdocMetadataRequest.
-     * @return CompletableFuture&lt;CreateEntryResult&gt; The return value
+     * @return CreateEntryResult The return value
      */
-    CompletableFuture<CreateEntryResult> importDocument(String repoId, Integer parentEntryId, String fileName,
-            Boolean autoRename, String culture, InputStream inputStream, PostEntryWithEdocMetadataRequest requestBody);
+    CreateEntryResult importDocument(String repoId, Integer parentEntryId, String fileName, Boolean autoRename,
+            String culture, InputStream inputStream, PostEntryWithEdocMetadataRequest requestBody);
 
     /**
      * - Returns the links assigned to an entry.
@@ -117,20 +113,19 @@ public interface EntriesClient {
      * @param top     Limits the number of items returned from a collection.
      * @param skip    Excludes the specified number of items of the queried collection from the result.
      * @param count   Indicates whether the total count of items within a collection are returned in the result.
-     * @return CompletableFuture&lt;ODataValueContextOfIListOfWEntryLinkInfo&gt; The return value
+     * @return ODataValueContextOfIListOfWEntryLinkInfo The return value
      */
-    CompletableFuture<ODataValueContextOfIListOfWEntryLinkInfo> getLinkValuesFromEntry(String repoId, Integer entryId,
-            String prefer, String select, String orderby, Integer top, Integer skip, Boolean count);
+    ODataValueContextOfIListOfWEntryLinkInfo getLinkValuesFromEntry(String repoId, Integer entryId, String prefer,
+            String select, String orderby, Integer top, Integer skip, Boolean count);
 
     /**
      * Returns the next subset of the requested collection, using a nextlink url.
      *
      * @param nextLink    A url that allows retrieving the next subset of the requested collection.
      * @param maxPageSize Optionally specify the maximum number of items to retrieve.
-     * @return CompletableFuture&lt;ODataValueContextOfIListOfWEntryLinkInfo&gt; The return value
+     * @return ODataValueContextOfIListOfWEntryLinkInfo The return value
      */
-    CompletableFuture<ODataValueContextOfIListOfWEntryLinkInfo> getLinkValuesFromEntryNextLink(String nextLink,
-            Integer maxPageSize);
+    ODataValueContextOfIListOfWEntryLinkInfo getLinkValuesFromEntryNextLink(String nextLink, Integer maxPageSize);
 
     /**
      * Provides the functionality to iteratively (i.e. through paging) call &lt;b&gt;getLinkValuesFromEntry&lt;/b&gt;, and apply a function on the response of each iteration.
@@ -145,10 +140,8 @@ public interface EntriesClient {
      * @param top         Limits the number of items returned from a collection.
      * @param skip        Excludes the specified number of items of the queried collection from the result.
      * @param count       Indicates whether the total count of items within a collection are returned in the result.
-     * @return CompletableFuture&lt;Void&gt; The return value
      */
-    CompletableFuture<Void> getLinkValuesFromEntryForEach(
-            Function<CompletableFuture<ODataValueContextOfIListOfWEntryLinkInfo>, CompletableFuture<Boolean>> callback,
+    void getLinkValuesFromEntryForEach(Function<ODataValueContextOfIListOfWEntryLinkInfo, Boolean> callback,
             Integer maxPageSize, String repoId, Integer entryId, String prefer, String select, String orderby,
             Integer top, Integer skip, Boolean count);
 
@@ -160,9 +153,9 @@ public interface EntriesClient {
      * @param repoId      The request repository ID.
      * @param entryId     The requested entry ID.
      * @param requestBody A value of type List&lt;PutLinksRequest&gt;.
-     * @return CompletableFuture&lt;ODataValueOfIListOfWEntryLinkInfo&gt; The return value
+     * @return ODataValueOfIListOfWEntryLinkInfo The return value
      */
-    CompletableFuture<ODataValueOfIListOfWEntryLinkInfo> assignEntryLinks(String repoId, Integer entryId,
+    ODataValueOfIListOfWEntryLinkInfo assignEntryLinks(String repoId, Integer entryId,
             List<PutLinksRequest> requestBody);
 
     /**
@@ -175,10 +168,9 @@ public interface EntriesClient {
      * @param requestBody The template and template fields that will be assigned to the entry.
      * @param culture     An optional query parameter used to indicate the locale that should be used.
      *                    The value should be a standard language tag. This may be used when setting field values with tokens.
-     * @return CompletableFuture&lt;Entry&gt; The return value
+     * @return Entry The return value
      */
-    CompletableFuture<Entry> writeTemplateValueToEntry(String repoId, Integer entryId, PutTemplateRequest requestBody,
-            String culture);
+    Entry writeTemplateValueToEntry(String repoId, Integer entryId, PutTemplateRequest requestBody, String culture);
 
     /**
      * - Remove the currently assigned template from the specified entry.
@@ -187,9 +179,9 @@ public interface EntriesClient {
      *
      * @param repoId  The requested repository ID.
      * @param entryId The ID of the entry that will have its template removed.
-     * @return CompletableFuture&lt;Entry&gt; The return value
+     * @return Entry The return value
      */
-    CompletableFuture<Entry> deleteAssignedTemplate(String repoId, Integer entryId);
+    Entry deleteAssignedTemplate(String repoId, Integer entryId);
 
     /**
      * - Returns dynamic field logic values with the current values of the fields in the template.
@@ -199,9 +191,9 @@ public interface EntriesClient {
      * @param repoId      The requested repository ID.
      * @param entryId     The requested entry ID.
      * @param requestBody A value of type GetDynamicFieldLogicValueRequest.
-     * @return CompletableFuture&lt;Map&lt;String,String[]&gt;&gt; The return value
+     * @return Map&lt;String,String[]&gt; The return value
      */
-    CompletableFuture<Map<String, String[]>> getDynamicFieldValues(String repoId, Integer entryId,
+    Map<String, String[]> getDynamicFieldValues(String repoId, Integer entryId,
             GetDynamicFieldLogicValueRequest requestBody);
 
     /**
@@ -211,10 +203,9 @@ public interface EntriesClient {
      * @param repoId                    The requested repository ID.
      * @param fullPath                  The requested entry path.
      * @param fallbackToClosestAncestor An optional query parameter used to indicate whether or not the closest ancestor in the path should be returned if the initial entry path is not found. The default value is false.
-     * @return CompletableFuture&lt;FindEntryResult&gt; The return value
+     * @return FindEntryResult The return value
      */
-    CompletableFuture<FindEntryResult> getEntryByPath(String repoId, String fullPath,
-            Boolean fallbackToClosestAncestor);
+    FindEntryResult getEntryByPath(String repoId, String fullPath, Boolean fallbackToClosestAncestor);
 
     /**
      * - Copy a new child entry in the designated folder async, and potentially return an operationToken.
@@ -229,10 +220,10 @@ public interface EntriesClient {
      *                    renamed if an entry already exists with the given name in the folder. The default value is false.
      * @param culture     An optional query parameter used to indicate the locale that should be used.
      *                    The value should be a standard language tag.
-     * @return CompletableFuture&lt;AcceptedOperation&gt; The return value
+     * @return AcceptedOperation The return value
      */
-    CompletableFuture<AcceptedOperation> copyEntryAsync(String repoId, Integer entryId, CopyAsyncRequest requestBody,
-            Boolean autoRename, String culture);
+    AcceptedOperation copyEntryAsync(String repoId, Integer entryId, CopyAsyncRequest requestBody, Boolean autoRename,
+            String culture);
 
     /**
      * - Returns a single entry object.
@@ -242,9 +233,9 @@ public interface EntriesClient {
      * @param repoId  The requested repository ID.
      * @param entryId The requested entry ID.
      * @param select  Limits the properties returned in the result.
-     * @return CompletableFuture&lt;Entry&gt; The return value
+     * @return Entry The return value
      */
-    CompletableFuture<Entry> getEntry(String repoId, Integer entryId, String select);
+    Entry getEntry(String repoId, Integer entryId, String select);
 
     /**
      * - Moves and/or renames an entry.
@@ -259,10 +250,10 @@ public interface EntriesClient {
      *                    renamed if another entry already exists with the same name in the folder. The default value is false.
      * @param culture     An optional query parameter used to indicate the locale that should be used.
      *                    The value should be a standard language tag.
-     * @return CompletableFuture&lt;Entry&gt; The return value
+     * @return Entry The return value
      */
-    CompletableFuture<Entry> moveOrRenameEntry(String repoId, Integer entryId, PatchEntryRequest requestBody,
-            Boolean autoRename, String culture);
+    Entry moveOrRenameEntry(String repoId, Integer entryId, PatchEntryRequest requestBody, Boolean autoRename,
+            String culture);
 
     /**
      * - Begins a task to delete an entry, and returns an operationToken.
@@ -272,10 +263,9 @@ public interface EntriesClient {
      * @param repoId      The requested repository ID.
      * @param entryId     The requested entry ID.
      * @param requestBody The submitted audit reason.
-     * @return CompletableFuture&lt;AcceptedOperation&gt; The return value
+     * @return AcceptedOperation The return value
      */
-    CompletableFuture<AcceptedOperation> deleteEntryInfo(String repoId, Integer entryId,
-            DeleteEntryWithAuditReason requestBody);
+    AcceptedOperation deleteEntryInfo(String repoId, Integer entryId, DeleteEntryWithAuditReason requestBody);
 
     /**
      * - Returns an entry's edoc resource in a stream format while including an audit reason.
@@ -288,10 +278,9 @@ public interface EntriesClient {
      * @param range               An optional header used to retrieve partial content of the edoc. Only supports single
      *                            range with byte unit.
      * @param inputStreamConsumer A Consumer&lt;InputStream&gt; object that the is provided with the response's inputStream to consume it, if the request has been successful.
-     * @return CompletableFuture&lt;Void&gt; The return value
      */
-    CompletableFuture<Void> exportDocumentWithAuditReason(String repoId, Integer entryId,
-            GetEdocWithAuditReasonRequest requestBody, String range, Consumer<InputStream> inputStreamConsumer);
+    void exportDocumentWithAuditReason(String repoId, Integer entryId, GetEdocWithAuditReasonRequest requestBody,
+            String range, Consumer<InputStream> inputStreamConsumer);
 
     /**
      * - Returns an entry's edoc resource in a stream format.
@@ -303,19 +292,17 @@ public interface EntriesClient {
      * @param range               An optional header used to retrieve partial content of the edoc. Only supports single
      *                            range with byte unit.
      * @param inputStreamConsumer A Consumer&lt;InputStream&gt; object that the is provided with the response's inputStream to consume it, if the request has been successful.
-     * @return CompletableFuture&lt;Void&gt; The return value
      */
-    CompletableFuture<Void> exportDocument(String repoId, Integer entryId, String range,
-            Consumer<InputStream> inputStreamConsumer);
+    void exportDocument(String repoId, Integer entryId, String range, Consumer<InputStream> inputStreamConsumer);
 
     /**
      * - Delete the edoc associated with the provided entry ID.
      *
      * @param repoId  The requested repository ID.
      * @param entryId The requested document ID.
-     * @return CompletableFuture&lt;ODataValueOfBoolean&gt; The return value
+     * @return ODataValueOfBoolean The return value
      */
-    CompletableFuture<ODataValueOfBoolean> deleteDocument(String repoId, Integer entryId);
+    ODataValueOfBoolean deleteDocument(String repoId, Integer entryId);
 
     /**
      * - Returns information about the edoc content of an entry, without downloading the edoc in its entirety.
@@ -324,9 +311,9 @@ public interface EntriesClient {
      *
      * @param repoId  The requested repository ID.
      * @param entryId The requested document ID.
-     * @return CompletableFuture&lt;Map&lt;String,String&gt;&gt; The return value
+     * @return Map&lt;String,String&gt; The return value
      */
-    CompletableFuture<Map<String, String>> getDocumentContentType(String repoId, Integer entryId);
+    Map<String, String> getDocumentContentType(String repoId, Integer entryId);
 
     /**
      * - Delete the pages associated with the provided entry ID. If no pageRange is specified, all pages will be deleted.
@@ -335,9 +322,9 @@ public interface EntriesClient {
      * @param repoId    The requested repository ID.
      * @param entryId   The requested document ID.
      * @param pageRange The pages to be deleted.
-     * @return CompletableFuture&lt;ODataValueOfBoolean&gt; The return value
+     * @return ODataValueOfBoolean The return value
      */
-    CompletableFuture<ODataValueOfBoolean> deletePages(String repoId, Integer entryId, String pageRange);
+    ODataValueOfBoolean deletePages(String repoId, Integer entryId, String pageRange);
 
     /**
      * - Returns the children entries of a folder in the repository.
@@ -361,20 +348,20 @@ public interface EntriesClient {
      * @param top              Limits the number of items returned from a collection.
      * @param skip             Excludes the specified number of items of the queried collection from the result.
      * @param count            Indicates whether the total count of items within a collection are returned in the result.
-     * @return CompletableFuture&lt;ODataValueContextOfIListOfEntry&gt; The return value
+     * @return ODataValueContextOfIListOfEntry The return value
      */
-    CompletableFuture<ODataValueContextOfIListOfEntry> getEntryListing(String repoId, Integer entryId,
-            Boolean groupByEntryType, String[] fields, Boolean formatFields, String prefer, String culture,
-            String select, String orderby, Integer top, Integer skip, Boolean count);
+    ODataValueContextOfIListOfEntry getEntryListing(String repoId, Integer entryId, Boolean groupByEntryType,
+            String[] fields, Boolean formatFields, String prefer, String culture, String select, String orderby,
+            Integer top, Integer skip, Boolean count);
 
     /**
      * Returns the next subset of the requested collection, using a nextlink url.
      *
      * @param nextLink    A url that allows retrieving the next subset of the requested collection.
      * @param maxPageSize Optionally specify the maximum number of items to retrieve.
-     * @return CompletableFuture&lt;ODataValueContextOfIListOfEntry&gt; The return value
+     * @return ODataValueContextOfIListOfEntry The return value
      */
-    CompletableFuture<ODataValueContextOfIListOfEntry> getEntryListingNextLink(String nextLink, Integer maxPageSize);
+    ODataValueContextOfIListOfEntry getEntryListingNextLink(String nextLink, Integer maxPageSize);
 
     /**
      * Provides the functionality to iteratively (i.e. through paging) call &lt;b&gt;getEntryListing&lt;/b&gt;, and apply a function on the response of each iteration.
@@ -395,13 +382,10 @@ public interface EntriesClient {
      * @param top              Limits the number of items returned from a collection.
      * @param skip             Excludes the specified number of items of the queried collection from the result.
      * @param count            Indicates whether the total count of items within a collection are returned in the result.
-     * @return CompletableFuture&lt;Void&gt; The return value
      */
-    CompletableFuture<Void> getEntryListingForEach(
-            Function<CompletableFuture<ODataValueContextOfIListOfEntry>, CompletableFuture<Boolean>> callback,
-            Integer maxPageSize, String repoId, Integer entryId, Boolean groupByEntryType, String[] fields,
-            Boolean formatFields, String prefer, String culture, String select, String orderby, Integer top,
-            Integer skip, Boolean count);
+    void getEntryListingForEach(Function<ODataValueContextOfIListOfEntry, Boolean> callback, Integer maxPageSize,
+            String repoId, Integer entryId, Boolean groupByEntryType, String[] fields, Boolean formatFields,
+            String prefer, String culture, String select, String orderby, Integer top, Integer skip, Boolean count);
 
     /**
      * - Create/copy a new child entry in the designated folder.
@@ -415,10 +399,10 @@ public interface EntriesClient {
      *                    renamed if an entry already exists with the given name in the folder. The default value is false.
      * @param culture     An optional query parameter used to indicate the locale that should be used.
      *                    The value should be a standard language tag.
-     * @return CompletableFuture&lt;Entry&gt; The return value
+     * @return Entry The return value
      */
-    CompletableFuture<Entry> createOrCopyEntry(String repoId, Integer entryId, PostEntryChildrenRequest requestBody,
-            Boolean autoRename, String culture);
+    Entry createOrCopyEntry(String repoId, Integer entryId, PostEntryChildrenRequest requestBody, Boolean autoRename,
+            String culture);
 
     /**
      * - Returns the tags assigned to an entry.
@@ -433,20 +417,19 @@ public interface EntriesClient {
      * @param top     Limits the number of items returned from a collection.
      * @param skip    Excludes the specified number of items of the queried collection from the result.
      * @param count   Indicates whether the total count of items within a collection are returned in the result.
-     * @return CompletableFuture&lt;ODataValueContextOfIListOfWTagInfo&gt; The return value
+     * @return ODataValueContextOfIListOfWTagInfo The return value
      */
-    CompletableFuture<ODataValueContextOfIListOfWTagInfo> getTagsAssignedToEntry(String repoId, Integer entryId,
-            String prefer, String select, String orderby, Integer top, Integer skip, Boolean count);
+    ODataValueContextOfIListOfWTagInfo getTagsAssignedToEntry(String repoId, Integer entryId, String prefer,
+            String select, String orderby, Integer top, Integer skip, Boolean count);
 
     /**
      * Returns the next subset of the requested collection, using a nextlink url.
      *
      * @param nextLink    A url that allows retrieving the next subset of the requested collection.
      * @param maxPageSize Optionally specify the maximum number of items to retrieve.
-     * @return CompletableFuture&lt;ODataValueContextOfIListOfWTagInfo&gt; The return value
+     * @return ODataValueContextOfIListOfWTagInfo The return value
      */
-    CompletableFuture<ODataValueContextOfIListOfWTagInfo> getTagsAssignedToEntryNextLink(String nextLink,
-            Integer maxPageSize);
+    ODataValueContextOfIListOfWTagInfo getTagsAssignedToEntryNextLink(String nextLink, Integer maxPageSize);
 
     /**
      * Provides the functionality to iteratively (i.e. through paging) call &lt;b&gt;getTagsAssignedToEntry&lt;/b&gt;, and apply a function on the response of each iteration.
@@ -461,10 +444,8 @@ public interface EntriesClient {
      * @param top         Limits the number of items returned from a collection.
      * @param skip        Excludes the specified number of items of the queried collection from the result.
      * @param count       Indicates whether the total count of items within a collection are returned in the result.
-     * @return CompletableFuture&lt;Void&gt; The return value
      */
-    CompletableFuture<Void> getTagsAssignedToEntryForEach(
-            Function<CompletableFuture<ODataValueContextOfIListOfWTagInfo>, CompletableFuture<Boolean>> callback,
+    void getTagsAssignedToEntryForEach(Function<ODataValueContextOfIListOfWTagInfo, Boolean> callback,
             Integer maxPageSize, String repoId, Integer entryId, String prefer, String select, String orderby,
             Integer top, Integer skip, Boolean count);
 
@@ -476,8 +457,7 @@ public interface EntriesClient {
      * @param repoId      The requested repository ID.
      * @param entryId     The requested entry ID.
      * @param requestBody The tags to add.
-     * @return CompletableFuture&lt;ODataValueOfIListOfWTagInfo&gt; The return value
+     * @return ODataValueOfIListOfWTagInfo The return value
      */
-    CompletableFuture<ODataValueOfIListOfWTagInfo> assignTags(String repoId, Integer entryId,
-            PutTagRequest requestBody);
+    ODataValueOfIListOfWTagInfo assignTags(String repoId, Integer entryId, PutTagRequest requestBody);
 }
