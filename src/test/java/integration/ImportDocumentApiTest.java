@@ -74,8 +74,7 @@ public class ImportDocumentApiTest extends BaseTest {
         WTemplateInfo template = null;
         ODataValueContextOfIListOfWTemplateInfo templateDefinitionResult = repositoryApiClient
                 .getTemplateDefinitionClient()
-                .getTemplateDefinitions(repoId, null, null, null, null, null, null, null, null)
-                .join();
+                .getTemplateDefinitions(repoId, null, null, null, null, null, null, null, null);
         List<WTemplateInfo> templateDefinitions = templateDefinitionResult.getValue();
         assertNotNull(templateDefinitions);
         Assertions.assertTrue(templateDefinitions.size() > 0);
@@ -83,8 +82,7 @@ public class ImportDocumentApiTest extends BaseTest {
             ODataValueContextOfIListOfTemplateFieldInfo templateDefinitionFieldsResult = repositoryApiClient
                     .getTemplateDefinitionClient()
                     .getTemplateFieldDefinitions(repoId,
-                            templateDefinition.getId(), null, null, null, null, null, null, null)
-                    .join();
+                            templateDefinition.getId(), null, null, null, null, null, null, null);
             if (templateDefinitionFieldsResult.getValue() != null && allFalse(
                     templateDefinitionFieldsResult.getValue())) {
                 template = templateDefinition;
