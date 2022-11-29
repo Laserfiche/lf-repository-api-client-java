@@ -28,14 +28,13 @@ public class TasksApiTest extends BaseTest {
     @Test
     void cancelOperation_OperationEndedBeforeCancel() throws InterruptedException {
         Entry deleteEntry = createEntry(createEntryClient, "RepositoryApiClientIntegrationTest Java CancelOperation", 1,
-                true).join();
+                true);
 
         DeleteEntryWithAuditReason body = new DeleteEntryWithAuditReason();
 
         AcceptedOperation result = repositoryApiClient
                 .getEntriesClient()
-                .deleteEntryInfo(repoId, deleteEntry.getId(), body)
-                .join();
+                .deleteEntryInfo(repoId, deleteEntry.getId(), body);
 
         String token = result.getToken();
 
@@ -57,14 +56,13 @@ public class TasksApiTest extends BaseTest {
     @Test
     void cancelOperation_OperationCancelledSuccessfully() {
         Entry deleteEntry = createEntry(createEntryClient, "RepositoryApiClientIntegrationTest Java CancelOperation", 1,
-                true).join();
+                true);
 
         DeleteEntryWithAuditReason body = new DeleteEntryWithAuditReason();
 
         AcceptedOperation result = repositoryApiClient
                 .getEntriesClient()
-                .deleteEntryInfo(repoId, deleteEntry.getId(), body)
-                .join();
+                .deleteEntryInfo(repoId, deleteEntry.getId(), body);
 
         String token = result.getToken();
         assertNotNull(token);
@@ -78,17 +76,15 @@ public class TasksApiTest extends BaseTest {
     @Test
     void getOperationStatus_ReturnStatus() throws InterruptedException {
         Entry deleteEntry = createEntry(createEntryClient, "RepositoryApiClientIntegrationTest Java GetOperationStatus",
-                1, true).join();
+                1, true);
 
         DeleteEntryWithAuditReason body = new DeleteEntryWithAuditReason();
 
-        CompletableFuture<AcceptedOperation> result = repositoryApiClient
+        AcceptedOperation result = repositoryApiClient
                 .getEntriesClient()
                 .deleteEntryInfo(repoId, deleteEntry.getId(), body);
 
-        String token = result
-                .join()
-                .getToken();
+        String token = result.getToken();
 
         assertNotNull(token);
 

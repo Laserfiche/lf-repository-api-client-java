@@ -14,7 +14,6 @@ import org.junit.jupiter.api.BeforeAll;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CompletableFuture;
 
 enum AuthorizationType {
     CLOUD_ACCESS_KEY,
@@ -101,7 +100,7 @@ public class BaseTest {
         return repositoryApiClient;
     }
 
-    public static CompletableFuture<Entry> createEntry(RepositoryApiClient client, String entryName,
+    public static Entry createEntry(RepositoryApiClient client, String entryName,
             Integer parentEntryId, Boolean autoRename) {
         PostEntryChildrenRequest request = new PostEntryChildrenRequest();
         request.setEntryType(PostEntryChildrenEntryType.FOLDER);
@@ -112,13 +111,13 @@ public class BaseTest {
                 .createOrCopyEntry(repoId, parentEntryId, request, autoRename, null);
     }
 
-    public static CompletableFuture<Boolean> allFalse(List<TemplateFieldInfo> arr) {
+    public static Boolean allFalse(List<TemplateFieldInfo> arr) {
         for (TemplateFieldInfo templateFieldInfo : arr) {
             if (templateFieldInfo.isRequired()) {
-                return CompletableFuture.supplyAsync(() -> false);
+                return false;
             }
         }
-        return CompletableFuture.supplyAsync(() -> true);
+        return true;
     }
 
     public static boolean nullOrEmpty(String str) {
