@@ -3,8 +3,6 @@ package com.laserfiche.repository.api.clients;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueOfBoolean;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueOfDateTime;
 
-import java.util.concurrent.CompletableFuture;
-
 public interface ServerSessionClient {
 
     /**
@@ -14,18 +12,18 @@ public interface ServerSessionClient {
      * - Only available in Laserfiche Cloud.
      *
      * @param repoId The requested repository ID.
-     * @return CompletableFuture&lt;ODataValueOfBoolean&gt; The return value
+     * @return ODataValueOfBoolean The return value
      */
-    CompletableFuture<ODataValueOfBoolean> invalidateServerSession(String repoId);
+    ODataValueOfBoolean invalidateServerSession(String repoId);
 
     /**
      * - Deprecated. This function is a no-op, always returns 200.
      * - Only available in Laserfiche Cloud.
      *
      * @param repoId The requested repository ID.
-     * @return CompletableFuture&lt;ODataValueOfBoolean&gt; The return value
+     * @return ODataValueOfBoolean The return value
      */
-    CompletableFuture<ODataValueOfBoolean> createServerSession(String repoId);
+    ODataValueOfBoolean createServerSession(String repoId);
 
     /**
      * - Deprecated.
@@ -34,7 +32,7 @@ public interface ServerSessionClient {
      * - Only available in Laserfiche Cloud.
      *
      * @param repoId The requested repository ID.
-     * @return CompletableFuture&lt;ODataValueOfDateTime&gt; The return value
+     * @return ODataValueOfDateTime The return value
      */
-    CompletableFuture<ODataValueOfDateTime> refreshServerSession(String repoId);
+    ODataValueOfDateTime refreshServerSession(String repoId);
 }
