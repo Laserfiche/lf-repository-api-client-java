@@ -394,14 +394,12 @@ class EntriesApiTest extends BaseTest {
 
     @Test
     void getDocumentContentType_ProblemDetails_Fields_Are_Valid_When_Exception_Thrown() {
-        Exception thrown = Assertions.assertThrows(CompletionException.class, () -> {
+        ApiException apiException = Assertions.assertThrows(ApiException.class, () -> {
             client
                     .getEntryListing(repoId, -1, false, null, false, "maxpagesize=100", null, null, null, null, null,
                             false);
         });
-        assertNotNull(thrown);
-        assertTrue(thrown.getCause() instanceof ApiException);
-        ApiException apiException = (ApiException) thrown.getCause();
+        assertNotNull(apiException);
         ProblemDetails problemDetails = apiException.getProblemDetails();
         assertNotNull(problemDetails);
         assertNotNull(problemDetails.getTitle());
@@ -455,11 +453,9 @@ class EntriesApiTest extends BaseTest {
     @Test
     void getDocumentContentType_Returns_Valid_Error_Message_ForInvalidRepoId() {
         String invalidRepoId = String.format("%s-%s", repoId, repoId);
-        Exception thrown = Assertions.assertThrows(CompletionException.class, () -> client
+        ApiException apiException = Assertions.assertThrows(ApiException.class, () -> client
                 .getDocumentContentType(invalidRepoId, 1));
-        assertNotNull(thrown);
-        assertTrue(thrown.getCause() instanceof ApiException);
-        ApiException apiException = (ApiException) thrown.getCause();
+        assertNotNull(apiException);
         assertEquals(404, apiException.getStatusCode());
         assertEquals("Not Found", apiException.getMessage());
         ProblemDetails problemDetails = apiException.getProblemDetails();
@@ -470,11 +466,9 @@ class EntriesApiTest extends BaseTest {
     void writeTemplateValueToEntry_ReturnsCorrectErrorMessage_For_Invalid_TemplateName() {
         PutTemplateRequest request = new PutTemplateRequest();
         request.setTemplateName("fake_template");
-        Exception thrown = Assertions.assertThrows(CompletionException.class, () -> client
+        ApiException apiException = Assertions.assertThrows(ApiException.class, () -> client
                 .writeTemplateValueToEntry(repoId, 3, request, null));
-        assertNotNull(thrown);
-        assertTrue(thrown.getCause() instanceof ApiException);
-        ApiException apiException = (ApiException) thrown.getCause();
+        assertNotNull(apiException);
         assertEquals(404, apiException.getStatusCode());
         assertTrue(apiException
                 .getMessage()
