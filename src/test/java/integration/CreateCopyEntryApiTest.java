@@ -236,12 +236,10 @@ public class CreateCopyEntryApiTest extends BaseTest {
         request.setName("RepositoryApiClientIntegrationTest Java MovedFolder");
 
         String invalidRepoId = String.format("%s-%s", repoId, repoId);
-        Exception thrown = Assertions.assertThrows(CompletionException.class, () -> client
+        ApiException apiException = Assertions.assertThrows(ApiException.class, () -> client
                 .moveOrRenameEntry(invalidRepoId, childFolder.getId(), request, true, null));
 
-        assertNotNull(thrown);
-        assertTrue(thrown.getCause() instanceof ApiException);
-        ApiException apiException = (ApiException) thrown.getCause();
+        assertNotNull(apiException);
         assertEquals(404, apiException.getStatusCode());
         assertEquals(
                 String.format("Error: Repository with Id %s not found or no connection could be made.", invalidRepoId),
