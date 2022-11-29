@@ -131,13 +131,11 @@ public class CreateCopyEntryApiTest extends BaseTest {
 
         TimeUnit.SECONDS.sleep(5);
 
-        CompletableFuture<OperationProgress> getOperationStatusAndProgressResponse = repositoryApiClient
+        OperationProgress getOperationStatusAndProgressResponse = repositoryApiClient
                 .getTasksClient()
                 .getOperationStatusAndProgress(repoId, opToken);
 
-        assertEquals(getOperationStatusAndProgressResponse
-                .join()
-                .getStatus(), OperationStatus.COMPLETED);
+        assertEquals(getOperationStatusAndProgressResponse.getStatus(), OperationStatus.COMPLETED);
 
         DeleteEntryWithAuditReason deleteEntryWithAuditReason = new DeleteEntryWithAuditReason();
         AcceptedOperation deleteEntryResponse = client
