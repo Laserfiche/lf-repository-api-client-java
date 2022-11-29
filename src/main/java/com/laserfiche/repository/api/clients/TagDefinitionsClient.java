@@ -3,7 +3,6 @@ package com.laserfiche.repository.api.clients;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfWTagInfo;
 import com.laserfiche.repository.api.clients.impl.model.WTagInfo;
 
-import java.util.concurrent.CompletableFuture;
 import java.util.function.Function;
 
 public interface TagDefinitionsClient {
@@ -22,20 +21,19 @@ public interface TagDefinitionsClient {
      * @param top     Limits the number of items returned from a collection.
      * @param skip    Excludes the specified number of items of the queried collection from the result.
      * @param count   Indicates whether the total count of items within a collection are returned in the result.
-     * @return CompletableFuture&lt;ODataValueContextOfIListOfWTagInfo&gt; The return value
+     * @return ODataValueContextOfIListOfWTagInfo The return value
      */
-    CompletableFuture<ODataValueContextOfIListOfWTagInfo> getTagDefinitions(String repoId, String prefer,
-            String culture, String select, String orderby, Integer top, Integer skip, Boolean count);
+    ODataValueContextOfIListOfWTagInfo getTagDefinitions(String repoId, String prefer, String culture, String select,
+            String orderby, Integer top, Integer skip, Boolean count);
 
     /**
      * Returns the next subset of the requested collection, using a nextlink url.
      *
      * @param nextLink    A url that allows retrieving the next subset of the requested collection.
      * @param maxPageSize Optionally specify the maximum number of items to retrieve.
-     * @return CompletableFuture&lt;ODataValueContextOfIListOfWTagInfo&gt; The return value
+     * @return ODataValueContextOfIListOfWTagInfo The return value
      */
-    CompletableFuture<ODataValueContextOfIListOfWTagInfo> getTagDefinitionsNextLink(String nextLink,
-            Integer maxPageSize);
+    ODataValueContextOfIListOfWTagInfo getTagDefinitionsNextLink(String nextLink, Integer maxPageSize);
 
     /**
      * Provides the functionality to iteratively (i.e. through paging) call &lt;b&gt;getTagDefinitions&lt;/b&gt;, and apply a function on the response of each iteration.
@@ -51,12 +49,10 @@ public interface TagDefinitionsClient {
      * @param top         Limits the number of items returned from a collection.
      * @param skip        Excludes the specified number of items of the queried collection from the result.
      * @param count       Indicates whether the total count of items within a collection are returned in the result.
-     * @return CompletableFuture&lt;Void&gt; The return value
      */
-    CompletableFuture<Void> getTagDefinitionsForEach(
-            Function<CompletableFuture<ODataValueContextOfIListOfWTagInfo>, CompletableFuture<Boolean>> callback,
-            Integer maxPageSize, String repoId, String prefer, String culture, String select, String orderby,
-            Integer top, Integer skip, Boolean count);
+    void getTagDefinitionsForEach(Function<ODataValueContextOfIListOfWTagInfo, Boolean> callback, Integer maxPageSize,
+            String repoId, String prefer, String culture, String select, String orderby, Integer top, Integer skip,
+            Boolean count);
 
     /**
      * - Returns a single tag definition.
@@ -68,7 +64,7 @@ public interface TagDefinitionsClient {
      * @param culture An optional query parameter used to indicate the locale that should be used for formatting.
      *                The value should be a standard language tag.
      * @param select  Limits the properties returned in the result.
-     * @return CompletableFuture&lt;WTagInfo&gt; The return value
+     * @return WTagInfo The return value
      */
-    CompletableFuture<WTagInfo> getTagDefinitionById(String repoId, Integer tagId, String culture, String select);
+    WTagInfo getTagDefinitionById(String repoId, Integer tagId, String culture, String select);
 }

@@ -6,7 +6,6 @@ import com.laserfiche.repository.api.clients.impl.model.WTagInfo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
@@ -23,8 +22,7 @@ class TagDefinitionsApiTest extends BaseTest {
     @Test
     void getTagDefinitions_ReturnAllTags() {
         ODataValueContextOfIListOfWTagInfo tagInfoList = client
-                .getTagDefinitions(repoId, null, null, null, null, null, null, false)
-                .join();
+                .getTagDefinitions(repoId, null, null, null, null, null, null, false);
 
         assertNotNull(tagInfoList);
     }
@@ -34,8 +32,7 @@ class TagDefinitionsApiTest extends BaseTest {
         int maxPageSize = 1;
         ODataValueContextOfIListOfWTagInfo tagInfoList = client
                 .getTagDefinitions(repoId, String.format("maxpagesize=%d", maxPageSize), null, null, null, null, null,
-                        false)
-                .join();
+                        false);
 
         assertNotNull(tagInfoList);
 
@@ -46,13 +43,12 @@ class TagDefinitionsApiTest extends BaseTest {
                 .getValue()
                 .size() <= maxPageSize);
 
-        CompletableFuture<ODataValueContextOfIListOfWTagInfo> nextLinkResponse = client.getTagDefinitionsNextLink(
+        ODataValueContextOfIListOfWTagInfo nextLinkResponse = client.getTagDefinitionsNextLink(
                 nextLink, maxPageSize);
         assertNotNull(nextLinkResponse);
         TimeUnit.SECONDS.sleep(10);
-        ODataValueContextOfIListOfWTagInfo nextLinkResult = nextLinkResponse.join();
-        assertNotNull(nextLinkResult);
-        assertTrue(nextLinkResult
+        assertNotNull(nextLinkResponse);
+        assertTrue(nextLinkResponse
                 .getValue()
                 .size() <= maxPageSize);
     }
@@ -60,26 +56,24 @@ class TagDefinitionsApiTest extends BaseTest {
     @Test
     void getTagDefinitions_ForEach() throws InterruptedException {
         ODataValueContextOfIListOfWTagInfo tagInfoList = client
-                .getTagDefinitions(repoId, null, null, null, null, null, null, false)
-                .join();
+                .getTagDefinitions(repoId, null, null, null, null, null, null, false);
 
         assertNotNull(tagInfoList);
 
         TimeUnit.SECONDS.sleep(10);
 
         int maxPageSize = 90;
-        Function<CompletableFuture<ODataValueContextOfIListOfWTagInfo>, CompletableFuture<Boolean>> callback = data -> {
-            ODataValueContextOfIListOfWTagInfo result = data.join();
-            if (result.getOdataNextLink() != null) {
-                assertNotEquals(0, result
+        Function<ODataValueContextOfIListOfWTagInfo, Boolean> callback = data -> {
+            if (data.getOdataNextLink() != null) {
+                assertNotEquals(0, data
                         .getValue()
                         .size());
-                assertTrue(result
+                assertTrue(data
                         .getValue()
                         .size() <= maxPageSize);
-                return CompletableFuture.completedFuture(true);
+                return true;
             } else {
-                return CompletableFuture.completedFuture(false);
+                return false;
             }
         };
         client.getTagDefinitionsForEach(callback, maxPageSize, repoId, null, null, null, null, null, null, null);
@@ -88,8 +82,7 @@ class TagDefinitionsApiTest extends BaseTest {
     @Test
     void getTagDefinitionById_ReturnTag() {
         ODataValueContextOfIListOfWTagInfo tagInfoList = client
-                .getTagDefinitions(repoId, null, null, null, null, null, null, false)
-                .join();
+                .getTagDefinitions(repoId, null, null, null, null, null, null, false);
 
         assertNotNull(tagInfoList);
 
@@ -97,8 +90,7 @@ class TagDefinitionsApiTest extends BaseTest {
                 .getTagDefinitionById(repoId, tagInfoList
                         .getValue()
                         .get(0)
-                        .getId(), null, null)
-                .join();
+                        .getId(), null, null);
 
         assertNotNull(tagInfo);
     }
