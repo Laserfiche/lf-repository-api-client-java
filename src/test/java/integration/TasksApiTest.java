@@ -45,7 +45,7 @@ public class TasksApiTest extends BaseTest {
         });
 
         Assertions.assertEquals(
-                String.format("%s: Error: Cannot cancel ended operation.", ApiException.class.getCanonicalName()),
+                String.format("%s: Cannot cancel ended operation.", Error.class.getSimpleName()),
                 thrown.getMessage());
     }
 
