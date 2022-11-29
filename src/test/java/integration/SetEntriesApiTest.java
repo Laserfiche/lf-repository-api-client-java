@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -36,12 +35,10 @@ public class SetEntriesApiTest extends BaseTest {
 
     @Test
     void setTags_ReturnTags() {
-        CompletableFuture<ODataValueContextOfIListOfWTagInfo> tagDefinitionsResponse = repositoryApiClient
+        ODataValueContextOfIListOfWTagInfo tagDefinitionsResponse = repositoryApiClient
                 .getTagDefinitionsClient()
                 .getTagDefinitions(repoId, null, null, null, null, null, null, null);
-        List<WTagInfo> tagDefinitions = tagDefinitionsResponse
-                .join()
-                .getValue();
+        List<WTagInfo> tagDefinitions = tagDefinitionsResponse.getValue();
 
         assertNotNull(tagDefinitions);
         assertTrue(tagDefinitions.size() > 0);
@@ -55,14 +52,12 @@ public class SetEntriesApiTest extends BaseTest {
                 .getTags()
                 .add(tag);
         entry = createEntry(client, "RepositoryApiClientIntegrationTest Java SetTags", 1, true);
-        Integer num = entry
-                .getId();
+        Integer num = entry.getId();
 
         ODataValueOfIListOfWTagInfo assignTagsResponse = repositoryApiClient
                 .getEntriesClient()
                 .assignTags(repoId, num, request);
-        List<WTagInfo> tags = assignTagsResponse
-                .getValue();
+        List<WTagInfo> tags = assignTagsResponse.getValue();
 
         assertNotNull(tags);
         assertEquals(tags
@@ -73,27 +68,21 @@ public class SetEntriesApiTest extends BaseTest {
     @Test
     void setTemplates_ReturnTemplates() throws ExecutionException, InterruptedException {
         WTemplateInfo template = null;
-        CompletableFuture<ODataValueContextOfIListOfWTemplateInfo> templateDefinitionsResponse = repositoryApiClient
+        ODataValueContextOfIListOfWTemplateInfo templateDefinitionsResponse = repositoryApiClient
                 .getTemplateDefinitionClient()
                 .getTemplateDefinitions(repoId, null, null, null, null, null, null, null, null);
-        List<WTemplateInfo> templateDefinitions = templateDefinitionsResponse
-                .join()
-                .getValue();
+        List<WTemplateInfo> templateDefinitions = templateDefinitionsResponse.getValue();
 
         assertNotNull(templateDefinitions);
         assertTrue(templateDefinitions.size() > 0);
 
         for (WTemplateInfo templateDefinition : templateDefinitions) {
-            CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo> templateDefinitionsFieldsResponse = repositoryApiClient
+            ODataValueContextOfIListOfTemplateFieldInfo templateDefinitionsFieldsResponse = repositoryApiClient
                     .getTemplateDefinitionClient()
                     .getTemplateFieldDefinitions(repoId, templateDefinition.getId(), null, null, null, null, null, null,
                             null);
             if (templateDefinitionsFieldsResponse
-                    .join()
-                    .getValue() != null && allFalse(
-                    templateDefinitionsFieldsResponse
-                            .join()
-                            .getValue())) {
+                    .getValue() != null && allFalse(templateDefinitionsFieldsResponse.getValue())) {
                 template = templateDefinition;
                 break;
             }
@@ -175,27 +164,22 @@ public class SetEntriesApiTest extends BaseTest {
     void removeTemplateFromEntry_ReturnEntry() throws ExecutionException, InterruptedException {
         WTemplateInfo template = null;
 
-        CompletableFuture<ODataValueContextOfIListOfWTemplateInfo> templateDefinitionsResponse = client
+        ODataValueContextOfIListOfWTemplateInfo templateDefinitionsResponse = client
                 .getTemplateDefinitionClient()
                 .getTemplateDefinitions(repoId, null, null, null, null, null, null, null, null);
-        List<WTemplateInfo> templateDefinitions = templateDefinitionsResponse
-                .join()
-                .getValue();
+        List<WTemplateInfo> templateDefinitions = templateDefinitionsResponse.getValue();
 
         assertNotNull(templateDefinitions);
         assertTrue(templateDefinitions.size() > 0);
 
         for (WTemplateInfo templateDefinition : templateDefinitions) {
-            CompletableFuture<ODataValueContextOfIListOfTemplateFieldInfo> templateDefinitionsFieldsResponse = client
+            ODataValueContextOfIListOfTemplateFieldInfo templateDefinitionsFieldsResponse = client
                     .getTemplateDefinitionClient()
                     .getTemplateFieldDefinitions(repoId, templateDefinition.getId(), null, null, null, null, null, null,
                             null);
             if (templateDefinitionsFieldsResponse
-                    .join()
                     .getValue() != null && allFalse(
-                    templateDefinitionsFieldsResponse
-                            .join()
-                            .getValue())) {
+                    templateDefinitionsFieldsResponse.getValue())) {
                 template = templateDefinition;
                 break;
             }
