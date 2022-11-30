@@ -30,9 +30,7 @@ public class ImportDocumentApiTest extends BaseTest {
     public void deleteEntries() {
         if (createdEntryId != 0) {
             DeleteEntryWithAuditReason body = new DeleteEntryWithAuditReason();
-            client
-                    .deleteEntryInfo(repoId, createdEntryId, body)
-                    .join();
+            client.deleteEntryInfo(repoId, createdEntryId, body);
         }
     }
 
@@ -50,8 +48,7 @@ public class ImportDocumentApiTest extends BaseTest {
 
         CreateEntryResult result = client
                 .importDocument(repoId, 1, fileName, true, null,
-                        new FileInputStream(toUpload), new PostEntryWithEdocMetadataRequest())
-                .join();
+                        new FileInputStream(toUpload), new PostEntryWithEdocMetadataRequest());
 
         assertNotNull(result);
         CreateEntryOperations operations = result.getOperations();
@@ -77,8 +74,7 @@ public class ImportDocumentApiTest extends BaseTest {
         WTemplateInfo template = null;
         ODataValueContextOfIListOfWTemplateInfo templateDefinitionResult = repositoryApiClient
                 .getTemplateDefinitionClient()
-                .getTemplateDefinitions(repoId, null, null, null, null, null, null, null, null)
-                .join();
+                .getTemplateDefinitions(repoId, null, null, null, null, null, null, null, null);
         List<WTemplateInfo> templateDefinitions = templateDefinitionResult.getValue();
         assertNotNull(templateDefinitions);
         Assertions.assertTrue(templateDefinitions.size() > 0);
@@ -86,10 +82,9 @@ public class ImportDocumentApiTest extends BaseTest {
             ODataValueContextOfIListOfTemplateFieldInfo templateDefinitionFieldsResult = repositoryApiClient
                     .getTemplateDefinitionClient()
                     .getTemplateFieldDefinitions(repoId,
-                            templateDefinition.getId(), null, null, null, null, null, null, null)
-                    .join();
+                            templateDefinition.getId(), null, null, null, null, null, null, null);
             if (templateDefinitionFieldsResult.getValue() != null && allFalse(
-                    templateDefinitionFieldsResult.getValue()).get()) {
+                    templateDefinitionFieldsResult.getValue())) {
                 template = templateDefinition;
                 break;
             }
@@ -110,8 +105,7 @@ public class ImportDocumentApiTest extends BaseTest {
 
         CreateEntryResult result = client
                 .importDocument(repoId, parentEntryId, fileName,
-                        true, null, new FileInputStream(toUpload), request)
-                .join();
+                        true, null, new FileInputStream(toUpload), request);
 
         CreateEntryOperations operations = result.getOperations();
         assertNotNull(operations);
@@ -148,8 +142,7 @@ public class ImportDocumentApiTest extends BaseTest {
 
         result = client
                 .importDocument(repoId, 1, fileName, true, null,
-                        inputStream, new PostEntryWithEdocMetadataRequest())
-                .join();
+                        inputStream, new PostEntryWithEdocMetadataRequest());
 
         assertNotNull(result);
         CreateEntryOperations operations = result.getOperations();
@@ -180,8 +173,7 @@ public class ImportDocumentApiTest extends BaseTest {
 
         result = client
                 .importDocument(repoId, 1, fileName, true, null,
-                        inputStream, new PostEntryWithEdocMetadataRequest())
-                .join();
+                        inputStream, new PostEntryWithEdocMetadataRequest());
 
         assertNotNull(result);
         CreateEntryOperations operations = result.getOperations();
@@ -214,8 +206,7 @@ public class ImportDocumentApiTest extends BaseTest {
         request.setTemplate("invalidTemplateName");
         result = client
                 .importDocument(repoId, 1, fileName, true, null,
-                        inputStream, request)
-                .join();
+                        inputStream, request);
 
         assertNotNull(result);
         CreateEntryOperations operations = result.getOperations();

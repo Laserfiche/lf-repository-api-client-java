@@ -11,8 +11,6 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.CompletionException;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
@@ -34,8 +32,7 @@ class EntriesApiTest extends BaseTest {
 
     @Test
     void getEntry_ReturnRootFolder() {
-        CompletableFuture<Entry> future = client.getEntry(repoId, 1, null);
-        Entry entry = future.join();
+        Entry entry = client.getEntry(repoId, 1, null);
 
         assertNotNull(entry);
         assertTrue(entry instanceof Folder); // We know the root folder is of type Folder.
@@ -43,8 +40,7 @@ class EntriesApiTest extends BaseTest {
 
     @Test
     void getEntry_ReturnEntryWhenTypeInfoMissing() {
-        CompletableFuture<Entry> future = client.getEntry(repoId, 1, "name");
-        Entry entry = future.join();
+        Entry entry = client.getEntry(repoId, 1, "name");
 
         assertNotNull(entry);
         assertFalse(entry instanceof Folder
@@ -56,8 +52,7 @@ class EntriesApiTest extends BaseTest {
     @Test
     void getEntryListing_ReturnEntries() {
         ODataValueContextOfIListOfEntry entries = client
-                .getEntryListing(repoId, 1, false, null, false, "maxpagesize=5", null, null, null, null, null, false)
-                .join();
+                .getEntryListing(repoId, 1, false, null, false, "maxpagesize=5", null, null, null, null, null, false);
 
         assertNotNull(entries);
 
@@ -81,8 +76,7 @@ class EntriesApiTest extends BaseTest {
         int maxPageSize = 1;
         ODataValueContextOfIListOfEntry entryList = client
                 .getEntryListing(repoId, 1, false, null, false, String.format("maxpagesize=%d", maxPageSize), null,
-                        null, null, null, null, false)
-                .join();
+                        null, null, null, null, false);
 
         assertNotNull(entryList);
 
@@ -92,11 +86,12 @@ class EntriesApiTest extends BaseTest {
                 .getValue()
                 .size() <= maxPageSize);
 
-        CompletableFuture<ODataValueContextOfIListOfEntry> nextLinkResponse = client.getEntryListingNextLink(nextLink,
+        ODataValueContextOfIListOfEntry nextLinkResult = client.getEntryListingNextLink(nextLink,
                 maxPageSize);
-        assertNotNull(nextLinkResponse);
+        assertNotNull(nextLinkResult);
+
         TimeUnit.SECONDS.sleep(10);
-        ODataValueContextOfIListOfEntry nextLinkResult = nextLinkResponse.join();
+
         assertNotNull(nextLinkResult);
         assertTrue(nextLinkResult
                 .getValue()
@@ -106,18 +101,17 @@ class EntriesApiTest extends BaseTest {
     @Test
     void getEntryListing_ForEach() {
         int maxPageSize = 10;
-        Function<CompletableFuture<ODataValueContextOfIListOfEntry>, CompletableFuture<Boolean>> callback = data -> {
-            ODataValueContextOfIListOfEntry futureResult = data.join();
-            if (futureResult.getOdataNextLink() != null) {
-                assertNotEquals(0, futureResult
+        Function<ODataValueContextOfIListOfEntry, Boolean> callback = entries -> {
+            if (entries.getOdataNextLink() != null) {
+                assertNotEquals(0, entries
                         .getValue()
                         .size());
-                assertTrue(futureResult
+                assertTrue(entries
                         .getValue()
                         .size() <= maxPageSize);
-                return CompletableFuture.completedFuture(true);
+                return true;
             } else {
-                return CompletableFuture.completedFuture(false);
+                return false;
             }
         };
         client.getEntryListingForEach(callback, maxPageSize, repoId, 1, false, null, false, null, null, null, null,
@@ -127,8 +121,7 @@ class EntriesApiTest extends BaseTest {
     @Test
     void getFieldValues_ReturnFields() {
         ODataValueContextOfIListOfFieldValue fieldValueList = client
-                .getFieldValues(repoId, 1, null, null, null, null, null, null, null, false)
-                .join();
+                .getFieldValues(repoId, 1, null, null, null, null, null, null, null, false);
 
         assertNotNull(fieldValueList);
     }
@@ -136,8 +129,7 @@ class EntriesApiTest extends BaseTest {
     @Test
     void getLinkValuesFromEntry_ReturnLinks() {
         ODataValueContextOfIListOfWEntryLinkInfo linkInfoList = client
-                .getLinkValuesFromEntry(repoId, 1, null, null, null, null, null, false)
-                .join();
+                .getLinkValuesFromEntry(repoId, 1, null, null, null, null, null, false);
 
         assertNotNull(linkInfoList);
     }
@@ -147,8 +139,7 @@ class EntriesApiTest extends BaseTest {
         int maxPageSize = 1;
         ODataValueContextOfIListOfFieldValue fieldValueList = client
                 .getFieldValues(repoId, 1, String.format("maxpagesize=%d", maxPageSize), null, null, null, null, null,
-                        null, false)
-                .join();
+                        null, false);
 
         assertNotNull(fieldValueList);
 
@@ -159,11 +150,12 @@ class EntriesApiTest extends BaseTest {
                 .getValue()
                 .size() <= maxPageSize);
 
-        CompletableFuture<ODataValueContextOfIListOfFieldValue> nextLinkResponse = client.getFieldValuesNextLink(
+        ODataValueContextOfIListOfFieldValue nextLinkResult = client.getFieldValuesNextLink(
                 nextLink, maxPageSize);
-        assertNotNull(nextLinkResponse);
+        assertNotNull(nextLinkResult);
+
         TimeUnit.SECONDS.sleep(10);
-        ODataValueContextOfIListOfFieldValue nextLinkResult = nextLinkResponse.join();
+
         assertNotNull(nextLinkResult);
         assertTrue(nextLinkResult
                 .getValue()
@@ -173,18 +165,17 @@ class EntriesApiTest extends BaseTest {
     @Test
     void getFieldValues_ForEach() {
         int maxPageSize = 90;
-        Function<CompletableFuture<ODataValueContextOfIListOfFieldValue>, CompletableFuture<Boolean>> callback = data -> {
-            ODataValueContextOfIListOfFieldValue futureResult = data.join();
-            if (futureResult.getOdataNextLink() != null) {
-                assertNotEquals(0, futureResult
+        Function<ODataValueContextOfIListOfFieldValue, Boolean> callback = fieldValues -> {
+            if (fieldValues.getOdataNextLink() != null) {
+                assertNotEquals(0, fieldValues
                         .getValue()
                         .size());
-                assertTrue(futureResult
+                assertTrue(fieldValues
                         .getValue()
                         .size() <= maxPageSize);
-                return CompletableFuture.completedFuture(true);
+                return true;
             } else {
-                return CompletableFuture.completedFuture(false);
+                return false;
             }
         };
         client.getFieldValuesForEach(callback, maxPageSize, repoId, 1, null, null, null, null, null, null, null,
@@ -197,8 +188,7 @@ class EntriesApiTest extends BaseTest {
         int maxPageSize = 1;
         ODataValueContextOfIListOfWEntryLinkInfo linkInfoList = client
                 .getLinkValuesFromEntry(repoId, 1, String.format("maxpagesize=%d", maxPageSize), null, null, null, null,
-                        false)
-                .join();
+                        false);
 
         assertNotNull(linkInfoList);
 
@@ -214,11 +204,12 @@ class EntriesApiTest extends BaseTest {
                 .getValue()
                 .size() <= maxPageSize);
 
-        CompletableFuture<ODataValueContextOfIListOfWEntryLinkInfo> nextLinkResponse = client.getLinkValuesFromEntryNextLink(
+        ODataValueContextOfIListOfWEntryLinkInfo nextLinkResult = client.getLinkValuesFromEntryNextLink(
                 nextLink, maxPageSize);
-        assertNotNull(nextLinkResponse);
+        assertNotNull(nextLinkResult);
+
         TimeUnit.SECONDS.sleep(10);
-        ODataValueContextOfIListOfWEntryLinkInfo nextLinkResult = nextLinkResponse.join();
+
         assertNotNull(nextLinkResult);
         assertTrue(nextLinkResult
                 .getValue()
@@ -228,18 +219,17 @@ class EntriesApiTest extends BaseTest {
     @Test
     void getLinkValuesFromEntry_ForEach() {
         int maxPageSize = 90;
-        Function<CompletableFuture<ODataValueContextOfIListOfWEntryLinkInfo>, CompletableFuture<Boolean>> callback = data -> {
-            ODataValueContextOfIListOfWEntryLinkInfo futureResult = data.join();
-            if (futureResult.getOdataNextLink() != null) {
-                assertNotEquals(0, futureResult
+        Function<ODataValueContextOfIListOfWEntryLinkInfo, Boolean> callback = entryLinkIntoList -> {
+            if (entryLinkIntoList.getOdataNextLink() != null) {
+                assertNotEquals(0, entryLinkIntoList
                         .getValue()
                         .size());
-                assertTrue(futureResult
+                assertTrue(entryLinkIntoList
                         .getValue()
                         .size() <= maxPageSize);
-                return CompletableFuture.completedFuture(true);
+                return true;
             } else {
-                return CompletableFuture.completedFuture(false);
+                return false;
             }
         };
         client.getLinkValuesFromEntryForEach(callback, maxPageSize, repoId, 1, null, null, null, null, null, false);
@@ -248,14 +238,12 @@ class EntriesApiTest extends BaseTest {
     @Test
     void deleteEntry_ReturnOperationToken() {
         Entry entryToDelete = createEntry(createEntryClient,
-                "RepositoryApiClientIntegrationTest Java DeleteFolder", 1, true)
-                .join();
+                "RepositoryApiClientIntegrationTest Java DeleteFolder", 1, true);
 
-        CompletableFuture<AcceptedOperation> deleteEntryResponse = client.deleteEntryInfo(repoId, entryToDelete.getId(),
+        AcceptedOperation deleteEntryResponse = client.deleteEntryInfo(repoId, entryToDelete.getId(),
                 new DeleteEntryWithAuditReason());
 
         String token = deleteEntryResponse
-                .join()
                 .getToken();
 
         assertNotNull(token);
@@ -266,8 +254,7 @@ class EntriesApiTest extends BaseTest {
         int maxPageSize = 1;
         ODataValueContextOfIListOfWTagInfo tagInfoList = client
                 .getTagsAssignedToEntry(repoId, 1, String.format("maxpagesize=%d", maxPageSize), null, null, null, null,
-                        false)
-                .join();
+                        false);
 
         assertNotNull(tagInfoList);
 
@@ -283,11 +270,12 @@ class EntriesApiTest extends BaseTest {
                 .getValue()
                 .size() <= maxPageSize);
 
-        CompletableFuture<ODataValueContextOfIListOfWTagInfo> nextLinkResponse = client.getTagsAssignedToEntryNextLink(
+        ODataValueContextOfIListOfWTagInfo nextLinkResult = client.getTagsAssignedToEntryNextLink(
                 nextLink, maxPageSize);
-        assertNotNull(nextLinkResponse);
+        assertNotNull(nextLinkResult);
+
         TimeUnit.SECONDS.sleep(10);
-        ODataValueContextOfIListOfWTagInfo nextLinkResult = nextLinkResponse.join();
+
         assertNotNull(nextLinkResult);
         assertTrue(nextLinkResult
                 .getValue()
@@ -297,18 +285,17 @@ class EntriesApiTest extends BaseTest {
     @Test
     void getTagsAssignedToEntry_ForEach() {
         int maxPageSize = 90;
-        Function<CompletableFuture<ODataValueContextOfIListOfWTagInfo>, CompletableFuture<Boolean>> callback = data -> {
-            ODataValueContextOfIListOfWTagInfo futureResult = data.join();
-            if (futureResult.getOdataNextLink() != null) {
-                assertNotEquals(0, futureResult
+        Function<ODataValueContextOfIListOfWTagInfo, Boolean> callback = tagInfoList -> {
+            if (tagInfoList.getOdataNextLink() != null) {
+                assertNotEquals(0, tagInfoList
                         .getValue()
                         .size());
-                assertTrue(futureResult
+                assertTrue(tagInfoList
                         .getValue()
                         .size() <= maxPageSize);
-                return CompletableFuture.completedFuture(true);
+                return true;
             } else {
-                return CompletableFuture.completedFuture(false);
+                return false;
             }
         };
         client.getTagsAssignedToEntryForEach(callback, maxPageSize, repoId, 1, null, null, null, null, null, false);
@@ -317,8 +304,7 @@ class EntriesApiTest extends BaseTest {
     @Test
     void getTagsAssignedToEntry_ReturnTags() {
         ODataValueContextOfIListOfWTagInfo tagInfoList = client
-                .getTagsAssignedToEntry(repoId, 1, null, null, null, null, null, false)
-                .join();
+                .getTagsAssignedToEntry(repoId, 1, null, null, null, null, null, false);
 
         assertNotNull(tagInfoList);
     }
@@ -327,8 +313,7 @@ class EntriesApiTest extends BaseTest {
     void getDynamicFieldsEntry_ReturnDynamicFields() {
         ODataValueContextOfIListOfWTemplateInfo templateDefinitionsResponse = repositoryApiClient
                 .getTemplateDefinitionClient()
-                .getTemplateDefinitions(repoId, null, null, null, null, null, null, null, null)
-                .join();
+                .getTemplateDefinitions(repoId, null, null, null, null, null, null, null, null);
         List<WTemplateInfo> templateDefinitions = templateDefinitionsResponse.getValue();
 
         assertNotNull(templateDefinitions);
@@ -340,8 +325,7 @@ class EntriesApiTest extends BaseTest {
                 .getId());
 
         Map<String, String[]> dynamicFieldValueResponse = client
-                .getDynamicFieldValues(repoId, 1, request)
-                .join();
+                .getDynamicFieldValues(repoId, 1, request);
         assertNotNull(dynamicFieldValueResponse);
     }
 
@@ -349,8 +333,7 @@ class EntriesApiTest extends BaseTest {
     void getEntryByFullPath_ReturnRootFolder() {
         FindEntryResult entry = repositoryApiClient
                 .getEntriesClient()
-                .getEntryByPath(repoId, rootPath, false)
-                .join();
+                .getEntryByPath(repoId, rootPath, false);
 
         assertNotNull(entry);
         assertEquals(1, entry
@@ -370,8 +353,7 @@ class EntriesApiTest extends BaseTest {
     void getEntryByFullPath_ReturnAncestorRootFolder() {
         FindEntryResult entry = repositoryApiClient
                 .getEntriesClient()
-                .getEntryByPath(repoId, nonExistingPath, true)
-                .join();
+                .getEntryByPath(repoId, nonExistingPath, true);
 
         assertNotNull(entry);
         assertEquals(1, entry
@@ -390,8 +372,7 @@ class EntriesApiTest extends BaseTest {
     @Test
     void getDocumentContentType_ReturnsExpectedHeaders() {
         ODataValueContextOfIListOfEntry entryList = client
-                .getEntryListing(repoId, 1, false, null, false, "maxpagesize=100", null, null, null, null, null, false)
-                .join();
+                .getEntryListing(repoId, 1, false, null, false, "maxpagesize=100", null, null, null, null, null, false);
         assertNotNull(entryList);
 
         Optional<Entry> optionalEntry = entryList
@@ -403,23 +384,19 @@ class EntriesApiTest extends BaseTest {
         assertNotNull(entry);
 
         Map<String, String> headers = client
-                .getDocumentContentType(repoId, entry.getId())
-                .join();
+                .getDocumentContentType(repoId, entry.getId());
         assertNotNull(headers.get("Content-Type"));
         assertNotNull(headers.get("Content-Length"));
     }
 
     @Test
     void getDocumentContentType_ProblemDetails_Fields_Are_Valid_When_Exception_Thrown() {
-        Exception thrown = Assertions.assertThrows(CompletionException.class, () -> {
+        ApiException apiException = Assertions.assertThrows(ApiException.class, () -> {
             client
                     .getEntryListing(repoId, -1, false, null, false, "maxpagesize=100", null, null, null, null, null,
-                            false)
-                    .join();
+                            false);
         });
-        assertNotNull(thrown);
-        assertTrue(thrown.getCause() instanceof ApiException);
-        ApiException apiException = (ApiException) thrown.getCause();
+        assertNotNull(apiException);
         ProblemDetails problemDetails = apiException.getProblemDetails();
         assertNotNull(problemDetails);
         assertNotNull(problemDetails.getTitle());
@@ -433,8 +410,7 @@ class EntriesApiTest extends BaseTest {
         String[] fieldNames = {"Sender"};
         ODataValueContextOfIListOfEntry entries = client
                 .getEntryListing(repoId, 1, false, fieldNames, false, "maxpagesize=5", null, null, null, null, null,
-                        false)
-                .join();
+                        false);
         assertNotNull(entries);
         for (Entry entry : entries.getValue()) {
             int numberOfReturnedFields = (int) entry
@@ -455,8 +431,7 @@ class EntriesApiTest extends BaseTest {
         String[] fieldNames = {"Sender", "Subject"};
         ODataValueContextOfIListOfEntry entries = client
                 .getEntryListing(repoId, 1, false, fieldNames, false, "maxpagesize=5", null, null, null, null, null,
-                        false)
-                .join();
+                        false);
         assertNotNull(entries);
         for (Entry entry : entries.getValue()) {
             int numberOfReturnedFields = (int) entry
@@ -475,12 +450,9 @@ class EntriesApiTest extends BaseTest {
     @Test
     void getDocumentContentType_Returns_Valid_Error_Message_ForInvalidRepoId() {
         String invalidRepoId = String.format("%s-%s", repoId, repoId);
-        Exception thrown = Assertions.assertThrows(CompletionException.class, () -> client
-                .getDocumentContentType(invalidRepoId, 1)
-                .join());
-        assertNotNull(thrown);
-        assertTrue(thrown.getCause() instanceof ApiException);
-        ApiException apiException = (ApiException) thrown.getCause();
+        ApiException apiException = Assertions.assertThrows(ApiException.class, () -> client
+                .getDocumentContentType(invalidRepoId, 1));
+        assertNotNull(apiException);
         assertEquals(404, apiException.getStatusCode());
         assertEquals("Not Found", apiException.getMessage());
         ProblemDetails problemDetails = apiException.getProblemDetails();
@@ -491,12 +463,9 @@ class EntriesApiTest extends BaseTest {
     void writeTemplateValueToEntry_ReturnsCorrectErrorMessage_For_Invalid_TemplateName() {
         PutTemplateRequest request = new PutTemplateRequest();
         request.setTemplateName("fake_template");
-        Exception thrown = Assertions.assertThrows(CompletionException.class, () -> client
-                .writeTemplateValueToEntry(repoId, 3, request, null)
-                .join());
-        assertNotNull(thrown);
-        assertTrue(thrown.getCause() instanceof ApiException);
-        ApiException apiException = (ApiException) thrown.getCause();
+        ApiException apiException = Assertions.assertThrows(ApiException.class, () -> client
+                .writeTemplateValueToEntry(repoId, 3, request, null));
+        assertNotNull(apiException);
         assertEquals(404, apiException.getStatusCode());
         assertTrue(apiException
                 .getMessage()

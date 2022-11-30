@@ -22,57 +22,51 @@ class AttributesApiTest extends BaseTest {
 
     @Test
     void getTrusteeAttributeKeyValuePairs_ReturnAttributes() {
-        CompletableFuture<ODataValueContextOfListOfAttribute> future = client.getTrusteeAttributeKeyValuePairs(repoId,
+        ODataValueContextOfListOfAttribute attributeList = client.getTrusteeAttributeKeyValuePairs(repoId,
                 true, null, null, null, null, null, false);
-        ODataValueContextOfListOfAttribute attributeList = future.join();
 
         assertNotNull(attributeList);
     }
 
     @Test
     void getAttributeValueByKey_ReturnAttribute() {
-        CompletableFuture<ODataValueContextOfListOfAttribute> future = client.getTrusteeAttributeKeyValuePairs(repoId,
+        ODataValueContextOfListOfAttribute attributeList = client.getTrusteeAttributeKeyValuePairs(repoId,
                 true, null, null, null, null, null, false);
-        ODataValueContextOfListOfAttribute attributeList = future.join();
         assertNotNull(attributeList);
 
-        CompletableFuture<Attribute> newFuture = client.getTrusteeAttributeValueByKey(repoId,
-                attributeList
-                        .getValue()
-                        .get(0)
-                        .getKey(), true);
-        Attribute attributeObj = newFuture.join();
-        assertNotNull(attributeObj);
+        Attribute attribute = client.getTrusteeAttributeValueByKey(repoId, attributeList
+                .getValue()
+                .get(0)
+                .getKey(), true);
+        assertNotNull(attribute);
     }
 
     @Test
     void getAttributeValueByKey_NextLink() throws InterruptedException {
-        int maxPageSize = 1;
-        CompletableFuture<ODataValueContextOfListOfAttribute> future = client.getTrusteeAttributeKeyValuePairs(repoId,
+        int maxPageSize = 5;
+        ODataValueContextOfListOfAttribute attributeList = client.getTrusteeAttributeKeyValuePairs(repoId,
                 true, String.format("maxpagesize=%d", maxPageSize), null, null, null, null, false);
-        ODataValueContextOfListOfAttribute attributeList = future.join();
         assertNotNull(attributeList);
 
-        CompletableFuture<Attribute> newFuture = client.getTrusteeAttributeValueByKey(repoId,
+        Attribute attribute = client.getTrusteeAttributeValueByKey(repoId,
                 attributeList
                         .getValue()
                         .get(0)
                         .getKey(), true);
-        Attribute attributeObj = newFuture.join();
-        assertNotNull(attributeObj);
+        assertNotNull(attribute);
 
         String nextLink = attributeList.getOdataNextLink();
         assertNotNull(nextLink);
-
         assertTrue(attributeList
                 .getValue()
                 .size() <= maxPageSize);
 
-        CompletableFuture<ODataValueContextOfListOfAttribute> nextLinkResponse = client.getTrusteeAttributeKeyValuePairsNextLink(
+        ODataValueContextOfListOfAttribute nextLinkResult = client.getTrusteeAttributeKeyValuePairsNextLink(
                 nextLink, maxPageSize);
-        assertNotNull(nextLinkResponse);
+        assertNotNull(nextLinkResult);
+
         TimeUnit.SECONDS.sleep(10);
-        ODataValueContextOfListOfAttribute nextLinkResult = nextLinkResponse.join();
+
         assertNotNull(nextLinkResult);
         assertTrue(nextLinkResult
                 .getValue()
@@ -82,32 +76,30 @@ class AttributesApiTest extends BaseTest {
     @Test
     void getAttributeValueByKey_ForEach() throws InterruptedException {
         int maxPageSize = 90;
-        CompletableFuture<ODataValueContextOfListOfAttribute> future = client.getTrusteeAttributeKeyValuePairs(repoId,
+        ODataValueContextOfListOfAttribute attributeList = client.getTrusteeAttributeKeyValuePairs(repoId,
                 true, String.format("maxpagesize=%d", maxPageSize), null, null, null, null, false);
-        ODataValueContextOfListOfAttribute attributeList = future.join();
         assertNotNull(attributeList);
 
-        CompletableFuture<Attribute> newFuture = client.getTrusteeAttributeValueByKey(repoId,
+        Attribute attribute = client.getTrusteeAttributeValueByKey(repoId,
                 attributeList
                         .getValue()
                         .get(0)
                         .getKey(), true);
-        Attribute attributeObj = newFuture.join();
-        assertNotNull(attributeObj);
+        assertNotNull(attribute);
 
         TimeUnit.SECONDS.sleep(10);
-        Function<CompletableFuture<ODataValueContextOfListOfAttribute>, CompletableFuture<Boolean>> callback = data -> {
-            ODataValueContextOfListOfAttribute futureResult = data.join();
-            if (futureResult.getOdataNextLink() != null) {
-                assertNotEquals(0, futureResult
+
+        Function<ODataValueContextOfListOfAttribute, Boolean> callback = attributes -> {
+            if (attributes.getOdataNextLink() != null) {
+                assertNotEquals(0, attributes
                         .getValue()
                         .size());
-                assertTrue(futureResult
+                assertTrue(attributes
                         .getValue()
                         .size() <= maxPageSize);
-                return CompletableFuture.completedFuture(true);
+                return true;
             } else {
-                return CompletableFuture.completedFuture(false);
+                return false;
             }
         };
         client.getTrusteeAttributeKeyValuePairsForEach(callback, maxPageSize, repoId, true, null, null, null, null,

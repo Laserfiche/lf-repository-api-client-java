@@ -8,16 +8,15 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class SetLinksApiTest extends BaseTest {
     RepositoryApiClient client;
-    CompletableFuture<Entry> sourceEntry = null;
+    Entry sourceEntry = null;
 
-    CompletableFuture<Entry> targetEntry = null;
+    Entry targetEntry = null;
 
     List<Entry> createdEntries;
 
@@ -42,12 +41,11 @@ public class SetLinksApiTest extends BaseTest {
     @Test
     void setLinks_ReturnLinks() {
         sourceEntry = createEntry(client, "RepositoryApiClientIntegrationTest Java SetLinks Source", 1, true);
-        createdEntries.add(sourceEntry.join());
+        createdEntries.add(sourceEntry);
         targetEntry = createEntry(client, "RepositoryApiClientIntegrationTest .Net SetLinks Target", 1, true);
-        createdEntries.add(targetEntry.join());
+        createdEntries.add(targetEntry);
         PutLinksRequest linkRequest = new PutLinksRequest();
         linkRequest.setTargetId(targetEntry
-                .join()
                 .getId());
         linkRequest.setLinkTypeId(1);
         List<PutLinksRequest> request = new ArrayList<PutLinksRequest>();
@@ -55,19 +53,15 @@ public class SetLinksApiTest extends BaseTest {
         ODataValueOfIListOfWEntryLinkInfo result = client
                 .getEntriesClient()
                 .assignEntryLinks(repoId, sourceEntry
-                        .join()
-                        .getId(), request)
-                .join();
+                        .getId(), request);
         List<WEntryLinkInfo> links = result.getValue();
         assertNotNull(links);
         assertEquals(request.size(), links.size());
         assertEquals(sourceEntry
-                .join()
                 .getId(), links
                 .get(0)
                 .getSourceId());
         assertEquals(targetEntry
-                .join()
                 .getId(), links
                 .get(0)
                 .getTargetId());

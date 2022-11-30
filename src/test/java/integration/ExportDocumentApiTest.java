@@ -31,8 +31,7 @@ public class ExportDocumentApiTest extends BaseTest {
         if (createdEntryId != 0) {
             DeleteEntryWithAuditReason body = new DeleteEntryWithAuditReason();
             client
-                    .deleteEntryInfo(repoId, createdEntryId, body)
-                    .join();
+                    .deleteEntryInfo(repoId, createdEntryId, body);
         }
     }
 
@@ -57,9 +56,7 @@ public class ExportDocumentApiTest extends BaseTest {
             }
         };
 
-        client
-                .exportDocument(repoId, createdEntryId, null, c)
-                .join();
+        client.exportDocument(repoId, createdEntryId, null, c);
         File exportedFile = new File(FILE_NAME);
         assertTrue(exportedFile.exists());
         assertEquals(0, exportedFile.length());
@@ -74,8 +71,7 @@ public class ExportDocumentApiTest extends BaseTest {
             assertTrue(false, "Consumer should not have been called.");
         };
         Exception thrown = Assertions.assertThrows(ApiException.class, () -> {
-            client
-                    .exportDocument(repoId, -createdEntryId, null, consumer);
+            client.exportDocument(repoId, -createdEntryId, null, consumer);
         });
         Assertions.assertEquals("Specified argument was out of the range of valid values. (Parameter 'entryId')",
                 thrown.getMessage());
@@ -90,8 +86,7 @@ public class ExportDocumentApiTest extends BaseTest {
             File toUpload = File.createTempFile(fileName, "txt");
             CreateEntryResult result = client
                     .importDocument(repoId, 1, fileName, true, null,
-                            new FileInputStream(toUpload), new PostEntryWithEdocMetadataRequest())
-                    .join();
+                            new FileInputStream(toUpload), new PostEntryWithEdocMetadataRequest());
 
             CreateEntryOperations operations = result.getOperations();
             createdEntryId = operations

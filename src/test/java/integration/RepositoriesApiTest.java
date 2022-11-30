@@ -10,9 +10,7 @@ class RepositoriesApiTest extends BaseTest {
     @Test
     void getRepositoryList_ReturnSuccessful() {
         RepositoriesClient client = repositoryApiClient.getRepositoryClient();
-        RepositoryInfo[] repositoryInfoList = client
-                .getRepositoryList()
-                .join();
+        RepositoryInfo[] repositoryInfoList = client.getRepositoryList();
 
         assertNotNull(repositoryInfoList);
     }

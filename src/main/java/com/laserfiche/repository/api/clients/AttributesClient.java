@@ -3,7 +3,6 @@ package com.laserfiche.repository.api.clients;
 import com.laserfiche.repository.api.clients.impl.model.Attribute;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfListOfAttribute;
 
-import java.util.concurrent.CompletableFuture;
 import java.util.function.Function;
 
 public interface AttributesClient {
@@ -15,9 +14,9 @@ public interface AttributesClient {
      * @param repoId       The requested repository ID.
      * @param attributeKey The requested attribute key.
      * @param everyone     Boolean value that indicates whether to return attributes associated with everyone or the currently authenticated user.
-     * @return CompletableFuture&lt;Attribute&gt; The return value
+     * @return Attribute The return value
      */
-    CompletableFuture<Attribute> getTrusteeAttributeValueByKey(String repoId, String attributeKey, Boolean everyone);
+    Attribute getTrusteeAttributeValueByKey(String repoId, String attributeKey, Boolean everyone);
 
     /**
      * - Returns the attribute key value pairs associated with the authenticated user. Alternatively, return only the attribute key value pairs that are associated with the &quot;Everyone&quot; group.
@@ -32,20 +31,19 @@ public interface AttributesClient {
      * @param top      Limits the number of items returned from a collection.
      * @param skip     Excludes the specified number of items of the queried collection from the result.
      * @param count    Indicates whether the total count of items within a collection are returned in the result.
-     * @return CompletableFuture&lt;ODataValueContextOfListOfAttribute&gt; The return value
+     * @return ODataValueContextOfListOfAttribute The return value
      */
-    CompletableFuture<ODataValueContextOfListOfAttribute> getTrusteeAttributeKeyValuePairs(String repoId,
-            Boolean everyone, String prefer, String select, String orderby, Integer top, Integer skip, Boolean count);
+    ODataValueContextOfListOfAttribute getTrusteeAttributeKeyValuePairs(String repoId, Boolean everyone, String prefer,
+            String select, String orderby, Integer top, Integer skip, Boolean count);
 
     /**
      * Returns the next subset of the requested collection, using a nextlink url.
      *
      * @param nextLink    A url that allows retrieving the next subset of the requested collection.
      * @param maxPageSize Optionally specify the maximum number of items to retrieve.
-     * @return CompletableFuture&lt;ODataValueContextOfListOfAttribute&gt; The return value
+     * @return ODataValueContextOfListOfAttribute The return value
      */
-    CompletableFuture<ODataValueContextOfListOfAttribute> getTrusteeAttributeKeyValuePairsNextLink(String nextLink,
-            Integer maxPageSize);
+    ODataValueContextOfListOfAttribute getTrusteeAttributeKeyValuePairsNextLink(String nextLink, Integer maxPageSize);
 
     /**
      * Provides the functionality to iteratively (i.e. through paging) call &lt;b&gt;getTrusteeAttributeKeyValuePairs&lt;/b&gt;, and apply a function on the response of each iteration.
@@ -60,10 +58,8 @@ public interface AttributesClient {
      * @param top         Limits the number of items returned from a collection.
      * @param skip        Excludes the specified number of items of the queried collection from the result.
      * @param count       Indicates whether the total count of items within a collection are returned in the result.
-     * @return CompletableFuture&lt;Void&gt; The return value
      */
-    CompletableFuture<Void> getTrusteeAttributeKeyValuePairsForEach(
-            Function<CompletableFuture<ODataValueContextOfListOfAttribute>, CompletableFuture<Boolean>> callback,
+    void getTrusteeAttributeKeyValuePairsForEach(Function<ODataValueContextOfListOfAttribute, Boolean> callback,
             Integer maxPageSize, String repoId, Boolean everyone, String prefer, String select, String orderby,
             Integer top, Integer skip, Boolean count);
 }
