@@ -5,8 +5,8 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum OperationStatus {
 
-    NOTSTARTED("NotStarted"),
-    INPROGRESS("InProgress"),
+    NOT_STARTED("NotStarted"),
+    IN_PROGRESS("InProgress"),
     COMPLETED("Completed"),
     FAILED("Failed"),
     CANCELLED("Cancelled");
