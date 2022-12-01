@@ -5,11 +5,11 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum WFieldType {
 
-    DATETIME("DateTime"),
+    DATE_TIME("DateTime"),
     BLOB("Blob"),
     DATE("Date"),
-    SHORTINTEGER("ShortInteger"),
-    LONGINTEGER("LongInteger"),
+    SHORT_INTEGER("ShortInteger"),
+    LONG_INTEGER("LongInteger"),
     LIST("List"),
     NUMBER("Number"),
     STRING("String"),
