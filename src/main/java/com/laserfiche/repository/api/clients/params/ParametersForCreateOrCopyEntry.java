@@ -1,36 +1,32 @@
 package com.laserfiche.repository.api.clients.params;
 
-import com.laserfiche.repository.api.clients.impl.model.*;
-import java.io.InputStream;
-import java.util.List;
-import java.util.Map;
-import java.util.function.Consumer;
+import com.laserfiche.repository.api.clients.impl.model.PostEntryChildrenRequest;
 
 public class ParametersForCreateOrCopyEntry {
 
     /**
      * The requested repository ID.
      */
-    String repoId;
+    private String repoId;
 
     /**
      * The folder ID that the entry will be created in.
      */
-    int entryId;
+    private int entryId;
 
-    PostEntryChildrenRequest requestBody;
+    private PostEntryChildrenRequest requestBody;
 
     /**
      * An optional query parameter used to indicate if the new entry should be automatically
-     *            renamed if an entry already exists with the given name in the folder. The default value is false.
+     * renamed if an entry already exists with the given name in the folder. The default value is false.
      */
-    boolean autoRename;
+    private boolean autoRename;
 
     /**
      * An optional query parameter used to indicate the locale that should be used.
-     *            The value should be a standard language tag.
+     * The value should be a standard language tag.
      */
-    String culture;
+    private String culture;
 
     public ParametersForCreateOrCopyEntry setRepoId(String repoId) {
         this.repoId = repoId;

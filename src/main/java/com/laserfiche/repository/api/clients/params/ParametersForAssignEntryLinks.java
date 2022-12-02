@@ -1,24 +1,22 @@
 package com.laserfiche.repository.api.clients.params;
 
-import com.laserfiche.repository.api.clients.impl.model.*;
-import java.io.InputStream;
+import com.laserfiche.repository.api.clients.impl.model.PutLinksRequest;
+
 import java.util.List;
-import java.util.Map;
-import java.util.function.Consumer;
 
 public class ParametersForAssignEntryLinks {
 
     /**
      * The request repository ID.
      */
-    String repoId;
+    private String repoId;
 
     /**
      * The requested entry ID.
      */
-    int entryId;
+    private int entryId;
 
-    List<PutLinksRequest> requestBody;
+    private List<PutLinksRequest> requestBody;
 
     public ParametersForAssignEntryLinks setRepoId(String repoId) {
         this.repoId = repoId;

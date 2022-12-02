@@ -34,7 +34,10 @@ public class ExportDocumentApiTest extends BaseTest {
         if (createdEntryId != 0) {
             DeleteEntryWithAuditReason body = new DeleteEntryWithAuditReason();
             client
-                    .deleteEntryInfo(new ParametersForDeleteEntryInfo().setRepoId(repoId).setEntryId(createdEntryId).setRequestBody(body));
+                    .deleteEntryInfo(new ParametersForDeleteEntryInfo()
+                            .setRepoId(repoId)
+                            .setEntryId(createdEntryId)
+                            .setRequestBody(body));
         }
     }
 
@@ -59,7 +62,10 @@ public class ExportDocumentApiTest extends BaseTest {
             }
         };
 
-        client.exportDocument(new ParametersForExportDocument().setRepoId(repoId).setEntryId(createdEntryId).setInputStreamConsumer(consumer));
+        client.exportDocument(new ParametersForExportDocument()
+                .setRepoId(repoId)
+                .setEntryId(createdEntryId)
+                .setInputStreamConsumer(consumer));
         File exportedFile = new File(FILE_NAME);
         assertTrue(exportedFile.exists());
         assertEquals(0, exportedFile.length());
@@ -74,7 +80,10 @@ public class ExportDocumentApiTest extends BaseTest {
             assertTrue(false, "Consumer should not have been called.");
         };
         Exception thrown = Assertions.assertThrows(ApiException.class, () -> {
-            client.exportDocument(new ParametersForExportDocument().setRepoId(repoId).setEntryId(-createdEntryId).setInputStreamConsumer(consumer));
+            client.exportDocument(new ParametersForExportDocument()
+                    .setRepoId(repoId)
+                    .setEntryId(-createdEntryId)
+                    .setInputStreamConsumer(consumer));
         });
         Assertions.assertEquals("Specified argument was out of the range of valid values. (Parameter 'entryId')",
                 thrown.getMessage());
@@ -88,9 +97,13 @@ public class ExportDocumentApiTest extends BaseTest {
             String fileName = "JavaClientLibrary_ExportDocumentApiTest";
             File toUpload = File.createTempFile(fileName, "txt");
             CreateEntryResult result = client
-                    .importDocument(new ParametersForImportDocument().setRepoId(repoId).setParentEntryId(1)
-                                    .setFileName(fileName).setAutoRename(true).setInputStream(new FileInputStream(toUpload))
-                                    .setRequestBody(new PostEntryWithEdocMetadataRequest()));
+                    .importDocument(new ParametersForImportDocument()
+                            .setRepoId(repoId)
+                            .setParentEntryId(1)
+                            .setFileName(fileName)
+                            .setAutoRename(true)
+                            .setInputStream(new FileInputStream(toUpload))
+                            .setRequestBody(new PostEntryWithEdocMetadataRequest()));
 
             CreateEntryOperations operations = result.getOperations();
             createdEntryId = operations

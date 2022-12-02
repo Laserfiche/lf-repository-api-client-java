@@ -1,27 +1,21 @@
 package com.laserfiche.repository.api.clients.params;
 
-import com.laserfiche.repository.api.clients.impl.model.*;
-import java.io.InputStream;
-import java.util.List;
-import java.util.Map;
-import java.util.function.Consumer;
-
 public class ParametersForGetTrusteeAttributeValueByKey {
 
     /**
      * The requested repository ID.
      */
-    String repoId;
+    private String repoId;
 
     /**
      * The requested attribute key.
      */
-    String attributeKey;
+    private String attributeKey;
 
     /**
      * Boolean value that indicates whether to return attributes associated with everyone or the currently authenticated user.
      */
-    boolean everyone;
+    private boolean everyone;
 
     public ParametersForGetTrusteeAttributeValueByKey setRepoId(String repoId) {
         this.repoId = repoId;

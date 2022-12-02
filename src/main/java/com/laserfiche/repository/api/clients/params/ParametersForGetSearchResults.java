@@ -1,79 +1,73 @@
 package com.laserfiche.repository.api.clients.params;
 
-import com.laserfiche.repository.api.clients.impl.model.*;
-import java.io.InputStream;
-import java.util.List;
-import java.util.Map;
-import java.util.function.Consumer;
-
 public class ParametersForGetSearchResults {
 
     /**
      * The requested repository ID.
      */
-    String repoId;
+    private String repoId;
 
     /**
      * The requested searchToken.
      */
-    String searchToken;
+    private String searchToken;
 
     /**
      * An optional query parameter used to indicate if the result should be grouped by entry type or not.
      */
-    boolean groupByEntryType;
+    private boolean groupByEntryType;
 
     /**
      * If the search listing should be refreshed to show updated values.
      */
-    boolean refresh;
+    private boolean refresh;
 
     /**
      * Optional array of field names. Field values corresponding to the given field names will be returned for each search result.
      */
-    String[] fields;
+    private String[] fields;
 
     /**
      * Boolean for if field values should be formatted. Only applicable if Fields are specified.
      */
-    boolean formatFields;
+    private boolean formatFields;
 
     /**
      * An optional odata header. Can be used to set the maximum page size using odata.maxpagesize.
      */
-    String prefer;
+    private String prefer;
 
     /**
      * An optional query parameter used to indicate the locale that should be used for formatting.
-     *            The value should be a standard language tag. The formatFields query parameter must be set to true, otherwise
-     *            culture will not be used for formatting.
+     * The value should be a standard language tag. The formatFields query parameter must be set to true, otherwise
+     * culture will not be used for formatting.
      */
-    String culture;
+    private String culture;
 
     /**
      * Limits the properties returned in the result.
      */
-    String select;
+    private String select;
 
     /**
      * Specifies the order in which items are returned. The maximum number of expressions is 5.
      */
-    String orderby;
+    private String orderby;
 
     /**
      * Limits the number of items returned from a collection.
      */
-    int top;
+    private int top;
 
     /**
      * Excludes the specified number of items of the queried collection from the result.
      */
-    int skip;
+    private int skip;
 
     /**
      * Indicates whether the total count of items within a collection are returned in the result.
      */
-    boolean count;
+    private boolean count;
 
     public ParametersForGetSearchResults setRepoId(String repoId) {
         this.repoId = repoId;

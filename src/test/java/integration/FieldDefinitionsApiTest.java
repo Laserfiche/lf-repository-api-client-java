@@ -8,7 +8,6 @@ import com.laserfiche.repository.api.clients.params.ParametersForGetFieldDefinit
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
@@ -25,7 +24,9 @@ class FieldDefinitionsApiTest extends BaseTest {
     @Test
     void getFieldDefinitionById_ReturnField() {
         WFieldInfo fieldInfo = client
-                .getFieldDefinitionById(new ParametersForGetFieldDefinitionById().setRepoId(repoId).setFieldDefinitionId(1));
+                .getFieldDefinitionById(new ParametersForGetFieldDefinitionById()
+                        .setRepoId(repoId)
+                        .setFieldDefinitionId(1));
 
         assertNotNull(fieldInfo);
     }
@@ -42,8 +43,9 @@ class FieldDefinitionsApiTest extends BaseTest {
     void getFieldDefinitions_NextLink() throws InterruptedException {
         int maxPageSize = 10;
         ODataValueContextOfIListOfWFieldInfo fieldInfoList = client
-                .getFieldDefinitions(new ParametersForGetFieldDefinitions().setRepoId(repoId)
-                                .setPrefer(String.format("maxpagesize=%d", maxPageSize)));
+                .getFieldDefinitions(new ParametersForGetFieldDefinitions()
+                        .setRepoId(repoId)
+                        .setPrefer(String.format("maxpagesize=%d", maxPageSize)));
         assertNotNull(fieldInfoList);
 
         String nextLink = fieldInfoList.getOdataNextLink();
@@ -81,6 +83,7 @@ class FieldDefinitionsApiTest extends BaseTest {
                 return false;
             }
         };
-        client.getFieldDefinitionsForEach(callback, maxPageSize, new ParametersForGetFieldDefinitions().setRepoId(repoId));
+        client.getFieldDefinitionsForEach(callback, maxPageSize,
+                new ParametersForGetFieldDefinitions().setRepoId(repoId));
     }
 }

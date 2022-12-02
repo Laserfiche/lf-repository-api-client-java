@@ -1,22 +1,16 @@
 package com.laserfiche.repository.api.clients.params;
 
-import com.laserfiche.repository.api.clients.impl.model.*;
-import java.io.InputStream;
-import java.util.List;
-import java.util.Map;
-import java.util.function.Consumer;
-
 public class ParametersForDeleteAssignedTemplate {
 
     /**
      * The requested repository ID.
      */
-    String repoId;
+    private String repoId;
 
     /**
      * The ID of the entry that will have its template removed.
      */
-    int entryId;
+    private int entryId;
 
     public ParametersForDeleteAssignedTemplate setRepoId(String repoId) {
         this.repoId = repoId;

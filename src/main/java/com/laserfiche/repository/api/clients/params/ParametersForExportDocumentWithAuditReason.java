@@ -1,9 +1,8 @@
 package com.laserfiche.repository.api.clients.params;
 
-import com.laserfiche.repository.api.clients.impl.model.*;
+import com.laserfiche.repository.api.clients.impl.model.GetEdocWithAuditReasonRequest;
+
 import java.io.InputStream;
-import java.util.List;
-import java.util.Map;
 import java.util.function.Consumer;
 
 public class ParametersForExportDocumentWithAuditReason {
@@ -11,22 +10,22 @@ public class ParametersForExportDocumentWithAuditReason {
     /**
      * The requested repository ID.
      */
-    String repoId;
+    private String repoId;
 
     /**
      * The requested document ID.
      */
-    int entryId;
+    private int entryId;
 
-    GetEdocWithAuditReasonRequest requestBody;
+    private GetEdocWithAuditReasonRequest requestBody;
 
     /**
      * An optional header used to retrieve partial content of the edoc. Only supports single
-     *            range with byte unit.
+     * range with byte unit.
      */
-    String range;
+    private String range;
 
-    Consumer<InputStream> inputStreamConsumer;
+    private Consumer<InputStream> inputStreamConsumer;
 
     public ParametersForExportDocumentWithAuditReason setRepoId(String repoId) {
         this.repoId = repoId;
@@ -64,7 +63,8 @@ public class ParametersForExportDocumentWithAuditReason {
         return this.range;
     }
 
-    public ParametersForExportDocumentWithAuditReason setInputStreamConsumer(Consumer<InputStream> inputStreamConsumer) {
+    public ParametersForExportDocumentWithAuditReason setInputStreamConsumer(
+            Consumer<InputStream> inputStreamConsumer) {
         this.inputStreamConsumer = inputStreamConsumer;
         return this;
     }

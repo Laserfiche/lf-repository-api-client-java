@@ -35,7 +35,10 @@ public class TasksApiTest extends BaseTest {
 
         AcceptedOperation result = repositoryApiClient
                 .getEntriesClient()
-                .deleteEntryInfo(new ParametersForDeleteEntryInfo().setRepoId(repoId).setEntryId(deleteEntry.getId()).setRequestBody(body));
+                .deleteEntryInfo(new ParametersForDeleteEntryInfo()
+                        .setRepoId(repoId)
+                        .setEntryId(deleteEntry.getId())
+                        .setRequestBody(body));
 
         String token = result.getToken();
 
@@ -44,7 +47,9 @@ public class TasksApiTest extends BaseTest {
         TimeUnit.SECONDS.sleep(10);
 
         Exception thrown = Assertions.assertThrows(ApiException.class, () -> {
-            client.cancelOperation(new ParametersForCancelOperation().setRepoId(repoId).setOperationToken(token));
+            client.cancelOperation(new ParametersForCancelOperation()
+                    .setRepoId(repoId)
+                    .setOperationToken(token));
         });
 
         Assertions.assertEquals(
@@ -61,12 +66,17 @@ public class TasksApiTest extends BaseTest {
 
         AcceptedOperation result = repositoryApiClient
                 .getEntriesClient()
-                .deleteEntryInfo(new ParametersForDeleteEntryInfo().setRepoId(repoId).setEntryId(deleteEntry.getId()).setRequestBody(body));
+                .deleteEntryInfo(new ParametersForDeleteEntryInfo()
+                        .setRepoId(repoId)
+                        .setEntryId(deleteEntry.getId())
+                        .setRequestBody(body));
 
         String token = result.getToken();
         assertNotNull(token);
 
-        boolean cancellationResult = client.cancelOperation(new ParametersForCancelOperation().setRepoId(repoId).setOperationToken(token));
+        boolean cancellationResult = client.cancelOperation(new ParametersForCancelOperation()
+                .setRepoId(repoId)
+                .setOperationToken(token));
         assertTrue(cancellationResult);
     }
 
@@ -79,7 +89,10 @@ public class TasksApiTest extends BaseTest {
 
         AcceptedOperation result = repositoryApiClient
                 .getEntriesClient()
-                .deleteEntryInfo(new ParametersForDeleteEntryInfo().setRepoId(repoId).setEntryId(deleteEntry.getId()).setRequestBody(body));
+                .deleteEntryInfo(new ParametersForDeleteEntryInfo()
+                        .setRepoId(repoId)
+                        .setEntryId(deleteEntry.getId())
+                        .setRequestBody(body));
 
         String token = result.getToken();
 
@@ -87,7 +100,10 @@ public class TasksApiTest extends BaseTest {
 
         TimeUnit.SECONDS.sleep(5);
 
-        OperationProgress operationProgressResponse = client.getOperationStatusAndProgress(new ParametersForGetOperationStatusAndProgress().setRepoId(repoId).setOperationToken(token));
+        OperationProgress operationProgressResponse = client.getOperationStatusAndProgress(
+                new ParametersForGetOperationStatusAndProgress()
+                        .setRepoId(repoId)
+                        .setOperationToken(token));
 
         assertNotNull(operationProgressResponse);
         Assertions.assertSame(operationProgressResponse.getStatus(), OperationStatus.COMPLETED);

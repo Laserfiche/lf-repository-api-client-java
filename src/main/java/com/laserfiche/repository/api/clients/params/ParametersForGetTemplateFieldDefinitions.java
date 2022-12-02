@@ -1,58 +1,52 @@
 package com.laserfiche.repository.api.clients.params;
 
-import com.laserfiche.repository.api.clients.impl.model.*;
-import java.io.InputStream;
-import java.util.List;
-import java.util.Map;
-import java.util.function.Consumer;
-
 public class ParametersForGetTemplateFieldDefinitions {
 
     /**
      * The requested repository ID.
      */
-    String repoId;
+    private String repoId;
 
     /**
      * The requested template definition ID.
      */
-    int templateId;
+    private int templateId;
 
     /**
      * An optional OData header. Can be used to set the maximum page size using odata.maxpagesize.
      */
-    String prefer;
+    private String prefer;
 
     /**
      * An optional query parameter used to indicate the locale that should be used for formatting.
-     *            The value should be a standard language tag.
+     * The value should be a standard language tag.
      */
-    String culture;
+    private String culture;
 
     /**
      * Limits the properties returned in the result.
      */
-    String select;
+    private String select;
 
     /**
      * Specifies the order in which items are returned. The maximum number of expressions is 5.
      */
-    String orderby;
+    private String orderby;
 
     /**
      * Limits the number of items returned from a collection.
      */
-    int top;
+    private int top;
 
     /**
      * Excludes the specified number of items of the queried collection from the result.
      */
-    int skip;
+    private int skip;
 
     /**
      * Indicates whether the total count of items within a collection are returned in the result.
      */
-    boolean count;
+    private boolean count;
 
     public ParametersForGetTemplateFieldDefinitions setRepoId(String repoId) {
         this.repoId = repoId;

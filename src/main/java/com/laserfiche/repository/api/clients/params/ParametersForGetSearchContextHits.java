@@ -1,57 +1,51 @@
 package com.laserfiche.repository.api.clients.params;
 
-import com.laserfiche.repository.api.clients.impl.model.*;
-import java.io.InputStream;
-import java.util.List;
-import java.util.Map;
-import java.util.function.Consumer;
-
 public class ParametersForGetSearchContextHits {
 
     /**
      * The requested repository ID.
      */
-    String repoId;
+    private String repoId;
 
     /**
      * The requested searchToken.
      */
-    String searchToken;
+    private String searchToken;
 
     /**
      * The search result listing row number to get context hits for.
      */
-    int rowNumber;
+    private int rowNumber;
 
     /**
      * An optional OData header. Can be used to set the maximum page size using odata.maxpagesize.
      */
-    String prefer;
+    private String prefer;
 
     /**
      * Limits the properties returned in the result.
      */
-    String select;
+    private String select;
 
     /**
      * Specifies the order in which items are returned. The maximum number of expressions is 5.
      */
-    String orderby;
+    private String orderby;
 
     /**
      * Limits the number of items returned from a collection.
      */
-    int top;
+    private int top;
 
     /**
      * Excludes the specified number of items of the queried collection from the result.
      */
-    int skip;
+    private int skip;
 
     /**
      * Indicates whether the total count of items within a collection are returned in the result.
      */
-    boolean count;
+    private boolean count;
 
     public ParametersForGetSearchContextHits setRepoId(String repoId) {
         this.repoId = repoId;

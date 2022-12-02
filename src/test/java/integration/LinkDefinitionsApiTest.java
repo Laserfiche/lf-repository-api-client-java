@@ -37,7 +37,9 @@ public class LinkDefinitionsApiTest extends BaseTest {
         assertNotNull(firstLinkDefinition);
 
         EntryLinkTypeInfo linkDefinitions = client.getLinkDefinitionById(
-                new ParametersForGetLinkDefinitionById().setRepoId(repoId).setLinkTypeId(firstLinkDefinition.getLinkTypeId()));
+                new ParametersForGetLinkDefinitionById()
+                        .setRepoId(repoId)
+                        .setLinkTypeId(firstLinkDefinition.getLinkTypeId()));
 
         assertNotNull(linkDefinitions);
         assertEquals(linkDefinitions.getLinkTypeId(), firstLinkDefinition.getLinkTypeId());

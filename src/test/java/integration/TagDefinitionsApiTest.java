@@ -33,8 +33,9 @@ class TagDefinitionsApiTest extends BaseTest {
     void getTagDefinitions_NextLink() throws InterruptedException {
         int maxPageSize = 1;
         ODataValueContextOfIListOfWTagInfo tagInfoList = client
-                .getTagDefinitions(new ParametersForGetTagDefinitions().setRepoId(repoId)
-                                .setPrefer(String.format("maxpagesize=%d", maxPageSize)));
+                .getTagDefinitions(new ParametersForGetTagDefinitions()
+                        .setRepoId(repoId)
+                        .setPrefer(String.format("maxpagesize=%d", maxPageSize)));
 
         assertNotNull(tagInfoList);
 
@@ -89,11 +90,12 @@ class TagDefinitionsApiTest extends BaseTest {
         assertNotNull(tagInfoList);
 
         WTagInfo tagInfo = client
-                .getTagDefinitionById(new ParametersForGetTagDefinitionById().setRepoId(repoId)
+                .getTagDefinitionById(new ParametersForGetTagDefinitionById()
+                        .setRepoId(repoId)
                         .setTagId(tagInfoList
-                        .getValue()
-                        .get(0)
-                        .getId()));
+                                .getValue()
+                                .get(0)
+                                .getId()));
 
         assertNotNull(tagInfo);
     }

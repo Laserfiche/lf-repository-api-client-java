@@ -14,7 +14,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
@@ -49,7 +48,8 @@ class TemplateDefinitionsApiTest extends BaseTest {
 
         ODataValueContextOfIListOfTemplateFieldInfo result = client
                 .getTemplateFieldDefinitions(
-                        new ParametersForGetTemplateFieldDefinitions().setRepoId(repoId)
+                        new ParametersForGetTemplateFieldDefinitions()
+                                .setRepoId(repoId)
                                 .setTemplateId(tempDef.getId()));
 
         assertNotNull(result);
@@ -63,7 +63,8 @@ class TemplateDefinitionsApiTest extends BaseTest {
         int maxPageSize = 1;
         ODataValueContextOfIListOfWTemplateInfo templateInfoList = client
                 .getTemplateDefinitions(
-                        new ParametersForGetTemplateDefinitions().setRepoId(repoId)
+                        new ParametersForGetTemplateDefinitions()
+                                .setRepoId(repoId)
                                 .setPrefer(String.format("maxpagesize=%d", maxPageSize)));
 
         assertNotNull(templateInfoList);
@@ -107,7 +108,8 @@ class TemplateDefinitionsApiTest extends BaseTest {
                 return false;
             }
         };
-        client.getTemplateDefinitionsForEach(callback, maxPageSize, new ParametersForGetTemplateDefinitions().setRepoId(repoId));
+        client.getTemplateDefinitionsForEach(callback, maxPageSize,
+                new ParametersForGetTemplateDefinitions().setRepoId(repoId));
     }
 
     @Test
@@ -115,7 +117,9 @@ class TemplateDefinitionsApiTest extends BaseTest {
         int maxPageSize = 1;
         ODataValueContextOfIListOfWTemplateInfo templateInfoList = client
                 .getTemplateDefinitions(
-                        new ParametersForGetTemplateDefinitions().setRepoId(repoId).setPrefer(String.format("maxpagesize=%d", maxPageSize)));
+                        new ParametersForGetTemplateDefinitions()
+                                .setRepoId(repoId)
+                                .setPrefer(String.format("maxpagesize=%d", maxPageSize)));
 
         WTemplateInfo tempDef = templateInfoList
                 .getValue()
@@ -125,8 +129,10 @@ class TemplateDefinitionsApiTest extends BaseTest {
 
         ODataValueContextOfIListOfTemplateFieldInfo result = client
                 .getTemplateFieldDefinitions(
-                        new ParametersForGetTemplateFieldDefinitions().setRepoId(repoId).setTemplateId(tempDef.getId())
-                                                                      .setPrefer(String.format("maxpagesize=%d", maxPageSize)));
+                        new ParametersForGetTemplateFieldDefinitions()
+                                .setRepoId(repoId)
+                                .setTemplateId(tempDef.getId())
+                                .setPrefer(String.format("maxpagesize=%d", maxPageSize)));
 
         assertNotNull(result);
         Assertions.assertSame(maxPageSize, result
@@ -162,7 +168,8 @@ class TemplateDefinitionsApiTest extends BaseTest {
 
         ODataValueContextOfIListOfTemplateFieldInfo result = client
                 .getTemplateFieldDefinitions(
-                        new ParametersForGetTemplateFieldDefinitions().setRepoId(repoId)
+                        new ParametersForGetTemplateFieldDefinitions()
+                                .setRepoId(repoId)
                                 .setTemplateId(tempDef.getId()));
 
         assertNotNull(result);
@@ -187,7 +194,8 @@ class TemplateDefinitionsApiTest extends BaseTest {
             }
         };
         client.getTemplateFieldDefinitionsForEach(callback, maxPageSize,
-                new ParametersForGetTemplateFieldDefinitions().setRepoId(repoId)
+                new ParametersForGetTemplateFieldDefinitions()
+                        .setRepoId(repoId)
                         .setTemplateId(tempDef.getId()));
     }
 
@@ -203,7 +211,8 @@ class TemplateDefinitionsApiTest extends BaseTest {
         assertNotNull(templateInfoList);
 
         WTemplateInfo result = client
-                .getTemplateDefinitionById(new ParametersForGetTemplateDefinitionById().setRepoId(repoId)
+                .getTemplateDefinitionById(new ParametersForGetTemplateDefinitionById()
+                        .setRepoId(repoId)
                         .setTemplateId(tempDef.getId()));
 
         assertNotNull(result);
@@ -222,7 +231,8 @@ class TemplateDefinitionsApiTest extends BaseTest {
         assertNotNull(templateInfoList);
 
         ODataValueContextOfIListOfWTemplateInfo result = client
-                .getTemplateDefinitions(new ParametersForGetTemplateDefinitions().setRepoId(repoId)
+                .getTemplateDefinitions(new ParametersForGetTemplateDefinitions()
+                        .setRepoId(repoId)
                         .setTemplateName(tempDef.getName()));
 
         assertNotNull(result);
@@ -239,7 +249,8 @@ class TemplateDefinitionsApiTest extends BaseTest {
 
         ODataValueContextOfIListOfTemplateFieldInfo result = client
                 .getTemplateFieldDefinitionsByTemplateName(
-                        new ParametersForGetTemplateFieldDefinitionsByTemplateName().setRepoId(repoId)
+                        new ParametersForGetTemplateFieldDefinitionsByTemplateName()
+                                .setRepoId(repoId)
                                 .setTemplateName(firstTemplateDefinitions.getName()));
         List<TemplateFieldInfo> templateFieldDefinitions = result.getValue();
         assertNotNull(templateFieldDefinitions);

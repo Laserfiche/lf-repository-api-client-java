@@ -1,24 +1,20 @@
 package com.laserfiche.repository.api.clients.params;
 
-import com.laserfiche.repository.api.clients.impl.model.*;
-import java.io.InputStream;
-import java.util.List;
-import java.util.Map;
-import java.util.function.Consumer;
+import com.laserfiche.repository.api.clients.impl.model.GetDynamicFieldLogicValueRequest;
 
 public class ParametersForGetDynamicFieldValues {
 
     /**
      * The requested repository ID.
      */
-    String repoId;
+    private String repoId;
 
     /**
      * The requested entry ID.
      */
-    int entryId;
+    private int entryId;
 
-    GetDynamicFieldLogicValueRequest requestBody;
+    private GetDynamicFieldLogicValueRequest requestBody;
 
     public ParametersForGetDynamicFieldValues setRepoId(String repoId) {
         this.repoId = repoId;

@@ -1,36 +1,32 @@
 package com.laserfiche.repository.api.clients.params;
 
-import com.laserfiche.repository.api.clients.impl.model.*;
-import java.io.InputStream;
-import java.util.List;
-import java.util.Map;
-import java.util.function.Consumer;
+import com.laserfiche.repository.api.clients.impl.model.PatchEntryRequest;
 
 public class ParametersForMoveOrRenameEntry {
 
     /**
      * The requested repository ID.
      */
-    String repoId;
+    private String repoId;
 
     /**
      * The requested entry ID.
      */
-    int entryId;
+    private int entryId;
 
-    PatchEntryRequest requestBody;
+    private PatchEntryRequest requestBody;
 
     /**
      * An optional query parameter used to indicate if the entry should be automatically
-     *            renamed if another entry already exists with the same name in the folder. The default value is false.
+     * renamed if another entry already exists with the same name in the folder. The default value is false.
      */
-    boolean autoRename;
+    private boolean autoRename;
 
     /**
      * An optional query parameter used to indicate the locale that should be used.
-     *            The value should be a standard language tag.
+     * The value should be a standard language tag.
      */
-    String culture;
+    private String culture;
 
     public ParametersForMoveOrRenameEntry setRepoId(String repoId) {
         this.repoId = repoId;

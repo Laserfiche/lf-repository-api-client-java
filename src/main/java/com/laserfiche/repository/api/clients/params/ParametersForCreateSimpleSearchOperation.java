@@ -1,51 +1,47 @@
 package com.laserfiche.repository.api.clients.params;
 
-import com.laserfiche.repository.api.clients.impl.model.*;
-import java.io.InputStream;
-import java.util.List;
-import java.util.Map;
-import java.util.function.Consumer;
+import com.laserfiche.repository.api.clients.impl.model.SimpleSearchRequest;
 
 public class ParametersForCreateSimpleSearchOperation {
 
     /**
      * Limits the properties returned in the result.
      */
-    String select;
+    private String select;
 
     /**
      * Specifies the order in which items are returned. The maximum number of expressions is 5.
      */
-    String orderby;
+    private String orderby;
 
     /**
      * Indicates whether the total count of items within a collection are returned in the result.
      */
-    boolean count;
+    private boolean count;
 
     /**
      * The requested repository ID.
      */
-    String repoId;
+    private String repoId;
 
     /**
      * Optional array of field names. Field values corresponding to the given field names will be returned for each search result.
      */
-    String[] fields;
+    private String[] fields;
 
     /**
      * Boolean for if field values should be formatted. Only applicable if Fields are specified.
      */
-    boolean formatFields;
+    private boolean formatFields;
 
-    SimpleSearchRequest requestBody;
+    private SimpleSearchRequest requestBody;
 
     /**
      * An optional query parameter used to indicate the locale that should be used for formatting.
-     *            The value should be a standard language tag. The formatFields query parameter must be set to true, otherwise
-     *            culture will not be used for formatting.
+     * The value should be a standard language tag. The formatFields query parameter must be set to true, otherwise
+     * culture will not be used for formatting.
      */
-    String culture;
+    private String culture;
 
     public ParametersForCreateSimpleSearchOperation setSelect(String select) {
         this.select = select;

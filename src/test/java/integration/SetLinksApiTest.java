@@ -35,8 +35,10 @@ public class SetLinksApiTest extends BaseTest {
                 DeleteEntryWithAuditReason body = new DeleteEntryWithAuditReason();
                 client
                         .getEntriesClient()
-                        .deleteEntryInfo(new ParametersForDeleteEntryInfo().setRepoId(repoId)
-                                .setEntryId(createdEntry.getId()).setRequestBody(body));
+                        .deleteEntryInfo(new ParametersForDeleteEntryInfo()
+                                .setRepoId(repoId)
+                                .setEntryId(createdEntry.getId())
+                                .setRequestBody(body));
             }
         }
     }
@@ -55,8 +57,11 @@ public class SetLinksApiTest extends BaseTest {
         request.add(linkRequest);
         ODataValueOfIListOfWEntryLinkInfo result = client
                 .getEntriesClient()
-                .assignEntryLinks(new ParametersForAssignEntryLinks().setRepoId(repoId).setEntryId(sourceEntry
-                        .getId()).setRequestBody(request));
+                .assignEntryLinks(new ParametersForAssignEntryLinks()
+                        .setRepoId(repoId)
+                        .setEntryId(sourceEntry
+                                .getId())
+                        .setRequestBody(request));
         List<WEntryLinkInfo> links = result.getValue();
         assertNotNull(links);
         assertEquals(request.size(), links.size());

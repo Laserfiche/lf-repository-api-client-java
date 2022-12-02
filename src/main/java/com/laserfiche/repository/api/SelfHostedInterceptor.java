@@ -1,15 +1,12 @@
 package com.laserfiche.repository.api;
 
 import com.laserfiche.api.client.apiserver.TokenClient;
-import com.laserfiche.api.client.httphandlers.BeforeSendResult;
 import com.laserfiche.api.client.httphandlers.Request;
 import com.laserfiche.api.client.httphandlers.RequestImpl;
 import com.laserfiche.api.client.httphandlers.UsernamePasswordHandler;
 import com.laserfiche.repository.api.clients.RepositoryApiClientInterceptor;
 import kong.unirest.Config;
 import kong.unirest.HttpRequest;
-
-import java.util.concurrent.CompletableFuture;
 
 public class SelfHostedInterceptor implements RepositoryApiClientInterceptor {
     private final UsernamePasswordHandler usernamePasswordHandler;

@@ -1,30 +1,26 @@
 package com.laserfiche.repository.api.clients.params;
 
-import com.laserfiche.repository.api.clients.impl.model.*;
-import java.io.InputStream;
-import java.util.List;
-import java.util.Map;
-import java.util.function.Consumer;
+import com.laserfiche.repository.api.clients.impl.model.PutTemplateRequest;
 
 public class ParametersForWriteTemplateValueToEntry {
 
     /**
      * The requested repository ID.
      */
-    String repoId;
+    private String repoId;
 
     /**
      * The ID of entry that will have its template updated.
      */
-    int entryId;
+    private int entryId;
 
-    PutTemplateRequest requestBody;
+    private PutTemplateRequest requestBody;
 
     /**
      * An optional query parameter used to indicate the locale that should be used.
-     *            The value should be a standard language tag. This may be used when setting field values with tokens.
+     * The value should be a standard language tag. This may be used when setting field values with tokens.
      */
-    String culture;
+    private String culture;
 
     public ParametersForWriteTemplateValueToEntry setRepoId(String repoId) {
         this.repoId = repoId;

@@ -17,8 +17,9 @@ class SimpleSearchesApiTest extends BaseTest {
         searchRequest.setSearchCommand("({LF:Basic ~= \"search text\", option=\"DFANLT\"})");
 
         ODataValueOfIListOfEntry entryList = client
-                .createSimpleSearchOperation(new ParametersForCreateSimpleSearchOperation().setRepoId(repoId).
-        setRequestBody(searchRequest));
+                .createSimpleSearchOperation(new ParametersForCreateSimpleSearchOperation()
+                        .setRepoId(repoId).
+                        setRequestBody(searchRequest));
 
         assertNotNull(entryList);
     }

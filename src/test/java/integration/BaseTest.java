@@ -109,7 +109,10 @@ public class BaseTest {
 
         return client
                 .getEntriesClient()
-                .createOrCopyEntry(new ParametersForCreateOrCopyEntry().setRepoId(repoId).setEntryId(parentEntryId).setRequestBody(request)
+                .createOrCopyEntry(new ParametersForCreateOrCopyEntry()
+                        .setRepoId(repoId)
+                        .setEntryId(parentEntryId)
+                        .setRequestBody(request)
                         .setAutoRename(autoRename));
     }
 

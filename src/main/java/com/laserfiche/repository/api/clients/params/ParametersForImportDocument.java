@@ -1,43 +1,41 @@
 package com.laserfiche.repository.api.clients.params;
 
-import com.laserfiche.repository.api.clients.impl.model.*;
+import com.laserfiche.repository.api.clients.impl.model.PostEntryWithEdocMetadataRequest;
+
 import java.io.InputStream;
-import java.util.List;
-import java.util.Map;
-import java.util.function.Consumer;
 
 public class ParametersForImportDocument {
 
     /**
      * The requested repository ID.
      */
-    String repoId;
+    private String repoId;
 
     /**
      * The entry ID of the folder that the document will be created in.
      */
-    int parentEntryId;
+    private int parentEntryId;
 
     /**
      * The created document's file name.
      */
-    String fileName;
+    private String fileName;
 
     /**
      * An optional query parameter used to indicate if the new document should be automatically
-     *            renamed if an entry already exists with the given name in the folder. The default value is false.
+     * renamed if an entry already exists with the given name in the folder. The default value is false.
      */
-    boolean autoRename;
+    private boolean autoRename;
 
     /**
      * An optional query parameter used to indicate the locale that should be used.
-     *            The value should be a standard language tag. This may be used when setting field values with tokens.
+     * The value should be a standard language tag. This may be used when setting field values with tokens.
      */
-    String culture;
+    private String culture;
 
-    InputStream inputStream;
+    private InputStream inputStream;
 
-    PostEntryWithEdocMetadataRequest requestBody;
+    private PostEntryWithEdocMetadataRequest requestBody;
 
     public ParametersForImportDocument setRepoId(String repoId) {
         this.repoId = repoId;
