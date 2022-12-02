@@ -2,6 +2,8 @@ package integration;
 
 import com.laserfiche.repository.api.RepositoryApiClient;
 import com.laserfiche.repository.api.clients.impl.model.*;
+import com.laserfiche.repository.api.clients.params.ParametersForAssignEntryLinks;
+import com.laserfiche.repository.api.clients.params.ParametersForDeleteEntryInfo;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -33,7 +35,8 @@ public class SetLinksApiTest extends BaseTest {
                 DeleteEntryWithAuditReason body = new DeleteEntryWithAuditReason();
                 client
                         .getEntriesClient()
-                        .deleteEntryInfo(repoId, createdEntry.getId(), body);
+                        .deleteEntryInfo(new ParametersForDeleteEntryInfo().setRepoId(repoId)
+                                .setEntryId(createdEntry.getId()).setRequestBody(body));
             }
         }
     }
@@ -52,8 +55,8 @@ public class SetLinksApiTest extends BaseTest {
         request.add(linkRequest);
         ODataValueOfIListOfWEntryLinkInfo result = client
                 .getEntriesClient()
-                .assignEntryLinks(repoId, sourceEntry
-                        .getId(), request);
+                .assignEntryLinks(new ParametersForAssignEntryLinks().setRepoId(repoId).setEntryId(sourceEntry
+                        .getId()).setRequestBody(request));
         List<WEntryLinkInfo> links = result.getValue();
         assertNotNull(links);
         assertEquals(request.size(), links.size());

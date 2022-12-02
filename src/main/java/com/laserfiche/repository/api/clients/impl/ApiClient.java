@@ -1,23 +1,23 @@
 package com.laserfiche.repository.api.clients.impl;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.MapperFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.json.JsonMapper;
-import com.fasterxml.jackson.databind.module.SimpleModule;
-import com.laserfiche.repository.api.clients.impl.deserialization.OffsetDateTimeDeserializer;
-import com.laserfiche.repository.api.clients.impl.model.ProblemDetails;
+import java.util.Map;
+import java.util.List;
+import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.stream.Collectors;
 import kong.unirest.Header;
 import kong.unirest.Headers;
+import kong.unirest.HttpResponse;
 import kong.unirest.UnirestInstance;
 import org.threeten.bp.OffsetDateTime;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.MapperFeature;
+import com.fasterxml.jackson.databind.json.JsonMapper;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.laserfiche.repository.api.clients.impl.model.ProblemDetails;
+import com.laserfiche.repository.api.clients.impl.deserialization.OffsetDateTimeDeserializer;
 
 public class ApiClient {
 
@@ -32,41 +32,34 @@ public class ApiClient {
         this.httpClient = httpClient;
         SimpleModule module = new SimpleModule();
         module.addDeserializer(OffsetDateTime.class, new OffsetDateTimeDeserializer());
-        this.objectMapper = JsonMapper
-                .builder()
-                .addModule(module)
-                .disable(MapperFeature.CAN_OVERRIDE_ACCESS_MODIFIERS)
-                .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
-                .enable(MapperFeature.ACCEPT_CASE_INSENSITIVE_ENUMS)
-                .build();
+        this.objectMapper = JsonMapper.builder().addModule(module).disable(MapperFeature.CAN_OVERRIDE_ACCESS_MODIFIERS).disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES).enable(MapperFeature.ACCEPT_CASE_INSENSITIVE_ENUMS).build();
     }
 
-    protected String mergeMaxSizeIntoPrefer(Integer maxSize, String prefer) {
-        if (maxSize == null)
+    protected String mergeMaxSizeIntoPrefer(int maxSize, String prefer) {
+        if (maxSize == 0)
             return prefer;
         else
-            return prefer == null ? String.format("maxpagesize=%d", maxSize) : String.format("%s; maxpagesize=%d",
-                    prefer, maxSize);
+            return prefer == null ? String.format("maxpagesize=%d", maxSize) : String.format("%s; maxpagesize=%d", prefer, maxSize);
     }
 
-    protected Map<String, Object> getNonNullParameters(String[] parameterNames, Object[] parameters) {
-        if (parameterNames == null || parameters == null) {
+    protected Map<String, Object> getParametersWithNonDefaultValue(String[] parameterTypes, String[] parameterNames, Object[] parameterValues) {
+        if (parameterTypes == null || parameterNames == null || parameterValues == null) {
             throw new IllegalArgumentException("Input cannot be null.");
         }
-        if (parameterNames.length != parameters.length) {
-            throw new IllegalArgumentException("The array for parameter name and value should have the same length.");
+        if (parameterTypes.length != parameterNames.length || parameterNames.length != parameterValues.length) {
+            throw new IllegalArgumentException("The arrays for parameter types/names/values should have the same length.");
         }
         Map<String, Object> paramKeyValuePairs = new HashMap<>();
-        for (int i = 0; i < parameters.length; i++) {
-            if (parameters[i] != null) {
+        for (int i = 0; i < parameterValues.length; i++) {
+            if (parameterValues[i] != null && !hasDefaultValue(parameterTypes[i], parameterValues[i])) {
                 List<Object> values = new ArrayList<>();
-                if (parameters[i] instanceof Object[]) {
-                    Object[] objects = (Object[]) parameters[i];
+                if (parameterValues[i] instanceof Object[]) {
+                    Object[] objects = (Object[]) parameterValues[i];
                     for (Object object : objects) {
                         values.add(object);
                     }
                 } else {
-                    values.add(parameters[i]);
+                    values.add(parameterValues[i]);
                 }
                 if (values.size() == 1) {
                     paramKeyValuePairs.put(parameterNames[i], values.get(0));
@@ -76,6 +69,16 @@ public class ApiClient {
             }
         }
         return paramKeyValuePairs;
+    }
+
+    private boolean hasDefaultValue(String type, Object value) {
+        switch(type) {
+            case "int":
+                return value.toString().equals("0");
+            case "boolean":
+                return value.toString().equals("false");
+        }
+        return false;
     }
 
     protected String toJson(Object object) {
@@ -89,41 +92,25 @@ public class ApiClient {
     }
 
     protected Map<String, String> getHeadersMap(Headers headers) {
-        return headers
-                .all()
-                .stream()
-                .collect(Collectors.toMap(Header::getName, Header::getValue));
+        return headers.all().stream().collect(Collectors.toMap(Header::getName, Header::getValue));
     }
 
     protected ProblemDetails deserializeToProblemDetails(String jsonString) throws JsonProcessingException {
         ProblemDetails problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
         if (problemDetails.get("title") != null)
-            problemDetails.setTitle(problemDetails
-                    .get("title")
-                    .toString());
+            problemDetails.setTitle(problemDetails.get("title").toString());
         if (problemDetails.get("type") != null)
-            problemDetails.setType(problemDetails
-                    .get("type")
-                    .toString());
+            problemDetails.setType(problemDetails.get("type").toString());
         if (problemDetails.get("instance") != null)
-            problemDetails.setInstance(problemDetails
-                    .get("instance")
-                    .toString());
+            problemDetails.setInstance(problemDetails.get("instance").toString());
         if (problemDetails.get("detail") != null)
-            problemDetails.setDetail(problemDetails
-                    .get("detail")
-                    .toString());
-        problemDetails.setStatus(Integer.parseInt(problemDetails
-                .get("status")
-                .toString()));
+            problemDetails.setDetail(problemDetails.get("detail").toString());
+        problemDetails.setStatus((int)Double.parseDouble(problemDetails.get("status").toString()));
         problemDetails.setExtensions((Map<String, Object>) problemDetails.get("extensions"));
         return problemDetails;
     }
 
     protected String decideErrorMessage(ProblemDetails problemDetails, String genericErrorMessage) {
-        return (problemDetails != null && problemDetails.getTitle() != null && problemDetails
-                .getTitle()
-                .trim()
-                .length() > 0) ? problemDetails.getTitle() : genericErrorMessage;
+        return (problemDetails != null && problemDetails.getTitle() != null && problemDetails.getTitle().trim().length() > 0) ? problemDetails.getTitle() : genericErrorMessage;
     }
 }

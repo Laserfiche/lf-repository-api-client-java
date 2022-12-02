@@ -3,6 +3,7 @@ package integration;
 import com.laserfiche.repository.api.clients.SimpleSearchesClient;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueOfIListOfEntry;
 import com.laserfiche.repository.api.clients.impl.model.SimpleSearchRequest;
+import com.laserfiche.repository.api.clients.params.ParametersForCreateSimpleSearchOperation;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -16,7 +17,8 @@ class SimpleSearchesApiTest extends BaseTest {
         searchRequest.setSearchCommand("({LF:Basic ~= \"search text\", option=\"DFANLT\"})");
 
         ODataValueOfIListOfEntry entryList = client
-                .createSimpleSearchOperation(null, null, null, repoId, null, null, searchRequest, null);
+                .createSimpleSearchOperation(new ParametersForCreateSimpleSearchOperation().setRepoId(repoId).
+        setRequestBody(searchRequest));
 
         assertNotNull(entryList);
     }

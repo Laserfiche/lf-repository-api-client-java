@@ -1,0 +1,38 @@
+package com.laserfiche.repository.api.clients.params;
+
+import com.laserfiche.repository.api.clients.impl.model.*;
+import java.io.InputStream;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Consumer;
+
+public class ParametersForGetOperationStatusAndProgress {
+
+    /**
+     * The requested repository ID
+     */
+    String repoId;
+
+    /**
+     * The operation token
+     */
+    String operationToken;
+
+    public ParametersForGetOperationStatusAndProgress setRepoId(String repoId) {
+        this.repoId = repoId;
+        return this;
+    }
+
+    public String getRepoId() {
+        return this.repoId;
+    }
+
+    public ParametersForGetOperationStatusAndProgress setOperationToken(String operationToken) {
+        this.operationToken = operationToken;
+        return this;
+    }
+
+    public String getOperationToken() {
+        return this.operationToken;
+    }
+}

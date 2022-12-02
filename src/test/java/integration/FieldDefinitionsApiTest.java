@@ -3,6 +3,8 @@ package integration;
 import com.laserfiche.repository.api.clients.FieldDefinitionsClient;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfWFieldInfo;
 import com.laserfiche.repository.api.clients.impl.model.WFieldInfo;
+import com.laserfiche.repository.api.clients.params.ParametersForGetFieldDefinitionById;
+import com.laserfiche.repository.api.clients.params.ParametersForGetFieldDefinitions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -23,7 +25,7 @@ class FieldDefinitionsApiTest extends BaseTest {
     @Test
     void getFieldDefinitionById_ReturnField() {
         WFieldInfo fieldInfo = client
-                .getFieldDefinitionById(repoId, 1, null, null);
+                .getFieldDefinitionById(new ParametersForGetFieldDefinitionById().setRepoId(repoId).setFieldDefinitionId(1));
 
         assertNotNull(fieldInfo);
     }
@@ -31,7 +33,7 @@ class FieldDefinitionsApiTest extends BaseTest {
     @Test
     void getFieldDefinitions_ReturnAllFields() {
         ODataValueContextOfIListOfWFieldInfo fieldInfoList = client
-                .getFieldDefinitions(repoId, null, null, null, null, null, null, false);
+                .getFieldDefinitions(new ParametersForGetFieldDefinitions().setRepoId(repoId));
 
         assertNotNull(fieldInfoList);
     }
@@ -40,8 +42,8 @@ class FieldDefinitionsApiTest extends BaseTest {
     void getFieldDefinitions_NextLink() throws InterruptedException {
         int maxPageSize = 10;
         ODataValueContextOfIListOfWFieldInfo fieldInfoList = client
-                .getFieldDefinitions(repoId, String.format("maxpagesize=%d", maxPageSize), null, null, null, null, null,
-                        false);
+                .getFieldDefinitions(new ParametersForGetFieldDefinitions().setRepoId(repoId)
+                                .setPrefer(String.format("maxpagesize=%d", maxPageSize)));
         assertNotNull(fieldInfoList);
 
         String nextLink = fieldInfoList.getOdataNextLink();
@@ -79,6 +81,6 @@ class FieldDefinitionsApiTest extends BaseTest {
                 return false;
             }
         };
-        client.getFieldDefinitionsForEach(callback, maxPageSize, repoId, null, null, null, null, null, null, null);
+        client.getFieldDefinitionsForEach(callback, maxPageSize, new ParametersForGetFieldDefinitions().setRepoId(repoId));
     }
 }

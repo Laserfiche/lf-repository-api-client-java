@@ -3,6 +3,8 @@ package integration;
 import com.laserfiche.repository.api.clients.TagDefinitionsClient;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfWTagInfo;
 import com.laserfiche.repository.api.clients.impl.model.WTagInfo;
+import com.laserfiche.repository.api.clients.params.ParametersForGetTagDefinitionById;
+import com.laserfiche.repository.api.clients.params.ParametersForGetTagDefinitions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -22,7 +24,7 @@ class TagDefinitionsApiTest extends BaseTest {
     @Test
     void getTagDefinitions_ReturnAllTags() {
         ODataValueContextOfIListOfWTagInfo tagInfoList = client
-                .getTagDefinitions(repoId, null, null, null, null, null, null, false);
+                .getTagDefinitions(new ParametersForGetTagDefinitions().setRepoId(repoId));
 
         assertNotNull(tagInfoList);
     }
@@ -31,8 +33,8 @@ class TagDefinitionsApiTest extends BaseTest {
     void getTagDefinitions_NextLink() throws InterruptedException {
         int maxPageSize = 1;
         ODataValueContextOfIListOfWTagInfo tagInfoList = client
-                .getTagDefinitions(repoId, String.format("maxpagesize=%d", maxPageSize), null, null, null, null, null,
-                        false);
+                .getTagDefinitions(new ParametersForGetTagDefinitions().setRepoId(repoId)
+                                .setPrefer(String.format("maxpagesize=%d", maxPageSize)));
 
         assertNotNull(tagInfoList);
 
@@ -56,7 +58,7 @@ class TagDefinitionsApiTest extends BaseTest {
     @Test
     void getTagDefinitions_ForEach() throws InterruptedException {
         ODataValueContextOfIListOfWTagInfo tagInfoList = client
-                .getTagDefinitions(repoId, null, null, null, null, null, null, false);
+                .getTagDefinitions(new ParametersForGetTagDefinitions().setRepoId(repoId));
 
         assertNotNull(tagInfoList);
 
@@ -76,21 +78,22 @@ class TagDefinitionsApiTest extends BaseTest {
                 return false;
             }
         };
-        client.getTagDefinitionsForEach(callback, maxPageSize, repoId, null, null, null, null, null, null, null);
+        client.getTagDefinitionsForEach(callback, maxPageSize, new ParametersForGetTagDefinitions().setRepoId(repoId));
     }
 
     @Test
     void getTagDefinitionById_ReturnTag() {
         ODataValueContextOfIListOfWTagInfo tagInfoList = client
-                .getTagDefinitions(repoId, null, null, null, null, null, null, false);
+                .getTagDefinitions(new ParametersForGetTagDefinitions().setRepoId(repoId));
 
         assertNotNull(tagInfoList);
 
         WTagInfo tagInfo = client
-                .getTagDefinitionById(repoId, tagInfoList
+                .getTagDefinitionById(new ParametersForGetTagDefinitionById().setRepoId(repoId)
+                        .setTagId(tagInfoList
                         .getValue()
                         .get(0)
-                        .getId(), null, null);
+                        .getId()));
 
         assertNotNull(tagInfo);
     }
