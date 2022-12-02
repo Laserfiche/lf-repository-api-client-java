@@ -28,7 +28,7 @@ import com.laserfiche.repository.api.clients.params.*;
 public interface TemplateDefinitionsClient {
 
     /**
-     *  - Returns all template definitions (including field definitions) in the repository. If a template name query parameter is given, then a single template definition is returned.
+     * - Returns all template definitions (including field definitions) in the repository. If a template name query parameter is given, then a single template definition is returned.
      * - Provide a repository ID, and get a paged listing of template definitions available in the repository. Useful when trying to find a list of all template definitions available, rather than a specific one.
      * - Default page size: 100. Allowed OData query options: Select | Count | OrderBy | Skip | Top | SkipToken | Prefer.
      *
@@ -55,7 +55,7 @@ public interface TemplateDefinitionsClient {
     void getTemplateDefinitionsForEach(Function<ODataValueContextOfIListOfWTemplateInfo, Boolean> callback, Integer maxPageSize, ParametersForGetTemplateDefinitions parameters);
 
     /**
-     *  - Returns the field definitions assigned to a template definition.
+     * - Returns the field definitions assigned to a template definition.
      * - Provide a template definition name, and get a paged listing of the field definitions assigned to that template.
      * - Default page size: 100. Allowed OData query options: Select | Count | OrderBy | Skip | Top | SkipToken | Prefer.
      *
@@ -82,7 +82,7 @@ public interface TemplateDefinitionsClient {
     void getTemplateFieldDefinitionsByTemplateNameForEach(Function<ODataValueContextOfIListOfTemplateFieldInfo, Boolean> callback, Integer maxPageSize, ParametersForGetTemplateFieldDefinitionsByTemplateName parameters);
 
     /**
-     *  - Returns the field definitions assigned to a template definition.
+     * - Returns the field definitions assigned to a template definition.
      * - Provide a template definition ID, and get a paged listing of the field definitions assigned to that template.
      * - Default page size: 100. Allowed OData query options: Select | Count | OrderBy | Skip | Top | SkipToken | Prefer.
      *
@@ -109,7 +109,7 @@ public interface TemplateDefinitionsClient {
     void getTemplateFieldDefinitionsForEach(Function<ODataValueContextOfIListOfTemplateFieldInfo, Boolean> callback, Integer maxPageSize, ParametersForGetTemplateFieldDefinitions parameters);
 
     /**
-     *  - Returns a single template definition (including field definitions, if relevant).
+     * - Returns a single template definition (including field definitions, if relevant).
      * - Provide a template definition ID, and get the single template definition associated with that ID. Useful when a route provides a minimal amount of details, and more information about the specific template is needed.
      * - Allowed OData query options: Select
      *

@@ -28,7 +28,7 @@ import com.laserfiche.repository.api.clients.params.*;
 public interface SearchesClient {
 
     /**
-     *  - Returns search status.
+     * - Returns search status.
      * - Provide a token (returned in the create search asynchronous route), and get the search status, progress, and any errors that may have occurred. When the search is completed, the Location header can be inspected as a link to the search results.
      * - OperationStatus can be one of the following : NotStarted, InProgress, Completed, Failed, or Canceled.
      *
@@ -38,7 +38,7 @@ public interface SearchesClient {
     OperationProgress getSearchStatus(ParametersForGetSearchStatus parameters);
 
     /**
-     *  - Cancels a currently running search.
+     * - Cancels a currently running search.
      * - Closes a completed search.
      *
      *  @param parameters An object of type ParametersForCancelOrCloseSearch which encapsulates the parameters of cancelOrCloseSearch method.
@@ -47,7 +47,7 @@ public interface SearchesClient {
     ODataValueOfBoolean cancelOrCloseSearch(ParametersForCancelOrCloseSearch parameters);
 
     /**
-     *  - Returns the context hits associated with a search result entry.
+     * - Returns the context hits associated with a search result entry.
      * - Given a searchToken, and rowNumber associated with a search entry in the listing, return the context hits for that entry.
      * - Default page size: 100. Allowed OData query options: Select | Count | OrderBy | Skip | Top | SkipToken | Prefer.
      *
@@ -74,7 +74,7 @@ public interface SearchesClient {
     void getSearchContextHitsForEach(Function<ODataValueContextOfIListOfContextHit, Boolean> callback, Integer maxPageSize, ParametersForGetSearchContextHits parameters);
 
     /**
-     *  - Runs a search operation on the repository.
+     * - Runs a search operation on the repository.
      * - Optional body parameters: FuzzyType: (default none), which can be used to determine what is considered a match by number of letters or percentage. FuzzyFactor: integer value that determines the degree to which a search will be considered a match (integer value for NumberOfLetters, or int value representing a percentage). The status for search operations must be checked via the Search specific status checking route.
      *
      *  @param parameters An object of type ParametersForCreateSearchOperation which encapsulates the parameters of createSearchOperation method.
@@ -83,7 +83,7 @@ public interface SearchesClient {
     AcceptedOperation createSearchOperation(ParametersForCreateSearchOperation parameters);
 
     /**
-     *  - Returns a search result listing if the search is completed.
+     * - Returns a search result listing if the search is completed.
      * - Optional query parameter: groupByOrderType (default false). This query parameter decides whether or not results are returned in groups based on their entry type.
      * - Optional query parameter: refresh (default false). If the search listing should be refreshed to show updated values.
      * - Default page size: 150. Allowed OData query options: Select | Count | OrderBy | Skip | Top | SkipToken | Prefer. OData $OrderBy syntax should follow: &quot;PropertyName direction,PropertyName2 direction&quot;. sort order can be either &quot;asc&quot; or &quot;desc&quot;. Search results expire after 5 minutes, but can be refreshed by retrieving the results again.

@@ -28,7 +28,7 @@ import com.laserfiche.repository.api.clients.params.*;
 public interface LinkDefinitionsClient {
 
     /**
-     *  - Returns a single link definition associated with the specified ID.
+     * - Returns a single link definition associated with the specified ID.
      * - Provide a link type ID and get the associated link definition. Useful when a route provides a minimal amount of details and more information about the specific link definition is needed.
      * - Allowed OData query options: Select
      *
@@ -38,7 +38,7 @@ public interface LinkDefinitionsClient {
     EntryLinkTypeInfo getLinkDefinitionById(ParametersForGetLinkDefinitionById parameters);
 
     /**
-     *  - Returns the link definitions in the repository.
+     * - Returns the link definitions in the repository.
      * - Provide a repository ID and get a paged listing of link definitions available in the repository. Useful when trying to display all link definitions available, not only links assigned to a specific entry.
      * - Default page size: 100. Allowed OData query options: Select | Count | OrderBy | Skip | Top | SkipToken | Prefer.
      *

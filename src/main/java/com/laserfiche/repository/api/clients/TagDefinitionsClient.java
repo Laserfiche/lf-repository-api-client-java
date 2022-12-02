@@ -28,7 +28,7 @@ import com.laserfiche.repository.api.clients.params.*;
 public interface TagDefinitionsClient {
 
     /**
-     *  - Returns all tag definitions in the repository.
+     * - Returns all tag definitions in the repository.
      * - Provide a repository ID and get a paged listing of tag definitions available in the repository. Useful when trying to display all tag definitions available, not only tags assigned to a specific entry.
      * - Default page size: 100. Allowed OData query options: Select | Count | OrderBy | Skip | Top | SkipToken | Prefer.
      *
@@ -55,7 +55,7 @@ public interface TagDefinitionsClient {
     void getTagDefinitionsForEach(Function<ODataValueContextOfIListOfWTagInfo, Boolean> callback, Integer maxPageSize, ParametersForGetTagDefinitions parameters);
 
     /**
-     *  - Returns a single tag definition.
+     * - Returns a single tag definition.
      * - Provide a tag definition ID, and get the single tag definition associated with that ID. Useful when another route provides a minimal amount of details, and more information about the specific tag is needed.
      * - Allowed OData query options: Select
      *

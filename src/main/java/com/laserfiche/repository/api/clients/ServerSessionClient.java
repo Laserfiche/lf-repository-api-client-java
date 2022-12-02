@@ -28,7 +28,7 @@ import com.laserfiche.repository.api.clients.params.*;
 public interface ServerSessionClient {
 
     /**
-     *  - Deprecated.
+     * - Deprecated.
      * - Invalidates the server session.
      * - Acts as a &quot;logout&quot; operation, and invalidates the session associated with the provided access token. This method should be used when the client wants to clean up the current session.
      * - Only available in Laserfiche Cloud.
@@ -39,7 +39,7 @@ public interface ServerSessionClient {
     ODataValueOfBoolean invalidateServerSession(ParametersForInvalidateServerSession parameters);
 
     /**
-     *  - Deprecated. This function is a no-op, always returns 200.
+     * - Deprecated. This function is a no-op, always returns 200.
      * - Only available in Laserfiche Cloud.
      *
      *  @param parameters An object of type ParametersForCreateServerSession which encapsulates the parameters of createServerSession method.
@@ -48,7 +48,7 @@ public interface ServerSessionClient {
     ODataValueOfBoolean createServerSession(ParametersForCreateServerSession parameters);
 
     /**
-     *  - Deprecated.
+     * - Deprecated.
      * - Refreshes the session associated with the access token. This is only necessary if you want to keep the same session alive, otherwise a new session will be automatically created when the session expires.
      * - When a client application wants to keep a session alive that has been idle for an hour, this route can be used to refresh the expiration timer associated with the access token.
      * - Only available in Laserfiche Cloud.

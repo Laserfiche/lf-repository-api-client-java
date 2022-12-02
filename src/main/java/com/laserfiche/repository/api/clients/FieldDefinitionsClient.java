@@ -28,7 +28,7 @@ import com.laserfiche.repository.api.clients.params.*;
 public interface FieldDefinitionsClient {
 
     /**
-     *  - Returns a single field definition associated with the specified ID.
+     * - Returns a single field definition associated with the specified ID.
      * - Useful when a route provides a minimal amount of details and more information about the specific field definition is needed.
      * - Allowed OData query options: Select
      *
@@ -38,7 +38,7 @@ public interface FieldDefinitionsClient {
     WFieldInfo getFieldDefinitionById(ParametersForGetFieldDefinitionById parameters);
 
     /**
-     *  - Returns a paged listing of field definitions available in the specified repository.
+     * - Returns a paged listing of field definitions available in the specified repository.
      * - Useful when trying to find a list of all field definitions available, rather than only those assigned to a specific entry/template.
      * - Default page size: 100. Allowed OData query options: Select | Count | OrderBy | Skip | Top | SkipToken | Prefer.
      *
