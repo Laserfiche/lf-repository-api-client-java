@@ -5,15 +5,15 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum WatermarkPosition {
 
-    TOPLEFT("TopLeft"),
-    TOPCENTER("TopCenter"),
-    TOPRIGHT("TopRight"),
-    MIDDLELEFT("MiddleLeft"),
-    DEADCENTER("DeadCenter"),
-    MIDDLERIGHT("MiddleRight"),
-    BOTTOMLEFT("BottomLeft"),
-    BOTTOMCENTER("BottomCenter"),
-    BOTTOMRIGHT("BottomRight");
+    TOP_LEFT("TopLeft"),
+    TOP_CENTER("TopCenter"),
+    TOP_RIGHT("TopRight"),
+    MIDDLE_LEFT("MiddleLeft"),
+    DEAD_CENTER("DeadCenter"),
+    MIDDLE_RIGHT("MiddleRight"),
+    BOTTOM_LEFT("BottomLeft"),
+    BOTTOM_CENTER("BottomCenter"),
+    BOTTOM_RIGHT("BottomRight");
 
     private String value;
 

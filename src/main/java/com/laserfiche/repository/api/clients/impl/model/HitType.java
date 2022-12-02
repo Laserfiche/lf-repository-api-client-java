@@ -5,21 +5,21 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum HitType {
 
-    PAGECONTENT("PageContent"),
+    PAGE_CONTENT("PageContent"),
     NOTE("Note"),
     CALLOUT("Callout"),
-    TEXTBOX("TextBox"),
+    TEXT_BOX("TextBox"),
     EDOC("Edoc"),
     PROP("Prop"),
     NAME("Name"),
     EXTENSION("Extension"),
-    VERSIONGROUPNOTE("VersionGroupNote"),
-    VERSIONCOMMENT("VersionComment"),
+    VERSION_GROUP_NOTE("VersionGroupNote"),
+    VERSION_COMMENT("VersionComment"),
     FIELD("Field"),
-    SIGNATURECOMMENT("SignatureComment"),
-    CERTIFICATESUBJECT("CertificateSubject"),
-    TAGCOMMENT("TagComment"),
-    ANNOTATIONCOMMENT("AnnotationComment"),
+    SIGNATURE_COMMENT("SignatureComment"),
+    CERTIFICATE_SUBJECT("CertificateSubject"),
+    TAG_COMMENT("TagComment"),
+    ANNOTATION_COMMENT("AnnotationComment"),
     ATTACHMENT("Attachment");
 
     private String value;
