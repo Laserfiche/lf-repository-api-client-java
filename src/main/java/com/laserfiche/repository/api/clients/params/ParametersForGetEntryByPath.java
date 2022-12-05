@@ -22,9 +22,8 @@ public class ParametersForGetEntryByPath {
         return this;
     }
 
-
     /**
-     * Returns the value of 'repoId' field, which is the requested repository ID.
+     * The requested repository ID.
      *
      * @return String The return value
      */
@@ -37,9 +36,8 @@ public class ParametersForGetEntryByPath {
         return this;
     }
 
-
     /**
-     * Returns the value of 'fullPath' field, which is the requested entry path.
+     * The requested entry path.
      *
      * @return String The return value
      */
@@ -52,9 +50,8 @@ public class ParametersForGetEntryByPath {
         return this;
     }
 
-
     /**
-     * Returns the value of 'fallbackToClosestAncestor' field, which is an optional query parameter used to indicate whether or not the closest ancestor in the path should be returned if the initial entry path is not found. The default value is false.
+     * An optional query parameter used to indicate whether or not the closest ancestor in the path should be returned if the initial entry path is not found. The default value is false.
      *
      * @return boolean The return value
      */

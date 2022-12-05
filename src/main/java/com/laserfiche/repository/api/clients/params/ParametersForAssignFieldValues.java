@@ -30,7 +30,7 @@ public class ParametersForAssignFieldValues {
     }
 
     /**
-     * Returns the value of 'repoId' field, which is the requested repository ID.
+     * The requested repository ID.
      *
      * @return String The return value
      */
@@ -44,7 +44,7 @@ public class ParametersForAssignFieldValues {
     }
 
     /**
-     * Returns the value of 'entryId' field, which is the entry ID of the entry that will have its fields updated.
+     * The entry ID of the entry that will have its fields updated.
      *
      * @return int The return value
      */
@@ -67,7 +67,7 @@ public class ParametersForAssignFieldValues {
     }
 
     /**
-     * Returns the value of 'culture' field, which is an optional query parameter used to indicate the locale that should be used.
+     * An optional query parameter used to indicate the locale that should be used.
      * The value should be a standard language tag. This may be used when setting field values with tokens.
      *
      * @return String The return value

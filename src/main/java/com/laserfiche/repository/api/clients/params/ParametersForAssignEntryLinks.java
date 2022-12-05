@@ -23,9 +23,8 @@ public class ParametersForAssignEntryLinks {
         return this;
     }
 
-
     /**
-     * Returns the value of 'repoId' field, which is the request repository ID.
+     * The request repository ID.
      *
      * @return String The return value
      */
@@ -38,9 +37,8 @@ public class ParametersForAssignEntryLinks {
         return this;
     }
 
-
     /**
-     * Returns the value of 'entryId' field, which is the requested entry ID.
+     * The requested entry ID.
      *
      * @return int The return value
      */

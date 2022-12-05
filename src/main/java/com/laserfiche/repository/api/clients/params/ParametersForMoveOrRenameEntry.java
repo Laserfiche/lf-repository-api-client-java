@@ -33,9 +33,8 @@ public class ParametersForMoveOrRenameEntry {
         return this;
     }
 
-
     /**
-     * Returns the value of 'repoId' field, which is the requested repository ID.
+     * The requested repository ID.
      *
      * @return String The return value
      */
@@ -48,9 +47,8 @@ public class ParametersForMoveOrRenameEntry {
         return this;
     }
 
-
     /**
-     * Returns the value of 'entryId' field, which is the requested entry ID.
+     * The requested entry ID.
      *
      * @return int The return value
      */
@@ -72,9 +70,8 @@ public class ParametersForMoveOrRenameEntry {
         return this;
     }
 
-
     /**
-     * Returns the value of 'autoRename' field, which is an optional query parameter used to indicate if the entry should be automatically
+     * An optional query parameter used to indicate if the entry should be automatically
      * renamed if another entry already exists with the same name in the folder. The default value is false.
      *
      * @return boolean The return value
@@ -88,9 +85,8 @@ public class ParametersForMoveOrRenameEntry {
         return this;
     }
 
-
     /**
-     * Returns the value of 'culture' field, which is an optional query parameter used to indicate the locale that should be used.
+     * An optional query parameter used to indicate the locale that should be used.
      * The value should be a standard language tag.
      *
      * @return String The return value

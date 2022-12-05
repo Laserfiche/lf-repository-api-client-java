@@ -17,7 +17,7 @@ public class ParametersForCreateSearchOperation {
     }
 
     /**
-     * Returns the value of 'repoId' field, which is the requested repository ID.
+     * The requested repository ID.
      *
      * @return String The return value
      */

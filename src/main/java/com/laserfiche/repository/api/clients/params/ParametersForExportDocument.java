@@ -29,7 +29,7 @@ public class ParametersForExportDocument {
     }
 
     /**
-     * Returns the value of 'repoId' field, which is the requested repository ID.
+     * The requested repository ID.
      *
      * @return String The return value
      */
@@ -43,7 +43,7 @@ public class ParametersForExportDocument {
     }
 
     /**
-     * Returns the value of 'entryId' field, which is the requested document ID.
+     * The requested document ID.
      *
      * @return int The return value
      */
@@ -56,9 +56,8 @@ public class ParametersForExportDocument {
         return this;
     }
 
-
     /**
-     * Returns the value of 'range' field, which is an optional header used to retrieve partial content of the edoc. Only supports single
+     * An optional header used to retrieve partial content of the edoc. Only supports single
      * range with byte unit.
      *
      * @return String The return value

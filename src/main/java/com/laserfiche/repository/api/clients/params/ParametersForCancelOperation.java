@@ -18,7 +18,7 @@ public class ParametersForCancelOperation {
     }
 
     /**
-     * Returns the value of 'repoId' field, which is the requested repository ID
+     * The requested repository ID
      *
      * @return String The return value
      */
@@ -32,7 +32,7 @@ public class ParametersForCancelOperation {
     }
 
     /**
-     * Returns the value of 'operationToken' field, which is the operation token
+     * The operation token
      *
      * @return String The return value
      */

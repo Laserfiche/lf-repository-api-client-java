@@ -22,7 +22,7 @@ public class ParametersForDeleteEntryInfo {
     }
 
     /**
-     * Returns the value of 'repoId' field, which is the requested repository ID.
+     * The requested repository ID.
      *
      * @return String The return value
      */
@@ -36,7 +36,7 @@ public class ParametersForDeleteEntryInfo {
     }
 
     /**
-     * Returns the value of 'entryId' field, which is the requested entry ID.
+     * The requested entry ID.
      *
      * @return int The return value
      */

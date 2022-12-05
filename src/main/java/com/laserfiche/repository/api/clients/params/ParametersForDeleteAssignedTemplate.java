@@ -18,7 +18,7 @@ public class ParametersForDeleteAssignedTemplate {
     }
 
     /**
-     * Returns the value of 'repoId' field, which is the requested repository ID.
+     * The requested repository ID.
      *
      * @return String The return value
      */
@@ -32,7 +32,7 @@ public class ParametersForDeleteAssignedTemplate {
     }
 
     /**
-     * Returns the value of 'entryId' field, which is the ID of the entry that will have its template removed.
+     * The ID of the entry that will have its template removed.
      *
      * @return int The return value
      */

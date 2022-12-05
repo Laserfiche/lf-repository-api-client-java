@@ -22,9 +22,8 @@ public class ParametersForGetLinkDefinitionById {
         return this;
     }
 
-
     /**
-     * Returns the value of 'repoId' field, which is the requested repository ID.
+     * The requested repository ID.
      *
      * @return String The return value
      */
@@ -37,9 +36,8 @@ public class ParametersForGetLinkDefinitionById {
         return this;
     }
 
-
     /**
-     * Returns the value of 'linkTypeId' field, which is the requested link type ID.
+     * The requested link type ID.
      *
      * @return int The return value
      */
@@ -52,9 +50,8 @@ public class ParametersForGetLinkDefinitionById {
         return this;
     }
 
-
     /**
-     * Returns the value of 'select' field, which is limits the properties returned in the result.
+     * Limits the properties returned in the result.
      *
      * @return String The return value
      */
