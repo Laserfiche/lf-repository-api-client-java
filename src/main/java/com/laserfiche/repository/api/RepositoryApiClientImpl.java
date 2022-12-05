@@ -4,6 +4,7 @@ import com.laserfiche.api.client.model.AccessKey;
 import com.laserfiche.repository.api.clients.*;
 import com.laserfiche.repository.api.clients.impl.*;
 import com.laserfiche.repository.api.clients.impl.deserialization.RepositoryClientObjectMapper;
+import kong.unirest.ObjectMapper;
 import kong.unirest.Unirest;
 import kong.unirest.UnirestInstance;
 
@@ -31,27 +32,30 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
             baseUrl = baseUrl.substring(0, baseUrl.length() - 1);
         }
 
+        // Initialize object mapper
+        ObjectMapper objectMapper = new RepositoryClientObjectMapper();
+
         // Initialize HTTP client
         httpClient = Unirest.spawnInstance();
         httpClient
                 .config()
-                .setObjectMapper(new RepositoryClientObjectMapper())
+                .setObjectMapper(objectMapper)
                 .interceptor(interceptor);
         this.interceptor = interceptor;
 
         // Initialize repository API clients
-        attributesClient = new AttributesClientImpl(baseUrl, httpClient);
-        auditReasonsClient = new AuditReasonsClientImpl(baseUrl, httpClient);
-        entriesClient = new EntriesClientImpl(baseUrl, httpClient);
-        fieldDefinitionsClient = new FieldDefinitionsClientImpl(baseUrl, httpClient);
-        linkDefinitionsClient = new LinkDefinitionsClientImpl(baseUrl, httpClient);
-        repositoriesClient = new RepositoriesClientImpl(baseUrl, httpClient);
-        searchesClient = new SearchesClientImpl(baseUrl, httpClient);
-        serverSessionClient = new ServerSessionClientImpl(baseUrl, httpClient);
-        simpleSearchesClient = new SimpleSearchesClientImpl(baseUrl, httpClient);
-        tagDefinitionsClient = new TagDefinitionsClientImpl(baseUrl, httpClient);
-        tasksClient = new TasksClientImpl(baseUrl, httpClient);
-        templateDefinitionsClient = new TemplateDefinitionsClientImpl(baseUrl, httpClient);
+        attributesClient = new AttributesClientImpl(baseUrl, httpClient, objectMapper);
+        auditReasonsClient = new AuditReasonsClientImpl(baseUrl, httpClient, objectMapper);
+        entriesClient = new EntriesClientImpl(baseUrl, httpClient, objectMapper);
+        fieldDefinitionsClient = new FieldDefinitionsClientImpl(baseUrl, httpClient, objectMapper);
+        linkDefinitionsClient = new LinkDefinitionsClientImpl(baseUrl, httpClient, objectMapper);
+        repositoriesClient = new RepositoriesClientImpl(baseUrl, httpClient, objectMapper);
+        searchesClient = new SearchesClientImpl(baseUrl, httpClient, objectMapper);
+        serverSessionClient = new ServerSessionClientImpl(baseUrl, httpClient, objectMapper);
+        simpleSearchesClient = new SimpleSearchesClientImpl(baseUrl, httpClient, objectMapper);
+        tagDefinitionsClient = new TagDefinitionsClientImpl(baseUrl, httpClient, objectMapper);
+        tasksClient = new TasksClientImpl(baseUrl, httpClient, objectMapper);
+        templateDefinitionsClient = new TemplateDefinitionsClientImpl(baseUrl, httpClient, objectMapper);
     }
 
     public static RepositoryApiClient createFromAccessKey(String servicePrincipalKey, AccessKey accessKey,
