@@ -7,10 +7,7 @@ import kong.unirest.Header;
 import kong.unirest.Headers;
 import kong.unirest.UnirestInstance;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class ApiClient {
@@ -50,9 +47,7 @@ public class ApiClient {
                 List<Object> values = new ArrayList<>();
                 if (parameterValues[i] instanceof Object[]) {
                     Object[] objects = (Object[]) parameterValues[i];
-                    for (Object object : objects) {
-                        values.add(object);
-                    }
+                    Collections.addAll(values, objects);
                 } else {
                     values.add(parameterValues[i]);
                 }
