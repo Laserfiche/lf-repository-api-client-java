@@ -17,6 +17,7 @@ public class ParametersForGetOperationStatusAndProgress {
         return this;
     }
 
+
     /**
      * Returns the value of 'repoId' field, which is the requested repository ID
      *
@@ -30,6 +31,7 @@ public class ParametersForGetOperationStatusAndProgress {
         this.operationToken = operationToken;
         return this;
     }
+
 
     /**
      * Returns the value of 'operationToken' field, which is the operation token

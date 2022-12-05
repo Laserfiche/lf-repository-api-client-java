@@ -17,6 +17,7 @@ public class ParametersForGetDocumentContentType {
         return this;
     }
 
+
     /**
      * Returns the value of 'repoId' field, which is the requested repository ID.
      *
@@ -30,6 +31,7 @@ public class ParametersForGetDocumentContentType {
         this.entryId = entryId;
         return this;
     }
+
 
     /**
      * Returns the value of 'entryId' field, which is the requested document ID.

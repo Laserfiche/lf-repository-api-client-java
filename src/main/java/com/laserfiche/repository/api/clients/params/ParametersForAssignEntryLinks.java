@@ -23,6 +23,7 @@ public class ParametersForAssignEntryLinks {
         return this;
     }
 
+
     /**
      * Returns the value of 'repoId' field, which is the request repository ID.
      *
@@ -36,6 +37,7 @@ public class ParametersForAssignEntryLinks {
         this.entryId = entryId;
         return this;
     }
+
 
     /**
      * Returns the value of 'entryId' field, which is the requested entry ID.

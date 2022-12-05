@@ -32,6 +32,7 @@ public class ParametersForExportDocumentWithAuditReason {
         return this;
     }
 
+
     /**
      * Returns the value of 'repoId' field, which is the requested repository ID.
      *
@@ -45,6 +46,7 @@ public class ParametersForExportDocumentWithAuditReason {
         this.entryId = entryId;
         return this;
     }
+
 
     /**
      * Returns the value of 'entryId' field, which is the requested document ID.
@@ -68,6 +70,7 @@ public class ParametersForExportDocumentWithAuditReason {
         this.range = range;
         return this;
     }
+
 
     /**
      * Returns the value of 'range' field, which is an optional header used to retrieve partial content of the edoc. Only supports single

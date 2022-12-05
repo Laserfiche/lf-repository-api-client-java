@@ -42,6 +42,7 @@ public class ParametersForImportDocument {
         return this;
     }
 
+
     /**
      * Returns the value of 'repoId' field, which is the requested repository ID.
      *
@@ -55,6 +56,7 @@ public class ParametersForImportDocument {
         this.parentEntryId = parentEntryId;
         return this;
     }
+
 
     /**
      * Returns the value of 'parentEntryId' field, which is the entry ID of the folder that the document will be created in.
@@ -70,6 +72,7 @@ public class ParametersForImportDocument {
         return this;
     }
 
+
     /**
      * Returns the value of 'fileName' field, which is the created document's file name.
      *
@@ -83,6 +86,7 @@ public class ParametersForImportDocument {
         this.autoRename = autoRename;
         return this;
     }
+
 
     /**
      * Returns the value of 'autoRename' field, which is an optional query parameter used to indicate if the new document should be automatically
@@ -98,6 +102,7 @@ public class ParametersForImportDocument {
         this.culture = culture;
         return this;
     }
+
 
     /**
      * Returns the value of 'culture' field, which is an optional query parameter used to indicate the locale that should be used.

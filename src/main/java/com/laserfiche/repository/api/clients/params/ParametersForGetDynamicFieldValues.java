@@ -21,6 +21,7 @@ public class ParametersForGetDynamicFieldValues {
         return this;
     }
 
+
     /**
      * Returns the value of 'repoId' field, which is the requested repository ID.
      *
@@ -34,6 +35,7 @@ public class ParametersForGetDynamicFieldValues {
         this.entryId = entryId;
         return this;
     }
+
 
     /**
      * Returns the value of 'entryId' field, which is the requested entry ID.

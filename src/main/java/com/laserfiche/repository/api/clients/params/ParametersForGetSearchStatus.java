@@ -17,6 +17,7 @@ public class ParametersForGetSearchStatus {
         return this;
     }
 
+
     /**
      * Returns the value of 'repoId' field, which is the requested repository ID.
      *
@@ -30,6 +31,7 @@ public class ParametersForGetSearchStatus {
         this.searchToken = searchToken;
         return this;
     }
+
 
     /**
      * Returns the value of 'searchToken' field, which is the requested searchToken.

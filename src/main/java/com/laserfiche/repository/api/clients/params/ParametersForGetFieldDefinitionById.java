@@ -28,6 +28,7 @@ public class ParametersForGetFieldDefinitionById {
         return this;
     }
 
+
     /**
      * Returns the value of 'repoId' field, which is the requested repository ID.
      *
@@ -41,6 +42,7 @@ public class ParametersForGetFieldDefinitionById {
         this.fieldDefinitionId = fieldDefinitionId;
         return this;
     }
+
 
     /**
      * Returns the value of 'fieldDefinitionId' field, which is the requested field definition ID.
@@ -56,6 +58,7 @@ public class ParametersForGetFieldDefinitionById {
         return this;
     }
 
+
     /**
      * Returns the value of 'culture' field, which is an optional query parameter used to indicate the locale that should be used for formatting.
      * The value should be a standard language tag.
@@ -70,6 +73,7 @@ public class ParametersForGetFieldDefinitionById {
         this.select = select;
         return this;
     }
+
 
     /**
      * Returns the value of 'select' field, which is limits the properties returned in the result.

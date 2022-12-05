@@ -28,6 +28,7 @@ public class ParametersForGetTagDefinitionById {
         return this;
     }
 
+
     /**
      * Returns the value of 'repoId' field, which is the requested repository ID.
      *
@@ -41,6 +42,7 @@ public class ParametersForGetTagDefinitionById {
         this.tagId = tagId;
         return this;
     }
+
 
     /**
      * Returns the value of 'tagId' field, which is the requested tag definition ID.
@@ -56,6 +58,7 @@ public class ParametersForGetTagDefinitionById {
         return this;
     }
 
+
     /**
      * Returns the value of 'culture' field, which is an optional query parameter used to indicate the locale that should be used for formatting.
      * The value should be a standard language tag.
@@ -70,6 +73,7 @@ public class ParametersForGetTagDefinitionById {
         this.select = select;
         return this;
     }
+
 
     /**
      * Returns the value of 'select' field, which is limits the properties returned in the result.

@@ -27,6 +27,7 @@ public class ParametersForWriteTemplateValueToEntry {
         return this;
     }
 
+
     /**
      * Returns the value of 'repoId' field, which is the requested repository ID.
      *
@@ -40,6 +41,7 @@ public class ParametersForWriteTemplateValueToEntry {
         this.entryId = entryId;
         return this;
     }
+
 
     /**
      * Returns the value of 'entryId' field, which is the ID of entry that will have its template updated.
@@ -63,6 +65,7 @@ public class ParametersForWriteTemplateValueToEntry {
         this.culture = culture;
         return this;
     }
+
 
     /**
      * Returns the value of 'culture' field, which is an optional query parameter used to indicate the locale that should be used.

@@ -28,6 +28,7 @@ public class ParametersForGetTemplateDefinitionById {
         return this;
     }
 
+
     /**
      * Returns the value of 'repoId' field, which is the requested repository ID.
      *
@@ -41,6 +42,7 @@ public class ParametersForGetTemplateDefinitionById {
         this.templateId = templateId;
         return this;
     }
+
 
     /**
      * Returns the value of 'templateId' field, which is the requested template definition ID.
@@ -56,6 +58,7 @@ public class ParametersForGetTemplateDefinitionById {
         return this;
     }
 
+
     /**
      * Returns the value of 'culture' field, which is an optional query parameter used to indicate the locale that should be used for formatting.
      * The value should be a standard language tag.
@@ -70,6 +73,7 @@ public class ParametersForGetTemplateDefinitionById {
         this.select = select;
         return this;
     }
+
 
     /**
      * Returns the value of 'select' field, which is limits the properties returned in the result.

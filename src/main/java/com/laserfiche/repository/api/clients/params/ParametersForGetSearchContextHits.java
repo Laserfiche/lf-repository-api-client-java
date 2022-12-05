@@ -52,6 +52,7 @@ public class ParametersForGetSearchContextHits {
         return this;
     }
 
+
     /**
      * Returns the value of 'repoId' field, which is the requested repository ID.
      *
@@ -65,6 +66,7 @@ public class ParametersForGetSearchContextHits {
         this.searchToken = searchToken;
         return this;
     }
+
 
     /**
      * Returns the value of 'searchToken' field, which is the requested searchToken.
@@ -80,6 +82,7 @@ public class ParametersForGetSearchContextHits {
         return this;
     }
 
+
     /**
      * Returns the value of 'rowNumber' field, which is the search result listing row number to get context hits for.
      *
@@ -93,6 +96,7 @@ public class ParametersForGetSearchContextHits {
         this.prefer = prefer;
         return this;
     }
+
 
     /**
      * Returns the value of 'prefer' field, which is an optional OData header. Can be used to set the maximum page size using odata.maxpagesize.
@@ -108,6 +112,7 @@ public class ParametersForGetSearchContextHits {
         return this;
     }
 
+
     /**
      * Returns the value of 'select' field, which is limits the properties returned in the result.
      *
@@ -121,6 +126,7 @@ public class ParametersForGetSearchContextHits {
         this.orderby = orderby;
         return this;
     }
+
 
     /**
      * Returns the value of 'orderby' field, which is specifies the order in which items are returned. The maximum number of expressions is 5.
@@ -136,6 +142,7 @@ public class ParametersForGetSearchContextHits {
         return this;
     }
 
+
     /**
      * Returns the value of 'top' field, which is limits the number of items returned from a collection.
      *
@@ -150,6 +157,7 @@ public class ParametersForGetSearchContextHits {
         return this;
     }
 
+
     /**
      * Returns the value of 'skip' field, which is excludes the specified number of items of the queried collection from the result.
      *
@@ -163,6 +171,7 @@ public class ParametersForGetSearchContextHits {
         this.count = count;
         return this;
     }
+
 
     /**
      * Returns the value of 'count' field, which is indicates whether the total count of items within a collection are returned in the result.
