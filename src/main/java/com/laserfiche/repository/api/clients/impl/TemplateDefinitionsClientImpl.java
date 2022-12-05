@@ -1,6 +1,5 @@
 package com.laserfiche.repository.api.clients.impl;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.laserfiche.repository.api.clients.TemplateDefinitionsClient;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfTemplateFieldInfo;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfWTemplateInfo;
@@ -11,6 +10,7 @@ import com.laserfiche.repository.api.clients.params.ParametersForGetTemplateDefi
 import com.laserfiche.repository.api.clients.params.ParametersForGetTemplateFieldDefinitions;
 import com.laserfiche.repository.api.clients.params.ParametersForGetTemplateFieldDefinitionsByTemplateName;
 import kong.unirest.HttpResponse;
+import kong.unirest.ObjectMapper;
 import kong.unirest.UnirestInstance;
 import kong.unirest.UnirestParsingException;
 import kong.unirest.json.JSONObject;
@@ -22,8 +22,8 @@ import java.util.stream.Collectors;
 
 public class TemplateDefinitionsClientImpl extends ApiClient implements TemplateDefinitionsClient {
 
-    public TemplateDefinitionsClientImpl(String baseUrl, UnirestInstance httpClient) {
-        super(baseUrl, httpClient);
+    public TemplateDefinitionsClientImpl(String baseUrl, UnirestInstance httpClient, ObjectMapper objectMapper) {
+        super(baseUrl, httpClient, objectMapper);
     }
 
     /**
@@ -65,7 +65,7 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
             try {
                 String jsonString = new JSONObject(body).toString();
                 return objectMapper.readValue(jsonString, ODataValueContextOfIListOfWTemplateInfo.class);
-            } catch (JsonProcessingException | IllegalStateException e) {
+            } catch (IllegalStateException e) {
                 e.printStackTrace();
                 return null;
             }
@@ -75,7 +75,7 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
             try {
                 String jsonString = new JSONObject(body).toString();
                 problemDetails = deserializeToProblemDetails(jsonString);
-            } catch (JsonProcessingException | IllegalStateException e) {
+            } catch (IllegalStateException e) {
                 Optional<UnirestParsingException> parsingException = httpResponse.getParsingError();
                 throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(),
                         (parsingException.isPresent() ? parsingException
@@ -159,7 +159,7 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
             try {
                 String jsonString = new JSONObject(body).toString();
                 return objectMapper.readValue(jsonString, ODataValueContextOfIListOfTemplateFieldInfo.class);
-            } catch (JsonProcessingException | IllegalStateException e) {
+            } catch (IllegalStateException e) {
                 e.printStackTrace();
                 return null;
             }
@@ -169,7 +169,7 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
             try {
                 String jsonString = new JSONObject(body).toString();
                 problemDetails = deserializeToProblemDetails(jsonString);
-            } catch (JsonProcessingException | IllegalStateException e) {
+            } catch (IllegalStateException e) {
                 Optional<UnirestParsingException> parsingException = httpResponse.getParsingError();
                 throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(),
                         (parsingException.isPresent() ? parsingException
@@ -256,7 +256,7 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
             try {
                 String jsonString = new JSONObject(body).toString();
                 return objectMapper.readValue(jsonString, ODataValueContextOfIListOfTemplateFieldInfo.class);
-            } catch (JsonProcessingException | IllegalStateException e) {
+            } catch (IllegalStateException e) {
                 e.printStackTrace();
                 return null;
             }
@@ -266,7 +266,7 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
             try {
                 String jsonString = new JSONObject(body).toString();
                 problemDetails = deserializeToProblemDetails(jsonString);
-            } catch (JsonProcessingException | IllegalStateException e) {
+            } catch (IllegalStateException e) {
                 Optional<UnirestParsingException> parsingException = httpResponse.getParsingError();
                 throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(),
                         (parsingException.isPresent() ? parsingException
@@ -336,7 +336,7 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
             try {
                 String jsonString = new JSONObject(body).toString();
                 return objectMapper.readValue(jsonString, WTemplateInfo.class);
-            } catch (JsonProcessingException | IllegalStateException e) {
+            } catch (IllegalStateException e) {
                 e.printStackTrace();
                 return null;
             }
@@ -346,7 +346,7 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
             try {
                 String jsonString = new JSONObject(body).toString();
                 problemDetails = deserializeToProblemDetails(jsonString);
-            } catch (JsonProcessingException | IllegalStateException e) {
+            } catch (IllegalStateException e) {
                 Optional<UnirestParsingException> parsingException = httpResponse.getParsingError();
                 throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(),
                         (parsingException.isPresent() ? parsingException

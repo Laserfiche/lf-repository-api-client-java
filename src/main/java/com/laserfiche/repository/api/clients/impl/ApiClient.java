@@ -1,10 +1,9 @@
 package com.laserfiche.repository.api.clients.impl;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.laserfiche.repository.api.clients.impl.model.ProblemDetails;
 import kong.unirest.Header;
 import kong.unirest.Headers;
+import kong.unirest.ObjectMapper;
 import kong.unirest.UnirestInstance;
 
 import java.util.*;
@@ -78,8 +77,8 @@ public class ApiClient {
     protected String toJson(Object object) {
         String json = null;
         try {
-            json = objectMapper.writeValueAsString(object);
-        } catch (JsonProcessingException e) {
+            json = objectMapper.writeValue(object);
+        } catch (RuntimeException e) {
             System.err.println(e);
         }
         return json;
@@ -92,7 +91,7 @@ public class ApiClient {
                 .collect(Collectors.toMap(Header::getName, Header::getValue));
     }
 
-    protected ProblemDetails deserializeToProblemDetails(String jsonString) throws JsonProcessingException {
+    protected ProblemDetails deserializeToProblemDetails(String jsonString) {
         ProblemDetails problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
         if (problemDetails.get("title") != null)
             problemDetails.setTitle(problemDetails

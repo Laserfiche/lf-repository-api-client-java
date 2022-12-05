@@ -1,10 +1,10 @@
 package com.laserfiche.repository.api.clients.impl;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.laserfiche.repository.api.clients.RepositoriesClient;
 import com.laserfiche.repository.api.clients.impl.model.ProblemDetails;
 import com.laserfiche.repository.api.clients.impl.model.RepositoryInfo;
 import kong.unirest.HttpResponse;
+import kong.unirest.ObjectMapper;
 import kong.unirest.UnirestInstance;
 import kong.unirest.UnirestParsingException;
 import kong.unirest.json.JSONArray;
@@ -16,8 +16,8 @@ import java.util.Optional;
 
 public class RepositoriesClientImpl extends ApiClient implements RepositoriesClient {
 
-    public RepositoriesClientImpl(String baseUrl, UnirestInstance httpClient) {
-        super(baseUrl, httpClient);
+    public RepositoriesClientImpl(String baseUrl, UnirestInstance httpClient, ObjectMapper objectMapper) {
+        super(baseUrl, httpClient, objectMapper);
     }
 
     /**
@@ -35,7 +35,7 @@ public class RepositoriesClientImpl extends ApiClient implements RepositoriesCli
             try {
                 String jsonString = new JSONArray(((ArrayList) body).toArray()).toString();
                 return objectMapper.readValue(jsonString, RepositoryInfo[].class);
-            } catch (JsonProcessingException | IllegalStateException e) {
+            } catch (IllegalStateException e) {
                 e.printStackTrace();
                 return null;
             }
@@ -45,7 +45,7 @@ public class RepositoriesClientImpl extends ApiClient implements RepositoriesCli
             try {
                 String jsonString = new JSONObject(body).toString();
                 problemDetails = deserializeToProblemDetails(jsonString);
-            } catch (JsonProcessingException | IllegalStateException e) {
+            } catch (IllegalStateException e) {
                 Optional<UnirestParsingException> parsingException = httpResponse.getParsingError();
                 throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(),
                         (parsingException.isPresent() ? parsingException

@@ -1,6 +1,5 @@
 package com.laserfiche.repository.api.clients.impl;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.laserfiche.repository.api.clients.AttributesClient;
 import com.laserfiche.repository.api.clients.impl.model.Attribute;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfListOfAttribute;
@@ -8,6 +7,7 @@ import com.laserfiche.repository.api.clients.impl.model.ProblemDetails;
 import com.laserfiche.repository.api.clients.params.ParametersForGetTrusteeAttributeKeyValuePairs;
 import com.laserfiche.repository.api.clients.params.ParametersForGetTrusteeAttributeValueByKey;
 import kong.unirest.HttpResponse;
+import kong.unirest.ObjectMapper;
 import kong.unirest.UnirestInstance;
 import kong.unirest.UnirestParsingException;
 import kong.unirest.json.JSONObject;
@@ -19,8 +19,8 @@ import java.util.stream.Collectors;
 
 public class AttributesClientImpl extends ApiClient implements AttributesClient {
 
-    public AttributesClientImpl(String baseUrl, UnirestInstance httpClient) {
-        super(baseUrl, httpClient);
+    public AttributesClientImpl(String baseUrl, UnirestInstance httpClient, ObjectMapper objectMapper) {
+        super(baseUrl, httpClient, objectMapper);
     }
 
     /**
@@ -47,7 +47,7 @@ public class AttributesClientImpl extends ApiClient implements AttributesClient 
             try {
                 String jsonString = new JSONObject(body).toString();
                 return objectMapper.readValue(jsonString, Attribute.class);
-            } catch (JsonProcessingException | IllegalStateException e) {
+            } catch (IllegalStateException e) {
                 e.printStackTrace();
                 return null;
             }
@@ -57,7 +57,7 @@ public class AttributesClientImpl extends ApiClient implements AttributesClient 
             try {
                 String jsonString = new JSONObject(body).toString();
                 problemDetails = deserializeToProblemDetails(jsonString);
-            } catch (JsonProcessingException | IllegalStateException e) {
+            } catch (IllegalStateException e) {
                 Optional<UnirestParsingException> parsingException = httpResponse.getParsingError();
                 throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(),
                         (parsingException.isPresent() ? parsingException
@@ -123,7 +123,7 @@ public class AttributesClientImpl extends ApiClient implements AttributesClient 
             try {
                 String jsonString = new JSONObject(body).toString();
                 return objectMapper.readValue(jsonString, ODataValueContextOfListOfAttribute.class);
-            } catch (JsonProcessingException | IllegalStateException e) {
+            } catch (IllegalStateException e) {
                 e.printStackTrace();
                 return null;
             }
@@ -133,7 +133,7 @@ public class AttributesClientImpl extends ApiClient implements AttributesClient 
             try {
                 String jsonString = new JSONObject(body).toString();
                 problemDetails = deserializeToProblemDetails(jsonString);
-            } catch (JsonProcessingException | IllegalStateException e) {
+            } catch (IllegalStateException e) {
                 Optional<UnirestParsingException> parsingException = httpResponse.getParsingError();
                 throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(),
                         (parsingException.isPresent() ? parsingException
