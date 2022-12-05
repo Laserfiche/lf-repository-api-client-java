@@ -1,17 +1,11 @@
 package com.laserfiche.repository.api.clients.impl;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.json.JsonMapper;
-import com.fasterxml.jackson.databind.module.SimpleModule;
-import com.laserfiche.repository.api.clients.impl.deserialization.OffsetDateTimeDeserializer;
 import com.laserfiche.repository.api.clients.impl.model.ProblemDetails;
 import kong.unirest.Header;
 import kong.unirest.Headers;
 import kong.unirest.UnirestInstance;
-import org.threeten.bp.OffsetDateTime;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,18 +21,10 @@ public class ApiClient {
 
     protected ObjectMapper objectMapper;
 
-    public ApiClient(String baseUrl, UnirestInstance httpClient) {
+    public ApiClient(String baseUrl, UnirestInstance httpClient, ObjectMapper objectMapper) {
         this.baseUrl = baseUrl;
         this.httpClient = httpClient;
-        SimpleModule module = new SimpleModule();
-        module.addDeserializer(OffsetDateTime.class, new OffsetDateTimeDeserializer());
-        this.objectMapper = JsonMapper
-                .builder()
-                .addModule(module)
-                .disable(MapperFeature.CAN_OVERRIDE_ACCESS_MODIFIERS)
-                .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
-                .enable(MapperFeature.ACCEPT_CASE_INSENSITIVE_ENUMS)
-                .build();
+        this.objectMapper = objectMapper;
     }
 
     protected String mergeMaxSizeIntoPrefer(int maxSize, String prefer) {
