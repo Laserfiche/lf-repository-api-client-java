@@ -1,9 +1,10 @@
 package com.laserfiche.repository.api.clients.impl;
 
+import com.laserfiche.api.client.model.ApiException;
+import com.laserfiche.api.client.model.ProblemDetails;
 import com.laserfiche.repository.api.clients.AttributesClient;
 import com.laserfiche.repository.api.clients.impl.model.Attribute;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfListOfAttribute;
-import com.laserfiche.repository.api.clients.impl.model.ProblemDetails;
 import com.laserfiche.repository.api.clients.params.ParametersForGetTrusteeAttributeKeyValuePairs;
 import com.laserfiche.repository.api.clients.params.ParametersForGetTrusteeAttributeValueByKey;
 import kong.unirest.HttpResponse;

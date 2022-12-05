@@ -1,9 +1,10 @@
 package com.laserfiche.repository.api.clients.impl;
 
+import com.laserfiche.api.client.model.ApiException;
+import com.laserfiche.api.client.model.ProblemDetails;
 import com.laserfiche.repository.api.clients.TemplateDefinitionsClient;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfTemplateFieldInfo;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfWTemplateInfo;
-import com.laserfiche.repository.api.clients.impl.model.ProblemDetails;
 import com.laserfiche.repository.api.clients.impl.model.WTemplateInfo;
 import com.laserfiche.repository.api.clients.params.ParametersForGetTemplateDefinitionById;
 import com.laserfiche.repository.api.clients.params.ParametersForGetTemplateDefinitions;

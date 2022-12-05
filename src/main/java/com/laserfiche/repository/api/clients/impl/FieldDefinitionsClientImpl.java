@@ -1,8 +1,9 @@
 package com.laserfiche.repository.api.clients.impl;
 
+import com.laserfiche.api.client.model.ApiException;
+import com.laserfiche.api.client.model.ProblemDetails;
 import com.laserfiche.repository.api.clients.FieldDefinitionsClient;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfWFieldInfo;
-import com.laserfiche.repository.api.clients.impl.model.ProblemDetails;
 import com.laserfiche.repository.api.clients.impl.model.WFieldInfo;
 import com.laserfiche.repository.api.clients.params.ParametersForGetFieldDefinitionById;
 import com.laserfiche.repository.api.clients.params.ParametersForGetFieldDefinitions;

@@ -1,6 +1,6 @@
 package com.laserfiche.repository.api.clients.impl;
 
-import com.laserfiche.repository.api.clients.impl.model.ProblemDetails;
+import com.laserfiche.api.client.model.ProblemDetails;
 import kong.unirest.Header;
 import kong.unirest.Headers;
 import kong.unirest.ObjectMapper;

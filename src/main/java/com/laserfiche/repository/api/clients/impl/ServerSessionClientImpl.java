@@ -1,9 +1,10 @@
 package com.laserfiche.repository.api.clients.impl;
 
+import com.laserfiche.api.client.model.ApiException;
+import com.laserfiche.api.client.model.ProblemDetails;
 import com.laserfiche.repository.api.clients.ServerSessionClient;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueOfBoolean;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueOfDateTime;
-import com.laserfiche.repository.api.clients.impl.model.ProblemDetails;
 import com.laserfiche.repository.api.clients.params.ParametersForCreateServerSession;
 import com.laserfiche.repository.api.clients.params.ParametersForInvalidateServerSession;
 import com.laserfiche.repository.api.clients.params.ParametersForRefreshServerSession;

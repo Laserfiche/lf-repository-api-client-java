@@ -1,7 +1,8 @@
 package com.laserfiche.repository.api.clients.impl;
 
+import com.laserfiche.api.client.model.ApiException;
+import com.laserfiche.api.client.model.ProblemDetails;
 import com.laserfiche.repository.api.clients.RepositoriesClient;
-import com.laserfiche.repository.api.clients.impl.model.ProblemDetails;
 import com.laserfiche.repository.api.clients.impl.model.RepositoryInfo;
 import kong.unirest.HttpResponse;
 import kong.unirest.ObjectMapper;

@@ -1,8 +1,9 @@
 package com.laserfiche.repository.api.clients.impl;
 
+import com.laserfiche.api.client.model.ApiException;
+import com.laserfiche.api.client.model.ProblemDetails;
 import com.laserfiche.repository.api.clients.TasksClient;
 import com.laserfiche.repository.api.clients.impl.model.OperationProgress;
-import com.laserfiche.repository.api.clients.impl.model.ProblemDetails;
 import com.laserfiche.repository.api.clients.params.ParametersForCancelOperation;
 import com.laserfiche.repository.api.clients.params.ParametersForGetOperationStatusAndProgress;
 import kong.unirest.HttpResponse;

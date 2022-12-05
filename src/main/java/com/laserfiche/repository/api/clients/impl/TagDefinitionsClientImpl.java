@@ -1,8 +1,9 @@
 package com.laserfiche.repository.api.clients.impl;
 
+import com.laserfiche.api.client.model.ApiException;
+import com.laserfiche.api.client.model.ProblemDetails;
 import com.laserfiche.repository.api.clients.TagDefinitionsClient;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfWTagInfo;
-import com.laserfiche.repository.api.clients.impl.model.ProblemDetails;
 import com.laserfiche.repository.api.clients.impl.model.WTagInfo;
 import com.laserfiche.repository.api.clients.params.ParametersForGetTagDefinitionById;
 import com.laserfiche.repository.api.clients.params.ParametersForGetTagDefinitions;
