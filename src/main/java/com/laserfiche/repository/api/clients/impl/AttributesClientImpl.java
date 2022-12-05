@@ -5,8 +5,6 @@ import com.laserfiche.repository.api.clients.AttributesClient;
 import com.laserfiche.repository.api.clients.impl.model.Attribute;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfListOfAttribute;
 import com.laserfiche.repository.api.clients.impl.model.ProblemDetails;
-import com.laserfiche.repository.api.clients.params.ParametersForGetTrusteeAttributeKeyValuePairs;
-import com.laserfiche.repository.api.clients.params.ParametersForGetTrusteeAttributeValueByKey;
 import kong.unirest.HttpResponse;
 import kong.unirest.UnirestInstance;
 import kong.unirest.UnirestParsingException;
@@ -23,20 +21,11 @@ public class AttributesClientImpl extends ApiClient implements AttributesClient 
         super(baseUrl, httpClient);
     }
 
-    /**
-     * - Returns the attribute associated with the key. Alternatively, return the attribute associated with the key within &quot;Everyone&quot; group.
-     * - Optional query parameters: everyone (bool, default false). When true, the server only searches for the attribute value with the given key upon the authenticated users attributes. If false, only the authenticated users attributes will be queried.
-     *
-     * @param parameters An object of type ParametersForGetTrusteeAttributeValueByKey which encapsulates the parameters of getTrusteeAttributeValueByKey method.
-     * @return Attribute The return value
-     */
     @Override
-    public Attribute getTrusteeAttributeValueByKey(ParametersForGetTrusteeAttributeValueByKey parameters) {
-        Map<String, Object> queryParameters = getParametersWithNonDefaultValue(new String[]{"boolean"},
-                new String[]{"everyone"}, new Object[]{parameters.isEveryone()});
-        Map<String, Object> pathParameters = getParametersWithNonDefaultValue(new String[]{"String", "String"},
-                new String[]{"repoId", "attributeKey"},
-                new Object[]{parameters.getRepoId(), parameters.getAttributeKey()});
+    public Attribute getTrusteeAttributeValueByKey(String repoId, String attributeKey, Boolean everyone) {
+        Map<String, Object> queryParameters = getNonNullParameters(new String[]{"everyone"}, new Object[]{everyone});
+        Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "attributeKey"},
+                new Object[]{repoId, attributeKey});
         HttpResponse<Object> httpResponse = httpClient
                 .get(baseUrl + "/v1/Repositories/{repoId}/Attributes/{attributeKey}")
                 .queryString(queryParameters)
@@ -84,30 +73,20 @@ public class AttributesClientImpl extends ApiClient implements AttributesClient 
         }
     }
 
-    /**
-     * - Returns the attribute key value pairs associated with the authenticated user. Alternatively, return only the attribute key value pairs that are associated with the &quot;Everyone&quot; group.
-     * - Attribute keys can be used with subsequent calls to get specific attribute values.
-     * - Default page size: 100. Allowed OData query options: Select, Count, OrderBy, Skip, Top, SkipToken, Prefer. Optional query parameters: everyone (bool, default false). When true, this route does not return the attributes that are tied to the currently authenticated user, but rather the attributes assigned to the &quot;Everyone&quot; group. Note when this is true, the response does not include both the &quot;Everyone&quot; groups attribute and the currently authenticated user, but only the &quot;Everyone&quot; groups.
-     *
-     * @param parameters An object of type ParametersForGetTrusteeAttributeKeyValuePairs which encapsulates the parameters of getTrusteeAttributeKeyValuePairs method.
-     * @return ODataValueContextOfListOfAttribute The return value
-     */
     @Override
-    public ODataValueContextOfListOfAttribute getTrusteeAttributeKeyValuePairs(
-            ParametersForGetTrusteeAttributeKeyValuePairs parameters) {
-        return doGetTrusteeAttributeKeyValuePairs(baseUrl + "/v1/Repositories/{repoId}/Attributes", parameters);
+    public ODataValueContextOfListOfAttribute getTrusteeAttributeKeyValuePairs(String repoId, Boolean everyone,
+            String prefer, String select, String orderby, Integer top, Integer skip, Boolean count) {
+        return doGetTrusteeAttributeKeyValuePairs(baseUrl + "/v1/Repositories/{repoId}/Attributes", repoId, everyone,
+                prefer, select, orderby, top, skip, count);
     }
 
-    private ODataValueContextOfListOfAttribute doGetTrusteeAttributeKeyValuePairs(String url,
-            ParametersForGetTrusteeAttributeKeyValuePairs parameters) {
-        Map<String, Object> queryParameters = getParametersWithNonDefaultValue(
-                new String[]{"boolean", "String", "String", "int", "int", "boolean"},
+    private ODataValueContextOfListOfAttribute doGetTrusteeAttributeKeyValuePairs(String url, String repoId,
+            Boolean everyone, String prefer, String select, String orderby, Integer top, Integer skip, Boolean count) {
+        Map<String, Object> queryParameters = getNonNullParameters(
                 new String[]{"everyone", "$select", "$orderby", "$top", "$skip", "$count"},
-                new Object[]{parameters.isEveryone(), parameters.getSelect(), parameters.getOrderby(), parameters.getTop(), parameters.getSkip(), parameters.isCount()});
-        Map<String, Object> pathParameters = getParametersWithNonDefaultValue(new String[]{"String"},
-                new String[]{"repoId"}, new Object[]{parameters.getRepoId()});
-        Map<String, Object> headerParameters = getParametersWithNonDefaultValue(new String[]{"String"},
-                new String[]{"prefer"}, new Object[]{parameters.getPrefer()});
+                new Object[]{everyone, select, orderby, top, skip, count});
+        Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId"}, new Object[]{repoId});
+        Map<String, Object> headerParameters = getNonNullParameters(new String[]{"prefer"}, new Object[]{prefer});
         Map<String, String> headerParametersWithStringTypeValue = headerParameters
                 .entrySet()
                 .stream()
@@ -162,17 +141,18 @@ public class AttributesClientImpl extends ApiClient implements AttributesClient 
 
     @Override
     public ODataValueContextOfListOfAttribute getTrusteeAttributeKeyValuePairsNextLink(String nextLink,
-            int maxPageSize) {
-        return doGetTrusteeAttributeKeyValuePairs(nextLink,
-                new ParametersForGetTrusteeAttributeKeyValuePairs().setPrefer(
-                        mergeMaxSizeIntoPrefer(maxPageSize, null)));
+            Integer maxPageSize) {
+        return doGetTrusteeAttributeKeyValuePairs(nextLink, null, null, mergeMaxSizeIntoPrefer(maxPageSize, null), null,
+                null, null, null, null);
     }
 
     @Override
     public void getTrusteeAttributeKeyValuePairsForEach(Function<ODataValueContextOfListOfAttribute, Boolean> callback,
-            Integer maxPageSize, ParametersForGetTrusteeAttributeKeyValuePairs parameters) {
-        parameters.setPrefer(mergeMaxSizeIntoPrefer(maxPageSize, parameters.getPrefer()));
-        ODataValueContextOfListOfAttribute response = getTrusteeAttributeKeyValuePairs(parameters);
+            Integer maxPageSize, String repoId, Boolean everyone, String prefer, String select, String orderby,
+            Integer top, Integer skip, Boolean count) {
+        prefer = mergeMaxSizeIntoPrefer(maxPageSize, prefer);
+        ODataValueContextOfListOfAttribute response = getTrusteeAttributeKeyValuePairs(repoId, everyone, prefer, select,
+                orderby, top, skip, count);
         while (response != null && callback.apply(response)) {
             String nextLink = response.getOdataNextLink();
             response = getTrusteeAttributeKeyValuePairsNextLink(nextLink, maxPageSize);

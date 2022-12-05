@@ -7,7 +7,6 @@ import com.laserfiche.repository.api.clients.impl.model.Entry;
 import com.laserfiche.repository.api.clients.impl.model.PostEntryChildrenEntryType;
 import com.laserfiche.repository.api.clients.impl.model.PostEntryChildrenRequest;
 import com.laserfiche.repository.api.clients.impl.model.TemplateFieldInfo;
-import com.laserfiche.repository.api.clients.params.ParametersForCreateOrCopyEntry;
 import io.github.cdimascio.dotenv.Dotenv;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -109,11 +108,7 @@ public class BaseTest {
 
         return client
                 .getEntriesClient()
-                .createOrCopyEntry(new ParametersForCreateOrCopyEntry()
-                        .setRepoId(repoId)
-                        .setEntryId(parentEntryId)
-                        .setRequestBody(request)
-                        .setAutoRename(autoRename));
+                .createOrCopyEntry(repoId, parentEntryId, request, autoRename, null);
     }
 
     public static Boolean allFalse(List<TemplateFieldInfo> arr) {

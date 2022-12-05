@@ -4,6 +4,7 @@ import com.laserfiche.api.client.model.AccessKey;
 import com.laserfiche.repository.api.clients.*;
 import com.laserfiche.repository.api.clients.impl.*;
 import com.laserfiche.repository.api.clients.impl.deserialization.RepositoryClientObjectMapper;
+import kong.unirest.Interceptor;
 import kong.unirest.Unirest;
 import kong.unirest.UnirestInstance;
 
@@ -69,8 +70,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
 
     public static RepositoryApiClient createFromUsernamePassword(String repositoryId, String username, String password,
             String baseUrl) {
-        RepositoryApiClientInterceptor interceptor = new SelfHostedInterceptor(repositoryId, username, password,
-                baseUrl, null);
+        RepositoryApiClientInterceptor interceptor = new SelfHostedInterceptor(repositoryId, username, password, baseUrl, null);
         return new RepositoryApiClientImpl(interceptor, baseUrl);
     }
 

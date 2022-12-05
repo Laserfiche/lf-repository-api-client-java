@@ -5,9 +5,6 @@ import com.laserfiche.repository.api.clients.ServerSessionClient;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueOfBoolean;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueOfDateTime;
 import com.laserfiche.repository.api.clients.impl.model.ProblemDetails;
-import com.laserfiche.repository.api.clients.params.ParametersForCreateServerSession;
-import com.laserfiche.repository.api.clients.params.ParametersForInvalidateServerSession;
-import com.laserfiche.repository.api.clients.params.ParametersForRefreshServerSession;
 import kong.unirest.HttpResponse;
 import kong.unirest.UnirestInstance;
 import kong.unirest.UnirestParsingException;
@@ -22,19 +19,9 @@ public class ServerSessionClientImpl extends ApiClient implements ServerSessionC
         super(baseUrl, httpClient);
     }
 
-    /**
-     * - Deprecated.
-     * - Invalidates the server session.
-     * - Acts as a &quot;logout&quot; operation, and invalidates the session associated with the provided access token. This method should be used when the client wants to clean up the current session.
-     * - Only available in Laserfiche Cloud.
-     *
-     * @param parameters An object of type ParametersForInvalidateServerSession which encapsulates the parameters of invalidateServerSession method.
-     * @return ODataValueOfBoolean The return value
-     */
     @Override
-    public ODataValueOfBoolean invalidateServerSession(ParametersForInvalidateServerSession parameters) {
-        Map<String, Object> pathParameters = getParametersWithNonDefaultValue(new String[]{"String"},
-                new String[]{"repoId"}, new Object[]{parameters.getRepoId()});
+    public ODataValueOfBoolean invalidateServerSession(String repoId) {
+        Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId"}, new Object[]{repoId});
         HttpResponse<Object> httpResponse = httpClient
                 .post(baseUrl + "/v1/Repositories/{repoId}/ServerSession/Invalidate")
                 .routeParam(pathParameters)
@@ -81,17 +68,9 @@ public class ServerSessionClientImpl extends ApiClient implements ServerSessionC
         }
     }
 
-    /**
-     * - Deprecated. This function is a no-op, always returns 200.
-     * - Only available in Laserfiche Cloud.
-     *
-     * @param parameters An object of type ParametersForCreateServerSession which encapsulates the parameters of createServerSession method.
-     * @return ODataValueOfBoolean The return value
-     */
     @Override
-    public ODataValueOfBoolean createServerSession(ParametersForCreateServerSession parameters) {
-        Map<String, Object> pathParameters = getParametersWithNonDefaultValue(new String[]{"String"},
-                new String[]{"repoId"}, new Object[]{parameters.getRepoId()});
+    public ODataValueOfBoolean createServerSession(String repoId) {
+        Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId"}, new Object[]{repoId});
         HttpResponse<Object> httpResponse = httpClient
                 .post(baseUrl + "/v1/Repositories/{repoId}/ServerSession/Create")
                 .routeParam(pathParameters)
@@ -129,19 +108,9 @@ public class ServerSessionClientImpl extends ApiClient implements ServerSessionC
         }
     }
 
-    /**
-     * - Deprecated.
-     * - Refreshes the session associated with the access token. This is only necessary if you want to keep the same session alive, otherwise a new session will be automatically created when the session expires.
-     * - When a client application wants to keep a session alive that has been idle for an hour, this route can be used to refresh the expiration timer associated with the access token.
-     * - Only available in Laserfiche Cloud.
-     *
-     * @param parameters An object of type ParametersForRefreshServerSession which encapsulates the parameters of refreshServerSession method.
-     * @return ODataValueOfDateTime The return value
-     */
     @Override
-    public ODataValueOfDateTime refreshServerSession(ParametersForRefreshServerSession parameters) {
-        Map<String, Object> pathParameters = getParametersWithNonDefaultValue(new String[]{"String"},
-                new String[]{"repoId"}, new Object[]{parameters.getRepoId()});
+    public ODataValueOfDateTime refreshServerSession(String repoId) {
+        Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId"}, new Object[]{repoId});
         HttpResponse<Object> httpResponse = httpClient
                 .post(baseUrl + "/v1/Repositories/{repoId}/ServerSession/Refresh")
                 .routeParam(pathParameters)

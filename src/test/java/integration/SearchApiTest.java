@@ -2,7 +2,6 @@ package integration;
 
 import com.laserfiche.repository.api.clients.SearchesClient;
 import com.laserfiche.repository.api.clients.impl.model.*;
-import com.laserfiche.repository.api.clients.params.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,9 +23,7 @@ public class SearchApiTest extends BaseTest {
     @AfterEach
     void cancelCloseSearch() {
         if (searchToken != null) {
-            client.cancelOrCloseSearch(new ParametersForCancelOrCloseSearch()
-                    .setRepoId(repoId)
-                    .setSearchToken(searchToken));
+            client.cancelOrCloseSearch(repoId, searchToken);
         }
     }
 
@@ -37,18 +34,15 @@ public class SearchApiTest extends BaseTest {
         request.setFuzzyFactor(2);
 
         AcceptedOperation searchResponse = client
-                .createSearchOperation(new ParametersForCreateSearchOperation()
-                        .setRepoId(repoId)
-                        .setRequestBody(request));
+                .createSearchOperation(repoId, request);
         searchToken = searchResponse.getToken();
 
         assertNotNull(searchToken);
 
         TimeUnit.SECONDS.sleep(5);
 
-        ODataValueContextOfIListOfEntry searchResults = client.getSearchResults(new ParametersForGetSearchResults()
-                .setRepoId(repoId)
-                .setSearchToken(searchToken));
+        ODataValueContextOfIListOfEntry searchResults = client.getSearchResults(repoId,
+                searchToken, null, null, null, null, null, null, null, null, null, null, null);
 
         assertNotNull(searchResults);
         assertTrue(searchResults
@@ -61,10 +55,7 @@ public class SearchApiTest extends BaseTest {
                 .getRowNumber();
 
         ODataValueContextOfIListOfContextHit contextHitResponse = client
-                .getSearchContextHits(new ParametersForGetSearchContextHits()
-                        .setRepoId(repoId)
-                        .setSearchToken(searchToken)
-                        .setRowNumber(rowNum));
+                .getSearchContextHits(repoId, searchToken, rowNum, null, null, null, null, null, null);
 
         assertNotNull(contextHitResponse);
     }
@@ -74,9 +65,7 @@ public class SearchApiTest extends BaseTest {
         AdvancedSearchRequest request = new AdvancedSearchRequest();
         request.setSearchCommand("({LF:Basic ~= \"search text\", option=\"DFANLT\"})");
 
-        AcceptedOperation searchResponse = client.createSearchOperation(new ParametersForCreateSearchOperation()
-                .setRepoId(repoId)
-                .setRequestBody(request));
+        AcceptedOperation searchResponse = client.createSearchOperation(repoId, request);
 
         searchToken = searchResponse.getToken();
 
@@ -84,10 +73,8 @@ public class SearchApiTest extends BaseTest {
 
         TimeUnit.SECONDS.sleep(5);
 
-        ODataValueContextOfIListOfEntry searchResultResponse = client.getSearchResults(
-                new ParametersForGetSearchResults()
-                        .setRepoId(repoId)
-                        .setSearchToken(searchToken));
+        ODataValueContextOfIListOfEntry searchResultResponse = client.getSearchResults(repoId,
+                searchToken, null, null, null, null, null, null, null, null, null, null, null);
         assertNotNull(searchResultResponse);
     }
 
@@ -96,18 +83,14 @@ public class SearchApiTest extends BaseTest {
         AdvancedSearchRequest request = new AdvancedSearchRequest();
         request.setSearchCommand("({LF:Basic ~= \"search text\", option=\"DFANLT\"})");
 
-        AcceptedOperation searchResponse = client.createSearchOperation(new ParametersForCreateSearchOperation()
-                .setRepoId(repoId)
-                .setRequestBody(request));
+        AcceptedOperation searchResponse = client.createSearchOperation(repoId, request);
         searchToken = searchResponse.getToken();
 
         assertNotNull(searchToken);
 
         TimeUnit.SECONDS.sleep(5);
 
-        OperationProgress searchStatusResponse = client.getSearchStatus(new ParametersForGetSearchStatus()
-                .setRepoId(repoId)
-                .setSearchToken(searchToken));
+        OperationProgress searchStatusResponse = client.getSearchStatus(repoId, searchToken);
 
         assertNotNull(searchStatusResponse);
     }
@@ -118,18 +101,14 @@ public class SearchApiTest extends BaseTest {
         request.setSearchCommand("({LF:Basic ~= \"search text\", option=\"DFANLT\"})");
 
         AcceptedOperation searchOperationResponse = client
-                .createSearchOperation(new ParametersForCreateSearchOperation()
-                        .setRepoId(repoId)
-                        .setRequestBody(request));
+                .createSearchOperation(repoId, request);
 
         searchToken = searchOperationResponse.getToken();
 
         assertNotNull(searchToken);
 
         ODataValueOfBoolean closeSearchResponse = client
-                .cancelOrCloseSearch(new ParametersForCancelOrCloseSearch()
-                        .setRepoId(repoId)
-                        .setSearchToken(searchToken));
+                .cancelOrCloseSearch(repoId, searchToken);
 
         assertTrue(closeSearchResponse.isValue());
     }
@@ -142,9 +121,7 @@ public class SearchApiTest extends BaseTest {
         AdvancedSearchRequest request = new AdvancedSearchRequest();
         request.setSearchCommand("({LF:Basic ~= \"search text\", option=\"NLT\"})");
 
-        AcceptedOperation searchResponse = client.createSearchOperation(new ParametersForCreateSearchOperation()
-                .setRepoId(repoId)
-                .setRequestBody(request));
+        AcceptedOperation searchResponse = client.createSearchOperation(repoId, request);
 
         searchToken = searchResponse.getToken();
         assertTrue(searchToken != null && !searchToken
@@ -153,11 +130,9 @@ public class SearchApiTest extends BaseTest {
 
         TimeUnit.SECONDS.sleep(10);
 
-        ODataValueContextOfIListOfEntry searchResults = client.getSearchResults(
-                new ParametersForGetSearchResults()
-                        .setRepoId(repoId)
-                        .setSearchToken(searchToken)
-                        .setPrefer(String.format("maxpagesize=%d", maxPageSize)));
+        ODataValueContextOfIListOfEntry searchResults = client.getSearchResults(repoId,
+                searchToken, null, null, null, null, String.format("maxpagesize=%d", maxPageSize), null, null, null,
+                null, null, null);
 
         assertNotNull(searchResults);
         if (searchResults
@@ -187,10 +162,7 @@ public class SearchApiTest extends BaseTest {
         AdvancedSearchRequest request = new AdvancedSearchRequest();
         request.setSearchCommand("({LF:Basic ~= \"search text\", option=\"NLT\"})");
 
-        AcceptedOperation searchOperationResponse = client.createSearchOperation(
-                new ParametersForCreateSearchOperation()
-                        .setRepoId(repoId)
-                        .setRequestBody(request));
+        AcceptedOperation searchOperationResponse = client.createSearchOperation(repoId, request);
 
         searchToken = searchOperationResponse.getToken();
         assertTrue(searchToken != null && !searchToken
@@ -212,9 +184,8 @@ public class SearchApiTest extends BaseTest {
                 return false;
             }
         };
-        client.getSearchResultsForEach(callback, maxPageSize, new ParametersForGetSearchResults()
-                .setRepoId(repoId)
-                .setSearchToken(searchToken));
+        client.getSearchResultsForEach(callback, maxPageSize, repoId, searchToken, null, null, null, null, null,
+                null, null, null, null, null, null);
     }
 
     @Test
@@ -224,20 +195,16 @@ public class SearchApiTest extends BaseTest {
         request.setSearchCommand("({LF:Basic ~= \"*\", option=\"DFANLT\"})");
         request.setFuzzyFactor(2);
 
-        AcceptedOperation searchResponse = client.createSearchOperation(new ParametersForCreateSearchOperation()
-                .setRepoId(repoId)
-                .setRequestBody(request));
+        AcceptedOperation searchResponse = client.createSearchOperation(repoId, request);
         searchToken = searchResponse.getToken();
 
         assertNotNull(searchToken);
 
         TimeUnit.SECONDS.sleep(5);
 
-        ODataValueContextOfIListOfEntry searchResults = client.getSearchResults(
-                new ParametersForGetSearchResults()
-                        .setRepoId(repoId)
-                        .setSearchToken(searchToken)
-                        .setPrefer(String.format("maxpagesize=%d", maxPageSize)));
+        ODataValueContextOfIListOfEntry searchResults = client.getSearchResults(repoId,
+                searchToken, null, null, null, null, String.format("maxpagesize=%d", maxPageSize), null, null, null,
+                null, null, null);
 
         assertNotNull(searchResults);
         assertTrue(searchResults
@@ -250,10 +217,7 @@ public class SearchApiTest extends BaseTest {
                 .getRowNumber();
 
         ODataValueContextOfIListOfContextHit contextHitResponse = client
-                .getSearchContextHits(new ParametersForGetSearchContextHits()
-                        .setRepoId(repoId)
-                        .setSearchToken(searchToken)
-                        .setRowNumber(rowNum));
+                .getSearchContextHits(repoId, searchToken, rowNum, null, null, null, null, null, null);
 
         assertNotNull(contextHitResponse);
 
@@ -281,20 +245,16 @@ public class SearchApiTest extends BaseTest {
         request.setSearchCommand("({LF:Basic ~= \"*\", option=\"DFANLT\"})");
         request.setFuzzyFactor(2);
 
-        AcceptedOperation searchResponse = client.createSearchOperation(new ParametersForCreateSearchOperation()
-                .setRepoId(repoId)
-                .setRequestBody(request));
+        AcceptedOperation searchResponse = client.createSearchOperation(repoId, request);
         searchToken = searchResponse.getToken();
 
         assertNotNull(searchToken);
 
         TimeUnit.SECONDS.sleep(5);
 
-        ODataValueContextOfIListOfEntry searchResultResponse = client.getSearchResults(
-                new ParametersForGetSearchResults()
-                        .setRepoId(repoId)
-                        .setSearchToken(searchToken)
-                        .setPrefer(String.format("maxpagesize=%d", maxPageSize)));
+        ODataValueContextOfIListOfEntry searchResultResponse = client.getSearchResults(repoId,
+                searchToken, null, null, null, null, String.format("maxpagesize=%d", maxPageSize), null, null, null,
+                null, null, null);
 
         assertNotNull(searchResultResponse);
         assertTrue(searchResultResponse
@@ -307,10 +267,7 @@ public class SearchApiTest extends BaseTest {
                 .getRowNumber();
 
         ODataValueContextOfIListOfContextHit contextHitResponse = client
-                .getSearchContextHits(new ParametersForGetSearchContextHits()
-                        .setRepoId(repoId)
-                        .setSearchToken(searchToken)
-                        .setRowNumber(rowNum));
+                .getSearchContextHits(repoId, searchToken, rowNum, null, null, null, null, null, null);
 
         assertNotNull(contextHitResponse);
 
@@ -327,10 +284,7 @@ public class SearchApiTest extends BaseTest {
                 return false;
             }
         };
-        client.getSearchContextHitsForEach(callback, maxPageSize,
-                new ParametersForGetSearchContextHits()
-                        .setRepoId(repoId)
-                        .setSearchToken(searchToken)
-                        .setRowNumber(1));
+        client.getSearchContextHitsForEach(callback, maxPageSize, repoId, searchToken, 1, null, null, null, null,
+                null, null);
     }
 }

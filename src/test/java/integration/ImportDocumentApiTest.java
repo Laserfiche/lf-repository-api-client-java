@@ -2,10 +2,6 @@ package integration;
 
 import com.laserfiche.repository.api.clients.EntriesClient;
 import com.laserfiche.repository.api.clients.impl.model.*;
-import com.laserfiche.repository.api.clients.params.ParametersForDeleteEntryInfo;
-import com.laserfiche.repository.api.clients.params.ParametersForGetTemplateDefinitions;
-import com.laserfiche.repository.api.clients.params.ParametersForGetTemplateFieldDefinitions;
-import com.laserfiche.repository.api.clients.params.ParametersForImportDocument;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,10 +30,7 @@ public class ImportDocumentApiTest extends BaseTest {
     public void deleteEntries() {
         if (createdEntryId != 0) {
             DeleteEntryWithAuditReason body = new DeleteEntryWithAuditReason();
-            client.deleteEntryInfo(new ParametersForDeleteEntryInfo()
-                    .setRepoId(repoId)
-                    .setEntryId(createdEntryId)
-                    .setRequestBody(body));
+            client.deleteEntryInfo(repoId, createdEntryId, body);
         }
     }
 
@@ -54,13 +47,8 @@ public class ImportDocumentApiTest extends BaseTest {
         assertNotNull(toUpload);
 
         CreateEntryResult result = client
-                .importDocument(new ParametersForImportDocument()
-                        .setRepoId(repoId)
-                        .setParentEntryId(1)
-                        .setFileName(fileName)
-                        .setAutoRename(true)
-                        .setInputStream(new FileInputStream(toUpload))
-                        .setRequestBody(new PostEntryWithEdocMetadataRequest()));
+                .importDocument(repoId, 1, fileName, true, null,
+                        new FileInputStream(toUpload), new PostEntryWithEdocMetadataRequest());
 
         assertNotNull(result);
         CreateEntryOperations operations = result.getOperations();
@@ -86,16 +74,15 @@ public class ImportDocumentApiTest extends BaseTest {
         WTemplateInfo template = null;
         ODataValueContextOfIListOfWTemplateInfo templateDefinitionResult = repositoryApiClient
                 .getTemplateDefinitionClient()
-                .getTemplateDefinitions(new ParametersForGetTemplateDefinitions().setRepoId(repoId));
+                .getTemplateDefinitions(repoId, null, null, null, null, null, null, null, null);
         List<WTemplateInfo> templateDefinitions = templateDefinitionResult.getValue();
         assertNotNull(templateDefinitions);
         Assertions.assertTrue(templateDefinitions.size() > 0);
         for (WTemplateInfo templateDefinition : templateDefinitions) {
             ODataValueContextOfIListOfTemplateFieldInfo templateDefinitionFieldsResult = repositoryApiClient
                     .getTemplateDefinitionClient()
-                    .getTemplateFieldDefinitions(new ParametersForGetTemplateFieldDefinitions()
-                            .setRepoId(repoId)
-                            .setTemplateId(templateDefinition.getId()));
+                    .getTemplateFieldDefinitions(repoId,
+                            templateDefinition.getId(), null, null, null, null, null, null, null);
             if (templateDefinitionFieldsResult.getValue() != null && allFalse(
                     templateDefinitionFieldsResult.getValue())) {
                 template = templateDefinition;
@@ -117,13 +104,8 @@ public class ImportDocumentApiTest extends BaseTest {
         request.setTemplate(template.getName());
 
         CreateEntryResult result = client
-                .importDocument(new ParametersForImportDocument()
-                        .setRepoId(repoId)
-                        .setParentEntryId(parentEntryId)
-                        .setFileName(fileName)
-                        .setAutoRename(true)
-                        .setInputStream(new FileInputStream(toUpload))
-                        .setRequestBody(request));
+                .importDocument(repoId, parentEntryId, fileName,
+                        true, null, new FileInputStream(toUpload), request);
 
         CreateEntryOperations operations = result.getOperations();
         assertNotNull(operations);
@@ -159,13 +141,8 @@ public class ImportDocumentApiTest extends BaseTest {
         assertNotNull(inputStream);
 
         result = client
-                .importDocument(new ParametersForImportDocument()
-                        .setRepoId(repoId)
-                        .setParentEntryId(1)
-                        .setFileName(fileName)
-                        .setAutoRename(true)
-                        .setInputStream(inputStream)
-                        .setRequestBody(new PostEntryWithEdocMetadataRequest()));
+                .importDocument(repoId, 1, fileName, true, null,
+                        inputStream, new PostEntryWithEdocMetadataRequest());
 
         assertNotNull(result);
         CreateEntryOperations operations = result.getOperations();
@@ -195,13 +172,8 @@ public class ImportDocumentApiTest extends BaseTest {
         assertNotNull(inputStream);
 
         result = client
-                .importDocument(new ParametersForImportDocument()
-                        .setRepoId(repoId)
-                        .setParentEntryId(1)
-                        .setFileName(fileName)
-                        .setAutoRename(true)
-                        .setInputStream(inputStream)
-                        .setRequestBody(new PostEntryWithEdocMetadataRequest()));
+                .importDocument(repoId, 1, fileName, true, null,
+                        inputStream, new PostEntryWithEdocMetadataRequest());
 
         assertNotNull(result);
         CreateEntryOperations operations = result.getOperations();
@@ -233,13 +205,8 @@ public class ImportDocumentApiTest extends BaseTest {
         PostEntryWithEdocMetadataRequest request = new PostEntryWithEdocMetadataRequest();
         request.setTemplate("invalidTemplateName");
         result = client
-                .importDocument(new ParametersForImportDocument()
-                        .setRepoId(repoId)
-                        .setParentEntryId(1)
-                        .setFileName(fileName)
-                        .setAutoRename(true)
-                        .setInputStream(inputStream)
-                        .setRequestBody(request));
+                .importDocument(repoId, 1, fileName, true, null,
+                        inputStream, request);
 
         assertNotNull(result);
         CreateEntryOperations operations = result.getOperations();

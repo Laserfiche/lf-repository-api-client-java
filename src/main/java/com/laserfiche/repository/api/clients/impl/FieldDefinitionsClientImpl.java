@@ -5,8 +5,6 @@ import com.laserfiche.repository.api.clients.FieldDefinitionsClient;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfWFieldInfo;
 import com.laserfiche.repository.api.clients.impl.model.ProblemDetails;
 import com.laserfiche.repository.api.clients.impl.model.WFieldInfo;
-import com.laserfiche.repository.api.clients.params.ParametersForGetFieldDefinitionById;
-import com.laserfiche.repository.api.clients.params.ParametersForGetFieldDefinitions;
 import kong.unirest.HttpResponse;
 import kong.unirest.UnirestInstance;
 import kong.unirest.UnirestParsingException;
@@ -23,21 +21,12 @@ public class FieldDefinitionsClientImpl extends ApiClient implements FieldDefini
         super(baseUrl, httpClient);
     }
 
-    /**
-     * - Returns a single field definition associated with the specified ID.
-     * - Useful when a route provides a minimal amount of details and more information about the specific field definition is needed.
-     * - Allowed OData query options: Select
-     *
-     * @param parameters An object of type ParametersForGetFieldDefinitionById which encapsulates the parameters of getFieldDefinitionById method.
-     * @return WFieldInfo The return value
-     */
     @Override
-    public WFieldInfo getFieldDefinitionById(ParametersForGetFieldDefinitionById parameters) {
-        Map<String, Object> queryParameters = getParametersWithNonDefaultValue(new String[]{"String", "String"},
-                new String[]{"culture", "$select"}, new Object[]{parameters.getCulture(), parameters.getSelect()});
-        Map<String, Object> pathParameters = getParametersWithNonDefaultValue(new String[]{"String", "int"},
-                new String[]{"repoId", "fieldDefinitionId"},
-                new Object[]{parameters.getRepoId(), parameters.getFieldDefinitionId()});
+    public WFieldInfo getFieldDefinitionById(String repoId, Integer fieldDefinitionId, String culture, String select) {
+        Map<String, Object> queryParameters = getNonNullParameters(new String[]{"culture", "$select"},
+                new Object[]{culture, select});
+        Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "fieldDefinitionId"},
+                new Object[]{repoId, fieldDefinitionId});
         HttpResponse<Object> httpResponse = httpClient
                 .get(baseUrl + "/v1/Repositories/{repoId}/FieldDefinitions/{fieldDefinitionId}")
                 .queryString(queryParameters)
@@ -85,29 +74,20 @@ public class FieldDefinitionsClientImpl extends ApiClient implements FieldDefini
         }
     }
 
-    /**
-     * - Returns a paged listing of field definitions available in the specified repository.
-     * - Useful when trying to find a list of all field definitions available, rather than only those assigned to a specific entry/template.
-     * - Default page size: 100. Allowed OData query options: Select | Count | OrderBy | Skip | Top | SkipToken | Prefer.
-     *
-     * @param parameters An object of type ParametersForGetFieldDefinitions which encapsulates the parameters of getFieldDefinitions method.
-     * @return ODataValueContextOfIListOfWFieldInfo The return value
-     */
     @Override
-    public ODataValueContextOfIListOfWFieldInfo getFieldDefinitions(ParametersForGetFieldDefinitions parameters) {
-        return doGetFieldDefinitions(baseUrl + "/v1/Repositories/{repoId}/FieldDefinitions", parameters);
+    public ODataValueContextOfIListOfWFieldInfo getFieldDefinitions(String repoId, String prefer, String culture,
+            String select, String orderby, Integer top, Integer skip, Boolean count) {
+        return doGetFieldDefinitions(baseUrl + "/v1/Repositories/{repoId}/FieldDefinitions", repoId, prefer, culture,
+                select, orderby, top, skip, count);
     }
 
-    private ODataValueContextOfIListOfWFieldInfo doGetFieldDefinitions(String url,
-            ParametersForGetFieldDefinitions parameters) {
-        Map<String, Object> queryParameters = getParametersWithNonDefaultValue(
-                new String[]{"String", "String", "String", "int", "int", "boolean"},
+    private ODataValueContextOfIListOfWFieldInfo doGetFieldDefinitions(String url, String repoId, String prefer,
+            String culture, String select, String orderby, Integer top, Integer skip, Boolean count) {
+        Map<String, Object> queryParameters = getNonNullParameters(
                 new String[]{"culture", "$select", "$orderby", "$top", "$skip", "$count"},
-                new Object[]{parameters.getCulture(), parameters.getSelect(), parameters.getOrderby(), parameters.getTop(), parameters.getSkip(), parameters.isCount()});
-        Map<String, Object> pathParameters = getParametersWithNonDefaultValue(new String[]{"String"},
-                new String[]{"repoId"}, new Object[]{parameters.getRepoId()});
-        Map<String, Object> headerParameters = getParametersWithNonDefaultValue(new String[]{"String"},
-                new String[]{"prefer"}, new Object[]{parameters.getPrefer()});
+                new Object[]{culture, select, orderby, top, skip, count});
+        Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId"}, new Object[]{repoId});
+        Map<String, Object> headerParameters = getNonNullParameters(new String[]{"prefer"}, new Object[]{prefer});
         Map<String, String> headerParametersWithStringTypeValue = headerParameters
                 .entrySet()
                 .stream()
@@ -161,16 +141,18 @@ public class FieldDefinitionsClientImpl extends ApiClient implements FieldDefini
     }
 
     @Override
-    public ODataValueContextOfIListOfWFieldInfo getFieldDefinitionsNextLink(String nextLink, int maxPageSize) {
-        return doGetFieldDefinitions(nextLink,
-                new ParametersForGetFieldDefinitions().setPrefer(mergeMaxSizeIntoPrefer(maxPageSize, null)));
+    public ODataValueContextOfIListOfWFieldInfo getFieldDefinitionsNextLink(String nextLink, Integer maxPageSize) {
+        return doGetFieldDefinitions(nextLink, null, mergeMaxSizeIntoPrefer(maxPageSize, null), null, null, null, null,
+                null, null);
     }
 
     @Override
     public void getFieldDefinitionsForEach(Function<ODataValueContextOfIListOfWFieldInfo, Boolean> callback,
-            Integer maxPageSize, ParametersForGetFieldDefinitions parameters) {
-        parameters.setPrefer(mergeMaxSizeIntoPrefer(maxPageSize, parameters.getPrefer()));
-        ODataValueContextOfIListOfWFieldInfo response = getFieldDefinitions(parameters);
+            Integer maxPageSize, String repoId, String prefer, String culture, String select, String orderby,
+            Integer top, Integer skip, Boolean count) {
+        prefer = mergeMaxSizeIntoPrefer(maxPageSize, prefer);
+        ODataValueContextOfIListOfWFieldInfo response = getFieldDefinitions(repoId, prefer, culture, select, orderby,
+                top, skip, count);
         while (response != null && callback.apply(response)) {
             String nextLink = response.getOdataNextLink();
             response = getFieldDefinitionsNextLink(nextLink, maxPageSize);

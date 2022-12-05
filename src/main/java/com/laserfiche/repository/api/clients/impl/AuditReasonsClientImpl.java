@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.laserfiche.repository.api.clients.AuditReasonsClient;
 import com.laserfiche.repository.api.clients.impl.model.AuditReasons;
 import com.laserfiche.repository.api.clients.impl.model.ProblemDetails;
-import com.laserfiche.repository.api.clients.params.ParametersForGetAuditReasons;
 import kong.unirest.HttpResponse;
 import kong.unirest.UnirestInstance;
 import kong.unirest.UnirestParsingException;
@@ -19,18 +18,9 @@ public class AuditReasonsClientImpl extends ApiClient implements AuditReasonsCli
         super(baseUrl, httpClient);
     }
 
-    /**
-     * - Returns the audit reasons associated with the authenticated user. Inherited audit reasons are included.
-     * - Only includes audit reasons associated with available API functionalities, like delete entry and export document.
-     * - If the authenticated user does not have the appropriate Laserfiche feature right, the audit reasons associated with that feature right will not be included.
-     *
-     * @param parameters An object of type ParametersForGetAuditReasons which encapsulates the parameters of getAuditReasons method.
-     * @return AuditReasons The return value
-     */
     @Override
-    public AuditReasons getAuditReasons(ParametersForGetAuditReasons parameters) {
-        Map<String, Object> pathParameters = getParametersWithNonDefaultValue(new String[]{"String"},
-                new String[]{"repoId"}, new Object[]{parameters.getRepoId()});
+    public AuditReasons getAuditReasons(String repoId) {
+        Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId"}, new Object[]{repoId});
         HttpResponse<Object> httpResponse = httpClient
                 .get(baseUrl + "/v1/Repositories/{repoId}/AuditReasons")
                 .routeParam(pathParameters)
