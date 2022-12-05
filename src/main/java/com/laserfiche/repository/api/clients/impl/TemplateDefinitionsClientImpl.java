@@ -6,6 +6,10 @@ import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIList
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfWTemplateInfo;
 import com.laserfiche.repository.api.clients.impl.model.ProblemDetails;
 import com.laserfiche.repository.api.clients.impl.model.WTemplateInfo;
+import com.laserfiche.repository.api.clients.params.ParametersForGetTemplateDefinitionById;
+import com.laserfiche.repository.api.clients.params.ParametersForGetTemplateDefinitions;
+import com.laserfiche.repository.api.clients.params.ParametersForGetTemplateFieldDefinitions;
+import com.laserfiche.repository.api.clients.params.ParametersForGetTemplateFieldDefinitionsByTemplateName;
 import kong.unirest.HttpResponse;
 import kong.unirest.UnirestInstance;
 import kong.unirest.UnirestParsingException;
@@ -22,21 +26,30 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
         super(baseUrl, httpClient);
     }
 
+    /**
+     * - Returns all template definitions (including field definitions) in the repository. If a template name query parameter is given, then a single template definition is returned.
+     * - Provide a repository ID, and get a paged listing of template definitions available in the repository. Useful when trying to find a list of all template definitions available, rather than a specific one.
+     * - Default page size: 100. Allowed OData query options: Select | Count | OrderBy | Skip | Top | SkipToken | Prefer.
+     *
+     * @param parameters An object of type ParametersForGetTemplateDefinitions which encapsulates the parameters of getTemplateDefinitions method.
+     * @return ODataValueContextOfIListOfWTemplateInfo The return value
+     */
     @Override
-    public ODataValueContextOfIListOfWTemplateInfo getTemplateDefinitions(String repoId, String templateName,
-            String prefer, String culture, String select, String orderby, Integer top, Integer skip, Boolean count) {
-        return doGetTemplateDefinitions(baseUrl + "/v1/Repositories/{repoId}/TemplateDefinitions", repoId, templateName,
-                prefer, culture, select, orderby, top, skip, count);
+    public ODataValueContextOfIListOfWTemplateInfo getTemplateDefinitions(
+            ParametersForGetTemplateDefinitions parameters) {
+        return doGetTemplateDefinitions(baseUrl + "/v1/Repositories/{repoId}/TemplateDefinitions", parameters);
     }
 
-    private ODataValueContextOfIListOfWTemplateInfo doGetTemplateDefinitions(String url, String repoId,
-            String templateName, String prefer, String culture, String select, String orderby, Integer top,
-            Integer skip, Boolean count) {
-        Map<String, Object> queryParameters = getNonNullParameters(
+    private ODataValueContextOfIListOfWTemplateInfo doGetTemplateDefinitions(String url,
+            ParametersForGetTemplateDefinitions parameters) {
+        Map<String, Object> queryParameters = getParametersWithNonDefaultValue(
+                new String[]{"String", "String", "String", "String", "int", "int", "boolean"},
                 new String[]{"templateName", "culture", "$select", "$orderby", "$top", "$skip", "$count"},
-                new Object[]{templateName, culture, select, orderby, top, skip, count});
-        Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId"}, new Object[]{repoId});
-        Map<String, Object> headerParameters = getNonNullParameters(new String[]{"prefer"}, new Object[]{prefer});
+                new Object[]{parameters.getTemplateName(), parameters.getCulture(), parameters.getSelect(), parameters.getOrderby(), parameters.getTop(), parameters.getSkip(), parameters.isCount()});
+        Map<String, Object> pathParameters = getParametersWithNonDefaultValue(new String[]{"String"},
+                new String[]{"repoId"}, new Object[]{parameters.getRepoId()});
+        Map<String, Object> headerParameters = getParametersWithNonDefaultValue(new String[]{"String"},
+                new String[]{"prefer"}, new Object[]{parameters.getPrefer()});
         Map<String, String> headerParametersWithStringTypeValue = headerParameters
                 .entrySet()
                 .stream()
@@ -90,42 +103,47 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
     }
 
     @Override
-    public ODataValueContextOfIListOfWTemplateInfo getTemplateDefinitionsNextLink(String nextLink,
-            Integer maxPageSize) {
-        return doGetTemplateDefinitions(nextLink, null, null, mergeMaxSizeIntoPrefer(maxPageSize, null), null, null,
-                null, null, null, null);
+    public ODataValueContextOfIListOfWTemplateInfo getTemplateDefinitionsNextLink(String nextLink, int maxPageSize) {
+        return doGetTemplateDefinitions(nextLink,
+                new ParametersForGetTemplateDefinitions().setPrefer(mergeMaxSizeIntoPrefer(maxPageSize, null)));
     }
 
     @Override
     public void getTemplateDefinitionsForEach(Function<ODataValueContextOfIListOfWTemplateInfo, Boolean> callback,
-            Integer maxPageSize, String repoId, String templateName, String prefer, String culture, String select,
-            String orderby, Integer top, Integer skip, Boolean count) {
-        prefer = mergeMaxSizeIntoPrefer(maxPageSize, prefer);
-        ODataValueContextOfIListOfWTemplateInfo response = getTemplateDefinitions(repoId, templateName, prefer, culture,
-                select, orderby, top, skip, count);
+            Integer maxPageSize, ParametersForGetTemplateDefinitions parameters) {
+        parameters.setPrefer(mergeMaxSizeIntoPrefer(maxPageSize, parameters.getPrefer()));
+        ODataValueContextOfIListOfWTemplateInfo response = getTemplateDefinitions(parameters);
         while (response != null && callback.apply(response)) {
             String nextLink = response.getOdataNextLink();
             response = getTemplateDefinitionsNextLink(nextLink, maxPageSize);
         }
     }
 
+    /**
+     * - Returns the field definitions assigned to a template definition.
+     * - Provide a template definition name, and get a paged listing of the field definitions assigned to that template.
+     * - Default page size: 100. Allowed OData query options: Select | Count | OrderBy | Skip | Top | SkipToken | Prefer.
+     *
+     * @param parameters An object of type ParametersForGetTemplateFieldDefinitionsByTemplateName which encapsulates the parameters of getTemplateFieldDefinitionsByTemplateName method.
+     * @return ODataValueContextOfIListOfTemplateFieldInfo The return value
+     */
     @Override
-    public ODataValueContextOfIListOfTemplateFieldInfo getTemplateFieldDefinitionsByTemplateName(String repoId,
-            String templateName, String prefer, String culture, String select, String orderby, Integer top,
-            Integer skip, Boolean count) {
+    public ODataValueContextOfIListOfTemplateFieldInfo getTemplateFieldDefinitionsByTemplateName(
+            ParametersForGetTemplateFieldDefinitionsByTemplateName parameters) {
         return doGetTemplateFieldDefinitionsByTemplateName(
-                baseUrl + "/v1/Repositories/{repoId}/TemplateDefinitions/Fields", repoId, templateName, prefer, culture,
-                select, orderby, top, skip, count);
+                baseUrl + "/v1/Repositories/{repoId}/TemplateDefinitions/Fields", parameters);
     }
 
     private ODataValueContextOfIListOfTemplateFieldInfo doGetTemplateFieldDefinitionsByTemplateName(String url,
-            String repoId, String templateName, String prefer, String culture, String select, String orderby,
-            Integer top, Integer skip, Boolean count) {
-        Map<String, Object> queryParameters = getNonNullParameters(
+            ParametersForGetTemplateFieldDefinitionsByTemplateName parameters) {
+        Map<String, Object> queryParameters = getParametersWithNonDefaultValue(
+                new String[]{"String", "String", "String", "String", "int", "int", "boolean"},
                 new String[]{"templateName", "culture", "$select", "$orderby", "$top", "$skip", "$count"},
-                new Object[]{templateName, culture, select, orderby, top, skip, count});
-        Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId"}, new Object[]{repoId});
-        Map<String, Object> headerParameters = getNonNullParameters(new String[]{"prefer"}, new Object[]{prefer});
+                new Object[]{parameters.getTemplateName(), parameters.getCulture(), parameters.getSelect(), parameters.getOrderby(), parameters.getTop(), parameters.getSkip(), parameters.isCount()});
+        Map<String, Object> pathParameters = getParametersWithNonDefaultValue(new String[]{"String"},
+                new String[]{"repoId"}, new Object[]{parameters.getRepoId()});
+        Map<String, Object> headerParameters = getParametersWithNonDefaultValue(new String[]{"String"},
+                new String[]{"prefer"}, new Object[]{parameters.getPrefer()});
         Map<String, String> headerParametersWithStringTypeValue = headerParameters
                 .entrySet()
                 .stream()
@@ -180,42 +198,49 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
 
     @Override
     public ODataValueContextOfIListOfTemplateFieldInfo getTemplateFieldDefinitionsByTemplateNameNextLink(
-            String nextLink, Integer maxPageSize) {
-        return doGetTemplateFieldDefinitionsByTemplateName(nextLink, null, null,
-                mergeMaxSizeIntoPrefer(maxPageSize, null), null, null, null, null, null, null);
+            String nextLink, int maxPageSize) {
+        return doGetTemplateFieldDefinitionsByTemplateName(nextLink,
+                new ParametersForGetTemplateFieldDefinitionsByTemplateName().setPrefer(
+                        mergeMaxSizeIntoPrefer(maxPageSize, null)));
     }
 
     @Override
     public void getTemplateFieldDefinitionsByTemplateNameForEach(
-            Function<ODataValueContextOfIListOfTemplateFieldInfo, Boolean> callback, Integer maxPageSize, String repoId,
-            String templateName, String prefer, String culture, String select, String orderby, Integer top,
-            Integer skip, Boolean count) {
-        prefer = mergeMaxSizeIntoPrefer(maxPageSize, prefer);
-        ODataValueContextOfIListOfTemplateFieldInfo response = getTemplateFieldDefinitionsByTemplateName(repoId,
-                templateName, prefer, culture, select, orderby, top, skip, count);
+            Function<ODataValueContextOfIListOfTemplateFieldInfo, Boolean> callback, Integer maxPageSize,
+            ParametersForGetTemplateFieldDefinitionsByTemplateName parameters) {
+        parameters.setPrefer(mergeMaxSizeIntoPrefer(maxPageSize, parameters.getPrefer()));
+        ODataValueContextOfIListOfTemplateFieldInfo response = getTemplateFieldDefinitionsByTemplateName(parameters);
         while (response != null && callback.apply(response)) {
             String nextLink = response.getOdataNextLink();
             response = getTemplateFieldDefinitionsByTemplateNameNextLink(nextLink, maxPageSize);
         }
     }
 
+    /**
+     * - Returns the field definitions assigned to a template definition.
+     * - Provide a template definition ID, and get a paged listing of the field definitions assigned to that template.
+     * - Default page size: 100. Allowed OData query options: Select | Count | OrderBy | Skip | Top | SkipToken | Prefer.
+     *
+     * @param parameters An object of type ParametersForGetTemplateFieldDefinitions which encapsulates the parameters of getTemplateFieldDefinitions method.
+     * @return ODataValueContextOfIListOfTemplateFieldInfo The return value
+     */
     @Override
-    public ODataValueContextOfIListOfTemplateFieldInfo getTemplateFieldDefinitions(String repoId, Integer templateId,
-            String prefer, String culture, String select, String orderby, Integer top, Integer skip, Boolean count) {
+    public ODataValueContextOfIListOfTemplateFieldInfo getTemplateFieldDefinitions(
+            ParametersForGetTemplateFieldDefinitions parameters) {
         return doGetTemplateFieldDefinitions(
-                baseUrl + "/v1/Repositories/{repoId}/TemplateDefinitions/{templateId}/Fields", repoId, templateId,
-                prefer, culture, select, orderby, top, skip, count);
+                baseUrl + "/v1/Repositories/{repoId}/TemplateDefinitions/{templateId}/Fields", parameters);
     }
 
-    private ODataValueContextOfIListOfTemplateFieldInfo doGetTemplateFieldDefinitions(String url, String repoId,
-            Integer templateId, String prefer, String culture, String select, String orderby, Integer top, Integer skip,
-            Boolean count) {
-        Map<String, Object> queryParameters = getNonNullParameters(
+    private ODataValueContextOfIListOfTemplateFieldInfo doGetTemplateFieldDefinitions(String url,
+            ParametersForGetTemplateFieldDefinitions parameters) {
+        Map<String, Object> queryParameters = getParametersWithNonDefaultValue(
+                new String[]{"String", "String", "String", "int", "int", "boolean"},
                 new String[]{"culture", "$select", "$orderby", "$top", "$skip", "$count"},
-                new Object[]{culture, select, orderby, top, skip, count});
-        Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "templateId"},
-                new Object[]{repoId, templateId});
-        Map<String, Object> headerParameters = getNonNullParameters(new String[]{"prefer"}, new Object[]{prefer});
+                new Object[]{parameters.getCulture(), parameters.getSelect(), parameters.getOrderby(), parameters.getTop(), parameters.getSkip(), parameters.isCount()});
+        Map<String, Object> pathParameters = getParametersWithNonDefaultValue(new String[]{"String", "int"},
+                new String[]{"repoId", "templateId"}, new Object[]{parameters.getRepoId(), parameters.getTemplateId()});
+        Map<String, Object> headerParameters = getParametersWithNonDefaultValue(new String[]{"String"},
+                new String[]{"prefer"}, new Object[]{parameters.getPrefer()});
         Map<String, String> headerParametersWithStringTypeValue = headerParameters
                 .entrySet()
                 .stream()
@@ -270,31 +295,37 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
 
     @Override
     public ODataValueContextOfIListOfTemplateFieldInfo getTemplateFieldDefinitionsNextLink(String nextLink,
-            Integer maxPageSize) {
-        return doGetTemplateFieldDefinitions(nextLink, null, null, mergeMaxSizeIntoPrefer(maxPageSize, null), null,
-                null, null, null, null, null);
+            int maxPageSize) {
+        return doGetTemplateFieldDefinitions(nextLink,
+                new ParametersForGetTemplateFieldDefinitions().setPrefer(mergeMaxSizeIntoPrefer(maxPageSize, null)));
     }
 
     @Override
     public void getTemplateFieldDefinitionsForEach(
-            Function<ODataValueContextOfIListOfTemplateFieldInfo, Boolean> callback, Integer maxPageSize, String repoId,
-            Integer templateId, String prefer, String culture, String select, String orderby, Integer top, Integer skip,
-            Boolean count) {
-        prefer = mergeMaxSizeIntoPrefer(maxPageSize, prefer);
-        ODataValueContextOfIListOfTemplateFieldInfo response = getTemplateFieldDefinitions(repoId, templateId, prefer,
-                culture, select, orderby, top, skip, count);
+            Function<ODataValueContextOfIListOfTemplateFieldInfo, Boolean> callback, Integer maxPageSize,
+            ParametersForGetTemplateFieldDefinitions parameters) {
+        parameters.setPrefer(mergeMaxSizeIntoPrefer(maxPageSize, parameters.getPrefer()));
+        ODataValueContextOfIListOfTemplateFieldInfo response = getTemplateFieldDefinitions(parameters);
         while (response != null && callback.apply(response)) {
             String nextLink = response.getOdataNextLink();
             response = getTemplateFieldDefinitionsNextLink(nextLink, maxPageSize);
         }
     }
 
+    /**
+     * - Returns a single template definition (including field definitions, if relevant).
+     * - Provide a template definition ID, and get the single template definition associated with that ID. Useful when a route provides a minimal amount of details, and more information about the specific template is needed.
+     * - Allowed OData query options: Select
+     *
+     * @param parameters An object of type ParametersForGetTemplateDefinitionById which encapsulates the parameters of getTemplateDefinitionById method.
+     * @return WTemplateInfo The return value
+     */
     @Override
-    public WTemplateInfo getTemplateDefinitionById(String repoId, Integer templateId, String culture, String select) {
-        Map<String, Object> queryParameters = getNonNullParameters(new String[]{"culture", "$select"},
-                new Object[]{culture, select});
-        Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "templateId"},
-                new Object[]{repoId, templateId});
+    public WTemplateInfo getTemplateDefinitionById(ParametersForGetTemplateDefinitionById parameters) {
+        Map<String, Object> queryParameters = getParametersWithNonDefaultValue(new String[]{"String", "String"},
+                new String[]{"culture", "$select"}, new Object[]{parameters.getCulture(), parameters.getSelect()});
+        Map<String, Object> pathParameters = getParametersWithNonDefaultValue(new String[]{"String", "int"},
+                new String[]{"repoId", "templateId"}, new Object[]{parameters.getRepoId(), parameters.getTemplateId()});
         HttpResponse<Object> httpResponse = httpClient
                 .get(baseUrl + "/v1/Repositories/{repoId}/TemplateDefinitions/{templateId}")
                 .queryString(queryParameters)

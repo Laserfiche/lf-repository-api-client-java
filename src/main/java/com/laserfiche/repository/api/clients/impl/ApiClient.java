@@ -41,32 +41,34 @@ public class ApiClient {
                 .build();
     }
 
-    protected String mergeMaxSizeIntoPrefer(Integer maxSize, String prefer) {
-        if (maxSize == null)
+    protected String mergeMaxSizeIntoPrefer(int maxSize, String prefer) {
+        if (maxSize == 0)
             return prefer;
         else
             return prefer == null ? String.format("maxpagesize=%d", maxSize) : String.format("%s; maxpagesize=%d",
                     prefer, maxSize);
     }
 
-    protected Map<String, Object> getNonNullParameters(String[] parameterNames, Object[] parameters) {
-        if (parameterNames == null || parameters == null) {
+    protected Map<String, Object> getParametersWithNonDefaultValue(String[] parameterTypes, String[] parameterNames,
+            Object[] parameterValues) {
+        if (parameterTypes == null || parameterNames == null || parameterValues == null) {
             throw new IllegalArgumentException("Input cannot be null.");
         }
-        if (parameterNames.length != parameters.length) {
-            throw new IllegalArgumentException("The array for parameter name and value should have the same length.");
+        if (parameterTypes.length != parameterNames.length || parameterNames.length != parameterValues.length) {
+            throw new IllegalArgumentException(
+                    "The arrays for parameter types/names/values should have the same length.");
         }
         Map<String, Object> paramKeyValuePairs = new HashMap<>();
-        for (int i = 0; i < parameters.length; i++) {
-            if (parameters[i] != null) {
+        for (int i = 0; i < parameterValues.length; i++) {
+            if (parameterValues[i] != null && !hasDefaultValue(parameterTypes[i], parameterValues[i])) {
                 List<Object> values = new ArrayList<>();
-                if (parameters[i] instanceof Object[]) {
-                    Object[] objects = (Object[]) parameters[i];
+                if (parameterValues[i] instanceof Object[]) {
+                    Object[] objects = (Object[]) parameterValues[i];
                     for (Object object : objects) {
                         values.add(object);
                     }
                 } else {
-                    values.add(parameters[i]);
+                    values.add(parameterValues[i]);
                 }
                 if (values.size() == 1) {
                     paramKeyValuePairs.put(parameterNames[i], values.get(0));
@@ -76,6 +78,20 @@ public class ApiClient {
             }
         }
         return paramKeyValuePairs;
+    }
+
+    private boolean hasDefaultValue(String type, Object value) {
+        switch (type) {
+            case "int":
+                return value
+                        .toString()
+                        .equals("0");
+            case "boolean":
+                return value
+                        .toString()
+                        .equals("false");
+        }
+        return false;
     }
 
     protected String toJson(Object object) {

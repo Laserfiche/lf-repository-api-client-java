@@ -5,6 +5,8 @@ import com.laserfiche.repository.api.clients.LinkDefinitionsClient;
 import com.laserfiche.repository.api.clients.impl.model.EntryLinkTypeInfo;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfEntryLinkTypeInfo;
 import com.laserfiche.repository.api.clients.impl.model.ProblemDetails;
+import com.laserfiche.repository.api.clients.params.ParametersForGetLinkDefinitionById;
+import com.laserfiche.repository.api.clients.params.ParametersForGetLinkDefinitions;
 import kong.unirest.HttpResponse;
 import kong.unirest.UnirestInstance;
 import kong.unirest.UnirestParsingException;
@@ -21,11 +23,20 @@ public class LinkDefinitionsClientImpl extends ApiClient implements LinkDefiniti
         super(baseUrl, httpClient);
     }
 
+    /**
+     * - Returns a single link definition associated with the specified ID.
+     * - Provide a link type ID and get the associated link definition. Useful when a route provides a minimal amount of details and more information about the specific link definition is needed.
+     * - Allowed OData query options: Select
+     *
+     * @param parameters An object of type ParametersForGetLinkDefinitionById which encapsulates the parameters of getLinkDefinitionById method.
+     * @return EntryLinkTypeInfo The return value
+     */
     @Override
-    public EntryLinkTypeInfo getLinkDefinitionById(String repoId, Integer linkTypeId, String select) {
-        Map<String, Object> queryParameters = getNonNullParameters(new String[]{"$select"}, new Object[]{select});
-        Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "linkTypeId"},
-                new Object[]{repoId, linkTypeId});
+    public EntryLinkTypeInfo getLinkDefinitionById(ParametersForGetLinkDefinitionById parameters) {
+        Map<String, Object> queryParameters = getParametersWithNonDefaultValue(new String[]{"String"},
+                new String[]{"$select"}, new Object[]{parameters.getSelect()});
+        Map<String, Object> pathParameters = getParametersWithNonDefaultValue(new String[]{"String", "int"},
+                new String[]{"repoId", "linkTypeId"}, new Object[]{parameters.getRepoId(), parameters.getLinkTypeId()});
         HttpResponse<Object> httpResponse = httpClient
                 .get(baseUrl + "/v1/Repositories/{repoId}/LinkDefinitions/{linkTypeId}")
                 .queryString(queryParameters)
@@ -74,20 +85,29 @@ public class LinkDefinitionsClientImpl extends ApiClient implements LinkDefiniti
         }
     }
 
+    /**
+     * - Returns the link definitions in the repository.
+     * - Provide a repository ID and get a paged listing of link definitions available in the repository. Useful when trying to display all link definitions available, not only links assigned to a specific entry.
+     * - Default page size: 100. Allowed OData query options: Select | Count | OrderBy | Skip | Top | SkipToken | Prefer.
+     *
+     * @param parameters An object of type ParametersForGetLinkDefinitions which encapsulates the parameters of getLinkDefinitions method.
+     * @return ODataValueContextOfIListOfEntryLinkTypeInfo The return value
+     */
     @Override
-    public ODataValueContextOfIListOfEntryLinkTypeInfo getLinkDefinitions(String repoId, String prefer, String select,
-            String orderby, Integer top, Integer skip, Boolean count) {
-        return doGetLinkDefinitions(baseUrl + "/v1/Repositories/{repoId}/LinkDefinitions", repoId, prefer, select,
-                orderby, top, skip, count);
+    public ODataValueContextOfIListOfEntryLinkTypeInfo getLinkDefinitions(ParametersForGetLinkDefinitions parameters) {
+        return doGetLinkDefinitions(baseUrl + "/v1/Repositories/{repoId}/LinkDefinitions", parameters);
     }
 
-    private ODataValueContextOfIListOfEntryLinkTypeInfo doGetLinkDefinitions(String url, String repoId, String prefer,
-            String select, String orderby, Integer top, Integer skip, Boolean count) {
-        Map<String, Object> queryParameters = getNonNullParameters(
+    private ODataValueContextOfIListOfEntryLinkTypeInfo doGetLinkDefinitions(String url,
+            ParametersForGetLinkDefinitions parameters) {
+        Map<String, Object> queryParameters = getParametersWithNonDefaultValue(
+                new String[]{"String", "String", "int", "int", "boolean"},
                 new String[]{"$select", "$orderby", "$top", "$skip", "$count"},
-                new Object[]{select, orderby, top, skip, count});
-        Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId"}, new Object[]{repoId});
-        Map<String, Object> headerParameters = getNonNullParameters(new String[]{"prefer"}, new Object[]{prefer});
+                new Object[]{parameters.getSelect(), parameters.getOrderby(), parameters.getTop(), parameters.getSkip(), parameters.isCount()});
+        Map<String, Object> pathParameters = getParametersWithNonDefaultValue(new String[]{"String"},
+                new String[]{"repoId"}, new Object[]{parameters.getRepoId()});
+        Map<String, Object> headerParameters = getParametersWithNonDefaultValue(new String[]{"String"},
+                new String[]{"prefer"}, new Object[]{parameters.getPrefer()});
         Map<String, String> headerParametersWithStringTypeValue = headerParameters
                 .entrySet()
                 .stream()
@@ -141,19 +161,16 @@ public class LinkDefinitionsClientImpl extends ApiClient implements LinkDefiniti
     }
 
     @Override
-    public ODataValueContextOfIListOfEntryLinkTypeInfo getLinkDefinitionsNextLink(String nextLink,
-            Integer maxPageSize) {
-        return doGetLinkDefinitions(nextLink, null, mergeMaxSizeIntoPrefer(maxPageSize, null), null, null, null, null,
-                null);
+    public ODataValueContextOfIListOfEntryLinkTypeInfo getLinkDefinitionsNextLink(String nextLink, int maxPageSize) {
+        return doGetLinkDefinitions(nextLink,
+                new ParametersForGetLinkDefinitions().setPrefer(mergeMaxSizeIntoPrefer(maxPageSize, null)));
     }
 
     @Override
     public void getLinkDefinitionsForEach(Function<ODataValueContextOfIListOfEntryLinkTypeInfo, Boolean> callback,
-            Integer maxPageSize, String repoId, String prefer, String select, String orderby, Integer top, Integer skip,
-            Boolean count) {
-        prefer = mergeMaxSizeIntoPrefer(maxPageSize, prefer);
-        ODataValueContextOfIListOfEntryLinkTypeInfo response = getLinkDefinitions(repoId, prefer, select, orderby, top,
-                skip, count);
+            Integer maxPageSize, ParametersForGetLinkDefinitions parameters) {
+        parameters.setPrefer(mergeMaxSizeIntoPrefer(maxPageSize, parameters.getPrefer()));
+        ODataValueContextOfIListOfEntryLinkTypeInfo response = getLinkDefinitions(parameters);
         while (response != null && callback.apply(response)) {
             String nextLink = response.getOdataNextLink();
             response = getLinkDefinitionsNextLink(nextLink, maxPageSize);

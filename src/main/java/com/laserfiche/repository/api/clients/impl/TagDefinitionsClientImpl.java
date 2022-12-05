@@ -5,6 +5,8 @@ import com.laserfiche.repository.api.clients.TagDefinitionsClient;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfWTagInfo;
 import com.laserfiche.repository.api.clients.impl.model.ProblemDetails;
 import com.laserfiche.repository.api.clients.impl.model.WTagInfo;
+import com.laserfiche.repository.api.clients.params.ParametersForGetTagDefinitionById;
+import com.laserfiche.repository.api.clients.params.ParametersForGetTagDefinitions;
 import kong.unirest.HttpResponse;
 import kong.unirest.UnirestInstance;
 import kong.unirest.UnirestParsingException;
@@ -21,20 +23,29 @@ public class TagDefinitionsClientImpl extends ApiClient implements TagDefinition
         super(baseUrl, httpClient);
     }
 
+    /**
+     * - Returns all tag definitions in the repository.
+     * - Provide a repository ID and get a paged listing of tag definitions available in the repository. Useful when trying to display all tag definitions available, not only tags assigned to a specific entry.
+     * - Default page size: 100. Allowed OData query options: Select | Count | OrderBy | Skip | Top | SkipToken | Prefer.
+     *
+     * @param parameters An object of type ParametersForGetTagDefinitions which encapsulates the parameters of getTagDefinitions method.
+     * @return ODataValueContextOfIListOfWTagInfo The return value
+     */
     @Override
-    public ODataValueContextOfIListOfWTagInfo getTagDefinitions(String repoId, String prefer, String culture,
-            String select, String orderby, Integer top, Integer skip, Boolean count) {
-        return doGetTagDefinitions(baseUrl + "/v1/Repositories/{repoId}/TagDefinitions", repoId, prefer, culture,
-                select, orderby, top, skip, count);
+    public ODataValueContextOfIListOfWTagInfo getTagDefinitions(ParametersForGetTagDefinitions parameters) {
+        return doGetTagDefinitions(baseUrl + "/v1/Repositories/{repoId}/TagDefinitions", parameters);
     }
 
-    private ODataValueContextOfIListOfWTagInfo doGetTagDefinitions(String url, String repoId, String prefer,
-            String culture, String select, String orderby, Integer top, Integer skip, Boolean count) {
-        Map<String, Object> queryParameters = getNonNullParameters(
+    private ODataValueContextOfIListOfWTagInfo doGetTagDefinitions(String url,
+            ParametersForGetTagDefinitions parameters) {
+        Map<String, Object> queryParameters = getParametersWithNonDefaultValue(
+                new String[]{"String", "String", "String", "int", "int", "boolean"},
                 new String[]{"culture", "$select", "$orderby", "$top", "$skip", "$count"},
-                new Object[]{culture, select, orderby, top, skip, count});
-        Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId"}, new Object[]{repoId});
-        Map<String, Object> headerParameters = getNonNullParameters(new String[]{"prefer"}, new Object[]{prefer});
+                new Object[]{parameters.getCulture(), parameters.getSelect(), parameters.getOrderby(), parameters.getTop(), parameters.getSkip(), parameters.isCount()});
+        Map<String, Object> pathParameters = getParametersWithNonDefaultValue(new String[]{"String"},
+                new String[]{"repoId"}, new Object[]{parameters.getRepoId()});
+        Map<String, Object> headerParameters = getParametersWithNonDefaultValue(new String[]{"String"},
+                new String[]{"prefer"}, new Object[]{parameters.getPrefer()});
         Map<String, String> headerParametersWithStringTypeValue = headerParameters
                 .entrySet()
                 .stream()
@@ -88,30 +99,36 @@ public class TagDefinitionsClientImpl extends ApiClient implements TagDefinition
     }
 
     @Override
-    public ODataValueContextOfIListOfWTagInfo getTagDefinitionsNextLink(String nextLink, Integer maxPageSize) {
-        return doGetTagDefinitions(nextLink, null, mergeMaxSizeIntoPrefer(maxPageSize, null), null, null, null, null,
-                null, null);
+    public ODataValueContextOfIListOfWTagInfo getTagDefinitionsNextLink(String nextLink, int maxPageSize) {
+        return doGetTagDefinitions(nextLink,
+                new ParametersForGetTagDefinitions().setPrefer(mergeMaxSizeIntoPrefer(maxPageSize, null)));
     }
 
     @Override
     public void getTagDefinitionsForEach(Function<ODataValueContextOfIListOfWTagInfo, Boolean> callback,
-            Integer maxPageSize, String repoId, String prefer, String culture, String select, String orderby,
-            Integer top, Integer skip, Boolean count) {
-        prefer = mergeMaxSizeIntoPrefer(maxPageSize, prefer);
-        ODataValueContextOfIListOfWTagInfo response = getTagDefinitions(repoId, prefer, culture, select, orderby, top,
-                skip, count);
+            Integer maxPageSize, ParametersForGetTagDefinitions parameters) {
+        parameters.setPrefer(mergeMaxSizeIntoPrefer(maxPageSize, parameters.getPrefer()));
+        ODataValueContextOfIListOfWTagInfo response = getTagDefinitions(parameters);
         while (response != null && callback.apply(response)) {
             String nextLink = response.getOdataNextLink();
             response = getTagDefinitionsNextLink(nextLink, maxPageSize);
         }
     }
 
+    /**
+     * - Returns a single tag definition.
+     * - Provide a tag definition ID, and get the single tag definition associated with that ID. Useful when another route provides a minimal amount of details, and more information about the specific tag is needed.
+     * - Allowed OData query options: Select
+     *
+     * @param parameters An object of type ParametersForGetTagDefinitionById which encapsulates the parameters of getTagDefinitionById method.
+     * @return WTagInfo The return value
+     */
     @Override
-    public WTagInfo getTagDefinitionById(String repoId, Integer tagId, String culture, String select) {
-        Map<String, Object> queryParameters = getNonNullParameters(new String[]{"culture", "$select"},
-                new Object[]{culture, select});
-        Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId", "tagId"},
-                new Object[]{repoId, tagId});
+    public WTagInfo getTagDefinitionById(ParametersForGetTagDefinitionById parameters) {
+        Map<String, Object> queryParameters = getParametersWithNonDefaultValue(new String[]{"String", "String"},
+                new String[]{"culture", "$select"}, new Object[]{parameters.getCulture(), parameters.getSelect()});
+        Map<String, Object> pathParameters = getParametersWithNonDefaultValue(new String[]{"String", "int"},
+                new String[]{"repoId", "tagId"}, new Object[]{parameters.getRepoId(), parameters.getTagId()});
         HttpResponse<Object> httpResponse = httpClient
                 .get(baseUrl + "/v1/Repositories/{repoId}/TagDefinitions/{tagId}")
                 .queryString(queryParameters)

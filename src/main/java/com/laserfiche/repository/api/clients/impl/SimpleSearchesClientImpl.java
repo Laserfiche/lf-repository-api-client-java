@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.laserfiche.repository.api.clients.SimpleSearchesClient;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfEntry;
 import com.laserfiche.repository.api.clients.impl.model.ProblemDetails;
-import com.laserfiche.repository.api.clients.impl.model.SimpleSearchRequest;
+import com.laserfiche.repository.api.clients.params.ParametersForCreateSimpleSearchOperation;
 import kong.unirest.HttpResponse;
 import kong.unirest.UnirestInstance;
 import kong.unirest.UnirestParsingException;
@@ -18,13 +18,26 @@ public class SimpleSearchesClientImpl extends ApiClient implements SimpleSearche
         super(baseUrl, httpClient);
     }
 
+    /**
+     * - Runs a &quot;simple&quot; search operation on the repository.
+     * - Returns a truncated search result listing.
+     * - Search result listing may be truncated, depending on number of results. Additionally, searches may time out if they take too long. Use the other search route to run full searches.
+     * - Optionally returns field values for the entries in the search result listing. Each field name needs to be specified in the request. Maximum limit of 10 field names.
+     * - If field values are requested, only the first value is returned if it is a multi value field.
+     * - Null or Empty field values should not be used to determine if a field is assigned to the entry.
+     *
+     * @param parameters An object of type ParametersForCreateSimpleSearchOperation which encapsulates the parameters of createSimpleSearchOperation method.
+     * @return ODataValueContextOfIListOfEntry The return value
+     */
     @Override
-    public ODataValueContextOfIListOfEntry createSimpleSearchOperation(String select, String orderby, Boolean count,
-            String repoId, String[] fields, Boolean formatFields, SimpleSearchRequest requestBody, String culture) {
-        Map<String, Object> queryParameters = getNonNullParameters(
+    public ODataValueContextOfIListOfEntry createSimpleSearchOperation(
+            ParametersForCreateSimpleSearchOperation parameters) {
+        Map<String, Object> queryParameters = getParametersWithNonDefaultValue(
+                new String[]{"String[]", "boolean", "String", "String", "String", "boolean"},
                 new String[]{"fields", "formatFields", "culture", "$select", "$orderby", "$count"},
-                new Object[]{fields, formatFields, culture, select, orderby, count});
-        Map<String, Object> pathParameters = getNonNullParameters(new String[]{"repoId"}, new Object[]{repoId});
+                new Object[]{parameters.getFields(), parameters.isFormatFields(), parameters.getCulture(), parameters.getSelect(), parameters.getOrderby(), parameters.isCount()});
+        Map<String, Object> pathParameters = getParametersWithNonDefaultValue(new String[]{"String"},
+                new String[]{"repoId"}, new Object[]{parameters.getRepoId()});
         HttpResponse<Object> httpResponse = httpClient
                 .post(baseUrl + "/v1/Repositories/{repoId}/SimpleSearches")
                 .queryString("fields", (queryParameters.get("fields") != null) ? (queryParameters.get(
@@ -33,7 +46,7 @@ public class SimpleSearchesClientImpl extends ApiClient implements SimpleSearche
                 .queryString(queryParameters)
                 .routeParam(pathParameters)
                 .contentType("application/json")
-                .body(requestBody)
+                .body(parameters.getRequestBody())
                 .asObject(Object.class);
         Object body = httpResponse.getBody();
         if (httpResponse.getStatus() == 200 || httpResponse.getStatus() == 204 || httpResponse.getStatus() == 206) {

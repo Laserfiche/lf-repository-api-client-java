@@ -20,6 +20,11 @@ public class RepositoriesClientImpl extends ApiClient implements RepositoriesCli
         super(baseUrl, httpClient);
     }
 
+    /**
+     * - Returns the repository resource list that current user has access to.
+     *
+     * @return RepositoryInfo[] The return value
+     */
     @Override
     public RepositoryInfo[] getRepositoryList() {
         HttpResponse<Object> httpResponse = httpClient

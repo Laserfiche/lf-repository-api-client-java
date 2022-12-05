@@ -3,10 +3,11 @@ package integration;
 import com.laserfiche.repository.api.clients.AttributesClient;
 import com.laserfiche.repository.api.clients.impl.model.Attribute;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfListOfAttribute;
+import com.laserfiche.repository.api.clients.params.ParametersForGetTrusteeAttributeKeyValuePairs;
+import com.laserfiche.repository.api.clients.params.ParametersForGetTrusteeAttributeValueByKey;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
@@ -22,37 +23,51 @@ class AttributesApiTest extends BaseTest {
 
     @Test
     void getTrusteeAttributeKeyValuePairs_ReturnAttributes() {
-        ODataValueContextOfListOfAttribute attributeList = client.getTrusteeAttributeKeyValuePairs(repoId,
-                true, null, null, null, null, null, false);
+        ODataValueContextOfListOfAttribute attributeList = client.getTrusteeAttributeKeyValuePairs(
+                new ParametersForGetTrusteeAttributeKeyValuePairs()
+                        .setRepoId(repoId)
+                        .setEveryone(true));
 
         assertNotNull(attributeList);
     }
 
     @Test
     void getAttributeValueByKey_ReturnAttribute() {
-        ODataValueContextOfListOfAttribute attributeList = client.getTrusteeAttributeKeyValuePairs(repoId,
-                true, null, null, null, null, null, false);
+        ODataValueContextOfListOfAttribute attributeList = client.getTrusteeAttributeKeyValuePairs(
+                new ParametersForGetTrusteeAttributeKeyValuePairs()
+                        .setRepoId(repoId)
+                        .setEveryone(true));
         assertNotNull(attributeList);
 
-        Attribute attribute = client.getTrusteeAttributeValueByKey(repoId, attributeList
-                .getValue()
-                .get(0)
-                .getKey(), true);
+        Attribute attribute = client.getTrusteeAttributeValueByKey(
+                new ParametersForGetTrusteeAttributeValueByKey()
+                        .setRepoId(repoId)
+                        .setAttributeKey(attributeList
+                                .getValue()
+                                .get(0)
+                                .getKey())
+                        .setEveryone(true));
         assertNotNull(attribute);
     }
 
     @Test
     void getAttributeValueByKey_NextLink() throws InterruptedException {
         int maxPageSize = 5;
-        ODataValueContextOfListOfAttribute attributeList = client.getTrusteeAttributeKeyValuePairs(repoId,
-                true, String.format("maxpagesize=%d", maxPageSize), null, null, null, null, false);
+        ODataValueContextOfListOfAttribute attributeList = client.getTrusteeAttributeKeyValuePairs(
+                new ParametersForGetTrusteeAttributeKeyValuePairs()
+                        .setRepoId(repoId)
+                        .setEveryone(true)
+                        .setPrefer(String.format("maxpagesize=%d", maxPageSize)));
         assertNotNull(attributeList);
 
-        Attribute attribute = client.getTrusteeAttributeValueByKey(repoId,
-                attributeList
-                        .getValue()
-                        .get(0)
-                        .getKey(), true);
+        Attribute attribute = client.getTrusteeAttributeValueByKey(
+                new ParametersForGetTrusteeAttributeValueByKey()
+                        .setRepoId(repoId)
+                        .setAttributeKey(attributeList
+                                .getValue()
+                                .get(0)
+                                .getKey())
+                        .setEveryone(true));
         assertNotNull(attribute);
 
         String nextLink = attributeList.getOdataNextLink();
@@ -76,15 +91,21 @@ class AttributesApiTest extends BaseTest {
     @Test
     void getAttributeValueByKey_ForEach() throws InterruptedException {
         int maxPageSize = 90;
-        ODataValueContextOfListOfAttribute attributeList = client.getTrusteeAttributeKeyValuePairs(repoId,
-                true, String.format("maxpagesize=%d", maxPageSize), null, null, null, null, false);
+        ODataValueContextOfListOfAttribute attributeList = client.getTrusteeAttributeKeyValuePairs(
+                new ParametersForGetTrusteeAttributeKeyValuePairs()
+                        .setRepoId(repoId)
+                        .setEveryone(true)
+                        .setPrefer(String.format("maxpagesize=%d", maxPageSize)));
         assertNotNull(attributeList);
 
-        Attribute attribute = client.getTrusteeAttributeValueByKey(repoId,
-                attributeList
-                        .getValue()
-                        .get(0)
-                        .getKey(), true);
+        Attribute attribute = client.getTrusteeAttributeValueByKey(
+                new ParametersForGetTrusteeAttributeValueByKey()
+                        .setRepoId(repoId)
+                        .setAttributeKey(attributeList
+                                .getValue()
+                                .get(0)
+                                .getKey())
+                        .setEveryone(true));
         assertNotNull(attribute);
 
         TimeUnit.SECONDS.sleep(10);
@@ -102,7 +123,9 @@ class AttributesApiTest extends BaseTest {
                 return false;
             }
         };
-        client.getTrusteeAttributeKeyValuePairsForEach(callback, maxPageSize, repoId, true, null, null, null, null,
-                null, null);
+        client.getTrusteeAttributeKeyValuePairsForEach(callback, maxPageSize,
+                new ParametersForGetTrusteeAttributeKeyValuePairs()
+                        .setRepoId(repoId)
+                        .setEveryone(true));
     }
 }
