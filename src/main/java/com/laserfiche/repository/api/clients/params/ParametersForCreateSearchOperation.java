@@ -16,6 +16,11 @@ public class ParametersForCreateSearchOperation {
         return this;
     }
 
+    /**
+     * Returns the value of 'repoId' field, which is the requested repository ID.
+     *
+     * @return String The return value
+     */
     public String getRepoId() {
         return this.repoId;
     }

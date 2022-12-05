@@ -22,6 +22,11 @@ public class ParametersForGetEntry {
         return this;
     }
 
+    /**
+     * Returns the value of 'repoId' field, which is the requested repository ID.
+     *
+     * @return String The return value
+     */
     public String getRepoId() {
         return this.repoId;
     }
@@ -31,6 +36,11 @@ public class ParametersForGetEntry {
         return this;
     }
 
+    /**
+     * Returns the value of 'entryId' field, which is the requested entry ID.
+     *
+     * @return int The return value
+     */
     public int getEntryId() {
         return this.entryId;
     }
@@ -40,6 +50,11 @@ public class ParametersForGetEntry {
         return this;
     }
 
+    /**
+     * Returns the value of 'select' field, which is limits the properties returned in the result.
+     *
+     * @return String The return value
+     */
     public String getSelect() {
         return this.select;
     }

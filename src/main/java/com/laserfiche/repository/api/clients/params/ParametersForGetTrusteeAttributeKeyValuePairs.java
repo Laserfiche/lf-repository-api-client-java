@@ -47,6 +47,11 @@ public class ParametersForGetTrusteeAttributeKeyValuePairs {
         return this;
     }
 
+    /**
+     * Returns the value of 'repoId' field, which is the requested repository ID.
+     *
+     * @return String The return value
+     */
     public String getRepoId() {
         return this.repoId;
     }
@@ -56,6 +61,11 @@ public class ParametersForGetTrusteeAttributeKeyValuePairs {
         return this;
     }
 
+    /**
+     * Returns the value of 'everyone' field, which is boolean value that indicates whether to return attributes key value pairs associated with everyone or the currently authenticated user.
+     *
+     * @return boolean The return value
+     */
     public boolean isEveryone() {
         return this.everyone;
     }
@@ -65,6 +75,11 @@ public class ParametersForGetTrusteeAttributeKeyValuePairs {
         return this;
     }
 
+    /**
+     * Returns the value of 'prefer' field, which is an optional OData header. Can be used to set the maximum page size using odata.maxpagesize.
+     *
+     * @return String The return value
+     */
     public String getPrefer() {
         return this.prefer;
     }
@@ -74,6 +89,11 @@ public class ParametersForGetTrusteeAttributeKeyValuePairs {
         return this;
     }
 
+    /**
+     * Returns the value of 'select' field, which is limits the properties returned in the result.
+     *
+     * @return String The return value
+     */
     public String getSelect() {
         return this.select;
     }
@@ -83,6 +103,11 @@ public class ParametersForGetTrusteeAttributeKeyValuePairs {
         return this;
     }
 
+    /**
+     * Returns the value of 'orderby' field, which is specifies the order in which items are returned. The maximum number of expressions is 5.
+     *
+     * @return String The return value
+     */
     public String getOrderby() {
         return this.orderby;
     }
@@ -92,6 +117,11 @@ public class ParametersForGetTrusteeAttributeKeyValuePairs {
         return this;
     }
 
+    /**
+     * Returns the value of 'top' field, which is limits the number of items returned from a collection.
+     *
+     * @return int The return value
+     */
     public int getTop() {
         return this.top;
     }
@@ -101,6 +131,11 @@ public class ParametersForGetTrusteeAttributeKeyValuePairs {
         return this;
     }
 
+    /**
+     * Returns the value of 'skip' field, which is excludes the specified number of items of the queried collection from the result.
+     *
+     * @return int The return value
+     */
     public int getSkip() {
         return this.skip;
     }
@@ -110,6 +145,11 @@ public class ParametersForGetTrusteeAttributeKeyValuePairs {
         return this;
     }
 
+    /**
+     * Returns the value of 'count' field, which is indicates whether the total count of items within a collection are returned in the result.
+     *
+     * @return boolean The return value
+     */
     public boolean isCount() {
         return this.count;
     }

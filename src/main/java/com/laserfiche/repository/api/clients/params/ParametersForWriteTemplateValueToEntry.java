@@ -27,6 +27,11 @@ public class ParametersForWriteTemplateValueToEntry {
         return this;
     }
 
+    /**
+     * Returns the value of 'repoId' field, which is the requested repository ID.
+     *
+     * @return String The return value
+     */
     public String getRepoId() {
         return this.repoId;
     }
@@ -36,6 +41,11 @@ public class ParametersForWriteTemplateValueToEntry {
         return this;
     }
 
+    /**
+     * Returns the value of 'entryId' field, which is the ID of entry that will have its template updated.
+     *
+     * @return int The return value
+     */
     public int getEntryId() {
         return this.entryId;
     }
@@ -54,6 +64,12 @@ public class ParametersForWriteTemplateValueToEntry {
         return this;
     }
 
+    /**
+     * Returns the value of 'culture' field, which is an optional query parameter used to indicate the locale that should be used.
+     * The value should be a standard language tag. This may be used when setting field values with tokens.
+     *
+     * @return String The return value
+     */
     public String getCulture() {
         return this.culture;
     }
