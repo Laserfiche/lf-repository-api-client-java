@@ -16,6 +16,11 @@ public class ParametersForCreateSearchOperation {
         return this;
     }
 
+    /**
+     * The requested repository ID.
+     *
+     * @return String The return value
+     */
     public String getRepoId() {
         return this.repoId;
     }

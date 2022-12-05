@@ -17,6 +17,11 @@ public class ParametersForGetSearchStatus {
         return this;
     }
 
+    /**
+     * The requested repository ID.
+     *
+     * @return String The return value
+     */
     public String getRepoId() {
         return this.repoId;
     }
@@ -26,6 +31,11 @@ public class ParametersForGetSearchStatus {
         return this;
     }
 
+    /**
+     * The requested searchToken.
+     *
+     * @return String The return value
+     */
     public String getSearchToken() {
         return this.searchToken;
     }

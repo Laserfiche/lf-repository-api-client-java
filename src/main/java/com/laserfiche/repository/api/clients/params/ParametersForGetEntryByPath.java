@@ -22,6 +22,11 @@ public class ParametersForGetEntryByPath {
         return this;
     }
 
+    /**
+     * The requested repository ID.
+     *
+     * @return String The return value
+     */
     public String getRepoId() {
         return this.repoId;
     }
@@ -31,6 +36,11 @@ public class ParametersForGetEntryByPath {
         return this;
     }
 
+    /**
+     * The requested entry path.
+     *
+     * @return String The return value
+     */
     public String getFullPath() {
         return this.fullPath;
     }
@@ -40,6 +50,11 @@ public class ParametersForGetEntryByPath {
         return this;
     }
 
+    /**
+     * An optional query parameter used to indicate whether or not the closest ancestor in the path should be returned if the initial entry path is not found. The default value is false.
+     *
+     * @return boolean The return value
+     */
     public boolean isFallbackToClosestAncestor() {
         return this.fallbackToClosestAncestor;
     }

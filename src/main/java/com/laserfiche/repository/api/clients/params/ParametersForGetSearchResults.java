@@ -74,6 +74,11 @@ public class ParametersForGetSearchResults {
         return this;
     }
 
+    /**
+     * The requested repository ID.
+     *
+     * @return String The return value
+     */
     public String getRepoId() {
         return this.repoId;
     }
@@ -83,6 +88,11 @@ public class ParametersForGetSearchResults {
         return this;
     }
 
+    /**
+     * The requested searchToken.
+     *
+     * @return String The return value
+     */
     public String getSearchToken() {
         return this.searchToken;
     }
@@ -92,6 +102,11 @@ public class ParametersForGetSearchResults {
         return this;
     }
 
+    /**
+     * An optional query parameter used to indicate if the result should be grouped by entry type or not.
+     *
+     * @return boolean The return value
+     */
     public boolean isGroupByEntryType() {
         return this.groupByEntryType;
     }
@@ -101,6 +116,11 @@ public class ParametersForGetSearchResults {
         return this;
     }
 
+    /**
+     * If the search listing should be refreshed to show updated values.
+     *
+     * @return boolean The return value
+     */
     public boolean isRefresh() {
         return this.refresh;
     }
@@ -110,6 +130,11 @@ public class ParametersForGetSearchResults {
         return this;
     }
 
+    /**
+     * Optional array of field names. Field values corresponding to the given field names will be returned for each search result.
+     *
+     * @return String[] The return value
+     */
     public String[] getFields() {
         return this.fields;
     }
@@ -119,6 +144,11 @@ public class ParametersForGetSearchResults {
         return this;
     }
 
+    /**
+     * Boolean for if field values should be formatted. Only applicable if Fields are specified.
+     *
+     * @return boolean The return value
+     */
     public boolean isFormatFields() {
         return this.formatFields;
     }
@@ -128,6 +158,11 @@ public class ParametersForGetSearchResults {
         return this;
     }
 
+    /**
+     * An optional odata header. Can be used to set the maximum page size using odata.maxpagesize.
+     *
+     * @return String The return value
+     */
     public String getPrefer() {
         return this.prefer;
     }
@@ -137,6 +172,13 @@ public class ParametersForGetSearchResults {
         return this;
     }
 
+    /**
+     * An optional query parameter used to indicate the locale that should be used for formatting.
+     * The value should be a standard language tag. The formatFields query parameter must be set to true, otherwise
+     * culture will not be used for formatting.
+     *
+     * @return String The return value
+     */
     public String getCulture() {
         return this.culture;
     }
@@ -146,6 +188,11 @@ public class ParametersForGetSearchResults {
         return this;
     }
 
+    /**
+     * Limits the properties returned in the result.
+     *
+     * @return String The return value
+     */
     public String getSelect() {
         return this.select;
     }
@@ -155,6 +202,11 @@ public class ParametersForGetSearchResults {
         return this;
     }
 
+    /**
+     * Specifies the order in which items are returned. The maximum number of expressions is 5.
+     *
+     * @return String The return value
+     */
     public String getOrderby() {
         return this.orderby;
     }
@@ -164,6 +216,11 @@ public class ParametersForGetSearchResults {
         return this;
     }
 
+    /**
+     * Limits the number of items returned from a collection.
+     *
+     * @return int The return value
+     */
     public int getTop() {
         return this.top;
     }
@@ -173,6 +230,11 @@ public class ParametersForGetSearchResults {
         return this;
     }
 
+    /**
+     * Excludes the specified number of items of the queried collection from the result.
+     *
+     * @return int The return value
+     */
     public int getSkip() {
         return this.skip;
     }
@@ -182,6 +244,11 @@ public class ParametersForGetSearchResults {
         return this;
     }
 
+    /**
+     * Indicates whether the total count of items within a collection are returned in the result.
+     *
+     * @return boolean The return value
+     */
     public boolean isCount() {
         return this.count;
     }

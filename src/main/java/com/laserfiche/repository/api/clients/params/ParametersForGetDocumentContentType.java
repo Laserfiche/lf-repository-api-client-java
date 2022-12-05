@@ -17,6 +17,11 @@ public class ParametersForGetDocumentContentType {
         return this;
     }
 
+    /**
+     * The requested repository ID.
+     *
+     * @return String The return value
+     */
     public String getRepoId() {
         return this.repoId;
     }
@@ -26,6 +31,11 @@ public class ParametersForGetDocumentContentType {
         return this;
     }
 
+    /**
+     * The requested document ID.
+     *
+     * @return int The return value
+     */
     public int getEntryId() {
         return this.entryId;
     }

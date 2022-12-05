@@ -17,6 +17,11 @@ public class ParametersForDeleteAssignedTemplate {
         return this;
     }
 
+    /**
+     * The requested repository ID.
+     *
+     * @return String The return value
+     */
     public String getRepoId() {
         return this.repoId;
     }
@@ -26,6 +31,11 @@ public class ParametersForDeleteAssignedTemplate {
         return this;
     }
 
+    /**
+     * The ID of the entry that will have its template removed.
+     *
+     * @return int The return value
+     */
     public int getEntryId() {
         return this.entryId;
     }

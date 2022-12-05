@@ -28,6 +28,11 @@ public class ParametersForExportDocument {
         return this;
     }
 
+    /**
+     * The requested repository ID.
+     *
+     * @return String The return value
+     */
     public String getRepoId() {
         return this.repoId;
     }
@@ -37,6 +42,11 @@ public class ParametersForExportDocument {
         return this;
     }
 
+    /**
+     * The requested document ID.
+     *
+     * @return int The return value
+     */
     public int getEntryId() {
         return this.entryId;
     }
@@ -46,6 +56,12 @@ public class ParametersForExportDocument {
         return this;
     }
 
+    /**
+     * An optional header used to retrieve partial content of the edoc. Only supports single
+     * range with byte unit.
+     *
+     * @return String The return value
+     */
     public String getRange() {
         return this.range;
     }

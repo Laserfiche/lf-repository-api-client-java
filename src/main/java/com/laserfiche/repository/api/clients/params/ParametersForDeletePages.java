@@ -22,6 +22,11 @@ public class ParametersForDeletePages {
         return this;
     }
 
+    /**
+     * The requested repository ID.
+     *
+     * @return String The return value
+     */
     public String getRepoId() {
         return this.repoId;
     }
@@ -31,6 +36,11 @@ public class ParametersForDeletePages {
         return this;
     }
 
+    /**
+     * The requested document ID.
+     *
+     * @return int The return value
+     */
     public int getEntryId() {
         return this.entryId;
     }
@@ -40,6 +50,11 @@ public class ParametersForDeletePages {
         return this;
     }
 
+    /**
+     * The pages to be deleted.
+     *
+     * @return String The return value
+     */
     public String getPageRange() {
         return this.pageRange;
     }

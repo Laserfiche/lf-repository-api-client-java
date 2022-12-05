@@ -52,6 +52,11 @@ public class ParametersForGetSearchContextHits {
         return this;
     }
 
+    /**
+     * The requested repository ID.
+     *
+     * @return String The return value
+     */
     public String getRepoId() {
         return this.repoId;
     }
@@ -61,6 +66,11 @@ public class ParametersForGetSearchContextHits {
         return this;
     }
 
+    /**
+     * The requested searchToken.
+     *
+     * @return String The return value
+     */
     public String getSearchToken() {
         return this.searchToken;
     }
@@ -70,6 +80,11 @@ public class ParametersForGetSearchContextHits {
         return this;
     }
 
+    /**
+     * The search result listing row number to get context hits for.
+     *
+     * @return int The return value
+     */
     public int getRowNumber() {
         return this.rowNumber;
     }
@@ -79,6 +94,11 @@ public class ParametersForGetSearchContextHits {
         return this;
     }
 
+    /**
+     * An optional OData header. Can be used to set the maximum page size using odata.maxpagesize.
+     *
+     * @return String The return value
+     */
     public String getPrefer() {
         return this.prefer;
     }
@@ -88,6 +108,11 @@ public class ParametersForGetSearchContextHits {
         return this;
     }
 
+    /**
+     * Limits the properties returned in the result.
+     *
+     * @return String The return value
+     */
     public String getSelect() {
         return this.select;
     }
@@ -97,6 +122,11 @@ public class ParametersForGetSearchContextHits {
         return this;
     }
 
+    /**
+     * Specifies the order in which items are returned. The maximum number of expressions is 5.
+     *
+     * @return String The return value
+     */
     public String getOrderby() {
         return this.orderby;
     }
@@ -106,6 +136,11 @@ public class ParametersForGetSearchContextHits {
         return this;
     }
 
+    /**
+     * Limits the number of items returned from a collection.
+     *
+     * @return int The return value
+     */
     public int getTop() {
         return this.top;
     }
@@ -115,6 +150,11 @@ public class ParametersForGetSearchContextHits {
         return this;
     }
 
+    /**
+     * Excludes the specified number of items of the queried collection from the result.
+     *
+     * @return int The return value
+     */
     public int getSkip() {
         return this.skip;
     }
@@ -124,6 +164,11 @@ public class ParametersForGetSearchContextHits {
         return this;
     }
 
+    /**
+     * Indicates whether the total count of items within a collection are returned in the result.
+     *
+     * @return boolean The return value
+     */
     public boolean isCount() {
         return this.count;
     }

@@ -33,6 +33,11 @@ public class ParametersForCreateOrCopyEntry {
         return this;
     }
 
+    /**
+     * The requested repository ID.
+     *
+     * @return String The return value
+     */
     public String getRepoId() {
         return this.repoId;
     }
@@ -42,6 +47,11 @@ public class ParametersForCreateOrCopyEntry {
         return this;
     }
 
+    /**
+     * The folder ID that the entry will be created in.
+     *
+     * @return int The return value
+     */
     public int getEntryId() {
         return this.entryId;
     }
@@ -60,6 +70,12 @@ public class ParametersForCreateOrCopyEntry {
         return this;
     }
 
+    /**
+     * An optional query parameter used to indicate if the new entry should be automatically
+     * renamed if an entry already exists with the given name in the folder. The default value is false.
+     *
+     * @return boolean The return value
+     */
     public boolean isAutoRename() {
         return this.autoRename;
     }
@@ -69,6 +85,12 @@ public class ParametersForCreateOrCopyEntry {
         return this;
     }
 
+    /**
+     * An optional query parameter used to indicate the locale that should be used.
+     * The value should be a standard language tag.
+     *
+     * @return String The return value
+     */
     public String getCulture() {
         return this.culture;
     }

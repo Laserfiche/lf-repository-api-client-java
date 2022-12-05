@@ -17,6 +17,11 @@ public class ParametersForCancelOperation {
         return this;
     }
 
+    /**
+     * The requested repository ID
+     *
+     * @return String The return value
+     */
     public String getRepoId() {
         return this.repoId;
     }
@@ -26,6 +31,11 @@ public class ParametersForCancelOperation {
         return this;
     }
 
+    /**
+     * The operation token
+     *
+     * @return String The return value
+     */
     public String getOperationToken() {
         return this.operationToken;
     }

@@ -22,6 +22,11 @@ public class ParametersForGetTrusteeAttributeValueByKey {
         return this;
     }
 
+    /**
+     * The requested repository ID.
+     *
+     * @return String The return value
+     */
     public String getRepoId() {
         return this.repoId;
     }
@@ -31,6 +36,11 @@ public class ParametersForGetTrusteeAttributeValueByKey {
         return this;
     }
 
+    /**
+     * The requested attribute key.
+     *
+     * @return String The return value
+     */
     public String getAttributeKey() {
         return this.attributeKey;
     }
@@ -40,6 +50,11 @@ public class ParametersForGetTrusteeAttributeValueByKey {
         return this;
     }
 
+    /**
+     * Boolean value that indicates whether to return attributes associated with everyone or the currently authenticated user.
+     *
+     * @return boolean The return value
+     */
     public boolean isEveryone() {
         return this.everyone;
     }

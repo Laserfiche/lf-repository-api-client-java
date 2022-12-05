@@ -47,6 +47,11 @@ public class ParametersForGetLinkValuesFromEntry {
         return this;
     }
 
+    /**
+     * The requested repository ID.
+     *
+     * @return String The return value
+     */
     public String getRepoId() {
         return this.repoId;
     }
@@ -56,6 +61,11 @@ public class ParametersForGetLinkValuesFromEntry {
         return this;
     }
 
+    /**
+     * The requested entry ID.
+     *
+     * @return int The return value
+     */
     public int getEntryId() {
         return this.entryId;
     }
@@ -65,6 +75,11 @@ public class ParametersForGetLinkValuesFromEntry {
         return this;
     }
 
+    /**
+     * An optional odata header. Can be used to set the maximum page size using odata.maxpagesize.
+     *
+     * @return String The return value
+     */
     public String getPrefer() {
         return this.prefer;
     }
@@ -74,6 +89,11 @@ public class ParametersForGetLinkValuesFromEntry {
         return this;
     }
 
+    /**
+     * Limits the properties returned in the result.
+     *
+     * @return String The return value
+     */
     public String getSelect() {
         return this.select;
     }
@@ -83,6 +103,11 @@ public class ParametersForGetLinkValuesFromEntry {
         return this;
     }
 
+    /**
+     * Specifies the order in which items are returned. The maximum number of expressions is 5.
+     *
+     * @return String The return value
+     */
     public String getOrderby() {
         return this.orderby;
     }
@@ -92,6 +117,11 @@ public class ParametersForGetLinkValuesFromEntry {
         return this;
     }
 
+    /**
+     * Limits the number of items returned from a collection.
+     *
+     * @return int The return value
+     */
     public int getTop() {
         return this.top;
     }
@@ -101,6 +131,11 @@ public class ParametersForGetLinkValuesFromEntry {
         return this;
     }
 
+    /**
+     * Excludes the specified number of items of the queried collection from the result.
+     *
+     * @return int The return value
+     */
     public int getSkip() {
         return this.skip;
     }
@@ -110,6 +145,11 @@ public class ParametersForGetLinkValuesFromEntry {
         return this;
     }
 
+    /**
+     * Indicates whether the total count of items within a collection are returned in the result.
+     *
+     * @return boolean The return value
+     */
     public boolean isCount() {
         return this.count;
     }

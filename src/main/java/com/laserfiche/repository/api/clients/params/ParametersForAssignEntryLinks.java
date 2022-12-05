@@ -23,6 +23,11 @@ public class ParametersForAssignEntryLinks {
         return this;
     }
 
+    /**
+     * The request repository ID.
+     *
+     * @return String The return value
+     */
     public String getRepoId() {
         return this.repoId;
     }
@@ -32,6 +37,11 @@ public class ParametersForAssignEntryLinks {
         return this;
     }
 
+    /**
+     * The requested entry ID.
+     *
+     * @return int The return value
+     */
     public int getEntryId() {
         return this.entryId;
     }

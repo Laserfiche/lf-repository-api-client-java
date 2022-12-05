@@ -48,6 +48,11 @@ public class ParametersForCreateSimpleSearchOperation {
         return this;
     }
 
+    /**
+     * Limits the properties returned in the result.
+     *
+     * @return String The return value
+     */
     public String getSelect() {
         return this.select;
     }
@@ -57,6 +62,11 @@ public class ParametersForCreateSimpleSearchOperation {
         return this;
     }
 
+    /**
+     * Specifies the order in which items are returned. The maximum number of expressions is 5.
+     *
+     * @return String The return value
+     */
     public String getOrderby() {
         return this.orderby;
     }
@@ -66,6 +76,11 @@ public class ParametersForCreateSimpleSearchOperation {
         return this;
     }
 
+    /**
+     * Indicates whether the total count of items within a collection are returned in the result.
+     *
+     * @return boolean The return value
+     */
     public boolean isCount() {
         return this.count;
     }
@@ -75,6 +90,11 @@ public class ParametersForCreateSimpleSearchOperation {
         return this;
     }
 
+    /**
+     * The requested repository ID.
+     *
+     * @return String The return value
+     */
     public String getRepoId() {
         return this.repoId;
     }
@@ -84,6 +104,11 @@ public class ParametersForCreateSimpleSearchOperation {
         return this;
     }
 
+    /**
+     * Optional array of field names. Field values corresponding to the given field names will be returned for each search result.
+     *
+     * @return String[] The return value
+     */
     public String[] getFields() {
         return this.fields;
     }
@@ -93,6 +118,11 @@ public class ParametersForCreateSimpleSearchOperation {
         return this;
     }
 
+    /**
+     * Boolean for if field values should be formatted. Only applicable if Fields are specified.
+     *
+     * @return boolean The return value
+     */
     public boolean isFormatFields() {
         return this.formatFields;
     }
@@ -111,6 +141,13 @@ public class ParametersForCreateSimpleSearchOperation {
         return this;
     }
 
+    /**
+     * An optional query parameter used to indicate the locale that should be used for formatting.
+     * The value should be a standard language tag. The formatFields query parameter must be set to true, otherwise
+     * culture will not be used for formatting.
+     *
+     * @return String The return value
+     */
     public String getCulture() {
         return this.culture;
     }

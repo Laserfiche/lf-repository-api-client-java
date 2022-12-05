@@ -28,6 +28,11 @@ public class ParametersForGetTemplateDefinitionById {
         return this;
     }
 
+    /**
+     * The requested repository ID.
+     *
+     * @return String The return value
+     */
     public String getRepoId() {
         return this.repoId;
     }
@@ -37,6 +42,11 @@ public class ParametersForGetTemplateDefinitionById {
         return this;
     }
 
+    /**
+     * The requested template definition ID.
+     *
+     * @return int The return value
+     */
     public int getTemplateId() {
         return this.templateId;
     }
@@ -46,6 +56,12 @@ public class ParametersForGetTemplateDefinitionById {
         return this;
     }
 
+    /**
+     * An optional query parameter used to indicate the locale that should be used for formatting.
+     * The value should be a standard language tag.
+     *
+     * @return String The return value
+     */
     public String getCulture() {
         return this.culture;
     }
@@ -55,6 +71,11 @@ public class ParametersForGetTemplateDefinitionById {
         return this;
     }
 
+    /**
+     * Limits the properties returned in the result.
+     *
+     * @return String The return value
+     */
     public String getSelect() {
         return this.select;
     }
