@@ -25,7 +25,7 @@ class FieldDefinitionsApiTest extends BaseTest {
     void getFieldDefinitionById_ReturnField() {
         WFieldInfo fieldInfo = client
                 .getFieldDefinitionById(new ParametersForGetFieldDefinitionById()
-                        .setRepoId(repoId)
+                        .setRepoId(repositoryId)
                         .setFieldDefinitionId(1));
 
         assertNotNull(fieldInfo);
@@ -34,7 +34,7 @@ class FieldDefinitionsApiTest extends BaseTest {
     @Test
     void getFieldDefinitions_ReturnAllFields() {
         ODataValueContextOfIListOfWFieldInfo fieldInfoList = client
-                .getFieldDefinitions(new ParametersForGetFieldDefinitions().setRepoId(repoId));
+                .getFieldDefinitions(new ParametersForGetFieldDefinitions().setRepoId(repositoryId));
 
         assertNotNull(fieldInfoList);
     }
@@ -44,7 +44,7 @@ class FieldDefinitionsApiTest extends BaseTest {
         int maxPageSize = 10;
         ODataValueContextOfIListOfWFieldInfo fieldInfoList = client
                 .getFieldDefinitions(new ParametersForGetFieldDefinitions()
-                        .setRepoId(repoId)
+                        .setRepoId(repositoryId)
                         .setPrefer(String.format("maxpagesize=%d", maxPageSize)));
         assertNotNull(fieldInfoList);
 
@@ -84,6 +84,6 @@ class FieldDefinitionsApiTest extends BaseTest {
             }
         };
         client.getFieldDefinitionsForEach(callback, maxPageSize,
-                new ParametersForGetFieldDefinitions().setRepoId(repoId));
+                new ParametersForGetFieldDefinitions().setRepoId(repositoryId));
     }
 }

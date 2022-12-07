@@ -30,7 +30,7 @@ public class SetEntriesApiTest extends BaseTest {
             repositoryApiClient
                     .getEntriesClient()
                     .deleteEntryInfo(new ParametersForDeleteEntryInfo()
-                            .setRepoId(repoId)
+                            .setRepoId(repositoryId)
                             .setEntryId(num)
                             .setRequestBody(body));
         }
@@ -41,7 +41,7 @@ public class SetEntriesApiTest extends BaseTest {
     void setTags_ReturnTags() {
         ODataValueContextOfIListOfWTagInfo tagDefinitionsResponse = repositoryApiClient
                 .getTagDefinitionsClient()
-                .getTagDefinitions(new ParametersForGetTagDefinitions().setRepoId(repoId));
+                .getTagDefinitions(new ParametersForGetTagDefinitions().setRepoId(repositoryId));
         List<WTagInfo> tagDefinitions = tagDefinitionsResponse.getValue();
 
         assertNotNull(tagDefinitions);
@@ -61,7 +61,7 @@ public class SetEntriesApiTest extends BaseTest {
         ODataValueOfIListOfWTagInfo assignTagsResponse = repositoryApiClient
                 .getEntriesClient()
                 .assignTags(new ParametersForAssignTags()
-                        .setRepoId(repoId)
+                        .setRepoId(repositoryId)
                         .setEntryId(num)
                         .setRequestBody(request));
         List<WTagInfo> tags = assignTagsResponse.getValue();
@@ -77,7 +77,7 @@ public class SetEntriesApiTest extends BaseTest {
         WTemplateInfo template = null;
         ODataValueContextOfIListOfWTemplateInfo templateDefinitionsResponse = repositoryApiClient
                 .getTemplateDefinitionClient()
-                .getTemplateDefinitions(new ParametersForGetTemplateDefinitions().setRepoId(repoId));
+                .getTemplateDefinitions(new ParametersForGetTemplateDefinitions().setRepoId(repositoryId));
         List<WTemplateInfo> templateDefinitions = templateDefinitionsResponse.getValue();
 
         assertNotNull(templateDefinitions);
@@ -87,7 +87,7 @@ public class SetEntriesApiTest extends BaseTest {
             ODataValueContextOfIListOfTemplateFieldInfo templateDefinitionsFieldsResponse = repositoryApiClient
                     .getTemplateDefinitionClient()
                     .getTemplateFieldDefinitions(new ParametersForGetTemplateFieldDefinitions()
-                            .setRepoId(repoId)
+                            .setRepoId(repositoryId)
                             .setTemplateId(templateDefinition.getId()));
             if (templateDefinitionsFieldsResponse
                     .getValue() != null && allFalse(templateDefinitionsFieldsResponse.getValue())) {
@@ -105,7 +105,7 @@ public class SetEntriesApiTest extends BaseTest {
         Entry setTemplateResponse = repositoryApiClient
                 .getEntriesClient()
                 .writeTemplateValueToEntry(new ParametersForWriteTemplateValueToEntry()
-                        .setRepoId(repoId)
+                        .setRepoId(repositoryId)
                         .setEntryId(entry
                                 .getId())
                         .setRequestBody(request));
@@ -123,7 +123,7 @@ public class SetEntriesApiTest extends BaseTest {
         // Find a field definition that accepts String and has constraint.
         ODataValueContextOfIListOfWFieldInfo fieldDefinitionsResponse = repositoryApiClient
                 .getFieldDefinitionsClient()
-                .getFieldDefinitions(new ParametersForGetFieldDefinitions().setRepoId(repoId));
+                .getFieldDefinitions(new ParametersForGetFieldDefinitions().setRepoId(repositoryId));
         List<WFieldInfo> fieldDefinitions = fieldDefinitionsResponse.getValue();
         for (WFieldInfo fieldDefinition : fieldDefinitions) {
             if (fieldDefinition
@@ -161,7 +161,7 @@ public class SetEntriesApiTest extends BaseTest {
         ODataValueOfIListOfFieldValue assignFieldValuesResponse = repositoryApiClient
                 .getEntriesClient()
                 .assignFieldValues(new ParametersForAssignFieldValues()
-                        .setRepoId(repoId)
+                        .setRepoId(repositoryId)
                         .setEntryId(entryId)
                         .setRequestBody(requestBody));
         List<FieldValue> fields = assignFieldValuesResponse
@@ -180,7 +180,7 @@ public class SetEntriesApiTest extends BaseTest {
 
         ODataValueContextOfIListOfWTemplateInfo templateDefinitionsResponse = client
                 .getTemplateDefinitionClient()
-                .getTemplateDefinitions(new ParametersForGetTemplateDefinitions().setRepoId(repoId));
+                .getTemplateDefinitions(new ParametersForGetTemplateDefinitions().setRepoId(repositoryId));
         List<WTemplateInfo> templateDefinitions = templateDefinitionsResponse.getValue();
 
         assertNotNull(templateDefinitions);
@@ -190,7 +190,7 @@ public class SetEntriesApiTest extends BaseTest {
             ODataValueContextOfIListOfTemplateFieldInfo templateDefinitionsFieldsResponse = client
                     .getTemplateDefinitionClient()
                     .getTemplateFieldDefinitions(new ParametersForGetTemplateFieldDefinitions()
-                            .setRepoId(repoId)
+                            .setRepoId(repositoryId)
                             .setTemplateId(templateDefinition.getId()));
             if (templateDefinitionsFieldsResponse
                     .getValue() != null && allFalse(
@@ -210,7 +210,7 @@ public class SetEntriesApiTest extends BaseTest {
         Entry writeTemplateValueToEntryResponse = client
                 .getEntriesClient()
                 .writeTemplateValueToEntry(new ParametersForWriteTemplateValueToEntry()
-                        .setRepoId(repoId)
+                        .setRepoId(repositoryId)
                         .setEntryId(entry
                                 .getId())
                         .setRequestBody(request));

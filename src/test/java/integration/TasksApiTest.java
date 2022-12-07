@@ -36,7 +36,7 @@ public class TasksApiTest extends BaseTest {
         AcceptedOperation result = repositoryApiClient
                 .getEntriesClient()
                 .deleteEntryInfo(new ParametersForDeleteEntryInfo()
-                        .setRepoId(repoId)
+                        .setRepoId(repositoryId)
                         .setEntryId(deleteEntry.getId())
                         .setRequestBody(body));
 
@@ -48,7 +48,7 @@ public class TasksApiTest extends BaseTest {
 
         Exception thrown = Assertions.assertThrows(ApiException.class, () -> {
             client.cancelOperation(new ParametersForCancelOperation()
-                    .setRepoId(repoId)
+                    .setRepoId(repositoryId)
                     .setOperationToken(token));
         });
 
@@ -67,7 +67,7 @@ public class TasksApiTest extends BaseTest {
         AcceptedOperation result = repositoryApiClient
                 .getEntriesClient()
                 .deleteEntryInfo(new ParametersForDeleteEntryInfo()
-                        .setRepoId(repoId)
+                        .setRepoId(repositoryId)
                         .setEntryId(deleteEntry.getId())
                         .setRequestBody(body));
 
@@ -75,7 +75,7 @@ public class TasksApiTest extends BaseTest {
         assertNotNull(token);
 
         boolean cancellationResult = client.cancelOperation(new ParametersForCancelOperation()
-                .setRepoId(repoId)
+                .setRepoId(repositoryId)
                 .setOperationToken(token));
         assertTrue(cancellationResult);
     }
@@ -90,7 +90,7 @@ public class TasksApiTest extends BaseTest {
         AcceptedOperation result = repositoryApiClient
                 .getEntriesClient()
                 .deleteEntryInfo(new ParametersForDeleteEntryInfo()
-                        .setRepoId(repoId)
+                        .setRepoId(repositoryId)
                         .setEntryId(deleteEntry.getId())
                         .setRequestBody(body));
 
@@ -102,7 +102,7 @@ public class TasksApiTest extends BaseTest {
 
         OperationProgress operationProgressResponse = client.getOperationStatusAndProgress(
                 new ParametersForGetOperationStatusAndProgress()
-                        .setRepoId(repoId)
+                        .setRepoId(repositoryId)
                         .setOperationToken(token));
 
         assertNotNull(operationProgressResponse);

@@ -36,7 +36,7 @@ public class SetLinksApiTest extends BaseTest {
                 client
                         .getEntriesClient()
                         .deleteEntryInfo(new ParametersForDeleteEntryInfo()
-                                .setRepoId(repoId)
+                                .setRepoId(repositoryId)
                                 .setEntryId(createdEntry.getId())
                                 .setRequestBody(body));
             }
@@ -58,7 +58,7 @@ public class SetLinksApiTest extends BaseTest {
         ODataValueOfIListOfWEntryLinkInfo result = client
                 .getEntriesClient()
                 .assignEntryLinks(new ParametersForAssignEntryLinks()
-                        .setRepoId(repoId)
+                        .setRepoId(repositoryId)
                         .setEntryId(sourceEntry
                                 .getId())
                         .setRequestBody(request));

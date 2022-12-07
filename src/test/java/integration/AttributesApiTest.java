@@ -25,7 +25,7 @@ class AttributesApiTest extends BaseTest {
     void getTrusteeAttributeKeyValuePairs_ReturnAttributes() {
         ODataValueContextOfListOfAttribute attributeList = client.getTrusteeAttributeKeyValuePairs(
                 new ParametersForGetTrusteeAttributeKeyValuePairs()
-                        .setRepoId(repoId)
+                        .setRepoId(repositoryId)
                         .setEveryone(true));
 
         assertNotNull(attributeList);
@@ -35,13 +35,13 @@ class AttributesApiTest extends BaseTest {
     void getAttributeValueByKey_ReturnAttribute() {
         ODataValueContextOfListOfAttribute attributeList = client.getTrusteeAttributeKeyValuePairs(
                 new ParametersForGetTrusteeAttributeKeyValuePairs()
-                        .setRepoId(repoId)
+                        .setRepoId(repositoryId)
                         .setEveryone(true));
         assertNotNull(attributeList);
 
         Attribute attribute = client.getTrusteeAttributeValueByKey(
                 new ParametersForGetTrusteeAttributeValueByKey()
-                        .setRepoId(repoId)
+                        .setRepoId(repositoryId)
                         .setAttributeKey(attributeList
                                 .getValue()
                                 .get(0)
@@ -55,14 +55,14 @@ class AttributesApiTest extends BaseTest {
         int maxPageSize = 5;
         ODataValueContextOfListOfAttribute attributeList = client.getTrusteeAttributeKeyValuePairs(
                 new ParametersForGetTrusteeAttributeKeyValuePairs()
-                        .setRepoId(repoId)
+                        .setRepoId(repositoryId)
                         .setEveryone(true)
                         .setPrefer(String.format("maxpagesize=%d", maxPageSize)));
         assertNotNull(attributeList);
 
         Attribute attribute = client.getTrusteeAttributeValueByKey(
                 new ParametersForGetTrusteeAttributeValueByKey()
-                        .setRepoId(repoId)
+                        .setRepoId(repositoryId)
                         .setAttributeKey(attributeList
                                 .getValue()
                                 .get(0)
@@ -93,14 +93,14 @@ class AttributesApiTest extends BaseTest {
         int maxPageSize = 90;
         ODataValueContextOfListOfAttribute attributeList = client.getTrusteeAttributeKeyValuePairs(
                 new ParametersForGetTrusteeAttributeKeyValuePairs()
-                        .setRepoId(repoId)
+                        .setRepoId(repositoryId)
                         .setEveryone(true)
                         .setPrefer(String.format("maxpagesize=%d", maxPageSize)));
         assertNotNull(attributeList);
 
         Attribute attribute = client.getTrusteeAttributeValueByKey(
                 new ParametersForGetTrusteeAttributeValueByKey()
-                        .setRepoId(repoId)
+                        .setRepoId(repositoryId)
                         .setAttributeKey(attributeList
                                 .getValue()
                                 .get(0)
@@ -125,7 +125,7 @@ class AttributesApiTest extends BaseTest {
         };
         client.getTrusteeAttributeKeyValuePairsForEach(callback, maxPageSize,
                 new ParametersForGetTrusteeAttributeKeyValuePairs()
-                        .setRepoId(repoId)
+                        .setRepoId(repositoryId)
                         .setEveryone(true));
     }
 }

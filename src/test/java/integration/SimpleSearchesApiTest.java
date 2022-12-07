@@ -18,7 +18,7 @@ class SimpleSearchesApiTest extends BaseTest {
 
         ODataValueOfIListOfEntry entryList = client
                 .createSimpleSearchOperation(new ParametersForCreateSimpleSearchOperation()
-                        .setRepoId(repoId).
+                        .setRepoId(repositoryId).
                         setRequestBody(searchRequest));
 
         assertNotNull(entryList);
