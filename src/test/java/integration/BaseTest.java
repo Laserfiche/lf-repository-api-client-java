@@ -73,48 +73,6 @@ public class BaseTest {
         testHeaders = new HashMap<>();
         testHeaders.put(testHeaderValue, "true");
         repositoryApiClient = createClient();
-//        spKey = System.getenv("SERVICE_PRINCIPAL_KEY");
-//        String accessKeyBase64 = System.getenv("ACCESS_KEY");
-//        if (!nullOrEmpty(accessKeyBase64)) {
-//            accessKey = AccessKey.createFromBase64EncodedAccessKey(accessKeyBase64);
-//        }
-//        repoId = System.getenv("REPOSITORY_ID");
-//        username = System.getenv("APISERVER_USERNAME");
-//        password = System.getenv("APISERVER_PASSWORD");
-//        baseUrl = System.getenv("APISERVER_REPOSITORY_API_BASE_URL");
-//        authorizationType = System.getenv("AUTHORIZATION_TYPE");
-//        String testHeaderValue = System.getenv("TEST_HEADER");
-//        if (nullOrEmpty(authorizationType)) {
-//            // Load environment variables
-//            Dotenv dotenv = Dotenv
-//                    .configure()
-//                    .filename(".env")
-//                    .load();
-//            authorizationType = dotenv.get("AUTHORIZATION_TYPE");
-//            testHeaderValue = dotenv.get("TEST_HEADER");
-//            repoId = dotenv.get("REPOSITORY_ID");
-//            if (nullOrEmpty(repoId)) {
-//                throw new IllegalStateException("Environment variable REPOSITORY_ID does not exist.");
-//            }
-//            if (authorizationType.equalsIgnoreCase(AuthorizationType.CLOUD_ACCESS_KEY.name())) {
-//                if (nullOrEmpty(spKey) && nullOrEmpty(accessKeyBase64)) {
-//                    accessKeyBase64 = dotenv.get("ACCESS_KEY");
-//                    spKey = dotenv.get("SERVICE_PRINCIPAL_KEY");
-//                    accessKey = AccessKey.createFromBase64EncodedAccessKey(accessKeyBase64);
-//                }
-//            } else if (authorizationType.equalsIgnoreCase(AuthorizationType.API_SERVER_USERNAME_PASSWORD.name())) {
-//                if (nullOrEmpty(username) && nullOrEmpty(password) && nullOrEmpty(baseUrl)) {
-//                    username = dotenv.get("APISERVER_USERNAME");
-//                    password = dotenv.get("APISERVER_PASSWORD");
-//                    baseUrl = dotenv.get("APISERVER_REPOSITORY_API_BASE_URL");
-//                }
-//            } else {
-//                throw new IllegalStateException("Invalid Authorization Type Value");
-//            }
-//        }
-//        testHeaders = new HashMap<>();
-//        testHeaders.put(testHeaderValue, "true");
-//        repositoryApiClient = createClient();
     }
 
     private static String getEnvironmentVariable(String environmentVariableName) {
