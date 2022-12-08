@@ -22,15 +22,15 @@ enum AuthorizationType {
 }
 
 public class BaseTest {
-    protected static String servicePrincipalKey;
-    protected static AccessKey accessKey;
+    private static String servicePrincipalKey;
+    private static AccessKey accessKey;
     protected static String repositoryId;
-    protected static Map<String, String> testHeaders;
+    private static Map<String, String> testHeaders;
     protected static RepositoryApiClient repositoryApiClient;
-    protected static String testHeaderValue;
-    protected static String username;
-    protected static String password;
-    protected static String baseUrl;
+    private static String testHeaderValue;
+    private static String username;
+    private static String password;
+    private static String baseUrl;
     private static final String TEST_HEADER = "TEST_HEADER";
     private static final String ACCESS_KEY = "ACCESS_KEY";
     private static final String SERVICE_PRINCIPAL_KEY = "SERVICE_PRINCIPAL_KEY";
@@ -39,7 +39,7 @@ public class BaseTest {
     private static final String PASSWORD = "APISERVER_PASSWORD";
     private static final String BASE_URL = "APISERVER_REPOSITORY_API_BASE_URL";
     private static final String AUTHORIZATION_TYPE = "AUTHORIZATION_TYPE";
-    protected static AuthorizationType authorizationType;
+    private static AuthorizationType authorizationType;
 
     @BeforeAll
     public static void setUp() {
