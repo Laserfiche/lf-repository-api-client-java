@@ -57,9 +57,6 @@ public class BaseTest {
                     getEnvironmentVariable(AUTHORIZATION_TYPE));
         }
         repositoryId = getEnvironmentVariable(REPOSITORY_ID);
-        if (nullOrEmpty(repositoryId)) {
-            throw new IllegalStateException("Environment variable REPOSITORY_ID does not exist.");
-        }
         if (authorizationType == AuthorizationType.CLOUD_ACCESS_KEY) {
             servicePrincipalKey = getEnvironmentVariable(SERVICE_PRINCIPAL_KEY);
             String accessKeyBase64 = getEnvironmentVariable(ACCESS_KEY);
