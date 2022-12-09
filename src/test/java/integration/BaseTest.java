@@ -40,13 +40,14 @@ public class BaseTest {
     private static final String BASE_URL = "APISERVER_REPOSITORY_API_BASE_URL";
     private static final String AUTHORIZATION_TYPE = "AUTHORIZATION_TYPE";
     private static AuthorizationType authorizationType;
-
+    private static final boolean IS_NOT_GITHUB_ENVIRONMENT = nullOrEmpty(System.getenv("GITHUB_WORKSPACE"));
     @BeforeAll
     public static void setUp() {
         Dotenv dotenv = Dotenv
                 .configure()
                 .filename(".env")
                 .systemProperties()
+                .ignoreIfMissing()
                 .load();
         try {
             authorizationType = AuthorizationType.valueOf(getEnvironmentVariable(AUTHORIZATION_TYPE));
@@ -79,7 +80,7 @@ public class BaseTest {
         String environmentVariable = System.getenv(environmentVariableName);
         if (nullOrEmpty(environmentVariable)) {
             environmentVariable = System.getProperty(environmentVariableName);
-            if (nullOrEmpty(environmentVariable))
+            if (nullOrEmpty(environmentVariable) && IS_NOT_GITHUB_ENVIRONMENT)
                 throw new IllegalStateException(
                         "Environment variable '" + environmentVariableName + "' does not exist.");
         }
