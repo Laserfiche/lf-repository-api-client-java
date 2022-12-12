@@ -1,9 +1,10 @@
 package com.laserfiche.repository.api;
 
+import com.laserfiche.api.client.deserialization.TokenClientObjectMapper;
 import com.laserfiche.api.client.model.AccessKey;
 import com.laserfiche.repository.api.clients.*;
 import com.laserfiche.repository.api.clients.impl.*;
-import com.laserfiche.repository.api.clients.impl.deserialization.RepositoryClientObjectMapper;
+import kong.unirest.ObjectMapper;
 import kong.unirest.Unirest;
 import kong.unirest.UnirestInstance;
 
@@ -31,11 +32,14 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
             baseUrl = baseUrl.substring(0, baseUrl.length() - 1);
         }
 
+        // Initialize object mapper
+        ObjectMapper objectMapper = new TokenClientObjectMapper();
+
         // Initialize HTTP client
         httpClient = Unirest.spawnInstance();
         httpClient
                 .config()
-                .setObjectMapper(new RepositoryClientObjectMapper())
+                .setObjectMapper(objectMapper)
                 .interceptor(interceptor);
         this.interceptor = interceptor;
 

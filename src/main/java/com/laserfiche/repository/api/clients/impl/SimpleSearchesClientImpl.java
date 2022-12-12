@@ -1,9 +1,9 @@
 package com.laserfiche.repository.api.clients.impl;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.laserfiche.api.client.model.ApiException;
+import com.laserfiche.api.client.model.ProblemDetails;
 import com.laserfiche.repository.api.clients.SimpleSearchesClient;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfEntry;
-import com.laserfiche.repository.api.clients.impl.model.ProblemDetails;
 import com.laserfiche.repository.api.clients.params.ParametersForCreateSimpleSearchOperation;
 import kong.unirest.HttpResponse;
 import kong.unirest.UnirestInstance;
@@ -53,7 +53,7 @@ public class SimpleSearchesClientImpl extends ApiClient implements SimpleSearche
             try {
                 String jsonString = new JSONObject(body).toString();
                 return objectMapper.readValue(jsonString, ODataValueContextOfIListOfEntry.class);
-            } catch (JsonProcessingException | IllegalStateException e) {
+            } catch (IllegalStateException e) {
                 e.printStackTrace();
                 return null;
             }
@@ -63,7 +63,7 @@ public class SimpleSearchesClientImpl extends ApiClient implements SimpleSearche
             try {
                 String jsonString = new JSONObject(body).toString();
                 problemDetails = deserializeToProblemDetails(jsonString);
-            } catch (JsonProcessingException | IllegalStateException e) {
+            } catch (IllegalStateException e) {
                 Optional<UnirestParsingException> parsingException = httpResponse.getParsingError();
                 throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(),
                         (parsingException.isPresent() ? parsingException

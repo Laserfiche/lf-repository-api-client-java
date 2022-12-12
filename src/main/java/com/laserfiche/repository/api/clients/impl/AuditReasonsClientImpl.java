@@ -1,9 +1,9 @@
 package com.laserfiche.repository.api.clients.impl;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.laserfiche.api.client.model.ApiException;
+import com.laserfiche.api.client.model.ProblemDetails;
 import com.laserfiche.repository.api.clients.AuditReasonsClient;
 import com.laserfiche.repository.api.clients.impl.model.AuditReasons;
-import com.laserfiche.repository.api.clients.impl.model.ProblemDetails;
 import com.laserfiche.repository.api.clients.params.ParametersForGetAuditReasons;
 import kong.unirest.HttpResponse;
 import kong.unirest.UnirestInstance;
@@ -40,7 +40,7 @@ public class AuditReasonsClientImpl extends ApiClient implements AuditReasonsCli
             try {
                 String jsonString = new JSONObject(body).toString();
                 return objectMapper.readValue(jsonString, AuditReasons.class);
-            } catch (JsonProcessingException | IllegalStateException e) {
+            } catch (IllegalStateException e) {
                 e.printStackTrace();
                 return null;
             }
@@ -50,7 +50,7 @@ public class AuditReasonsClientImpl extends ApiClient implements AuditReasonsCli
             try {
                 String jsonString = new JSONObject(body).toString();
                 problemDetails = deserializeToProblemDetails(jsonString);
-            } catch (JsonProcessingException | IllegalStateException e) {
+            } catch (IllegalStateException e) {
                 Optional<UnirestParsingException> parsingException = httpResponse.getParsingError();
                 throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(),
                         (parsingException.isPresent() ? parsingException

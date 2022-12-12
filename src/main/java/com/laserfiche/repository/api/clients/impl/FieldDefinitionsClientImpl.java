@@ -1,9 +1,9 @@
 package com.laserfiche.repository.api.clients.impl;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.laserfiche.api.client.model.ApiException;
+import com.laserfiche.api.client.model.ProblemDetails;
 import com.laserfiche.repository.api.clients.FieldDefinitionsClient;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfWFieldInfo;
-import com.laserfiche.repository.api.clients.impl.model.ProblemDetails;
 import com.laserfiche.repository.api.clients.impl.model.WFieldInfo;
 import com.laserfiche.repository.api.clients.params.ParametersForGetFieldDefinitionById;
 import com.laserfiche.repository.api.clients.params.ParametersForGetFieldDefinitions;
@@ -48,7 +48,7 @@ public class FieldDefinitionsClientImpl extends ApiClient implements FieldDefini
             try {
                 String jsonString = new JSONObject(body).toString();
                 return objectMapper.readValue(jsonString, WFieldInfo.class);
-            } catch (JsonProcessingException | IllegalStateException e) {
+            } catch (IllegalStateException e) {
                 e.printStackTrace();
                 return null;
             }
@@ -58,7 +58,7 @@ public class FieldDefinitionsClientImpl extends ApiClient implements FieldDefini
             try {
                 String jsonString = new JSONObject(body).toString();
                 problemDetails = deserializeToProblemDetails(jsonString);
-            } catch (JsonProcessingException | IllegalStateException e) {
+            } catch (IllegalStateException e) {
                 Optional<UnirestParsingException> parsingException = httpResponse.getParsingError();
                 throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(),
                         (parsingException.isPresent() ? parsingException
@@ -123,7 +123,7 @@ public class FieldDefinitionsClientImpl extends ApiClient implements FieldDefini
             try {
                 String jsonString = new JSONObject(body).toString();
                 return objectMapper.readValue(jsonString, ODataValueContextOfIListOfWFieldInfo.class);
-            } catch (JsonProcessingException | IllegalStateException e) {
+            } catch (IllegalStateException e) {
                 e.printStackTrace();
                 return null;
             }
@@ -133,7 +133,7 @@ public class FieldDefinitionsClientImpl extends ApiClient implements FieldDefini
             try {
                 String jsonString = new JSONObject(body).toString();
                 problemDetails = deserializeToProblemDetails(jsonString);
-            } catch (JsonProcessingException | IllegalStateException e) {
+            } catch (IllegalStateException e) {
                 Optional<UnirestParsingException> parsingException = httpResponse.getParsingError();
                 throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(),
                         (parsingException.isPresent() ? parsingException
