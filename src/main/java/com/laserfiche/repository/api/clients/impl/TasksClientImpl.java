@@ -7,7 +7,6 @@ import com.laserfiche.repository.api.clients.impl.model.OperationProgress;
 import com.laserfiche.repository.api.clients.params.ParametersForCancelOperation;
 import com.laserfiche.repository.api.clients.params.ParametersForGetOperationStatusAndProgress;
 import kong.unirest.HttpResponse;
-import kong.unirest.ObjectMapper;
 import kong.unirest.UnirestInstance;
 import kong.unirest.UnirestParsingException;
 import kong.unirest.json.JSONObject;
@@ -17,8 +16,8 @@ import java.util.Optional;
 
 public class TasksClientImpl extends ApiClient implements TasksClient {
 
-    public TasksClientImpl(String baseUrl, UnirestInstance httpClient, ObjectMapper objectMapper) {
-        super(baseUrl, httpClient, objectMapper);
+    public TasksClientImpl(String baseUrl, UnirestInstance httpClient) {
+        super(baseUrl, httpClient);
     }
 
     /**

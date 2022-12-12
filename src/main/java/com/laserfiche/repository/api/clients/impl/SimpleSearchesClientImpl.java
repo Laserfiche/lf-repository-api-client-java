@@ -6,7 +6,6 @@ import com.laserfiche.repository.api.clients.SimpleSearchesClient;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfEntry;
 import com.laserfiche.repository.api.clients.params.ParametersForCreateSimpleSearchOperation;
 import kong.unirest.HttpResponse;
-import kong.unirest.ObjectMapper;
 import kong.unirest.UnirestInstance;
 import kong.unirest.UnirestParsingException;
 import kong.unirest.json.JSONObject;
@@ -15,8 +14,8 @@ import java.util.*;
 
 public class SimpleSearchesClientImpl extends ApiClient implements SimpleSearchesClient {
 
-    public SimpleSearchesClientImpl(String baseUrl, UnirestInstance httpClient, ObjectMapper objectMapper) {
-        super(baseUrl, httpClient, objectMapper);
+    public SimpleSearchesClientImpl(String baseUrl, UnirestInstance httpClient) {
+        super(baseUrl, httpClient);
     }
 
     /**

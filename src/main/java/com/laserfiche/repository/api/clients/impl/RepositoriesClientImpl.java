@@ -5,7 +5,6 @@ import com.laserfiche.api.client.model.ProblemDetails;
 import com.laserfiche.repository.api.clients.RepositoriesClient;
 import com.laserfiche.repository.api.clients.impl.model.RepositoryInfo;
 import kong.unirest.HttpResponse;
-import kong.unirest.ObjectMapper;
 import kong.unirest.UnirestInstance;
 import kong.unirest.UnirestParsingException;
 import kong.unirest.json.JSONArray;
@@ -17,8 +16,8 @@ import java.util.Optional;
 
 public class RepositoriesClientImpl extends ApiClient implements RepositoriesClient {
 
-    public RepositoriesClientImpl(String baseUrl, UnirestInstance httpClient, ObjectMapper objectMapper) {
-        super(baseUrl, httpClient, objectMapper);
+    public RepositoriesClientImpl(String baseUrl, UnirestInstance httpClient) {
+        super(baseUrl, httpClient);
     }
 
     /**

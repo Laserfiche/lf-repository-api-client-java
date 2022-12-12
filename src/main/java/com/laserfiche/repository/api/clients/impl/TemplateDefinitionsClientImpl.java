@@ -11,7 +11,6 @@ import com.laserfiche.repository.api.clients.params.ParametersForGetTemplateDefi
 import com.laserfiche.repository.api.clients.params.ParametersForGetTemplateFieldDefinitions;
 import com.laserfiche.repository.api.clients.params.ParametersForGetTemplateFieldDefinitionsByTemplateName;
 import kong.unirest.HttpResponse;
-import kong.unirest.ObjectMapper;
 import kong.unirest.UnirestInstance;
 import kong.unirest.UnirestParsingException;
 import kong.unirest.json.JSONObject;
@@ -23,8 +22,8 @@ import java.util.stream.Collectors;
 
 public class TemplateDefinitionsClientImpl extends ApiClient implements TemplateDefinitionsClient {
 
-    public TemplateDefinitionsClientImpl(String baseUrl, UnirestInstance httpClient, ObjectMapper objectMapper) {
-        super(baseUrl, httpClient, objectMapper);
+    public TemplateDefinitionsClientImpl(String baseUrl, UnirestInstance httpClient) {
+        super(baseUrl, httpClient);
     }
 
     /**

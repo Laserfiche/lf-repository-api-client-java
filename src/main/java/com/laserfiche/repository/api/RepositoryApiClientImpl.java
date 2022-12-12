@@ -44,18 +44,18 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
         this.interceptor = interceptor;
 
         // Initialize repository API clients
-        attributesClient = new AttributesClientImpl(baseUrl, httpClient, objectMapper);
-        auditReasonsClient = new AuditReasonsClientImpl(baseUrl, httpClient, objectMapper);
-        entriesClient = new EntriesClientImpl(baseUrl, httpClient, objectMapper);
-        fieldDefinitionsClient = new FieldDefinitionsClientImpl(baseUrl, httpClient, objectMapper);
-        linkDefinitionsClient = new LinkDefinitionsClientImpl(baseUrl, httpClient, objectMapper);
-        repositoriesClient = new RepositoriesClientImpl(baseUrl, httpClient, objectMapper);
-        searchesClient = new SearchesClientImpl(baseUrl, httpClient, objectMapper);
-        serverSessionClient = new ServerSessionClientImpl(baseUrl, httpClient, objectMapper);
-        simpleSearchesClient = new SimpleSearchesClientImpl(baseUrl, httpClient, objectMapper);
-        tagDefinitionsClient = new TagDefinitionsClientImpl(baseUrl, httpClient, objectMapper);
-        tasksClient = new TasksClientImpl(baseUrl, httpClient, objectMapper);
-        templateDefinitionsClient = new TemplateDefinitionsClientImpl(baseUrl, httpClient, objectMapper);
+        attributesClient = new AttributesClientImpl(baseUrl, httpClient);
+        auditReasonsClient = new AuditReasonsClientImpl(baseUrl, httpClient);
+        entriesClient = new EntriesClientImpl(baseUrl, httpClient);
+        fieldDefinitionsClient = new FieldDefinitionsClientImpl(baseUrl, httpClient);
+        linkDefinitionsClient = new LinkDefinitionsClientImpl(baseUrl, httpClient);
+        repositoriesClient = new RepositoriesClientImpl(baseUrl, httpClient);
+        searchesClient = new SearchesClientImpl(baseUrl, httpClient);
+        serverSessionClient = new ServerSessionClientImpl(baseUrl, httpClient);
+        simpleSearchesClient = new SimpleSearchesClientImpl(baseUrl, httpClient);
+        tagDefinitionsClient = new TagDefinitionsClientImpl(baseUrl, httpClient);
+        tasksClient = new TasksClientImpl(baseUrl, httpClient);
+        templateDefinitionsClient = new TemplateDefinitionsClientImpl(baseUrl, httpClient);
     }
 
     public static RepositoryApiClient createFromAccessKey(String servicePrincipalKey, AccessKey accessKey,

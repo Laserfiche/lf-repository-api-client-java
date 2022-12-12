@@ -17,10 +17,12 @@ public class ApiClient {
 
     protected ObjectMapper objectMapper;
 
-    public ApiClient(String baseUrl, UnirestInstance httpClient, ObjectMapper objectMapper) {
+    public ApiClient(String baseUrl, UnirestInstance httpClient) {
         this.baseUrl = baseUrl;
         this.httpClient = httpClient;
-        this.objectMapper = objectMapper;
+        this.objectMapper = httpClient
+                .config()
+                .getObjectMapper();
     }
 
     protected String mergeMaxSizeIntoPrefer(int maxSize, String prefer) {

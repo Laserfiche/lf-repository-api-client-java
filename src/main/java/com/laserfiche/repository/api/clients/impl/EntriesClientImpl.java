@@ -5,7 +5,10 @@ import com.laserfiche.api.client.model.ProblemDetails;
 import com.laserfiche.repository.api.clients.EntriesClient;
 import com.laserfiche.repository.api.clients.impl.model.*;
 import com.laserfiche.repository.api.clients.params.*;
-import kong.unirest.*;
+import kong.unirest.Header;
+import kong.unirest.HttpResponse;
+import kong.unirest.UnirestInstance;
+import kong.unirest.UnirestParsingException;
 import kong.unirest.json.JSONObject;
 
 import java.util.*;
@@ -14,8 +17,8 @@ import java.util.stream.Collectors;
 
 public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
-    public EntriesClientImpl(String baseUrl, UnirestInstance httpClient, ObjectMapper objectMapper) {
-        super(baseUrl, httpClient, objectMapper);
+    public EntriesClientImpl(String baseUrl, UnirestInstance httpClient) {
+        super(baseUrl, httpClient);
     }
 
     /**

@@ -8,7 +8,6 @@ import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfListO
 import com.laserfiche.repository.api.clients.params.ParametersForGetTrusteeAttributeKeyValuePairs;
 import com.laserfiche.repository.api.clients.params.ParametersForGetTrusteeAttributeValueByKey;
 import kong.unirest.HttpResponse;
-import kong.unirest.ObjectMapper;
 import kong.unirest.UnirestInstance;
 import kong.unirest.UnirestParsingException;
 import kong.unirest.json.JSONObject;
@@ -20,8 +19,8 @@ import java.util.stream.Collectors;
 
 public class AttributesClientImpl extends ApiClient implements AttributesClient {
 
-    public AttributesClientImpl(String baseUrl, UnirestInstance httpClient, ObjectMapper objectMapper) {
-        super(baseUrl, httpClient, objectMapper);
+    public AttributesClientImpl(String baseUrl, UnirestInstance httpClient) {
+        super(baseUrl, httpClient);
     }
 
     /**
