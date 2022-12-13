@@ -35,7 +35,7 @@ public class ExportDocumentApiTest extends BaseTest {
             DeleteEntryWithAuditReason body = new DeleteEntryWithAuditReason();
             client
                     .deleteEntryInfo(new ParametersForDeleteEntryInfo()
-                            .setRepoId(repoId)
+                            .setRepoId(repositoryId)
                             .setEntryId(createdEntryId)
                             .setRequestBody(body));
         }
@@ -63,7 +63,7 @@ public class ExportDocumentApiTest extends BaseTest {
         };
 
         client.exportDocument(new ParametersForExportDocument()
-                .setRepoId(repoId)
+                .setRepoId(repositoryId)
                 .setEntryId(createdEntryId)
                 .setInputStreamConsumer(consumer));
         File exportedFile = new File(FILE_NAME);
@@ -81,7 +81,7 @@ public class ExportDocumentApiTest extends BaseTest {
         };
         Exception thrown = Assertions.assertThrows(ApiException.class, () -> {
             client.exportDocument(new ParametersForExportDocument()
-                    .setRepoId(repoId)
+                    .setRepoId(repositoryId)
                     .setEntryId(-createdEntryId)
                     .setInputStreamConsumer(consumer));
         });
@@ -98,7 +98,7 @@ public class ExportDocumentApiTest extends BaseTest {
             File toUpload = File.createTempFile(fileName, "txt");
             CreateEntryResult result = client
                     .importDocument(new ParametersForImportDocument()
-                            .setRepoId(repoId)
+                            .setRepoId(repositoryId)
                             .setParentEntryId(1)
                             .setFileName(fileName)
                             .setAutoRename(true)

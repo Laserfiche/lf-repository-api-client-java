@@ -22,7 +22,7 @@ public class LinkDefinitionsApiTest extends BaseTest {
     @Test
     void getLinkDefinitions_ReturnAllLinks() {
         ODataValueContextOfIListOfEntryLinkTypeInfo linkDefinitionsResponse = client.getLinkDefinitions(
-                new ParametersForGetLinkDefinitions().setRepoId(repoId));
+                new ParametersForGetLinkDefinitions().setRepoId(repositoryId));
 
         assertNotNull(linkDefinitionsResponse.getValue());
     }
@@ -30,7 +30,7 @@ public class LinkDefinitionsApiTest extends BaseTest {
     @Test
     void getLinkDefinitionsById_ReturnLinkDefinition() {
         ODataValueContextOfIListOfEntryLinkTypeInfo allLinkDefinitionsResult = client.getLinkDefinitions(
-                new ParametersForGetLinkDefinitions().setRepoId(repoId));
+                new ParametersForGetLinkDefinitions().setRepoId(repositoryId));
         EntryLinkTypeInfo firstLinkDefinition = allLinkDefinitionsResult
                 .getValue()
                 .get(0);
@@ -38,7 +38,7 @@ public class LinkDefinitionsApiTest extends BaseTest {
 
         EntryLinkTypeInfo linkDefinitions = client.getLinkDefinitionById(
                 new ParametersForGetLinkDefinitionById()
-                        .setRepoId(repoId)
+                        .setRepoId(repositoryId)
                         .setLinkTypeId(firstLinkDefinition.getLinkTypeId()));
 
         assertNotNull(linkDefinitions);

@@ -24,7 +24,7 @@ class TagDefinitionsApiTest extends BaseTest {
     @Test
     void getTagDefinitions_ReturnAllTags() {
         ODataValueContextOfIListOfWTagInfo tagInfoList = client
-                .getTagDefinitions(new ParametersForGetTagDefinitions().setRepoId(repoId));
+                .getTagDefinitions(new ParametersForGetTagDefinitions().setRepoId(repositoryId));
 
         assertNotNull(tagInfoList);
     }
@@ -34,7 +34,7 @@ class TagDefinitionsApiTest extends BaseTest {
         int maxPageSize = 1;
         ODataValueContextOfIListOfWTagInfo tagInfoList = client
                 .getTagDefinitions(new ParametersForGetTagDefinitions()
-                        .setRepoId(repoId)
+                        .setRepoId(repositoryId)
                         .setPrefer(String.format("maxpagesize=%d", maxPageSize)));
 
         assertNotNull(tagInfoList);
@@ -59,7 +59,7 @@ class TagDefinitionsApiTest extends BaseTest {
     @Test
     void getTagDefinitions_ForEach() throws InterruptedException {
         ODataValueContextOfIListOfWTagInfo tagInfoList = client
-                .getTagDefinitions(new ParametersForGetTagDefinitions().setRepoId(repoId));
+                .getTagDefinitions(new ParametersForGetTagDefinitions().setRepoId(repositoryId));
 
         assertNotNull(tagInfoList);
 
@@ -79,19 +79,20 @@ class TagDefinitionsApiTest extends BaseTest {
                 return false;
             }
         };
-        client.getTagDefinitionsForEach(callback, maxPageSize, new ParametersForGetTagDefinitions().setRepoId(repoId));
+        client.getTagDefinitionsForEach(callback, maxPageSize, new ParametersForGetTagDefinitions().setRepoId(
+                repositoryId));
     }
 
     @Test
     void getTagDefinitionById_ReturnTag() {
         ODataValueContextOfIListOfWTagInfo tagInfoList = client
-                .getTagDefinitions(new ParametersForGetTagDefinitions().setRepoId(repoId));
+                .getTagDefinitions(new ParametersForGetTagDefinitions().setRepoId(repositoryId));
 
         assertNotNull(tagInfoList);
 
         WTagInfo tagInfo = client
                 .getTagDefinitionById(new ParametersForGetTagDefinitionById()
-                        .setRepoId(repoId)
+                        .setRepoId(repositoryId)
                         .setTagId(tagInfoList
                                 .getValue()
                                 .get(0)

@@ -38,7 +38,7 @@ public class CreateCopyEntryApiTest extends BaseTest {
                 repositoryApiClient
                         .getEntriesClient()
                         .deleteEntryInfo(new ParametersForDeleteEntryInfo()
-                                .setRepoId(repoId)
+                                .setRepoId(repositoryId)
                                 .setEntryId(num)
                                 .setRequestBody(body));
             }
@@ -57,7 +57,7 @@ public class CreateCopyEntryApiTest extends BaseTest {
 
         Entry createdEntry = client
                 .createOrCopyEntry(new ParametersForCreateOrCopyEntry()
-                        .setRepoId(repoId)
+                        .setRepoId(repositoryId)
                         .setEntryId(parentEntryId)
                         .setRequestBody(request)
                         .setAutoRename(true));
@@ -83,7 +83,7 @@ public class CreateCopyEntryApiTest extends BaseTest {
 
         Entry targetEntry = client
                 .createOrCopyEntry(new ParametersForCreateOrCopyEntry()
-                        .setRepoId(repoId)
+                        .setRepoId(repositoryId)
                         .setEntryId(parentEntryId)
                         .setRequestBody(request)
                         .setAutoRename(true));
@@ -102,7 +102,7 @@ public class CreateCopyEntryApiTest extends BaseTest {
 
         Entry shortCut = client
                 .createOrCopyEntry(new ParametersForCreateOrCopyEntry()
-                        .setRepoId(repoId)
+                        .setRepoId(repositoryId)
                         .setEntryId(parentEntryId)
                         .setRequestBody(request)
                         .setAutoRename(true));
@@ -129,7 +129,7 @@ public class CreateCopyEntryApiTest extends BaseTest {
 
         Entry targetEntry = client
                 .createOrCopyEntry(new ParametersForCreateOrCopyEntry()
-                        .setRepoId(repoId)
+                        .setRepoId(repositoryId)
                         .setEntryId(testFolder.getId())
                         .setRequestBody(request)
                         .setAutoRename(true));
@@ -145,7 +145,7 @@ public class CreateCopyEntryApiTest extends BaseTest {
         copyAsyncRequest.setSourceId(targetEntry.getId());
 
         AcceptedOperation copyEntryResponse = client.copyEntryAsync(new ParametersForCopyEntryAsync()
-                .setRepoId(repoId)
+                .setRepoId(repositoryId)
                 .setEntryId(testFolder.getId())
                 .setRequestBody(copyAsyncRequest)
                 .setAutoRename(true));
@@ -157,7 +157,7 @@ public class CreateCopyEntryApiTest extends BaseTest {
         OperationProgress getOperationStatusAndProgressResponse = repositoryApiClient
                 .getTasksClient()
                 .getOperationStatusAndProgress(new ParametersForGetOperationStatusAndProgress()
-                        .setRepoId(repoId)
+                        .setRepoId(repositoryId)
                         .setOperationToken(opToken));
 
         assertEquals(getOperationStatusAndProgressResponse.getStatus(), OperationStatus.COMPLETED);
@@ -165,7 +165,7 @@ public class CreateCopyEntryApiTest extends BaseTest {
         DeleteEntryWithAuditReason deleteEntryWithAuditReason = new DeleteEntryWithAuditReason();
         AcceptedOperation deleteEntryResponse = client
                 .deleteEntryInfo(new ParametersForDeleteEntryInfo()
-                        .setRepoId(repoId)
+                        .setRepoId(repositoryId)
                         .setEntryId(testFolder.getId())
                         .setRequestBody(deleteEntryWithAuditReason));
         assertNotNull(deleteEntryResponse);
@@ -182,7 +182,7 @@ public class CreateCopyEntryApiTest extends BaseTest {
 
         Entry targetEntry = client
                 .createOrCopyEntry(new ParametersForCreateOrCopyEntry()
-                        .setRepoId(repoId)
+                        .setRepoId(repositoryId)
                         .setEntryId(parentEntryId)
                         .setRequestBody(request)
                         .setAutoRename(true));
@@ -203,7 +203,7 @@ public class CreateCopyEntryApiTest extends BaseTest {
 
         Entry createOrCopyEntryResponse = client
                 .createOrCopyEntry(new ParametersForCreateOrCopyEntry()
-                        .setRepoId(repoId)
+                        .setRepoId(repositoryId)
                         .setEntryId(parentEntryId)
                         .setRequestBody(request)
                         .setAutoRename(true));
@@ -221,7 +221,7 @@ public class CreateCopyEntryApiTest extends BaseTest {
 
         Entry newEntryResponse = client
                 .createOrCopyEntry(new ParametersForCreateOrCopyEntry()
-                        .setRepoId(repoId)
+                        .setRepoId(repositoryId)
                         .setEntryId(parentEntryId)
                         .setRequestBody(request)
                         .setAutoRename(true));
@@ -250,7 +250,7 @@ public class CreateCopyEntryApiTest extends BaseTest {
 
         Entry movedEntry = client
                 .moveOrRenameEntry(new ParametersForMoveOrRenameEntry()
-                        .setRepoId(repoId)
+                        .setRepoId(repositoryId)
                         .setEntryId(childFolder.getId())
                         .setRequestBody(request)
                         .setAutoRename(true));
@@ -277,7 +277,7 @@ public class CreateCopyEntryApiTest extends BaseTest {
         request.setParentId(parentFolder.getId());
         request.setName("RepositoryApiClientIntegrationTest Java MovedFolder");
 
-        String invalidRepoId = String.format("%s-%s", repoId, repoId);
+        String invalidRepoId = String.format("%s-%s", repositoryId, repositoryId);
         ApiException apiException = Assertions.assertThrows(ApiException.class, () -> client
                 .moveOrRenameEntry(new ParametersForMoveOrRenameEntry()
                         .setRepoId(invalidRepoId)

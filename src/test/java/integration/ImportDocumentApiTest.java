@@ -35,7 +35,7 @@ public class ImportDocumentApiTest extends BaseTest {
         if (createdEntryId != 0) {
             DeleteEntryWithAuditReason body = new DeleteEntryWithAuditReason();
             client.deleteEntryInfo(new ParametersForDeleteEntryInfo()
-                    .setRepoId(repoId)
+                    .setRepoId(repositoryId)
                     .setEntryId(createdEntryId)
                     .setRequestBody(body));
         }
@@ -55,7 +55,7 @@ public class ImportDocumentApiTest extends BaseTest {
 
         CreateEntryResult result = client
                 .importDocument(new ParametersForImportDocument()
-                        .setRepoId(repoId)
+                        .setRepoId(repositoryId)
                         .setParentEntryId(1)
                         .setFileName(fileName)
                         .setAutoRename(true)
@@ -86,7 +86,7 @@ public class ImportDocumentApiTest extends BaseTest {
         WTemplateInfo template = null;
         ODataValueContextOfIListOfWTemplateInfo templateDefinitionResult = repositoryApiClient
                 .getTemplateDefinitionClient()
-                .getTemplateDefinitions(new ParametersForGetTemplateDefinitions().setRepoId(repoId));
+                .getTemplateDefinitions(new ParametersForGetTemplateDefinitions().setRepoId(repositoryId));
         List<WTemplateInfo> templateDefinitions = templateDefinitionResult.getValue();
         assertNotNull(templateDefinitions);
         Assertions.assertTrue(templateDefinitions.size() > 0);
@@ -94,7 +94,7 @@ public class ImportDocumentApiTest extends BaseTest {
             ODataValueContextOfIListOfTemplateFieldInfo templateDefinitionFieldsResult = repositoryApiClient
                     .getTemplateDefinitionClient()
                     .getTemplateFieldDefinitions(new ParametersForGetTemplateFieldDefinitions()
-                            .setRepoId(repoId)
+                            .setRepoId(repositoryId)
                             .setTemplateId(templateDefinition.getId()));
             if (templateDefinitionFieldsResult.getValue() != null && allFalse(
                     templateDefinitionFieldsResult.getValue())) {
@@ -118,7 +118,7 @@ public class ImportDocumentApiTest extends BaseTest {
 
         CreateEntryResult result = client
                 .importDocument(new ParametersForImportDocument()
-                        .setRepoId(repoId)
+                        .setRepoId(repositoryId)
                         .setParentEntryId(parentEntryId)
                         .setFileName(fileName)
                         .setAutoRename(true)
@@ -160,7 +160,7 @@ public class ImportDocumentApiTest extends BaseTest {
 
         result = client
                 .importDocument(new ParametersForImportDocument()
-                        .setRepoId(repoId)
+                        .setRepoId(repositoryId)
                         .setParentEntryId(1)
                         .setFileName(fileName)
                         .setAutoRename(true)
@@ -196,7 +196,7 @@ public class ImportDocumentApiTest extends BaseTest {
 
         result = client
                 .importDocument(new ParametersForImportDocument()
-                        .setRepoId(repoId)
+                        .setRepoId(repositoryId)
                         .setParentEntryId(1)
                         .setFileName(fileName)
                         .setAutoRename(true)
@@ -234,7 +234,7 @@ public class ImportDocumentApiTest extends BaseTest {
         request.setTemplate("invalidTemplateName");
         result = client
                 .importDocument(new ParametersForImportDocument()
-                        .setRepoId(repoId)
+                        .setRepoId(repositoryId)
                         .setParentEntryId(1)
                         .setFileName(fileName)
                         .setAutoRename(true)

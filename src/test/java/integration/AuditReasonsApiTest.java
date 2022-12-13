@@ -11,7 +11,7 @@ class AuditReasonsApiTest extends BaseTest {
     @Test
     void getAuditReasons_ReturnAuditReasons() {
         AuditReasonsClient client = repositoryApiClient.getAuditReasonsClient();
-        AuditReasons reasons = client.getAuditReasons(new ParametersForGetAuditReasons().setRepoId(repoId));
+        AuditReasons reasons = client.getAuditReasons(new ParametersForGetAuditReasons().setRepoId(repositoryId));
 
         assertNotNull(reasons);
     }

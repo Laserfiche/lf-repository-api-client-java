@@ -22,61 +22,66 @@ enum AuthorizationType {
 }
 
 public class BaseTest {
-    protected static String spKey;
-    protected static AccessKey accessKey;
-    protected static String repoId;
-    protected static Map<String, String> testHeaders;
+    private static String servicePrincipalKey;
+    private static AccessKey accessKey;
+    protected static String repositoryId;
+    private static Map<String, String> testHeaders;
     protected static RepositoryApiClient repositoryApiClient;
-    protected static String username;
-    protected static String password;
-    protected static String baseUrl;
-
-    protected static String authorizationType;
-
+    private static String testHeaderValue;
+    private static String username;
+    private static String password;
+    private static String baseUrl;
+    private static final String TEST_HEADER = "TEST_HEADER";
+    private static final String ACCESS_KEY = "ACCESS_KEY";
+    private static final String SERVICE_PRINCIPAL_KEY = "SERVICE_PRINCIPAL_KEY";
+    private static final String REPOSITORY_ID = "REPOSITORY_ID";
+    private static final String USERNAME = "APISERVER_USERNAME";
+    private static final String PASSWORD = "APISERVER_PASSWORD";
+    private static final String BASE_URL = "APISERVER_REPOSITORY_API_BASE_URL";
+    private static final String AUTHORIZATION_TYPE = "AUTHORIZATION_TYPE";
+    private static AuthorizationType authorizationType;
+    private static final boolean IS_NOT_GITHUB_ENVIRONMENT = nullOrEmpty(System.getenv("GITHUB_WORKSPACE"));
     @BeforeAll
     public static void setUp() {
-        spKey = System.getenv("SERVICE_PRINCIPAL_KEY");
-        String accessKeyBase64 = System.getenv("ACCESS_KEY");
-        if (!nullOrEmpty(accessKeyBase64)) {
-            accessKey = AccessKey.createFromBase64EncodedAccessKey(accessKeyBase64);
+        Dotenv dotenv = Dotenv
+                .configure()
+                .filename(".env")
+                .systemProperties()
+                .ignoreIfMissing()
+                .load();
+        try {
+            authorizationType = AuthorizationType.valueOf(getEnvironmentVariable(AUTHORIZATION_TYPE));
+            testHeaderValue = getEnvironmentVariable(TEST_HEADER);
+        } catch (EnumConstantNotPresentException e) {
+            throw new EnumConstantNotPresentException(AuthorizationType.class,
+                    getEnvironmentVariable(AUTHORIZATION_TYPE));
         }
-        repoId = System.getenv("REPOSITORY_ID");
-        username = System.getenv("APISERVER_USERNAME");
-        password = System.getenv("APISERVER_PASSWORD");
-        baseUrl = System.getenv("APISERVER_REPOSITORY_API_BASE_URL");
-        authorizationType = System.getenv("AUTHORIZATION_TYPE");
-        String testHeaderValue = System.getenv("TEST_HEADER");
-        if (nullOrEmpty(authorizationType)) {
-            // Load environment variables
-            Dotenv dotenv = Dotenv
-                    .configure()
-                    .filename(".env")
-                    .load();
-            authorizationType = dotenv.get("AUTHORIZATION_TYPE");
-            testHeaderValue = dotenv.get("TEST_HEADER");
-            repoId = dotenv.get("REPOSITORY_ID");
-            if (nullOrEmpty(repoId)) {
-                throw new IllegalStateException("Environment variable REPOSITORY_ID does not exist.");
-            }
-            if (authorizationType.equalsIgnoreCase(AuthorizationType.CLOUD_ACCESS_KEY.name())) {
-                if (nullOrEmpty(spKey) && nullOrEmpty(accessKeyBase64)) {
-                    accessKeyBase64 = dotenv.get("ACCESS_KEY");
-                    spKey = dotenv.get("SERVICE_PRINCIPAL_KEY");
-                    accessKey = AccessKey.createFromBase64EncodedAccessKey(accessKeyBase64);
-                }
-            } else if (authorizationType.equalsIgnoreCase(AuthorizationType.API_SERVER_USERNAME_PASSWORD.name())) {
-                if (nullOrEmpty(username) && nullOrEmpty(password) && nullOrEmpty(baseUrl)) {
-                    username = dotenv.get("APISERVER_USERNAME");
-                    password = dotenv.get("APISERVER_PASSWORD");
-                    baseUrl = dotenv.get("APISERVER_REPOSITORY_API_BASE_URL");
-                }
-            } else {
-                throw new IllegalStateException("Invalid Authorization Type Value");
-            }
+        repositoryId = getEnvironmentVariable(REPOSITORY_ID);
+        if (authorizationType == AuthorizationType.CLOUD_ACCESS_KEY) {
+            servicePrincipalKey = getEnvironmentVariable(SERVICE_PRINCIPAL_KEY);
+            String accessKeyBase64 = getEnvironmentVariable(ACCESS_KEY);
+            accessKey = AccessKey.createFromBase64EncodedAccessKey(accessKeyBase64);
+        } else if (authorizationType == AuthorizationType.API_SERVER_USERNAME_PASSWORD) {
+            username = getEnvironmentVariable(USERNAME);
+            password = getEnvironmentVariable(PASSWORD);
+            baseUrl = getEnvironmentVariable(BASE_URL);
+        } else {
+            throw new IllegalStateException("Invalid Authorization Type Value");
         }
         testHeaders = new HashMap<>();
         testHeaders.put(testHeaderValue, "true");
         repositoryApiClient = createClient();
+    }
+
+    private static String getEnvironmentVariable(String environmentVariableName) {
+        String environmentVariable = System.getenv(environmentVariableName);
+        if (nullOrEmpty(environmentVariable)) {
+            environmentVariable = System.getProperty(environmentVariableName);
+            if (nullOrEmpty(environmentVariable) && IS_NOT_GITHUB_ENVIRONMENT)
+                throw new IllegalStateException(
+                        "Environment variable '" + environmentVariableName + "' does not exist.");
+        }
+        return environmentVariable;
     }
 
     @AfterAll
@@ -86,14 +91,15 @@ public class BaseTest {
 
     public static RepositoryApiClient createClient() {
         if (repositoryApiClient == null) {
-            if (authorizationType.equalsIgnoreCase(AuthorizationType.CLOUD_ACCESS_KEY.name())) {
-                if (nullOrEmpty(spKey) || accessKey == null)
+            if (authorizationType.equals(AuthorizationType.CLOUD_ACCESS_KEY)) {
+                if (nullOrEmpty(servicePrincipalKey) || accessKey == null)
                     return null;
-                repositoryApiClient = RepositoryApiClientImpl.createFromAccessKey(spKey, accessKey);
-            } else if (authorizationType.equalsIgnoreCase(AuthorizationType.API_SERVER_USERNAME_PASSWORD.name())) {
-                if (nullOrEmpty(repoId) || nullOrEmpty(username) || nullOrEmpty(password) || nullOrEmpty(baseUrl))
+                repositoryApiClient = RepositoryApiClientImpl.createFromAccessKey(servicePrincipalKey, accessKey);
+            } else if (authorizationType.equals(AuthorizationType.API_SERVER_USERNAME_PASSWORD)) {
+                if (nullOrEmpty(repositoryId) || nullOrEmpty(username) || nullOrEmpty(password) || nullOrEmpty(baseUrl))
                     return null;
-                repositoryApiClient = RepositoryApiClientImpl.createFromUsernamePassword(repoId, username, password,
+                repositoryApiClient = RepositoryApiClientImpl.createFromUsernamePassword(repositoryId, username,
+                        password,
                         baseUrl);
             }
             repositoryApiClient.setDefaultRequestHeaders(testHeaders);
@@ -110,7 +116,7 @@ public class BaseTest {
         return client
                 .getEntriesClient()
                 .createOrCopyEntry(new ParametersForCreateOrCopyEntry()
-                        .setRepoId(repoId)
+                        .setRepoId(repositoryId)
                         .setEntryId(parentEntryId)
                         .setRequestBody(request)
                         .setAutoRename(autoRename));
