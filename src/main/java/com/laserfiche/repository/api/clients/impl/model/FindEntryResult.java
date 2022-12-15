@@ -1,12 +1,12 @@
 package com.laserfiche.repository.api.clients.impl.model;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.util.Objects;
+import java.util.Arrays;
+import com.laserfiche.api.client.model.Entry;
+import io.swagger.v3.oas.annotations.media.Schema;
+import com.fasterxml.jackson.annotation.*;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-17T11:38:41.655-04:00[America/New_York]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class FindEntryResult {
 
@@ -21,6 +21,11 @@ public class FindEntryResult {
         return this;
     }
 
+    /**
+ * Returns entry
+ * @return entry
+ 
+*/
     @Schema(description = "")
     public Entry getEntry() {
         return entry;
@@ -35,6 +40,11 @@ public class FindEntryResult {
         return this;
     }
 
+    /**
+ * Returns ancestorEntry
+ * @return ancestorEntry
+ 
+*/
     @Schema(description = "")
     public Entry getAncestorEntry() {
         return ancestorEntry;
@@ -45,7 +55,7 @@ public class FindEntryResult {
     }
 
     @Override
-    public boolean equals(java.lang.Object o) {
+    public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
@@ -53,8 +63,7 @@ public class FindEntryResult {
             return false;
         }
         FindEntryResult findEntryResult = (FindEntryResult) o;
-        return Objects.equals(this.entry, findEntryResult.entry) && Objects.equals(this.ancestorEntry,
-                findEntryResult.ancestorEntry);
+        return Objects.equals(this.entry, findEntryResult.entry) && Objects.equals(this.ancestorEntry, findEntryResult.ancestorEntry);
     }
 
     @Override
@@ -66,24 +75,16 @@ public class FindEntryResult {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class FindEntryResult {\n");
-        sb
-                .append("    entry: ")
-                .append(toIndentedString(entry))
-                .append("\n");
-        sb
-                .append("    ancestorEntry: ")
-                .append(toIndentedString(ancestorEntry))
-                .append("\n");
+        sb.append("    entry: ").append(toIndentedString(entry)).append("\n");
+        sb.append("    ancestorEntry: ").append(toIndentedString(ancestorEntry)).append("\n");
         sb.append("}");
         return sb.toString();
     }
 
-    private String toIndentedString(java.lang.Object o) {
+    private String toIndentedString(Object o) {
         if (o == null) {
             return "null";
         }
-        return o
-                .toString()
-                .replace("\n", "\n    ");
+        return o.toString().replace("\n", "\n    ");
     }
 }

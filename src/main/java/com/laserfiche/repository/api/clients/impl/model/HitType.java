@@ -1,8 +1,13 @@
 package com.laserfiche.repository.api.clients.impl.model;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
+import java.util.Objects;
+import java.util.Arrays;
+import io.swagger.v3.oas.annotations.media.Schema;
+import com.fasterxml.jackson.annotation.*;
 
+/**
+ * The type of context hit.
+ */
 public enum HitType {
 
     PAGE_CONTENT("PageContent"),

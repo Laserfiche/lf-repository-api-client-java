@@ -1,12 +1,16 @@
 package com.laserfiche.repository.api.clients.impl.model;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.util.Objects;
+import java.util.Arrays;
+import com.laserfiche.api.client.model.Entry;
+import com.laserfiche.api.client.model.EntryFieldValue;
+import com.laserfiche.api.client.model.EntryType;
+import io.swagger.v3.oas.annotations.media.Schema;
+import java.util.List;
+import org.threeten.bp.OffsetDateTime;
+import com.fasterxml.jackson.annotation.*;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-17T11:38:41.655-04:00[America/New_York]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Shortcut extends Entry {
 
@@ -24,6 +28,10 @@ public class Shortcut extends Entry {
         return this;
     }
 
+    /**
+ * Returns the entry ID of the shortcut target.
+ * @return targetId
+*/
     @Schema(description = "The entry ID of the shortcut target.")
     public Integer getTargetId() {
         return targetId;
@@ -38,6 +46,10 @@ public class Shortcut extends Entry {
         return this;
     }
 
+    /**
+ * Returns the extension of the shortcut target.
+ * @return extension
+*/
     @Schema(description = "The extension of the shortcut target.")
     public String getExtension() {
         return extension;
@@ -52,6 +64,11 @@ public class Shortcut extends Entry {
         return this;
     }
 
+    /**
+ * Returns targetType
+ * @return targetType
+ 
+*/
     @Schema(description = "")
     public EntryType getTargetType() {
         return targetType;
@@ -62,7 +79,7 @@ public class Shortcut extends Entry {
     }
 
     @Override
-    public boolean equals(java.lang.Object o) {
+    public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
@@ -70,8 +87,7 @@ public class Shortcut extends Entry {
             return false;
         }
         Shortcut shortcut = (Shortcut) o;
-        return Objects.equals(this.targetId, shortcut.targetId) && Objects.equals(this.extension,
-                shortcut.extension) && Objects.equals(this.targetType, shortcut.targetType) && super.equals(o);
+        return Objects.equals(this.targetId, shortcut.targetId) && Objects.equals(this.extension, shortcut.extension) && Objects.equals(this.targetType, shortcut.targetType) && super.equals(o);
     }
 
     @Override
@@ -83,32 +99,18 @@ public class Shortcut extends Entry {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class Shortcut {\n");
-        sb
-                .append("    ")
-                .append(toIndentedString(super.toString()))
-                .append("\n");
-        sb
-                .append("    targetId: ")
-                .append(toIndentedString(targetId))
-                .append("\n");
-        sb
-                .append("    extension: ")
-                .append(toIndentedString(extension))
-                .append("\n");
-        sb
-                .append("    targetType: ")
-                .append(toIndentedString(targetType))
-                .append("\n");
+        sb.append("    ").append(toIndentedString(super.toString())).append("\n");
+        sb.append("    targetId: ").append(toIndentedString(targetId)).append("\n");
+        sb.append("    extension: ").append(toIndentedString(extension)).append("\n");
+        sb.append("    targetType: ").append(toIndentedString(targetType)).append("\n");
         sb.append("}");
         return sb.toString();
     }
 
-    private String toIndentedString(java.lang.Object o) {
+    private String toIndentedString(Object o) {
         if (o == null) {
             return "null";
         }
-        return o
-                .toString()
-                .replace("\n", "\n    ");
+        return o.toString().replace("\n", "\n    ");
     }
 }

@@ -1,12 +1,12 @@
 package com.laserfiche.repository.api.clients.impl.model;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.util.Objects;
+import java.util.Arrays;
+import com.laserfiche.api.client.model.LFColor;
+import io.swagger.v3.oas.annotations.media.Schema;
+import com.fasterxml.jackson.annotation.*;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-17T11:38:41.655-04:00[America/New_York]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class WTemplateInfo {
 
@@ -33,6 +33,10 @@ public class WTemplateInfo {
         return this;
     }
 
+    /**
+ * Returns the ID of the template definition.
+ * @return id
+*/
     @Schema(description = "The ID of the template definition.")
     public Integer getId() {
         return id;
@@ -47,6 +51,10 @@ public class WTemplateInfo {
         return this;
     }
 
+    /**
+ * Returns the name of the template definition.
+ * @return name
+*/
     @Schema(description = "The name of the template definition.")
     public String getName() {
         return name;
@@ -61,6 +69,10 @@ public class WTemplateInfo {
         return this;
     }
 
+    /**
+ * Returns the localized name of the template definition.
+ * @return displayName
+*/
     @Schema(description = "The localized name of the template definition.")
     public String getDisplayName() {
         return displayName;
@@ -75,6 +87,10 @@ public class WTemplateInfo {
         return this;
     }
 
+    /**
+ * Returns the description of the template definition.
+ * @return description
+*/
     @Schema(description = "The description of the template definition.")
     public String getDescription() {
         return description;
@@ -89,6 +105,11 @@ public class WTemplateInfo {
         return this;
     }
 
+    /**
+ * Returns color
+ * @return color
+ 
+*/
     @Schema(description = "")
     public LFColor getColor() {
         return color;
@@ -103,6 +124,10 @@ public class WTemplateInfo {
         return this;
     }
 
+    /**
+ * Returns the number of fields assigned to the template.
+ * @return fieldCount
+*/
     @Schema(description = "The number of fields assigned to the template.")
     public Integer getFieldCount() {
         return fieldCount;
@@ -113,7 +138,7 @@ public class WTemplateInfo {
     }
 
     @Override
-    public boolean equals(java.lang.Object o) {
+    public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
@@ -121,10 +146,7 @@ public class WTemplateInfo {
             return false;
         }
         WTemplateInfo wtemplateInfo = (WTemplateInfo) o;
-        return Objects.equals(this.id, wtemplateInfo.id) && Objects.equals(this.name,
-                wtemplateInfo.name) && Objects.equals(this.displayName, wtemplateInfo.displayName) && Objects.equals(
-                this.description, wtemplateInfo.description) && Objects.equals(this.color,
-                wtemplateInfo.color) && Objects.equals(this.fieldCount, wtemplateInfo.fieldCount);
+        return Objects.equals(this.id, wtemplateInfo.id) && Objects.equals(this.name, wtemplateInfo.name) && Objects.equals(this.displayName, wtemplateInfo.displayName) && Objects.equals(this.description, wtemplateInfo.description) && Objects.equals(this.color, wtemplateInfo.color) && Objects.equals(this.fieldCount, wtemplateInfo.fieldCount);
     }
 
     @Override
@@ -136,40 +158,20 @@ public class WTemplateInfo {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class WTemplateInfo {\n");
-        sb
-                .append("    id: ")
-                .append(toIndentedString(id))
-                .append("\n");
-        sb
-                .append("    name: ")
-                .append(toIndentedString(name))
-                .append("\n");
-        sb
-                .append("    displayName: ")
-                .append(toIndentedString(displayName))
-                .append("\n");
-        sb
-                .append("    description: ")
-                .append(toIndentedString(description))
-                .append("\n");
-        sb
-                .append("    color: ")
-                .append(toIndentedString(color))
-                .append("\n");
-        sb
-                .append("    fieldCount: ")
-                .append(toIndentedString(fieldCount))
-                .append("\n");
+        sb.append("    id: ").append(toIndentedString(id)).append("\n");
+        sb.append("    name: ").append(toIndentedString(name)).append("\n");
+        sb.append("    displayName: ").append(toIndentedString(displayName)).append("\n");
+        sb.append("    description: ").append(toIndentedString(description)).append("\n");
+        sb.append("    color: ").append(toIndentedString(color)).append("\n");
+        sb.append("    fieldCount: ").append(toIndentedString(fieldCount)).append("\n");
         sb.append("}");
         return sb.toString();
     }
 
-    private String toIndentedString(java.lang.Object o) {
+    private String toIndentedString(Object o) {
         if (o == null) {
             return "null";
         }
-        return o
-                .toString()
-                .replace("\n", "\n    ");
+        return o.toString().replace("\n", "\n    ");
     }
 }

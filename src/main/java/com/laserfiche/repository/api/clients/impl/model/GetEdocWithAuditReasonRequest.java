@@ -1,12 +1,11 @@
 package com.laserfiche.repository.api.clients.impl.model;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.util.Objects;
+import java.util.Arrays;
+import io.swagger.v3.oas.annotations.media.Schema;
+import com.fasterxml.jackson.annotation.*;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-17T11:38:41.655-04:00[America/New_York]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class GetEdocWithAuditReasonRequest {
 
@@ -21,6 +20,10 @@ public class GetEdocWithAuditReasonRequest {
         return this;
     }
 
+    /**
+ * Returns the reason id for this audit event.
+ * @return auditReasonId
+*/
     @Schema(description = "The reason id for this audit event.")
     public Integer getAuditReasonId() {
         return auditReasonId;
@@ -35,6 +38,10 @@ public class GetEdocWithAuditReasonRequest {
         return this;
     }
 
+    /**
+ * Returns the comment for this audit event.
+ * @return comment
+*/
     @Schema(description = "The comment for this audit event.")
     public String getComment() {
         return comment;
@@ -45,7 +52,7 @@ public class GetEdocWithAuditReasonRequest {
     }
 
     @Override
-    public boolean equals(java.lang.Object o) {
+    public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
@@ -53,8 +60,7 @@ public class GetEdocWithAuditReasonRequest {
             return false;
         }
         GetEdocWithAuditReasonRequest getEdocWithAuditReasonRequest = (GetEdocWithAuditReasonRequest) o;
-        return Objects.equals(this.auditReasonId, getEdocWithAuditReasonRequest.auditReasonId) && Objects.equals(
-                this.comment, getEdocWithAuditReasonRequest.comment);
+        return Objects.equals(this.auditReasonId, getEdocWithAuditReasonRequest.auditReasonId) && Objects.equals(this.comment, getEdocWithAuditReasonRequest.comment);
     }
 
     @Override
@@ -66,24 +72,16 @@ public class GetEdocWithAuditReasonRequest {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class GetEdocWithAuditReasonRequest {\n");
-        sb
-                .append("    auditReasonId: ")
-                .append(toIndentedString(auditReasonId))
-                .append("\n");
-        sb
-                .append("    comment: ")
-                .append(toIndentedString(comment))
-                .append("\n");
+        sb.append("    auditReasonId: ").append(toIndentedString(auditReasonId)).append("\n");
+        sb.append("    comment: ").append(toIndentedString(comment)).append("\n");
         sb.append("}");
         return sb.toString();
     }
 
-    private String toIndentedString(java.lang.Object o) {
+    private String toIndentedString(Object o) {
         if (o == null) {
             return "null";
         }
-        return o
-                .toString()
-                .replace("\n", "\n    ");
+        return o.toString().replace("\n", "\n    ");
     }
 }

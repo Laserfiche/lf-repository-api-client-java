@@ -1,14 +1,17 @@
 package com.laserfiche.repository.api.clients.impl.model;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.Objects;
+import java.util.Arrays;
+import com.laserfiche.api.client.model.Entry;
+import com.laserfiche.api.client.model.EntryFieldValue;
+import com.laserfiche.api.client.model.EntryType;
 import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+import org.threeten.bp.OffsetDateTime;
+import com.fasterxml.jackson.annotation.*;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-11-07T15:57:30.539-05:00[America/New_York]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Folder extends Entry {
 
@@ -26,6 +29,10 @@ public class Folder extends Entry {
         return this;
     }
 
+    /**
+ * Returns a boolean indicating if the folder that this instance represents is known to be a record folder.
+ * @return isRecordFolder
+*/
     @Schema(description = "A boolean indicating if the folder that this instance represents is known to be a record folder.")
     @JsonProperty("isRecordFolder")
     public Boolean isRecordFolder() {
@@ -41,6 +48,10 @@ public class Folder extends Entry {
         return this;
     }
 
+    /**
+ * Returns a boolean indicating if the folder that this instance represents is known to directly or indirectly under a record series in the repository.
+ * @return isUnderRecordSeries
+*/
     @Schema(description = "A boolean indicating if the folder that this instance represents is known to directly or indirectly under a record series in the repository.")
     @JsonProperty("isUnderRecordSeries")
     public Boolean isUnderRecordSeries() {
@@ -64,6 +75,10 @@ public class Folder extends Entry {
         return this;
     }
 
+    /**
+ * Returns the entries in this folder.
+ * @return children
+*/
     @Schema(description = "The entries in this folder.")
     public List<Entry> getChildren() {
         return children;
@@ -74,7 +89,7 @@ public class Folder extends Entry {
     }
 
     @Override
-    public boolean equals(java.lang.Object o) {
+    public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
@@ -82,8 +97,7 @@ public class Folder extends Entry {
             return false;
         }
         Folder folder = (Folder) o;
-        return Objects.equals(this.isRecordFolder, folder.isRecordFolder) && Objects.equals(this.isUnderRecordSeries,
-                folder.isUnderRecordSeries) && Objects.equals(this.children, folder.children) && super.equals(o);
+        return Objects.equals(this.isRecordFolder, folder.isRecordFolder) && Objects.equals(this.isUnderRecordSeries, folder.isUnderRecordSeries) && Objects.equals(this.children, folder.children) && super.equals(o);
     }
 
     @Override
@@ -95,32 +109,18 @@ public class Folder extends Entry {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class Folder {\n");
-        sb
-                .append("    ")
-                .append(toIndentedString(super.toString()))
-                .append("\n");
-        sb
-                .append("    isRecordFolder: ")
-                .append(toIndentedString(isRecordFolder))
-                .append("\n");
-        sb
-                .append("    isUnderRecordSeries: ")
-                .append(toIndentedString(isUnderRecordSeries))
-                .append("\n");
-        sb
-                .append("    children: ")
-                .append(toIndentedString(children))
-                .append("\n");
+        sb.append("    ").append(toIndentedString(super.toString())).append("\n");
+        sb.append("    isRecordFolder: ").append(toIndentedString(isRecordFolder)).append("\n");
+        sb.append("    isUnderRecordSeries: ").append(toIndentedString(isUnderRecordSeries)).append("\n");
+        sb.append("    children: ").append(toIndentedString(children)).append("\n");
         sb.append("}");
         return sb.toString();
     }
 
-    private String toIndentedString(java.lang.Object o) {
+    private String toIndentedString(Object o) {
         if (o == null) {
             return "null";
         }
-        return o
-                .toString()
-                .replace("\n", "\n    ");
+        return o.toString().replace("\n", "\n    ");
     }
 }

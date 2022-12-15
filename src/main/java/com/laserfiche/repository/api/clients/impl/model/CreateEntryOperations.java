@@ -1,13 +1,21 @@
 package com.laserfiche.repository.api.clients.impl.model;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.util.Objects;
+import java.util.Arrays;
+import com.laserfiche.api.client.model.EntryCreate;
+import com.laserfiche.api.client.model.SetEdoc;
+import com.laserfiche.api.client.model.SetFields;
+import com.laserfiche.api.client.model.SetLinks;
+import com.laserfiche.api.client.model.SetTags;
+import com.laserfiche.api.client.model.SetTemplate;
+import io.swagger.v3.oas.annotations.media.Schema;
+import com.fasterxml.jackson.annotation.*;
 
+/**
+ * The results of each operation needed in order to create the electronic document with optional template and fields.
+ */
 @Schema(description = "The results of each operation needed in order to create the electronic document with optional template and fields.")
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-17T11:38:41.655-04:00[America/New_York]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CreateEntryOperations {
 
@@ -34,6 +42,11 @@ public class CreateEntryOperations {
         return this;
     }
 
+    /**
+ * Returns entryCreate
+ * @return entryCreate
+ 
+*/
     @Schema(description = "")
     public EntryCreate getEntryCreate() {
         return entryCreate;
@@ -48,6 +61,11 @@ public class CreateEntryOperations {
         return this;
     }
 
+    /**
+ * Returns setEdoc
+ * @return setEdoc
+ 
+*/
     @Schema(description = "")
     public SetEdoc getSetEdoc() {
         return setEdoc;
@@ -62,6 +80,11 @@ public class CreateEntryOperations {
         return this;
     }
 
+    /**
+ * Returns setTemplate
+ * @return setTemplate
+ 
+*/
     @Schema(description = "")
     public SetTemplate getSetTemplate() {
         return setTemplate;
@@ -76,6 +99,11 @@ public class CreateEntryOperations {
         return this;
     }
 
+    /**
+ * Returns setFields
+ * @return setFields
+ 
+*/
     @Schema(description = "")
     public SetFields getSetFields() {
         return setFields;
@@ -90,6 +118,11 @@ public class CreateEntryOperations {
         return this;
     }
 
+    /**
+ * Returns setTags
+ * @return setTags
+ 
+*/
     @Schema(description = "")
     public SetTags getSetTags() {
         return setTags;
@@ -104,6 +137,11 @@ public class CreateEntryOperations {
         return this;
     }
 
+    /**
+ * Returns setLinks
+ * @return setLinks
+ 
+*/
     @Schema(description = "")
     public SetLinks getSetLinks() {
         return setLinks;
@@ -114,7 +152,7 @@ public class CreateEntryOperations {
     }
 
     @Override
-    public boolean equals(java.lang.Object o) {
+    public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
@@ -122,11 +160,7 @@ public class CreateEntryOperations {
             return false;
         }
         CreateEntryOperations createEntryOperations = (CreateEntryOperations) o;
-        return Objects.equals(this.entryCreate, createEntryOperations.entryCreate) && Objects.equals(this.setEdoc,
-                createEntryOperations.setEdoc) && Objects.equals(this.setTemplate,
-                createEntryOperations.setTemplate) && Objects.equals(this.setFields,
-                createEntryOperations.setFields) && Objects.equals(this.setTags,
-                createEntryOperations.setTags) && Objects.equals(this.setLinks, createEntryOperations.setLinks);
+        return Objects.equals(this.entryCreate, createEntryOperations.entryCreate) && Objects.equals(this.setEdoc, createEntryOperations.setEdoc) && Objects.equals(this.setTemplate, createEntryOperations.setTemplate) && Objects.equals(this.setFields, createEntryOperations.setFields) && Objects.equals(this.setTags, createEntryOperations.setTags) && Objects.equals(this.setLinks, createEntryOperations.setLinks);
     }
 
     @Override
@@ -138,40 +172,20 @@ public class CreateEntryOperations {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class CreateEntryOperations {\n");
-        sb
-                .append("    entryCreate: ")
-                .append(toIndentedString(entryCreate))
-                .append("\n");
-        sb
-                .append("    setEdoc: ")
-                .append(toIndentedString(setEdoc))
-                .append("\n");
-        sb
-                .append("    setTemplate: ")
-                .append(toIndentedString(setTemplate))
-                .append("\n");
-        sb
-                .append("    setFields: ")
-                .append(toIndentedString(setFields))
-                .append("\n");
-        sb
-                .append("    setTags: ")
-                .append(toIndentedString(setTags))
-                .append("\n");
-        sb
-                .append("    setLinks: ")
-                .append(toIndentedString(setLinks))
-                .append("\n");
+        sb.append("    entryCreate: ").append(toIndentedString(entryCreate)).append("\n");
+        sb.append("    setEdoc: ").append(toIndentedString(setEdoc)).append("\n");
+        sb.append("    setTemplate: ").append(toIndentedString(setTemplate)).append("\n");
+        sb.append("    setFields: ").append(toIndentedString(setFields)).append("\n");
+        sb.append("    setTags: ").append(toIndentedString(setTags)).append("\n");
+        sb.append("    setLinks: ").append(toIndentedString(setLinks)).append("\n");
         sb.append("}");
         return sb.toString();
     }
 
-    private String toIndentedString(java.lang.Object o) {
+    private String toIndentedString(Object o) {
         if (o == null) {
             return "null";
         }
-        return o
-                .toString()
-                .replace("\n", "\n    ");
+        return o.toString().replace("\n", "\n    ");
     }
 }

@@ -1,14 +1,14 @@
 package com.laserfiche.repository.api.clients.impl.model;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.v3.oas.annotations.media.Schema;
-
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
+import java.util.Arrays;
+import io.swagger.v3.oas.annotations.media.Schema;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import com.fasterxml.jackson.annotation.*;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-17T11:38:41.655-04:00[America/New_York]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class GetDynamicFieldLogicValueRequest {
 
@@ -23,6 +23,10 @@ public class GetDynamicFieldLogicValueRequest {
         return this;
     }
 
+    /**
+ * Returns the template id.
+ * @return templateId
+*/
     @Schema(description = "The template id.")
     public Integer getTemplateId() {
         return templateId;
@@ -45,6 +49,10 @@ public class GetDynamicFieldLogicValueRequest {
         return this;
     }
 
+    /**
+ * Returns the dynamic fields.
+ * @return fieldValues
+*/
     @Schema(description = "The dynamic fields.")
     public Map<String, String> getFieldValues() {
         return fieldValues;
@@ -55,7 +63,7 @@ public class GetDynamicFieldLogicValueRequest {
     }
 
     @Override
-    public boolean equals(java.lang.Object o) {
+    public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
@@ -63,8 +71,7 @@ public class GetDynamicFieldLogicValueRequest {
             return false;
         }
         GetDynamicFieldLogicValueRequest getDynamicFieldLogicValueRequest = (GetDynamicFieldLogicValueRequest) o;
-        return Objects.equals(this.templateId, getDynamicFieldLogicValueRequest.templateId) && Objects.equals(
-                this.fieldValues, getDynamicFieldLogicValueRequest.fieldValues);
+        return Objects.equals(this.templateId, getDynamicFieldLogicValueRequest.templateId) && Objects.equals(this.fieldValues, getDynamicFieldLogicValueRequest.fieldValues);
     }
 
     @Override
@@ -76,24 +83,16 @@ public class GetDynamicFieldLogicValueRequest {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class GetDynamicFieldLogicValueRequest {\n");
-        sb
-                .append("    templateId: ")
-                .append(toIndentedString(templateId))
-                .append("\n");
-        sb
-                .append("    fieldValues: ")
-                .append(toIndentedString(fieldValues))
-                .append("\n");
+        sb.append("    templateId: ").append(toIndentedString(templateId)).append("\n");
+        sb.append("    fieldValues: ").append(toIndentedString(fieldValues)).append("\n");
         sb.append("}");
         return sb.toString();
     }
 
-    private String toIndentedString(java.lang.Object o) {
+    private String toIndentedString(Object o) {
         if (o == null) {
             return "null";
         }
-        return o
-                .toString()
-                .replace("\n", "\n    ");
+        return o.toString().replace("\n", "\n    ");
     }
 }
