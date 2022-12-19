@@ -9,54 +9,57 @@ import java.util.Map;
  */
 public interface RepositoryApiClient extends AutoCloseable {
     /**
-     * @return The Laserfiche Repository Attributes API client.
+     * Returns the Laserfiche Repository Attributes API client.
      */
     AttributesClient getAttributesClient();
 
     /**
-     * @return The Laserfiche Repository Audit Reasons API client.
+     * Returns the Laserfiche Repository Audit Reasons API client.
      */
     AuditReasonsClient getAuditReasonsClient();
 
     /**
-     * @return The Laserfiche Repository Entries API client.
+     * Returns the Laserfiche Repository Entries API client.
      */
     EntriesClient getEntriesClient();
 
     /**
-     * @return The Laserfiche Repository Field Definitions API client.
+     * Returns the Laserfiche Repository Field Definitions API client.
      */
     FieldDefinitionsClient getFieldDefinitionsClient();
 
     /**
-     * @return The Laserfiche Repository Repositories API client.
+     * Returns the Laserfiche Repository Repositories API client.
      */
     RepositoriesClient getRepositoryClient();
 
+    /**
+     * Returns the Laserfiche Repository Link Definitions API client.
+     */
     LinkDefinitionsClient getLinkDefinitionsClient();
 
     /**
-     * @return The Laserfiche Repository Searches API client.
+     * Returns the Laserfiche Repository Searches API client.
      */
     SearchesClient getSearchesClient();
 
     /**
-     * @return The Laserfiche Repository Simple Searches API client.
+     * Returns the Laserfiche Repository Simple Searches API client.
      */
     SimpleSearchesClient getSimpleSearchesClient();
 
     /**
-     * @return The Laserfiche Repository Tag Definitions API client.
+     * Returns the Laserfiche Repository Tag Definitions API client.
      */
     TagDefinitionsClient getTagDefinitionsClient();
 
     /**
-     * @return The Laserfiche Repository Tasks API client.
+     * Returns the Laserfiche Repository Tasks API client.
      */
     TasksClient getTasksClient();
 
     /**
-     * @return The Laserfiche Repository Template Definitions API client.
+     * Returns the Laserfiche Repository Template Definitions API client.
      */
     TemplateDefinitionsClient getTemplateDefinitionClient();
 
@@ -68,13 +71,17 @@ public interface RepositoryApiClient extends AutoCloseable {
     void setDefaultRequestHeaders(Map<String, String> defaultHeaders);
 
     /**
-     * @return Default request headers in a key value pair of header name and value.
+     * Returns default request headers that will be used for all requests.
      */
     Map<String, String> getDefaultRequestHeaders();
 
-    /**
+    /*
      * Since the underlying resource (the HTTP client) won't throw any exception during its close() invocation.
      * We override the signature of the close() to not include any checked exception.
+     */
+    /**
+     * An implementation of {@link AutoCloseable} that does not throw any checked exceptions.
+     * {@inheritDoc}
      */
     @Override
     void close();
