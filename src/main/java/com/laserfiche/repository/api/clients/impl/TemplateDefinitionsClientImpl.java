@@ -20,20 +20,15 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+/**
+ * The Laserfiche Repository TemplateDefinitions API client.
+ */
 public class TemplateDefinitionsClientImpl extends ApiClient implements TemplateDefinitionsClient {
 
     public TemplateDefinitionsClientImpl(String baseUrl, UnirestInstance httpClient) {
         super(baseUrl, httpClient);
     }
 
-    /**
-     * - Returns all template definitions (including field definitions) in the repository. If a template name query parameter is given, then a single template definition is returned.
-     * - Provide a repository ID, and get a paged listing of template definitions available in the repository. Useful when trying to find a list of all template definitions available, rather than a specific one.
-     * - Default page size: 100. Allowed OData query options: Select | Count | OrderBy | Skip | Top | SkipToken | Prefer.
-     *
-     * @param parameters An object of type ParametersForGetTemplateDefinitions which encapsulates the parameters of getTemplateDefinitions method.
-     * @return ODataValueContextOfIListOfWTemplateInfo The return value
-     */
     @Override
     public ODataValueContextOfIListOfWTemplateInfo getTemplateDefinitions(
             ParametersForGetTemplateDefinitions parameters) {
@@ -119,14 +114,6 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
         }
     }
 
-    /**
-     * - Returns the field definitions assigned to a template definition.
-     * - Provide a template definition name, and get a paged listing of the field definitions assigned to that template.
-     * - Default page size: 100. Allowed OData query options: Select | Count | OrderBy | Skip | Top | SkipToken | Prefer.
-     *
-     * @param parameters An object of type ParametersForGetTemplateFieldDefinitionsByTemplateName which encapsulates the parameters of getTemplateFieldDefinitionsByTemplateName method.
-     * @return ODataValueContextOfIListOfTemplateFieldInfo The return value
-     */
     @Override
     public ODataValueContextOfIListOfTemplateFieldInfo getTemplateFieldDefinitionsByTemplateName(
             ParametersForGetTemplateFieldDefinitionsByTemplateName parameters) {
@@ -216,14 +203,6 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
         }
     }
 
-    /**
-     * - Returns the field definitions assigned to a template definition.
-     * - Provide a template definition ID, and get a paged listing of the field definitions assigned to that template.
-     * - Default page size: 100. Allowed OData query options: Select | Count | OrderBy | Skip | Top | SkipToken | Prefer.
-     *
-     * @param parameters An object of type ParametersForGetTemplateFieldDefinitions which encapsulates the parameters of getTemplateFieldDefinitions method.
-     * @return ODataValueContextOfIListOfTemplateFieldInfo The return value
-     */
     @Override
     public ODataValueContextOfIListOfTemplateFieldInfo getTemplateFieldDefinitions(
             ParametersForGetTemplateFieldDefinitions parameters) {
@@ -312,14 +291,6 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
         }
     }
 
-    /**
-     * - Returns a single template definition (including field definitions, if relevant).
-     * - Provide a template definition ID, and get the single template definition associated with that ID. Useful when a route provides a minimal amount of details, and more information about the specific template is needed.
-     * - Allowed OData query options: Select
-     *
-     * @param parameters An object of type ParametersForGetTemplateDefinitionById which encapsulates the parameters of getTemplateDefinitionById method.
-     * @return WTemplateInfo The return value
-     */
     @Override
     public WTemplateInfo getTemplateDefinitionById(ParametersForGetTemplateDefinitionById parameters) {
         Map<String, Object> queryParameters = getParametersWithNonDefaultValue(new String[]{"String", "String"},

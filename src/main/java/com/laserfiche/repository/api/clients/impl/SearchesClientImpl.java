@@ -14,20 +14,15 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+/**
+ * The Laserfiche Repository Searches API client.
+ */
 public class SearchesClientImpl extends ApiClient implements SearchesClient {
 
     public SearchesClientImpl(String baseUrl, UnirestInstance httpClient) {
         super(baseUrl, httpClient);
     }
 
-    /**
-     * - Returns search status.
-     * - Provide a token (returned in the create search asynchronous route), and get the search status, progress, and any errors that may have occurred. When the search is completed, the Location header can be inspected as a link to the search results.
-     * - OperationStatus can be one of the following : NotStarted, InProgress, Completed, Failed, or Canceled.
-     *
-     * @param parameters An object of type ParametersForGetSearchStatus which encapsulates the parameters of getSearchStatus method.
-     * @return OperationProgress The return value
-     */
     @Override
     public OperationProgress getSearchStatus(ParametersForGetSearchStatus parameters) {
         Map<String, Object> pathParameters = getParametersWithNonDefaultValue(new String[]{"String", "String"},
@@ -79,13 +74,6 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
         }
     }
 
-    /**
-     * - Cancels a currently running search.
-     * - Closes a completed search.
-     *
-     * @param parameters An object of type ParametersForCancelOrCloseSearch which encapsulates the parameters of cancelOrCloseSearch method.
-     * @return ODataValueOfBoolean The return value
-     */
     @Override
     public ODataValueOfBoolean cancelOrCloseSearch(ParametersForCancelOrCloseSearch parameters) {
         Map<String, Object> pathParameters = getParametersWithNonDefaultValue(new String[]{"String", "String"},
@@ -137,14 +125,6 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
         }
     }
 
-    /**
-     * - Returns the context hits associated with a search result entry.
-     * - Given a searchToken, and rowNumber associated with a search entry in the listing, return the context hits for that entry.
-     * - Default page size: 100. Allowed OData query options: Select | Count | OrderBy | Skip | Top | SkipToken | Prefer.
-     *
-     * @param parameters An object of type ParametersForGetSearchContextHits which encapsulates the parameters of getSearchContextHits method.
-     * @return ODataValueContextOfIListOfContextHit The return value
-     */
     @Override
     public ODataValueContextOfIListOfContextHit getSearchContextHits(ParametersForGetSearchContextHits parameters) {
         return doGetSearchContextHits(
@@ -232,13 +212,6 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
         }
     }
 
-    /**
-     * - Runs a search operation on the repository.
-     * - Optional body parameters: FuzzyType: (default none), which can be used to determine what is considered a match by number of letters or percentage. FuzzyFactor: integer value that determines the degree to which a search will be considered a match (integer value for NumberOfLetters, or int value representing a percentage). The status for search operations must be checked via the Search specific status checking route.
-     *
-     * @param parameters An object of type ParametersForCreateSearchOperation which encapsulates the parameters of createSearchOperation method.
-     * @return AcceptedOperation The return value
-     */
     @Override
     public AcceptedOperation createSearchOperation(ParametersForCreateSearchOperation parameters) {
         Map<String, Object> pathParameters = getParametersWithNonDefaultValue(new String[]{"String"},
@@ -291,18 +264,6 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
         }
     }
 
-    /**
-     * - Returns a search result listing if the search is completed.
-     * - Optional query parameter: groupByOrderType (default false). This query parameter decides whether or not results are returned in groups based on their entry type.
-     * - Optional query parameter: refresh (default false). If the search listing should be refreshed to show updated values.
-     * - Default page size: 150. Allowed OData query options: Select | Count | OrderBy | Skip | Top | SkipToken | Prefer. OData $OrderBy syntax should follow: &quot;PropertyName direction,PropertyName2 direction&quot;. sort order can be either &quot;asc&quot; or &quot;desc&quot;. Search results expire after 5 minutes, but can be refreshed by retrieving the results again.
-     * - Optionally returns field values for the entries in the search result listing. Each field name needs to be specified in the request. Maximum limit of 10 field names.
-     * - If field values are requested, only the first value is returned if it is a multi value field.
-     * - Null or Empty field values should not be used to determine if a field is assigned to the entry.
-     *
-     * @param parameters An object of type ParametersForGetSearchResults which encapsulates the parameters of getSearchResults method.
-     * @return ODataValueContextOfIListOfEntry The return value
-     */
     @Override
     public ODataValueContextOfIListOfEntry getSearchResults(ParametersForGetSearchResults parameters) {
         return doGetSearchResults(baseUrl + "/v1/Repositories/{repoId}/Searches/{searchToken}/Results", parameters);
