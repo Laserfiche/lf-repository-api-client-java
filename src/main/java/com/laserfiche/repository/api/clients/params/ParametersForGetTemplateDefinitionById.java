@@ -1,5 +1,8 @@
 package com.laserfiche.repository.api.clients.params;
 
+/**
+ * The encapsulated parameters for {@link com.laserfiche.repository.api.clients.impl.TemplateDefinitionsClientImpl#getTemplateDefinitionById(ParametersForGetTemplateDefinitionById) getTemplateDefinitionById}.
+ */
 public class ParametersForGetTemplateDefinitionById {
 
     /**
@@ -23,6 +26,12 @@ public class ParametersForGetTemplateDefinitionById {
      */
     private String select;
 
+    /**
+     * Builder for setting the repoId parameter.
+     *
+     * @param repoId The requested repository ID.
+     * @return {@link ParametersForGetTemplateDefinitionById} The return value
+     */
     public ParametersForGetTemplateDefinitionById setRepoId(String repoId) {
         this.repoId = repoId;
         return this;
@@ -31,12 +40,18 @@ public class ParametersForGetTemplateDefinitionById {
     /**
      * The requested repository ID.
      *
-     * @return String The return value
+     * @return {@link String} The return value
      */
     public String getRepoId() {
         return this.repoId;
     }
 
+    /**
+     * Builder for setting the templateId parameter.
+     *
+     * @param templateId The requested template definition ID.
+     * @return {@link ParametersForGetTemplateDefinitionById} The return value
+     */
     public ParametersForGetTemplateDefinitionById setTemplateId(int templateId) {
         this.templateId = templateId;
         return this;
@@ -45,12 +60,19 @@ public class ParametersForGetTemplateDefinitionById {
     /**
      * The requested template definition ID.
      *
-     * @return int The return value
+     * @return {@link int} The return value
      */
     public int getTemplateId() {
         return this.templateId;
     }
 
+    /**
+     * Builder for setting the culture parameter.
+     *
+     * @param culture An optional query parameter used to indicate the locale that should be used for formatting.
+     *                The value should be a standard language tag.
+     * @return {@link ParametersForGetTemplateDefinitionById} The return value
+     */
     public ParametersForGetTemplateDefinitionById setCulture(String culture) {
         this.culture = culture;
         return this;
@@ -60,12 +82,18 @@ public class ParametersForGetTemplateDefinitionById {
      * An optional query parameter used to indicate the locale that should be used for formatting.
      * The value should be a standard language tag.
      *
-     * @return String The return value
+     * @return {@link String} The return value
      */
     public String getCulture() {
         return this.culture;
     }
 
+    /**
+     * Builder for setting the select parameter.
+     *
+     * @param select Limits the properties returned in the result.
+     * @return {@link ParametersForGetTemplateDefinitionById} The return value
+     */
     public ParametersForGetTemplateDefinitionById setSelect(String select) {
         this.select = select;
         return this;
@@ -74,7 +102,7 @@ public class ParametersForGetTemplateDefinitionById {
     /**
      * Limits the properties returned in the result.
      *
-     * @return String The return value
+     * @return {@link String} The return value
      */
     public String getSelect() {
         return this.select;

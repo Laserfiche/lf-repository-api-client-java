@@ -1,5 +1,8 @@
 package com.laserfiche.repository.api.clients.params;
 
+/**
+ * The encapsulated parameters for {@link com.laserfiche.repository.api.clients.impl.TemplateDefinitionsClientImpl#getTemplateFieldDefinitions(ParametersForGetTemplateFieldDefinitions) getTemplateFieldDefinitions}.
+ */
 public class ParametersForGetTemplateFieldDefinitions {
 
     /**
@@ -48,6 +51,12 @@ public class ParametersForGetTemplateFieldDefinitions {
      */
     private boolean count;
 
+    /**
+     * Builder for setting the repoId parameter.
+     *
+     * @param repoId The requested repository ID.
+     * @return {@link ParametersForGetTemplateFieldDefinitions} The return value
+     */
     public ParametersForGetTemplateFieldDefinitions setRepoId(String repoId) {
         this.repoId = repoId;
         return this;
@@ -56,12 +65,18 @@ public class ParametersForGetTemplateFieldDefinitions {
     /**
      * The requested repository ID.
      *
-     * @return String The return value
+     * @return {@link String} The return value
      */
     public String getRepoId() {
         return this.repoId;
     }
 
+    /**
+     * Builder for setting the templateId parameter.
+     *
+     * @param templateId The requested template definition ID.
+     * @return {@link ParametersForGetTemplateFieldDefinitions} The return value
+     */
     public ParametersForGetTemplateFieldDefinitions setTemplateId(int templateId) {
         this.templateId = templateId;
         return this;
@@ -70,12 +85,18 @@ public class ParametersForGetTemplateFieldDefinitions {
     /**
      * The requested template definition ID.
      *
-     * @return int The return value
+     * @return {@link int} The return value
      */
     public int getTemplateId() {
         return this.templateId;
     }
 
+    /**
+     * Builder for setting the prefer parameter.
+     *
+     * @param prefer An optional OData header. Can be used to set the maximum page size using odata.maxpagesize.
+     * @return {@link ParametersForGetTemplateFieldDefinitions} The return value
+     */
     public ParametersForGetTemplateFieldDefinitions setPrefer(String prefer) {
         this.prefer = prefer;
         return this;
@@ -84,12 +105,19 @@ public class ParametersForGetTemplateFieldDefinitions {
     /**
      * An optional OData header. Can be used to set the maximum page size using odata.maxpagesize.
      *
-     * @return String The return value
+     * @return {@link String} The return value
      */
     public String getPrefer() {
         return this.prefer;
     }
 
+    /**
+     * Builder for setting the culture parameter.
+     *
+     * @param culture An optional query parameter used to indicate the locale that should be used for formatting.
+     *                The value should be a standard language tag.
+     * @return {@link ParametersForGetTemplateFieldDefinitions} The return value
+     */
     public ParametersForGetTemplateFieldDefinitions setCulture(String culture) {
         this.culture = culture;
         return this;
@@ -99,12 +127,18 @@ public class ParametersForGetTemplateFieldDefinitions {
      * An optional query parameter used to indicate the locale that should be used for formatting.
      * The value should be a standard language tag.
      *
-     * @return String The return value
+     * @return {@link String} The return value
      */
     public String getCulture() {
         return this.culture;
     }
 
+    /**
+     * Builder for setting the select parameter.
+     *
+     * @param select Limits the properties returned in the result.
+     * @return {@link ParametersForGetTemplateFieldDefinitions} The return value
+     */
     public ParametersForGetTemplateFieldDefinitions setSelect(String select) {
         this.select = select;
         return this;
@@ -113,12 +147,18 @@ public class ParametersForGetTemplateFieldDefinitions {
     /**
      * Limits the properties returned in the result.
      *
-     * @return String The return value
+     * @return {@link String} The return value
      */
     public String getSelect() {
         return this.select;
     }
 
+    /**
+     * Builder for setting the orderby parameter.
+     *
+     * @param orderby Specifies the order in which items are returned. The maximum number of expressions is 5.
+     * @return {@link ParametersForGetTemplateFieldDefinitions} The return value
+     */
     public ParametersForGetTemplateFieldDefinitions setOrderby(String orderby) {
         this.orderby = orderby;
         return this;
@@ -127,12 +167,18 @@ public class ParametersForGetTemplateFieldDefinitions {
     /**
      * Specifies the order in which items are returned. The maximum number of expressions is 5.
      *
-     * @return String The return value
+     * @return {@link String} The return value
      */
     public String getOrderby() {
         return this.orderby;
     }
 
+    /**
+     * Builder for setting the top parameter.
+     *
+     * @param top Limits the number of items returned from a collection.
+     * @return {@link ParametersForGetTemplateFieldDefinitions} The return value
+     */
     public ParametersForGetTemplateFieldDefinitions setTop(int top) {
         this.top = top;
         return this;
@@ -141,12 +187,18 @@ public class ParametersForGetTemplateFieldDefinitions {
     /**
      * Limits the number of items returned from a collection.
      *
-     * @return int The return value
+     * @return {@link int} The return value
      */
     public int getTop() {
         return this.top;
     }
 
+    /**
+     * Builder for setting the skip parameter.
+     *
+     * @param skip Excludes the specified number of items of the queried collection from the result.
+     * @return {@link ParametersForGetTemplateFieldDefinitions} The return value
+     */
     public ParametersForGetTemplateFieldDefinitions setSkip(int skip) {
         this.skip = skip;
         return this;
@@ -155,12 +207,18 @@ public class ParametersForGetTemplateFieldDefinitions {
     /**
      * Excludes the specified number of items of the queried collection from the result.
      *
-     * @return int The return value
+     * @return {@link int} The return value
      */
     public int getSkip() {
         return this.skip;
     }
 
+    /**
+     * Builder for setting the count parameter.
+     *
+     * @param count Indicates whether the total count of items within a collection are returned in the result.
+     * @return {@link ParametersForGetTemplateFieldDefinitions} The return value
+     */
     public ParametersForGetTemplateFieldDefinitions setCount(boolean count) {
         this.count = count;
         return this;
@@ -169,7 +227,7 @@ public class ParametersForGetTemplateFieldDefinitions {
     /**
      * Indicates whether the total count of items within a collection are returned in the result.
      *
-     * @return boolean The return value
+     * @return {@link boolean} The return value
      */
     public boolean isCount() {
         return this.count;

@@ -2,6 +2,9 @@ package com.laserfiche.repository.api.clients.params;
 
 import com.laserfiche.repository.api.clients.impl.model.GetDynamicFieldLogicValueRequest;
 
+/**
+ * The encapsulated parameters for {@link com.laserfiche.repository.api.clients.impl.EntriesClientImpl#getDynamicFieldValues(ParametersForGetDynamicFieldValues) getDynamicFieldValues}.
+ */
 public class ParametersForGetDynamicFieldValues {
 
     /**
@@ -16,6 +19,12 @@ public class ParametersForGetDynamicFieldValues {
 
     private GetDynamicFieldLogicValueRequest requestBody;
 
+    /**
+     * Builder for setting the repoId parameter.
+     *
+     * @param repoId The requested repository ID.
+     * @return {@link ParametersForGetDynamicFieldValues} The return value
+     */
     public ParametersForGetDynamicFieldValues setRepoId(String repoId) {
         this.repoId = repoId;
         return this;
@@ -24,12 +33,18 @@ public class ParametersForGetDynamicFieldValues {
     /**
      * The requested repository ID.
      *
-     * @return String The return value
+     * @return {@link String} The return value
      */
     public String getRepoId() {
         return this.repoId;
     }
 
+    /**
+     * Builder for setting the entryId parameter.
+     *
+     * @param entryId The requested entry ID.
+     * @return {@link ParametersForGetDynamicFieldValues} The return value
+     */
     public ParametersForGetDynamicFieldValues setEntryId(int entryId) {
         this.entryId = entryId;
         return this;
@@ -38,7 +53,7 @@ public class ParametersForGetDynamicFieldValues {
     /**
      * The requested entry ID.
      *
-     * @return int The return value
+     * @return {@link int} The return value
      */
     public int getEntryId() {
         return this.entryId;

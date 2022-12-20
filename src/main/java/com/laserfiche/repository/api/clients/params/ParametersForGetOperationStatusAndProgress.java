@@ -1,5 +1,8 @@
 package com.laserfiche.repository.api.clients.params;
 
+/**
+ * The encapsulated parameters for {@link com.laserfiche.repository.api.clients.impl.TasksClientImpl#getOperationStatusAndProgress(ParametersForGetOperationStatusAndProgress) getOperationStatusAndProgress}.
+ */
 public class ParametersForGetOperationStatusAndProgress {
 
     /**
@@ -12,6 +15,12 @@ public class ParametersForGetOperationStatusAndProgress {
      */
     private String operationToken;
 
+    /**
+     * Builder for setting the repoId parameter.
+     *
+     * @param repoId The requested repository ID
+     * @return {@link ParametersForGetOperationStatusAndProgress} The return value
+     */
     public ParametersForGetOperationStatusAndProgress setRepoId(String repoId) {
         this.repoId = repoId;
         return this;
@@ -20,12 +29,18 @@ public class ParametersForGetOperationStatusAndProgress {
     /**
      * The requested repository ID
      *
-     * @return String The return value
+     * @return {@link String} The return value
      */
     public String getRepoId() {
         return this.repoId;
     }
 
+    /**
+     * Builder for setting the operationToken parameter.
+     *
+     * @param operationToken The operation token
+     * @return {@link ParametersForGetOperationStatusAndProgress} The return value
+     */
     public ParametersForGetOperationStatusAndProgress setOperationToken(String operationToken) {
         this.operationToken = operationToken;
         return this;
@@ -34,7 +49,7 @@ public class ParametersForGetOperationStatusAndProgress {
     /**
      * The operation token
      *
-     * @return String The return value
+     * @return {@link String} The return value
      */
     public String getOperationToken() {
         return this.operationToken;

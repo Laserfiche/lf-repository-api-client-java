@@ -1,5 +1,8 @@
 package com.laserfiche.repository.api.clients.params;
 
+/**
+ * The encapsulated parameters for {@link com.laserfiche.repository.api.clients.impl.ServerSessionClientImpl#refreshServerSession(ParametersForRefreshServerSession) refreshServerSession}.
+ */
 public class ParametersForRefreshServerSession {
 
     /**
@@ -7,6 +10,12 @@ public class ParametersForRefreshServerSession {
      */
     private String repoId;
 
+    /**
+     * Builder for setting the repoId parameter.
+     *
+     * @param repoId The requested repository ID.
+     * @return {@link ParametersForRefreshServerSession} The return value
+     */
     public ParametersForRefreshServerSession setRepoId(String repoId) {
         this.repoId = repoId;
         return this;
@@ -15,7 +24,7 @@ public class ParametersForRefreshServerSession {
     /**
      * The requested repository ID.
      *
-     * @return String The return value
+     * @return {@link String} The return value
      */
     public String getRepoId() {
         return this.repoId;

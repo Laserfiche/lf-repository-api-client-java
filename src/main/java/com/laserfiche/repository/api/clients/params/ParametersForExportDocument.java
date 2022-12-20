@@ -3,6 +3,9 @@ package com.laserfiche.repository.api.clients.params;
 import java.io.InputStream;
 import java.util.function.Consumer;
 
+/**
+ * The encapsulated parameters for {@link com.laserfiche.repository.api.clients.impl.EntriesClientImpl#exportDocument(ParametersForExportDocument) exportDocument}.
+ */
 public class ParametersForExportDocument {
 
     /**
@@ -23,6 +26,12 @@ public class ParametersForExportDocument {
 
     private Consumer<InputStream> inputStreamConsumer;
 
+    /**
+     * Builder for setting the repoId parameter.
+     *
+     * @param repoId The requested repository ID.
+     * @return {@link ParametersForExportDocument} The return value
+     */
     public ParametersForExportDocument setRepoId(String repoId) {
         this.repoId = repoId;
         return this;
@@ -31,12 +40,18 @@ public class ParametersForExportDocument {
     /**
      * The requested repository ID.
      *
-     * @return String The return value
+     * @return {@link String} The return value
      */
     public String getRepoId() {
         return this.repoId;
     }
 
+    /**
+     * Builder for setting the entryId parameter.
+     *
+     * @param entryId The requested document ID.
+     * @return {@link ParametersForExportDocument} The return value
+     */
     public ParametersForExportDocument setEntryId(int entryId) {
         this.entryId = entryId;
         return this;
@@ -45,12 +60,19 @@ public class ParametersForExportDocument {
     /**
      * The requested document ID.
      *
-     * @return int The return value
+     * @return {@link int} The return value
      */
     public int getEntryId() {
         return this.entryId;
     }
 
+    /**
+     * Builder for setting the range parameter.
+     *
+     * @param range An optional header used to retrieve partial content of the edoc. Only supports single
+     *              range with byte unit.
+     * @return {@link ParametersForExportDocument} The return value
+     */
     public ParametersForExportDocument setRange(String range) {
         this.range = range;
         return this;
@@ -60,7 +82,7 @@ public class ParametersForExportDocument {
      * An optional header used to retrieve partial content of the edoc. Only supports single
      * range with byte unit.
      *
-     * @return String The return value
+     * @return {@link String} The return value
      */
     public String getRange() {
         return this.range;

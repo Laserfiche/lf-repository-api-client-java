@@ -1,5 +1,8 @@
 package com.laserfiche.repository.api.clients.params;
 
+/**
+ * The encapsulated parameters for {@link com.laserfiche.repository.api.clients.impl.EntriesClientImpl#getEntry(ParametersForGetEntry) getEntry}.
+ */
 public class ParametersForGetEntry {
 
     /**
@@ -17,6 +20,12 @@ public class ParametersForGetEntry {
      */
     private String select;
 
+    /**
+     * Builder for setting the repoId parameter.
+     *
+     * @param repoId The requested repository ID.
+     * @return {@link ParametersForGetEntry} The return value
+     */
     public ParametersForGetEntry setRepoId(String repoId) {
         this.repoId = repoId;
         return this;
@@ -25,12 +34,18 @@ public class ParametersForGetEntry {
     /**
      * The requested repository ID.
      *
-     * @return String The return value
+     * @return {@link String} The return value
      */
     public String getRepoId() {
         return this.repoId;
     }
 
+    /**
+     * Builder for setting the entryId parameter.
+     *
+     * @param entryId The requested entry ID.
+     * @return {@link ParametersForGetEntry} The return value
+     */
     public ParametersForGetEntry setEntryId(int entryId) {
         this.entryId = entryId;
         return this;
@@ -39,12 +54,18 @@ public class ParametersForGetEntry {
     /**
      * The requested entry ID.
      *
-     * @return int The return value
+     * @return {@link int} The return value
      */
     public int getEntryId() {
         return this.entryId;
     }
 
+    /**
+     * Builder for setting the select parameter.
+     *
+     * @param select Limits the properties returned in the result.
+     * @return {@link ParametersForGetEntry} The return value
+     */
     public ParametersForGetEntry setSelect(String select) {
         this.select = select;
         return this;
@@ -53,7 +74,7 @@ public class ParametersForGetEntry {
     /**
      * Limits the properties returned in the result.
      *
-     * @return String The return value
+     * @return {@link String} The return value
      */
     public String getSelect() {
         return this.select;

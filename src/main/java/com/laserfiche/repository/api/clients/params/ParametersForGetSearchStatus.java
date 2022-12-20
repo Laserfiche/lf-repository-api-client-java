@@ -1,5 +1,8 @@
 package com.laserfiche.repository.api.clients.params;
 
+/**
+ * The encapsulated parameters for {@link com.laserfiche.repository.api.clients.impl.SearchesClientImpl#getSearchStatus(ParametersForGetSearchStatus) getSearchStatus}.
+ */
 public class ParametersForGetSearchStatus {
 
     /**
@@ -12,6 +15,12 @@ public class ParametersForGetSearchStatus {
      */
     private String searchToken;
 
+    /**
+     * Builder for setting the repoId parameter.
+     *
+     * @param repoId The requested repository ID.
+     * @return {@link ParametersForGetSearchStatus} The return value
+     */
     public ParametersForGetSearchStatus setRepoId(String repoId) {
         this.repoId = repoId;
         return this;
@@ -20,12 +29,18 @@ public class ParametersForGetSearchStatus {
     /**
      * The requested repository ID.
      *
-     * @return String The return value
+     * @return {@link String} The return value
      */
     public String getRepoId() {
         return this.repoId;
     }
 
+    /**
+     * Builder for setting the searchToken parameter.
+     *
+     * @param searchToken The requested searchToken.
+     * @return {@link ParametersForGetSearchStatus} The return value
+     */
     public ParametersForGetSearchStatus setSearchToken(String searchToken) {
         this.searchToken = searchToken;
         return this;
@@ -34,7 +49,7 @@ public class ParametersForGetSearchStatus {
     /**
      * The requested searchToken.
      *
-     * @return String The return value
+     * @return {@link String} The return value
      */
     public String getSearchToken() {
         return this.searchToken;

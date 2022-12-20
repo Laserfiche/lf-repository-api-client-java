@@ -2,6 +2,9 @@ package com.laserfiche.repository.api.clients.params;
 
 import com.laserfiche.repository.api.clients.impl.model.AdvancedSearchRequest;
 
+/**
+ * The encapsulated parameters for {@link com.laserfiche.repository.api.clients.impl.SearchesClientImpl#createSearchOperation(ParametersForCreateSearchOperation) createSearchOperation}.
+ */
 public class ParametersForCreateSearchOperation {
 
     /**
@@ -11,6 +14,12 @@ public class ParametersForCreateSearchOperation {
 
     private AdvancedSearchRequest requestBody;
 
+    /**
+     * Builder for setting the repoId parameter.
+     *
+     * @param repoId The requested repository ID.
+     * @return {@link ParametersForCreateSearchOperation} The return value
+     */
     public ParametersForCreateSearchOperation setRepoId(String repoId) {
         this.repoId = repoId;
         return this;
@@ -19,7 +28,7 @@ public class ParametersForCreateSearchOperation {
     /**
      * The requested repository ID.
      *
-     * @return String The return value
+     * @return {@link String} The return value
      */
     public String getRepoId() {
         return this.repoId;

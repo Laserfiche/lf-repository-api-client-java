@@ -4,6 +4,9 @@ import com.laserfiche.repository.api.clients.impl.model.PutLinksRequest;
 
 import java.util.List;
 
+/**
+ * The encapsulated parameters for {@link com.laserfiche.repository.api.clients.impl.EntriesClientImpl#assignEntryLinks(ParametersForAssignEntryLinks) assignEntryLinks}.
+ */
 public class ParametersForAssignEntryLinks {
 
     /**
@@ -18,6 +21,12 @@ public class ParametersForAssignEntryLinks {
 
     private List<PutLinksRequest> requestBody;
 
+    /**
+     * Builder for setting the repoId parameter.
+     *
+     * @param repoId The request repository ID.
+     * @return {@link ParametersForAssignEntryLinks} The return value
+     */
     public ParametersForAssignEntryLinks setRepoId(String repoId) {
         this.repoId = repoId;
         return this;
@@ -26,12 +35,18 @@ public class ParametersForAssignEntryLinks {
     /**
      * The request repository ID.
      *
-     * @return String The return value
+     * @return {@link String} The return value
      */
     public String getRepoId() {
         return this.repoId;
     }
 
+    /**
+     * Builder for setting the entryId parameter.
+     *
+     * @param entryId The requested entry ID.
+     * @return {@link ParametersForAssignEntryLinks} The return value
+     */
     public ParametersForAssignEntryLinks setEntryId(int entryId) {
         this.entryId = entryId;
         return this;
@@ -40,7 +55,7 @@ public class ParametersForAssignEntryLinks {
     /**
      * The requested entry ID.
      *
-     * @return int The return value
+     * @return {@link int} The return value
      */
     public int getEntryId() {
         return this.entryId;

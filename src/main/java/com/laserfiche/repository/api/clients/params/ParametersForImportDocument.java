@@ -4,6 +4,9 @@ import com.laserfiche.repository.api.clients.impl.model.PostEntryWithEdocMetadat
 
 import java.io.InputStream;
 
+/**
+ * The encapsulated parameters for {@link com.laserfiche.repository.api.clients.impl.EntriesClientImpl#importDocument(ParametersForImportDocument) importDocument}.
+ */
 public class ParametersForImportDocument {
 
     /**
@@ -37,6 +40,12 @@ public class ParametersForImportDocument {
 
     private PostEntryWithEdocMetadataRequest requestBody;
 
+    /**
+     * Builder for setting the repoId parameter.
+     *
+     * @param repoId The requested repository ID.
+     * @return {@link ParametersForImportDocument} The return value
+     */
     public ParametersForImportDocument setRepoId(String repoId) {
         this.repoId = repoId;
         return this;
@@ -45,12 +54,18 @@ public class ParametersForImportDocument {
     /**
      * The requested repository ID.
      *
-     * @return String The return value
+     * @return {@link String} The return value
      */
     public String getRepoId() {
         return this.repoId;
     }
 
+    /**
+     * Builder for setting the parentEntryId parameter.
+     *
+     * @param parentEntryId The entry ID of the folder that the document will be created in.
+     * @return {@link ParametersForImportDocument} The return value
+     */
     public ParametersForImportDocument setParentEntryId(int parentEntryId) {
         this.parentEntryId = parentEntryId;
         return this;
@@ -59,12 +74,18 @@ public class ParametersForImportDocument {
     /**
      * The entry ID of the folder that the document will be created in.
      *
-     * @return int The return value
+     * @return {@link int} The return value
      */
     public int getParentEntryId() {
         return this.parentEntryId;
     }
 
+    /**
+     * Builder for setting the fileName parameter.
+     *
+     * @param fileName The created document's file name.
+     * @return {@link ParametersForImportDocument} The return value
+     */
     public ParametersForImportDocument setFileName(String fileName) {
         this.fileName = fileName;
         return this;
@@ -73,12 +94,19 @@ public class ParametersForImportDocument {
     /**
      * The created document's file name.
      *
-     * @return String The return value
+     * @return {@link String} The return value
      */
     public String getFileName() {
         return this.fileName;
     }
 
+    /**
+     * Builder for setting the autoRename parameter.
+     *
+     * @param autoRename An optional query parameter used to indicate if the new document should be automatically
+     *                   renamed if an entry already exists with the given name in the folder. The default value is false.
+     * @return {@link ParametersForImportDocument} The return value
+     */
     public ParametersForImportDocument setAutoRename(boolean autoRename) {
         this.autoRename = autoRename;
         return this;
@@ -88,12 +116,19 @@ public class ParametersForImportDocument {
      * An optional query parameter used to indicate if the new document should be automatically
      * renamed if an entry already exists with the given name in the folder. The default value is false.
      *
-     * @return boolean The return value
+     * @return {@link boolean} The return value
      */
     public boolean isAutoRename() {
         return this.autoRename;
     }
 
+    /**
+     * Builder for setting the culture parameter.
+     *
+     * @param culture An optional query parameter used to indicate the locale that should be used.
+     *                The value should be a standard language tag. This may be used when setting field values with tokens.
+     * @return {@link ParametersForImportDocument} The return value
+     */
     public ParametersForImportDocument setCulture(String culture) {
         this.culture = culture;
         return this;
@@ -103,7 +138,7 @@ public class ParametersForImportDocument {
      * An optional query parameter used to indicate the locale that should be used.
      * The value should be a standard language tag. This may be used when setting field values with tokens.
      *
-     * @return String The return value
+     * @return {@link String} The return value
      */
     public String getCulture() {
         return this.culture;
