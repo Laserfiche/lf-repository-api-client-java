@@ -83,7 +83,7 @@ public interface RepositoryApiClient extends AutoCloseable {
 
     /**
      * Returns default request headers that will be used for all requests.
-     * @return default request headers that will be used for all requests.
+     * @return Default request headers that will be used for all requests.
      */
     Map<String, String> getDefaultRequestHeaders();
 
