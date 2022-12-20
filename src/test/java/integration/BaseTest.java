@@ -87,6 +87,7 @@ public class BaseTest {
     @AfterAll
     public static void tearDown() {
         repositoryApiClient.close();
+        repositoryApiClient = null;
     }
 
     public static RepositoryApiClient createClient() {
