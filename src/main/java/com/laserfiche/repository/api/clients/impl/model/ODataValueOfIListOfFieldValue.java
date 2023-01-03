@@ -29,10 +29,10 @@ public class ODataValueOfIListOfFieldValue {
     }
 
     /**
- * Returns value
- * @return value
- 
-*/
+     * Returns value
+     *
+     * @return value
+     */
     @Schema(description = "")
     public List<FieldValue> getValue() {
         return value;
@@ -63,7 +63,10 @@ public class ODataValueOfIListOfFieldValue {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class ODataValueOfIListOfFieldValue {\n");
-        sb.append("    value: ").append(toIndentedString(value)).append("\n");
+        sb
+                .append("    value: ")
+                .append(toIndentedString(value))
+                .append("\n");
         sb.append("}");
         return sb.toString();
     }
@@ -72,6 +75,8 @@ public class ODataValueOfIListOfFieldValue {
         if (o == null) {
             return "null";
         }
-        return o.toString().replace("\n", "\n    ");
+        return o
+                .toString()
+                .replace("\n", "\n    ");
     }
 }

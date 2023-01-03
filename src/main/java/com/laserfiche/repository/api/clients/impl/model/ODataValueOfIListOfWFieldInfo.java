@@ -29,10 +29,10 @@ public class ODataValueOfIListOfWFieldInfo {
     }
 
     /**
- * Returns value
- * @return value
- 
-*/
+     * Returns value
+     *
+     * @return value
+     */
     @Schema(description = "")
     public List<WFieldInfo> getValue() {
         return value;
@@ -63,7 +63,10 @@ public class ODataValueOfIListOfWFieldInfo {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class ODataValueOfIListOfWFieldInfo {\n");
-        sb.append("    value: ").append(toIndentedString(value)).append("\n");
+        sb
+                .append("    value: ")
+                .append(toIndentedString(value))
+                .append("\n");
         sb.append("}");
         return sb.toString();
     }
@@ -72,6 +75,8 @@ public class ODataValueOfIListOfWFieldInfo {
         if (o == null) {
             return "null";
         }
-        return o.toString().replace("\n", "\n    ");
+        return o
+                .toString()
+                .replace("\n", "\n    ");
     }
 }

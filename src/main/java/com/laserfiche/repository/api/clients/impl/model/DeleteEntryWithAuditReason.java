@@ -22,9 +22,10 @@ public class DeleteEntryWithAuditReason {
     }
 
     /**
- * Returns the reason id for this audit event.
- * @return auditReasonId
-*/
+     * Returns the reason id for this audit event.
+     *
+     * @return auditReasonId
+     */
     @Schema(description = "The reason id for this audit event.")
     public Integer getAuditReasonId() {
         return auditReasonId;
@@ -40,9 +41,10 @@ public class DeleteEntryWithAuditReason {
     }
 
     /**
- * Returns the comment for this audit event.
- * @return comment
-*/
+     * Returns the comment for this audit event.
+     *
+     * @return comment
+     */
     @Schema(description = "The comment for this audit event.")
     public String getComment() {
         return comment;
@@ -61,7 +63,8 @@ public class DeleteEntryWithAuditReason {
             return false;
         }
         DeleteEntryWithAuditReason deleteEntryWithAuditReason = (DeleteEntryWithAuditReason) o;
-        return Objects.equals(this.auditReasonId, deleteEntryWithAuditReason.auditReasonId) && Objects.equals(this.comment, deleteEntryWithAuditReason.comment);
+        return Objects.equals(this.auditReasonId, deleteEntryWithAuditReason.auditReasonId) && Objects.equals(
+                this.comment, deleteEntryWithAuditReason.comment);
     }
 
     @Override
@@ -73,8 +76,14 @@ public class DeleteEntryWithAuditReason {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class DeleteEntryWithAuditReason {\n");
-        sb.append("    auditReasonId: ").append(toIndentedString(auditReasonId)).append("\n");
-        sb.append("    comment: ").append(toIndentedString(comment)).append("\n");
+        sb
+                .append("    auditReasonId: ")
+                .append(toIndentedString(auditReasonId))
+                .append("\n");
+        sb
+                .append("    comment: ")
+                .append(toIndentedString(comment))
+                .append("\n");
         sb.append("}");
         return sb.toString();
     }
@@ -83,6 +92,8 @@ public class DeleteEntryWithAuditReason {
         if (o == null) {
             return "null";
         }
-        return o.toString().replace("\n", "\n    ");
+        return o
+                .toString()
+                .replace("\n", "\n    ");
     }
 }

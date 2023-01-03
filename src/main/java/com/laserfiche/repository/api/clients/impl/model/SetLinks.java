@@ -36,9 +36,10 @@ public class SetLinks {
     }
 
     /**
- * Returns the list of exceptions that occured when trying to perform the operation.
- * @return exceptions
-*/
+     * Returns the list of exceptions that occured when trying to perform the operation.
+     *
+     * @return exceptions
+     */
     @Schema(description = "The list of exceptions that occured when trying to perform the operation.")
     public List<APIServerException> getExceptions() {
         return exceptions;
@@ -62,9 +63,10 @@ public class SetLinks {
     }
 
     /**
- * Returns the ids of the other entries linked to the entry
- * @return otherEntryIds
-*/
+     * Returns the ids of the other entries linked to the entry
+     *
+     * @return otherEntryIds
+     */
     @Schema(description = "The ids of the other entries linked to the entry")
     public List<Integer> getOtherEntryIds() {
         return otherEntryIds;
@@ -83,7 +85,8 @@ public class SetLinks {
             return false;
         }
         SetLinks setLinks = (SetLinks) o;
-        return Objects.equals(this.exceptions, setLinks.exceptions) && Objects.equals(this.otherEntryIds, setLinks.otherEntryIds);
+        return Objects.equals(this.exceptions, setLinks.exceptions) && Objects.equals(this.otherEntryIds,
+                setLinks.otherEntryIds);
     }
 
     @Override
@@ -95,8 +98,14 @@ public class SetLinks {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class SetLinks {\n");
-        sb.append("    exceptions: ").append(toIndentedString(exceptions)).append("\n");
-        sb.append("    otherEntryIds: ").append(toIndentedString(otherEntryIds)).append("\n");
+        sb
+                .append("    exceptions: ")
+                .append(toIndentedString(exceptions))
+                .append("\n");
+        sb
+                .append("    otherEntryIds: ")
+                .append(toIndentedString(otherEntryIds))
+                .append("\n");
         sb.append("}");
         return sb.toString();
     }
@@ -105,6 +114,8 @@ public class SetLinks {
         if (o == null) {
             return "null";
         }
-        return o.toString().replace("\n", "\n    ");
+        return o
+                .toString()
+                .replace("\n", "\n    ");
     }
 }

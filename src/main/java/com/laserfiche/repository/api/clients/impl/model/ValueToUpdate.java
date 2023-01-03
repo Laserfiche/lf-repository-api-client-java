@@ -22,9 +22,10 @@ public class ValueToUpdate {
     }
 
     /**
- * Returns the value assigned to the field at the position specified.
- * @return value
-*/
+     * Returns the value assigned to the field at the position specified.
+     *
+     * @return value
+     */
     @Schema(description = "The value assigned to the field at the position specified.")
     public String getValue() {
         return value;
@@ -40,9 +41,10 @@ public class ValueToUpdate {
     }
 
     /**
- * Returns the position of the value in the field. This is 1-indexed for multi value field. It will be ignored for single value field.
- * @return position
-*/
+     * Returns the position of the value in the field. This is 1-indexed for multi value field. It will be ignored for single value field.
+     *
+     * @return position
+     */
     @Schema(description = "The position of the value in the field. This is 1-indexed for multi value field. It will be ignored for single value field.")
     public Integer getPosition() {
         return position;
@@ -73,8 +75,14 @@ public class ValueToUpdate {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class ValueToUpdate {\n");
-        sb.append("    value: ").append(toIndentedString(value)).append("\n");
-        sb.append("    position: ").append(toIndentedString(position)).append("\n");
+        sb
+                .append("    value: ")
+                .append(toIndentedString(value))
+                .append("\n");
+        sb
+                .append("    position: ")
+                .append(toIndentedString(position))
+                .append("\n");
         sb.append("}");
         return sb.toString();
     }
@@ -83,6 +91,8 @@ public class ValueToUpdate {
         if (o == null) {
             return "null";
         }
-        return o.toString().replace("\n", "\n    ");
+        return o
+                .toString()
+                .replace("\n", "\n    ");
     }
 }

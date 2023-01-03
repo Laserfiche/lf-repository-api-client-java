@@ -40,9 +40,10 @@ public class EntryFieldValue {
     }
 
     /**
- * Returns the name of the field.
- * @return fieldName
-*/
+     * Returns the name of the field.
+     *
+     * @return fieldName
+     */
     @Schema(description = "The name of the field.")
     public String getFieldName() {
         return fieldName;
@@ -66,9 +67,10 @@ public class EntryFieldValue {
     }
 
     /**
- * Returns the values assigned to the field.
- * @return values
-*/
+     * Returns the values assigned to the field.
+     *
+     * @return values
+     */
     @Schema(description = "The values assigned to the field.")
     public List<Map<String, Object>> getValues() {
         return values;
@@ -84,10 +86,10 @@ public class EntryFieldValue {
     }
 
     /**
- * Returns fieldType
- * @return fieldType
- 
-*/
+     * Returns fieldType
+     *
+     * @return fieldType
+     */
     @Schema(description = "")
     public WFieldType getFieldType() {
         return fieldType;
@@ -103,9 +105,10 @@ public class EntryFieldValue {
     }
 
     /**
- * Returns the ID of the field.
- * @return fieldId
-*/
+     * Returns the ID of the field.
+     *
+     * @return fieldId
+     */
     @Schema(description = "The ID of the field.")
     public Integer getFieldId() {
         return fieldId;
@@ -121,9 +124,10 @@ public class EntryFieldValue {
     }
 
     /**
- * Returns a boolean indicating if the represented field supports multiple values.
- * @return isMultiValue
-*/
+     * Returns a boolean indicating if the represented field supports multiple values.
+     *
+     * @return isMultiValue
+     */
     @Schema(description = "A boolean indicating if the represented field supports multiple values.")
     @JsonProperty("isMultiValue")
     public Boolean isMultiValue() {
@@ -140,9 +144,10 @@ public class EntryFieldValue {
     }
 
     /**
- * Returns a boolean indicating if the represented field must have a value set on entries assigned to a template that the field is a member of.
- * @return isRequired
-*/
+     * Returns a boolean indicating if the represented field must have a value set on entries assigned to a template that the field is a member of.
+     *
+     * @return isRequired
+     */
     @Schema(description = "A boolean indicating if the represented field must have a value set on entries assigned to a template that the field is a member of.")
     @JsonProperty("isRequired")
     public Boolean isRequired() {
@@ -159,9 +164,10 @@ public class EntryFieldValue {
     }
 
     /**
- * Returns a boolean indicating if there are more field values.
- * @return hasMoreValues
-*/
+     * Returns a boolean indicating if there are more field values.
+     *
+     * @return hasMoreValues
+     */
     @Schema(description = "A boolean indicating if there are more field values.")
     public Boolean isHasMoreValues() {
         return hasMoreValues;
@@ -180,7 +186,11 @@ public class EntryFieldValue {
             return false;
         }
         EntryFieldValue entryFieldValue = (EntryFieldValue) o;
-        return Objects.equals(this.fieldName, entryFieldValue.fieldName) && Objects.equals(this.values, entryFieldValue.values) && Objects.equals(this.fieldType, entryFieldValue.fieldType) && Objects.equals(this.fieldId, entryFieldValue.fieldId) && Objects.equals(this.isMultiValue, entryFieldValue.isMultiValue) && Objects.equals(this.isRequired, entryFieldValue.isRequired) && Objects.equals(this.hasMoreValues, entryFieldValue.hasMoreValues);
+        return Objects.equals(this.fieldName, entryFieldValue.fieldName) && Objects.equals(this.values,
+                entryFieldValue.values) && Objects.equals(this.fieldType, entryFieldValue.fieldType) && Objects.equals(
+                this.fieldId, entryFieldValue.fieldId) && Objects.equals(this.isMultiValue,
+                entryFieldValue.isMultiValue) && Objects.equals(this.isRequired,
+                entryFieldValue.isRequired) && Objects.equals(this.hasMoreValues, entryFieldValue.hasMoreValues);
     }
 
     @Override
@@ -192,13 +202,34 @@ public class EntryFieldValue {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class EntryFieldValue {\n");
-        sb.append("    fieldName: ").append(toIndentedString(fieldName)).append("\n");
-        sb.append("    values: ").append(toIndentedString(values)).append("\n");
-        sb.append("    fieldType: ").append(toIndentedString(fieldType)).append("\n");
-        sb.append("    fieldId: ").append(toIndentedString(fieldId)).append("\n");
-        sb.append("    isMultiValue: ").append(toIndentedString(isMultiValue)).append("\n");
-        sb.append("    isRequired: ").append(toIndentedString(isRequired)).append("\n");
-        sb.append("    hasMoreValues: ").append(toIndentedString(hasMoreValues)).append("\n");
+        sb
+                .append("    fieldName: ")
+                .append(toIndentedString(fieldName))
+                .append("\n");
+        sb
+                .append("    values: ")
+                .append(toIndentedString(values))
+                .append("\n");
+        sb
+                .append("    fieldType: ")
+                .append(toIndentedString(fieldType))
+                .append("\n");
+        sb
+                .append("    fieldId: ")
+                .append(toIndentedString(fieldId))
+                .append("\n");
+        sb
+                .append("    isMultiValue: ")
+                .append(toIndentedString(isMultiValue))
+                .append("\n");
+        sb
+                .append("    isRequired: ")
+                .append(toIndentedString(isRequired))
+                .append("\n");
+        sb
+                .append("    hasMoreValues: ")
+                .append(toIndentedString(hasMoreValues))
+                .append("\n");
         sb.append("}");
         return sb.toString();
     }
@@ -207,6 +238,8 @@ public class EntryFieldValue {
         if (o == null) {
             return "null";
         }
-        return o.toString().replace("\n", "\n    ");
+        return o
+                .toString()
+                .replace("\n", "\n    ");
     }
 }

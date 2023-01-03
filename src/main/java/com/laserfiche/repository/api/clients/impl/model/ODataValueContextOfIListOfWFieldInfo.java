@@ -22,10 +22,10 @@ public class ODataValueContextOfIListOfWFieldInfo extends ODataValueOfIListOfWFi
     }
 
     /**
- * Returns a URL that allows retrieving the next subset of the requested collection.
- * @return _atOdataNextLink
- 
-*/
+     * Returns a URL that allows retrieving the next subset of the requested collection.
+     *
+     * @return _atOdataNextLink
+     */
     @Schema(description = "It contains a URL that allows retrieving the next subset of the requested collection.")
     public String getOdataNextLink() {
         return odataNextLink;
@@ -41,10 +41,10 @@ public class ODataValueContextOfIListOfWFieldInfo extends ODataValueOfIListOfWFi
     }
 
     /**
- * Returns the count of a collection of entities or a collection of entity references.
- * @return _atOdataCount
- 
-*/
+     * Returns the count of a collection of entities or a collection of entity references.
+     *
+     * @return _atOdataCount
+     */
     @Schema(description = "It contains the count of a collection of entities or a collection of entity references.")
     public Integer getOdataCount() {
         return odataCount;
@@ -63,7 +63,8 @@ public class ODataValueContextOfIListOfWFieldInfo extends ODataValueOfIListOfWFi
             return false;
         }
         ODataValueContextOfIListOfWFieldInfo odataValueContextOfIListOfWFieldInfo = (ODataValueContextOfIListOfWFieldInfo) o;
-        return Objects.equals(this.odataNextLink, odataValueContextOfIListOfWFieldInfo.odataNextLink) && Objects.equals(this.odataCount, odataValueContextOfIListOfWFieldInfo.odataCount) && super.equals(o);
+        return Objects.equals(this.odataNextLink, odataValueContextOfIListOfWFieldInfo.odataNextLink) && Objects.equals(
+                this.odataCount, odataValueContextOfIListOfWFieldInfo.odataCount) && super.equals(o);
     }
 
     @Override
@@ -75,9 +76,18 @@ public class ODataValueContextOfIListOfWFieldInfo extends ODataValueOfIListOfWFi
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class ODataValueContextOfIListOfWFieldInfo {\n");
-        sb.append("    ").append(toIndentedString(super.toString())).append("\n");
-        sb.append("    odataNextLink: ").append(toIndentedString(odataNextLink)).append("\n");
-        sb.append("    odataCount: ").append(toIndentedString(odataCount)).append("\n");
+        sb
+                .append("    ")
+                .append(toIndentedString(super.toString()))
+                .append("\n");
+        sb
+                .append("    odataNextLink: ")
+                .append(toIndentedString(odataNextLink))
+                .append("\n");
+        sb
+                .append("    odataCount: ")
+                .append(toIndentedString(odataCount))
+                .append("\n");
         sb.append("}");
         return sb.toString();
     }
@@ -86,6 +96,8 @@ public class ODataValueContextOfIListOfWFieldInfo extends ODataValueOfIListOfWFi
         if (o == null) {
             return "null";
         }
-        return o.toString().replace("\n", "\n    ");
+        return o
+                .toString()
+                .replace("\n", "\n    ");
     }
 }

@@ -28,7 +28,10 @@ public class RecordSeries extends Entry {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class RecordSeries {\n");
-        sb.append("    ").append(toIndentedString(super.toString())).append("\n");
+        sb
+                .append("    ")
+                .append(toIndentedString(super.toString()))
+                .append("\n");
         sb.append("}");
         return sb.toString();
     }
@@ -37,6 +40,8 @@ public class RecordSeries extends Entry {
         if (o == null) {
             return "null";
         }
-        return o.toString().replace("\n", "\n    ");
+        return o
+                .toString()
+                .replace("\n", "\n    ");
     }
 }

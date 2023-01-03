@@ -36,9 +36,10 @@ public class SetTags {
     }
 
     /**
- * Returns the list of exceptions that occured when trying to perform the operation.
- * @return exceptions
-*/
+     * Returns the list of exceptions that occured when trying to perform the operation.
+     *
+     * @return exceptions
+     */
     @Schema(description = "The list of exceptions that occured when trying to perform the operation.")
     public List<APIServerException> getExceptions() {
         return exceptions;
@@ -62,9 +63,10 @@ public class SetTags {
     }
 
     /**
- * Returns the tags that were assigned to the entry
- * @return assignedTags
-*/
+     * Returns the tags that were assigned to the entry
+     *
+     * @return assignedTags
+     */
     @Schema(description = "The tags that were assigned to the entry")
     public List<String> getAssignedTags() {
         return assignedTags;
@@ -83,7 +85,8 @@ public class SetTags {
             return false;
         }
         SetTags setTags = (SetTags) o;
-        return Objects.equals(this.exceptions, setTags.exceptions) && Objects.equals(this.assignedTags, setTags.assignedTags);
+        return Objects.equals(this.exceptions, setTags.exceptions) && Objects.equals(this.assignedTags,
+                setTags.assignedTags);
     }
 
     @Override
@@ -95,8 +98,14 @@ public class SetTags {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class SetTags {\n");
-        sb.append("    exceptions: ").append(toIndentedString(exceptions)).append("\n");
-        sb.append("    assignedTags: ").append(toIndentedString(assignedTags)).append("\n");
+        sb
+                .append("    exceptions: ")
+                .append(toIndentedString(exceptions))
+                .append("\n");
+        sb
+                .append("    assignedTags: ")
+                .append(toIndentedString(assignedTags))
+                .append("\n");
         sb.append("}");
         return sb.toString();
     }
@@ -105,6 +114,8 @@ public class SetTags {
         if (o == null) {
             return "null";
         }
-        return o.toString().replace("\n", "\n    ");
+        return o
+                .toString()
+                .replace("\n", "\n    ");
     }
 }

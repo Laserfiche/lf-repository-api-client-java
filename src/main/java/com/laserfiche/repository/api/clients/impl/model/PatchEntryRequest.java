@@ -22,9 +22,10 @@ public class PatchEntryRequest {
     }
 
     /**
- * Returns the ID of the parent entry that the entry will be moved to.
- * @return parentId
-*/
+     * Returns the ID of the parent entry that the entry will be moved to.
+     *
+     * @return parentId
+     */
     @Schema(description = "The ID of the parent entry that the entry will be moved to.")
     public Integer getParentId() {
         return parentId;
@@ -40,9 +41,10 @@ public class PatchEntryRequest {
     }
 
     /**
- * Returns the name that will be assigned to the entry.
- * @return name
-*/
+     * Returns the name that will be assigned to the entry.
+     *
+     * @return name
+     */
     @Schema(description = "The name that will be assigned to the entry.")
     public String getName() {
         return name;
@@ -61,7 +63,8 @@ public class PatchEntryRequest {
             return false;
         }
         PatchEntryRequest patchEntryRequest = (PatchEntryRequest) o;
-        return Objects.equals(this.parentId, patchEntryRequest.parentId) && Objects.equals(this.name, patchEntryRequest.name);
+        return Objects.equals(this.parentId, patchEntryRequest.parentId) && Objects.equals(this.name,
+                patchEntryRequest.name);
     }
 
     @Override
@@ -73,8 +76,14 @@ public class PatchEntryRequest {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class PatchEntryRequest {\n");
-        sb.append("    parentId: ").append(toIndentedString(parentId)).append("\n");
-        sb.append("    name: ").append(toIndentedString(name)).append("\n");
+        sb
+                .append("    parentId: ")
+                .append(toIndentedString(parentId))
+                .append("\n");
+        sb
+                .append("    name: ")
+                .append(toIndentedString(name))
+                .append("\n");
         sb.append("}");
         return sb.toString();
     }
@@ -83,6 +92,8 @@ public class PatchEntryRequest {
         if (o == null) {
             return "null";
         }
-        return o.toString().replace("\n", "\n    ");
+        return o
+                .toString()
+                .replace("\n", "\n    ");
     }
 }

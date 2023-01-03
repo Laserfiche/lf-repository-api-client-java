@@ -24,9 +24,10 @@ public class GetDynamicFieldLogicValueRequest {
     }
 
     /**
- * Returns the template id.
- * @return templateId
-*/
+     * Returns the template id.
+     *
+     * @return templateId
+     */
     @Schema(description = "The template id.")
     public Integer getTemplateId() {
         return templateId;
@@ -50,9 +51,10 @@ public class GetDynamicFieldLogicValueRequest {
     }
 
     /**
- * Returns the dynamic fields.
- * @return fieldValues
-*/
+     * Returns the dynamic fields.
+     *
+     * @return fieldValues
+     */
     @Schema(description = "The dynamic fields.")
     public Map<String, String> getFieldValues() {
         return fieldValues;
@@ -71,7 +73,8 @@ public class GetDynamicFieldLogicValueRequest {
             return false;
         }
         GetDynamicFieldLogicValueRequest getDynamicFieldLogicValueRequest = (GetDynamicFieldLogicValueRequest) o;
-        return Objects.equals(this.templateId, getDynamicFieldLogicValueRequest.templateId) && Objects.equals(this.fieldValues, getDynamicFieldLogicValueRequest.fieldValues);
+        return Objects.equals(this.templateId, getDynamicFieldLogicValueRequest.templateId) && Objects.equals(
+                this.fieldValues, getDynamicFieldLogicValueRequest.fieldValues);
     }
 
     @Override
@@ -83,8 +86,14 @@ public class GetDynamicFieldLogicValueRequest {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class GetDynamicFieldLogicValueRequest {\n");
-        sb.append("    templateId: ").append(toIndentedString(templateId)).append("\n");
-        sb.append("    fieldValues: ").append(toIndentedString(fieldValues)).append("\n");
+        sb
+                .append("    templateId: ")
+                .append(toIndentedString(templateId))
+                .append("\n");
+        sb
+                .append("    fieldValues: ")
+                .append(toIndentedString(fieldValues))
+                .append("\n");
         sb.append("}");
         return sb.toString();
     }
@@ -93,6 +102,8 @@ public class GetDynamicFieldLogicValueRequest {
         if (o == null) {
             return "null";
         }
-        return o.toString().replace("\n", "\n    ");
+        return o
+                .toString()
+                .replace("\n", "\n    ");
     }
 }

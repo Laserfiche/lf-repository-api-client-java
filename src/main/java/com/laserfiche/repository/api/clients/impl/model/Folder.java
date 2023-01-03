@@ -27,9 +27,10 @@ public class Folder extends Entry {
     }
 
     /**
- * Returns a boolean indicating if the folder that this instance represents is known to be a record folder.
- * @return isRecordFolder
-*/
+     * Returns a boolean indicating if the folder that this instance represents is known to be a record folder.
+     *
+     * @return isRecordFolder
+     */
     @Schema(description = "A boolean indicating if the folder that this instance represents is known to be a record folder.")
     @JsonProperty("isRecordFolder")
     public Boolean isRecordFolder() {
@@ -46,9 +47,10 @@ public class Folder extends Entry {
     }
 
     /**
- * Returns a boolean indicating if the folder that this instance represents is known to directly or indirectly under a record series in the repository.
- * @return isUnderRecordSeries
-*/
+     * Returns a boolean indicating if the folder that this instance represents is known to directly or indirectly under a record series in the repository.
+     *
+     * @return isUnderRecordSeries
+     */
     @Schema(description = "A boolean indicating if the folder that this instance represents is known to directly or indirectly under a record series in the repository.")
     @JsonProperty("isUnderRecordSeries")
     public Boolean isUnderRecordSeries() {
@@ -73,9 +75,10 @@ public class Folder extends Entry {
     }
 
     /**
- * Returns the entries in this folder.
- * @return children
-*/
+     * Returns the entries in this folder.
+     *
+     * @return children
+     */
     @Schema(description = "The entries in this folder.")
     public List<Entry> getChildren() {
         return children;
@@ -94,7 +97,8 @@ public class Folder extends Entry {
             return false;
         }
         Folder folder = (Folder) o;
-        return Objects.equals(this.isRecordFolder, folder.isRecordFolder) && Objects.equals(this.isUnderRecordSeries, folder.isUnderRecordSeries) && Objects.equals(this.children, folder.children) && super.equals(o);
+        return Objects.equals(this.isRecordFolder, folder.isRecordFolder) && Objects.equals(this.isUnderRecordSeries,
+                folder.isUnderRecordSeries) && Objects.equals(this.children, folder.children) && super.equals(o);
     }
 
     @Override
@@ -106,10 +110,22 @@ public class Folder extends Entry {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class Folder {\n");
-        sb.append("    ").append(toIndentedString(super.toString())).append("\n");
-        sb.append("    isRecordFolder: ").append(toIndentedString(isRecordFolder)).append("\n");
-        sb.append("    isUnderRecordSeries: ").append(toIndentedString(isUnderRecordSeries)).append("\n");
-        sb.append("    children: ").append(toIndentedString(children)).append("\n");
+        sb
+                .append("    ")
+                .append(toIndentedString(super.toString()))
+                .append("\n");
+        sb
+                .append("    isRecordFolder: ")
+                .append(toIndentedString(isRecordFolder))
+                .append("\n");
+        sb
+                .append("    isUnderRecordSeries: ")
+                .append(toIndentedString(isUnderRecordSeries))
+                .append("\n");
+        sb
+                .append("    children: ")
+                .append(toIndentedString(children))
+                .append("\n");
         sb.append("}");
         return sb.toString();
     }
@@ -118,6 +134,8 @@ public class Folder extends Entry {
         if (o == null) {
             return "null";
         }
-        return o.toString().replace("\n", "\n    ");
+        return o
+                .toString()
+                .replace("\n", "\n    ");
     }
 }

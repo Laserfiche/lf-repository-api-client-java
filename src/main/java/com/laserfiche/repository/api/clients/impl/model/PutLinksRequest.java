@@ -27,9 +27,10 @@ public class PutLinksRequest {
     }
 
     /**
- * Returns the target entry ID to create a link to.
- * @return targetId
-*/
+     * Returns the target entry ID to create a link to.
+     *
+     * @return targetId
+     */
     @Schema(description = "The target entry ID to create a link to.")
     public Integer getTargetId() {
         return targetId;
@@ -45,9 +46,10 @@ public class PutLinksRequest {
     }
 
     /**
- * Returns the link type ID to create the link with.
- * @return linkTypeId
-*/
+     * Returns the link type ID to create the link with.
+     *
+     * @return linkTypeId
+     */
     @Schema(description = "The link type ID to create the link with.")
     public Integer getLinkTypeId() {
         return linkTypeId;
@@ -71,9 +73,10 @@ public class PutLinksRequest {
     }
 
     /**
- * Returns custom properties (key, value pairs) to be added to the link
- * @return customProperties
-*/
+     * Returns custom properties (key, value pairs) to be added to the link
+     *
+     * @return customProperties
+     */
     @Schema(description = "Custom properties (key, value pairs) to be added to the link")
     public Map<String, String> getCustomProperties() {
         return customProperties;
@@ -92,7 +95,8 @@ public class PutLinksRequest {
             return false;
         }
         PutLinksRequest putLinksRequest = (PutLinksRequest) o;
-        return Objects.equals(this.targetId, putLinksRequest.targetId) && Objects.equals(this.linkTypeId, putLinksRequest.linkTypeId) && Objects.equals(this.customProperties, putLinksRequest.customProperties);
+        return Objects.equals(this.targetId, putLinksRequest.targetId) && Objects.equals(this.linkTypeId,
+                putLinksRequest.linkTypeId) && Objects.equals(this.customProperties, putLinksRequest.customProperties);
     }
 
     @Override
@@ -104,9 +108,18 @@ public class PutLinksRequest {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class PutLinksRequest {\n");
-        sb.append("    targetId: ").append(toIndentedString(targetId)).append("\n");
-        sb.append("    linkTypeId: ").append(toIndentedString(linkTypeId)).append("\n");
-        sb.append("    customProperties: ").append(toIndentedString(customProperties)).append("\n");
+        sb
+                .append("    targetId: ")
+                .append(toIndentedString(targetId))
+                .append("\n");
+        sb
+                .append("    linkTypeId: ")
+                .append(toIndentedString(linkTypeId))
+                .append("\n");
+        sb
+                .append("    customProperties: ")
+                .append(toIndentedString(customProperties))
+                .append("\n");
         sb.append("}");
         return sb.toString();
     }
@@ -115,6 +128,8 @@ public class PutLinksRequest {
         if (o == null) {
             return "null";
         }
-        return o.toString().replace("\n", "\n    ");
+        return o
+                .toString()
+                .replace("\n", "\n    ");
     }
 }

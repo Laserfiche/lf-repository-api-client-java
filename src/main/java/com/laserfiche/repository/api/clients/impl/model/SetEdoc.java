@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
 /**
  * The result of trying to create the electronic document.
  */
@@ -32,9 +33,10 @@ public class SetEdoc {
     }
 
     /**
- * Returns the list of exceptions that occured when trying to perform the operation.
- * @return exceptions
-*/
+     * Returns the list of exceptions that occured when trying to perform the operation.
+     *
+     * @return exceptions
+     */
     @Schema(description = "The list of exceptions that occured when trying to perform the operation.")
     public List<APIServerException> getExceptions() {
         return exceptions;
@@ -65,7 +67,10 @@ public class SetEdoc {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class SetEdoc {\n");
-        sb.append("    exceptions: ").append(toIndentedString(exceptions)).append("\n");
+        sb
+                .append("    exceptions: ")
+                .append(toIndentedString(exceptions))
+                .append("\n");
         sb.append("}");
         return sb.toString();
     }
@@ -74,6 +79,8 @@ public class SetEdoc {
         if (o == null) {
             return "null";
         }
-        return o.toString().replace("\n", "\n    ");
+        return o
+                .toString()
+                .replace("\n", "\n    ");
     }
 }

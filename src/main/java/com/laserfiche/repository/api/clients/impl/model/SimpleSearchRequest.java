@@ -19,9 +19,10 @@ public class SimpleSearchRequest {
     }
 
     /**
- * Returns search command for simple search
- * @return searchCommand
-*/
+     * Returns search command for simple search
+     *
+     * @return searchCommand
+     */
     @Schema(description = "Search command for simple search")
     public String getSearchCommand() {
         return searchCommand;
@@ -52,7 +53,10 @@ public class SimpleSearchRequest {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class SimpleSearchRequest {\n");
-        sb.append("    searchCommand: ").append(toIndentedString(searchCommand)).append("\n");
+        sb
+                .append("    searchCommand: ")
+                .append(toIndentedString(searchCommand))
+                .append("\n");
         sb.append("}");
         return sb.toString();
     }
@@ -61,6 +65,8 @@ public class SimpleSearchRequest {
         if (o == null) {
             return "null";
         }
-        return o.toString().replace("\n", "\n    ");
+        return o
+                .toString()
+                .replace("\n", "\n    ");
     }
 }

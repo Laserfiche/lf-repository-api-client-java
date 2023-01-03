@@ -25,9 +25,10 @@ public class RepositoryInfo {
     }
 
     /**
- * Returns the repository id.
- * @return repoId
-*/
+     * Returns the repository id.
+     *
+     * @return repoId
+     */
     @Schema(description = "The repository id.")
     public String getRepoId() {
         return repoId;
@@ -43,9 +44,10 @@ public class RepositoryInfo {
     }
 
     /**
- * Returns the repository name.
- * @return repoName
-*/
+     * Returns the repository name.
+     *
+     * @return repoName
+     */
     @Schema(description = "The repository name.")
     public String getRepoName() {
         return repoName;
@@ -61,9 +63,10 @@ public class RepositoryInfo {
     }
 
     /**
- * Returns the corresponding repository WebClient url.
- * @return webclientUrl
-*/
+     * Returns the corresponding repository WebClient url.
+     *
+     * @return webclientUrl
+     */
     @Schema(description = "The corresponding repository WebClient url.")
     public String getWebclientUrl() {
         return webclientUrl;
@@ -82,7 +85,8 @@ public class RepositoryInfo {
             return false;
         }
         RepositoryInfo repositoryInfo = (RepositoryInfo) o;
-        return Objects.equals(this.repoId, repositoryInfo.repoId) && Objects.equals(this.repoName, repositoryInfo.repoName) && Objects.equals(this.webclientUrl, repositoryInfo.webclientUrl);
+        return Objects.equals(this.repoId, repositoryInfo.repoId) && Objects.equals(this.repoName,
+                repositoryInfo.repoName) && Objects.equals(this.webclientUrl, repositoryInfo.webclientUrl);
     }
 
     @Override
@@ -94,9 +98,18 @@ public class RepositoryInfo {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class RepositoryInfo {\n");
-        sb.append("    repoId: ").append(toIndentedString(repoId)).append("\n");
-        sb.append("    repoName: ").append(toIndentedString(repoName)).append("\n");
-        sb.append("    webclientUrl: ").append(toIndentedString(webclientUrl)).append("\n");
+        sb
+                .append("    repoId: ")
+                .append(toIndentedString(repoId))
+                .append("\n");
+        sb
+                .append("    repoName: ")
+                .append(toIndentedString(repoName))
+                .append("\n");
+        sb
+                .append("    webclientUrl: ")
+                .append(toIndentedString(webclientUrl))
+                .append("\n");
         sb.append("}");
         return sb.toString();
     }
@@ -105,6 +118,8 @@ public class RepositoryInfo {
         if (o == null) {
             return "null";
         }
-        return o.toString().replace("\n", "\n    ");
+        return o
+                .toString()
+                .replace("\n", "\n    ");
     }
 }

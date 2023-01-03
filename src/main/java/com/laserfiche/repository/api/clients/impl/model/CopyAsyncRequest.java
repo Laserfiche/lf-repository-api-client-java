@@ -25,9 +25,10 @@ public class CopyAsyncRequest {
     }
 
     /**
- * Returns the name of the entry.
- * @return name
-*/
+     * Returns the name of the entry.
+     *
+     * @return name
+     */
     @Schema(description = "The name of the entry.")
     public String getName() {
         return name;
@@ -43,9 +44,10 @@ public class CopyAsyncRequest {
     }
 
     /**
- * Returns the source entry Id to copy.
- * @return sourceId
-*/
+     * Returns the source entry Id to copy.
+     *
+     * @return sourceId
+     */
     @Schema(description = "The source entry Id to copy.")
     public Integer getSourceId() {
         return sourceId;
@@ -61,9 +63,10 @@ public class CopyAsyncRequest {
     }
 
     /**
- * Returns the name of the volume to use. Will use the default parent entry volume if not specified. This is ignored in Laserfiche Cloud.
- * @return volumeName
-*/
+     * Returns the name of the volume to use. Will use the default parent entry volume if not specified. This is ignored in Laserfiche Cloud.
+     *
+     * @return volumeName
+     */
     @Schema(description = "The name of the volume to use. Will use the default parent entry volume if not specified. This is ignored in Laserfiche Cloud.")
     public String getVolumeName() {
         return volumeName;
@@ -82,7 +85,8 @@ public class CopyAsyncRequest {
             return false;
         }
         CopyAsyncRequest copyAsyncRequest = (CopyAsyncRequest) o;
-        return Objects.equals(this.name, copyAsyncRequest.name) && Objects.equals(this.sourceId, copyAsyncRequest.sourceId) && Objects.equals(this.volumeName, copyAsyncRequest.volumeName);
+        return Objects.equals(this.name, copyAsyncRequest.name) && Objects.equals(this.sourceId,
+                copyAsyncRequest.sourceId) && Objects.equals(this.volumeName, copyAsyncRequest.volumeName);
     }
 
     @Override
@@ -94,9 +98,18 @@ public class CopyAsyncRequest {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class CopyAsyncRequest {\n");
-        sb.append("    name: ").append(toIndentedString(name)).append("\n");
-        sb.append("    sourceId: ").append(toIndentedString(sourceId)).append("\n");
-        sb.append("    volumeName: ").append(toIndentedString(volumeName)).append("\n");
+        sb
+                .append("    name: ")
+                .append(toIndentedString(name))
+                .append("\n");
+        sb
+                .append("    sourceId: ")
+                .append(toIndentedString(sourceId))
+                .append("\n");
+        sb
+                .append("    volumeName: ")
+                .append(toIndentedString(volumeName))
+                .append("\n");
         sb.append("}");
         return sb.toString();
     }
@@ -105,6 +118,8 @@ public class CopyAsyncRequest {
         if (o == null) {
             return "null";
         }
-        return o.toString().replace("\n", "\n    ");
+        return o
+                .toString()
+                .replace("\n", "\n    ");
     }
 }

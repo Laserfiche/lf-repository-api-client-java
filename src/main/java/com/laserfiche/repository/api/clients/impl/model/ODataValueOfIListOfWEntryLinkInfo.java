@@ -29,10 +29,10 @@ public class ODataValueOfIListOfWEntryLinkInfo {
     }
 
     /**
- * Returns value
- * @return value
- 
-*/
+     * Returns value
+     *
+     * @return value
+     */
     @Schema(description = "")
     public List<WEntryLinkInfo> getValue() {
         return value;
@@ -63,7 +63,10 @@ public class ODataValueOfIListOfWEntryLinkInfo {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class ODataValueOfIListOfWEntryLinkInfo {\n");
-        sb.append("    value: ").append(toIndentedString(value)).append("\n");
+        sb
+                .append("    value: ")
+                .append(toIndentedString(value))
+                .append("\n");
         sb.append("}");
         return sb.toString();
     }
@@ -72,6 +75,8 @@ public class ODataValueOfIListOfWEntryLinkInfo {
         if (o == null) {
             return "null";
         }
-        return o.toString().replace("\n", "\n    ");
+        return o
+                .toString()
+                .replace("\n", "\n    ");
     }
 }

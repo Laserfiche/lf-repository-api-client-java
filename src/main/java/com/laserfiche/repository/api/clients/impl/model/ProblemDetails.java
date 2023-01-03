@@ -1,12 +1,12 @@
 package com.laserfiche.repository.api.clients.impl.model;
 
-import java.util.Objects;
-import java.util.Arrays;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import com.fasterxml.jackson.annotation.*;
+import java.util.Objects;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -36,10 +36,10 @@ public class ProblemDetails extends HashMap<String, Object> {
     }
 
     /**
- * Returns type
- * @return type
- 
-*/
+     * Returns type
+     *
+     * @return type
+     */
     @Schema(description = "")
     public String getType() {
         return type;
@@ -55,10 +55,10 @@ public class ProblemDetails extends HashMap<String, Object> {
     }
 
     /**
- * Returns title
- * @return title
- 
-*/
+     * Returns title
+     *
+     * @return title
+     */
     @Schema(description = "")
     public String getTitle() {
         return title;
@@ -74,10 +74,10 @@ public class ProblemDetails extends HashMap<String, Object> {
     }
 
     /**
- * Returns status
- * @return status
- 
-*/
+     * Returns status
+     *
+     * @return status
+     */
     @Schema(description = "")
     public Integer getStatus() {
         return status;
@@ -93,10 +93,10 @@ public class ProblemDetails extends HashMap<String, Object> {
     }
 
     /**
- * Returns detail
- * @return detail
- 
-*/
+     * Returns detail
+     *
+     * @return detail
+     */
     @Schema(description = "")
     public String getDetail() {
         return detail;
@@ -112,10 +112,10 @@ public class ProblemDetails extends HashMap<String, Object> {
     }
 
     /**
- * Returns instance
- * @return instance
- 
-*/
+     * Returns instance
+     *
+     * @return instance
+     */
     @Schema(description = "")
     public String getInstance() {
         return instance;
@@ -139,10 +139,10 @@ public class ProblemDetails extends HashMap<String, Object> {
     }
 
     /**
- * Returns extensions
- * @return extensions
- 
-*/
+     * Returns extensions
+     *
+     * @return extensions
+     */
     @Schema(description = "")
     public Map<String, Object> getExtensions() {
         return extensions;
@@ -161,7 +161,11 @@ public class ProblemDetails extends HashMap<String, Object> {
             return false;
         }
         ProblemDetails problemDetails = (ProblemDetails) o;
-        return Objects.equals(this.type, problemDetails.type) && Objects.equals(this.title, problemDetails.title) && Objects.equals(this.status, problemDetails.status) && Objects.equals(this.detail, problemDetails.detail) && Objects.equals(this.instance, problemDetails.instance) && Objects.equals(this.extensions, problemDetails.extensions) && super.equals(o);
+        return Objects.equals(this.type, problemDetails.type) && Objects.equals(this.title,
+                problemDetails.title) && Objects.equals(this.status, problemDetails.status) && Objects.equals(
+                this.detail, problemDetails.detail) && Objects.equals(this.instance,
+                problemDetails.instance) && Objects.equals(this.extensions, problemDetails.extensions) && super.equals(
+                o);
     }
 
     @Override
@@ -173,13 +177,34 @@ public class ProblemDetails extends HashMap<String, Object> {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class ProblemDetails {\n");
-        sb.append("    ").append(toIndentedString(super.toString())).append("\n");
-        sb.append("    type: ").append(toIndentedString(type)).append("\n");
-        sb.append("    title: ").append(toIndentedString(title)).append("\n");
-        sb.append("    status: ").append(toIndentedString(status)).append("\n");
-        sb.append("    detail: ").append(toIndentedString(detail)).append("\n");
-        sb.append("    instance: ").append(toIndentedString(instance)).append("\n");
-        sb.append("    extensions: ").append(toIndentedString(extensions)).append("\n");
+        sb
+                .append("    ")
+                .append(toIndentedString(super.toString()))
+                .append("\n");
+        sb
+                .append("    type: ")
+                .append(toIndentedString(type))
+                .append("\n");
+        sb
+                .append("    title: ")
+                .append(toIndentedString(title))
+                .append("\n");
+        sb
+                .append("    status: ")
+                .append(toIndentedString(status))
+                .append("\n");
+        sb
+                .append("    detail: ")
+                .append(toIndentedString(detail))
+                .append("\n");
+        sb
+                .append("    instance: ")
+                .append(toIndentedString(instance))
+                .append("\n");
+        sb
+                .append("    extensions: ")
+                .append(toIndentedString(extensions))
+                .append("\n");
         sb.append("}");
         return sb.toString();
     }
@@ -188,6 +213,8 @@ public class ProblemDetails extends HashMap<String, Object> {
         if (o == null) {
             return "null";
         }
-        return o.toString().replace("\n", "\n    ");
+        return o
+                .toString()
+                .replace("\n", "\n    ");
     }
 }

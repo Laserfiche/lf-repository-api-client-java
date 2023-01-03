@@ -28,10 +28,10 @@ public class LFColor {
     }
 
     /**
- * Returns a
- * @return a
- 
-*/
+     * Returns a
+     *
+     * @return a
+     */
     @Schema(description = "")
     public Integer getA() {
         return a;
@@ -47,10 +47,10 @@ public class LFColor {
     }
 
     /**
- * Returns r
- * @return r
- 
-*/
+     * Returns r
+     *
+     * @return r
+     */
     @Schema(description = "")
     public Integer getR() {
         return r;
@@ -66,10 +66,10 @@ public class LFColor {
     }
 
     /**
- * Returns g
- * @return g
- 
-*/
+     * Returns g
+     *
+     * @return g
+     */
     @Schema(description = "")
     public Integer getG() {
         return g;
@@ -85,10 +85,10 @@ public class LFColor {
     }
 
     /**
- * Returns b
- * @return b
- 
-*/
+     * Returns b
+     *
+     * @return b
+     */
     @Schema(description = "")
     public Integer getB() {
         return b;
@@ -107,7 +107,8 @@ public class LFColor {
             return false;
         }
         LFColor lfColor = (LFColor) o;
-        return Objects.equals(this.a, lfColor.a) && Objects.equals(this.r, lfColor.r) && Objects.equals(this.g, lfColor.g) && Objects.equals(this.b, lfColor.b);
+        return Objects.equals(this.a, lfColor.a) && Objects.equals(this.r, lfColor.r) && Objects.equals(this.g,
+                lfColor.g) && Objects.equals(this.b, lfColor.b);
     }
 
     @Override
@@ -119,10 +120,22 @@ public class LFColor {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class LFColor {\n");
-        sb.append("    a: ").append(toIndentedString(a)).append("\n");
-        sb.append("    r: ").append(toIndentedString(r)).append("\n");
-        sb.append("    g: ").append(toIndentedString(g)).append("\n");
-        sb.append("    b: ").append(toIndentedString(b)).append("\n");
+        sb
+                .append("    a: ")
+                .append(toIndentedString(a))
+                .append("\n");
+        sb
+                .append("    r: ")
+                .append(toIndentedString(r))
+                .append("\n");
+        sb
+                .append("    g: ")
+                .append(toIndentedString(g))
+                .append("\n");
+        sb
+                .append("    b: ")
+                .append(toIndentedString(b))
+                .append("\n");
         sb.append("}");
         return sb.toString();
     }
@@ -131,6 +144,8 @@ public class LFColor {
         if (o == null) {
             return "null";
         }
-        return o.toString().replace("\n", "\n    ");
+        return o
+                .toString()
+                .replace("\n", "\n    ");
     }
 }

@@ -25,9 +25,10 @@ public class LinkToUpdate {
     }
 
     /**
- * Returns the id of the link assigned to the entry.
- * @return linkTypeId
-*/
+     * Returns the id of the link assigned to the entry.
+     *
+     * @return linkTypeId
+     */
     @Schema(description = "The id of the link assigned to the entry.")
     public Integer getLinkTypeId() {
         return linkTypeId;
@@ -43,9 +44,10 @@ public class LinkToUpdate {
     }
 
     /**
- * Returns the id of the other source linked to the entry.
- * @return otherSourceId
-*/
+     * Returns the id of the other source linked to the entry.
+     *
+     * @return otherSourceId
+     */
     @Schema(description = "The id of the other source linked to the entry.")
     public Integer getOtherSourceId() {
         return otherSourceId;
@@ -61,9 +63,10 @@ public class LinkToUpdate {
     }
 
     /**
- * Returns whether the entry is the source for the link.
- * @return isSource
-*/
+     * Returns whether the entry is the source for the link.
+     *
+     * @return isSource
+     */
     @Schema(description = "Whether the entry is the source for the link.")
     @JsonProperty("isSource")
     public Boolean isSource() {
@@ -83,7 +86,8 @@ public class LinkToUpdate {
             return false;
         }
         LinkToUpdate linkToUpdate = (LinkToUpdate) o;
-        return Objects.equals(this.linkTypeId, linkToUpdate.linkTypeId) && Objects.equals(this.otherSourceId, linkToUpdate.otherSourceId) && Objects.equals(this.isSource, linkToUpdate.isSource);
+        return Objects.equals(this.linkTypeId, linkToUpdate.linkTypeId) && Objects.equals(this.otherSourceId,
+                linkToUpdate.otherSourceId) && Objects.equals(this.isSource, linkToUpdate.isSource);
     }
 
     @Override
@@ -95,9 +99,18 @@ public class LinkToUpdate {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class LinkToUpdate {\n");
-        sb.append("    linkTypeId: ").append(toIndentedString(linkTypeId)).append("\n");
-        sb.append("    otherSourceId: ").append(toIndentedString(otherSourceId)).append("\n");
-        sb.append("    isSource: ").append(toIndentedString(isSource)).append("\n");
+        sb
+                .append("    linkTypeId: ")
+                .append(toIndentedString(linkTypeId))
+                .append("\n");
+        sb
+                .append("    otherSourceId: ")
+                .append(toIndentedString(otherSourceId))
+                .append("\n");
+        sb
+                .append("    isSource: ")
+                .append(toIndentedString(isSource))
+                .append("\n");
         sb.append("}");
         return sb.toString();
     }
@@ -106,6 +119,8 @@ public class LinkToUpdate {
         if (o == null) {
             return "null";
         }
-        return o.toString().replace("\n", "\n    ");
+        return o
+                .toString()
+                .replace("\n", "\n    ");
     }
 }

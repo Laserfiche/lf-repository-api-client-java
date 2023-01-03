@@ -22,9 +22,10 @@ public class WAuditReason {
     }
 
     /**
- * Returns the audit reason id.
- * @return id
-*/
+     * Returns the audit reason id.
+     *
+     * @return id
+     */
     @Schema(description = "The audit reason id.")
     public Integer getId() {
         return id;
@@ -40,9 +41,10 @@ public class WAuditReason {
     }
 
     /**
- * Returns the audit reason text.
- * @return name
-*/
+     * Returns the audit reason text.
+     *
+     * @return name
+     */
     @Schema(description = "The audit reason text.")
     public String getName() {
         return name;
@@ -73,8 +75,14 @@ public class WAuditReason {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class WAuditReason {\n");
-        sb.append("    id: ").append(toIndentedString(id)).append("\n");
-        sb.append("    name: ").append(toIndentedString(name)).append("\n");
+        sb
+                .append("    id: ")
+                .append(toIndentedString(id))
+                .append("\n");
+        sb
+                .append("    name: ")
+                .append(toIndentedString(name))
+                .append("\n");
         sb.append("}");
         return sb.toString();
     }
@@ -83,6 +91,8 @@ public class WAuditReason {
         if (o == null) {
             return "null";
         }
-        return o.toString().replace("\n", "\n    ");
+        return o
+                .toString()
+                .replace("\n", "\n    ");
     }
 }

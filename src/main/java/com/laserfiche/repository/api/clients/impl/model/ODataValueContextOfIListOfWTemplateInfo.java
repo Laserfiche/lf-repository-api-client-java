@@ -22,10 +22,10 @@ public class ODataValueContextOfIListOfWTemplateInfo extends ODataValueOfIListOf
     }
 
     /**
- * Returns a URL that allows retrieving the next subset of the requested collection.
- * @return _atOdataNextLink
- 
-*/
+     * Returns a URL that allows retrieving the next subset of the requested collection.
+     *
+     * @return _atOdataNextLink
+     */
     @Schema(description = "It contains a URL that allows retrieving the next subset of the requested collection.")
     public String getOdataNextLink() {
         return odataNextLink;
@@ -41,10 +41,10 @@ public class ODataValueContextOfIListOfWTemplateInfo extends ODataValueOfIListOf
     }
 
     /**
- * Returns the count of a collection of entities or a collection of entity references.
- * @return _atOdataCount
- 
-*/
+     * Returns the count of a collection of entities or a collection of entity references.
+     *
+     * @return _atOdataCount
+     */
     @Schema(description = "It contains the count of a collection of entities or a collection of entity references.")
     public Integer getOdataCount() {
         return odataCount;
@@ -63,7 +63,9 @@ public class ODataValueContextOfIListOfWTemplateInfo extends ODataValueOfIListOf
             return false;
         }
         ODataValueContextOfIListOfWTemplateInfo odataValueContextOfIListOfWTemplateInfo = (ODataValueContextOfIListOfWTemplateInfo) o;
-        return Objects.equals(this.odataNextLink, odataValueContextOfIListOfWTemplateInfo.odataNextLink) && Objects.equals(this.odataCount, odataValueContextOfIListOfWTemplateInfo.odataCount) && super.equals(o);
+        return Objects.equals(this.odataNextLink,
+                odataValueContextOfIListOfWTemplateInfo.odataNextLink) && Objects.equals(this.odataCount,
+                odataValueContextOfIListOfWTemplateInfo.odataCount) && super.equals(o);
     }
 
     @Override
@@ -75,9 +77,18 @@ public class ODataValueContextOfIListOfWTemplateInfo extends ODataValueOfIListOf
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class ODataValueContextOfIListOfWTemplateInfo {\n");
-        sb.append("    ").append(toIndentedString(super.toString())).append("\n");
-        sb.append("    odataNextLink: ").append(toIndentedString(odataNextLink)).append("\n");
-        sb.append("    odataCount: ").append(toIndentedString(odataCount)).append("\n");
+        sb
+                .append("    ")
+                .append(toIndentedString(super.toString()))
+                .append("\n");
+        sb
+                .append("    odataNextLink: ")
+                .append(toIndentedString(odataNextLink))
+                .append("\n");
+        sb
+                .append("    odataCount: ")
+                .append(toIndentedString(odataCount))
+                .append("\n");
         sb.append("}");
         return sb.toString();
     }
@@ -86,6 +97,8 @@ public class ODataValueContextOfIListOfWTemplateInfo extends ODataValueOfIListOf
         if (o == null) {
             return "null";
         }
-        return o.toString().replace("\n", "\n    ");
+        return o
+                .toString()
+                .replace("\n", "\n    ");
     }
 }

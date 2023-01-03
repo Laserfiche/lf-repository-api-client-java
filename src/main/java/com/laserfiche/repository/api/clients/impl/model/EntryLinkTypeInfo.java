@@ -28,9 +28,10 @@ public class EntryLinkTypeInfo {
     }
 
     /**
- * Returns the ID of the entry link type.
- * @return linkTypeId
-*/
+     * Returns the ID of the entry link type.
+     *
+     * @return linkTypeId
+     */
     @Schema(description = "The ID of the entry link type.")
     public Integer getLinkTypeId() {
         return linkTypeId;
@@ -46,9 +47,10 @@ public class EntryLinkTypeInfo {
     }
 
     /**
- * Returns the label for the source entry in the link type.
- * @return sourceLabel
-*/
+     * Returns the label for the source entry in the link type.
+     *
+     * @return sourceLabel
+     */
     @Schema(description = "The label for the source entry in the link type.")
     public String getSourceLabel() {
         return sourceLabel;
@@ -64,9 +66,10 @@ public class EntryLinkTypeInfo {
     }
 
     /**
- * Returns the label for the target entry in the link type.
- * @return targetLabel
-*/
+     * Returns the label for the target entry in the link type.
+     *
+     * @return targetLabel
+     */
     @Schema(description = "The label for the target entry in the link type.")
     public String getTargetLabel() {
         return targetLabel;
@@ -82,9 +85,10 @@ public class EntryLinkTypeInfo {
     }
 
     /**
- * Returns the description of the link type.
- * @return linkTypeDescription
-*/
+     * Returns the description of the link type.
+     *
+     * @return linkTypeDescription
+     */
     @Schema(description = "The description of the link type.")
     public String getLinkTypeDescription() {
         return linkTypeDescription;
@@ -103,7 +107,10 @@ public class EntryLinkTypeInfo {
             return false;
         }
         EntryLinkTypeInfo entryLinkTypeInfo = (EntryLinkTypeInfo) o;
-        return Objects.equals(this.linkTypeId, entryLinkTypeInfo.linkTypeId) && Objects.equals(this.sourceLabel, entryLinkTypeInfo.sourceLabel) && Objects.equals(this.targetLabel, entryLinkTypeInfo.targetLabel) && Objects.equals(this.linkTypeDescription, entryLinkTypeInfo.linkTypeDescription);
+        return Objects.equals(this.linkTypeId, entryLinkTypeInfo.linkTypeId) && Objects.equals(this.sourceLabel,
+                entryLinkTypeInfo.sourceLabel) && Objects.equals(this.targetLabel,
+                entryLinkTypeInfo.targetLabel) && Objects.equals(this.linkTypeDescription,
+                entryLinkTypeInfo.linkTypeDescription);
     }
 
     @Override
@@ -115,10 +122,22 @@ public class EntryLinkTypeInfo {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class EntryLinkTypeInfo {\n");
-        sb.append("    linkTypeId: ").append(toIndentedString(linkTypeId)).append("\n");
-        sb.append("    sourceLabel: ").append(toIndentedString(sourceLabel)).append("\n");
-        sb.append("    targetLabel: ").append(toIndentedString(targetLabel)).append("\n");
-        sb.append("    linkTypeDescription: ").append(toIndentedString(linkTypeDescription)).append("\n");
+        sb
+                .append("    linkTypeId: ")
+                .append(toIndentedString(linkTypeId))
+                .append("\n");
+        sb
+                .append("    sourceLabel: ")
+                .append(toIndentedString(sourceLabel))
+                .append("\n");
+        sb
+                .append("    targetLabel: ")
+                .append(toIndentedString(targetLabel))
+                .append("\n");
+        sb
+                .append("    linkTypeDescription: ")
+                .append(toIndentedString(linkTypeDescription))
+                .append("\n");
         sb.append("}");
         return sb.toString();
     }
@@ -127,6 +146,8 @@ public class EntryLinkTypeInfo {
         if (o == null) {
             return "null";
         }
-        return o.toString().replace("\n", "\n    ");
+        return o
+                .toString()
+                .replace("\n", "\n    ");
     }
 }

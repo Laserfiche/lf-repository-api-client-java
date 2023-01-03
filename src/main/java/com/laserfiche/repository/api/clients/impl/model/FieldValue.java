@@ -19,9 +19,10 @@ public class FieldValue extends EntryFieldValue {
     }
 
     /**
- * Returns the group id of the multi value field group. If the field is not a part of a multi value field group, then there is no group id.
- * @return groupId
-*/
+     * Returns the group id of the multi value field group. If the field is not a part of a multi value field group, then there is no group id.
+     *
+     * @return groupId
+     */
     @Schema(description = "The group id of the multi value field group. If the field is not a part of a multi value field group, then there is no group id.")
     public Integer getGroupId() {
         return groupId;
@@ -52,8 +53,14 @@ public class FieldValue extends EntryFieldValue {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class FieldValue {\n");
-        sb.append("    ").append(toIndentedString(super.toString())).append("\n");
-        sb.append("    groupId: ").append(toIndentedString(groupId)).append("\n");
+        sb
+                .append("    ")
+                .append(toIndentedString(super.toString()))
+                .append("\n");
+        sb
+                .append("    groupId: ")
+                .append(toIndentedString(groupId))
+                .append("\n");
         sb.append("}");
         return sb.toString();
     }
@@ -62,6 +69,8 @@ public class FieldValue extends EntryFieldValue {
         if (o == null) {
             return "null";
         }
-        return o.toString().replace("\n", "\n    ");
+        return o
+                .toString()
+                .replace("\n", "\n    ");
     }
 }

@@ -33,9 +33,10 @@ public class ImportAsyncMetadata {
     }
 
     /**
- * Returns the fields that will be assigned to the entry.
- * @return fields
-*/
+     * Returns the fields that will be assigned to the entry.
+     *
+     * @return fields
+     */
     @Schema(description = "The fields that will be assigned to the entry.")
     public Map<String, FieldToUpdate> getFields() {
         return fields;
@@ -59,9 +60,10 @@ public class ImportAsyncMetadata {
     }
 
     /**
- * Returns the tags that will be assigned to the entry.
- * @return tags
-*/
+     * Returns the tags that will be assigned to the entry.
+     *
+     * @return tags
+     */
     @Schema(description = "The tags that will be assigned to the entry.")
     public List<String> getTags() {
         return tags;
@@ -85,9 +87,10 @@ public class ImportAsyncMetadata {
     }
 
     /**
- * Returns the links that will be assigned to the entry.
- * @return links
-*/
+     * Returns the links that will be assigned to the entry.
+     *
+     * @return links
+     */
     @Schema(description = "The links that will be assigned to the entry.")
     public List<LinkToUpdate> getLinks() {
         return links;
@@ -106,7 +109,8 @@ public class ImportAsyncMetadata {
             return false;
         }
         ImportAsyncMetadata importAsyncMetadata = (ImportAsyncMetadata) o;
-        return Objects.equals(this.fields, importAsyncMetadata.fields) && Objects.equals(this.tags, importAsyncMetadata.tags) && Objects.equals(this.links, importAsyncMetadata.links);
+        return Objects.equals(this.fields, importAsyncMetadata.fields) && Objects.equals(this.tags,
+                importAsyncMetadata.tags) && Objects.equals(this.links, importAsyncMetadata.links);
     }
 
     @Override
@@ -118,9 +122,18 @@ public class ImportAsyncMetadata {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class ImportAsyncMetadata {\n");
-        sb.append("    fields: ").append(toIndentedString(fields)).append("\n");
-        sb.append("    tags: ").append(toIndentedString(tags)).append("\n");
-        sb.append("    links: ").append(toIndentedString(links)).append("\n");
+        sb
+                .append("    fields: ")
+                .append(toIndentedString(fields))
+                .append("\n");
+        sb
+                .append("    tags: ")
+                .append(toIndentedString(tags))
+                .append("\n");
+        sb
+                .append("    links: ")
+                .append(toIndentedString(links))
+                .append("\n");
         sb.append("}");
         return sb.toString();
     }
@@ -129,6 +142,8 @@ public class ImportAsyncMetadata {
         if (o == null) {
             return "null";
         }
-        return o.toString().replace("\n", "\n    ");
+        return o
+                .toString()
+                .replace("\n", "\n    ");
     }
 }

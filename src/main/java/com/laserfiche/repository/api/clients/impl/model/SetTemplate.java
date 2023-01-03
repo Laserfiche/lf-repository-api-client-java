@@ -36,9 +36,10 @@ public class SetTemplate {
     }
 
     /**
- * Returns the list of exceptions that occured when trying to perform the operation.
- * @return exceptions
-*/
+     * Returns the list of exceptions that occured when trying to perform the operation.
+     *
+     * @return exceptions
+     */
     @Schema(description = "The list of exceptions that occured when trying to perform the operation.")
     public List<APIServerException> getExceptions() {
         return exceptions;
@@ -54,9 +55,10 @@ public class SetTemplate {
     }
 
     /**
- * Returns the name of the template assigned to the entry. If this is null, then no template was assigned.
- * @return template
-*/
+     * Returns the name of the template assigned to the entry. If this is null, then no template was assigned.
+     *
+     * @return template
+     */
     @Schema(description = "The name of the template assigned to the entry. If this is null, then no template was assigned.")
     public String getTemplate() {
         return template;
@@ -75,7 +77,8 @@ public class SetTemplate {
             return false;
         }
         SetTemplate setTemplate = (SetTemplate) o;
-        return Objects.equals(this.exceptions, setTemplate.exceptions) && Objects.equals(this.template, setTemplate.template);
+        return Objects.equals(this.exceptions, setTemplate.exceptions) && Objects.equals(this.template,
+                setTemplate.template);
     }
 
     @Override
@@ -87,8 +90,14 @@ public class SetTemplate {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class SetTemplate {\n");
-        sb.append("    exceptions: ").append(toIndentedString(exceptions)).append("\n");
-        sb.append("    template: ").append(toIndentedString(template)).append("\n");
+        sb
+                .append("    exceptions: ")
+                .append(toIndentedString(exceptions))
+                .append("\n");
+        sb
+                .append("    template: ")
+                .append(toIndentedString(template))
+                .append("\n");
         sb.append("}");
         return sb.toString();
     }
@@ -97,6 +106,8 @@ public class SetTemplate {
         if (o == null) {
             return "null";
         }
-        return o.toString().replace("\n", "\n    ");
+        return o
+                .toString()
+                .replace("\n", "\n    ");
     }
 }

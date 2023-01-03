@@ -29,9 +29,10 @@ public class PutTagRequest {
     }
 
     /**
- * Returns the tag names to assign to the entry.
- * @return tags
-*/
+     * Returns the tag names to assign to the entry.
+     *
+     * @return tags
+     */
     @Schema(description = "The tag names to assign to the entry.")
     public List<String> getTags() {
         return tags;
@@ -62,7 +63,10 @@ public class PutTagRequest {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class PutTagRequest {\n");
-        sb.append("    tags: ").append(toIndentedString(tags)).append("\n");
+        sb
+                .append("    tags: ")
+                .append(toIndentedString(tags))
+                .append("\n");
         sb.append("}");
         return sb.toString();
     }
@@ -71,6 +75,8 @@ public class PutTagRequest {
         if (o == null) {
             return "null";
         }
-        return o.toString().replace("\n", "\n    ");
+        return o
+                .toString()
+                .replace("\n", "\n    ");
     }
 }

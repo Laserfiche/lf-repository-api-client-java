@@ -34,9 +34,10 @@ public class WTagInfo {
     }
 
     /**
- * Returns the ID of the tag definition.
- * @return id
-*/
+     * Returns the ID of the tag definition.
+     *
+     * @return id
+     */
     @Schema(description = "The ID of the tag definition.")
     public Integer getId() {
         return id;
@@ -52,9 +53,10 @@ public class WTagInfo {
     }
 
     /**
- * Returns the name of the tag definition.
- * @return name
-*/
+     * Returns the name of the tag definition.
+     *
+     * @return name
+     */
     @Schema(description = "The name of the tag definition.")
     public String getName() {
         return name;
@@ -70,9 +72,10 @@ public class WTagInfo {
     }
 
     /**
- * Returns the localized name of the tag definition.
- * @return displayName
-*/
+     * Returns the localized name of the tag definition.
+     *
+     * @return displayName
+     */
     @Schema(description = "The localized name of the tag definition.")
     public String getDisplayName() {
         return displayName;
@@ -88,9 +91,10 @@ public class WTagInfo {
     }
 
     /**
- * Returns the description of the tag definition.
- * @return description
-*/
+     * Returns the description of the tag definition.
+     *
+     * @return description
+     */
     @Schema(description = "The description of the tag definition.")
     public String getDescription() {
         return description;
@@ -106,9 +110,10 @@ public class WTagInfo {
     }
 
     /**
- * Returns a boolean indicating whether or not the tag definition is classified as a security tag (true) or an informational tag (false).
- * @return isSecure
-*/
+     * Returns a boolean indicating whether or not the tag definition is classified as a security tag (true) or an informational tag (false).
+     *
+     * @return isSecure
+     */
     @Schema(description = "A boolean indicating whether or not the tag definition is classified as a security tag (true) or an informational tag (false).")
     @JsonProperty("isSecure")
     public Boolean isSecure() {
@@ -125,10 +130,10 @@ public class WTagInfo {
     }
 
     /**
- * Returns watermark
- * @return watermark
- 
-*/
+     * Returns watermark
+     *
+     * @return watermark
+     */
     @Schema(description = "")
     public Watermark getWatermark() {
         return watermark;
@@ -147,7 +152,10 @@ public class WTagInfo {
             return false;
         }
         WTagInfo wtagInfo = (WTagInfo) o;
-        return Objects.equals(this.id, wtagInfo.id) && Objects.equals(this.name, wtagInfo.name) && Objects.equals(this.displayName, wtagInfo.displayName) && Objects.equals(this.description, wtagInfo.description) && Objects.equals(this.isSecure, wtagInfo.isSecure) && Objects.equals(this.watermark, wtagInfo.watermark);
+        return Objects.equals(this.id, wtagInfo.id) && Objects.equals(this.name, wtagInfo.name) && Objects.equals(
+                this.displayName, wtagInfo.displayName) && Objects.equals(this.description,
+                wtagInfo.description) && Objects.equals(this.isSecure, wtagInfo.isSecure) && Objects.equals(
+                this.watermark, wtagInfo.watermark);
     }
 
     @Override
@@ -159,12 +167,30 @@ public class WTagInfo {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class WTagInfo {\n");
-        sb.append("    id: ").append(toIndentedString(id)).append("\n");
-        sb.append("    name: ").append(toIndentedString(name)).append("\n");
-        sb.append("    displayName: ").append(toIndentedString(displayName)).append("\n");
-        sb.append("    description: ").append(toIndentedString(description)).append("\n");
-        sb.append("    isSecure: ").append(toIndentedString(isSecure)).append("\n");
-        sb.append("    watermark: ").append(toIndentedString(watermark)).append("\n");
+        sb
+                .append("    id: ")
+                .append(toIndentedString(id))
+                .append("\n");
+        sb
+                .append("    name: ")
+                .append(toIndentedString(name))
+                .append("\n");
+        sb
+                .append("    displayName: ")
+                .append(toIndentedString(displayName))
+                .append("\n");
+        sb
+                .append("    description: ")
+                .append(toIndentedString(description))
+                .append("\n");
+        sb
+                .append("    isSecure: ")
+                .append(toIndentedString(isSecure))
+                .append("\n");
+        sb
+                .append("    watermark: ")
+                .append(toIndentedString(watermark))
+                .append("\n");
         sb.append("}");
         return sb.toString();
     }
@@ -173,6 +199,8 @@ public class WTagInfo {
         if (o == null) {
             return "null";
         }
-        return o.toString().replace("\n", "\n    ");
+        return o
+                .toString()
+                .replace("\n", "\n    ");
     }
 }

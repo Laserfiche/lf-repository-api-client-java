@@ -34,9 +34,10 @@ public class WTemplateInfo {
     }
 
     /**
- * Returns the ID of the template definition.
- * @return id
-*/
+     * Returns the ID of the template definition.
+     *
+     * @return id
+     */
     @Schema(description = "The ID of the template definition.")
     public Integer getId() {
         return id;
@@ -52,9 +53,10 @@ public class WTemplateInfo {
     }
 
     /**
- * Returns the name of the template definition.
- * @return name
-*/
+     * Returns the name of the template definition.
+     *
+     * @return name
+     */
     @Schema(description = "The name of the template definition.")
     public String getName() {
         return name;
@@ -70,9 +72,10 @@ public class WTemplateInfo {
     }
 
     /**
- * Returns the localized name of the template definition.
- * @return displayName
-*/
+     * Returns the localized name of the template definition.
+     *
+     * @return displayName
+     */
     @Schema(description = "The localized name of the template definition.")
     public String getDisplayName() {
         return displayName;
@@ -88,9 +91,10 @@ public class WTemplateInfo {
     }
 
     /**
- * Returns the description of the template definition.
- * @return description
-*/
+     * Returns the description of the template definition.
+     *
+     * @return description
+     */
     @Schema(description = "The description of the template definition.")
     public String getDescription() {
         return description;
@@ -106,10 +110,10 @@ public class WTemplateInfo {
     }
 
     /**
- * Returns color
- * @return color
- 
-*/
+     * Returns color
+     *
+     * @return color
+     */
     @Schema(description = "")
     public LFColor getColor() {
         return color;
@@ -125,9 +129,10 @@ public class WTemplateInfo {
     }
 
     /**
- * Returns the number of fields assigned to the template.
- * @return fieldCount
-*/
+     * Returns the number of fields assigned to the template.
+     *
+     * @return fieldCount
+     */
     @Schema(description = "The number of fields assigned to the template.")
     public Integer getFieldCount() {
         return fieldCount;
@@ -146,7 +151,10 @@ public class WTemplateInfo {
             return false;
         }
         WTemplateInfo wtemplateInfo = (WTemplateInfo) o;
-        return Objects.equals(this.id, wtemplateInfo.id) && Objects.equals(this.name, wtemplateInfo.name) && Objects.equals(this.displayName, wtemplateInfo.displayName) && Objects.equals(this.description, wtemplateInfo.description) && Objects.equals(this.color, wtemplateInfo.color) && Objects.equals(this.fieldCount, wtemplateInfo.fieldCount);
+        return Objects.equals(this.id, wtemplateInfo.id) && Objects.equals(this.name,
+                wtemplateInfo.name) && Objects.equals(this.displayName, wtemplateInfo.displayName) && Objects.equals(
+                this.description, wtemplateInfo.description) && Objects.equals(this.color,
+                wtemplateInfo.color) && Objects.equals(this.fieldCount, wtemplateInfo.fieldCount);
     }
 
     @Override
@@ -158,12 +166,30 @@ public class WTemplateInfo {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class WTemplateInfo {\n");
-        sb.append("    id: ").append(toIndentedString(id)).append("\n");
-        sb.append("    name: ").append(toIndentedString(name)).append("\n");
-        sb.append("    displayName: ").append(toIndentedString(displayName)).append("\n");
-        sb.append("    description: ").append(toIndentedString(description)).append("\n");
-        sb.append("    color: ").append(toIndentedString(color)).append("\n");
-        sb.append("    fieldCount: ").append(toIndentedString(fieldCount)).append("\n");
+        sb
+                .append("    id: ")
+                .append(toIndentedString(id))
+                .append("\n");
+        sb
+                .append("    name: ")
+                .append(toIndentedString(name))
+                .append("\n");
+        sb
+                .append("    displayName: ")
+                .append(toIndentedString(displayName))
+                .append("\n");
+        sb
+                .append("    description: ")
+                .append(toIndentedString(description))
+                .append("\n");
+        sb
+                .append("    color: ")
+                .append(toIndentedString(color))
+                .append("\n");
+        sb
+                .append("    fieldCount: ")
+                .append(toIndentedString(fieldCount))
+                .append("\n");
         sb.append("}");
         return sb.toString();
     }
@@ -172,6 +198,8 @@ public class WTemplateInfo {
         if (o == null) {
             return "null";
         }
-        return o.toString().replace("\n", "\n    ");
+        return o
+                .toString()
+                .replace("\n", "\n    ");
     }
 }

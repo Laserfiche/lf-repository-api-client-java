@@ -23,10 +23,10 @@ public class ParentEntryIdFileNameBody {
     }
 
     /**
- * Returns electronicDocument
- * @return electronicDocument
- 
-*/
+     * Returns electronicDocument
+     *
+     * @return electronicDocument
+     */
     @Schema(description = "")
     public File getElectronicDocument() {
         return electronicDocument;
@@ -42,10 +42,10 @@ public class ParentEntryIdFileNameBody {
     }
 
     /**
- * Returns request
- * @return request
- 
-*/
+     * Returns request
+     *
+     * @return request
+     */
     @Schema(description = "")
     public PostEntryWithEdocMetadataRequest getRequest() {
         return request;
@@ -64,7 +64,8 @@ public class ParentEntryIdFileNameBody {
             return false;
         }
         ParentEntryIdFileNameBody parentEntryIdFileNameBody = (ParentEntryIdFileNameBody) o;
-        return Objects.equals(this.electronicDocument, parentEntryIdFileNameBody.electronicDocument) && Objects.equals(this.request, parentEntryIdFileNameBody.request);
+        return Objects.equals(this.electronicDocument, parentEntryIdFileNameBody.electronicDocument) && Objects.equals(
+                this.request, parentEntryIdFileNameBody.request);
     }
 
     @Override
@@ -76,8 +77,14 @@ public class ParentEntryIdFileNameBody {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class ParentEntryIdFileNameBody {\n");
-        sb.append("    electronicDocument: ").append(toIndentedString(electronicDocument)).append("\n");
-        sb.append("    request: ").append(toIndentedString(request)).append("\n");
+        sb
+                .append("    electronicDocument: ")
+                .append(toIndentedString(electronicDocument))
+                .append("\n");
+        sb
+                .append("    request: ")
+                .append(toIndentedString(request))
+                .append("\n");
         sb.append("}");
         return sb.toString();
     }
@@ -86,6 +93,8 @@ public class ParentEntryIdFileNameBody {
         if (o == null) {
             return "null";
         }
-        return o.toString().replace("\n", "\n    ");
+        return o
+                .toString()
+                .replace("\n", "\n    ");
     }
 }

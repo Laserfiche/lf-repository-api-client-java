@@ -29,9 +29,10 @@ public class Rule {
     }
 
     /**
- * Returns the IDs of the parent fields in the template according to the form logic rule.
- * @return ancestors
-*/
+     * Returns the IDs of the parent fields in the template according to the form logic rule.
+     *
+     * @return ancestors
+     */
     @Schema(description = "The IDs of the parent fields in the template according to the form logic rule.")
     public List<Integer> getAncestors() {
         return ancestors;
@@ -62,7 +63,10 @@ public class Rule {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class Rule {\n");
-        sb.append("    ancestors: ").append(toIndentedString(ancestors)).append("\n");
+        sb
+                .append("    ancestors: ")
+                .append(toIndentedString(ancestors))
+                .append("\n");
         sb.append("}");
         return sb.toString();
     }
@@ -71,6 +75,8 @@ public class Rule {
         if (o == null) {
             return "null";
         }
-        return o.toString().replace("\n", "\n    ");
+        return o
+                .toString()
+                .replace("\n", "\n    ");
     }
 }

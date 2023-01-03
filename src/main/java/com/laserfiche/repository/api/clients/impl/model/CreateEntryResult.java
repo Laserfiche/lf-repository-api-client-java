@@ -22,10 +22,10 @@ public class CreateEntryResult {
     }
 
     /**
- * Returns operations
- * @return operations
- 
-*/
+     * Returns operations
+     *
+     * @return operations
+     */
     @Schema(description = "")
     public CreateEntryOperations getOperations() {
         return operations;
@@ -41,9 +41,10 @@ public class CreateEntryResult {
     }
 
     /**
- * Returns a link to get the created entry.
- * @return documentLink
-*/
+     * Returns a link to get the created entry.
+     *
+     * @return documentLink
+     */
     @Schema(description = "A link to get the created entry.")
     public String getDocumentLink() {
         return documentLink;
@@ -62,7 +63,8 @@ public class CreateEntryResult {
             return false;
         }
         CreateEntryResult createEntryResult = (CreateEntryResult) o;
-        return Objects.equals(this.operations, createEntryResult.operations) && Objects.equals(this.documentLink, createEntryResult.documentLink);
+        return Objects.equals(this.operations, createEntryResult.operations) && Objects.equals(this.documentLink,
+                createEntryResult.documentLink);
     }
 
     @Override
@@ -74,8 +76,14 @@ public class CreateEntryResult {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class CreateEntryResult {\n");
-        sb.append("    operations: ").append(toIndentedString(operations)).append("\n");
-        sb.append("    documentLink: ").append(toIndentedString(documentLink)).append("\n");
+        sb
+                .append("    operations: ")
+                .append(toIndentedString(operations))
+                .append("\n");
+        sb
+                .append("    documentLink: ")
+                .append(toIndentedString(documentLink))
+                .append("\n");
         sb.append("}");
         return sb.toString();
     }
@@ -84,6 +92,8 @@ public class CreateEntryResult {
         if (o == null) {
             return "null";
         }
-        return o.toString().replace("\n", "\n    ");
+        return o
+                .toString()
+                .replace("\n", "\n    ");
     }
 }

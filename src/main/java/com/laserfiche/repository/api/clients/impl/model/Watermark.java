@@ -34,9 +34,10 @@ public class Watermark {
     }
 
     /**
- * Returns the watermark text associated with the tag defintion.
- * @return watermarkText
-*/
+     * Returns the watermark text associated with the tag defintion.
+     *
+     * @return watermarkText
+     */
     @Schema(description = "The watermark text associated with the tag defintion.")
     public String getWatermarkText() {
         return watermarkText;
@@ -52,9 +53,10 @@ public class Watermark {
     }
 
     /**
- * Returns the size of the watermark text, in points, associated with the tag definition.
- * @return watermarkTextSize
-*/
+     * Returns the size of the watermark text, in points, associated with the tag definition.
+     *
+     * @return watermarkTextSize
+     */
     @Schema(description = "The size of the watermark text, in points, associated with the tag definition.")
     public Integer getWatermarkTextSize() {
         return watermarkTextSize;
@@ -70,10 +72,10 @@ public class Watermark {
     }
 
     /**
- * Returns watermarkPosition
- * @return watermarkPosition
- 
-*/
+     * Returns watermarkPosition
+     *
+     * @return watermarkPosition
+     */
     @Schema(description = "")
     public WatermarkPosition getWatermarkPosition() {
         return watermarkPosition;
@@ -89,9 +91,10 @@ public class Watermark {
     }
 
     /**
- * Returns the rotation angle, in degrees, of the watermark associated with the tag definition.
- * @return watermarkRotationAngle
-*/
+     * Returns the rotation angle, in degrees, of the watermark associated with the tag definition.
+     *
+     * @return watermarkRotationAngle
+     */
     @Schema(description = "The rotation angle, in degrees, of the watermark associated with the tag definition.")
     public Integer getWatermarkRotationAngle() {
         return watermarkRotationAngle;
@@ -107,9 +110,10 @@ public class Watermark {
     }
 
     /**
- * Returns a boolean indicating whether or not the watermark associated with the tag is mandatory.
- * @return isWatermarkMandatory
-*/
+     * Returns a boolean indicating whether or not the watermark associated with the tag is mandatory.
+     *
+     * @return isWatermarkMandatory
+     */
     @Schema(description = "A boolean indicating whether or not the watermark associated with the tag is mandatory.")
     @JsonProperty("isWatermarkMandatory")
     public Boolean isWatermarkMandatory() {
@@ -126,9 +130,10 @@ public class Watermark {
     }
 
     /**
- * Returns the intensity of the watermark associated with the tag definition. Valid value  ranges from 0 to 100, with -1 as the default values.
- * @return watermarkIntensity
-*/
+     * Returns the intensity of the watermark associated with the tag definition. Valid value  ranges from 0 to 100, with -1 as the default values.
+     *
+     * @return watermarkIntensity
+     */
     @Schema(description = "The intensity of the watermark associated with the tag definition. Valid value  ranges from 0 to 100, with -1 as the default values.")
     public Integer getWatermarkIntensity() {
         return watermarkIntensity;
@@ -147,24 +152,48 @@ public class Watermark {
             return false;
         }
         Watermark watermark = (Watermark) o;
-        return Objects.equals(this.watermarkText, watermark.watermarkText) && Objects.equals(this.watermarkTextSize, watermark.watermarkTextSize) && Objects.equals(this.watermarkPosition, watermark.watermarkPosition) && Objects.equals(this.watermarkRotationAngle, watermark.watermarkRotationAngle) && Objects.equals(this.isWatermarkMandatory, watermark.isWatermarkMandatory) && Objects.equals(this.watermarkIntensity, watermark.watermarkIntensity);
+        return Objects.equals(this.watermarkText, watermark.watermarkText) && Objects.equals(this.watermarkTextSize,
+                watermark.watermarkTextSize) && Objects.equals(this.watermarkPosition,
+                watermark.watermarkPosition) && Objects.equals(this.watermarkRotationAngle,
+                watermark.watermarkRotationAngle) && Objects.equals(this.isWatermarkMandatory,
+                watermark.isWatermarkMandatory) && Objects.equals(this.watermarkIntensity,
+                watermark.watermarkIntensity);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(watermarkText, watermarkTextSize, watermarkPosition, watermarkRotationAngle, isWatermarkMandatory, watermarkIntensity);
+        return Objects.hash(watermarkText, watermarkTextSize, watermarkPosition, watermarkRotationAngle,
+                isWatermarkMandatory, watermarkIntensity);
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class Watermark {\n");
-        sb.append("    watermarkText: ").append(toIndentedString(watermarkText)).append("\n");
-        sb.append("    watermarkTextSize: ").append(toIndentedString(watermarkTextSize)).append("\n");
-        sb.append("    watermarkPosition: ").append(toIndentedString(watermarkPosition)).append("\n");
-        sb.append("    watermarkRotationAngle: ").append(toIndentedString(watermarkRotationAngle)).append("\n");
-        sb.append("    isWatermarkMandatory: ").append(toIndentedString(isWatermarkMandatory)).append("\n");
-        sb.append("    watermarkIntensity: ").append(toIndentedString(watermarkIntensity)).append("\n");
+        sb
+                .append("    watermarkText: ")
+                .append(toIndentedString(watermarkText))
+                .append("\n");
+        sb
+                .append("    watermarkTextSize: ")
+                .append(toIndentedString(watermarkTextSize))
+                .append("\n");
+        sb
+                .append("    watermarkPosition: ")
+                .append(toIndentedString(watermarkPosition))
+                .append("\n");
+        sb
+                .append("    watermarkRotationAngle: ")
+                .append(toIndentedString(watermarkRotationAngle))
+                .append("\n");
+        sb
+                .append("    isWatermarkMandatory: ")
+                .append(toIndentedString(isWatermarkMandatory))
+                .append("\n");
+        sb
+                .append("    watermarkIntensity: ")
+                .append(toIndentedString(watermarkIntensity))
+                .append("\n");
         sb.append("}");
         return sb.toString();
     }
@@ -173,6 +202,8 @@ public class Watermark {
         if (o == null) {
             return "null";
         }
-        return o.toString().replace("\n", "\n    ");
+        return o
+                .toString()
+                .replace("\n", "\n    ");
     }
 }

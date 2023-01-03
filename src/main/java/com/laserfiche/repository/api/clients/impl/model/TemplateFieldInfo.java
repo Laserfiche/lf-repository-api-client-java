@@ -25,10 +25,10 @@ public class TemplateFieldInfo extends WFieldInfo {
     }
 
     /**
- * Returns rule
- * @return rule
- 
-*/
+     * Returns rule
+     *
+     * @return rule
+     */
     @Schema(description = "")
     public Rule getRule() {
         return rule;
@@ -44,9 +44,10 @@ public class TemplateFieldInfo extends WFieldInfo {
     }
 
     /**
- * Returns the group id of the field in the template.
- * @return groupId
-*/
+     * Returns the group id of the field in the template.
+     *
+     * @return groupId
+     */
     @Schema(description = "The group id of the field in the template.")
     public Integer getGroupId() {
         return groupId;
@@ -62,9 +63,10 @@ public class TemplateFieldInfo extends WFieldInfo {
     }
 
     /**
- * Returns the name of field group.
- * @return groupName
-*/
+     * Returns the name of field group.
+     *
+     * @return groupName
+     */
     @Schema(description = "The name of field group.")
     public String getGroupName() {
         return groupName;
@@ -83,7 +85,9 @@ public class TemplateFieldInfo extends WFieldInfo {
             return false;
         }
         TemplateFieldInfo templateFieldInfo = (TemplateFieldInfo) o;
-        return Objects.equals(this.rule, templateFieldInfo.rule) && Objects.equals(this.groupId, templateFieldInfo.groupId) && Objects.equals(this.groupName, templateFieldInfo.groupName) && super.equals(o);
+        return Objects.equals(this.rule, templateFieldInfo.rule) && Objects.equals(this.groupId,
+                templateFieldInfo.groupId) && Objects.equals(this.groupName,
+                templateFieldInfo.groupName) && super.equals(o);
     }
 
     @Override
@@ -95,10 +99,22 @@ public class TemplateFieldInfo extends WFieldInfo {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class TemplateFieldInfo {\n");
-        sb.append("    ").append(toIndentedString(super.toString())).append("\n");
-        sb.append("    rule: ").append(toIndentedString(rule)).append("\n");
-        sb.append("    groupId: ").append(toIndentedString(groupId)).append("\n");
-        sb.append("    groupName: ").append(toIndentedString(groupName)).append("\n");
+        sb
+                .append("    ")
+                .append(toIndentedString(super.toString()))
+                .append("\n");
+        sb
+                .append("    rule: ")
+                .append(toIndentedString(rule))
+                .append("\n");
+        sb
+                .append("    groupId: ")
+                .append(toIndentedString(groupId))
+                .append("\n");
+        sb
+                .append("    groupName: ")
+                .append(toIndentedString(groupName))
+                .append("\n");
         sb.append("}");
         return sb.toString();
     }
@@ -107,6 +123,8 @@ public class TemplateFieldInfo extends WFieldInfo {
         if (o == null) {
             return "null";
         }
-        return o.toString().replace("\n", "\n    ");
+        return o
+                .toString()
+                .replace("\n", "\n    ");
     }
 }

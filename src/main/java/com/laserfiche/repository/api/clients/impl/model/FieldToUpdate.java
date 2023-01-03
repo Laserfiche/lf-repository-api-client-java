@@ -33,9 +33,10 @@ public class FieldToUpdate {
     }
 
     /**
- * Returns the field values that will be assigned to the field.
- * @return values
-*/
+     * Returns the field values that will be assigned to the field.
+     *
+     * @return values
+     */
     @Schema(description = "The field values that will be assigned to the field.")
     public List<ValueToUpdate> getValues() {
         return values;
@@ -66,7 +67,10 @@ public class FieldToUpdate {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class FieldToUpdate {\n");
-        sb.append("    values: ").append(toIndentedString(values)).append("\n");
+        sb
+                .append("    values: ")
+                .append(toIndentedString(values))
+                .append("\n");
         sb.append("}");
         return sb.toString();
     }
@@ -75,6 +79,8 @@ public class FieldToUpdate {
         if (o == null) {
             return "null";
         }
-        return o.toString().replace("\n", "\n    ");
+        return o
+                .toString()
+                .replace("\n", "\n    ");
     }
 }

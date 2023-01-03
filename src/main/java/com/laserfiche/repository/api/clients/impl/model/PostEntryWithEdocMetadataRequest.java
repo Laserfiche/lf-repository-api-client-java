@@ -25,9 +25,10 @@ public class PostEntryWithEdocMetadataRequest {
     }
 
     /**
- * Returns the name of the template assigned to the entry.
- * @return template
-*/
+     * Returns the name of the template assigned to the entry.
+     *
+     * @return template
+     */
     @Schema(description = "The name of the template assigned to the entry.")
     public String getTemplate() {
         return template;
@@ -43,10 +44,10 @@ public class PostEntryWithEdocMetadataRequest {
     }
 
     /**
- * Returns metadata
- * @return metadata
- 
-*/
+     * Returns metadata
+     *
+     * @return metadata
+     */
     @Schema(description = "")
     public PutFieldValsRequest getMetadata() {
         return metadata;
@@ -62,9 +63,10 @@ public class PostEntryWithEdocMetadataRequest {
     }
 
     /**
- * Returns the name of the volume to use. Will use the default parent entry volume if not specified. This is ignored in Laserfiche Cloud.
- * @return volumeName
-*/
+     * Returns the name of the volume to use. Will use the default parent entry volume if not specified. This is ignored in Laserfiche Cloud.
+     *
+     * @return volumeName
+     */
     @Schema(description = "The name of the volume to use. Will use the default parent entry volume if not specified. This is ignored in Laserfiche Cloud.")
     public String getVolumeName() {
         return volumeName;
@@ -83,7 +85,9 @@ public class PostEntryWithEdocMetadataRequest {
             return false;
         }
         PostEntryWithEdocMetadataRequest postEntryWithEdocMetadataRequest = (PostEntryWithEdocMetadataRequest) o;
-        return Objects.equals(this.template, postEntryWithEdocMetadataRequest.template) && Objects.equals(this.metadata, postEntryWithEdocMetadataRequest.metadata) && Objects.equals(this.volumeName, postEntryWithEdocMetadataRequest.volumeName);
+        return Objects.equals(this.template, postEntryWithEdocMetadataRequest.template) && Objects.equals(this.metadata,
+                postEntryWithEdocMetadataRequest.metadata) && Objects.equals(this.volumeName,
+                postEntryWithEdocMetadataRequest.volumeName);
     }
 
     @Override
@@ -95,9 +99,18 @@ public class PostEntryWithEdocMetadataRequest {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class PostEntryWithEdocMetadataRequest {\n");
-        sb.append("    template: ").append(toIndentedString(template)).append("\n");
-        sb.append("    metadata: ").append(toIndentedString(metadata)).append("\n");
-        sb.append("    volumeName: ").append(toIndentedString(volumeName)).append("\n");
+        sb
+                .append("    template: ")
+                .append(toIndentedString(template))
+                .append("\n");
+        sb
+                .append("    metadata: ")
+                .append(toIndentedString(metadata))
+                .append("\n");
+        sb
+                .append("    volumeName: ")
+                .append(toIndentedString(volumeName))
+                .append("\n");
         sb.append("}");
         return sb.toString();
     }
@@ -106,6 +119,8 @@ public class PostEntryWithEdocMetadataRequest {
         if (o == null) {
             return "null";
         }
-        return o.toString().replace("\n", "\n    ");
+        return o
+                .toString()
+                .replace("\n", "\n    ");
     }
 }

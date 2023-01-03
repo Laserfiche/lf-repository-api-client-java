@@ -20,10 +20,10 @@ public class ODataValueOfDateTime {
     }
 
     /**
- * Returns value
- * @return value
- 
-*/
+     * Returns value
+     *
+     * @return value
+     */
     @Schema(description = "")
     public OffsetDateTime getValue() {
         return value;
@@ -54,7 +54,10 @@ public class ODataValueOfDateTime {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class ODataValueOfDateTime {\n");
-        sb.append("    value: ").append(toIndentedString(value)).append("\n");
+        sb
+                .append("    value: ")
+                .append(toIndentedString(value))
+                .append("\n");
         sb.append("}");
         return sb.toString();
     }
@@ -63,6 +66,8 @@ public class ODataValueOfDateTime {
         if (o == null) {
             return "null";
         }
-        return o.toString().replace("\n", "\n    ");
+        return o
+                .toString()
+                .replace("\n", "\n    ");
     }
 }

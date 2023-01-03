@@ -22,9 +22,10 @@ public class OperationErrorItem {
     }
 
     /**
- * Returns the ID of the entry to which the error is related.
- * @return objectId
-*/
+     * Returns the ID of the entry to which the error is related.
+     *
+     * @return objectId
+     */
     @Schema(description = "The ID of the entry to which the error is related. ")
     public Integer getObjectId() {
         return objectId;
@@ -40,9 +41,10 @@ public class OperationErrorItem {
     }
 
     /**
- * Returns the short description of the error.
- * @return errorMessage
-*/
+     * Returns the short description of the error.
+     *
+     * @return errorMessage
+     */
     @Schema(description = "The short description of the error.")
     public String getErrorMessage() {
         return errorMessage;
@@ -61,7 +63,8 @@ public class OperationErrorItem {
             return false;
         }
         OperationErrorItem operationErrorItem = (OperationErrorItem) o;
-        return Objects.equals(this.objectId, operationErrorItem.objectId) && Objects.equals(this.errorMessage, operationErrorItem.errorMessage);
+        return Objects.equals(this.objectId, operationErrorItem.objectId) && Objects.equals(this.errorMessage,
+                operationErrorItem.errorMessage);
     }
 
     @Override
@@ -73,8 +76,14 @@ public class OperationErrorItem {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class OperationErrorItem {\n");
-        sb.append("    objectId: ").append(toIndentedString(objectId)).append("\n");
-        sb.append("    errorMessage: ").append(toIndentedString(errorMessage)).append("\n");
+        sb
+                .append("    objectId: ")
+                .append(toIndentedString(objectId))
+                .append("\n");
+        sb
+                .append("    errorMessage: ")
+                .append(toIndentedString(errorMessage))
+                .append("\n");
         sb.append("}");
         return sb.toString();
     }
@@ -83,6 +92,8 @@ public class OperationErrorItem {
         if (o == null) {
             return "null";
         }
-        return o.toString().replace("\n", "\n    ");
+        return o
+                .toString()
+                .replace("\n", "\n    ");
     }
 }

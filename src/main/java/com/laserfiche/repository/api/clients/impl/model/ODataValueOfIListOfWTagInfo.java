@@ -29,10 +29,10 @@ public class ODataValueOfIListOfWTagInfo {
     }
 
     /**
- * Returns value
- * @return value
- 
-*/
+     * Returns value
+     *
+     * @return value
+     */
     @Schema(description = "")
     public List<WTagInfo> getValue() {
         return value;
@@ -63,7 +63,10 @@ public class ODataValueOfIListOfWTagInfo {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class ODataValueOfIListOfWTagInfo {\n");
-        sb.append("    value: ").append(toIndentedString(value)).append("\n");
+        sb
+                .append("    value: ")
+                .append(toIndentedString(value))
+                .append("\n");
         sb.append("}");
         return sb.toString();
     }
@@ -72,6 +75,8 @@ public class ODataValueOfIListOfWTagInfo {
         if (o == null) {
             return "null";
         }
-        return o.toString().replace("\n", "\n    ");
+        return o
+                .toString()
+                .replace("\n", "\n    ");
     }
 }

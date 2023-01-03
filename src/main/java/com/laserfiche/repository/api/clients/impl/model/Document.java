@@ -43,9 +43,10 @@ public class Document extends Entry {
     }
 
     /**
- * Returns the size of the electronic document attached to the represented document, if there is one, in bytes.
- * @return elecDocumentSize
-*/
+     * Returns the size of the electronic document attached to the represented document, if there is one, in bytes.
+     *
+     * @return elecDocumentSize
+     */
     @Schema(description = "The size of the electronic document attached to the represented document, if there is one, in bytes.")
     public Long getElecDocumentSize() {
         return elecDocumentSize;
@@ -61,9 +62,10 @@ public class Document extends Entry {
     }
 
     /**
- * Returns the extension for the document.
- * @return extension
-*/
+     * Returns the extension for the document.
+     *
+     * @return extension
+     */
     @Schema(description = "The extension for the document.")
     public String getExtension() {
         return extension;
@@ -79,9 +81,10 @@ public class Document extends Entry {
     }
 
     /**
- * Returns a boolean indicating if there is an electronic document attached to the represented document.
- * @return isElectronicDocument
-*/
+     * Returns a boolean indicating if there is an electronic document attached to the represented document.
+     *
+     * @return isElectronicDocument
+     */
     @Schema(description = "A boolean indicating if there is an electronic document attached to the represented document.")
     @JsonProperty("isElectronicDocument")
     public Boolean isElectronicDocument() {
@@ -98,9 +101,10 @@ public class Document extends Entry {
     }
 
     /**
- * Returns a boolean indicating if the represented document is a record.
- * @return isRecord
-*/
+     * Returns a boolean indicating if the represented document is a record.
+     *
+     * @return isRecord
+     */
     @Schema(description = "A boolean indicating if the represented document is a record.")
     @JsonProperty("isRecord")
     public Boolean isRecord() {
@@ -117,9 +121,10 @@ public class Document extends Entry {
     }
 
     /**
- * Returns the MIME type of the electronic document.
- * @return mimeType
-*/
+     * Returns the MIME type of the electronic document.
+     *
+     * @return mimeType
+     */
     @Schema(description = "The MIME type of the electronic document.")
     public String getMimeType() {
         return mimeType;
@@ -135,9 +140,10 @@ public class Document extends Entry {
     }
 
     /**
- * Returns the page count of the represented document.
- * @return pageCount
-*/
+     * Returns the page count of the represented document.
+     *
+     * @return pageCount
+     */
     @Schema(description = "The page count of the represented document.")
     public Integer getPageCount() {
         return pageCount;
@@ -153,9 +159,10 @@ public class Document extends Entry {
     }
 
     /**
- * Returns a boolean indicating if the represented document is checked out.
- * @return isCheckedOut
-*/
+     * Returns a boolean indicating if the represented document is checked out.
+     *
+     * @return isCheckedOut
+     */
     @Schema(description = "A boolean indicating if the represented document is checked out.")
     @JsonProperty("isCheckedOut")
     public Boolean isCheckedOut() {
@@ -172,9 +179,10 @@ public class Document extends Entry {
     }
 
     /**
- * Returns a boolean indicating if the represented document is under version control.
- * @return isUnderVersionControl
-*/
+     * Returns a boolean indicating if the represented document is under version control.
+     *
+     * @return isUnderVersionControl
+     */
     @Schema(description = "A boolean indicating if the represented document is under version control.")
     @JsonProperty("isUnderVersionControl")
     public Boolean isUnderVersionControl() {
@@ -191,10 +199,10 @@ public class Document extends Entry {
     }
 
     /**
- * Returns edoc
- * @return edoc
- 
-*/
+     * Returns edoc
+     *
+     * @return edoc
+     */
     @Schema(description = "")
     public Edoc getEdoc() {
         return edoc;
@@ -213,28 +221,65 @@ public class Document extends Entry {
             return false;
         }
         Document document = (Document) o;
-        return Objects.equals(this.elecDocumentSize, document.elecDocumentSize) && Objects.equals(this.extension, document.extension) && Objects.equals(this.isElectronicDocument, document.isElectronicDocument) && Objects.equals(this.isRecord, document.isRecord) && Objects.equals(this.mimeType, document.mimeType) && Objects.equals(this.pageCount, document.pageCount) && Objects.equals(this.isCheckedOut, document.isCheckedOut) && Objects.equals(this.isUnderVersionControl, document.isUnderVersionControl) && Objects.equals(this.edoc, document.edoc) && super.equals(o);
+        return Objects.equals(this.elecDocumentSize, document.elecDocumentSize) && Objects.equals(this.extension,
+                document.extension) && Objects.equals(this.isElectronicDocument,
+                document.isElectronicDocument) && Objects.equals(this.isRecord, document.isRecord) && Objects.equals(
+                this.mimeType, document.mimeType) && Objects.equals(this.pageCount,
+                document.pageCount) && Objects.equals(this.isCheckedOut, document.isCheckedOut) && Objects.equals(
+                this.isUnderVersionControl, document.isUnderVersionControl) && Objects.equals(this.edoc,
+                document.edoc) && super.equals(o);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(elecDocumentSize, extension, isElectronicDocument, isRecord, mimeType, pageCount, isCheckedOut, isUnderVersionControl, edoc, super.hashCode());
+        return Objects.hash(elecDocumentSize, extension, isElectronicDocument, isRecord, mimeType, pageCount,
+                isCheckedOut, isUnderVersionControl, edoc, super.hashCode());
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class Document {\n");
-        sb.append("    ").append(toIndentedString(super.toString())).append("\n");
-        sb.append("    elecDocumentSize: ").append(toIndentedString(elecDocumentSize)).append("\n");
-        sb.append("    extension: ").append(toIndentedString(extension)).append("\n");
-        sb.append("    isElectronicDocument: ").append(toIndentedString(isElectronicDocument)).append("\n");
-        sb.append("    isRecord: ").append(toIndentedString(isRecord)).append("\n");
-        sb.append("    mimeType: ").append(toIndentedString(mimeType)).append("\n");
-        sb.append("    pageCount: ").append(toIndentedString(pageCount)).append("\n");
-        sb.append("    isCheckedOut: ").append(toIndentedString(isCheckedOut)).append("\n");
-        sb.append("    isUnderVersionControl: ").append(toIndentedString(isUnderVersionControl)).append("\n");
-        sb.append("    edoc: ").append(toIndentedString(edoc)).append("\n");
+        sb
+                .append("    ")
+                .append(toIndentedString(super.toString()))
+                .append("\n");
+        sb
+                .append("    elecDocumentSize: ")
+                .append(toIndentedString(elecDocumentSize))
+                .append("\n");
+        sb
+                .append("    extension: ")
+                .append(toIndentedString(extension))
+                .append("\n");
+        sb
+                .append("    isElectronicDocument: ")
+                .append(toIndentedString(isElectronicDocument))
+                .append("\n");
+        sb
+                .append("    isRecord: ")
+                .append(toIndentedString(isRecord))
+                .append("\n");
+        sb
+                .append("    mimeType: ")
+                .append(toIndentedString(mimeType))
+                .append("\n");
+        sb
+                .append("    pageCount: ")
+                .append(toIndentedString(pageCount))
+                .append("\n");
+        sb
+                .append("    isCheckedOut: ")
+                .append(toIndentedString(isCheckedOut))
+                .append("\n");
+        sb
+                .append("    isUnderVersionControl: ")
+                .append(toIndentedString(isUnderVersionControl))
+                .append("\n");
+        sb
+                .append("    edoc: ")
+                .append(toIndentedString(edoc))
+                .append("\n");
         sb.append("}");
         return sb.toString();
     }
@@ -243,6 +288,8 @@ public class Document extends Entry {
         if (o == null) {
             return "null";
         }
-        return o.toString().replace("\n", "\n    ");
+        return o
+                .toString()
+                .replace("\n", "\n    ");
     }
 }

@@ -22,10 +22,10 @@ public class FindEntryResult {
     }
 
     /**
- * Returns entry
- * @return entry
- 
-*/
+     * Returns entry
+     *
+     * @return entry
+     */
     @Schema(description = "")
     public Entry getEntry() {
         return entry;
@@ -41,10 +41,10 @@ public class FindEntryResult {
     }
 
     /**
- * Returns ancestorEntry
- * @return ancestorEntry
- 
-*/
+     * Returns ancestorEntry
+     *
+     * @return ancestorEntry
+     */
     @Schema(description = "")
     public Entry getAncestorEntry() {
         return ancestorEntry;
@@ -63,7 +63,8 @@ public class FindEntryResult {
             return false;
         }
         FindEntryResult findEntryResult = (FindEntryResult) o;
-        return Objects.equals(this.entry, findEntryResult.entry) && Objects.equals(this.ancestorEntry, findEntryResult.ancestorEntry);
+        return Objects.equals(this.entry, findEntryResult.entry) && Objects.equals(this.ancestorEntry,
+                findEntryResult.ancestorEntry);
     }
 
     @Override
@@ -75,8 +76,14 @@ public class FindEntryResult {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class FindEntryResult {\n");
-        sb.append("    entry: ").append(toIndentedString(entry)).append("\n");
-        sb.append("    ancestorEntry: ").append(toIndentedString(ancestorEntry)).append("\n");
+        sb
+                .append("    entry: ")
+                .append(toIndentedString(entry))
+                .append("\n");
+        sb
+                .append("    ancestorEntry: ")
+                .append(toIndentedString(ancestorEntry))
+                .append("\n");
         sb.append("}");
         return sb.toString();
     }
@@ -85,6 +92,8 @@ public class FindEntryResult {
         if (o == null) {
             return "null";
         }
-        return o.toString().replace("\n", "\n    ");
+        return o
+                .toString()
+                .replace("\n", "\n    ");
     }
 }

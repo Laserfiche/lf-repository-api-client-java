@@ -19,10 +19,10 @@ public class ODataValueOfBoolean {
     }
 
     /**
- * Returns value
- * @return value
- 
-*/
+     * Returns value
+     *
+     * @return value
+     */
     @Schema(description = "")
     public Boolean isValue() {
         return value;
@@ -53,7 +53,10 @@ public class ODataValueOfBoolean {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class ODataValueOfBoolean {\n");
-        sb.append("    value: ").append(toIndentedString(value)).append("\n");
+        sb
+                .append("    value: ")
+                .append(toIndentedString(value))
+                .append("\n");
         sb.append("}");
         return sb.toString();
     }
@@ -62,6 +65,8 @@ public class ODataValueOfBoolean {
         if (o == null) {
             return "null";
         }
-        return o.toString().replace("\n", "\n    ");
+        return o
+                .toString()
+                .replace("\n", "\n    ");
     }
 }

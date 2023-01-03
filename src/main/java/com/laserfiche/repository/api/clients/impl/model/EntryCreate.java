@@ -36,9 +36,10 @@ public class EntryCreate {
     }
 
     /**
- * Returns the list of exceptions that occured when trying to perform the operation.
- * @return exceptions
-*/
+     * Returns the list of exceptions that occured when trying to perform the operation.
+     *
+     * @return exceptions
+     */
     @Schema(description = "The list of exceptions that occured when trying to perform the operation.")
     public List<APIServerException> getExceptions() {
         return exceptions;
@@ -54,9 +55,10 @@ public class EntryCreate {
     }
 
     /**
- * Returns the id of the created entry. If the id is 0, then the entry was not created.
- * @return entryId
-*/
+     * Returns the id of the created entry. If the id is 0, then the entry was not created.
+     *
+     * @return entryId
+     */
     @Schema(description = "The id of the created entry. If the id is 0, then the entry was not created.")
     public Integer getEntryId() {
         return entryId;
@@ -75,7 +77,8 @@ public class EntryCreate {
             return false;
         }
         EntryCreate entryCreate = (EntryCreate) o;
-        return Objects.equals(this.exceptions, entryCreate.exceptions) && Objects.equals(this.entryId, entryCreate.entryId);
+        return Objects.equals(this.exceptions, entryCreate.exceptions) && Objects.equals(this.entryId,
+                entryCreate.entryId);
     }
 
     @Override
@@ -87,8 +90,14 @@ public class EntryCreate {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class EntryCreate {\n");
-        sb.append("    exceptions: ").append(toIndentedString(exceptions)).append("\n");
-        sb.append("    entryId: ").append(toIndentedString(entryId)).append("\n");
+        sb
+                .append("    exceptions: ")
+                .append(toIndentedString(exceptions))
+                .append("\n");
+        sb
+                .append("    entryId: ")
+                .append(toIndentedString(entryId))
+                .append("\n");
         sb.append("}");
         return sb.toString();
     }
@@ -97,6 +106,8 @@ public class EntryCreate {
         if (o == null) {
             return "null";
         }
-        return o.toString().replace("\n", "\n    ");
+        return o
+                .toString()
+                .replace("\n", "\n    ");
     }
 }

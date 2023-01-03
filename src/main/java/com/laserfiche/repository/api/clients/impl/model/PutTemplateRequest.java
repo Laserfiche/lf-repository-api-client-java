@@ -24,9 +24,10 @@ public class PutTemplateRequest {
     }
 
     /**
- * Returns the template that will be assigned to the entry.
- * @return templateName
-*/
+     * Returns the template that will be assigned to the entry.
+     *
+     * @return templateName
+     */
     @Schema(description = "The template that will be assigned to the entry.")
     public String getTemplateName() {
         return templateName;
@@ -50,9 +51,10 @@ public class PutTemplateRequest {
     }
 
     /**
- * Returns the template fields that will be assigned to the entry.
- * @return fields
-*/
+     * Returns the template fields that will be assigned to the entry.
+     *
+     * @return fields
+     */
     @Schema(description = "The template fields that will be assigned to the entry.")
     public Map<String, FieldToUpdate> getFields() {
         return fields;
@@ -71,7 +73,8 @@ public class PutTemplateRequest {
             return false;
         }
         PutTemplateRequest putTemplateRequest = (PutTemplateRequest) o;
-        return Objects.equals(this.templateName, putTemplateRequest.templateName) && Objects.equals(this.fields, putTemplateRequest.fields);
+        return Objects.equals(this.templateName, putTemplateRequest.templateName) && Objects.equals(this.fields,
+                putTemplateRequest.fields);
     }
 
     @Override
@@ -83,8 +86,14 @@ public class PutTemplateRequest {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class PutTemplateRequest {\n");
-        sb.append("    templateName: ").append(toIndentedString(templateName)).append("\n");
-        sb.append("    fields: ").append(toIndentedString(fields)).append("\n");
+        sb
+                .append("    templateName: ")
+                .append(toIndentedString(templateName))
+                .append("\n");
+        sb
+                .append("    fields: ")
+                .append(toIndentedString(fields))
+                .append("\n");
         sb.append("}");
         return sb.toString();
     }
@@ -93,6 +102,8 @@ public class PutTemplateRequest {
         if (o == null) {
             return "null";
         }
-        return o.toString().replace("\n", "\n    ");
+        return o
+                .toString()
+                .replace("\n", "\n    ");
     }
 }

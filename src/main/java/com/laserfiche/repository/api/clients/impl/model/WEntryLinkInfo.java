@@ -57,9 +57,10 @@ public class WEntryLinkInfo {
     }
 
     /**
- * Returns the ID of the entry link.
- * @return linkId
-*/
+     * Returns the ID of the entry link.
+     *
+     * @return linkId
+     */
     @Schema(description = "The ID of the entry link.")
     public Integer getLinkId() {
         return linkId;
@@ -75,9 +76,10 @@ public class WEntryLinkInfo {
     }
 
     /**
- * Returns the ID of the source entry of the represented link.
- * @return sourceId
-*/
+     * Returns the ID of the source entry of the represented link.
+     *
+     * @return sourceId
+     */
     @Schema(description = "The ID of the source entry of the represented link.")
     public Integer getSourceId() {
         return sourceId;
@@ -93,9 +95,10 @@ public class WEntryLinkInfo {
     }
 
     /**
- * Returns the full path to the source entry of the represented link.
- * @return sourceFullPath
-*/
+     * Returns the full path to the source entry of the represented link.
+     *
+     * @return sourceFullPath
+     */
     @Schema(description = "The full path to the source entry of the represented link.")
     public String getSourceFullPath() {
         return sourceFullPath;
@@ -111,9 +114,10 @@ public class WEntryLinkInfo {
     }
 
     /**
- * Returns the label for the source entry in the link type.
- * @return sourceLabel
-*/
+     * Returns the label for the source entry in the link type.
+     *
+     * @return sourceLabel
+     */
     @Schema(description = "The label for the source entry in the link type.")
     public String getSourceLabel() {
         return sourceLabel;
@@ -129,9 +133,10 @@ public class WEntryLinkInfo {
     }
 
     /**
- * Returns the ID of the target entry of the represented link.
- * @return targetId
-*/
+     * Returns the ID of the target entry of the represented link.
+     *
+     * @return targetId
+     */
     @Schema(description = "The ID of the target entry of the represented link.")
     public Integer getTargetId() {
         return targetId;
@@ -147,9 +152,10 @@ public class WEntryLinkInfo {
     }
 
     /**
- * Returns the full path to the target entry of the represented link.
- * @return targetFullPath
-*/
+     * Returns the full path to the target entry of the represented link.
+     *
+     * @return targetFullPath
+     */
     @Schema(description = "The full path to the target entry of the represented link.")
     public String getTargetFullPath() {
         return targetFullPath;
@@ -165,9 +171,10 @@ public class WEntryLinkInfo {
     }
 
     /**
- * Returns the label for the target entry in the link type.
- * @return targetLabel
-*/
+     * Returns the label for the target entry in the link type.
+     *
+     * @return targetLabel
+     */
     @Schema(description = "The label for the target entry in the link type.")
     public String getTargetLabel() {
         return targetLabel;
@@ -183,9 +190,10 @@ public class WEntryLinkInfo {
     }
 
     /**
- * Returns the descriptive text for the represented entry link.
- * @return description
-*/
+     * Returns the descriptive text for the represented entry link.
+     *
+     * @return description
+     */
     @Schema(description = "The descriptive text for the represented entry link.")
     public String getDescription() {
         return description;
@@ -201,9 +209,10 @@ public class WEntryLinkInfo {
     }
 
     /**
- * Returns the description of the link type.
- * @return linkTypeDescription
-*/
+     * Returns the description of the link type.
+     *
+     * @return linkTypeDescription
+     */
     @Schema(description = "The description of the link type.")
     public String getLinkTypeDescription() {
         return linkTypeDescription;
@@ -219,9 +228,10 @@ public class WEntryLinkInfo {
     }
 
     /**
- * Returns the ID of the entry link type.
- * @return linkTypeId
-*/
+     * Returns the ID of the entry link type.
+     *
+     * @return linkTypeId
+     */
     @Schema(description = "The ID of the entry link type.")
     public Integer getLinkTypeId() {
         return linkTypeId;
@@ -245,9 +255,10 @@ public class WEntryLinkInfo {
     }
 
     /**
- * Returns the properties for the entry link.
- * @return linkProperties
-*/
+     * Returns the properties for the entry link.
+     *
+     * @return linkProperties
+     */
     @Schema(description = "The properties for the entry link.")
     public Map<String, String> getLinkProperties() {
         return linkProperties;
@@ -263,9 +274,10 @@ public class WEntryLinkInfo {
     }
 
     /**
- * Returns the navigation link to the source entry.
- * @return sourceLink
-*/
+     * Returns the navigation link to the source entry.
+     *
+     * @return sourceLink
+     */
     @Schema(description = "The navigation link to the source entry.")
     public String getSourceLink() {
         return sourceLink;
@@ -281,9 +293,10 @@ public class WEntryLinkInfo {
     }
 
     /**
- * Returns the navigation link to the target entry.
- * @return targetLink
-*/
+     * Returns the navigation link to the target entry.
+     *
+     * @return targetLink
+     */
     @Schema(description = "The navigation link to the target entry.")
     public String getTargetLink() {
         return targetLink;
@@ -302,31 +315,81 @@ public class WEntryLinkInfo {
             return false;
         }
         WEntryLinkInfo wentryLinkInfo = (WEntryLinkInfo) o;
-        return Objects.equals(this.linkId, wentryLinkInfo.linkId) && Objects.equals(this.sourceId, wentryLinkInfo.sourceId) && Objects.equals(this.sourceFullPath, wentryLinkInfo.sourceFullPath) && Objects.equals(this.sourceLabel, wentryLinkInfo.sourceLabel) && Objects.equals(this.targetId, wentryLinkInfo.targetId) && Objects.equals(this.targetFullPath, wentryLinkInfo.targetFullPath) && Objects.equals(this.targetLabel, wentryLinkInfo.targetLabel) && Objects.equals(this.description, wentryLinkInfo.description) && Objects.equals(this.linkTypeDescription, wentryLinkInfo.linkTypeDescription) && Objects.equals(this.linkTypeId, wentryLinkInfo.linkTypeId) && Objects.equals(this.linkProperties, wentryLinkInfo.linkProperties) && Objects.equals(this.sourceLink, wentryLinkInfo.sourceLink) && Objects.equals(this.targetLink, wentryLinkInfo.targetLink);
+        return Objects.equals(this.linkId, wentryLinkInfo.linkId) && Objects.equals(this.sourceId,
+                wentryLinkInfo.sourceId) && Objects.equals(this.sourceFullPath,
+                wentryLinkInfo.sourceFullPath) && Objects.equals(this.sourceLabel,
+                wentryLinkInfo.sourceLabel) && Objects.equals(this.targetId, wentryLinkInfo.targetId) && Objects.equals(
+                this.targetFullPath, wentryLinkInfo.targetFullPath) && Objects.equals(this.targetLabel,
+                wentryLinkInfo.targetLabel) && Objects.equals(this.description,
+                wentryLinkInfo.description) && Objects.equals(this.linkTypeDescription,
+                wentryLinkInfo.linkTypeDescription) && Objects.equals(this.linkTypeId,
+                wentryLinkInfo.linkTypeId) && Objects.equals(this.linkProperties,
+                wentryLinkInfo.linkProperties) && Objects.equals(this.sourceLink,
+                wentryLinkInfo.sourceLink) && Objects.equals(this.targetLink, wentryLinkInfo.targetLink);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(linkId, sourceId, sourceFullPath, sourceLabel, targetId, targetFullPath, targetLabel, description, linkTypeDescription, linkTypeId, linkProperties, sourceLink, targetLink);
+        return Objects.hash(linkId, sourceId, sourceFullPath, sourceLabel, targetId, targetFullPath, targetLabel,
+                description, linkTypeDescription, linkTypeId, linkProperties, sourceLink, targetLink);
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class WEntryLinkInfo {\n");
-        sb.append("    linkId: ").append(toIndentedString(linkId)).append("\n");
-        sb.append("    sourceId: ").append(toIndentedString(sourceId)).append("\n");
-        sb.append("    sourceFullPath: ").append(toIndentedString(sourceFullPath)).append("\n");
-        sb.append("    sourceLabel: ").append(toIndentedString(sourceLabel)).append("\n");
-        sb.append("    targetId: ").append(toIndentedString(targetId)).append("\n");
-        sb.append("    targetFullPath: ").append(toIndentedString(targetFullPath)).append("\n");
-        sb.append("    targetLabel: ").append(toIndentedString(targetLabel)).append("\n");
-        sb.append("    description: ").append(toIndentedString(description)).append("\n");
-        sb.append("    linkTypeDescription: ").append(toIndentedString(linkTypeDescription)).append("\n");
-        sb.append("    linkTypeId: ").append(toIndentedString(linkTypeId)).append("\n");
-        sb.append("    linkProperties: ").append(toIndentedString(linkProperties)).append("\n");
-        sb.append("    sourceLink: ").append(toIndentedString(sourceLink)).append("\n");
-        sb.append("    targetLink: ").append(toIndentedString(targetLink)).append("\n");
+        sb
+                .append("    linkId: ")
+                .append(toIndentedString(linkId))
+                .append("\n");
+        sb
+                .append("    sourceId: ")
+                .append(toIndentedString(sourceId))
+                .append("\n");
+        sb
+                .append("    sourceFullPath: ")
+                .append(toIndentedString(sourceFullPath))
+                .append("\n");
+        sb
+                .append("    sourceLabel: ")
+                .append(toIndentedString(sourceLabel))
+                .append("\n");
+        sb
+                .append("    targetId: ")
+                .append(toIndentedString(targetId))
+                .append("\n");
+        sb
+                .append("    targetFullPath: ")
+                .append(toIndentedString(targetFullPath))
+                .append("\n");
+        sb
+                .append("    targetLabel: ")
+                .append(toIndentedString(targetLabel))
+                .append("\n");
+        sb
+                .append("    description: ")
+                .append(toIndentedString(description))
+                .append("\n");
+        sb
+                .append("    linkTypeDescription: ")
+                .append(toIndentedString(linkTypeDescription))
+                .append("\n");
+        sb
+                .append("    linkTypeId: ")
+                .append(toIndentedString(linkTypeId))
+                .append("\n");
+        sb
+                .append("    linkProperties: ")
+                .append(toIndentedString(linkProperties))
+                .append("\n");
+        sb
+                .append("    sourceLink: ")
+                .append(toIndentedString(sourceLink))
+                .append("\n");
+        sb
+                .append("    targetLink: ")
+                .append(toIndentedString(targetLink))
+                .append("\n");
         sb.append("}");
         return sb.toString();
     }
@@ -335,6 +398,8 @@ public class WEntryLinkInfo {
         if (o == null) {
             return "null";
         }
-        return o.toString().replace("\n", "\n    ");
+        return o
+                .toString()
+                .replace("\n", "\n    ");
     }
 }
