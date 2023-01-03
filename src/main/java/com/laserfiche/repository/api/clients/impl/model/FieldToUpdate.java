@@ -1,12 +1,12 @@
 package com.laserfiche.repository.api.clients.impl.model;
 
-import java.util.Objects;
-import java.util.Arrays;
-import com.laserfiche.api.client.model.ValueToUpdate;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.ArrayList;
 import java.util.List;
-import com.fasterxml.jackson.annotation.*;
+import java.util.Objects;
 
 /**
  * The request body containing fields that will be assigned to the entry.

@@ -1,8 +1,8 @@
 package com.laserfiche.repository.api.clients.impl.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.util.Objects;
-import java.util.Arrays;
-import com.fasterxml.jackson.annotation.*;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
 @JsonInclude(JsonInclude.Include.NON_NULL)
