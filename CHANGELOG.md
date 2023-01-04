@@ -1,9 +1,3 @@
-## 1.2.1
-
-### Documentation
-
-- Added documentation for all the models 
-
 ## 1.2.0
 
 ### Features
