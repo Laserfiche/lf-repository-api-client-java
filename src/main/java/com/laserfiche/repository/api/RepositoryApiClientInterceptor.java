@@ -1,4 +1,4 @@
-package com.laserfiche.repository.api.clients;
+package com.laserfiche.repository.api;
 
 import kong.unirest.Interceptor;
 
