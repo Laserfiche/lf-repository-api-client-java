@@ -53,7 +53,7 @@ public class TasksApiTest extends BaseTest {
         });
 
         Assertions.assertEquals(
-                String.format("%s: Cannot cancel ended operation.", Error.class.getSimpleName()),
+                String.format("%s: Cannot cancel completed operation.", Error.class.getSimpleName()),
                 thrown.getMessage());
     }
 
