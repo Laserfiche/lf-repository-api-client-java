@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 /**
  * The base API client.
  */
-public class ApiClient {
+public abstract class ApiClient {
 
     protected String baseUrl;
 

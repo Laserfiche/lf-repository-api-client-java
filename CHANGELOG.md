@@ -1,3 +1,11 @@
+## 2.0.0
+
+- **[BREAKING]** For every API, the parameters are now encapsulated into a parameter class.
+- **[BREAKING]** Enum values are now following Java naming convention.
+- **[BREAKING]** Every async API are replaced with normal blocking API.
+- The ApiClient class is now abstract.
+- Improved documentation.
+
 ## 1.2.0
 
 ### Features

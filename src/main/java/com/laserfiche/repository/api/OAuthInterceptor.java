@@ -4,7 +4,6 @@ import com.laserfiche.api.client.httphandlers.OAuthClientCredentialsHandler;
 import com.laserfiche.api.client.httphandlers.Request;
 import com.laserfiche.api.client.httphandlers.RequestImpl;
 import com.laserfiche.api.client.model.AccessKey;
-import com.laserfiche.repository.api.clients.RepositoryApiClientInterceptor;
 import kong.unirest.Config;
 import kong.unirest.HttpRequest;
 
