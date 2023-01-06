@@ -28,7 +28,7 @@ public class ParametersForAssignFieldValues {
     private String culture;
 
     /**
-     * Builder for setting the repoId parameter.
+     * Sets the value of the repoId parameter and returns the current object, to enable chaining further setters.
      *
      * @param repoId The requested repository ID.
      * @return {@link ParametersForAssignFieldValues} The return value
@@ -48,7 +48,7 @@ public class ParametersForAssignFieldValues {
     }
 
     /**
-     * Builder for setting the entryId parameter.
+     * Sets the value of the entryId parameter and returns the current object, to enable chaining further setters.
      *
      * @param entryId The entry ID of the entry that will have its fields updated.
      * @return {@link ParametersForAssignFieldValues} The return value
@@ -61,7 +61,7 @@ public class ParametersForAssignFieldValues {
     /**
      * The entry ID of the entry that will have its fields updated.
      *
-     * @return {@link int} The return value
+     * @return int The return value
      */
     public int getEntryId() {
         return this.entryId;
@@ -77,7 +77,7 @@ public class ParametersForAssignFieldValues {
     }
 
     /**
-     * Builder for setting the culture parameter.
+     * Sets the value of the culture parameter and returns the current object, to enable chaining further setters.
      *
      * @param culture An optional query parameter used to indicate the locale that should be used.
      *                The value should be a standard language tag. This may be used when setting field values with tokens.

@@ -27,7 +27,7 @@ public class ParametersForGetTagDefinitionById {
     private String select;
 
     /**
-     * Builder for setting the repoId parameter.
+     * Sets the value of the repoId parameter and returns the current object, to enable chaining further setters.
      *
      * @param repoId The requested repository ID.
      * @return {@link ParametersForGetTagDefinitionById} The return value
@@ -47,7 +47,7 @@ public class ParametersForGetTagDefinitionById {
     }
 
     /**
-     * Builder for setting the tagId parameter.
+     * Sets the value of the tagId parameter and returns the current object, to enable chaining further setters.
      *
      * @param tagId The requested tag definition ID.
      * @return {@link ParametersForGetTagDefinitionById} The return value
@@ -60,14 +60,14 @@ public class ParametersForGetTagDefinitionById {
     /**
      * The requested tag definition ID.
      *
-     * @return {@link int} The return value
+     * @return int The return value
      */
     public int getTagId() {
         return this.tagId;
     }
 
     /**
-     * Builder for setting the culture parameter.
+     * Sets the value of the culture parameter and returns the current object, to enable chaining further setters.
      *
      * @param culture An optional query parameter used to indicate the locale that should be used for formatting.
      *                The value should be a standard language tag.
@@ -89,7 +89,7 @@ public class ParametersForGetTagDefinitionById {
     }
 
     /**
-     * Builder for setting the select parameter.
+     * Sets the value of the select parameter and returns the current object, to enable chaining further setters.
      *
      * @param select Limits the properties returned in the result.
      * @return {@link ParametersForGetTagDefinitionById} The return value

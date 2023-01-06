@@ -47,7 +47,7 @@ public class ParametersForCreateSimpleSearchOperation {
     private String culture;
 
     /**
-     * Builder for setting the select parameter.
+     * Sets the value of the select parameter and returns the current object, to enable chaining further setters.
      *
      * @param select Limits the properties returned in the result.
      * @return {@link ParametersForCreateSimpleSearchOperation} The return value
@@ -67,7 +67,7 @@ public class ParametersForCreateSimpleSearchOperation {
     }
 
     /**
-     * Builder for setting the orderby parameter.
+     * Sets the value of the orderby parameter and returns the current object, to enable chaining further setters.
      *
      * @param orderby Specifies the order in which items are returned. The maximum number of expressions is 5.
      * @return {@link ParametersForCreateSimpleSearchOperation} The return value
@@ -87,7 +87,7 @@ public class ParametersForCreateSimpleSearchOperation {
     }
 
     /**
-     * Builder for setting the count parameter.
+     * Sets the value of the count parameter and returns the current object, to enable chaining further setters.
      *
      * @param count Indicates whether the total count of items within a collection are returned in the result.
      * @return {@link ParametersForCreateSimpleSearchOperation} The return value
@@ -100,14 +100,14 @@ public class ParametersForCreateSimpleSearchOperation {
     /**
      * Indicates whether the total count of items within a collection are returned in the result.
      *
-     * @return {@link boolean} The return value
+     * @return boolean The return value
      */
     public boolean isCount() {
         return this.count;
     }
 
     /**
-     * Builder for setting the repoId parameter.
+     * Sets the value of the repoId parameter and returns the current object, to enable chaining further setters.
      *
      * @param repoId The requested repository ID.
      * @return {@link ParametersForCreateSimpleSearchOperation} The return value
@@ -127,7 +127,7 @@ public class ParametersForCreateSimpleSearchOperation {
     }
 
     /**
-     * Builder for setting the fields parameter.
+     * Sets the value of the fields parameter and returns the current object, to enable chaining further setters.
      *
      * @param fields Optional array of field names. Field values corresponding to the given field names will be returned for each search result.
      * @return {@link ParametersForCreateSimpleSearchOperation} The return value
@@ -147,7 +147,7 @@ public class ParametersForCreateSimpleSearchOperation {
     }
 
     /**
-     * Builder for setting the formatFields parameter.
+     * Sets the value of the formatFields parameter and returns the current object, to enable chaining further setters.
      *
      * @param formatFields Boolean for if field values should be formatted. Only applicable if Fields are specified.
      * @return {@link ParametersForCreateSimpleSearchOperation} The return value
@@ -160,7 +160,7 @@ public class ParametersForCreateSimpleSearchOperation {
     /**
      * Boolean for if field values should be formatted. Only applicable if Fields are specified.
      *
-     * @return {@link boolean} The return value
+     * @return boolean The return value
      */
     public boolean isFormatFields() {
         return this.formatFields;
@@ -176,7 +176,7 @@ public class ParametersForCreateSimpleSearchOperation {
     }
 
     /**
-     * Builder for setting the culture parameter.
+     * Sets the value of the culture parameter and returns the current object, to enable chaining further setters.
      *
      * @param culture An optional query parameter used to indicate the locale that should be used for formatting.
      *                The value should be a standard language tag. The formatFields query parameter must be set to true, otherwise

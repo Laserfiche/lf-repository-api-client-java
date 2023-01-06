@@ -27,7 +27,7 @@ public class ParametersForExportDocument {
     private Consumer<InputStream> inputStreamConsumer;
 
     /**
-     * Builder for setting the repoId parameter.
+     * Sets the value of the repoId parameter and returns the current object, to enable chaining further setters.
      *
      * @param repoId The requested repository ID.
      * @return {@link ParametersForExportDocument} The return value
@@ -47,7 +47,7 @@ public class ParametersForExportDocument {
     }
 
     /**
-     * Builder for setting the entryId parameter.
+     * Sets the value of the entryId parameter and returns the current object, to enable chaining further setters.
      *
      * @param entryId The requested document ID.
      * @return {@link ParametersForExportDocument} The return value
@@ -60,14 +60,14 @@ public class ParametersForExportDocument {
     /**
      * The requested document ID.
      *
-     * @return {@link int} The return value
+     * @return int The return value
      */
     public int getEntryId() {
         return this.entryId;
     }
 
     /**
-     * Builder for setting the range parameter.
+     * Sets the value of the range parameter and returns the current object, to enable chaining further setters.
      *
      * @param range An optional header used to retrieve partial content of the edoc. Only supports single
      *              range with byte unit.

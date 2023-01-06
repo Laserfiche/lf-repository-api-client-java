@@ -32,7 +32,7 @@ public class ParametersForCopyEntryAsync {
     private String culture;
 
     /**
-     * Builder for setting the repoId parameter.
+     * Sets the value of the repoId parameter and returns the current object, to enable chaining further setters.
      *
      * @param repoId The requested repository ID.
      * @return {@link ParametersForCopyEntryAsync} The return value
@@ -52,7 +52,7 @@ public class ParametersForCopyEntryAsync {
     }
 
     /**
-     * Builder for setting the entryId parameter.
+     * Sets the value of the entryId parameter and returns the current object, to enable chaining further setters.
      *
      * @param entryId The folder ID that the entry will be created in.
      * @return {@link ParametersForCopyEntryAsync} The return value
@@ -65,7 +65,7 @@ public class ParametersForCopyEntryAsync {
     /**
      * The folder ID that the entry will be created in.
      *
-     * @return {@link int} The return value
+     * @return int The return value
      */
     public int getEntryId() {
         return this.entryId;
@@ -81,7 +81,7 @@ public class ParametersForCopyEntryAsync {
     }
 
     /**
-     * Builder for setting the autoRename parameter.
+     * Sets the value of the autoRename parameter and returns the current object, to enable chaining further setters.
      *
      * @param autoRename An optional query parameter used to indicate if the new entry should be automatically
      *                   renamed if an entry already exists with the given name in the folder. The default value is false.
@@ -96,14 +96,14 @@ public class ParametersForCopyEntryAsync {
      * An optional query parameter used to indicate if the new entry should be automatically
      * renamed if an entry already exists with the given name in the folder. The default value is false.
      *
-     * @return {@link boolean} The return value
+     * @return boolean The return value
      */
     public boolean isAutoRename() {
         return this.autoRename;
     }
 
     /**
-     * Builder for setting the culture parameter.
+     * Sets the value of the culture parameter and returns the current object, to enable chaining further setters.
      *
      * @param culture An optional query parameter used to indicate the locale that should be used.
      *                The value should be a standard language tag.

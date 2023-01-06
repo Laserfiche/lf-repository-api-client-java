@@ -41,7 +41,7 @@ public class ParametersForImportDocument {
     private PostEntryWithEdocMetadataRequest requestBody;
 
     /**
-     * Builder for setting the repoId parameter.
+     * Sets the value of the repoId parameter and returns the current object, to enable chaining further setters.
      *
      * @param repoId The requested repository ID.
      * @return {@link ParametersForImportDocument} The return value
@@ -61,7 +61,7 @@ public class ParametersForImportDocument {
     }
 
     /**
-     * Builder for setting the parentEntryId parameter.
+     * Sets the value of the parentEntryId parameter and returns the current object, to enable chaining further setters.
      *
      * @param parentEntryId The entry ID of the folder that the document will be created in.
      * @return {@link ParametersForImportDocument} The return value
@@ -74,14 +74,14 @@ public class ParametersForImportDocument {
     /**
      * The entry ID of the folder that the document will be created in.
      *
-     * @return {@link int} The return value
+     * @return int The return value
      */
     public int getParentEntryId() {
         return this.parentEntryId;
     }
 
     /**
-     * Builder for setting the fileName parameter.
+     * Sets the value of the fileName parameter and returns the current object, to enable chaining further setters.
      *
      * @param fileName The created document's file name.
      * @return {@link ParametersForImportDocument} The return value
@@ -101,7 +101,7 @@ public class ParametersForImportDocument {
     }
 
     /**
-     * Builder for setting the autoRename parameter.
+     * Sets the value of the autoRename parameter and returns the current object, to enable chaining further setters.
      *
      * @param autoRename An optional query parameter used to indicate if the new document should be automatically
      *                   renamed if an entry already exists with the given name in the folder. The default value is false.
@@ -116,14 +116,14 @@ public class ParametersForImportDocument {
      * An optional query parameter used to indicate if the new document should be automatically
      * renamed if an entry already exists with the given name in the folder. The default value is false.
      *
-     * @return {@link boolean} The return value
+     * @return boolean The return value
      */
     public boolean isAutoRename() {
         return this.autoRename;
     }
 
     /**
-     * Builder for setting the culture parameter.
+     * Sets the value of the culture parameter and returns the current object, to enable chaining further setters.
      *
      * @param culture An optional query parameter used to indicate the locale that should be used.
      *                The value should be a standard language tag. This may be used when setting field values with tokens.

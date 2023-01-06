@@ -11,7 +11,7 @@ public class ParametersForRefreshServerSession {
     private String repoId;
 
     /**
-     * Builder for setting the repoId parameter.
+     * Sets the value of the repoId parameter and returns the current object, to enable chaining further setters.
      *
      * @param repoId The requested repository ID.
      * @return {@link ParametersForRefreshServerSession} The return value

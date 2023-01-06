@@ -51,7 +51,7 @@ public class ParametersForGetSearchContextHits {
     private boolean count;
 
     /**
-     * Builder for setting the repoId parameter.
+     * Sets the value of the repoId parameter and returns the current object, to enable chaining further setters.
      *
      * @param repoId The requested repository ID.
      * @return {@link ParametersForGetSearchContextHits} The return value
@@ -71,7 +71,7 @@ public class ParametersForGetSearchContextHits {
     }
 
     /**
-     * Builder for setting the searchToken parameter.
+     * Sets the value of the searchToken parameter and returns the current object, to enable chaining further setters.
      *
      * @param searchToken The requested searchToken.
      * @return {@link ParametersForGetSearchContextHits} The return value
@@ -91,7 +91,7 @@ public class ParametersForGetSearchContextHits {
     }
 
     /**
-     * Builder for setting the rowNumber parameter.
+     * Sets the value of the rowNumber parameter and returns the current object, to enable chaining further setters.
      *
      * @param rowNumber The search result listing row number to get context hits for.
      * @return {@link ParametersForGetSearchContextHits} The return value
@@ -104,14 +104,14 @@ public class ParametersForGetSearchContextHits {
     /**
      * The search result listing row number to get context hits for.
      *
-     * @return {@link int} The return value
+     * @return int The return value
      */
     public int getRowNumber() {
         return this.rowNumber;
     }
 
     /**
-     * Builder for setting the prefer parameter.
+     * Sets the value of the prefer parameter and returns the current object, to enable chaining further setters.
      *
      * @param prefer An optional OData header. Can be used to set the maximum page size using odata.maxpagesize.
      * @return {@link ParametersForGetSearchContextHits} The return value
@@ -131,7 +131,7 @@ public class ParametersForGetSearchContextHits {
     }
 
     /**
-     * Builder for setting the select parameter.
+     * Sets the value of the select parameter and returns the current object, to enable chaining further setters.
      *
      * @param select Limits the properties returned in the result.
      * @return {@link ParametersForGetSearchContextHits} The return value
@@ -151,7 +151,7 @@ public class ParametersForGetSearchContextHits {
     }
 
     /**
-     * Builder for setting the orderby parameter.
+     * Sets the value of the orderby parameter and returns the current object, to enable chaining further setters.
      *
      * @param orderby Specifies the order in which items are returned. The maximum number of expressions is 5.
      * @return {@link ParametersForGetSearchContextHits} The return value
@@ -171,7 +171,7 @@ public class ParametersForGetSearchContextHits {
     }
 
     /**
-     * Builder for setting the top parameter.
+     * Sets the value of the top parameter and returns the current object, to enable chaining further setters.
      *
      * @param top Limits the number of items returned from a collection.
      * @return {@link ParametersForGetSearchContextHits} The return value
@@ -184,14 +184,14 @@ public class ParametersForGetSearchContextHits {
     /**
      * Limits the number of items returned from a collection.
      *
-     * @return {@link int} The return value
+     * @return int The return value
      */
     public int getTop() {
         return this.top;
     }
 
     /**
-     * Builder for setting the skip parameter.
+     * Sets the value of the skip parameter and returns the current object, to enable chaining further setters.
      *
      * @param skip Excludes the specified number of items of the queried collection from the result.
      * @return {@link ParametersForGetSearchContextHits} The return value
@@ -204,14 +204,14 @@ public class ParametersForGetSearchContextHits {
     /**
      * Excludes the specified number of items of the queried collection from the result.
      *
-     * @return {@link int} The return value
+     * @return int The return value
      */
     public int getSkip() {
         return this.skip;
     }
 
     /**
-     * Builder for setting the count parameter.
+     * Sets the value of the count parameter and returns the current object, to enable chaining further setters.
      *
      * @param count Indicates whether the total count of items within a collection are returned in the result.
      * @return {@link ParametersForGetSearchContextHits} The return value
@@ -224,7 +224,7 @@ public class ParametersForGetSearchContextHits {
     /**
      * Indicates whether the total count of items within a collection are returned in the result.
      *
-     * @return {@link boolean} The return value
+     * @return boolean The return value
      */
     public boolean isCount() {
         return this.count;

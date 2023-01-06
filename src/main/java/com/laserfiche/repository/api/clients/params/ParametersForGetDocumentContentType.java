@@ -16,7 +16,7 @@ public class ParametersForGetDocumentContentType {
     private int entryId;
 
     /**
-     * Builder for setting the repoId parameter.
+     * Sets the value of the repoId parameter and returns the current object, to enable chaining further setters.
      *
      * @param repoId The requested repository ID.
      * @return {@link ParametersForGetDocumentContentType} The return value
@@ -36,7 +36,7 @@ public class ParametersForGetDocumentContentType {
     }
 
     /**
-     * Builder for setting the entryId parameter.
+     * Sets the value of the entryId parameter and returns the current object, to enable chaining further setters.
      *
      * @param entryId The requested document ID.
      * @return {@link ParametersForGetDocumentContentType} The return value
@@ -49,7 +49,7 @@ public class ParametersForGetDocumentContentType {
     /**
      * The requested document ID.
      *
-     * @return {@link int} The return value
+     * @return int The return value
      */
     public int getEntryId() {
         return this.entryId;

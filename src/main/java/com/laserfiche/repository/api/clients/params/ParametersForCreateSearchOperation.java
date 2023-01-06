@@ -15,7 +15,7 @@ public class ParametersForCreateSearchOperation {
     private AdvancedSearchRequest requestBody;
 
     /**
-     * Builder for setting the repoId parameter.
+     * Sets the value of the repoId parameter and returns the current object, to enable chaining further setters.
      *
      * @param repoId The requested repository ID.
      * @return {@link ParametersForCreateSearchOperation} The return value

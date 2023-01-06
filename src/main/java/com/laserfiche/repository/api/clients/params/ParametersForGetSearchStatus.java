@@ -16,7 +16,7 @@ public class ParametersForGetSearchStatus {
     private String searchToken;
 
     /**
-     * Builder for setting the repoId parameter.
+     * Sets the value of the repoId parameter and returns the current object, to enable chaining further setters.
      *
      * @param repoId The requested repository ID.
      * @return {@link ParametersForGetSearchStatus} The return value
@@ -36,7 +36,7 @@ public class ParametersForGetSearchStatus {
     }
 
     /**
-     * Builder for setting the searchToken parameter.
+     * Sets the value of the searchToken parameter and returns the current object, to enable chaining further setters.
      *
      * @param searchToken The requested searchToken.
      * @return {@link ParametersForGetSearchStatus} The return value

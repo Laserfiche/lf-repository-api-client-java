@@ -21,7 +21,7 @@ public class ParametersForGetEntryByPath {
     private boolean fallbackToClosestAncestor;
 
     /**
-     * Builder for setting the repoId parameter.
+     * Sets the value of the repoId parameter and returns the current object, to enable chaining further setters.
      *
      * @param repoId The requested repository ID.
      * @return {@link ParametersForGetEntryByPath} The return value
@@ -41,7 +41,7 @@ public class ParametersForGetEntryByPath {
     }
 
     /**
-     * Builder for setting the fullPath parameter.
+     * Sets the value of the fullPath parameter and returns the current object, to enable chaining further setters.
      *
      * @param fullPath The requested entry path.
      * @return {@link ParametersForGetEntryByPath} The return value
@@ -61,7 +61,7 @@ public class ParametersForGetEntryByPath {
     }
 
     /**
-     * Builder for setting the fallbackToClosestAncestor parameter.
+     * Sets the value of the fallbackToClosestAncestor parameter and returns the current object, to enable chaining further setters.
      *
      * @param fallbackToClosestAncestor An optional query parameter used to indicate whether or not the closest ancestor in the path should be returned if the initial entry path is not found. The default value is false.
      * @return {@link ParametersForGetEntryByPath} The return value
@@ -74,7 +74,7 @@ public class ParametersForGetEntryByPath {
     /**
      * An optional query parameter used to indicate whether or not the closest ancestor in the path should be returned if the initial entry path is not found. The default value is false.
      *
-     * @return {@link boolean} The return value
+     * @return boolean The return value
      */
     public boolean isFallbackToClosestAncestor() {
         return this.fallbackToClosestAncestor;

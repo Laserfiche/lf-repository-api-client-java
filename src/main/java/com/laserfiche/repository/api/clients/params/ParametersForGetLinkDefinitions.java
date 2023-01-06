@@ -41,7 +41,7 @@ public class ParametersForGetLinkDefinitions {
     private boolean count;
 
     /**
-     * Builder for setting the repoId parameter.
+     * Sets the value of the repoId parameter and returns the current object, to enable chaining further setters.
      *
      * @param repoId The requested repository ID.
      * @return {@link ParametersForGetLinkDefinitions} The return value
@@ -61,7 +61,7 @@ public class ParametersForGetLinkDefinitions {
     }
 
     /**
-     * Builder for setting the prefer parameter.
+     * Sets the value of the prefer parameter and returns the current object, to enable chaining further setters.
      *
      * @param prefer An optional OData header. Can be used to set the maximum page size using odata.maxpagesize.
      * @return {@link ParametersForGetLinkDefinitions} The return value
@@ -81,7 +81,7 @@ public class ParametersForGetLinkDefinitions {
     }
 
     /**
-     * Builder for setting the select parameter.
+     * Sets the value of the select parameter and returns the current object, to enable chaining further setters.
      *
      * @param select Limits the properties returned in the result.
      * @return {@link ParametersForGetLinkDefinitions} The return value
@@ -101,7 +101,7 @@ public class ParametersForGetLinkDefinitions {
     }
 
     /**
-     * Builder for setting the orderby parameter.
+     * Sets the value of the orderby parameter and returns the current object, to enable chaining further setters.
      *
      * @param orderby Specifies the order in which items are returned. The maximum number of expressions is 5.
      * @return {@link ParametersForGetLinkDefinitions} The return value
@@ -121,7 +121,7 @@ public class ParametersForGetLinkDefinitions {
     }
 
     /**
-     * Builder for setting the top parameter.
+     * Sets the value of the top parameter and returns the current object, to enable chaining further setters.
      *
      * @param top Limits the number of items returned from a collection.
      * @return {@link ParametersForGetLinkDefinitions} The return value
@@ -134,14 +134,14 @@ public class ParametersForGetLinkDefinitions {
     /**
      * Limits the number of items returned from a collection.
      *
-     * @return {@link int} The return value
+     * @return int The return value
      */
     public int getTop() {
         return this.top;
     }
 
     /**
-     * Builder for setting the skip parameter.
+     * Sets the value of the skip parameter and returns the current object, to enable chaining further setters.
      *
      * @param skip Excludes the specified number of items of the queried collection from the result.
      * @return {@link ParametersForGetLinkDefinitions} The return value
@@ -154,14 +154,14 @@ public class ParametersForGetLinkDefinitions {
     /**
      * Excludes the specified number of items of the queried collection from the result.
      *
-     * @return {@link int} The return value
+     * @return int The return value
      */
     public int getSkip() {
         return this.skip;
     }
 
     /**
-     * Builder for setting the count parameter.
+     * Sets the value of the count parameter and returns the current object, to enable chaining further setters.
      *
      * @param count Indicates whether the total count of items within a collection are returned in the result.
      * @return {@link ParametersForGetLinkDefinitions} The return value
@@ -174,7 +174,7 @@ public class ParametersForGetLinkDefinitions {
     /**
      * Indicates whether the total count of items within a collection are returned in the result.
      *
-     * @return {@link boolean} The return value
+     * @return boolean The return value
      */
     public boolean isCount() {
         return this.count;

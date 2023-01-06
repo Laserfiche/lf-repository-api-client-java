@@ -21,7 +21,7 @@ public class ParametersForGetLinkDefinitionById {
     private String select;
 
     /**
-     * Builder for setting the repoId parameter.
+     * Sets the value of the repoId parameter and returns the current object, to enable chaining further setters.
      *
      * @param repoId The requested repository ID.
      * @return {@link ParametersForGetLinkDefinitionById} The return value
@@ -41,7 +41,7 @@ public class ParametersForGetLinkDefinitionById {
     }
 
     /**
-     * Builder for setting the linkTypeId parameter.
+     * Sets the value of the linkTypeId parameter and returns the current object, to enable chaining further setters.
      *
      * @param linkTypeId The requested link type ID.
      * @return {@link ParametersForGetLinkDefinitionById} The return value
@@ -54,14 +54,14 @@ public class ParametersForGetLinkDefinitionById {
     /**
      * The requested link type ID.
      *
-     * @return {@link int} The return value
+     * @return int The return value
      */
     public int getLinkTypeId() {
         return this.linkTypeId;
     }
 
     /**
-     * Builder for setting the select parameter.
+     * Sets the value of the select parameter and returns the current object, to enable chaining further setters.
      *
      * @param select Limits the properties returned in the result.
      * @return {@link ParametersForGetLinkDefinitionById} The return value

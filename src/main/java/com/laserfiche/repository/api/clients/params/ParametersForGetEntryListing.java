@@ -68,7 +68,7 @@ public class ParametersForGetEntryListing {
     private boolean count;
 
     /**
-     * Builder for setting the repoId parameter.
+     * Sets the value of the repoId parameter and returns the current object, to enable chaining further setters.
      *
      * @param repoId The requested repository ID.
      * @return {@link ParametersForGetEntryListing} The return value
@@ -88,7 +88,7 @@ public class ParametersForGetEntryListing {
     }
 
     /**
-     * Builder for setting the entryId parameter.
+     * Sets the value of the entryId parameter and returns the current object, to enable chaining further setters.
      *
      * @param entryId The folder ID.
      * @return {@link ParametersForGetEntryListing} The return value
@@ -101,14 +101,14 @@ public class ParametersForGetEntryListing {
     /**
      * The folder ID.
      *
-     * @return {@link int} The return value
+     * @return int The return value
      */
     public int getEntryId() {
         return this.entryId;
     }
 
     /**
-     * Builder for setting the groupByEntryType parameter.
+     * Sets the value of the groupByEntryType parameter and returns the current object, to enable chaining further setters.
      *
      * @param groupByEntryType An optional query parameter used to indicate if the result should be grouped by entry type or not.
      * @return {@link ParametersForGetEntryListing} The return value
@@ -121,14 +121,14 @@ public class ParametersForGetEntryListing {
     /**
      * An optional query parameter used to indicate if the result should be grouped by entry type or not.
      *
-     * @return {@link boolean} The return value
+     * @return boolean The return value
      */
     public boolean isGroupByEntryType() {
         return this.groupByEntryType;
     }
 
     /**
-     * Builder for setting the fields parameter.
+     * Sets the value of the fields parameter and returns the current object, to enable chaining further setters.
      *
      * @param fields Optional array of field names. Field values corresponding to the given field names will be returned for each entry.
      * @return {@link ParametersForGetEntryListing} The return value
@@ -148,7 +148,7 @@ public class ParametersForGetEntryListing {
     }
 
     /**
-     * Builder for setting the formatFields parameter.
+     * Sets the value of the formatFields parameter and returns the current object, to enable chaining further setters.
      *
      * @param formatFields Boolean for if field values should be formatted. Only applicable if Fields are specified.
      * @return {@link ParametersForGetEntryListing} The return value
@@ -161,14 +161,14 @@ public class ParametersForGetEntryListing {
     /**
      * Boolean for if field values should be formatted. Only applicable if Fields are specified.
      *
-     * @return {@link boolean} The return value
+     * @return boolean The return value
      */
     public boolean isFormatFields() {
         return this.formatFields;
     }
 
     /**
-     * Builder for setting the prefer parameter.
+     * Sets the value of the prefer parameter and returns the current object, to enable chaining further setters.
      *
      * @param prefer An optional OData header. Can be used to set the maximum page size using odata.maxpagesize.
      * @return {@link ParametersForGetEntryListing} The return value
@@ -188,7 +188,7 @@ public class ParametersForGetEntryListing {
     }
 
     /**
-     * Builder for setting the culture parameter.
+     * Sets the value of the culture parameter and returns the current object, to enable chaining further setters.
      *
      * @param culture An optional query parameter used to indicate the locale that should be used for formatting.
      *                The value should be a standard language tag. The formatFields query parameter must be set to true, otherwise
@@ -212,7 +212,7 @@ public class ParametersForGetEntryListing {
     }
 
     /**
-     * Builder for setting the select parameter.
+     * Sets the value of the select parameter and returns the current object, to enable chaining further setters.
      *
      * @param select Limits the properties returned in the result.
      * @return {@link ParametersForGetEntryListing} The return value
@@ -232,7 +232,7 @@ public class ParametersForGetEntryListing {
     }
 
     /**
-     * Builder for setting the orderby parameter.
+     * Sets the value of the orderby parameter and returns the current object, to enable chaining further setters.
      *
      * @param orderby Specifies the order in which items are returned. The maximum number of expressions is 5.
      * @return {@link ParametersForGetEntryListing} The return value
@@ -252,7 +252,7 @@ public class ParametersForGetEntryListing {
     }
 
     /**
-     * Builder for setting the top parameter.
+     * Sets the value of the top parameter and returns the current object, to enable chaining further setters.
      *
      * @param top Limits the number of items returned from a collection.
      * @return {@link ParametersForGetEntryListing} The return value
@@ -265,14 +265,14 @@ public class ParametersForGetEntryListing {
     /**
      * Limits the number of items returned from a collection.
      *
-     * @return {@link int} The return value
+     * @return int The return value
      */
     public int getTop() {
         return this.top;
     }
 
     /**
-     * Builder for setting the skip parameter.
+     * Sets the value of the skip parameter and returns the current object, to enable chaining further setters.
      *
      * @param skip Excludes the specified number of items of the queried collection from the result.
      * @return {@link ParametersForGetEntryListing} The return value
@@ -285,14 +285,14 @@ public class ParametersForGetEntryListing {
     /**
      * Excludes the specified number of items of the queried collection from the result.
      *
-     * @return {@link int} The return value
+     * @return int The return value
      */
     public int getSkip() {
         return this.skip;
     }
 
     /**
-     * Builder for setting the count parameter.
+     * Sets the value of the count parameter and returns the current object, to enable chaining further setters.
      *
      * @param count Indicates whether the total count of items within a collection are returned in the result.
      * @return {@link ParametersForGetEntryListing} The return value
@@ -305,7 +305,7 @@ public class ParametersForGetEntryListing {
     /**
      * Indicates whether the total count of items within a collection are returned in the result.
      *
-     * @return {@link boolean} The return value
+     * @return boolean The return value
      */
     public boolean isCount() {
         return this.count;

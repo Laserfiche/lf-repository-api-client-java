@@ -25,7 +25,7 @@ public interface TasksClient {
      * - Rollbacks must be done manually. For example, if a copy operation is started and is halfway complete when canceled, the client application is responsible for cleaning up the files that were successfully copied before the operation was canceled.
      *
      * @param parameters An object of type {@link ParametersForCancelOperation} which encapsulates the parameters of {@link #cancelOperation cancelOperation} method.
-     * @return {@link boolean} The return value
+     * @return boolean The return value
      */
     boolean cancelOperation(ParametersForCancelOperation parameters);
 }

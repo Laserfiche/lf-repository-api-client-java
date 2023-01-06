@@ -22,7 +22,7 @@ public class ParametersForAssignEntryLinks {
     private List<PutLinksRequest> requestBody;
 
     /**
-     * Builder for setting the repoId parameter.
+     * Sets the value of the repoId parameter and returns the current object, to enable chaining further setters.
      *
      * @param repoId The request repository ID.
      * @return {@link ParametersForAssignEntryLinks} The return value
@@ -42,7 +42,7 @@ public class ParametersForAssignEntryLinks {
     }
 
     /**
-     * Builder for setting the entryId parameter.
+     * Sets the value of the entryId parameter and returns the current object, to enable chaining further setters.
      *
      * @param entryId The requested entry ID.
      * @return {@link ParametersForAssignEntryLinks} The return value
@@ -55,7 +55,7 @@ public class ParametersForAssignEntryLinks {
     /**
      * The requested entry ID.
      *
-     * @return {@link int} The return value
+     * @return int The return value
      */
     public int getEntryId() {
         return this.entryId;

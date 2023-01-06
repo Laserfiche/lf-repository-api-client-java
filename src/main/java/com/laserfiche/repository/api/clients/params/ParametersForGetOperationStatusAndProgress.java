@@ -16,7 +16,7 @@ public class ParametersForGetOperationStatusAndProgress {
     private String operationToken;
 
     /**
-     * Builder for setting the repoId parameter.
+     * Sets the value of the repoId parameter and returns the current object, to enable chaining further setters.
      *
      * @param repoId The requested repository ID
      * @return {@link ParametersForGetOperationStatusAndProgress} The return value
@@ -36,7 +36,7 @@ public class ParametersForGetOperationStatusAndProgress {
     }
 
     /**
-     * Builder for setting the operationToken parameter.
+     * Sets the value of the operationToken parameter and returns the current object, to enable chaining further setters.
      *
      * @param operationToken The operation token
      * @return {@link ParametersForGetOperationStatusAndProgress} The return value

@@ -20,7 +20,7 @@ public class ParametersForAssignTags {
     private PutTagRequest requestBody;
 
     /**
-     * Builder for setting the repoId parameter.
+     * Sets the value of the repoId parameter and returns the current object, to enable chaining further setters.
      *
      * @param repoId The requested repository ID.
      * @return {@link ParametersForAssignTags} The return value
@@ -40,7 +40,7 @@ public class ParametersForAssignTags {
     }
 
     /**
-     * Builder for setting the entryId parameter.
+     * Sets the value of the entryId parameter and returns the current object, to enable chaining further setters.
      *
      * @param entryId The requested entry ID.
      * @return {@link ParametersForAssignTags} The return value
@@ -53,7 +53,7 @@ public class ParametersForAssignTags {
     /**
      * The requested entry ID.
      *
-     * @return {@link int} The return value
+     * @return int The return value
      */
     public int getEntryId() {
         return this.entryId;

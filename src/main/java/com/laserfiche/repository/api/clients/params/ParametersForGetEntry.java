@@ -21,7 +21,7 @@ public class ParametersForGetEntry {
     private String select;
 
     /**
-     * Builder for setting the repoId parameter.
+     * Sets the value of the repoId parameter and returns the current object, to enable chaining further setters.
      *
      * @param repoId The requested repository ID.
      * @return {@link ParametersForGetEntry} The return value
@@ -41,7 +41,7 @@ public class ParametersForGetEntry {
     }
 
     /**
-     * Builder for setting the entryId parameter.
+     * Sets the value of the entryId parameter and returns the current object, to enable chaining further setters.
      *
      * @param entryId The requested entry ID.
      * @return {@link ParametersForGetEntry} The return value
@@ -54,14 +54,14 @@ public class ParametersForGetEntry {
     /**
      * The requested entry ID.
      *
-     * @return {@link int} The return value
+     * @return int The return value
      */
     public int getEntryId() {
         return this.entryId;
     }
 
     /**
-     * Builder for setting the select parameter.
+     * Sets the value of the select parameter and returns the current object, to enable chaining further setters.
      *
      * @param select Limits the properties returned in the result.
      * @return {@link ParametersForGetEntry} The return value
