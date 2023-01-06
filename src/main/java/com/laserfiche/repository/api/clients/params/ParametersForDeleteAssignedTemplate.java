@@ -1,5 +1,8 @@
 package com.laserfiche.repository.api.clients.params;
 
+/**
+ * The encapsulated parameters for {@link com.laserfiche.repository.api.clients.impl.EntriesClientImpl#deleteAssignedTemplate(ParametersForDeleteAssignedTemplate) deleteAssignedTemplate}.
+ */
 public class ParametersForDeleteAssignedTemplate {
 
     /**
@@ -12,6 +15,12 @@ public class ParametersForDeleteAssignedTemplate {
      */
     private int entryId;
 
+    /**
+     * Sets the value of the repoId parameter and returns the current object, to enable chaining further setters.
+     *
+     * @param repoId The requested repository ID.
+     * @return {@link ParametersForDeleteAssignedTemplate} The return value
+     */
     public ParametersForDeleteAssignedTemplate setRepoId(String repoId) {
         this.repoId = repoId;
         return this;
@@ -20,12 +29,18 @@ public class ParametersForDeleteAssignedTemplate {
     /**
      * The requested repository ID.
      *
-     * @return String The return value
+     * @return {@link String} The return value
      */
     public String getRepoId() {
         return this.repoId;
     }
 
+    /**
+     * Sets the value of the entryId parameter and returns the current object, to enable chaining further setters.
+     *
+     * @param entryId The ID of the entry that will have its template removed.
+     * @return {@link ParametersForDeleteAssignedTemplate} The return value
+     */
     public ParametersForDeleteAssignedTemplate setEntryId(int entryId) {
         this.entryId = entryId;
         return this;

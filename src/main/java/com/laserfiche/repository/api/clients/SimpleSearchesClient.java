@@ -3,6 +3,9 @@ package com.laserfiche.repository.api.clients;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfEntry;
 import com.laserfiche.repository.api.clients.params.ParametersForCreateSimpleSearchOperation;
 
+/**
+ * The Laserfiche Repository SimpleSearches API client.
+ */
 public interface SimpleSearchesClient {
 
     /**
@@ -13,8 +16,8 @@ public interface SimpleSearchesClient {
      * - If field values are requested, only the first value is returned if it is a multi value field.
      * - Null or Empty field values should not be used to determine if a field is assigned to the entry.
      *
-     * @param parameters An object of type ParametersForCreateSimpleSearchOperation which encapsulates the parameters of createSimpleSearchOperation method.
-     * @return ODataValueContextOfIListOfEntry The return value
+     * @param parameters An object of type {@link ParametersForCreateSimpleSearchOperation} which encapsulates the parameters of {@link #createSimpleSearchOperation createSimpleSearchOperation} method.
+     * @return {@link ODataValueContextOfIListOfEntry} The return value
      */
     ODataValueContextOfIListOfEntry createSimpleSearchOperation(ParametersForCreateSimpleSearchOperation parameters);
 }

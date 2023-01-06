@@ -4,6 +4,9 @@ import com.laserfiche.repository.api.clients.impl.model.FieldToUpdate;
 
 import java.util.Map;
 
+/**
+ * The encapsulated parameters for {@link com.laserfiche.repository.api.clients.impl.EntriesClientImpl#assignFieldValues(ParametersForAssignFieldValues) assignFieldValues}.
+ */
 public class ParametersForAssignFieldValues {
 
     /**
@@ -24,6 +27,12 @@ public class ParametersForAssignFieldValues {
      */
     private String culture;
 
+    /**
+     * Sets the value of the repoId parameter and returns the current object, to enable chaining further setters.
+     *
+     * @param repoId The requested repository ID.
+     * @return {@link ParametersForAssignFieldValues} The return value
+     */
     public ParametersForAssignFieldValues setRepoId(String repoId) {
         this.repoId = repoId;
         return this;
@@ -32,12 +41,18 @@ public class ParametersForAssignFieldValues {
     /**
      * The requested repository ID.
      *
-     * @return String The return value
+     * @return {@link String} The return value
      */
     public String getRepoId() {
         return this.repoId;
     }
 
+    /**
+     * Sets the value of the entryId parameter and returns the current object, to enable chaining further setters.
+     *
+     * @param entryId The entry ID of the entry that will have its fields updated.
+     * @return {@link ParametersForAssignFieldValues} The return value
+     */
     public ParametersForAssignFieldValues setEntryId(int entryId) {
         this.entryId = entryId;
         return this;
@@ -61,6 +76,13 @@ public class ParametersForAssignFieldValues {
         return this.requestBody;
     }
 
+    /**
+     * Sets the value of the culture parameter and returns the current object, to enable chaining further setters.
+     *
+     * @param culture An optional query parameter used to indicate the locale that should be used.
+     *                The value should be a standard language tag. This may be used when setting field values with tokens.
+     * @return {@link ParametersForAssignFieldValues} The return value
+     */
     public ParametersForAssignFieldValues setCulture(String culture) {
         this.culture = culture;
         return this;
@@ -70,7 +92,7 @@ public class ParametersForAssignFieldValues {
      * An optional query parameter used to indicate the locale that should be used.
      * The value should be a standard language tag. This may be used when setting field values with tokens.
      *
-     * @return String The return value
+     * @return {@link String} The return value
      */
     public String getCulture() {
         return this.culture;

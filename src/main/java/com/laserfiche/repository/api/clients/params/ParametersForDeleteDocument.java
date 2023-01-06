@@ -1,5 +1,8 @@
 package com.laserfiche.repository.api.clients.params;
 
+/**
+ * The encapsulated parameters for {@link com.laserfiche.repository.api.clients.impl.EntriesClientImpl#deleteDocument(ParametersForDeleteDocument) deleteDocument}.
+ */
 public class ParametersForDeleteDocument {
 
     /**
@@ -12,6 +15,12 @@ public class ParametersForDeleteDocument {
      */
     private int entryId;
 
+    /**
+     * Sets the value of the repoId parameter and returns the current object, to enable chaining further setters.
+     *
+     * @param repoId The requested repository ID.
+     * @return {@link ParametersForDeleteDocument} The return value
+     */
     public ParametersForDeleteDocument setRepoId(String repoId) {
         this.repoId = repoId;
         return this;
@@ -20,12 +29,18 @@ public class ParametersForDeleteDocument {
     /**
      * The requested repository ID.
      *
-     * @return String The return value
+     * @return {@link String} The return value
      */
     public String getRepoId() {
         return this.repoId;
     }
 
+    /**
+     * Sets the value of the entryId parameter and returns the current object, to enable chaining further setters.
+     *
+     * @param entryId The requested document ID.
+     * @return {@link ParametersForDeleteDocument} The return value
+     */
     public ParametersForDeleteDocument setEntryId(int entryId) {
         this.entryId = entryId;
         return this;

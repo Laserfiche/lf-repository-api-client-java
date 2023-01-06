@@ -1,5 +1,8 @@
 package com.laserfiche.repository.api.clients.params;
 
+/**
+ * The encapsulated parameters for {@link com.laserfiche.repository.api.clients.impl.SearchesClientImpl#getSearchContextHits(ParametersForGetSearchContextHits) getSearchContextHits}.
+ */
 public class ParametersForGetSearchContextHits {
 
     /**
@@ -47,6 +50,12 @@ public class ParametersForGetSearchContextHits {
      */
     private boolean count;
 
+    /**
+     * Sets the value of the repoId parameter and returns the current object, to enable chaining further setters.
+     *
+     * @param repoId The requested repository ID.
+     * @return {@link ParametersForGetSearchContextHits} The return value
+     */
     public ParametersForGetSearchContextHits setRepoId(String repoId) {
         this.repoId = repoId;
         return this;
@@ -55,12 +64,18 @@ public class ParametersForGetSearchContextHits {
     /**
      * The requested repository ID.
      *
-     * @return String The return value
+     * @return {@link String} The return value
      */
     public String getRepoId() {
         return this.repoId;
     }
 
+    /**
+     * Sets the value of the searchToken parameter and returns the current object, to enable chaining further setters.
+     *
+     * @param searchToken The requested searchToken.
+     * @return {@link ParametersForGetSearchContextHits} The return value
+     */
     public ParametersForGetSearchContextHits setSearchToken(String searchToken) {
         this.searchToken = searchToken;
         return this;
@@ -69,12 +84,18 @@ public class ParametersForGetSearchContextHits {
     /**
      * The requested searchToken.
      *
-     * @return String The return value
+     * @return {@link String} The return value
      */
     public String getSearchToken() {
         return this.searchToken;
     }
 
+    /**
+     * Sets the value of the rowNumber parameter and returns the current object, to enable chaining further setters.
+     *
+     * @param rowNumber The search result listing row number to get context hits for.
+     * @return {@link ParametersForGetSearchContextHits} The return value
+     */
     public ParametersForGetSearchContextHits setRowNumber(int rowNumber) {
         this.rowNumber = rowNumber;
         return this;
@@ -89,6 +110,12 @@ public class ParametersForGetSearchContextHits {
         return this.rowNumber;
     }
 
+    /**
+     * Sets the value of the prefer parameter and returns the current object, to enable chaining further setters.
+     *
+     * @param prefer An optional OData header. Can be used to set the maximum page size using odata.maxpagesize.
+     * @return {@link ParametersForGetSearchContextHits} The return value
+     */
     public ParametersForGetSearchContextHits setPrefer(String prefer) {
         this.prefer = prefer;
         return this;
@@ -97,12 +124,18 @@ public class ParametersForGetSearchContextHits {
     /**
      * An optional OData header. Can be used to set the maximum page size using odata.maxpagesize.
      *
-     * @return String The return value
+     * @return {@link String} The return value
      */
     public String getPrefer() {
         return this.prefer;
     }
 
+    /**
+     * Sets the value of the select parameter and returns the current object, to enable chaining further setters.
+     *
+     * @param select Limits the properties returned in the result.
+     * @return {@link ParametersForGetSearchContextHits} The return value
+     */
     public ParametersForGetSearchContextHits setSelect(String select) {
         this.select = select;
         return this;
@@ -111,12 +144,18 @@ public class ParametersForGetSearchContextHits {
     /**
      * Limits the properties returned in the result.
      *
-     * @return String The return value
+     * @return {@link String} The return value
      */
     public String getSelect() {
         return this.select;
     }
 
+    /**
+     * Sets the value of the orderby parameter and returns the current object, to enable chaining further setters.
+     *
+     * @param orderby Specifies the order in which items are returned. The maximum number of expressions is 5.
+     * @return {@link ParametersForGetSearchContextHits} The return value
+     */
     public ParametersForGetSearchContextHits setOrderby(String orderby) {
         this.orderby = orderby;
         return this;
@@ -125,12 +164,18 @@ public class ParametersForGetSearchContextHits {
     /**
      * Specifies the order in which items are returned. The maximum number of expressions is 5.
      *
-     * @return String The return value
+     * @return {@link String} The return value
      */
     public String getOrderby() {
         return this.orderby;
     }
 
+    /**
+     * Sets the value of the top parameter and returns the current object, to enable chaining further setters.
+     *
+     * @param top Limits the number of items returned from a collection.
+     * @return {@link ParametersForGetSearchContextHits} The return value
+     */
     public ParametersForGetSearchContextHits setTop(int top) {
         this.top = top;
         return this;
@@ -145,6 +190,12 @@ public class ParametersForGetSearchContextHits {
         return this.top;
     }
 
+    /**
+     * Sets the value of the skip parameter and returns the current object, to enable chaining further setters.
+     *
+     * @param skip Excludes the specified number of items of the queried collection from the result.
+     * @return {@link ParametersForGetSearchContextHits} The return value
+     */
     public ParametersForGetSearchContextHits setSkip(int skip) {
         this.skip = skip;
         return this;
@@ -159,6 +210,12 @@ public class ParametersForGetSearchContextHits {
         return this.skip;
     }
 
+    /**
+     * Sets the value of the count parameter and returns the current object, to enable chaining further setters.
+     *
+     * @param count Indicates whether the total count of items within a collection are returned in the result.
+     * @return {@link ParametersForGetSearchContextHits} The return value
+     */
     public ParametersForGetSearchContextHits setCount(boolean count) {
         this.count = count;
         return this;

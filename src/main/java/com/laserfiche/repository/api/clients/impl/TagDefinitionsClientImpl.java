@@ -17,20 +17,15 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+/**
+ * The Laserfiche Repository TagDefinitions API client.
+ */
 public class TagDefinitionsClientImpl extends ApiClient implements TagDefinitionsClient {
 
     public TagDefinitionsClientImpl(String baseUrl, UnirestInstance httpClient) {
         super(baseUrl, httpClient);
     }
 
-    /**
-     * - Returns all tag definitions in the repository.
-     * - Provide a repository ID and get a paged listing of tag definitions available in the repository. Useful when trying to display all tag definitions available, not only tags assigned to a specific entry.
-     * - Default page size: 100. Allowed OData query options: Select | Count | OrderBy | Skip | Top | SkipToken | Prefer.
-     *
-     * @param parameters An object of type ParametersForGetTagDefinitions which encapsulates the parameters of getTagDefinitions method.
-     * @return ODataValueContextOfIListOfWTagInfo The return value
-     */
     @Override
     public ODataValueContextOfIListOfWTagInfo getTagDefinitions(ParametersForGetTagDefinitions parameters) {
         return doGetTagDefinitions(baseUrl + "/v1/Repositories/{repoId}/TagDefinitions", parameters);
@@ -115,14 +110,6 @@ public class TagDefinitionsClientImpl extends ApiClient implements TagDefinition
         }
     }
 
-    /**
-     * - Returns a single tag definition.
-     * - Provide a tag definition ID, and get the single tag definition associated with that ID. Useful when another route provides a minimal amount of details, and more information about the specific tag is needed.
-     * - Allowed OData query options: Select
-     *
-     * @param parameters An object of type ParametersForGetTagDefinitionById which encapsulates the parameters of getTagDefinitionById method.
-     * @return WTagInfo The return value
-     */
     @Override
     public WTagInfo getTagDefinitionById(ParametersForGetTagDefinitionById parameters) {
         Map<String, Object> queryParameters = getParametersWithNonDefaultValue(new String[]{"String", "String"},

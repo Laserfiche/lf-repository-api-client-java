@@ -17,20 +17,15 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+/**
+ * The Laserfiche Repository FieldDefinitions API client.
+ */
 public class FieldDefinitionsClientImpl extends ApiClient implements FieldDefinitionsClient {
 
     public FieldDefinitionsClientImpl(String baseUrl, UnirestInstance httpClient) {
         super(baseUrl, httpClient);
     }
 
-    /**
-     * - Returns a single field definition associated with the specified ID.
-     * - Useful when a route provides a minimal amount of details and more information about the specific field definition is needed.
-     * - Allowed OData query options: Select
-     *
-     * @param parameters An object of type ParametersForGetFieldDefinitionById which encapsulates the parameters of getFieldDefinitionById method.
-     * @return WFieldInfo The return value
-     */
     @Override
     public WFieldInfo getFieldDefinitionById(ParametersForGetFieldDefinitionById parameters) {
         Map<String, Object> queryParameters = getParametersWithNonDefaultValue(new String[]{"String", "String"},
@@ -85,14 +80,6 @@ public class FieldDefinitionsClientImpl extends ApiClient implements FieldDefini
         }
     }
 
-    /**
-     * - Returns a paged listing of field definitions available in the specified repository.
-     * - Useful when trying to find a list of all field definitions available, rather than only those assigned to a specific entry/template.
-     * - Default page size: 100. Allowed OData query options: Select | Count | OrderBy | Skip | Top | SkipToken | Prefer.
-     *
-     * @param parameters An object of type ParametersForGetFieldDefinitions which encapsulates the parameters of getFieldDefinitions method.
-     * @return ODataValueContextOfIListOfWFieldInfo The return value
-     */
     @Override
     public ODataValueContextOfIListOfWFieldInfo getFieldDefinitions(ParametersForGetFieldDefinitions parameters) {
         return doGetFieldDefinitions(baseUrl + "/v1/Repositories/{repoId}/FieldDefinitions", parameters);
