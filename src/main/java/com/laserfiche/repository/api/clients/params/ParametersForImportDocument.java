@@ -4,6 +4,9 @@ import com.laserfiche.repository.api.clients.impl.model.PostEntryWithEdocMetadat
 
 import java.io.InputStream;
 
+/**
+ * The encapsulated parameters for {@link com.laserfiche.repository.api.clients.impl.EntriesClientImpl#importDocument(ParametersForImportDocument) importDocument}.
+ */
 public class ParametersForImportDocument {
 
     /**
@@ -37,6 +40,12 @@ public class ParametersForImportDocument {
 
     private PostEntryWithEdocMetadataRequest requestBody;
 
+    /**
+     * Sets the value of the repoId parameter and returns the current object, to enable chaining further setters.
+     *
+     * @param repoId The requested repository ID.
+     * @return {@link ParametersForImportDocument} The return value
+     */
     public ParametersForImportDocument setRepoId(String repoId) {
         this.repoId = repoId;
         return this;
@@ -45,12 +54,18 @@ public class ParametersForImportDocument {
     /**
      * The requested repository ID.
      *
-     * @return String The return value
+     * @return {@link String} The return value
      */
     public String getRepoId() {
         return this.repoId;
     }
 
+    /**
+     * Sets the value of the parentEntryId parameter and returns the current object, to enable chaining further setters.
+     *
+     * @param parentEntryId The entry ID of the folder that the document will be created in.
+     * @return {@link ParametersForImportDocument} The return value
+     */
     public ParametersForImportDocument setParentEntryId(int parentEntryId) {
         this.parentEntryId = parentEntryId;
         return this;
@@ -65,6 +80,12 @@ public class ParametersForImportDocument {
         return this.parentEntryId;
     }
 
+    /**
+     * Sets the value of the fileName parameter and returns the current object, to enable chaining further setters.
+     *
+     * @param fileName The created document's file name.
+     * @return {@link ParametersForImportDocument} The return value
+     */
     public ParametersForImportDocument setFileName(String fileName) {
         this.fileName = fileName;
         return this;
@@ -73,12 +94,19 @@ public class ParametersForImportDocument {
     /**
      * The created document's file name.
      *
-     * @return String The return value
+     * @return {@link String} The return value
      */
     public String getFileName() {
         return this.fileName;
     }
 
+    /**
+     * Sets the value of the autoRename parameter and returns the current object, to enable chaining further setters.
+     *
+     * @param autoRename An optional query parameter used to indicate if the new document should be automatically
+     *                   renamed if an entry already exists with the given name in the folder. The default value is false.
+     * @return {@link ParametersForImportDocument} The return value
+     */
     public ParametersForImportDocument setAutoRename(boolean autoRename) {
         this.autoRename = autoRename;
         return this;
@@ -94,6 +122,13 @@ public class ParametersForImportDocument {
         return this.autoRename;
     }
 
+    /**
+     * Sets the value of the culture parameter and returns the current object, to enable chaining further setters.
+     *
+     * @param culture An optional query parameter used to indicate the locale that should be used.
+     *                The value should be a standard language tag. This may be used when setting field values with tokens.
+     * @return {@link ParametersForImportDocument} The return value
+     */
     public ParametersForImportDocument setCulture(String culture) {
         this.culture = culture;
         return this;
@@ -103,7 +138,7 @@ public class ParametersForImportDocument {
      * An optional query parameter used to indicate the locale that should be used.
      * The value should be a standard language tag. This may be used when setting field values with tokens.
      *
-     * @return String The return value
+     * @return {@link String} The return value
      */
     public String getCulture() {
         return this.culture;

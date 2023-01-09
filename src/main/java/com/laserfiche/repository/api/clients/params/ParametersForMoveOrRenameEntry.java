@@ -2,6 +2,9 @@ package com.laserfiche.repository.api.clients.params;
 
 import com.laserfiche.repository.api.clients.impl.model.PatchEntryRequest;
 
+/**
+ * The encapsulated parameters for {@link com.laserfiche.repository.api.clients.impl.EntriesClientImpl#moveOrRenameEntry(ParametersForMoveOrRenameEntry) moveOrRenameEntry}.
+ */
 public class ParametersForMoveOrRenameEntry {
 
     /**
@@ -28,6 +31,12 @@ public class ParametersForMoveOrRenameEntry {
      */
     private String culture;
 
+    /**
+     * Sets the value of the repoId parameter and returns the current object, to enable chaining further setters.
+     *
+     * @param repoId The requested repository ID.
+     * @return {@link ParametersForMoveOrRenameEntry} The return value
+     */
     public ParametersForMoveOrRenameEntry setRepoId(String repoId) {
         this.repoId = repoId;
         return this;
@@ -36,12 +45,18 @@ public class ParametersForMoveOrRenameEntry {
     /**
      * The requested repository ID.
      *
-     * @return String The return value
+     * @return {@link String} The return value
      */
     public String getRepoId() {
         return this.repoId;
     }
 
+    /**
+     * Sets the value of the entryId parameter and returns the current object, to enable chaining further setters.
+     *
+     * @param entryId The requested entry ID.
+     * @return {@link ParametersForMoveOrRenameEntry} The return value
+     */
     public ParametersForMoveOrRenameEntry setEntryId(int entryId) {
         this.entryId = entryId;
         return this;
@@ -65,6 +80,13 @@ public class ParametersForMoveOrRenameEntry {
         return this.requestBody;
     }
 
+    /**
+     * Sets the value of the autoRename parameter and returns the current object, to enable chaining further setters.
+     *
+     * @param autoRename An optional query parameter used to indicate if the entry should be automatically
+     *                   renamed if another entry already exists with the same name in the folder. The default value is false.
+     * @return {@link ParametersForMoveOrRenameEntry} The return value
+     */
     public ParametersForMoveOrRenameEntry setAutoRename(boolean autoRename) {
         this.autoRename = autoRename;
         return this;
@@ -80,6 +102,13 @@ public class ParametersForMoveOrRenameEntry {
         return this.autoRename;
     }
 
+    /**
+     * Sets the value of the culture parameter and returns the current object, to enable chaining further setters.
+     *
+     * @param culture An optional query parameter used to indicate the locale that should be used.
+     *                The value should be a standard language tag.
+     * @return {@link ParametersForMoveOrRenameEntry} The return value
+     */
     public ParametersForMoveOrRenameEntry setCulture(String culture) {
         this.culture = culture;
         return this;
@@ -89,7 +118,7 @@ public class ParametersForMoveOrRenameEntry {
      * An optional query parameter used to indicate the locale that should be used.
      * The value should be a standard language tag.
      *
-     * @return String The return value
+     * @return {@link String} The return value
      */
     public String getCulture() {
         return this.culture;

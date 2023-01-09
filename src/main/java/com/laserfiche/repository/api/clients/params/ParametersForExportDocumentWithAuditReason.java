@@ -5,6 +5,9 @@ import com.laserfiche.repository.api.clients.impl.model.GetEdocWithAuditReasonRe
 import java.io.InputStream;
 import java.util.function.Consumer;
 
+/**
+ * The encapsulated parameters for {@link com.laserfiche.repository.api.clients.impl.EntriesClientImpl#exportDocumentWithAuditReason(ParametersForExportDocumentWithAuditReason) exportDocumentWithAuditReason}.
+ */
 public class ParametersForExportDocumentWithAuditReason {
 
     /**
@@ -27,6 +30,12 @@ public class ParametersForExportDocumentWithAuditReason {
 
     private Consumer<InputStream> inputStreamConsumer;
 
+    /**
+     * Sets the value of the repoId parameter and returns the current object, to enable chaining further setters.
+     *
+     * @param repoId The requested repository ID.
+     * @return {@link ParametersForExportDocumentWithAuditReason} The return value
+     */
     public ParametersForExportDocumentWithAuditReason setRepoId(String repoId) {
         this.repoId = repoId;
         return this;
@@ -35,12 +44,18 @@ public class ParametersForExportDocumentWithAuditReason {
     /**
      * The requested repository ID.
      *
-     * @return String The return value
+     * @return {@link String} The return value
      */
     public String getRepoId() {
         return this.repoId;
     }
 
+    /**
+     * Sets the value of the entryId parameter and returns the current object, to enable chaining further setters.
+     *
+     * @param entryId The requested document ID.
+     * @return {@link ParametersForExportDocumentWithAuditReason} The return value
+     */
     public ParametersForExportDocumentWithAuditReason setEntryId(int entryId) {
         this.entryId = entryId;
         return this;
@@ -64,6 +79,13 @@ public class ParametersForExportDocumentWithAuditReason {
         return this.requestBody;
     }
 
+    /**
+     * Sets the value of the range parameter and returns the current object, to enable chaining further setters.
+     *
+     * @param range An optional header used to retrieve partial content of the edoc. Only supports single
+     *              range with byte unit.
+     * @return {@link ParametersForExportDocumentWithAuditReason} The return value
+     */
     public ParametersForExportDocumentWithAuditReason setRange(String range) {
         this.range = range;
         return this;
@@ -73,7 +95,7 @@ public class ParametersForExportDocumentWithAuditReason {
      * An optional header used to retrieve partial content of the edoc. Only supports single
      * range with byte unit.
      *
-     * @return String The return value
+     * @return {@link String} The return value
      */
     public String getRange() {
         return this.range;

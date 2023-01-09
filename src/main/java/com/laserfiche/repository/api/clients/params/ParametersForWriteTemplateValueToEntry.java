@@ -2,6 +2,9 @@ package com.laserfiche.repository.api.clients.params;
 
 import com.laserfiche.repository.api.clients.impl.model.PutTemplateRequest;
 
+/**
+ * The encapsulated parameters for {@link com.laserfiche.repository.api.clients.impl.EntriesClientImpl#writeTemplateValueToEntry(ParametersForWriteTemplateValueToEntry) writeTemplateValueToEntry}.
+ */
 public class ParametersForWriteTemplateValueToEntry {
 
     /**
@@ -22,6 +25,12 @@ public class ParametersForWriteTemplateValueToEntry {
      */
     private String culture;
 
+    /**
+     * Sets the value of the repoId parameter and returns the current object, to enable chaining further setters.
+     *
+     * @param repoId The requested repository ID.
+     * @return {@link ParametersForWriteTemplateValueToEntry} The return value
+     */
     public ParametersForWriteTemplateValueToEntry setRepoId(String repoId) {
         this.repoId = repoId;
         return this;
@@ -30,12 +39,18 @@ public class ParametersForWriteTemplateValueToEntry {
     /**
      * The requested repository ID.
      *
-     * @return String The return value
+     * @return {@link String} The return value
      */
     public String getRepoId() {
         return this.repoId;
     }
 
+    /**
+     * Sets the value of the entryId parameter and returns the current object, to enable chaining further setters.
+     *
+     * @param entryId The ID of entry that will have its template updated.
+     * @return {@link ParametersForWriteTemplateValueToEntry} The return value
+     */
     public ParametersForWriteTemplateValueToEntry setEntryId(int entryId) {
         this.entryId = entryId;
         return this;
@@ -59,6 +74,13 @@ public class ParametersForWriteTemplateValueToEntry {
         return this.requestBody;
     }
 
+    /**
+     * Sets the value of the culture parameter and returns the current object, to enable chaining further setters.
+     *
+     * @param culture An optional query parameter used to indicate the locale that should be used.
+     *                The value should be a standard language tag. This may be used when setting field values with tokens.
+     * @return {@link ParametersForWriteTemplateValueToEntry} The return value
+     */
     public ParametersForWriteTemplateValueToEntry setCulture(String culture) {
         this.culture = culture;
         return this;
@@ -68,7 +90,7 @@ public class ParametersForWriteTemplateValueToEntry {
      * An optional query parameter used to indicate the locale that should be used.
      * The value should be a standard language tag. This may be used when setting field values with tokens.
      *
-     * @return String The return value
+     * @return {@link String} The return value
      */
     public String getCulture() {
         return this.culture;

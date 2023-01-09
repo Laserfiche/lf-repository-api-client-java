@@ -10,6 +10,9 @@ import kong.unirest.UnirestInstance;
 
 import java.util.Map;
 
+/**
+ * The Laserfiche Repository API client.
+ */
 public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseable {
     private Map<String, String> defaultHeaders;
     private final RepositoryApiClientInterceptor interceptor;
@@ -58,6 +61,13 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
         templateDefinitionsClient = new TemplateDefinitionsClientImpl(baseUrl, httpClient);
     }
 
+    /**
+     * Creates a new Laserfiche repository client that will use Laserfiche Cloud OAuth client credentials to get access tokens.
+     * @param servicePrincipalKey The service principal key created for the service principal from the Laserfiche Account Administration.
+     * @param accessKey The access key exported from the Laserfiche Developer Console.
+     * @param baseUrlDebug Optional override for the Laserfiche repository API base url.
+     * @return {@link RepositoryApiClient}
+     */
     public static RepositoryApiClient createFromAccessKey(String servicePrincipalKey, AccessKey accessKey,
             String baseUrlDebug) {
         if (baseUrlDebug == null) {
@@ -67,10 +77,25 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
         return new RepositoryApiClientImpl(interceptor, baseUrlDebug);
     }
 
+    /**
+     * Creates a new Laserfiche repository client that will use Laserfiche Cloud OAuth client credentials to get access tokens.
+     * @param servicePrincipalKey The service principal key created for the service principal from the Laserfiche Account Administration.
+     * @param accessKey The access key exported from the Laserfiche Developer Console.
+     * @return {@link RepositoryApiClient}
+     */
     public static RepositoryApiClient createFromAccessKey(String servicePrincipalKey, AccessKey accessKey) {
         return createFromAccessKey(servicePrincipalKey, accessKey, null);
     }
 
+    /**
+     * Creates a new Laserfiche repository client that will use username and password to get access tokens for Laserfiche API.
+     * Password credentials grant type is implemented by the Laserfiche Self-Hosted API server. Not available in cloud.
+     * @param repositoryId The repository ID.
+     * @param username The username.
+     * @param password The password.
+     * @param baseUrl API server base URL e.g., https://{APIServerName}/LFRepositoryAPI.
+     * @return {@link RepositoryApiClient}
+     */
     public static RepositoryApiClient createFromUsernamePassword(String repositoryId, String username, String password,
             String baseUrl) {
         RepositoryApiClientInterceptor interceptor = new SelfHostedInterceptor(repositoryId, username, password,

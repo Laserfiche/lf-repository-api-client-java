@@ -14,17 +14,15 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * The Laserfiche Repository Repositories API client.
+ */
 public class RepositoriesClientImpl extends ApiClient implements RepositoriesClient {
 
     public RepositoriesClientImpl(String baseUrl, UnirestInstance httpClient) {
         super(baseUrl, httpClient);
     }
 
-    /**
-     * - Returns the repository resource list that current user has access to.
-     *
-     * @return RepositoryInfo[] The return value
-     */
     @Override
     public RepositoryInfo[] getRepositoryList() {
         HttpResponse<Object> httpResponse = httpClient

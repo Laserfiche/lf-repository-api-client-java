@@ -9,7 +9,10 @@ import kong.unirest.UnirestInstance;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class ApiClient {
+/**
+ * The base API client.
+ */
+public abstract class ApiClient {
 
     protected String baseUrl;
 

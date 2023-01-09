@@ -1,5 +1,8 @@
 package com.laserfiche.repository.api.clients.params;
 
+/**
+ * The encapsulated parameters for {@link com.laserfiche.repository.api.clients.impl.EntriesClientImpl#deletePages(ParametersForDeletePages) deletePages}.
+ */
 public class ParametersForDeletePages {
 
     /**
@@ -17,6 +20,12 @@ public class ParametersForDeletePages {
      */
     private String pageRange;
 
+    /**
+     * Sets the value of the repoId parameter and returns the current object, to enable chaining further setters.
+     *
+     * @param repoId The requested repository ID.
+     * @return {@link ParametersForDeletePages} The return value
+     */
     public ParametersForDeletePages setRepoId(String repoId) {
         this.repoId = repoId;
         return this;
@@ -25,12 +34,18 @@ public class ParametersForDeletePages {
     /**
      * The requested repository ID.
      *
-     * @return String The return value
+     * @return {@link String} The return value
      */
     public String getRepoId() {
         return this.repoId;
     }
 
+    /**
+     * Sets the value of the entryId parameter and returns the current object, to enable chaining further setters.
+     *
+     * @param entryId The requested document ID.
+     * @return {@link ParametersForDeletePages} The return value
+     */
     public ParametersForDeletePages setEntryId(int entryId) {
         this.entryId = entryId;
         return this;
@@ -45,6 +60,12 @@ public class ParametersForDeletePages {
         return this.entryId;
     }
 
+    /**
+     * Sets the value of the pageRange parameter and returns the current object, to enable chaining further setters.
+     *
+     * @param pageRange The pages to be deleted.
+     * @return {@link ParametersForDeletePages} The return value
+     */
     public ParametersForDeletePages setPageRange(String pageRange) {
         this.pageRange = pageRange;
         return this;
@@ -53,7 +74,7 @@ public class ParametersForDeletePages {
     /**
      * The pages to be deleted.
      *
-     * @return String The return value
+     * @return {@link String} The return value
      */
     public String getPageRange() {
         return this.pageRange;

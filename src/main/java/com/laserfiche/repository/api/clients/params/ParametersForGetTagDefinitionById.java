@@ -1,5 +1,8 @@
 package com.laserfiche.repository.api.clients.params;
 
+/**
+ * The encapsulated parameters for {@link com.laserfiche.repository.api.clients.impl.TagDefinitionsClientImpl#getTagDefinitionById(ParametersForGetTagDefinitionById) getTagDefinitionById}.
+ */
 public class ParametersForGetTagDefinitionById {
 
     /**
@@ -23,6 +26,12 @@ public class ParametersForGetTagDefinitionById {
      */
     private String select;
 
+    /**
+     * Sets the value of the repoId parameter and returns the current object, to enable chaining further setters.
+     *
+     * @param repoId The requested repository ID.
+     * @return {@link ParametersForGetTagDefinitionById} The return value
+     */
     public ParametersForGetTagDefinitionById setRepoId(String repoId) {
         this.repoId = repoId;
         return this;
@@ -31,12 +40,18 @@ public class ParametersForGetTagDefinitionById {
     /**
      * The requested repository ID.
      *
-     * @return String The return value
+     * @return {@link String} The return value
      */
     public String getRepoId() {
         return this.repoId;
     }
 
+    /**
+     * Sets the value of the tagId parameter and returns the current object, to enable chaining further setters.
+     *
+     * @param tagId The requested tag definition ID.
+     * @return {@link ParametersForGetTagDefinitionById} The return value
+     */
     public ParametersForGetTagDefinitionById setTagId(int tagId) {
         this.tagId = tagId;
         return this;
@@ -51,6 +66,13 @@ public class ParametersForGetTagDefinitionById {
         return this.tagId;
     }
 
+    /**
+     * Sets the value of the culture parameter and returns the current object, to enable chaining further setters.
+     *
+     * @param culture An optional query parameter used to indicate the locale that should be used for formatting.
+     *                The value should be a standard language tag.
+     * @return {@link ParametersForGetTagDefinitionById} The return value
+     */
     public ParametersForGetTagDefinitionById setCulture(String culture) {
         this.culture = culture;
         return this;
@@ -60,12 +82,18 @@ public class ParametersForGetTagDefinitionById {
      * An optional query parameter used to indicate the locale that should be used for formatting.
      * The value should be a standard language tag.
      *
-     * @return String The return value
+     * @return {@link String} The return value
      */
     public String getCulture() {
         return this.culture;
     }
 
+    /**
+     * Sets the value of the select parameter and returns the current object, to enable chaining further setters.
+     *
+     * @param select Limits the properties returned in the result.
+     * @return {@link ParametersForGetTagDefinitionById} The return value
+     */
     public ParametersForGetTagDefinitionById setSelect(String select) {
         this.select = select;
         return this;
@@ -74,7 +102,7 @@ public class ParametersForGetTagDefinitionById {
     /**
      * Limits the properties returned in the result.
      *
-     * @return String The return value
+     * @return {@link String} The return value
      */
     public String getSelect() {
         return this.select;

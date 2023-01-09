@@ -2,6 +2,9 @@ package com.laserfiche.repository.api.clients.params;
 
 import com.laserfiche.repository.api.clients.impl.model.PostEntryChildrenRequest;
 
+/**
+ * The encapsulated parameters for {@link com.laserfiche.repository.api.clients.impl.EntriesClientImpl#createOrCopyEntry(ParametersForCreateOrCopyEntry) createOrCopyEntry}.
+ */
 public class ParametersForCreateOrCopyEntry {
 
     /**
@@ -28,6 +31,12 @@ public class ParametersForCreateOrCopyEntry {
      */
     private String culture;
 
+    /**
+     * Sets the value of the repoId parameter and returns the current object, to enable chaining further setters.
+     *
+     * @param repoId The requested repository ID.
+     * @return {@link ParametersForCreateOrCopyEntry} The return value
+     */
     public ParametersForCreateOrCopyEntry setRepoId(String repoId) {
         this.repoId = repoId;
         return this;
@@ -36,12 +45,18 @@ public class ParametersForCreateOrCopyEntry {
     /**
      * The requested repository ID.
      *
-     * @return String The return value
+     * @return {@link String} The return value
      */
     public String getRepoId() {
         return this.repoId;
     }
 
+    /**
+     * Sets the value of the entryId parameter and returns the current object, to enable chaining further setters.
+     *
+     * @param entryId The folder ID that the entry will be created in.
+     * @return {@link ParametersForCreateOrCopyEntry} The return value
+     */
     public ParametersForCreateOrCopyEntry setEntryId(int entryId) {
         this.entryId = entryId;
         return this;
@@ -65,6 +80,13 @@ public class ParametersForCreateOrCopyEntry {
         return this.requestBody;
     }
 
+    /**
+     * Sets the value of the autoRename parameter and returns the current object, to enable chaining further setters.
+     *
+     * @param autoRename An optional query parameter used to indicate if the new entry should be automatically
+     *                   renamed if an entry already exists with the given name in the folder. The default value is false.
+     * @return {@link ParametersForCreateOrCopyEntry} The return value
+     */
     public ParametersForCreateOrCopyEntry setAutoRename(boolean autoRename) {
         this.autoRename = autoRename;
         return this;
@@ -80,6 +102,13 @@ public class ParametersForCreateOrCopyEntry {
         return this.autoRename;
     }
 
+    /**
+     * Sets the value of the culture parameter and returns the current object, to enable chaining further setters.
+     *
+     * @param culture An optional query parameter used to indicate the locale that should be used.
+     *                The value should be a standard language tag.
+     * @return {@link ParametersForCreateOrCopyEntry} The return value
+     */
     public ParametersForCreateOrCopyEntry setCulture(String culture) {
         this.culture = culture;
         return this;
@@ -89,7 +118,7 @@ public class ParametersForCreateOrCopyEntry {
      * An optional query parameter used to indicate the locale that should be used.
      * The value should be a standard language tag.
      *
-     * @return String The return value
+     * @return {@link String} The return value
      */
     public String getCulture() {
         return this.culture;

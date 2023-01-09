@@ -17,20 +17,15 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+/**
+ * The Laserfiche Repository LinkDefinitions API client.
+ */
 public class LinkDefinitionsClientImpl extends ApiClient implements LinkDefinitionsClient {
 
     public LinkDefinitionsClientImpl(String baseUrl, UnirestInstance httpClient) {
         super(baseUrl, httpClient);
     }
 
-    /**
-     * - Returns a single link definition associated with the specified ID.
-     * - Provide a link type ID and get the associated link definition. Useful when a route provides a minimal amount of details and more information about the specific link definition is needed.
-     * - Allowed OData query options: Select
-     *
-     * @param parameters An object of type ParametersForGetLinkDefinitionById which encapsulates the parameters of getLinkDefinitionById method.
-     * @return EntryLinkTypeInfo The return value
-     */
     @Override
     public EntryLinkTypeInfo getLinkDefinitionById(ParametersForGetLinkDefinitionById parameters) {
         Map<String, Object> queryParameters = getParametersWithNonDefaultValue(new String[]{"String"},
@@ -85,14 +80,6 @@ public class LinkDefinitionsClientImpl extends ApiClient implements LinkDefiniti
         }
     }
 
-    /**
-     * - Returns the link definitions in the repository.
-     * - Provide a repository ID and get a paged listing of link definitions available in the repository. Useful when trying to display all link definitions available, not only links assigned to a specific entry.
-     * - Default page size: 100. Allowed OData query options: Select | Count | OrderBy | Skip | Top | SkipToken | Prefer.
-     *
-     * @param parameters An object of type ParametersForGetLinkDefinitions which encapsulates the parameters of getLinkDefinitions method.
-     * @return ODataValueContextOfIListOfEntryLinkTypeInfo The return value
-     */
     @Override
     public ODataValueContextOfIListOfEntryLinkTypeInfo getLinkDefinitions(ParametersForGetLinkDefinitions parameters) {
         return doGetLinkDefinitions(baseUrl + "/v1/Repositories/{repoId}/LinkDefinitions", parameters);
