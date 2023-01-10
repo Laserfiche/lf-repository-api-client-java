@@ -8,8 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * The result of trying to assign a entry link to the entry.
+ */
 @Schema(description = "The result of trying to assign a entry link to the entry.")
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-17T11:38:41.655-04:00[America/New_York]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class SetLinks {
 
@@ -32,6 +35,11 @@ public class SetLinks {
         return this;
     }
 
+    /**
+     * Returns the list of exceptions that occured when trying to perform the operation.
+     *
+     * @return exceptions
+     */
     @Schema(description = "The list of exceptions that occured when trying to perform the operation.")
     public List<APIServerException> getExceptions() {
         return exceptions;
@@ -54,6 +62,11 @@ public class SetLinks {
         return this;
     }
 
+    /**
+     * Returns the ids of the other entries linked to the entry
+     *
+     * @return otherEntryIds
+     */
     @Schema(description = "The ids of the other entries linked to the entry")
     public List<Integer> getOtherEntryIds() {
         return otherEntryIds;
@@ -64,7 +77,7 @@ public class SetLinks {
     }
 
     @Override
-    public boolean equals(java.lang.Object o) {
+    public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
@@ -97,7 +110,7 @@ public class SetLinks {
         return sb.toString();
     }
 
-    private String toIndentedString(java.lang.Object o) {
+    private String toIndentedString(Object o) {
         if (o == null) {
             return "null";
         }

@@ -6,7 +6,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.Objects;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-17T11:38:41.655-04:00[America/New_York]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class WTemplateInfo {
 
@@ -33,6 +33,11 @@ public class WTemplateInfo {
         return this;
     }
 
+    /**
+     * Returns the ID of the template definition.
+     *
+     * @return id
+     */
     @Schema(description = "The ID of the template definition.")
     public Integer getId() {
         return id;
@@ -47,6 +52,11 @@ public class WTemplateInfo {
         return this;
     }
 
+    /**
+     * Returns the name of the template definition.
+     *
+     * @return name
+     */
     @Schema(description = "The name of the template definition.")
     public String getName() {
         return name;
@@ -61,6 +71,11 @@ public class WTemplateInfo {
         return this;
     }
 
+    /**
+     * Returns the localized name of the template definition.
+     *
+     * @return displayName
+     */
     @Schema(description = "The localized name of the template definition.")
     public String getDisplayName() {
         return displayName;
@@ -75,6 +90,11 @@ public class WTemplateInfo {
         return this;
     }
 
+    /**
+     * Returns the description of the template definition.
+     *
+     * @return description
+     */
     @Schema(description = "The description of the template definition.")
     public String getDescription() {
         return description;
@@ -89,6 +109,11 @@ public class WTemplateInfo {
         return this;
     }
 
+    /**
+     * Returns color
+     *
+     * @return color
+     */
     @Schema(description = "")
     public LFColor getColor() {
         return color;
@@ -103,6 +128,11 @@ public class WTemplateInfo {
         return this;
     }
 
+    /**
+     * Returns the number of fields assigned to the template.
+     *
+     * @return fieldCount
+     */
     @Schema(description = "The number of fields assigned to the template.")
     public Integer getFieldCount() {
         return fieldCount;
@@ -113,7 +143,7 @@ public class WTemplateInfo {
     }
 
     @Override
-    public boolean equals(java.lang.Object o) {
+    public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
@@ -164,7 +194,7 @@ public class WTemplateInfo {
         return sb.toString();
     }
 
-    private String toIndentedString(java.lang.Object o) {
+    private String toIndentedString(Object o) {
         if (o == null) {
             return "null";
         }

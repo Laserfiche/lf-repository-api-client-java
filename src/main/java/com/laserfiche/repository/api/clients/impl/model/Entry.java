@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-11-07T15:57:30.539-05:00[America/New_York]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "entryType", visible = true, defaultImpl = Entry.class)
 @JsonSubTypes({@JsonSubTypes.Type(value = Document.class, name = "Document"), @JsonSubTypes.Type(value = Folder.class, name = "Folder"), @JsonSubTypes.Type(value = Shortcut.class, name = "Shortcut"), @JsonSubTypes.Type(value = RecordSeries.class, name = "RecordSeries")})
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -73,6 +73,11 @@ public class Entry {
         return this;
     }
 
+    /**
+     * Returns the ID of the entry.
+     *
+     * @return id
+     */
     @Schema(description = "The ID of the entry.")
     public Integer getId() {
         return id;
@@ -87,6 +92,11 @@ public class Entry {
         return this;
     }
 
+    /**
+     * Returns the name of the entry.
+     *
+     * @return name
+     */
     @Schema(description = "The name of the entry.")
     public String getName() {
         return name;
@@ -101,6 +111,11 @@ public class Entry {
         return this;
     }
 
+    /**
+     * Returns the ID of the parent entry.
+     *
+     * @return parentId
+     */
     @Schema(description = "The ID of the parent entry.")
     public Integer getParentId() {
         return parentId;
@@ -115,6 +130,11 @@ public class Entry {
         return this;
     }
 
+    /**
+     * Returns the full path in the Laserfiche repository to the entry.
+     *
+     * @return fullPath
+     */
     @Schema(description = "The full path in the Laserfiche repository to the entry.")
     public String getFullPath() {
         return fullPath;
@@ -129,6 +149,11 @@ public class Entry {
         return this;
     }
 
+    /**
+     * Returns the path in the Laserfiche repository to the parent folder.
+     *
+     * @return folderPath
+     */
     @Schema(description = "The path in the Laserfiche repository to the parent folder.")
     public String getFolderPath() {
         return folderPath;
@@ -143,6 +168,11 @@ public class Entry {
         return this;
     }
 
+    /**
+     * Returns the name of the user that created this entry.
+     *
+     * @return creator
+     */
     @Schema(description = "The name of the user that created this entry.")
     public String getCreator() {
         return creator;
@@ -157,6 +187,11 @@ public class Entry {
         return this;
     }
 
+    /**
+     * Returns the creation time of the entry.
+     *
+     * @return creationTime
+     */
     @Schema(description = "The creation time of the entry.")
     public OffsetDateTime getCreationTime() {
         return creationTime;
@@ -171,6 +206,11 @@ public class Entry {
         return this;
     }
 
+    /**
+     * Returns the last modification time of the entry.
+     *
+     * @return lastModifiedTime
+     */
     @Schema(description = "The last modification time of the entry.")
     public OffsetDateTime getLastModifiedTime() {
         return lastModifiedTime;
@@ -185,6 +225,11 @@ public class Entry {
         return this;
     }
 
+    /**
+     * Returns entryType
+     *
+     * @return entryType
+     */
     @Schema(description = "")
     public EntryType getEntryType() {
         return entryType;
@@ -199,6 +244,11 @@ public class Entry {
         return this;
     }
 
+    /**
+     * Returns a boolean indicating if this entry is a container object; it can have other entries as children.
+     *
+     * @return isContainer
+     */
     @Schema(description = "A boolean indicating if this entry is a container object; it can have other entries as children.")
     @JsonProperty("isContainer")
     public Boolean isContainer() {
@@ -214,6 +264,11 @@ public class Entry {
         return this;
     }
 
+    /**
+     * Returns a boolean indicating if this entry is a leaf object; it cannot have other entries as children.
+     *
+     * @return isLeaf
+     */
     @Schema(description = "A boolean indicating if this entry is a leaf object; it cannot have other entries as children.")
     @JsonProperty("isLeaf")
     public Boolean isLeaf() {
@@ -229,6 +284,11 @@ public class Entry {
         return this;
     }
 
+    /**
+     * Returns the name of the template assigned to this entry.
+     *
+     * @return templateName
+     */
     @Schema(description = "The name of the template assigned to this entry.")
     public String getTemplateName() {
         return templateName;
@@ -243,6 +303,11 @@ public class Entry {
         return this;
     }
 
+    /**
+     * Returns the id of the template assigned to this entry.
+     *
+     * @return templateId
+     */
     @Schema(description = "The id of the template assigned to this entry.")
     public Integer getTemplateId() {
         return templateId;
@@ -265,6 +330,11 @@ public class Entry {
         return this;
     }
 
+    /**
+     * Returns the names of the fields assigned to the template assigned to this entry.
+     *
+     * @return templateFieldNames
+     */
     @Schema(description = "The names of the fields assigned to the template assigned to this entry.")
     public List<String> getTemplateFieldNames() {
         return templateFieldNames;
@@ -279,6 +349,11 @@ public class Entry {
         return this;
     }
 
+    /**
+     * Returns the name of the volume that this entry is associated with.
+     *
+     * @return volumeName
+     */
     @Schema(description = "The name of the volume that this entry is associated with.")
     public String getVolumeName() {
         return volumeName;
@@ -293,6 +368,11 @@ public class Entry {
         return this;
     }
 
+    /**
+     * Returns row number assigned to this entry in the listing.
+     *
+     * @return rowNumber
+     */
     @Schema(description = "Row number assigned to this entry in the listing.")
     public Integer getRowNumber() {
         return rowNumber;
@@ -315,6 +395,11 @@ public class Entry {
         return this;
     }
 
+    /**
+     * Returns the fields assigned to this entry.
+     *
+     * @return fields
+     */
     @Schema(description = "The fields assigned to this entry.")
     public List<EntryFieldValue> getFields() {
         return fields;
@@ -325,7 +410,7 @@ public class Entry {
     }
 
     @Override
-    public boolean equals(java.lang.Object o) {
+    public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
@@ -428,7 +513,7 @@ public class Entry {
         return sb.toString();
     }
 
-    private String toIndentedString(java.lang.Object o) {
+    private String toIndentedString(Object o) {
         if (o == null) {
             return "null";
         }

@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-17T11:38:41.655-04:00[America/New_York]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class GetDynamicFieldLogicValueRequest {
 
@@ -23,6 +23,11 @@ public class GetDynamicFieldLogicValueRequest {
         return this;
     }
 
+    /**
+     * Returns the template id.
+     *
+     * @return templateId
+     */
     @Schema(description = "The template id.")
     public Integer getTemplateId() {
         return templateId;
@@ -45,6 +50,11 @@ public class GetDynamicFieldLogicValueRequest {
         return this;
     }
 
+    /**
+     * Returns the dynamic fields.
+     *
+     * @return fieldValues
+     */
     @Schema(description = "The dynamic fields.")
     public Map<String, String> getFieldValues() {
         return fieldValues;
@@ -55,7 +65,7 @@ public class GetDynamicFieldLogicValueRequest {
     }
 
     @Override
-    public boolean equals(java.lang.Object o) {
+    public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
@@ -88,7 +98,7 @@ public class GetDynamicFieldLogicValueRequest {
         return sb.toString();
     }
 
-    private String toIndentedString(java.lang.Object o) {
+    private String toIndentedString(Object o) {
         if (o == null) {
             return "null";
         }

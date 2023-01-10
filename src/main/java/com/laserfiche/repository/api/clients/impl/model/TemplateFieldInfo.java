@@ -6,7 +6,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.Objects;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-17T11:38:41.655-04:00[America/New_York]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class TemplateFieldInfo extends WFieldInfo {
 
@@ -24,6 +24,11 @@ public class TemplateFieldInfo extends WFieldInfo {
         return this;
     }
 
+    /**
+     * Returns rule
+     *
+     * @return rule
+     */
     @Schema(description = "")
     public Rule getRule() {
         return rule;
@@ -38,6 +43,11 @@ public class TemplateFieldInfo extends WFieldInfo {
         return this;
     }
 
+    /**
+     * Returns the group id of the field in the template.
+     *
+     * @return groupId
+     */
     @Schema(description = "The group id of the field in the template.")
     public Integer getGroupId() {
         return groupId;
@@ -52,6 +62,11 @@ public class TemplateFieldInfo extends WFieldInfo {
         return this;
     }
 
+    /**
+     * Returns the name of field group.
+     *
+     * @return groupName
+     */
     @Schema(description = "The name of field group.")
     public String getGroupName() {
         return groupName;
@@ -62,7 +77,7 @@ public class TemplateFieldInfo extends WFieldInfo {
     }
 
     @Override
-    public boolean equals(java.lang.Object o) {
+    public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
@@ -104,7 +119,7 @@ public class TemplateFieldInfo extends WFieldInfo {
         return sb.toString();
     }
 
-    private String toIndentedString(java.lang.Object o) {
+    private String toIndentedString(Object o) {
         if (o == null) {
             return "null";
         }

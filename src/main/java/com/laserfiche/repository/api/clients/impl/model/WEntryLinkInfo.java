@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-17T11:38:41.655-04:00[America/New_York]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class WEntryLinkInfo {
 
@@ -56,6 +56,11 @@ public class WEntryLinkInfo {
         return this;
     }
 
+    /**
+     * Returns the ID of the entry link.
+     *
+     * @return linkId
+     */
     @Schema(description = "The ID of the entry link.")
     public Integer getLinkId() {
         return linkId;
@@ -70,6 +75,11 @@ public class WEntryLinkInfo {
         return this;
     }
 
+    /**
+     * Returns the ID of the source entry of the represented link.
+     *
+     * @return sourceId
+     */
     @Schema(description = "The ID of the source entry of the represented link.")
     public Integer getSourceId() {
         return sourceId;
@@ -84,6 +94,11 @@ public class WEntryLinkInfo {
         return this;
     }
 
+    /**
+     * Returns the full path to the source entry of the represented link.
+     *
+     * @return sourceFullPath
+     */
     @Schema(description = "The full path to the source entry of the represented link.")
     public String getSourceFullPath() {
         return sourceFullPath;
@@ -98,6 +113,11 @@ public class WEntryLinkInfo {
         return this;
     }
 
+    /**
+     * Returns the label for the source entry in the link type.
+     *
+     * @return sourceLabel
+     */
     @Schema(description = "The label for the source entry in the link type.")
     public String getSourceLabel() {
         return sourceLabel;
@@ -112,6 +132,11 @@ public class WEntryLinkInfo {
         return this;
     }
 
+    /**
+     * Returns the ID of the target entry of the represented link.
+     *
+     * @return targetId
+     */
     @Schema(description = "The ID of the target entry of the represented link.")
     public Integer getTargetId() {
         return targetId;
@@ -126,6 +151,11 @@ public class WEntryLinkInfo {
         return this;
     }
 
+    /**
+     * Returns the full path to the target entry of the represented link.
+     *
+     * @return targetFullPath
+     */
     @Schema(description = "The full path to the target entry of the represented link.")
     public String getTargetFullPath() {
         return targetFullPath;
@@ -140,6 +170,11 @@ public class WEntryLinkInfo {
         return this;
     }
 
+    /**
+     * Returns the label for the target entry in the link type.
+     *
+     * @return targetLabel
+     */
     @Schema(description = "The label for the target entry in the link type.")
     public String getTargetLabel() {
         return targetLabel;
@@ -154,6 +189,11 @@ public class WEntryLinkInfo {
         return this;
     }
 
+    /**
+     * Returns the descriptive text for the represented entry link.
+     *
+     * @return description
+     */
     @Schema(description = "The descriptive text for the represented entry link.")
     public String getDescription() {
         return description;
@@ -168,6 +208,11 @@ public class WEntryLinkInfo {
         return this;
     }
 
+    /**
+     * Returns the description of the link type.
+     *
+     * @return linkTypeDescription
+     */
     @Schema(description = "The description of the link type.")
     public String getLinkTypeDescription() {
         return linkTypeDescription;
@@ -182,6 +227,11 @@ public class WEntryLinkInfo {
         return this;
     }
 
+    /**
+     * Returns the ID of the entry link type.
+     *
+     * @return linkTypeId
+     */
     @Schema(description = "The ID of the entry link type.")
     public Integer getLinkTypeId() {
         return linkTypeId;
@@ -204,6 +254,11 @@ public class WEntryLinkInfo {
         return this;
     }
 
+    /**
+     * Returns the properties for the entry link.
+     *
+     * @return linkProperties
+     */
     @Schema(description = "The properties for the entry link.")
     public Map<String, String> getLinkProperties() {
         return linkProperties;
@@ -218,6 +273,11 @@ public class WEntryLinkInfo {
         return this;
     }
 
+    /**
+     * Returns the navigation link to the source entry.
+     *
+     * @return sourceLink
+     */
     @Schema(description = "The navigation link to the source entry.")
     public String getSourceLink() {
         return sourceLink;
@@ -232,6 +292,11 @@ public class WEntryLinkInfo {
         return this;
     }
 
+    /**
+     * Returns the navigation link to the target entry.
+     *
+     * @return targetLink
+     */
     @Schema(description = "The navigation link to the target entry.")
     public String getTargetLink() {
         return targetLink;
@@ -242,7 +307,7 @@ public class WEntryLinkInfo {
     }
 
     @Override
-    public boolean equals(java.lang.Object o) {
+    public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
@@ -329,7 +394,7 @@ public class WEntryLinkInfo {
         return sb.toString();
     }
 
-    private String toIndentedString(java.lang.Object o) {
+    private String toIndentedString(Object o) {
         if (o == null) {
             return "null";
         }

@@ -6,7 +6,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.Objects;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-17T11:38:41.655-04:00[America/New_York]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class EntryLinkTypeInfo {
 
@@ -27,6 +27,11 @@ public class EntryLinkTypeInfo {
         return this;
     }
 
+    /**
+     * Returns the ID of the entry link type.
+     *
+     * @return linkTypeId
+     */
     @Schema(description = "The ID of the entry link type.")
     public Integer getLinkTypeId() {
         return linkTypeId;
@@ -41,6 +46,11 @@ public class EntryLinkTypeInfo {
         return this;
     }
 
+    /**
+     * Returns the label for the source entry in the link type.
+     *
+     * @return sourceLabel
+     */
     @Schema(description = "The label for the source entry in the link type.")
     public String getSourceLabel() {
         return sourceLabel;
@@ -55,6 +65,11 @@ public class EntryLinkTypeInfo {
         return this;
     }
 
+    /**
+     * Returns the label for the target entry in the link type.
+     *
+     * @return targetLabel
+     */
     @Schema(description = "The label for the target entry in the link type.")
     public String getTargetLabel() {
         return targetLabel;
@@ -69,6 +84,11 @@ public class EntryLinkTypeInfo {
         return this;
     }
 
+    /**
+     * Returns the description of the link type.
+     *
+     * @return linkTypeDescription
+     */
     @Schema(description = "The description of the link type.")
     public String getLinkTypeDescription() {
         return linkTypeDescription;
@@ -79,7 +99,7 @@ public class EntryLinkTypeInfo {
     }
 
     @Override
-    public boolean equals(java.lang.Object o) {
+    public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
@@ -122,7 +142,7 @@ public class EntryLinkTypeInfo {
         return sb.toString();
     }
 
-    private String toIndentedString(java.lang.Object o) {
+    private String toIndentedString(Object o) {
         if (o == null) {
             return "null";
         }

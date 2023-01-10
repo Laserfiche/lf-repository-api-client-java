@@ -6,7 +6,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.Objects;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-17T11:38:41.655-04:00[America/New_York]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class PatchEntryRequest {
 
@@ -21,6 +21,11 @@ public class PatchEntryRequest {
         return this;
     }
 
+    /**
+     * Returns the ID of the parent entry that the entry will be moved to.
+     *
+     * @return parentId
+     */
     @Schema(description = "The ID of the parent entry that the entry will be moved to.")
     public Integer getParentId() {
         return parentId;
@@ -35,6 +40,11 @@ public class PatchEntryRequest {
         return this;
     }
 
+    /**
+     * Returns the name that will be assigned to the entry.
+     *
+     * @return name
+     */
     @Schema(description = "The name that will be assigned to the entry.")
     public String getName() {
         return name;
@@ -45,7 +55,7 @@ public class PatchEntryRequest {
     }
 
     @Override
-    public boolean equals(java.lang.Object o) {
+    public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
@@ -78,7 +88,7 @@ public class PatchEntryRequest {
         return sb.toString();
     }
 
-    private String toIndentedString(java.lang.Object o) {
+    private String toIndentedString(Object o) {
         if (o == null) {
             return "null";
         }

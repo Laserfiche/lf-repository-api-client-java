@@ -3,6 +3,9 @@ package com.laserfiche.repository.api.clients.impl.model;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
+/**
+ * Enumeration of Laserfiche template field formats.
+ */
 public enum WFieldFormat {
 
     NONE("None"),

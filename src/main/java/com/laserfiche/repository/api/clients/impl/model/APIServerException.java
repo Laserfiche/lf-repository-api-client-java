@@ -6,7 +6,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.Objects;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-17T11:38:41.655-04:00[America/New_York]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class APIServerException {
 
@@ -33,6 +33,11 @@ public class APIServerException {
         return this;
     }
 
+    /**
+     * Returns the id of the operation that threw the exception.
+     *
+     * @return operationId
+     */
     @Schema(description = "The id of the operation that threw the exception.")
     public String getOperationId() {
         return operationId;
@@ -47,6 +52,11 @@ public class APIServerException {
         return this;
     }
 
+    /**
+     * Returns the explaination of the exception that occurred.
+     *
+     * @return message
+     */
     @Schema(description = "The explaination of the exception that occurred.")
     public String getMessage() {
         return message;
@@ -61,6 +71,11 @@ public class APIServerException {
         return this;
     }
 
+    /**
+     * Returns the code associated with the exception.
+     *
+     * @return errorCode
+     */
     @Schema(description = "The code associated with the exception.")
     public Integer getErrorCode() {
         return errorCode;
@@ -75,6 +90,11 @@ public class APIServerException {
         return this;
     }
 
+    /**
+     * Returns the class of exceptions this belongs to.
+     *
+     * @return errorClass
+     */
     @Schema(description = "The class of exceptions this belongs to.")
     public String getErrorClass() {
         return errorClass;
@@ -89,6 +109,11 @@ public class APIServerException {
         return this;
     }
 
+    /**
+     * Returns the HTTP status code returned.
+     *
+     * @return statusCode
+     */
     @Schema(description = "The HTTP status code returned.")
     public Integer getStatusCode() {
         return statusCode;
@@ -103,6 +128,11 @@ public class APIServerException {
         return this;
     }
 
+    /**
+     * Returns the source of where the exception occurred.
+     *
+     * @return errorSource
+     */
     @Schema(description = "The source of where the exception occurred.")
     public String getErrorSource() {
         return errorSource;
@@ -113,7 +143,7 @@ public class APIServerException {
     }
 
     @Override
-    public boolean equals(java.lang.Object o) {
+    public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
@@ -165,7 +195,7 @@ public class APIServerException {
         return sb.toString();
     }
 
-    private String toIndentedString(java.lang.Object o) {
+    private String toIndentedString(Object o) {
         if (o == null) {
             return "null";
         }

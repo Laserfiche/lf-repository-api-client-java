@@ -6,7 +6,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.Objects;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-11-07T15:57:30.539-05:00[America/New_York]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Document extends Entry {
 
@@ -42,6 +42,11 @@ public class Document extends Entry {
         return this;
     }
 
+    /**
+     * Returns the size of the electronic document attached to the represented document, if there is one, in bytes.
+     *
+     * @return elecDocumentSize
+     */
     @Schema(description = "The size of the electronic document attached to the represented document, if there is one, in bytes.")
     public Long getElecDocumentSize() {
         return elecDocumentSize;
@@ -56,6 +61,11 @@ public class Document extends Entry {
         return this;
     }
 
+    /**
+     * Returns the extension for the document.
+     *
+     * @return extension
+     */
     @Schema(description = "The extension for the document.")
     public String getExtension() {
         return extension;
@@ -70,6 +80,11 @@ public class Document extends Entry {
         return this;
     }
 
+    /**
+     * Returns a boolean indicating if there is an electronic document attached to the represented document.
+     *
+     * @return isElectronicDocument
+     */
     @Schema(description = "A boolean indicating if there is an electronic document attached to the represented document.")
     @JsonProperty("isElectronicDocument")
     public Boolean isElectronicDocument() {
@@ -85,6 +100,11 @@ public class Document extends Entry {
         return this;
     }
 
+    /**
+     * Returns a boolean indicating if the represented document is a record.
+     *
+     * @return isRecord
+     */
     @Schema(description = "A boolean indicating if the represented document is a record.")
     @JsonProperty("isRecord")
     public Boolean isRecord() {
@@ -100,6 +120,11 @@ public class Document extends Entry {
         return this;
     }
 
+    /**
+     * Returns the MIME type of the electronic document.
+     *
+     * @return mimeType
+     */
     @Schema(description = "The MIME type of the electronic document.")
     public String getMimeType() {
         return mimeType;
@@ -114,6 +139,11 @@ public class Document extends Entry {
         return this;
     }
 
+    /**
+     * Returns the page count of the represented document.
+     *
+     * @return pageCount
+     */
     @Schema(description = "The page count of the represented document.")
     public Integer getPageCount() {
         return pageCount;
@@ -128,6 +158,11 @@ public class Document extends Entry {
         return this;
     }
 
+    /**
+     * Returns a boolean indicating if the represented document is checked out.
+     *
+     * @return isCheckedOut
+     */
     @Schema(description = "A boolean indicating if the represented document is checked out.")
     @JsonProperty("isCheckedOut")
     public Boolean isCheckedOut() {
@@ -143,6 +178,11 @@ public class Document extends Entry {
         return this;
     }
 
+    /**
+     * Returns a boolean indicating if the represented document is under version control.
+     *
+     * @return isUnderVersionControl
+     */
     @Schema(description = "A boolean indicating if the represented document is under version control.")
     @JsonProperty("isUnderVersionControl")
     public Boolean isUnderVersionControl() {
@@ -158,6 +198,11 @@ public class Document extends Entry {
         return this;
     }
 
+    /**
+     * Returns edoc
+     *
+     * @return edoc
+     */
     @Schema(description = "")
     public Edoc getEdoc() {
         return edoc;
@@ -168,7 +213,7 @@ public class Document extends Entry {
     }
 
     @Override
-    public boolean equals(java.lang.Object o) {
+    public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
@@ -239,7 +284,7 @@ public class Document extends Entry {
         return sb.toString();
     }
 
-    private String toIndentedString(java.lang.Object o) {
+    private String toIndentedString(Object o) {
         if (o == null) {
             return "null";
         }
