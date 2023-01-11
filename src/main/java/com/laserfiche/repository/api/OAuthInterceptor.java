@@ -49,7 +49,7 @@ public class OAuthInterceptor implements RepositoryApiClientInterceptor {
         if (shouldRetry && retryCount < maxRetries) {
             retryCount++;
             tempRequest.getHeaders().clear();
-            tempRequest.asObject(Object.class).getStatus();
+            tempRequest.asObject(Object.class);
         }
         if (!shouldRetry || retryCount == maxRetries) {
             retryCount = 0;
