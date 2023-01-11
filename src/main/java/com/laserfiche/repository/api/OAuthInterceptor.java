@@ -5,10 +5,7 @@ import com.laserfiche.api.client.httphandlers.Request;
 import com.laserfiche.api.client.httphandlers.RequestImpl;
 import com.laserfiche.api.client.httphandlers.ResponseImpl;
 import com.laserfiche.api.client.model.AccessKey;
-import kong.unirest.Config;
-import kong.unirest.HttpRequest;
-import kong.unirest.HttpRequestSummary;
-import kong.unirest.HttpResponse;
+import kong.unirest.*;
 
 
 /**
@@ -18,6 +15,8 @@ public class OAuthInterceptor implements RepositoryApiClientInterceptor {
     private final OAuthClientCredentialsHandler oauthHandler;
 
     private HttpRequest<?> tempRequest = null;
+
+    private UnirestInstance httpClient = null;
 
     private final int maxRetries = 1;
 
@@ -35,9 +34,9 @@ public class OAuthInterceptor implements RepositoryApiClientInterceptor {
 
     @Override
     public void onRequest(HttpRequest<?> request, Config config) {
-        retryCount++;
         Request customRequest = new RequestImpl();
         oauthHandler.beforeSend(customRequest);
+        customRequest.headers().set("Authorization", "wrong");
         request.header("Authorization", customRequest
                 .headers()
                 .get("Authorization"));
@@ -48,10 +47,12 @@ public class OAuthInterceptor implements RepositoryApiClientInterceptor {
     public void onResponse(HttpResponse<?> response, HttpRequestSummary request, Config config) {
         boolean shouldRetry = oauthHandler.afterSend(new ResponseImpl((short) response.getStatus())) || isRetryable(
                 response, request);
-        if (shouldRetry && retryCount <= maxRetries) {
-            onRequest(tempRequest, config);
+        if (shouldRetry && retryCount < maxRetries) {
+            retryCount++;
+            tempRequest.getHeaders().clear();
+            System.out.println("option 2:"+ tempRequest.asObject(Object.class).getStatus());
         }
-        if (!shouldRetry || retryCount == 2) {
+        if (!shouldRetry || retryCount == maxRetries) {
             retryCount = 0;
         }
     }
