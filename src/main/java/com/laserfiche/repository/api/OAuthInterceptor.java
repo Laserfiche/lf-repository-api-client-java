@@ -16,8 +16,6 @@ public class OAuthInterceptor implements RepositoryApiClientInterceptor {
 
     private HttpRequest<?> tempRequest = null;
 
-    private UnirestInstance httpClient = null;
-
     private final int maxRetries = 1;
 
     private int retryCount = 0;
