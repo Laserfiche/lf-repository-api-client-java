@@ -38,7 +38,6 @@ public class SelfHostedInterceptor implements RepositoryApiClientInterceptor {
 
     @Override
     public void onRequest(HttpRequest<?> request, Config config) {
-        retryCount++;
         Request customRequest = new RequestImpl();
         usernamePasswordHandler.beforeSend(customRequest);
         request.header("Authorization", customRequest
@@ -49,12 +48,13 @@ public class SelfHostedInterceptor implements RepositoryApiClientInterceptor {
 
     @Override
     public void onResponse(HttpResponse<?> response, HttpRequestSummary request, Config config) {
-        boolean shouldRetry = usernamePasswordHandler.afterSend(
-                new ResponseImpl((short) response.getStatus())) || isRetryable(response, request);
-        if (shouldRetry && retryCount <= maxRetries) {
-            onRequest(tempRequest, config);
+        boolean shouldRetry = usernamePasswordHandler.afterSend(new ResponseImpl((short) response.getStatus())) || isRetryable(response, request);
+        if (shouldRetry && retryCount < maxRetries) {
+            retryCount++;
+            tempRequest.getHeaders().clear();
+            tempRequest.asObject(Object.class).getStatus();
         }
-        if (!shouldRetry || retryCount == 2) {
+        if (!shouldRetry || retryCount == maxRetries) {
             retryCount = 0;
         }
     }

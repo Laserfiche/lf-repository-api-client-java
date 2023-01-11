@@ -5,6 +5,7 @@
 - **[BREAKING]** Every async API are replaced with normal blocking API.
 - The ApiClient class is now abstract.
 - Improved documentation.
+- Added retry logic by using the `afterSend()` function to handle automatically retry requests
 
 ## 1.2.0
 
