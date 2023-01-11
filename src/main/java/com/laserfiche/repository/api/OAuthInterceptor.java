@@ -36,7 +36,6 @@ public class OAuthInterceptor implements RepositoryApiClientInterceptor {
     public void onRequest(HttpRequest<?> request, Config config) {
         Request customRequest = new RequestImpl();
         oauthHandler.beforeSend(customRequest);
-        customRequest.headers().set("Authorization", "wrong");
         request.header("Authorization", customRequest
                 .headers()
                 .get("Authorization"));
@@ -50,7 +49,7 @@ public class OAuthInterceptor implements RepositoryApiClientInterceptor {
         if (shouldRetry && retryCount < maxRetries) {
             retryCount++;
             tempRequest.getHeaders().clear();
-            System.out.println("option 2:"+ tempRequest.asObject(Object.class).getStatus());
+            tempRequest.asObject(Object.class).getStatus();
         }
         if (!shouldRetry || retryCount == maxRetries) {
             retryCount = 0;
