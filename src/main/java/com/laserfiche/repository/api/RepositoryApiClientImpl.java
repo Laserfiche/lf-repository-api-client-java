@@ -1,6 +1,9 @@
 package com.laserfiche.repository.api;
 
 import com.laserfiche.api.client.deserialization.TokenClientObjectMapper;
+import com.laserfiche.api.client.httphandlers.HttpRequestHandler;
+import com.laserfiche.api.client.httphandlers.OAuthClientCredentialsHandler;
+import com.laserfiche.api.client.httphandlers.UsernamePasswordHandler;
 import com.laserfiche.api.client.model.AccessKey;
 import com.laserfiche.repository.api.clients.*;
 import com.laserfiche.repository.api.clients.impl.*;
@@ -30,7 +33,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
     private final TasksClient tasksClient;
     private final TemplateDefinitionsClient templateDefinitionsClient;
 
-    protected RepositoryApiClientImpl(RepositoryApiClientInterceptor interceptor, String baseUrl) {
+    protected RepositoryApiClientImpl(RepositoryApiClientInterceptor interceptor, String baseUrl, HttpRequestHandler httpHandler) {
         if (baseUrl.endsWith("/")) {
             baseUrl = baseUrl.substring(0, baseUrl.length() - 1);
         }
@@ -47,7 +50,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
         this.interceptor = interceptor;
 
         // Initialize repository API clients
-        attributesClient = new AttributesClientImpl(baseUrl, httpClient);
+        attributesClient = new AttributesClientImpl(baseUrl, httpClient, httpHandler);
         auditReasonsClient = new AuditReasonsClientImpl(baseUrl, httpClient);
         entriesClient = new EntriesClientImpl(baseUrl, httpClient);
         fieldDefinitionsClient = new FieldDefinitionsClientImpl(baseUrl, httpClient);
@@ -74,7 +77,8 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
             baseUrlDebug = "https://api." + accessKey.getDomain() + "/repository";
         }
         RepositoryApiClientInterceptor interceptor = new OAuthInterceptor(servicePrincipalKey, accessKey);
-        return new RepositoryApiClientImpl(interceptor, baseUrlDebug);
+        HttpRequestHandler oauthHandler = new OAuthClientCredentialsHandler(servicePrincipalKey, accessKey);
+        return new RepositoryApiClientImpl(interceptor, baseUrlDebug, oauthHandler);
     }
 
     /**
@@ -100,7 +104,8 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
             String baseUrl) {
         RepositoryApiClientInterceptor interceptor = new SelfHostedInterceptor(repositoryId, username, password,
                 baseUrl, null);
-        return new RepositoryApiClientImpl(interceptor, baseUrl);
+        HttpRequestHandler usernamePasswordHandler = new UsernamePasswordHandler(repositoryId, username, password, baseUrl, null);
+        return new RepositoryApiClientImpl(interceptor, baseUrl, usernamePasswordHandler);
     }
 
     @Override

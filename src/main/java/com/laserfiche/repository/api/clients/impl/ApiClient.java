@@ -1,10 +1,7 @@
 package com.laserfiche.repository.api.clients.impl;
 
 import com.laserfiche.api.client.model.ProblemDetails;
-import kong.unirest.Header;
-import kong.unirest.Headers;
-import kong.unirest.ObjectMapper;
-import kong.unirest.UnirestInstance;
+import kong.unirest.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -126,5 +123,13 @@ public abstract class ApiClient {
                 .getTitle()
                 .trim()
                 .length() > 0) ? problemDetails.getTitle() : genericErrorMessage;
+    }
+
+    protected boolean isRetryable(HttpResponse<?> response, HttpRequestSummary request) {
+        boolean isIdempotent = request
+                .getHttpMethod()
+                .toString()
+                .equals("POST");
+        return (response.getStatus() >= 500 || response.getStatus() == 408) && isIdempotent;
     }
 }

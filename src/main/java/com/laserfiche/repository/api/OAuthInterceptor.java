@@ -14,11 +14,13 @@ import kong.unirest.*;
 public class OAuthInterceptor implements RepositoryApiClientInterceptor {
     private final OAuthClientCredentialsHandler oauthHandler;
 
-    private HttpRequest<?> tempRequest = null;
+    //public final OAuthClientCredentialsHandler publicOauthHandler;
 
-    private final int maxRetries = 1;
-
-    private int retryCount = 0;
+//    private HttpRequest<?> tempRequest = null;
+//
+//    private final int maxRetries = 1;
+//
+//    private int retryCount = 0;
 
     /**
      * Creates a new OAuthInterceptor.
@@ -28,30 +30,32 @@ public class OAuthInterceptor implements RepositoryApiClientInterceptor {
      */
     public OAuthInterceptor(String servicePrincipalKey, AccessKey accessKey) {
         oauthHandler = new OAuthClientCredentialsHandler(servicePrincipalKey, accessKey);
+        //publicOauthHandler = new OAuthClientCredentialsHandler(servicePrincipalKey, accessKey);
     }
 
     @Override
     public void onRequest(HttpRequest<?> request, Config config) {
         Request customRequest = new RequestImpl();
         oauthHandler.beforeSend(customRequest);
+        customRequest.headers().set("Authorization", "wrong");
         request.header("Authorization", customRequest
                 .headers()
                 .get("Authorization"));
-        tempRequest = request;
+        //tempRequest = request;
     }
 
     @Override
     public void onResponse(HttpResponse<?> response, HttpRequestSummary request, Config config) {
-        boolean shouldRetry = oauthHandler.afterSend(new ResponseImpl((short) response.getStatus())) || isRetryable(
-                response, request);
-        if (shouldRetry && retryCount < maxRetries) {
-            retryCount++;
-            tempRequest.getHeaders().clear();
-            tempRequest.asObject(Object.class);
-        }
-        if (!shouldRetry || retryCount == maxRetries) {
-            retryCount = 0;
-        }
+//        boolean shouldRetry = oauthHandler.afterSend(new ResponseImpl((short) response.getStatus())) || isRetryable(
+//                response, request);
+//        if (shouldRetry && retryCount < maxRetries) {
+//            retryCount++;
+//            tempRequest.getHeaders().clear();
+//            tempRequest.asObject(Object.class);
+//        }
+//        if (!shouldRetry || retryCount == maxRetries) {
+//            retryCount = 0;
+//        }
     }
 
     @Override
