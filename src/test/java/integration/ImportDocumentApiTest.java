@@ -248,4 +248,49 @@ public class ImportDocumentApiTest extends BaseTest {
         assertEquals(HttpURLConnection.HTTP_CONFLICT, setTemplateException.getStatusCode());
         assertEquals(ErrorSource.LASERFICHE_SERVER.getName(), setTemplateException.getErrorSource());
     }
+
+    @Test
+    void importDocument_InvalidParentID_Return_APIServerException_NotFound() {
+        String fileName = "myFile";
+        CreateEntryResult result = null;
+        String fileContent = "This is the file content";
+        InputStream inputStream = new ByteArrayInputStream(fileContent.getBytes());
+        assertNotNull(inputStream);
+
+        PostEntryWithEdocMetadataRequest request = new PostEntryWithEdocMetadataRequest();
+        request.setTemplate("invalidTemplateName");
+        result = client
+                .importDocument(repoId, 99999999, fileName, true, null,
+                        inputStream, request)
+                .join();
+
+        assertNotNull(result);
+        CreateEntryOperations operations = result.getOperations();
+        createdEntryId = operations
+                .getEntryCreate()
+                .getEntryId();
+        assertEquals(0, createdEntryId);
+        assertNotNull(operations);
+        assertNotNull(operations
+                .getEntryCreate()
+                .getExceptions());
+        assertEquals(0, operations
+                .getSetEdoc()
+                .getExceptions()
+                .size());
+        assertEquals(1, operations
+                .getEntryCreate()
+                .getExceptions()
+                .size());
+        APIServerException entryCreateException = operations
+                .getEntryCreate()
+                .getExceptions()
+                .get(0);
+        assertTrue(entryCreateException
+                .getMessage()
+                .startsWith("Entry not found."));
+        assertEquals(HttpURLConnection.HTTP_NOT_FOUND, entryCreateException.getStatusCode());
+        assertEquals(ErrorSource.LASERFICHE_SERVER.getName(), entryCreateException.getErrorSource());
+    }
+
 }
