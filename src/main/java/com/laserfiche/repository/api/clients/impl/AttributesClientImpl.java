@@ -3,15 +3,12 @@ package com.laserfiche.repository.api.clients.impl;
 import com.laserfiche.api.client.httphandlers.*;
 import com.laserfiche.api.client.model.ApiException;
 import com.laserfiche.api.client.model.ProblemDetails;
-import com.laserfiche.repository.api.RepositoryApiClientInterceptor;
 import com.laserfiche.repository.api.clients.AttributesClient;
 import com.laserfiche.repository.api.clients.impl.model.Attribute;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfListOfAttribute;
 import com.laserfiche.repository.api.clients.params.ParametersForGetTrusteeAttributeKeyValuePairs;
 import com.laserfiche.repository.api.clients.params.ParametersForGetTrusteeAttributeValueByKey;
-import kong.unirest.HttpResponse;
-import kong.unirest.UnirestInstance;
-import kong.unirest.UnirestParsingException;
+import kong.unirest.*;
 import kong.unirest.json.JSONObject;
 
 import java.util.Map;
@@ -29,6 +26,44 @@ public class AttributesClientImpl extends ApiClient implements AttributesClient 
     public AttributesClientImpl(String baseUrl, UnirestInstance httpClient, HttpRequestHandler httpRequestHandler) {
         super(baseUrl, httpClient);
         this.httpRequestHandler = httpRequestHandler;
+    }
+
+    private String beforeSend(String url, Map<String, String> headerParametersWithStringTypeValue) {
+        String requestUrl;
+        Request customRequest = new RequestImpl();
+        BeforeSendResult beforeSendResult = httpRequestHandler.beforeSend(customRequest);
+        String authorizationValue = customRequest.headers().get("Authorization");
+        if (authorizationValue != null){
+            headerParametersWithStringTypeValue.put("Authorization", authorizationValue);
+        }
+        if (url.startsWith("http")) {
+            requestUrl = url;
+        } else {
+            String apiBasedAddress = getRepositoryEndpoint(beforeSendResult.getRegionalDomain());
+            requestUrl = combineURLs(apiBasedAddress, url);
+        }
+        return requestUrl;
+    }
+
+    private String getRepositoryEndpoint(String regionDomain) {
+        if (regionDomain == null)
+            throw new IllegalArgumentException("regionDomain is null.");
+        return "https://api." + regionDomain + "/repository";
+    }
+
+    private String combineURLs(String baseURL, String relativeURL) {
+        char end = baseURL.charAt(baseURL.length() - 1);
+        char begin = relativeURL.charAt(0);
+        String url;
+
+        if ((end != '/' && begin == '/') || (end == '/' && begin != '/')) {
+            url = baseURL + relativeURL;
+        } else if (begin == '/') {
+            url = baseURL + relativeURL.substring(1);
+        } else {
+            url = baseURL + '/' + relativeURL;
+        }
+        return url;
     }
 
     @Override
@@ -127,8 +162,10 @@ public class AttributesClientImpl extends ApiClient implements AttributesClient 
 
             try {
                 //response = await fetch(absoluteUrl, init);
+                String requestUrl = beforeSend(url, headerParametersWithStringTypeValue);
+                //request = request.get(url).qu
                 httpResponse = httpClient
-                        .get(url)
+                        .get(requestUrl)
                         .queryString(queryParameters)
                         .routeParam(pathParameters)
                         .headers(headerParametersWithStringTypeValue)

@@ -16,11 +16,11 @@ import kong.unirest.HttpResponse;
 public class SelfHostedInterceptor implements RepositoryApiClientInterceptor {
     private final UsernamePasswordHandler usernamePasswordHandler;
 
-    private HttpRequest<?> tempRequest = null;
-
-    private final int maxRetries = 1;
-
-    private int retryCount = 0;
+//    private HttpRequest<?> tempRequest = null;
+//
+//    private final int maxRetries = 1;
+//
+//    private int retryCount = 0;
 
     /**
      * Creates a new SelfHostedInterceptor.
@@ -43,21 +43,21 @@ public class SelfHostedInterceptor implements RepositoryApiClientInterceptor {
         request.header("Authorization", customRequest
                 .headers()
                 .get("Authorization"));
-        tempRequest = request;
+        //tempRequest = request;
     }
 
-    @Override
-    public void onResponse(HttpResponse<?> response, HttpRequestSummary request, Config config) {
-        boolean shouldRetry = usernamePasswordHandler.afterSend(new ResponseImpl((short) response.getStatus())) || isRetryable(response, request);
-        if (shouldRetry && retryCount < maxRetries) {
-            retryCount++;
-            tempRequest.getHeaders().clear();
-            tempRequest.asObject(Object.class);
-        }
-        if (!shouldRetry || retryCount == maxRetries) {
-            retryCount = 0;
-        }
-    }
+//    @Override
+//    public void onResponse(HttpResponse<?> response, HttpRequestSummary request, Config config) {
+//        boolean shouldRetry = usernamePasswordHandler.afterSend(new ResponseImpl((short) response.getStatus())) || isRetryable(response, request);
+//        if (shouldRetry && retryCount < maxRetries) {
+//            retryCount++;
+//            tempRequest.getHeaders().clear();
+//            tempRequest.asObject(Object.class);
+//        }
+//        if (!shouldRetry || retryCount == maxRetries) {
+//            retryCount = 0;
+//        }
+//    }
 
     @Override
     public void close() {

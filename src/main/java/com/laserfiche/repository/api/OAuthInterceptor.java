@@ -1,9 +1,6 @@
 package com.laserfiche.repository.api;
 
-import com.laserfiche.api.client.httphandlers.OAuthClientCredentialsHandler;
-import com.laserfiche.api.client.httphandlers.Request;
-import com.laserfiche.api.client.httphandlers.RequestImpl;
-import com.laserfiche.api.client.httphandlers.ResponseImpl;
+import com.laserfiche.api.client.httphandlers.*;
 import com.laserfiche.api.client.model.AccessKey;
 import kong.unirest.*;
 
@@ -35,12 +32,20 @@ public class OAuthInterceptor implements RepositoryApiClientInterceptor {
 
     @Override
     public void onRequest(HttpRequest<?> request, Config config) {
-        Request customRequest = new RequestImpl();
-        oauthHandler.beforeSend(customRequest);
-        customRequest.headers().set("Authorization", "wrong");
-        request.header("Authorization", customRequest
-                .headers()
-                .get("Authorization"));
+//        Request customRequest = new RequestImpl();
+//        BeforeSendResult beforeSendResult = oauthHandler.beforeSend(customRequest);
+//        String authorizationValue = customRequest.headers().get("Authorization");
+//        if (authorizationValue != null){
+//            request.header("Authorization", authorizationValue);
+//        }
+//        String absoluteUrl;
+//        if (request.getUrl().startsWith("http")) {
+//            absoluteUrl = request.getUrl();
+//        } else {
+//            String apiBasedAddress = getRepositoryEndpoint(beforeSendResult.getRegionalDomain());
+//            absoluteUrl = combineURLs(apiBasedAddress, request.getUrl());
+//        }
+        //customRequest.headers().set("Authorization", "wrong");
         //tempRequest = request;
     }
 
@@ -69,5 +74,26 @@ public class OAuthInterceptor implements RepositoryApiClientInterceptor {
                 .toString()
                 .equals("POST");
         return (response.getStatus() >= 500 || response.getStatus() == 408) && isIdempotent;
+    }
+
+    private String getRepositoryEndpoint(String regionDomain) {
+        if (regionDomain == null)
+            throw new IllegalArgumentException("regionDomain is null.");
+        return "https://api." + regionDomain + "/repository";
+    }
+
+    private String combineURLs(String baseURL, String relativeURL) {
+   char end = baseURL.charAt(baseURL.length() - 1);
+   char begin = relativeURL.charAt(0);
+        String url;
+
+        if ((end != '/' && begin == '/') || (end == '/' && begin != '/')) {
+            url = baseURL + relativeURL;
+        } else if (begin == '/') {
+            url = baseURL + relativeURL.substring(1);
+        } else {
+            url = baseURL + '/' + relativeURL;
+        }
+        return url;
     }
 }
