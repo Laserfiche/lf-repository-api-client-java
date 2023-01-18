@@ -1,6 +1,7 @@
 package integration;
 
 import com.laserfiche.repository.api.clients.EntriesClient;
+import com.laserfiche.repository.api.clients.impl.ApiException;
 import com.laserfiche.repository.api.clients.impl.model.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -11,6 +12,7 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
+import java.util.concurrent.CompletionException;
 import java.util.concurrent.ExecutionException;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -247,5 +249,68 @@ public class ImportDocumentApiTest extends BaseTest {
                 .startsWith("Template not found."), setTemplateException.getMessage());
         assertEquals(HttpURLConnection.HTTP_CONFLICT, setTemplateException.getStatusCode());
         assertEquals(ErrorSource.LASERFICHE_SERVER.getName(), setTemplateException.getErrorSource());
+    }
+
+    @Test
+    void importDocument_InvalidParentID_Return_APIServerException_NotFound() {
+        String fileName = "myFile";
+        CreateEntryResult result = null;
+        String fileContent = "This is the file content";
+        InputStream inputStream = new ByteArrayInputStream(fileContent.getBytes());
+        assertNotNull(inputStream);
+
+        PostEntryWithEdocMetadataRequest request = new PostEntryWithEdocMetadataRequest();
+        request.setTemplate("invalidTemplateName");
+        result = client
+                .importDocument(repoId, 99999999, fileName, true, null,
+                        inputStream, request)
+                .join();
+
+        assertNotNull(result);
+        CreateEntryOperations operations = result.getOperations();
+        createdEntryId = operations
+                .getEntryCreate()
+                .getEntryId();
+        assertEquals(0, createdEntryId);
+        assertNotNull(operations);
+        assertNotNull(operations
+                .getEntryCreate()
+                .getExceptions());
+        assertEquals(0, operations
+                .getSetEdoc()
+                .getExceptions()
+                .size());
+        assertEquals(1, operations
+                .getEntryCreate()
+                .getExceptions()
+                .size());
+        APIServerException entryCreateException = operations
+                .getEntryCreate()
+                .getExceptions()
+                .get(0);
+        assertTrue(entryCreateException
+                .getMessage()
+                .startsWith("Entry not found."));
+        assertEquals(HttpURLConnection.HTTP_NOT_FOUND, entryCreateException.getStatusCode());
+        assertEquals(ErrorSource.LASERFICHE_SERVER.getName(), entryCreateException.getErrorSource());
+    }
+
+    @Test
+    void importDocument_InvalidRepoID_Exception_Thrown(){
+        String fileName = "myFile";
+        String fileContent = "This is the file content";
+        InputStream inputStream = new ByteArrayInputStream(fileContent.getBytes());
+        assertNotNull(inputStream);
+
+        PostEntryWithEdocMetadataRequest request = new PostEntryWithEdocMetadataRequest();
+        request.setTemplate("invalidTemplateName");
+        CompletionException exception = assertThrows(CompletionException.class, () -> client
+                .importDocument("test", 1, fileName, true, null,
+                        inputStream, request)
+                .join());
+        ProblemDetails problemDetailsException = ((ApiException)exception.getCause()).getProblemDetails();
+        assertTrue(exception.getMessage().contains("ApiException"));
+        assertEquals(HttpURLConnection.HTTP_NOT_FOUND, problemDetailsException.getStatus());
+        assertTrue(problemDetailsException.getTitle().contains("Repository with the given Id not found or no connection could be made."));
     }
 }

@@ -1,3 +1,9 @@
+## 1.2.1
+
+### Fixes
+
+- Return type of `CreateEntryResult` response for import document api with a parent ID that is not found
+
 ## 1.2.0
 
 ### Features

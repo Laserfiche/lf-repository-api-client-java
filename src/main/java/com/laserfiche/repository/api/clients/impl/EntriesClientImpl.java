@@ -198,21 +198,19 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 .asObjectAsync(Object.class)
                 .thenApply(httpResponse -> {
                     Object body = httpResponse.getBody();
-                    if (httpResponse.getStatus() == 201 || httpResponse.getStatus() == 409) {
-                        try {
-                            String jsonString = new JSONObject(body).toString();
-                            return objectMapper.readValue(jsonString, CreateEntryResult.class);
-                        } catch (JsonProcessingException | IllegalStateException e) {
-                            e.printStackTrace();
-                            return null;
+                    String jsonString = new JSONObject(body).toString();
+                    try {
+                        CreateEntryResult response = objectMapper.readValue(jsonString, CreateEntryResult.class);
+                        if (response.getOperations() == null) {
+                            throw new IllegalStateException();
                         }
-                    } else {
-                        ProblemDetails problemDetails;
+                        return response;
+                    } catch (JsonProcessingException | IllegalStateException e) {
                         Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
+                        ProblemDetails problemDetails;
                         try {
-                            String jsonString = new JSONObject(body).toString();
                             problemDetails = deserializeToProblemDetails(jsonString);
-                        } catch (JsonProcessingException | IllegalStateException e) {
+                        } catch (JsonProcessingException | IllegalStateException ex) {
                             Optional<UnirestParsingException> parsingException = httpResponse.getParsingError();
                             throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(),
                                     (parsingException.isPresent() ? parsingException
