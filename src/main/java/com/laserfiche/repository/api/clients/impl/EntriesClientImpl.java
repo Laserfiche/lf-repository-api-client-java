@@ -204,7 +204,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                         if (response.getOperations() == null) {
                             throw new IllegalStateException();
                         }
-                        return objectMapper.readValue(jsonString, CreateEntryResult.class);
+                        return response;
                     } catch (JsonProcessingException | IllegalStateException e) {
                         Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         ProblemDetails problemDetails;
