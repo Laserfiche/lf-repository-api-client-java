@@ -200,10 +200,8 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                     Object body = httpResponse.getBody();
                     String jsonString = new JSONObject(body).toString();
                     try {
-                        //String jsonString = new JSONObject(body).toString();
-                        //ProblemDetails problemDetails = deserializeToProblemDetails(jsonString);
                         CreateEntryResult response = objectMapper.readValue(jsonString, CreateEntryResult.class);
-                        if (response.getOperations() == null){
+                        if (response.getOperations() == null) {
                             throw new IllegalStateException();
                         }
                         return objectMapper.readValue(jsonString, CreateEntryResult.class);
@@ -243,51 +241,6 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                         else
                             throw new RuntimeException(httpResponse.getStatusText());
                     }
-//                    if (httpResponse.getStatus() == 201 || httpResponse.getStatus() == 409) {
-//                        try {
-//                            String jsonString = new JSONObject(body).toString();
-//                            return objectMapper.readValue(jsonString, CreateEntryResult.class);
-//                        } catch (JsonProcessingException | IllegalStateException e) {
-//                            e.printStackTrace();
-//                            return null;
-//                        }
-//                    } else {
-//                        ProblemDetails problemDetails;
-//                        Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
-//                        try {
-//                            String jsonString = new JSONObject(body).toString();
-//                            problemDetails = deserializeToProblemDetails(jsonString);
-//                        } catch (JsonProcessingException | IllegalStateException e) {
-//                            Optional<UnirestParsingException> parsingException = httpResponse.getParsingError();
-//                            throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(),
-//                                    (parsingException.isPresent() ? parsingException
-//                                            .get()
-//                                            .getOriginalBody() : null), headersMap, null);
-//                        }
-//                        if (httpResponse.getStatus() == 400)
-//                            throw new ApiException(decideErrorMessage(problemDetails, "Invalid or bad request."),
-//                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
-//                        else if (httpResponse.getStatus() == 401)
-//                            throw new ApiException(
-//                                    decideErrorMessage(problemDetails, "Access token is invalid or expired."),
-//                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
-//                        else if (httpResponse.getStatus() == 403)
-//                            throw new ApiException(
-//                                    decideErrorMessage(problemDetails, "Access denied for the operation."),
-//                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
-//                        else if (httpResponse.getStatus() == 404)
-//                            throw new ApiException(decideErrorMessage(problemDetails, "Parent entry is not found."),
-//                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
-//                        else if (httpResponse.getStatus() == 429)
-//                            throw new ApiException(decideErrorMessage(problemDetails, "Rate limit is reached."),
-//                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
-//                        else if (httpResponse.getStatus() == 500)
-//                            throw new ApiException(
-//                                    decideErrorMessage(problemDetails, "Document creation is complete failure."),
-//                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
-//                        else
-//                            throw new RuntimeException(httpResponse.getStatusText());
-//                    }
                 });
     }
 
