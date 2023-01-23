@@ -22,15 +22,15 @@ enum AuthorizationType {
 }
 
 public class BaseTest {
-    private static String servicePrincipalKey;
-    private static AccessKey accessKey;
+    protected static String servicePrincipalKey;
+    protected static AccessKey accessKey;
     protected static String repositoryId;
     private static Map<String, String> testHeaders;
     protected static RepositoryApiClient repositoryApiClient;
     private static String testHeaderValue;
-    private static String username;
-    private static String password;
-    private static String baseUrl;
+    protected static String username;
+    protected static String password;
+    protected static String baseUrl;
     private static final String TEST_HEADER = "TEST_HEADER";
     private static final String ACCESS_KEY = "ACCESS_KEY";
     private static final String SERVICE_PRINCIPAL_KEY = "SERVICE_PRINCIPAL_KEY";
@@ -39,7 +39,7 @@ public class BaseTest {
     private static final String PASSWORD = "APISERVER_PASSWORD";
     private static final String BASE_URL = "APISERVER_REPOSITORY_API_BASE_URL";
     private static final String AUTHORIZATION_TYPE = "AUTHORIZATION_TYPE";
-    private static AuthorizationType authorizationType;
+    protected static AuthorizationType authorizationType;
     private static final boolean IS_NOT_GITHUB_ENVIRONMENT = nullOrEmpty(System.getenv("GITHUB_WORKSPACE"));
     @BeforeAll
     public static void setUp() {

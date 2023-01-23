@@ -436,7 +436,7 @@ class EntriesApiTest extends BaseTest {
     }
 
     @Test
-    void getDocumentContentType_ProblemDetails_Fields_Are_Valid_When_Exception_Thrown() {
+    void getEntryListing_ProblemDetails_Fields_Are_Valid_When_Exception_Thrown() {
         ApiException apiException = Assertions.assertThrows(ApiException.class, () -> {
             client
                     .getEntryListing(new ParametersForGetEntryListing()
@@ -510,9 +510,13 @@ class EntriesApiTest extends BaseTest {
                         .setEntryId(1)));
         assertNotNull(apiException);
         assertEquals(404, apiException.getStatusCode());
-        assertEquals("Not Found", apiException.getMessage());
+        assertEquals("Error: Repository with the given Id not found or no connection could be made.", apiException.getMessage());
+        assertTrue(apiException.getHeaders().size() > 0);
         ProblemDetails problemDetails = apiException.getProblemDetails();
-        assertNull(problemDetails);
+        assertNotNull(problemDetails);
+        assertEquals(apiException.getStatusCode(), problemDetails.getStatus());
+        assertEquals(apiException.getMessage(), problemDetails.getTitle());
+        assertNotNull(problemDetails.getOperationId());
     }
 
     @Test

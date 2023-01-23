@@ -1,5 +1,6 @@
 package integration;
 
+import com.laserfiche.api.client.model.ApiException;
 import com.laserfiche.repository.api.clients.EntriesClient;
 import com.laserfiche.repository.api.clients.impl.model.*;
 import com.laserfiche.repository.api.clients.params.ParametersForDeleteEntryInfo;
@@ -225,21 +226,29 @@ public class ImportDocumentApiTest extends BaseTest {
     @Test
     void importDocument_Returns_Detail_When_PartialSuccess_Happens() {
         String fileName = "myFile";
-        CreateEntryResult result = null;
         String fileContent = "This is the file content";
         InputStream inputStream = new ByteArrayInputStream(fileContent.getBytes());
         assertNotNull(inputStream);
 
         PostEntryWithEdocMetadataRequest request = new PostEntryWithEdocMetadataRequest();
         request.setTemplate("invalidTemplateName");
-        result = client
+        ApiException apiException = assertThrows(ApiException.class, () -> client
                 .importDocument(new ParametersForImportDocument()
                         .setRepoId(repositoryId)
                         .setParentEntryId(1)
                         .setFileName(fileName)
                         .setAutoRename(true)
                         .setInputStream(inputStream)
-                        .setRequestBody(request));
+                        .setRequestBody(request)));
+
+        assertEquals(409, apiException.getStatusCode());
+        assertEquals(apiException.getStatusCode(), apiException.getProblemDetails().getStatus());
+        assertEquals(apiException.getMessage(), apiException.getProblemDetails().getTitle());
+        assertTrue(apiException.getHeaders().size() > 0);
+        assertTrue(apiException.getProblemDetails().getExtensions().size() > 0);
+
+        Object obj = apiException.getProblemDetails().getExtensions().get(CreateEntryResult.class.getSimpleName());
+        CreateEntryResult result = obj instanceof CreateEntryResult ? (CreateEntryResult) obj : null;
 
         assertNotNull(result);
         CreateEntryOperations operations = result.getOperations();
@@ -269,6 +278,7 @@ public class ImportDocumentApiTest extends BaseTest {
         assertTrue(setTemplateException
                 .getMessage()
                 .startsWith("Template not found."), setTemplateException.getMessage());
+        assertEquals(apiException.getMessage(), setTemplateException.getMessage());
         assertEquals(HttpURLConnection.HTTP_CONFLICT, setTemplateException.getStatusCode());
         assertEquals(ErrorSource.LASERFICHE_SERVER.getName(), setTemplateException.getErrorSource());
     }
