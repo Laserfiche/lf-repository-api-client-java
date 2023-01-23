@@ -70,14 +70,14 @@ public class BaseTest {
         }
         testHeaders = new HashMap<>();
         testHeaders.put(testHeaderValue, "true");
-        repositoryApiClient = createClient();
+        repositoryApiClient = createClient(false);
     }
 
     private static String getEnvironmentVariable(String environmentVariableName) {
         String environmentVariable = System.getenv(environmentVariableName);
         if (nullOrEmpty(environmentVariable)) {
             environmentVariable = System.getProperty(environmentVariableName);
-            if (nullOrEmpty(environmentVariable) && IS_NOT_GITHUB_ENVIRONMENT)
+            if (nullOrEmpty(environmentVariable) && environmentVariable.equals(AuthorizationType.CLOUD_ACCESS_KEY.toString()) && IS_NOT_GITHUB_ENVIRONMENT)
                 throw new IllegalStateException(
                         "Environment variable '" + environmentVariableName + "' does not exist.");
         }
@@ -90,18 +90,24 @@ public class BaseTest {
         repositoryApiClient = null;
     }
 
-    public static RepositoryApiClient createClient() {
+    public static RepositoryApiClient createClient(boolean nullUsernameAndPassword) {
         if (repositoryApiClient == null) {
             if (authorizationType.equals(AuthorizationType.CLOUD_ACCESS_KEY)) {
                 if (nullOrEmpty(servicePrincipalKey) || accessKey == null)
                     return null;
                 repositoryApiClient = RepositoryApiClientImpl.createFromAccessKey(servicePrincipalKey, accessKey);
             } else if (authorizationType.equals(AuthorizationType.API_SERVER_USERNAME_PASSWORD)) {
-                if (nullOrEmpty(repositoryId) || nullOrEmpty(username) || nullOrEmpty(password) || nullOrEmpty(baseUrl))
-                    return null;
-                repositoryApiClient = RepositoryApiClientImpl.createFromUsernamePassword(repositoryId, username,
-                        password,
-                        baseUrl);
+                if (nullUsernameAndPassword){
+                    repositoryApiClient = RepositoryApiClientImpl.createFromUsernamePassword(repositoryId, null, null, baseUrl);
+                }
+                else {
+                    if (nullOrEmpty(repositoryId) || nullOrEmpty(username) || nullOrEmpty(password) || nullOrEmpty(
+                            baseUrl))
+                        return null;
+                    repositoryApiClient = RepositoryApiClientImpl.createFromUsernamePassword(repositoryId, username,
+                            password,
+                            baseUrl);
+                }
             }
             repositoryApiClient.setDefaultRequestHeaders(testHeaders);
         }

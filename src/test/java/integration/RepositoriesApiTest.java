@@ -14,4 +14,12 @@ class RepositoriesApiTest extends BaseTest {
 
         assertNotNull(repositoryInfoList);
     }
+
+    @Test
+    void getRepositoryList_SelfHosted_NoCredentials(){
+        repositoryApiClient = createClient(true);
+        RepositoriesClient client = repositoryApiClient.getRepositoryClient();
+        RepositoryInfo[] repositoryInfoList = client.getRepositoryList();
+        assertNotNull(repositoryInfoList);
+    }
 }
