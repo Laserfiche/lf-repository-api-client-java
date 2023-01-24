@@ -278,7 +278,7 @@ public class ImportDocumentApiTest extends BaseTest {
         assertTrue(setTemplateException
                 .getMessage()
                 .startsWith("Template not found."), setTemplateException.getMessage());
-        assertEquals(apiException.getMessage(), setTemplateException.getMessage());
+        assertEquals(apiException.getMessage(), String.format("EntryId=%s. %s", createdEntryId, setTemplateException.getMessage()));
         assertEquals(HttpURLConnection.HTTP_CONFLICT, setTemplateException.getStatusCode());
         assertEquals(ErrorSource.LASERFICHE_SERVER.getName(), setTemplateException.getErrorSource());
     }

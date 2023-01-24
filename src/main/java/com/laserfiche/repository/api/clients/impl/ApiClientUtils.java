@@ -27,10 +27,15 @@ class ApiClientUtils {
         Collection<String> messages = new ArrayList<>();
         if (createEntryResult != null && createEntryResult.getOperations() != null) {
             CreateEntryOperations operations = createEntryResult.getOperations();
-            if (operations.getEntryCreate() != null)
+            if (operations.getEntryCreate() != null) {
+                Integer entryId = operations.getEntryCreate().getEntryId();
+                if (entryId != null && entryId > 0) {
+                    messages.add(String.format("EntryId=%s.", entryId));
+                }
                 messages.add(getErrorMessagesFromAPIServerExceptions(operations
                         .getEntryCreate()
                         .getExceptions()));
+            }
             if (operations.getSetEdoc() != null)
                 messages.add(getErrorMessagesFromAPIServerExceptions(operations
                         .getSetEdoc()
