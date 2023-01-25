@@ -28,44 +28,6 @@ public class AttributesClientImpl extends ApiClient implements AttributesClient 
         this.httpRequestHandler = httpRequestHandler;
     }
 
-    private String beforeSend(String url, Map<String, String> headerParametersWithStringTypeValue) {
-        String requestUrl;
-        Request customRequest = new RequestImpl();
-        BeforeSendResult beforeSendResult = httpRequestHandler.beforeSend(customRequest);
-        String authorizationValue = customRequest.headers().get("Authorization");
-        if (authorizationValue != null){
-            headerParametersWithStringTypeValue.put("Authorization", authorizationValue);
-        }
-        if (url.startsWith("http")) {
-            requestUrl = url;
-        } else {
-            String apiBasedAddress = getRepositoryEndpoint(beforeSendResult.getRegionalDomain());
-            requestUrl = combineURLs(apiBasedAddress, url);
-        }
-        return requestUrl;
-    }
-
-    private String getRepositoryEndpoint(String regionDomain) {
-        if (regionDomain == null)
-            throw new IllegalArgumentException("regionDomain is null.");
-        return "https://api." + regionDomain + "/repository";
-    }
-
-    private String combineURLs(String baseURL, String relativeURL) {
-        char end = baseURL.charAt(baseURL.length() - 1);
-        char begin = relativeURL.charAt(0);
-        String url;
-
-        if ((end != '/' && begin == '/') || (end == '/' && begin != '/')) {
-            url = baseURL + relativeURL;
-        } else if (begin == '/') {
-            url = baseURL + relativeURL.substring(1);
-        } else {
-            url = baseURL + '/' + relativeURL;
-        }
-        return url;
-    }
-
     @Override
     public Attribute getTrusteeAttributeValueByKey(ParametersForGetTrusteeAttributeValueByKey parameters) {
         Map<String, Object> queryParameters = getParametersWithNonDefaultValue(new String[]{"boolean"},
@@ -79,7 +41,8 @@ public class AttributesClientImpl extends ApiClient implements AttributesClient 
                 .routeParam(pathParameters)
                 .asObject(Object.class);
         Object body = httpResponse.getBody();
-        if (httpResponse.getStatus() == 200) {
+        int statusCode = httpResponse.getStatus();
+        if (statusCode == 200) {
             try {
                 String jsonString = new JSONObject(body).toString();
                 return objectMapper.readValue(jsonString, Attribute.class);
@@ -92,29 +55,29 @@ public class AttributesClientImpl extends ApiClient implements AttributesClient 
             Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
             try {
                 String jsonString = new JSONObject(body).toString();
-                problemDetails = deserializeToProblemDetails(jsonString);
+                problemDetails = deserializeToProblemDetails(jsonString, objectMapper);
             } catch (IllegalStateException e) {
                 Optional<UnirestParsingException> parsingException = httpResponse.getParsingError();
-                throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(),
+                throw new ApiException(httpResponse.getStatusText(), statusCode,
                         (parsingException.isPresent() ? parsingException
                                 .get()
                                 .getOriginalBody() : null), headersMap, null);
             }
-            if (httpResponse.getStatus() == 400)
+            if (statusCode == 400)
                 throw new ApiException(decideErrorMessage(problemDetails, "Invalid or bad request."),
-                        httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
-            else if (httpResponse.getStatus() == 401)
+                        statusCode, httpResponse.getStatusText(), headersMap, problemDetails);
+            else if (statusCode == 401)
                 throw new ApiException(decideErrorMessage(problemDetails, "Access token is invalid or expired."),
-                        httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
-            else if (httpResponse.getStatus() == 403)
+                        statusCode, httpResponse.getStatusText(), headersMap, problemDetails);
+            else if (statusCode == 403)
                 throw new ApiException(decideErrorMessage(problemDetails, "Access denied for the operation."),
-                        httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
-            else if (httpResponse.getStatus() == 404)
+                        statusCode, httpResponse.getStatusText(), headersMap, problemDetails);
+            else if (statusCode == 404)
                 throw new ApiException(decideErrorMessage(problemDetails, "Requested attribute key not found."),
-                        httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
-            else if (httpResponse.getStatus() == 429)
+                        statusCode, httpResponse.getStatusText(), headersMap, problemDetails);
+            else if (statusCode == 429)
                 throw new ApiException(decideErrorMessage(problemDetails, "Rate limit is reached."),
-                        httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
+                        statusCode, httpResponse.getStatusText(), headersMap, problemDetails);
             else
                 throw new RuntimeException(httpResponse.getStatusText());
         }
@@ -141,149 +104,10 @@ public class AttributesClientImpl extends ApiClient implements AttributesClient 
                 .stream()
                 .collect(Collectors.toMap(Map.Entry::getKey, e -> (String) e.getValue()));
 
-        ////////////////////////////////////
-        int retryCount = 0;
-        int maxRetries = 1;
-        boolean shouldRetry = true;
-        HttpRequestHandler httpRequestHandler = null;
-        Request customRequest;
-        HttpResponse<Object> httpResponse = null;
-        while (retryCount <= maxRetries && shouldRetry) {
-      //const beforeSendResult = await this._httpRequestHandler.beforeFetchRequestAsync(url, init);
-            //customRequest = new RequestImpl();
-            //BeforeSendResult beforeSendResult = httpRequestHandler.beforeSend(customRequest);
-//            String absoluteUrl = "";
-//            if (url.startsWith("http")) {
-//                absoluteUrl = url;
-//            } else {
-//                String apiBasedAddress = beforeSendResult.getRegionalDomain();
-//                //absoluteUrl = UrlUtils.combineURLs(apiBasedAddress, url);
-//            }
-
-            try {
-                //response = await fetch(absoluteUrl, init);
-                String requestUrl = beforeSend(url, headerParametersWithStringTypeValue);
-                //request = request.get(url).qu
-                httpResponse = httpClient
-                        .get(requestUrl)
-                        .queryString(queryParameters)
-                        .routeParam(pathParameters)
-                        .headers(headerParametersWithStringTypeValue)
-                        .asObject(Object.class);
-                httpRequestHandler = this.httpRequestHandler;
-                shouldRetry = httpRequestHandler.afterSend(new ResponseImpl((short) httpResponse.getStatus()));// || isRetryable(httpResponse,);
-                        //(await this._httpRequestHandler.afterFetchResponseAsync(absoluteUrl, response, init)) ||
-                //isRetryable(response, init);
-                if (!shouldRetry) {
-                    Object body = httpResponse.getBody();
-                    if (httpResponse.getStatus() == 200) {
-                        try {
-                            String jsonString = new JSONObject(body).toString();
-                            return objectMapper.readValue(jsonString, ODataValueContextOfListOfAttribute.class);
-                        } catch (IllegalStateException e) {
-                            e.printStackTrace();
-                            return null;
-                        }
-                    } else {
-                        ProblemDetails problemDetails;
-                        Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
-                        try {
-                            String jsonString = new JSONObject(body).toString();
-                            problemDetails = deserializeToProblemDetails(jsonString);
-                        } catch (IllegalStateException e) {
-                            Optional<UnirestParsingException> parsingException = httpResponse.getParsingError();
-                            throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(),
-                                    (parsingException.isPresent() ? parsingException
-                                            .get()
-                                            .getOriginalBody() : null), headersMap, null);
-                        }
-                        if (httpResponse.getStatus() == 400)
-                            throw new ApiException(decideErrorMessage(problemDetails, "Invalid or bad request."),
-                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
-                        else if (httpResponse.getStatus() == 401)
-                            throw new ApiException(decideErrorMessage(problemDetails, "Access token is invalid or expired."),
-                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
-                        else if (httpResponse.getStatus() == 403)
-                            throw new ApiException(decideErrorMessage(problemDetails, "Access denied for the operation."),
-                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
-                        else if (httpResponse.getStatus() == 404)
-                            throw new ApiException(decideErrorMessage(problemDetails, "Not found."), httpResponse.getStatus(),
-                                    httpResponse.getStatusText(), headersMap, problemDetails);
-                        else if (httpResponse.getStatus() == 429)
-                            throw new ApiException(decideErrorMessage(problemDetails, "Rate limit is reached."),
-                                    httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
-                        else
-                            throw new RuntimeException(httpResponse.getStatusText());
-                    }
-                }
-            } catch (Exception err) {
-                if (retryCount >= maxRetries) {
-                    throw err;
-                }
-                shouldRetry = true;
-                System.err.println("Retrying fetch due to exception: "+ err);
-            } finally {
-                retryCount++;
-            }
-        }
-        if (httpResponse == null){
-            throw new IllegalStateException("Undefined response, there is a bug");
-        }
-        Object body = httpResponse.getBody();
-        String jsonString = new JSONObject(body).toString();
-        return objectMapper.readValue(jsonString, ODataValueContextOfListOfAttribute.class);
-
-
-        ///////////////////////////
-
-
-//        HttpResponse<Object> httpResponse = httpClient
-//                .get(url)
-//                .queryString(queryParameters)
-//                .routeParam(pathParameters)
-//                .headers(headerParametersWithStringTypeValue)
-//                .asObject(Object.class);
-
-//        Object body = httpResponse.getBody();
-//        if (httpResponse.getStatus() == 200) {
-//            try {
-//                String jsonString = new JSONObject(body).toString();
-//                return objectMapper.readValue(jsonString, ODataValueContextOfListOfAttribute.class);
-//            } catch (IllegalStateException e) {
-//                e.printStackTrace();
-//                return null;
-//            }
-//        } else {
-//            ProblemDetails problemDetails;
-//            Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
-//            try {
-//                String jsonString = new JSONObject(body).toString();
-//                problemDetails = deserializeToProblemDetails(jsonString);
-//            } catch (IllegalStateException e) {
-//                Optional<UnirestParsingException> parsingException = httpResponse.getParsingError();
-//                throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(),
-//                        (parsingException.isPresent() ? parsingException
-//                                .get()
-//                                .getOriginalBody() : null), headersMap, null);
-//            }
-//            if (httpResponse.getStatus() == 400)
-//                throw new ApiException(decideErrorMessage(problemDetails, "Invalid or bad request."),
-//                        httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
-//            else if (httpResponse.getStatus() == 401)
-//                throw new ApiException(decideErrorMessage(problemDetails, "Access token is invalid or expired."),
-//                        httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
-//            else if (httpResponse.getStatus() == 403)
-//                throw new ApiException(decideErrorMessage(problemDetails, "Access denied for the operation."),
-//                        httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
-//            else if (httpResponse.getStatus() == 404)
-//                throw new ApiException(decideErrorMessage(problemDetails, "Not found."), httpResponse.getStatus(),
-//                        httpResponse.getStatusText(), headersMap, problemDetails);
-//            else if (httpResponse.getStatus() == 429)
-//                throw new ApiException(decideErrorMessage(problemDetails, "Rate limit is reached."),
-//                        httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
-//            else
-//                throw new RuntimeException(httpResponse.getStatusText());
-//        }
+        return sendRequestParseResponse(httpClient, objectMapper, ODataValueContextOfListOfAttribute.class,
+                httpRequestHandler, url, "GET",
+                queryParameters, pathParameters,
+                headerParametersWithStringTypeValue);
     }
 
     @Override

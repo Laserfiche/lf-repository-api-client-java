@@ -65,7 +65,7 @@ public class TagDefinitionsClientImpl extends ApiClient implements TagDefinition
             Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
             try {
                 String jsonString = new JSONObject(body).toString();
-                problemDetails = deserializeToProblemDetails(jsonString);
+                problemDetails = deserializeToProblemDetails(jsonString, objectMapper);
             } catch (IllegalStateException e) {
                 Optional<UnirestParsingException> parsingException = httpResponse.getParsingError();
                 throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(),

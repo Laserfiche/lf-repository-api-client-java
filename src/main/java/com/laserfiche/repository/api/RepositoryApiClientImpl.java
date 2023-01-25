@@ -18,7 +18,6 @@ import java.util.Map;
  */
 public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseable {
     private Map<String, String> defaultHeaders;
-    private final RepositoryApiClientInterceptor interceptor;
     private final UnirestInstance httpClient;
     private final AttributesClient attributesClient;
     private final AuditReasonsClient auditReasonsClient;
@@ -33,7 +32,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
     private final TasksClient tasksClient;
     private final TemplateDefinitionsClient templateDefinitionsClient;
 
-    protected RepositoryApiClientImpl(RepositoryApiClientInterceptor interceptor, String baseUrl, HttpRequestHandler httpHandler) {
+    protected RepositoryApiClientImpl(String baseUrl, HttpRequestHandler httpHandler) {
         if (baseUrl.endsWith("/")) {
             baseUrl = baseUrl.substring(0, baseUrl.length() - 1);
         }
@@ -45,9 +44,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
         httpClient = Unirest.spawnInstance();
         httpClient
                 .config()
-                .setObjectMapper(objectMapper)
-                .interceptor(interceptor);
-        this.interceptor = interceptor;
+                .setObjectMapper(objectMapper);
 
         // Initialize repository API clients
         attributesClient = new AttributesClientImpl(baseUrl, httpClient, httpHandler);
@@ -76,9 +73,8 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
         if (baseUrlDebug == null) {
             baseUrlDebug = "https://api." + accessKey.getDomain() + "/repository";
         }
-        RepositoryApiClientInterceptor interceptor = new OAuthInterceptor(servicePrincipalKey, accessKey);
         HttpRequestHandler oauthHandler = new OAuthClientCredentialsHandler(servicePrincipalKey, accessKey);
-        return new RepositoryApiClientImpl(interceptor, baseUrlDebug, oauthHandler);
+        return new RepositoryApiClientImpl(baseUrlDebug, oauthHandler);
     }
 
     /**
@@ -102,10 +98,8 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
      */
     public static RepositoryApiClient createFromUsernamePassword(String repositoryId, String username, String password,
             String baseUrl) {
-        RepositoryApiClientInterceptor interceptor = new SelfHostedInterceptor(repositoryId, username, password,
-                baseUrl, null);
         HttpRequestHandler usernamePasswordHandler = new UsernamePasswordHandler(repositoryId, username, password, baseUrl, null);
-        return new RepositoryApiClientImpl(interceptor, baseUrl, usernamePasswordHandler);
+        return new RepositoryApiClientImpl(baseUrl, usernamePasswordHandler);
     }
 
     @Override
@@ -186,9 +180,6 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
      */
     @Override
     public void close() {
-        if (interceptor != null) {
-            interceptor.close();
-        }
         httpClient.close();
     }
 }
