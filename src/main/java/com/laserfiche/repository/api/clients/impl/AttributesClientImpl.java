@@ -105,7 +105,7 @@ public class AttributesClientImpl extends ApiClient implements AttributesClient 
                 .collect(Collectors.toMap(Map.Entry::getKey, e -> (String) e.getValue()));
 
         return sendRequestParseResponse(httpClient, objectMapper, ODataValueContextOfListOfAttribute.class,
-                httpRequestHandler, url, "GET",
+                httpRequestHandler, url, "GET", null, null, null, null, null, null, null, null,
                 queryParameters, pathParameters,
                 headerParametersWithStringTypeValue);
     }

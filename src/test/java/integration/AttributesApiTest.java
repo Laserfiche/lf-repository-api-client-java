@@ -29,6 +29,7 @@ class AttributesApiTest extends BaseTest {
                         .setEveryone(true));
 
         assertNotNull(attributeList);
+        assertNotNull(attributeList.getValue());
     }
 
     @Test

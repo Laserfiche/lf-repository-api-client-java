@@ -7,6 +7,7 @@ import kong.unirest.*;
 import kong.unirest.Headers;
 import kong.unirest.json.JSONObject;
 
+import java.io.InputStream;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -234,7 +235,10 @@ public abstract class ApiClient {
     protected static <TResponse> TResponse sendRequestParseResponse(UnirestInstance httpClient,
             ObjectMapper objectMapper, Class<TResponse> deserializedResponseType,
             HttpRequestHandler httpRequestHandler, String url, String requestMethod,
-            Map<String, Object>queryParameters, Map<String, Object> pathParameters,
+            String fieldName, InputStream edoc, String edocName, Object edocRequestObject, String contentType,
+            String queryStringFields, Object requestBody,
+            Collection<?> queryStringFieldList,
+            Map<String, Object> queryParameters, Map<String, Object> pathParameters,
             Map<String, String> headerParametersWithStringTypeValue) {
         int retryCount = 0;
         int maxRetries = 1;
@@ -244,16 +248,35 @@ public abstract class ApiClient {
         while (retryCount <= maxRetries && shouldRetry) {
             try {
                 String requestUrl = beforeSend(url, headerParametersWithStringTypeValue, httpRequestHandler);
-                HttpRequest<?> httpRequest = httpClient.request(requestMethod, requestUrl);
+                HttpRequest<?> httpRequest = null;
+                HttpRequestWithBody httpRequestWithBody = httpClient.request(requestMethod, requestUrl);
                 if(queryParameters != null){
-                    httpRequest = httpRequest.queryString(queryParameters);
+                    httpRequest = httpRequestWithBody.queryString(queryParameters);
                 }
                 if (pathParameters != null){
-                    httpRequest = httpRequest.routeParam(pathParameters);
+                    httpRequest = httpRequestWithBody.routeParam(pathParameters);
                 }
                 if (headerParametersWithStringTypeValue != null){
-                    httpRequest = httpRequest.headers(headerParametersWithStringTypeValue);
+                    httpRequest = httpRequestWithBody.headers(headerParametersWithStringTypeValue);
                 }
+                if (queryStringFields != null && queryStringFieldList != null){
+                    httpRequest = httpRequestWithBody.queryString(queryStringFields, queryStringFieldList);
+                }
+                if (contentType != null){
+                    httpRequest = httpRequestWithBody.contentType(contentType);
+                }
+                if (requestBody != null){
+                    httpRequest = httpRequestWithBody.body(requestBody);
+                }
+                if (fieldName != null){
+                    if (edoc != null && edocName != null){
+                        httpRequestWithBody.field(fieldName, edoc, edocName);
+                    }
+                    if (edocRequestObject != null){
+                        httpRequestWithBody.field(fieldName, edocRequestObject);
+                    }
+                }
+                //httpRequest.getHeaders().clear();
                 httpResponse = httpRequest.asObject(Object.class);
 
                 HttpMethod httpMethod = httpRequest.getHttpMethod();
