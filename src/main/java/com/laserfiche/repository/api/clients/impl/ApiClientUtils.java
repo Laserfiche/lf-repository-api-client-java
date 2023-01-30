@@ -10,9 +10,9 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
- * Helper class containing utility functions for the RepositoryApiClient.
+ * Internal helper class containing utility functions for the RepositoryApiClient.
  */
-class ApiClientUtils {
+public class ApiClientUtils {
     private ApiClientUtils() {
         throw new IllegalStateException("Utility class with all static methods are not meant to be instantiated.");
     }
@@ -23,7 +23,7 @@ class ApiClientUtils {
      * @param createEntryResult The createEntryResult.
      * @return A human-readable summary of the {@link CreateEntryResult}.
      */
-    static String getCreateEntryResultSummary(CreateEntryResult createEntryResult) {
+    public static String getCreateEntryResultSummary(CreateEntryResult createEntryResult) {
         Collection<String> messages = new ArrayList<>();
         if (createEntryResult != null && createEntryResult.getOperations() != null) {
             CreateEntryOperations operations = createEntryResult.getOperations();
