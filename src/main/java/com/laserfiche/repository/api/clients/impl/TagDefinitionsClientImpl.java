@@ -1,5 +1,6 @@
 package com.laserfiche.repository.api.clients.impl;
 
+import com.laserfiche.api.client.deserialization.ProblemDetailsDeserializer;
 import com.laserfiche.api.client.model.ApiException;
 import com.laserfiche.api.client.model.ProblemDetails;
 import com.laserfiche.repository.api.clients.TagDefinitionsClient;
@@ -9,11 +10,9 @@ import com.laserfiche.repository.api.clients.params.ParametersForGetTagDefinitio
 import com.laserfiche.repository.api.clients.params.ParametersForGetTagDefinitions;
 import kong.unirest.HttpResponse;
 import kong.unirest.UnirestInstance;
-import kong.unirest.UnirestParsingException;
 import kong.unirest.json.JSONObject;
 
 import java.util.Map;
-import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -52,44 +51,34 @@ public class TagDefinitionsClientImpl extends ApiClient implements TagDefinition
                 .headers(headerParametersWithStringTypeValue)
                 .asObject(Object.class);
         Object body = httpResponse.getBody();
+        Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
         if (httpResponse.getStatus() == 200) {
             try {
                 String jsonString = new JSONObject(body).toString();
                 return objectMapper.readValue(jsonString, ODataValueContextOfIListOfWTagInfo.class);
-            } catch (IllegalStateException e) {
-                e.printStackTrace();
-                return null;
+            } catch (Exception e) {
+                throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
             }
         } else {
             ProblemDetails problemDetails;
-            Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
             try {
                 String jsonString = new JSONObject(body).toString();
-                problemDetails = deserializeToProblemDetails(jsonString);
-            } catch (IllegalStateException e) {
-                Optional<UnirestParsingException> parsingException = httpResponse.getParsingError();
-                throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(),
-                        (parsingException.isPresent() ? parsingException
-                                .get()
-                                .getOriginalBody() : null), headersMap, null);
+                problemDetails = ProblemDetailsDeserializer.deserialize(objectMapper, jsonString);
+            } catch (Exception e) {
+                throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
             }
             if (httpResponse.getStatus() == 400)
-                throw new ApiException(decideErrorMessage(problemDetails, "Invalid or bad request."),
-                        httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
+                throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
             else if (httpResponse.getStatus() == 401)
-                throw new ApiException(decideErrorMessage(problemDetails, "Access token is invalid or expired."),
-                        httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
+                throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
             else if (httpResponse.getStatus() == 403)
-                throw new ApiException(decideErrorMessage(problemDetails, "Access denied for the operation."),
-                        httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
+                throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
             else if (httpResponse.getStatus() == 404)
-                throw new ApiException(decideErrorMessage(problemDetails, "Not found."), httpResponse.getStatus(),
-                        httpResponse.getStatusText(), headersMap, problemDetails);
+                throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
             else if (httpResponse.getStatus() == 429)
-                throw new ApiException(decideErrorMessage(problemDetails, "Rate limit is reached."),
-                        httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
+                throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
             else
-                throw new RuntimeException(httpResponse.getStatusText());
+                throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
         }
     }
 
@@ -122,44 +111,34 @@ public class TagDefinitionsClientImpl extends ApiClient implements TagDefinition
                 .routeParam(pathParameters)
                 .asObject(Object.class);
         Object body = httpResponse.getBody();
+        Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
         if (httpResponse.getStatus() == 200) {
             try {
                 String jsonString = new JSONObject(body).toString();
                 return objectMapper.readValue(jsonString, WTagInfo.class);
-            } catch (IllegalStateException e) {
-                e.printStackTrace();
-                return null;
+            } catch (Exception e) {
+                throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
             }
         } else {
             ProblemDetails problemDetails;
-            Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
             try {
                 String jsonString = new JSONObject(body).toString();
-                problemDetails = deserializeToProblemDetails(jsonString);
-            } catch (IllegalStateException e) {
-                Optional<UnirestParsingException> parsingException = httpResponse.getParsingError();
-                throw new ApiException(httpResponse.getStatusText(), httpResponse.getStatus(),
-                        (parsingException.isPresent() ? parsingException
-                                .get()
-                                .getOriginalBody() : null), headersMap, null);
+                problemDetails = ProblemDetailsDeserializer.deserialize(objectMapper, jsonString);
+            } catch (Exception e) {
+                throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
             }
             if (httpResponse.getStatus() == 400)
-                throw new ApiException(decideErrorMessage(problemDetails, "Invalid or bad request."),
-                        httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
+                throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
             else if (httpResponse.getStatus() == 401)
-                throw new ApiException(decideErrorMessage(problemDetails, "Access token is invalid or expired."),
-                        httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
+                throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
             else if (httpResponse.getStatus() == 403)
-                throw new ApiException(decideErrorMessage(problemDetails, "Access denied for the operation."),
-                        httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
+                throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
             else if (httpResponse.getStatus() == 404)
-                throw new ApiException(decideErrorMessage(problemDetails, "Request tag definition id not found."),
-                        httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
+                throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
             else if (httpResponse.getStatus() == 429)
-                throw new ApiException(decideErrorMessage(problemDetails, "Rate limit is reached."),
-                        httpResponse.getStatus(), httpResponse.getStatusText(), headersMap, problemDetails);
+                throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
             else
-                throw new RuntimeException(httpResponse.getStatusText());
+                throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
         }
     }
 }

@@ -1,6 +1,5 @@
 package com.laserfiche.repository.api.clients.impl;
 
-import com.laserfiche.api.client.model.ProblemDetails;
 import kong.unirest.Header;
 import kong.unirest.Headers;
 import kong.unirest.ObjectMapper;
@@ -94,37 +93,5 @@ public abstract class ApiClient {
                 .all()
                 .stream()
                 .collect(Collectors.toMap(Header::getName, Header::getValue));
-    }
-
-    protected ProblemDetails deserializeToProblemDetails(String jsonString) {
-        ProblemDetails problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
-        if (problemDetails.get("title") != null)
-            problemDetails.setTitle(problemDetails
-                    .get("title")
-                    .toString());
-        if (problemDetails.get("type") != null)
-            problemDetails.setType(problemDetails
-                    .get("type")
-                    .toString());
-        if (problemDetails.get("instance") != null)
-            problemDetails.setInstance(problemDetails
-                    .get("instance")
-                    .toString());
-        if (problemDetails.get("detail") != null)
-            problemDetails.setDetail(problemDetails
-                    .get("detail")
-                    .toString());
-        problemDetails.setStatus(Integer.parseInt(problemDetails
-                .get("status")
-                .toString()));
-        problemDetails.setExtensions((Map<String, Object>) problemDetails.get("extensions"));
-        return problemDetails;
-    }
-
-    protected String decideErrorMessage(ProblemDetails problemDetails, String genericErrorMessage) {
-        return (problemDetails != null && problemDetails.getTitle() != null && problemDetails
-                .getTitle()
-                .trim()
-                .length() > 0) ? problemDetails.getTitle() : genericErrorMessage;
     }
 }
