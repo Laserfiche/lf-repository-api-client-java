@@ -3,6 +3,7 @@ package com.laserfiche.repository.api.clients.impl;
 import com.laserfiche.api.client.httphandlers.*;
 import com.laserfiche.api.client.model.ApiException;
 import com.laserfiche.api.client.model.ProblemDetails;
+import com.laserfiche.repository.api.clients.params.ParametersForExportDocument;
 import kong.unirest.*;
 import kong.unirest.Headers;
 import kong.unirest.json.JSONObject;
@@ -123,7 +124,32 @@ public abstract class ApiClient {
         return problemDetails;
     }
 
-    protected ProblemDetails deserializeToProblemDetails(String jsonString) {
+//    protected static ProblemDetails deserializeToProblemDetails(String jsonString) {
+//        ProblemDetails problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
+//        if (problemDetails.get("title") != null)
+//            problemDetails.setTitle(problemDetails
+//                    .get("title")
+//                    .toString());
+//        if (problemDetails.get("type") != null)
+//            problemDetails.setType(problemDetails
+//                    .get("type")
+//                    .toString());
+//        if (problemDetails.get("instance") != null)
+//            problemDetails.setInstance(problemDetails
+//                    .get("instance")
+//                    .toString());
+//        if (problemDetails.get("detail") != null)
+//            problemDetails.setDetail(problemDetails
+//                    .get("detail")
+//                    .toString());
+//        problemDetails.setStatus(Integer.parseInt(problemDetails
+//                .get("status")
+//                .toString()));
+//        problemDetails.setExtensions((Map<String, Object>) problemDetails.get("extensions"));
+//        return problemDetails;
+//    }
+
+    protected ProblemDetails deserializeRawResponse(String jsonString) {
         ProblemDetails problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
         if (problemDetails.get("title") != null)
             problemDetails.setTitle(problemDetails
@@ -215,6 +241,57 @@ public abstract class ApiClient {
             return new RuntimeException(httpResponse.getStatusText());
     }
 
+    protected static void createExportApiException(ParametersForExportDocument parameters,
+            RawResponse rawResponse, RuntimeException[] exception){
+        //ObjectMapper objectMapper;
+        if (rawResponse.getStatus() == 200 || rawResponse.getStatus() == 206) {
+            parameters
+                    .getInputStreamConsumer()
+                    .accept(rawResponse.getContent());
+        } else {
+            ProblemDetails problemDetails = null;
+            Map<String, String> headersMap = getHeadersMap(rawResponse.getHeaders());
+            try {
+                String jsonString = rawResponse.getContentAsString();
+                problemDetails = deserializeToProblemDetails(jsonString, objectMapper);
+            } catch (IllegalStateException e) {
+                exception[0] = new ApiException(rawResponse.getStatusText(), rawResponse.getStatus(),
+                        rawResponse.getContentAsString(), headersMap, null);
+            }
+            if (rawResponse.getStatus() == 400)
+                exception[0] = new ApiException(
+                        decideErrorMessage(problemDetails, "Invalid or bad request."),
+                        rawResponse.getStatus(), rawResponse.getStatusText(), headersMap,
+                        problemDetails);
+            else if (rawResponse.getStatus() == 401)
+                exception[0] = new ApiException(
+                        decideErrorMessage(problemDetails, "Access token is invalid or expired."),
+                        rawResponse.getStatus(), rawResponse.getStatusText(), headersMap,
+                        problemDetails);
+            else if (rawResponse.getStatus() == 403)
+                exception[0] = new ApiException(
+                        decideErrorMessage(problemDetails, "Access denied for the operation."),
+                        rawResponse.getStatus(), rawResponse.getStatusText(), headersMap,
+                        problemDetails);
+            else if (rawResponse.getStatus() == 404)
+                exception[0] = new ApiException(
+                        decideErrorMessage(problemDetails, "Request entry id not found."),
+                        rawResponse.getStatus(), rawResponse.getStatusText(), headersMap,
+                        problemDetails);
+            else if (rawResponse.getStatus() == 423)
+                exception[0] = new ApiException(decideErrorMessage(problemDetails, "Entry is locked."),
+                        rawResponse.getStatus(), rawResponse.getStatusText(), headersMap,
+                        problemDetails);
+            else if (rawResponse.getStatus() == 429)
+                exception[0] = new ApiException(
+                        decideErrorMessage(problemDetails, "Rate limit is reached."),
+                        rawResponse.getStatus(), rawResponse.getStatusText(), headersMap,
+                        problemDetails);
+            else
+                exception[0] = new RuntimeException(rawResponse.getStatusText());
+        }
+    }
+
     private static String beforeSend(String url, Map<String, String> headerParametersWithStringTypeValue, HttpRequestHandler httpRequestHandler) {
         String requestUrl;
         Request customRequest = new RequestImpl();
@@ -276,7 +353,6 @@ public abstract class ApiClient {
                         httpRequestWithBody.field(fieldName, edocRequestObject);
                     }
                 }
-                //httpRequest.getHeaders().clear();
                 httpResponse = httpRequest.asObject(Object.class);
 
                 HttpMethod httpMethod = httpRequest.getHttpMethod();
@@ -329,5 +405,42 @@ public abstract class ApiClient {
         else{
             throw new RuntimeException("Response does not contain Json");
         }
+    }
+
+    protected static void sendExportRequest(UnirestInstance httpClient,
+            HttpRequestHandler httpRequestHandler, String url, String contentType,
+            String queryStringFields, Object requestBody,
+            ParametersForExportDocument parameters,
+            Map<String, Object> pathParameters,
+            Map<String, String> headerParametersWithStringTypeValue){
+        int retryCount = 0;
+        int maxRetries = 1;
+        boolean shouldRetry = true;
+        HttpResponse<Object> httpResponse = null;
+        String responseJson = null;
+        while (retryCount <= maxRetries && shouldRetry) {
+            try {
+                String requestUrl = beforeSend(url, headerParametersWithStringTypeValue, httpRequestHandler);
+                HttpRequest<?> httpRequest = null;
+                HttpRequestWithBody httpRequestWithBody = httpClient.post(requestUrl);
+                httpRequest = httpRequestWithBody;
+                final RuntimeException[] exception = {null};
+                httpRequest.thenConsume(rawResponse -> {
+                    createExportApiException(parameters, rawResponse, exception);
+                });
+                if (exception[0] != null) {
+                    throw exception[0];
+                }
+            } catch (Exception err) {
+                if (retryCount >= maxRetries) {
+                    throw err;
+                }
+                shouldRetry = true;
+                System.err.println("Retrying fetch due to exception: " + err);
+            } finally {
+                retryCount++;
+            }
+        }
+
     }
 }
