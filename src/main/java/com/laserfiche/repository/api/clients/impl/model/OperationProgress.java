@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-17T11:38:41.655-04:00[America/New_York]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class OperationProgress {
 
@@ -45,6 +45,11 @@ public class OperationProgress {
         return this;
     }
 
+    /**
+     * Returns the operation token of the operation associated with this OperationProgress.
+     *
+     * @return operationToken
+     */
     @Schema(description = "The operation token of the operation associated with this OperationProgress.")
     public String getOperationToken() {
         return operationToken;
@@ -59,6 +64,11 @@ public class OperationProgress {
         return this;
     }
 
+    /**
+     * Returns the type of the operation associated with this OperationProgress.
+     *
+     * @return operationType
+     */
     @Schema(description = "The type of the operation associated with this OperationProgress.")
     public String getOperationType() {
         return operationType;
@@ -73,6 +83,11 @@ public class OperationProgress {
         return this;
     }
 
+    /**
+     * Returns determines what percentage of the execution of the associated operation is completed.
+     *
+     * @return percentComplete
+     */
     @Schema(description = "Determines what percentage of the execution of the associated operation is completed.")
     public Integer getPercentComplete() {
         return percentComplete;
@@ -87,6 +102,11 @@ public class OperationProgress {
         return this;
     }
 
+    /**
+     * Returns status
+     *
+     * @return status
+     */
     @Schema(description = "")
     public OperationStatus getStatus() {
         return status;
@@ -109,6 +129,11 @@ public class OperationProgress {
         return this;
     }
 
+    /**
+     * Returns the list of errors occurred during the execution of the associated operation.
+     *
+     * @return errors
+     */
     @Schema(description = "The list of errors occurred during the execution of the associated operation.")
     public List<OperationErrorItem> getErrors() {
         return errors;
@@ -123,6 +148,11 @@ public class OperationProgress {
         return this;
     }
 
+    /**
+     * Returns the URI which can be used (via api call) to access the result(s) of the associated operation.
+     *
+     * @return redirectUri
+     */
     @Schema(description = "The URI which can be used (via api call) to access the result(s) of the associated operation.")
     public String getRedirectUri() {
         return redirectUri;
@@ -137,6 +167,11 @@ public class OperationProgress {
         return this;
     }
 
+    /**
+     * Returns the ID of the entry affected (e.g. created or modified) by the execution of the associated operation.
+     *
+     * @return entryId
+     */
     @Schema(description = "The ID of the entry affected (e.g. created or modified) by the execution of the associated operation.")
     public Integer getEntryId() {
         return entryId;
@@ -151,6 +186,11 @@ public class OperationProgress {
         return this;
     }
 
+    /**
+     * Returns the timestamp representing when the associated operation&#x27;s execution is started.
+     *
+     * @return startTimestamp
+     */
     @Schema(description = "The timestamp representing when the associated operation's execution is started.")
     public OffsetDateTime getStartTimestamp() {
         return startTimestamp;
@@ -165,6 +205,11 @@ public class OperationProgress {
         return this;
     }
 
+    /**
+     * Returns the timestamp representing the last time when the associated task&#x27;s status has changed.
+     *
+     * @return statusTimestamp
+     */
     @Schema(description = "The timestamp representing the last time when the associated task's status has changed.")
     public OffsetDateTime getStatusTimestamp() {
         return statusTimestamp;
@@ -175,7 +220,7 @@ public class OperationProgress {
     }
 
     @Override
-    public boolean equals(java.lang.Object o) {
+    public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
@@ -243,7 +288,7 @@ public class OperationProgress {
         return sb.toString();
     }
 
-    private String toIndentedString(java.lang.Object o) {
+    private String toIndentedString(Object o) {
         if (o == null) {
             return "null";
         }

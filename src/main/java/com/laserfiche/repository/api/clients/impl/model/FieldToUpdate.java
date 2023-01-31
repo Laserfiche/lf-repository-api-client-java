@@ -8,8 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * The request body containing fields that will be assigned to the entry.
+ */
 @Schema(description = "The request body containing fields that will be assigned to the entry.")
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-17T11:38:41.655-04:00[America/New_York]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class FieldToUpdate {
 
@@ -29,6 +32,11 @@ public class FieldToUpdate {
         return this;
     }
 
+    /**
+     * Returns the field values that will be assigned to the field.
+     *
+     * @return values
+     */
     @Schema(description = "The field values that will be assigned to the field.")
     public List<ValueToUpdate> getValues() {
         return values;
@@ -39,7 +47,7 @@ public class FieldToUpdate {
     }
 
     @Override
-    public boolean equals(java.lang.Object o) {
+    public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
@@ -67,7 +75,7 @@ public class FieldToUpdate {
         return sb.toString();
     }
 
-    private String toIndentedString(java.lang.Object o) {
+    private String toIndentedString(Object o) {
         if (o == null) {
             return "null";
         }

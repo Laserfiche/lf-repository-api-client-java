@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-17T11:38:41.655-04:00[America/New_York]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class PutLinksRequest {
 
@@ -26,6 +26,11 @@ public class PutLinksRequest {
         return this;
     }
 
+    /**
+     * Returns the target entry ID to create a link to.
+     *
+     * @return targetId
+     */
     @Schema(description = "The target entry ID to create a link to.")
     public Integer getTargetId() {
         return targetId;
@@ -40,6 +45,11 @@ public class PutLinksRequest {
         return this;
     }
 
+    /**
+     * Returns the link type ID to create the link with.
+     *
+     * @return linkTypeId
+     */
     @Schema(description = "The link type ID to create the link with.")
     public Integer getLinkTypeId() {
         return linkTypeId;
@@ -62,6 +72,11 @@ public class PutLinksRequest {
         return this;
     }
 
+    /**
+     * Returns custom properties (key, value pairs) to be added to the link
+     *
+     * @return customProperties
+     */
     @Schema(description = "Custom properties (key, value pairs) to be added to the link")
     public Map<String, String> getCustomProperties() {
         return customProperties;
@@ -72,7 +87,7 @@ public class PutLinksRequest {
     }
 
     @Override
-    public boolean equals(java.lang.Object o) {
+    public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
@@ -109,7 +124,7 @@ public class PutLinksRequest {
         return sb.toString();
     }
 
-    private String toIndentedString(java.lang.Object o) {
+    private String toIndentedString(Object o) {
         if (o == null) {
             return "null";
         }

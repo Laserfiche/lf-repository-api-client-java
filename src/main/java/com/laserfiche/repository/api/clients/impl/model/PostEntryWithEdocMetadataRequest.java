@@ -6,7 +6,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.Objects;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-17T11:38:41.655-04:00[America/New_York]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class PostEntryWithEdocMetadataRequest {
 
@@ -24,6 +24,11 @@ public class PostEntryWithEdocMetadataRequest {
         return this;
     }
 
+    /**
+     * Returns the name of the template assigned to the entry.
+     *
+     * @return template
+     */
     @Schema(description = "The name of the template assigned to the entry.")
     public String getTemplate() {
         return template;
@@ -38,6 +43,11 @@ public class PostEntryWithEdocMetadataRequest {
         return this;
     }
 
+    /**
+     * Returns metadata
+     *
+     * @return metadata
+     */
     @Schema(description = "")
     public PutFieldValsRequest getMetadata() {
         return metadata;
@@ -52,6 +62,11 @@ public class PostEntryWithEdocMetadataRequest {
         return this;
     }
 
+    /**
+     * Returns the name of the volume to use. Will use the default parent entry volume if not specified. This is ignored in Laserfiche Cloud.
+     *
+     * @return volumeName
+     */
     @Schema(description = "The name of the volume to use. Will use the default parent entry volume if not specified. This is ignored in Laserfiche Cloud.")
     public String getVolumeName() {
         return volumeName;
@@ -62,7 +77,7 @@ public class PostEntryWithEdocMetadataRequest {
     }
 
     @Override
-    public boolean equals(java.lang.Object o) {
+    public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
@@ -100,7 +115,7 @@ public class PostEntryWithEdocMetadataRequest {
         return sb.toString();
     }
 
-    private String toIndentedString(java.lang.Object o) {
+    private String toIndentedString(Object o) {
         if (o == null) {
             return "null";
         }

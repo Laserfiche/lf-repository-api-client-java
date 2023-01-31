@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-11-07T15:57:30.539-05:00[America/New_York]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class WFieldInfo {
 
@@ -62,6 +62,11 @@ public class WFieldInfo {
         return this;
     }
 
+    /**
+     * Returns the name of the field.
+     *
+     * @return name
+     */
     @Schema(description = "The name of the field.")
     public String getName() {
         return name;
@@ -76,6 +81,11 @@ public class WFieldInfo {
         return this;
     }
 
+    /**
+     * Returns the localized name of the field.
+     *
+     * @return displayName
+     */
     @Schema(description = "The localized name of the field.")
     public String getDisplayName() {
         return displayName;
@@ -90,6 +100,11 @@ public class WFieldInfo {
         return this;
     }
 
+    /**
+     * Returns the ID of the field.
+     *
+     * @return id
+     */
     @Schema(description = "The ID of the field.")
     public Integer getId() {
         return id;
@@ -104,6 +119,11 @@ public class WFieldInfo {
         return this;
     }
 
+    /**
+     * Returns the description of the field.
+     *
+     * @return description
+     */
     @Schema(description = "The description of the field.")
     public String getDescription() {
         return description;
@@ -118,6 +138,11 @@ public class WFieldInfo {
         return this;
     }
 
+    /**
+     * Returns fieldType
+     *
+     * @return fieldType
+     */
     @Schema(description = "")
     public WFieldType getFieldType() {
         return fieldType;
@@ -132,6 +157,11 @@ public class WFieldInfo {
         return this;
     }
 
+    /**
+     * Returns the length of the field for variable length data types.
+     *
+     * @return length
+     */
     @Schema(description = "The length of the field for variable length data types.")
     public Integer getLength() {
         return length;
@@ -146,6 +176,11 @@ public class WFieldInfo {
         return this;
     }
 
+    /**
+     * Returns the default value of the field for new entries that are assigned to a template the represented field is a member of.
+     *
+     * @return defaultValue
+     */
     @Schema(description = "The default value of the field for new entries that are assigned to a template the represented field is a member of.")
     public String getDefaultValue() {
         return defaultValue;
@@ -160,6 +195,11 @@ public class WFieldInfo {
         return this;
     }
 
+    /**
+     * Returns a boolean indicating if the represented template field supports multiple values.
+     *
+     * @return isMultiValue
+     */
     @Schema(description = "A boolean indicating if the represented template field supports multiple values.")
     @JsonProperty("isMultiValue")
     public Boolean isMultiValue() {
@@ -175,6 +215,11 @@ public class WFieldInfo {
         return this;
     }
 
+    /**
+     * Returns a boolean indicating if the represented field must have a value set on entries assigned to a template that the field is a member of.
+     *
+     * @return isRequired
+     */
     @Schema(description = "A boolean indicating if the represented field must have a value set on entries assigned to a template that the field is a member of.")
     @JsonProperty("isRequired")
     public Boolean isRequired() {
@@ -190,6 +235,11 @@ public class WFieldInfo {
         return this;
     }
 
+    /**
+     * Returns the constraint for values stored in the represented field.
+     *
+     * @return constraint
+     */
     @Schema(description = "The constraint for values stored in the represented field.")
     public String getConstraint() {
         return constraint;
@@ -204,6 +254,11 @@ public class WFieldInfo {
         return this;
     }
 
+    /**
+     * Returns the error string that will be returned when the field constraint is violated when setting a value for this field.
+     *
+     * @return constraintError
+     */
     @Schema(description = "The error string that will be returned when the field constraint is violated when setting a value for this field.")
     public String getConstraintError() {
         return constraintError;
@@ -226,6 +281,11 @@ public class WFieldInfo {
         return this;
     }
 
+    /**
+     * Returns the list of items assigned to the represented field.
+     *
+     * @return listValues
+     */
     @Schema(description = "The list of items assigned to the represented field.")
     public List<String> getListValues() {
         return listValues;
@@ -240,6 +300,11 @@ public class WFieldInfo {
         return this;
     }
 
+    /**
+     * Returns format
+     *
+     * @return format
+     */
     @Schema(description = "")
     public WFieldFormat getFormat() {
         return format;
@@ -254,6 +319,11 @@ public class WFieldInfo {
         return this;
     }
 
+    /**
+     * Returns the name of the currency that will be using when formatting the represented field when the Format property is set to the Currency member of the WFieldFormat enumeration.
+     *
+     * @return currency
+     */
     @Schema(description = "The name of the currency that will be using when formatting the represented field when the Format property is set to the Currency member of the WFieldFormat enumeration.")
     public String getCurrency() {
         return currency;
@@ -268,6 +338,11 @@ public class WFieldInfo {
         return this;
     }
 
+    /**
+     * Returns the custom format pattern for fields that are configured to use a custom format.
+     *
+     * @return formatPattern
+     */
     @Schema(description = "The custom format pattern for fields that are configured to use a custom format.")
     public String getFormatPattern() {
         return formatPattern;
@@ -278,7 +353,7 @@ public class WFieldInfo {
     }
 
     @Override
-    public boolean equals(java.lang.Object o) {
+    public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
@@ -372,7 +447,7 @@ public class WFieldInfo {
         return sb.toString();
     }
 
-    private String toIndentedString(java.lang.Object o) {
+    private String toIndentedString(Object o) {
         if (o == null) {
             return "null";
         }

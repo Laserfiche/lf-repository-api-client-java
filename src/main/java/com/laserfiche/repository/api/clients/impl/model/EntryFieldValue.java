@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-11-07T15:57:30.539-05:00[America/New_York]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class EntryFieldValue {
 
@@ -39,6 +39,11 @@ public class EntryFieldValue {
         return this;
     }
 
+    /**
+     * Returns the name of the field.
+     *
+     * @return fieldName
+     */
     @Schema(description = "The name of the field.")
     public String getFieldName() {
         return fieldName;
@@ -61,6 +66,11 @@ public class EntryFieldValue {
         return this;
     }
 
+    /**
+     * Returns the values assigned to the field.
+     *
+     * @return values
+     */
     @Schema(description = "The values assigned to the field.")
     public List<Map<String, Object>> getValues() {
         return values;
@@ -75,6 +85,11 @@ public class EntryFieldValue {
         return this;
     }
 
+    /**
+     * Returns fieldType
+     *
+     * @return fieldType
+     */
     @Schema(description = "")
     public WFieldType getFieldType() {
         return fieldType;
@@ -89,6 +104,11 @@ public class EntryFieldValue {
         return this;
     }
 
+    /**
+     * Returns the ID of the field.
+     *
+     * @return fieldId
+     */
     @Schema(description = "The ID of the field.")
     public Integer getFieldId() {
         return fieldId;
@@ -103,6 +123,11 @@ public class EntryFieldValue {
         return this;
     }
 
+    /**
+     * Returns a boolean indicating if the represented field supports multiple values.
+     *
+     * @return isMultiValue
+     */
     @Schema(description = "A boolean indicating if the represented field supports multiple values.")
     @JsonProperty("isMultiValue")
     public Boolean isMultiValue() {
@@ -118,6 +143,11 @@ public class EntryFieldValue {
         return this;
     }
 
+    /**
+     * Returns a boolean indicating if the represented field must have a value set on entries assigned to a template that the field is a member of.
+     *
+     * @return isRequired
+     */
     @Schema(description = "A boolean indicating if the represented field must have a value set on entries assigned to a template that the field is a member of.")
     @JsonProperty("isRequired")
     public Boolean isRequired() {
@@ -133,6 +163,11 @@ public class EntryFieldValue {
         return this;
     }
 
+    /**
+     * Returns a boolean indicating if there are more field values.
+     *
+     * @return hasMoreValues
+     */
     @Schema(description = "A boolean indicating if there are more field values.")
     public Boolean isHasMoreValues() {
         return hasMoreValues;
@@ -143,7 +178,7 @@ public class EntryFieldValue {
     }
 
     @Override
-    public boolean equals(java.lang.Object o) {
+    public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
@@ -199,7 +234,7 @@ public class EntryFieldValue {
         return sb.toString();
     }
 
-    private String toIndentedString(java.lang.Object o) {
+    private String toIndentedString(Object o) {
         if (o == null) {
             return "null";
         }

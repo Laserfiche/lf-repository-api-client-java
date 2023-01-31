@@ -6,7 +6,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.*;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-17T11:38:41.655-04:00[America/New_York]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ImportAsyncMetadata {
 
@@ -32,6 +32,11 @@ public class ImportAsyncMetadata {
         return this;
     }
 
+    /**
+     * Returns the fields that will be assigned to the entry.
+     *
+     * @return fields
+     */
     @Schema(description = "The fields that will be assigned to the entry.")
     public Map<String, FieldToUpdate> getFields() {
         return fields;
@@ -54,6 +59,11 @@ public class ImportAsyncMetadata {
         return this;
     }
 
+    /**
+     * Returns the tags that will be assigned to the entry.
+     *
+     * @return tags
+     */
     @Schema(description = "The tags that will be assigned to the entry.")
     public List<String> getTags() {
         return tags;
@@ -76,6 +86,11 @@ public class ImportAsyncMetadata {
         return this;
     }
 
+    /**
+     * Returns the links that will be assigned to the entry.
+     *
+     * @return links
+     */
     @Schema(description = "The links that will be assigned to the entry.")
     public List<LinkToUpdate> getLinks() {
         return links;
@@ -86,7 +101,7 @@ public class ImportAsyncMetadata {
     }
 
     @Override
-    public boolean equals(java.lang.Object o) {
+    public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
@@ -123,7 +138,7 @@ public class ImportAsyncMetadata {
         return sb.toString();
     }
 
-    private String toIndentedString(java.lang.Object o) {
+    private String toIndentedString(Object o) {
         if (o == null) {
             return "null";
         }

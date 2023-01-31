@@ -6,7 +6,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.Objects;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-11-07T15:57:30.539-05:00[America/New_York]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class WTagInfo {
 
@@ -33,6 +33,11 @@ public class WTagInfo {
         return this;
     }
 
+    /**
+     * Returns the ID of the tag definition.
+     *
+     * @return id
+     */
     @Schema(description = "The ID of the tag definition.")
     public Integer getId() {
         return id;
@@ -47,6 +52,11 @@ public class WTagInfo {
         return this;
     }
 
+    /**
+     * Returns the name of the tag definition.
+     *
+     * @return name
+     */
     @Schema(description = "The name of the tag definition.")
     public String getName() {
         return name;
@@ -61,6 +71,11 @@ public class WTagInfo {
         return this;
     }
 
+    /**
+     * Returns the localized name of the tag definition.
+     *
+     * @return displayName
+     */
     @Schema(description = "The localized name of the tag definition.")
     public String getDisplayName() {
         return displayName;
@@ -75,6 +90,11 @@ public class WTagInfo {
         return this;
     }
 
+    /**
+     * Returns the description of the tag definition.
+     *
+     * @return description
+     */
     @Schema(description = "The description of the tag definition.")
     public String getDescription() {
         return description;
@@ -89,6 +109,11 @@ public class WTagInfo {
         return this;
     }
 
+    /**
+     * Returns a boolean indicating whether or not the tag definition is classified as a security tag (true) or an informational tag (false).
+     *
+     * @return isSecure
+     */
     @Schema(description = "A boolean indicating whether or not the tag definition is classified as a security tag (true) or an informational tag (false).")
     @JsonProperty("isSecure")
     public Boolean isSecure() {
@@ -104,6 +129,11 @@ public class WTagInfo {
         return this;
     }
 
+    /**
+     * Returns watermark
+     *
+     * @return watermark
+     */
     @Schema(description = "")
     public Watermark getWatermark() {
         return watermark;
@@ -114,7 +144,7 @@ public class WTagInfo {
     }
 
     @Override
-    public boolean equals(java.lang.Object o) {
+    public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
@@ -165,7 +195,7 @@ public class WTagInfo {
         return sb.toString();
     }
 
-    private String toIndentedString(java.lang.Object o) {
+    private String toIndentedString(Object o) {
         if (o == null) {
             return "null";
         }

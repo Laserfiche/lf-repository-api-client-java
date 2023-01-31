@@ -5,7 +5,22 @@
 - **[BREAKING]** Every async API are replaced with normal blocking API.
 - The ApiClient class is now abstract.
 - Improved documentation.
-- Added retry logic by using the `afterSend()` function to handle automatically retry requests
+- Only throw the `ApiException` type when error API responses occur.
+- **[BREAKING]** `EntriesClient.importDocument` API v1 can succeed in creating a document, but fail in setting some or all of its metadata components. To retrieve errors in the case of a partial success, inspect the content of the `ProblemDetails.getExtensions()`. See example below.
+  ```java
+  try {
+    repositoryApiClient.getEntriesClient().importDocument(...);
+  } catch (ApiException e) {
+    e.printStackTrace();
+    if (e.getProblemDetails() != null && e.getProblemDetails().getExtensions() != null) {
+      Object obj = e.getProblemDetails().getExtensions().getOrDefault(CreateEntryResult.class.getSimpleName(), null);
+      CreateEntryResult result = obj instanceof CreateEntryResult ? (CreateEntryResult) obj : null;
+      if (result != null && result.getOperations() != null && result.getOperations().getEntryCreate() != null) {
+        Integer createdEntryId = result.getOperations().getEntryCreate().getEntryId();
+      }
+    }
+  }
+  ```
 
 ## 1.2.0
 
