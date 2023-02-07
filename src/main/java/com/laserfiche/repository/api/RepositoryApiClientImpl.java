@@ -48,8 +48,8 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
 
         // Initialize repository API clients
         attributesClient = new AttributesClientImpl(baseUrl, httpClient, httpHandler);
-        auditReasonsClient = new AuditReasonsClientImpl(baseUrl, httpClient);
-        entriesClient = new EntriesClientImpl(baseUrl, httpClient);
+        auditReasonsClient = new AuditReasonsClientImpl(baseUrl, httpClient, httpHandler);
+        entriesClient = new EntriesClientImpl(baseUrl, httpClient, httpHandler);
         fieldDefinitionsClient = new FieldDefinitionsClientImpl(baseUrl, httpClient);
         linkDefinitionsClient = new LinkDefinitionsClientImpl(baseUrl, httpClient);
         repositoriesClient = new RepositoriesClientImpl(baseUrl, httpClient);
@@ -58,7 +58,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
         simpleSearchesClient = new SimpleSearchesClientImpl(baseUrl, httpClient);
         tagDefinitionsClient = new TagDefinitionsClientImpl(baseUrl, httpClient);
         tasksClient = new TasksClientImpl(baseUrl, httpClient);
-        templateDefinitionsClient = new TemplateDefinitionsClientImpl(baseUrl, httpClient);
+        templateDefinitionsClient = new TemplateDefinitionsClientImpl(baseUrl, httpClient, httpHandler);
     }
 
     /**

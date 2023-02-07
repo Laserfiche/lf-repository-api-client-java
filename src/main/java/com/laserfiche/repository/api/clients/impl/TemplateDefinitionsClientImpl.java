@@ -1,6 +1,7 @@
 package com.laserfiche.repository.api.clients.impl;
 
 import com.laserfiche.api.client.deserialization.ProblemDetailsDeserializer;
+import com.laserfiche.api.client.httphandlers.HttpRequestHandler;
 import com.laserfiche.api.client.model.ApiException;
 import com.laserfiche.api.client.model.ProblemDetails;
 import com.laserfiche.repository.api.clients.TemplateDefinitionsClient;
@@ -24,8 +25,11 @@ import java.util.stream.Collectors;
  */
 public class TemplateDefinitionsClientImpl extends ApiClient implements TemplateDefinitionsClient {
 
-    public TemplateDefinitionsClientImpl(String baseUrl, UnirestInstance httpClient) {
+    private HttpRequestHandler httpRequestHandler;
+
+    public TemplateDefinitionsClientImpl(String baseUrl, UnirestInstance httpClient, HttpRequestHandler httpRequestHandler) {
         super(baseUrl, httpClient);
+        this.httpRequestHandler = httpRequestHandler;
     }
 
     @Override
@@ -48,42 +52,45 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
                 .entrySet()
                 .stream()
                 .collect(Collectors.toMap(Map.Entry::getKey, e -> (String) e.getValue()));
-        HttpResponse<Object> httpResponse = httpClient
-                .get(url)
-                .queryString(queryParameters)
-                .routeParam(pathParameters)
-                .headers(headerParametersWithStringTypeValue)
-                .asObject(Object.class);
-        Object body = httpResponse.getBody();
-        Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
-        if (httpResponse.getStatus() == 200) {
-            try {
-                String jsonString = new JSONObject(body).toString();
-                return objectMapper.readValue(jsonString, ODataValueContextOfIListOfWTemplateInfo.class);
-            } catch (Exception e) {
-                throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
-            }
-        } else {
-            ProblemDetails problemDetails;
-            try {
-                String jsonString = new JSONObject(body).toString();
-                problemDetails = ProblemDetailsDeserializer.deserialize(objectMapper, jsonString);
-            } catch (Exception e) {
-                throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
-            }
-            if (httpResponse.getStatus() == 400)
-                throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-            else if (httpResponse.getStatus() == 401)
-                throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-            else if (httpResponse.getStatus() == 403)
-                throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-            else if (httpResponse.getStatus() == 404)
-                throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-            else if (httpResponse.getStatus() == 429)
-                throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-            else
-                throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-        }
+//        HttpResponse<Object> httpResponse = httpClient
+//                .get(url)
+//                .queryString(queryParameters)
+//                .routeParam(pathParameters)
+//                .headers(headerParametersWithStringTypeValue)
+//                .asObject(Object.class);
+//        Object body = httpResponse.getBody();
+//        Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
+//        if (httpResponse.getStatus() == 200) {
+//            try {
+//                String jsonString = new JSONObject(body).toString();
+//                return objectMapper.readValue(jsonString, ODataValueContextOfIListOfWTemplateInfo.class);
+//            } catch (Exception e) {
+//                throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+//            }
+//        } else {
+//            ProblemDetails problemDetails;
+//            try {
+//                String jsonString = new JSONObject(body).toString();
+//                problemDetails = ProblemDetailsDeserializer.deserialize(objectMapper, jsonString);
+//            } catch (Exception e) {
+//                throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+//            }
+//            if (httpResponse.getStatus() == 400)
+//                throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+//            else if (httpResponse.getStatus() == 401)
+//                throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+//            else if (httpResponse.getStatus() == 403)
+//                throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+//            else if (httpResponse.getStatus() == 404)
+//                throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+//            else if (httpResponse.getStatus() == 429)
+//                throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+//            else
+//                throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+//        }
+        return sendRequestParseResponse(httpClient, objectMapper, ODataValueContextOfIListOfWTemplateInfo.class,
+                httpRequestHandler, url, "GET", null, null, null, null, queryParameters, pathParameters,
+                headerParametersWithStringTypeValue, false);
     }
 
     @Override

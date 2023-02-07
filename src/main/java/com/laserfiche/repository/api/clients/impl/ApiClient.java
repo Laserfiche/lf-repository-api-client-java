@@ -1,15 +1,18 @@
 package com.laserfiche.repository.api.clients.impl;
 
+import com.laserfiche.api.client.deserialization.ProblemDetailsDeserializer;
 import com.laserfiche.api.client.httphandlers.*;
 import com.laserfiche.api.client.model.ApiException;
 import com.laserfiche.api.client.model.ProblemDetails;
 import com.laserfiche.repository.api.clients.params.ParametersForExportDocument;
+import com.laserfiche.repository.api.clients.params.ParametersForExportDocumentWithAuditReason;
 import kong.unirest.*;
 import kong.unirest.Headers;
 import kong.unirest.json.JSONObject;
 
 import java.io.InputStream;
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -101,26 +104,22 @@ public abstract class ApiClient {
 
     protected static ProblemDetails deserializeToProblemDetails(String jsonString, ObjectMapper objectMapper) {
         ProblemDetails problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
-        if (problemDetails.get("title") != null)
+        if (problemDetails.getTitle() != null)
             problemDetails.setTitle(problemDetails
-                    .get("title")
-                    .toString());
-        if (problemDetails.get("type") != null)
+                    .getTitle());
+        if (problemDetails.getType() != null)
             problemDetails.setType(problemDetails
-                    .get("type")
-                    .toString());
-        if (problemDetails.get("instance") != null)
+                    .getType());
+        if (problemDetails.getInstance() != null)
             problemDetails.setInstance(problemDetails
-                    .get("instance")
-                    .toString());
-        if (problemDetails.get("detail") != null)
+                    .getInstance());
+        if (problemDetails.getDetail() != null)
             problemDetails.setDetail(problemDetails
-                    .get("detail")
-                    .toString());
+                                  .getDetail());
         problemDetails.setStatus(Integer.parseInt(problemDetails
-                .get("status")
+                                                .getStatus()
                 .toString()));
-        problemDetails.setExtensions((Map<String, Object>) problemDetails.get("extensions"));
+        problemDetails.setExtensions(problemDetails.getExtensions());
         return problemDetails;
     }
 
@@ -149,37 +148,31 @@ public abstract class ApiClient {
 //        return problemDetails;
 //    }
 
-    protected ProblemDetails deserializeRawResponse(String jsonString) {
-        ProblemDetails problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
-        if (problemDetails.get("title") != null)
-            problemDetails.setTitle(problemDetails
-                    .get("title")
-                    .toString());
-        if (problemDetails.get("type") != null)
-            problemDetails.setType(problemDetails
-                    .get("type")
-                    .toString());
-        if (problemDetails.get("instance") != null)
-            problemDetails.setInstance(problemDetails
-                    .get("instance")
-                    .toString());
-        if (problemDetails.get("detail") != null)
-            problemDetails.setDetail(problemDetails
-                    .get("detail")
-                    .toString());
-        problemDetails.setStatus(Integer.parseInt(problemDetails
-                .get("status")
-                .toString()));
-        problemDetails.setExtensions((Map<String, Object>) problemDetails.get("extensions"));
-        return problemDetails;
-    }
+//    protected ProblemDetails deserializeRawResponse(String jsonString) {
+//        ProblemDetails problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
+//        if (problemDetails.get("title") != null)
+//            problemDetails.setTitle(problemDetails
+//                    .get("title")
+//                    .toString());
+//        if (problemDetails.get("type") != null)
+//            problemDetails.setType(problemDetails
+//                    .get("type")
+//                    .toString());
+//        if (problemDetails.get("instance") != null)
+//            problemDetails.setInstance(problemDetails
+//                    .get("instance")
+//                    .toString());
+//        if (problemDetails.get("detail") != null)
+//            problemDetails.setDetail(problemDetails
+//                    .get("detail")
+//                    .toString());
+//        problemDetails.setStatus(Integer.parseInt(problemDetails
+//                .get("status")
+//                .toString()));
+//        problemDetails.setExtensions((Map<String, Object>) problemDetails.get("extensions"));
+//        return problemDetails;
+//    }
 
-    protected static String decideErrorMessage(ProblemDetails problemDetails, String genericErrorMessage) {
-        return (problemDetails != null && problemDetails.getTitle() != null && problemDetails
-                .getTitle()
-                .trim()
-                .length() > 0) ? problemDetails.getTitle() : genericErrorMessage;
-    }
 
     protected static boolean isRetryableStatusCode(int statusCode, HttpMethod requestMethod) {
         boolean isIdempotent = !requestMethod
@@ -219,80 +212,64 @@ public abstract class ApiClient {
         return false;
     }
 
-    protected static RuntimeException createApiException(HttpResponse<Object> httpResponse, ProblemDetails problemDetails){
+    protected static void createApiException(HttpResponse<Object> httpResponse, ProblemDetails problemDetails){
         int statusCode = httpResponse.getStatus();
         Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
-        if (statusCode == 400)
-            return new ApiException(decideErrorMessage(problemDetails, "Invalid or bad request."),
-                    statusCode, httpResponse.getStatusText(), headersMap, problemDetails);
-        else if (statusCode == 401)
-            return new ApiException(decideErrorMessage(problemDetails, "Access token is invalid or expired."),
-                    statusCode, httpResponse.getStatusText(), headersMap, problemDetails);
-        else if (statusCode == 403)
-            return new ApiException(decideErrorMessage(problemDetails, "Access denied for the operation."),
-                    statusCode, httpResponse.getStatusText(), headersMap, problemDetails);
-        else if (statusCode == 404)
-            return new ApiException(decideErrorMessage(problemDetails, "Not found."), statusCode,
-                    httpResponse.getStatusText(), headersMap, problemDetails);
-        else if (statusCode == 429)
-            return new ApiException(decideErrorMessage(problemDetails, "Rate limit is reached."),
-                    statusCode, httpResponse.getStatusText(), headersMap, problemDetails);
-        else
-            return new RuntimeException(httpResponse.getStatusText());
+        throw ApiException.create(statusCode, headersMap, problemDetails, null);
     }
 
-    protected static void createExportApiException(ParametersForExportDocument parameters,
-            RawResponse rawResponse, RuntimeException[] exception){
-        //ObjectMapper objectMapper;
-        if (rawResponse.getStatus() == 200 || rawResponse.getStatus() == 206) {
-            parameters
-                    .getInputStreamConsumer()
-                    .accept(rawResponse.getContent());
-        } else {
-            ProblemDetails problemDetails = null;
-            Map<String, String> headersMap = getHeadersMap(rawResponse.getHeaders());
-            try {
-                String jsonString = rawResponse.getContentAsString();
-                problemDetails = deserializeToProblemDetails(jsonString, objectMapper);
-            } catch (IllegalStateException e) {
-                exception[0] = new ApiException(rawResponse.getStatusText(), rawResponse.getStatus(),
-                        rawResponse.getContentAsString(), headersMap, null);
-            }
-            if (rawResponse.getStatus() == 400)
-                exception[0] = new ApiException(
-                        decideErrorMessage(problemDetails, "Invalid or bad request."),
-                        rawResponse.getStatus(), rawResponse.getStatusText(), headersMap,
-                        problemDetails);
-            else if (rawResponse.getStatus() == 401)
-                exception[0] = new ApiException(
-                        decideErrorMessage(problemDetails, "Access token is invalid or expired."),
-                        rawResponse.getStatus(), rawResponse.getStatusText(), headersMap,
-                        problemDetails);
-            else if (rawResponse.getStatus() == 403)
-                exception[0] = new ApiException(
-                        decideErrorMessage(problemDetails, "Access denied for the operation."),
-                        rawResponse.getStatus(), rawResponse.getStatusText(), headersMap,
-                        problemDetails);
-            else if (rawResponse.getStatus() == 404)
-                exception[0] = new ApiException(
-                        decideErrorMessage(problemDetails, "Request entry id not found."),
-                        rawResponse.getStatus(), rawResponse.getStatusText(), headersMap,
-                        problemDetails);
-            else if (rawResponse.getStatus() == 423)
-                exception[0] = new ApiException(decideErrorMessage(problemDetails, "Entry is locked."),
-                        rawResponse.getStatus(), rawResponse.getStatusText(), headersMap,
-                        problemDetails);
-            else if (rawResponse.getStatus() == 429)
-                exception[0] = new ApiException(
-                        decideErrorMessage(problemDetails, "Rate limit is reached."),
-                        rawResponse.getStatus(), rawResponse.getStatusText(), headersMap,
-                        problemDetails);
-            else
-                exception[0] = new RuntimeException(rawResponse.getStatusText());
-        }
-    }
+//    protected static void createExportApiException(ParametersForExportDocument parameters,
+//            RawResponse rawResponse, RuntimeException[] exception){
+//        //ObjectMapper objectMapper;
+//        if (rawResponse.getStatus() == 200 || rawResponse.getStatus() == 206) {
+//            parameters
+//                    .getInputStreamConsumer()
+//                    .accept(rawResponse.getContent());
+//        } else {
+//            ProblemDetails problemDetails = null;
+//            Map<String, String> headersMap = getHeadersMap(rawResponse.getHeaders());
+//            try {
+//                String jsonString = rawResponse.getContentAsString();
+//                problemDetails = deserializeToProblemDetails(jsonString, objectMapper);
+//            } catch (IllegalStateException e) {
+//                exception[0] = new ApiException(rawResponse.getStatusText(), rawResponse.getStatus(),
+//                        rawResponse.getContentAsString(), headersMap, null);
+//            }
+//            if (rawResponse.getStatus() == 400)
+//                exception[0] = new ApiException(
+//                        decideErrorMessage(problemDetails, "Invalid or bad request."),
+//                        rawResponse.getStatus(), rawResponse.getStatusText(), headersMap,
+//                        problemDetails);
+//            else if (rawResponse.getStatus() == 401)
+//                exception[0] = new ApiException(
+//                        decideErrorMessage(problemDetails, "Access token is invalid or expired."),
+//                        rawResponse.getStatus(), rawResponse.getStatusText(), headersMap,
+//                        problemDetails);
+//            else if (rawResponse.getStatus() == 403)
+//                exception[0] = new ApiException(
+//                        decideErrorMessage(problemDetails, "Access denied for the operation."),
+//                        rawResponse.getStatus(), rawResponse.getStatusText(), headersMap,
+//                        problemDetails);
+//            else if (rawResponse.getStatus() == 404)
+//                exception[0] = new ApiException(
+//                        decideErrorMessage(problemDetails, "Request entry id not found."),
+//                        rawResponse.getStatus(), rawResponse.getStatusText(), headersMap,
+//                        problemDetails);
+//            else if (rawResponse.getStatus() == 423)
+//                exception[0] = new ApiException(decideErrorMessage(problemDetails, "Entry is locked."),
+//                        rawResponse.getStatus(), rawResponse.getStatusText(), headersMap,
+//                        problemDetails);
+//            else if (rawResponse.getStatus() == 429)
+//                exception[0] = new ApiException(
+//                        decideErrorMessage(problemDetails, "Rate limit is reached."),
+//                        rawResponse.getStatus(), rawResponse.getStatusText(), headersMap,
+//                        problemDetails);
+//            else
+//                exception[0] = new RuntimeException(rawResponse.getStatusText());
+//        }
+//    }
 
-    private static String beforeSend(String url, Map<String, String> headerParametersWithStringTypeValue, HttpRequestHandler httpRequestHandler) {
+    protected static String beforeSend(String url, Map<String, String> headerParametersWithStringTypeValue, HttpRequestHandler httpRequestHandler) {
         String requestUrl;
         Request customRequest = new RequestImpl();
         BeforeSendResult beforeSendResult = httpRequestHandler.beforeSend(customRequest);
@@ -309,129 +286,157 @@ public abstract class ApiClient {
         return requestUrl;
     }
 
-    protected static <TResponse> TResponse sendRequestParseResponse(UnirestInstance httpClient,
+    protected static <TResponse> TResponse sendRequestParseResponse(
+            UnirestInstance httpClient,
             ObjectMapper objectMapper, Class<TResponse> deserializedResponseType,
             HttpRequestHandler httpRequestHandler, String url, String requestMethod,
-            String fieldName, InputStream edoc, String edocName, Object edocRequestObject, String contentType,
-            String queryStringFields, Object requestBody,
+            String contentType,
+            Object requestBody,
+            String queryStringFields,
             Collection<?> queryStringFieldList,
             Map<String, Object> queryParameters, Map<String, Object> pathParameters,
-            Map<String, String> headerParametersWithStringTypeValue) {
+            Map<String, String> headerParametersWithStringTypeValue,
+            boolean isDynamicFieldValues) {
         int retryCount = 0;
         int maxRetries = 1;
         boolean shouldRetry = true;
+        //final ResponseParsingStatus responseParsingStatus = new ResponseParsingStatus(true, null);
         HttpResponse<Object> httpResponse = null;
         String responseJson = null;
         while (retryCount <= maxRetries && shouldRetry) {
             try {
                 String requestUrl = beforeSend(url, headerParametersWithStringTypeValue, httpRequestHandler);
-                HttpRequest<?> httpRequest = null;
-                HttpRequestWithBody httpRequestWithBody = httpClient.request(requestMethod, requestUrl);
-                if(queryParameters != null){
-                    httpRequest = httpRequestWithBody.queryString(queryParameters);
+                final HttpRequestWithBody httpRequestWithBody = httpClient.request(requestMethod, requestUrl);
+                final HttpRequest<?> httpRequest = httpRequestWithBody;
+                if (queryParameters != null) {
+                    httpRequestWithBody.queryString(queryParameters);
                 }
-                if (pathParameters != null){
-                    httpRequest = httpRequestWithBody.routeParam(pathParameters);
+                if (pathParameters != null) {
+                    httpRequestWithBody.routeParam(pathParameters);
                 }
-                if (headerParametersWithStringTypeValue != null){
-                    httpRequest = httpRequestWithBody.headers(headerParametersWithStringTypeValue);
+                if (headerParametersWithStringTypeValue != null) {
+                    httpRequestWithBody.headers(headerParametersWithStringTypeValue);
                 }
-                if (queryStringFields != null && queryStringFieldList != null){
-                    httpRequest = httpRequestWithBody.queryString(queryStringFields, queryStringFieldList);
+                if (queryStringFields != null && queryStringFieldList != null) {
+                    httpRequestWithBody.queryString(queryStringFields, queryStringFieldList);
                 }
-                if (contentType != null){
-                    httpRequest = httpRequestWithBody.contentType(contentType);
+                if (contentType != null) {
+                    httpRequestWithBody.contentType(contentType);
                 }
-                if (requestBody != null){
-                    httpRequest = httpRequestWithBody.body(requestBody);
+                if (requestBody != null) {
+                    httpRequestWithBody.body(requestBody);
                 }
-                if (fieldName != null){
-                    if (edoc != null && edocName != null){
-                        httpRequestWithBody.field(fieldName, edoc, edocName);
-                    }
-                    if (edocRequestObject != null){
-                        httpRequestWithBody.field(fieldName, edocRequestObject);
-                    }
+                //if !isExportDocApi()
+                //httpRequest = httpRequest.asObject(Object.class);
+//                httpRequest.asObject(rawResponse -> {
+//                    HttpMethod httpMethod = httpRequest.getHttpMethod();
+//                    int statusCode = httpResponse.getStatus();
+//                    responseParsingStatus.shouldRetry = httpRequestHandler.afterSend(new ResponseImpl((short) statusCode)) || isRetryableStatusCode(statusCode, httpMethod);
+//                    boolean isJsonResponse = isJsonResponse(httpResponse);
+//                    if (isJsonResponse){
+//                        responseParsingStatus.jsonResponse = rawResponse.getContentAsString();
+//                    }
+//                    else if (exportParameters != null) {
+//                        exportParameters
+//                                .getInputStreamConsumer()
+//                                .accept(rawResponse.getContent());
+//                    }
+//                    if (!responseParsingStatus.shouldRetry) {
+//                        Object body = httpResponse.getBody();
+//                        Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
+//                        if (statusCode == 200) {
+//                            try {
+//                                responseParsingStatus.responseObject = objectMapper.readValue(responseParsingStatus.jsonResponse, deserializedResponseType);
+//                                return responseParsingStatus.responseObject;
+//                            } catch (IllegalStateException e) {
+//                                e.printStackTrace();
+//                                return null;
+//                            }
+//                        } else {
+//                            ProblemDetails problemDetails;
+//                            try {
+//                                String jsonString = new JSONObject(body).toString();
+//                                problemDetails = ProblemDetailsDeserializer.deserialize(objectMapper, jsonString);
+//                            } catch (Exception e) {
+//                                throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+//                            }
+//                            createApiException(httpResponse, problemDetails);
+//                        }
+//                    }
+//                    return null;
+//                });
+                if (isDynamicFieldValues || requestMethod.equals("HEAD")){
+                    httpResponse = httpRequest.asObject(new HashMap<String, String[]>().getClass());
                 }
-                httpResponse = httpRequest.asObject(Object.class);
+                else{
+                    httpResponse = httpRequest.asObject(Object.class);
+                }
 
                 HttpMethod httpMethod = httpRequest.getHttpMethod();
+                Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
+                if (requestMethod.equals("HEAD")){
+                    if (httpResponse.getStatus() == 200) {
+                        return (TResponse) httpResponse
+                                .getHeaders()
+                                .all()
+                                .stream()
+                                .collect(Collectors.toMap(Header::getName, Header::getValue));
+                    } else {
+                        throw ApiException.create(httpResponse.getStatus(), headersMap, null, null);
+                    }
+                }
                 int statusCode = httpResponse.getStatus();
-                shouldRetry = httpRequestHandler.afterSend(new ResponseImpl((short) statusCode)) || isRetryableStatusCode(statusCode, httpMethod);
+                shouldRetry = httpRequestHandler.afterSend(
+                        new ResponseImpl((short) statusCode)) || isRetryableStatusCode(statusCode, httpMethod);
                 boolean isJsonResponse = isJsonResponse(httpResponse);
-                if (isJsonResponse){
+                if (isJsonResponse) {
                     Object body = httpResponse.getBody();
                     responseJson = new JSONObject(body).toString();
                 }
                 if (!shouldRetry) {
+                    Object body = httpResponse.getBody();
+                    //Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
+                    if (httpMethod.name().equals("HEAD")){
+                        if (httpResponse.getStatus() == 200) {
+                            return (TResponse) httpResponse
+                                    .getHeaders()
+                                    .all()
+                                    .stream()
+                                    .collect(Collectors.toMap(Header::getName, Header::getValue));
+                        } else {
+                            throw ApiException.create(httpResponse.getStatus(), headersMap, null, null);
+                        }
+                    }
                     if (statusCode == 200) {
                         try {
-                            return objectMapper.readValue(responseJson, deserializedResponseType);
+                                return objectMapper.readValue(responseJson, deserializedResponseType);
                         } catch (IllegalStateException e) {
                             e.printStackTrace();
                             return null;
                         }
                     } else {
                         ProblemDetails problemDetails;
-                        Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
                         try {
-                            problemDetails = deserializeToProblemDetails(responseJson, objectMapper);
-                        } catch (IllegalStateException e) {
-                            Optional<UnirestParsingException> parsingException = httpResponse.getParsingError();
-                            throw new ApiException(httpResponse.getStatusText(), statusCode,
-                                    (parsingException.isPresent() ? parsingException
-                                            .get()
-                                            .getOriginalBody() : null), headersMap, null);
+                            String jsonString = new JSONObject(body).toString();
+                            problemDetails = ProblemDetailsDeserializer.deserialize(objectMapper, jsonString);
+                        } catch (Exception e) {
+                            throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
                         }
-                        throw createApiException(httpResponse, problemDetails);
+                        createApiException(httpResponse, problemDetails);
                     }
                 }
             } catch (Exception err) {
-                if (retryCount >= maxRetries) {
-                    throw err;
+                if (err
+                        .getClass()
+                        .getName()
+                        .equals("com.laserfiche.api.client.model.ApiException")) {
+                    if (requestMethod.equals("HEAD")){
+                        throw err;
+                    }else{
+                        System.err.println(err);
+                    }
+                    break;
                 }
-                shouldRetry = true;
-                System.err.println("Retrying fetch due to exception: "+ err);
-            } finally {
-                retryCount++;
-            }
-        }
-        if (httpResponse == null){
-            throw new IllegalStateException("Undefined response, there is a bug");
-        }
-        if (responseJson != null){
-            return objectMapper.readValue(responseJson, deserializedResponseType);
-        }
-        else{
-            throw new RuntimeException("Response does not contain Json");
-        }
-    }
-
-    protected static void sendExportRequest(UnirestInstance httpClient,
-            HttpRequestHandler httpRequestHandler, String url, String contentType,
-            String queryStringFields, Object requestBody,
-            ParametersForExportDocument parameters,
-            Map<String, Object> pathParameters,
-            Map<String, String> headerParametersWithStringTypeValue){
-        int retryCount = 0;
-        int maxRetries = 1;
-        boolean shouldRetry = true;
-        HttpResponse<Object> httpResponse = null;
-        String responseJson = null;
-        while (retryCount <= maxRetries && shouldRetry) {
-            try {
-                String requestUrl = beforeSend(url, headerParametersWithStringTypeValue, httpRequestHandler);
-                HttpRequest<?> httpRequest = null;
-                HttpRequestWithBody httpRequestWithBody = httpClient.post(requestUrl);
-                httpRequest = httpRequestWithBody;
-                final RuntimeException[] exception = {null};
-                httpRequest.thenConsume(rawResponse -> {
-                    createExportApiException(parameters, rawResponse, exception);
-                });
-                if (exception[0] != null) {
-                    throw exception[0];
-                }
-            } catch (Exception err) {
                 if (retryCount >= maxRetries) {
                     throw err;
                 }
@@ -441,6 +446,50 @@ public abstract class ApiClient {
                 retryCount++;
             }
         }
-
+        if (httpResponse == null) {
+            throw new IllegalStateException("Undefined response, there is a bug");
+        }
+        if (responseJson != null) {
+            return objectMapper.readValue(responseJson, deserializedResponseType);
+        } else {
+            throw new RuntimeException("Response does not contain Json");
+        }
     }
+
+//    protected static void sendExportRequest(UnirestInstance httpClient,
+//            HttpRequestHandler httpRequestHandler, String url, String contentType,
+//            String queryStringFields, Object requestBody,
+//            ParametersForExportDocument parameters,
+//            Map<String, Object> pathParameters,
+//            Map<String, String> headerParametersWithStringTypeValue){
+//        int retryCount = 0;
+//        int maxRetries = 1;
+//        boolean shouldRetry = true;
+//        HttpResponse<Object> httpResponse = null;
+//        String responseJson = null;
+//        while (retryCount <= maxRetries && shouldRetry) {
+//            try {
+//                String requestUrl = beforeSend(url, headerParametersWithStringTypeValue, httpRequestHandler);
+//                HttpRequest<?> httpRequest = null;
+//                HttpRequestWithBody httpRequestWithBody = httpClient.post(requestUrl);
+//                httpRequest = httpRequestWithBody;
+//                final RuntimeException[] exception = {null};
+//                httpRequest.thenConsume(rawResponse -> {
+//                    createExportApiException(parameters, rawResponse, exception);
+//                });
+//                if (exception[0] != null) {
+//                    throw exception[0];
+//                }
+//            } catch (Exception err) {
+//                if (retryCount >= maxRetries) {
+//                    throw err;
+//                }
+//                shouldRetry = true;
+//                System.err.println("Retrying fetch due to exception: " + err);
+//            } finally {
+//                retryCount++;
+//            }
+//        }
+//
+//    }
 }
