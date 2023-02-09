@@ -50,14 +50,14 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
         attributesClient = new AttributesClientImpl(baseUrl, httpClient, httpHandler);
         auditReasonsClient = new AuditReasonsClientImpl(baseUrl, httpClient, httpHandler);
         entriesClient = new EntriesClientImpl(baseUrl, httpClient, httpHandler);
-        fieldDefinitionsClient = new FieldDefinitionsClientImpl(baseUrl, httpClient);
-        linkDefinitionsClient = new LinkDefinitionsClientImpl(baseUrl, httpClient);
-        repositoriesClient = new RepositoriesClientImpl(baseUrl, httpClient);
-        searchesClient = new SearchesClientImpl(baseUrl, httpClient);
-        serverSessionClient = new ServerSessionClientImpl(baseUrl, httpClient);
-        simpleSearchesClient = new SimpleSearchesClientImpl(baseUrl, httpClient);
-        tagDefinitionsClient = new TagDefinitionsClientImpl(baseUrl, httpClient);
-        tasksClient = new TasksClientImpl(baseUrl, httpClient);
+        fieldDefinitionsClient = new FieldDefinitionsClientImpl(baseUrl, httpClient, httpHandler);
+        linkDefinitionsClient = new LinkDefinitionsClientImpl(baseUrl, httpClient, httpHandler);
+        repositoriesClient = new RepositoriesClientImpl(baseUrl, httpClient, httpHandler);
+        searchesClient = new SearchesClientImpl(baseUrl, httpClient, httpHandler);
+        serverSessionClient = new ServerSessionClientImpl(baseUrl, httpClient, httpHandler);
+        simpleSearchesClient = new SimpleSearchesClientImpl(baseUrl, httpClient, httpHandler);
+        tagDefinitionsClient = new TagDefinitionsClientImpl(baseUrl, httpClient, httpHandler);
+        tasksClient = new TasksClientImpl(baseUrl, httpClient, httpHandler);
         templateDefinitionsClient = new TemplateDefinitionsClientImpl(baseUrl, httpClient, httpHandler);
     }
 

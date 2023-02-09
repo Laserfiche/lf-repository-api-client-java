@@ -1,9 +1,6 @@
 package com.laserfiche.repository.api.clients.impl;
 
-import com.laserfiche.api.client.deserialization.ProblemDetailsDeserializer;
 import com.laserfiche.api.client.httphandlers.HttpRequestHandler;
-import com.laserfiche.api.client.model.ApiException;
-import com.laserfiche.api.client.model.ProblemDetails;
 import com.laserfiche.repository.api.clients.TemplateDefinitionsClient;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfTemplateFieldInfo;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfWTemplateInfo;
@@ -12,10 +9,9 @@ import com.laserfiche.repository.api.clients.params.ParametersForGetTemplateDefi
 import com.laserfiche.repository.api.clients.params.ParametersForGetTemplateDefinitions;
 import com.laserfiche.repository.api.clients.params.ParametersForGetTemplateFieldDefinitions;
 import com.laserfiche.repository.api.clients.params.ParametersForGetTemplateFieldDefinitionsByTemplateName;
-import kong.unirest.HttpResponse;
 import kong.unirest.UnirestInstance;
-import kong.unirest.json.JSONObject;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -27,7 +23,8 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
 
     private HttpRequestHandler httpRequestHandler;
 
-    public TemplateDefinitionsClientImpl(String baseUrl, UnirestInstance httpClient, HttpRequestHandler httpRequestHandler) {
+    public TemplateDefinitionsClientImpl(String baseUrl, UnirestInstance httpClient,
+            HttpRequestHandler httpRequestHandler) {
         super(baseUrl, httpClient);
         this.httpRequestHandler = httpRequestHandler;
     }
@@ -52,42 +49,6 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
                 .entrySet()
                 .stream()
                 .collect(Collectors.toMap(Map.Entry::getKey, e -> (String) e.getValue()));
-//        HttpResponse<Object> httpResponse = httpClient
-//                .get(url)
-//                .queryString(queryParameters)
-//                .routeParam(pathParameters)
-//                .headers(headerParametersWithStringTypeValue)
-//                .asObject(Object.class);
-//        Object body = httpResponse.getBody();
-//        Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
-//        if (httpResponse.getStatus() == 200) {
-//            try {
-//                String jsonString = new JSONObject(body).toString();
-//                return objectMapper.readValue(jsonString, ODataValueContextOfIListOfWTemplateInfo.class);
-//            } catch (Exception e) {
-//                throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
-//            }
-//        } else {
-//            ProblemDetails problemDetails;
-//            try {
-//                String jsonString = new JSONObject(body).toString();
-//                problemDetails = ProblemDetailsDeserializer.deserialize(objectMapper, jsonString);
-//            } catch (Exception e) {
-//                throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
-//            }
-//            if (httpResponse.getStatus() == 400)
-//                throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-//            else if (httpResponse.getStatus() == 401)
-//                throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-//            else if (httpResponse.getStatus() == 403)
-//                throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-//            else if (httpResponse.getStatus() == 404)
-//                throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-//            else if (httpResponse.getStatus() == 429)
-//                throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-//            else
-//                throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-//        }
         return sendRequestParseResponse(httpClient, objectMapper, ODataValueContextOfIListOfWTemplateInfo.class,
                 httpRequestHandler, url, "GET", null, null, null, null, queryParameters, pathParameters,
                 headerParametersWithStringTypeValue, false);
@@ -131,42 +92,9 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
                 .entrySet()
                 .stream()
                 .collect(Collectors.toMap(Map.Entry::getKey, e -> (String) e.getValue()));
-        HttpResponse<Object> httpResponse = httpClient
-                .get(url)
-                .queryString(queryParameters)
-                .routeParam(pathParameters)
-                .headers(headerParametersWithStringTypeValue)
-                .asObject(Object.class);
-        Object body = httpResponse.getBody();
-        Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
-        if (httpResponse.getStatus() == 200) {
-            try {
-                String jsonString = new JSONObject(body).toString();
-                return objectMapper.readValue(jsonString, ODataValueContextOfIListOfTemplateFieldInfo.class);
-            } catch (Exception e) {
-                throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
-            }
-        } else {
-            ProblemDetails problemDetails;
-            try {
-                String jsonString = new JSONObject(body).toString();
-                problemDetails = ProblemDetailsDeserializer.deserialize(objectMapper, jsonString);
-            } catch (Exception e) {
-                throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
-            }
-            if (httpResponse.getStatus() == 400)
-                throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-            else if (httpResponse.getStatus() == 401)
-                throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-            else if (httpResponse.getStatus() == 403)
-                throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-            else if (httpResponse.getStatus() == 404)
-                throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-            else if (httpResponse.getStatus() == 429)
-                throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-            else
-                throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-        }
+        return sendRequestParseResponse(httpClient, objectMapper, ODataValueContextOfIListOfTemplateFieldInfo.class,
+                httpRequestHandler, url, "GET", null, null, null, null, queryParameters, pathParameters,
+                headerParametersWithStringTypeValue, false);
     }
 
     @Override
@@ -210,42 +138,9 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
                 .entrySet()
                 .stream()
                 .collect(Collectors.toMap(Map.Entry::getKey, e -> (String) e.getValue()));
-        HttpResponse<Object> httpResponse = httpClient
-                .get(url)
-                .queryString(queryParameters)
-                .routeParam(pathParameters)
-                .headers(headerParametersWithStringTypeValue)
-                .asObject(Object.class);
-        Object body = httpResponse.getBody();
-        Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
-        if (httpResponse.getStatus() == 200) {
-            try {
-                String jsonString = new JSONObject(body).toString();
-                return objectMapper.readValue(jsonString, ODataValueContextOfIListOfTemplateFieldInfo.class);
-            } catch (Exception e) {
-                throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
-            }
-        } else {
-            ProblemDetails problemDetails;
-            try {
-                String jsonString = new JSONObject(body).toString();
-                problemDetails = ProblemDetailsDeserializer.deserialize(objectMapper, jsonString);
-            } catch (Exception e) {
-                throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
-            }
-            if (httpResponse.getStatus() == 400)
-                throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-            else if (httpResponse.getStatus() == 401)
-                throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-            else if (httpResponse.getStatus() == 403)
-                throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-            else if (httpResponse.getStatus() == 404)
-                throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-            else if (httpResponse.getStatus() == 429)
-                throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-            else
-                throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-        }
+        return sendRequestParseResponse(httpClient, objectMapper, ODataValueContextOfIListOfTemplateFieldInfo.class,
+                httpRequestHandler, url, "GET", null, null, null, null, queryParameters, pathParameters,
+                headerParametersWithStringTypeValue, false);
     }
 
     @Override
@@ -273,40 +168,8 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
                 new String[]{"culture", "$select"}, new Object[]{parameters.getCulture(), parameters.getSelect()});
         Map<String, Object> pathParameters = getParametersWithNonDefaultValue(new String[]{"String", "int"},
                 new String[]{"repoId", "templateId"}, new Object[]{parameters.getRepoId(), parameters.getTemplateId()});
-        HttpResponse<Object> httpResponse = httpClient
-                .get(baseUrl + "/v1/Repositories/{repoId}/TemplateDefinitions/{templateId}")
-                .queryString(queryParameters)
-                .routeParam(pathParameters)
-                .asObject(Object.class);
-        Object body = httpResponse.getBody();
-        Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
-        if (httpResponse.getStatus() == 200) {
-            try {
-                String jsonString = new JSONObject(body).toString();
-                return objectMapper.readValue(jsonString, WTemplateInfo.class);
-            } catch (Exception e) {
-                throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
-            }
-        } else {
-            ProblemDetails problemDetails;
-            try {
-                String jsonString = new JSONObject(body).toString();
-                problemDetails = ProblemDetailsDeserializer.deserialize(objectMapper, jsonString);
-            } catch (Exception e) {
-                throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
-            }
-            if (httpResponse.getStatus() == 400)
-                throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-            else if (httpResponse.getStatus() == 401)
-                throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-            else if (httpResponse.getStatus() == 403)
-                throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-            else if (httpResponse.getStatus() == 404)
-                throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-            else if (httpResponse.getStatus() == 429)
-                throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-            else
-                throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-        }
+        return sendRequestParseResponse(httpClient, objectMapper, WTemplateInfo.class, httpRequestHandler,
+                baseUrl + "/v1/Repositories/{repoId}/TemplateDefinitions/{templateId}", "GET", null, null, null, null,
+                queryParameters, pathParameters, new HashMap<String, String>(), false);
     }
 }
