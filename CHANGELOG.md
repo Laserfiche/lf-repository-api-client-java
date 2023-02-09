@@ -47,6 +47,7 @@ protected static<TResponse> TResponse sendRequestParseResponse(
   - Refactored almost all API methods to call `sendRequestParseResponse()`
 - Refactored implementation for `importDocument` and `exportDocument` API edge cases
 - Refactored the `beforeSend()` method to the `exportDocument` API edge case (the `afterSend()` method will be done either in this release or another one)
+- Refactored the `RepositoryApiClientImpl` class to be able pass in the proper variables for these new breaking changes
 
 ## 1.2.0
 
