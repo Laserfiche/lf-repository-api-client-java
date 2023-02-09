@@ -100,27 +100,6 @@ public abstract class ApiClient {
                 .collect(Collectors.toMap(Header::getName, Header::getValue));
     }
 
-    protected static ProblemDetails deserializeToProblemDetails(String jsonString, ObjectMapper objectMapper) {
-        ProblemDetails problemDetails = objectMapper.readValue(jsonString, ProblemDetails.class);
-        if (problemDetails.getTitle() != null)
-            problemDetails.setTitle(problemDetails
-                    .getTitle());
-        if (problemDetails.getType() != null)
-            problemDetails.setType(problemDetails
-                    .getType());
-        if (problemDetails.getInstance() != null)
-            problemDetails.setInstance(problemDetails
-                    .getInstance());
-        if (problemDetails.getDetail() != null)
-            problemDetails.setDetail(problemDetails
-                    .getDetail());
-        problemDetails.setStatus(Integer.parseInt(problemDetails
-                .getStatus()
-                .toString()));
-        problemDetails.setExtensions(problemDetails.getExtensions());
-        return problemDetails;
-    }
-
     protected static boolean isRetryableStatusCode(int statusCode, HttpMethod requestMethod) {
         boolean isIdempotent = !requestMethod
                 .toString()
