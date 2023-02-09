@@ -191,7 +191,16 @@ public abstract class ApiClient {
                 .contains("Error")) {
             return true;
         }
-        if (err.getProblemDetails().getTitle().equals("Authentication failed (reason: Invalid service principal key. (6-45)).")){
+        if (err
+                .getProblemDetails()
+                .getTitle()
+                .equals("Authentication failed (reason: Invalid service principal key. (6-45)).")) {
+            return true;
+        }
+        if (err
+                .getProblemDetails()
+                .getTitle()
+                .equals("The user account name or password is incorrect. [9010]")) {
             return true;
         }
         return false;
@@ -304,7 +313,8 @@ public abstract class ApiClient {
                         .getClass()
                         .getName()
                         .equals("com.laserfiche.api.client.model.ApiException")) {
-                    if (shouldThrowException(requestMethod, queryStringFields, queryStringFieldList,url,(ApiException) err)){
+                    if (shouldThrowException(requestMethod, queryStringFields, queryStringFieldList, url,
+                            (ApiException) err)) {
                         throw err;
                     } else {
                         System.err.println(err);
