@@ -21,6 +21,17 @@
     }
   }
   ```
+- **[BREAKING]** Removed `OAuthInterceptor` and `SelfHostedInterceptors` 
+- **[BREAKING]** Added a `beforeSend()` method in the `ApiClient` class which will call the `beforeSend()` method in the [lf-api-client-core-java](https://github.com/Laserfiche/lf-api-client-core-java) and modify the request URL
+- **[BREAKING]** Added additional helper functions in the `ApiClient` class such as: `isRetryableStatusCode()`, `combineURLs`, `isJsonResponse`, `createApiException`, `shouldThrowException`
+- **[BREAKING]** Added the `private HttpRequestHandler httpRequestHandler;` field to each `clientImpl` class and passed it in as a parameter from the `RepositoryApiClientImpl` class
+- Added the `private HttpRequestHandler httpRequestHandler;` field to each `clientImpl` class and passed it in as a parameter from the `RepositoryApiClientImpl` class
+- Added `afterSend()` and retry implementation as `sendRequestParseResponse()` method in the `ApiClient` class which includes
+  - 401 status code check to call the `afterSend()` function
+  - `isIdempotent()` check to call the `afterSend()` function 
+  - Added while loop in each API for retry logic and call `beforeSend()` in the beginning of the while loop  
+  - Refactored almost all API methods to call `sendRequestParseResponse()`
+- Refactored implementation for `importDocument` and `exportDocument` API edge cases
 
 ## 1.2.0
 
