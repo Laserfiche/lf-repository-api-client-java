@@ -91,6 +91,14 @@ public class ApiClientUtils {
         throw ApiException.create(statusCode, headersMap, problemDetails, null);
     }
 
+    /**
+     * Sets the authorization bearer token and returns a Request Url.
+     *
+     * @param url                                 The url.
+     * @param headerParametersWithStringTypeValue The header parameters with string type value.
+     * @param httpRequestHandler                  The HTTP request handler.
+     * @return Sets the authorization bearer token and returns a Request Url.
+     */
     public static String beforeSend(String url, Map<String, String> headerParametersWithStringTypeValue,
             HttpRequestHandler httpRequestHandler) {
         String requestUrl;
@@ -146,6 +154,12 @@ public class ApiClientUtils {
         return false;
     }
 
+    /**
+     * Returns a Header Map containing the header name and value.
+     *
+     * @param headers The headers.
+     * @return Returns a Header Map containing the header name and value.
+     */
     public static Map<String, String> getHeadersMap(Headers headers) {
         return headers
                 .all()
@@ -153,6 +167,13 @@ public class ApiClientUtils {
                 .collect(Collectors.toMap(Header::getName, Header::getValue));
     }
 
+    /**
+     * Returns a boolean value that determines whether or not to re-send the same API request.
+     *
+     * @param statusCode    The status code.
+     * @param requestMethod The HTTP request method.
+     * @return Returns a boolean value that determines whether or not to re-send the same API request.
+     */
     public static boolean isRetryableStatusCode(int statusCode, HttpMethod requestMethod) {
         boolean isIdempotent = !requestMethod
                 .toString()
@@ -160,6 +181,13 @@ public class ApiClientUtils {
         return (statusCode >= 500 || statusCode == 408) && isIdempotent;
     }
 
+    /**
+     * Returns a combined header string contain the prefer and maxSize String.
+     *
+     * @param prefer  The prefer header.
+     * @param maxSize The max size header number.
+     * @return Returns a Header Map containing the header name and value.
+     */
     public static String mergeMaxSizeIntoPrefer(int maxSize, String prefer) {
         if (maxSize == 0)
             return prefer;
