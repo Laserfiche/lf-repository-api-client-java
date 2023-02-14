@@ -28,9 +28,9 @@ public class LinkDefinitionsClientImpl extends ApiClient implements LinkDefiniti
 
     @Override
     public EntryLinkTypeInfo getLinkDefinitionById(ParametersForGetLinkDefinitionById parameters) {
-        Map<String, Object> queryParameters = getParametersWithNonDefaultValue(new String[]{"String"},
+        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"},
                 new String[]{"$select"}, new Object[]{parameters.getSelect()});
-        Map<String, Object> pathParameters = getParametersWithNonDefaultValue(new String[]{"String", "int"},
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int"},
                 new String[]{"repoId", "linkTypeId"}, new Object[]{parameters.getRepoId(), parameters.getLinkTypeId()});
         return sendRequestParseResponse(httpClient, objectMapper, EntryLinkTypeInfo.class, httpRequestHandler,
                 baseUrl + "/v1/Repositories/{repoId}/LinkDefinitions/{linkTypeId}", "GET", null, null, null, null,
@@ -44,13 +44,13 @@ public class LinkDefinitionsClientImpl extends ApiClient implements LinkDefiniti
 
     private ODataValueContextOfIListOfEntryLinkTypeInfo doGetLinkDefinitions(String url,
             ParametersForGetLinkDefinitions parameters) {
-        Map<String, Object> queryParameters = getParametersWithNonDefaultValue(
+        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(
                 new String[]{"String", "String", "int", "int", "boolean"},
                 new String[]{"$select", "$orderby", "$top", "$skip", "$count"},
                 new Object[]{parameters.getSelect(), parameters.getOrderby(), parameters.getTop(), parameters.getSkip(), parameters.isCount()});
-        Map<String, Object> pathParameters = getParametersWithNonDefaultValue(new String[]{"String"},
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"},
                 new String[]{"repoId"}, new Object[]{parameters.getRepoId()});
-        Map<String, Object> headerParameters = getParametersWithNonDefaultValue(new String[]{"String"},
+        Map<String, Object> headerParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"},
                 new String[]{"prefer"}, new Object[]{parameters.getPrefer()});
         Map<String, String> headerParametersWithStringTypeValue = headerParameters
                 .entrySet()
@@ -64,13 +64,13 @@ public class LinkDefinitionsClientImpl extends ApiClient implements LinkDefiniti
     @Override
     public ODataValueContextOfIListOfEntryLinkTypeInfo getLinkDefinitionsNextLink(String nextLink, int maxPageSize) {
         return doGetLinkDefinitions(nextLink,
-                new ParametersForGetLinkDefinitions().setPrefer(mergeMaxSizeIntoPrefer(maxPageSize, null)));
+                new ParametersForGetLinkDefinitions().setPrefer(ApiClientUtils.mergeMaxSizeIntoPrefer(maxPageSize, null)));
     }
 
     @Override
     public void getLinkDefinitionsForEach(Function<ODataValueContextOfIListOfEntryLinkTypeInfo, Boolean> callback,
             Integer maxPageSize, ParametersForGetLinkDefinitions parameters) {
-        parameters.setPrefer(mergeMaxSizeIntoPrefer(maxPageSize, parameters.getPrefer()));
+        parameters.setPrefer(ApiClientUtils.mergeMaxSizeIntoPrefer(maxPageSize, parameters.getPrefer()));
         ODataValueContextOfIListOfEntryLinkTypeInfo response = getLinkDefinitions(parameters);
         while (response != null && callback.apply(response)) {
             String nextLink = response.getOdataNextLink();

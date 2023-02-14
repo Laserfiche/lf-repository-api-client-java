@@ -37,13 +37,13 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
 
     private ODataValueContextOfIListOfWTemplateInfo doGetTemplateDefinitions(String url,
             ParametersForGetTemplateDefinitions parameters) {
-        Map<String, Object> queryParameters = getParametersWithNonDefaultValue(
+        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(
                 new String[]{"String", "String", "String", "String", "int", "int", "boolean"},
                 new String[]{"templateName", "culture", "$select", "$orderby", "$top", "$skip", "$count"},
                 new Object[]{parameters.getTemplateName(), parameters.getCulture(), parameters.getSelect(), parameters.getOrderby(), parameters.getTop(), parameters.getSkip(), parameters.isCount()});
-        Map<String, Object> pathParameters = getParametersWithNonDefaultValue(new String[]{"String"},
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"},
                 new String[]{"repoId"}, new Object[]{parameters.getRepoId()});
-        Map<String, Object> headerParameters = getParametersWithNonDefaultValue(new String[]{"String"},
+        Map<String, Object> headerParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"},
                 new String[]{"prefer"}, new Object[]{parameters.getPrefer()});
         Map<String, String> headerParametersWithStringTypeValue = headerParameters
                 .entrySet()
@@ -57,13 +57,13 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
     @Override
     public ODataValueContextOfIListOfWTemplateInfo getTemplateDefinitionsNextLink(String nextLink, int maxPageSize) {
         return doGetTemplateDefinitions(nextLink,
-                new ParametersForGetTemplateDefinitions().setPrefer(mergeMaxSizeIntoPrefer(maxPageSize, null)));
+                new ParametersForGetTemplateDefinitions().setPrefer(ApiClientUtils.mergeMaxSizeIntoPrefer(maxPageSize, null)));
     }
 
     @Override
     public void getTemplateDefinitionsForEach(Function<ODataValueContextOfIListOfWTemplateInfo, Boolean> callback,
             Integer maxPageSize, ParametersForGetTemplateDefinitions parameters) {
-        parameters.setPrefer(mergeMaxSizeIntoPrefer(maxPageSize, parameters.getPrefer()));
+        parameters.setPrefer(ApiClientUtils.mergeMaxSizeIntoPrefer(maxPageSize, parameters.getPrefer()));
         ODataValueContextOfIListOfWTemplateInfo response = getTemplateDefinitions(parameters);
         while (response != null && callback.apply(response)) {
             String nextLink = response.getOdataNextLink();
@@ -80,13 +80,13 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
 
     private ODataValueContextOfIListOfTemplateFieldInfo doGetTemplateFieldDefinitionsByTemplateName(String url,
             ParametersForGetTemplateFieldDefinitionsByTemplateName parameters) {
-        Map<String, Object> queryParameters = getParametersWithNonDefaultValue(
+        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(
                 new String[]{"String", "String", "String", "String", "int", "int", "boolean"},
                 new String[]{"templateName", "culture", "$select", "$orderby", "$top", "$skip", "$count"},
                 new Object[]{parameters.getTemplateName(), parameters.getCulture(), parameters.getSelect(), parameters.getOrderby(), parameters.getTop(), parameters.getSkip(), parameters.isCount()});
-        Map<String, Object> pathParameters = getParametersWithNonDefaultValue(new String[]{"String"},
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"},
                 new String[]{"repoId"}, new Object[]{parameters.getRepoId()});
-        Map<String, Object> headerParameters = getParametersWithNonDefaultValue(new String[]{"String"},
+        Map<String, Object> headerParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"},
                 new String[]{"prefer"}, new Object[]{parameters.getPrefer()});
         Map<String, String> headerParametersWithStringTypeValue = headerParameters
                 .entrySet()
@@ -102,14 +102,14 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
             String nextLink, int maxPageSize) {
         return doGetTemplateFieldDefinitionsByTemplateName(nextLink,
                 new ParametersForGetTemplateFieldDefinitionsByTemplateName().setPrefer(
-                        mergeMaxSizeIntoPrefer(maxPageSize, null)));
+                        ApiClientUtils.mergeMaxSizeIntoPrefer(maxPageSize, null)));
     }
 
     @Override
     public void getTemplateFieldDefinitionsByTemplateNameForEach(
             Function<ODataValueContextOfIListOfTemplateFieldInfo, Boolean> callback, Integer maxPageSize,
             ParametersForGetTemplateFieldDefinitionsByTemplateName parameters) {
-        parameters.setPrefer(mergeMaxSizeIntoPrefer(maxPageSize, parameters.getPrefer()));
+        parameters.setPrefer(ApiClientUtils.mergeMaxSizeIntoPrefer(maxPageSize, parameters.getPrefer()));
         ODataValueContextOfIListOfTemplateFieldInfo response = getTemplateFieldDefinitionsByTemplateName(parameters);
         while (response != null && callback.apply(response)) {
             String nextLink = response.getOdataNextLink();
@@ -126,13 +126,13 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
 
     private ODataValueContextOfIListOfTemplateFieldInfo doGetTemplateFieldDefinitions(String url,
             ParametersForGetTemplateFieldDefinitions parameters) {
-        Map<String, Object> queryParameters = getParametersWithNonDefaultValue(
+        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(
                 new String[]{"String", "String", "String", "int", "int", "boolean"},
                 new String[]{"culture", "$select", "$orderby", "$top", "$skip", "$count"},
                 new Object[]{parameters.getCulture(), parameters.getSelect(), parameters.getOrderby(), parameters.getTop(), parameters.getSkip(), parameters.isCount()});
-        Map<String, Object> pathParameters = getParametersWithNonDefaultValue(new String[]{"String", "int"},
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int"},
                 new String[]{"repoId", "templateId"}, new Object[]{parameters.getRepoId(), parameters.getTemplateId()});
-        Map<String, Object> headerParameters = getParametersWithNonDefaultValue(new String[]{"String"},
+        Map<String, Object> headerParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"},
                 new String[]{"prefer"}, new Object[]{parameters.getPrefer()});
         Map<String, String> headerParametersWithStringTypeValue = headerParameters
                 .entrySet()
@@ -147,14 +147,14 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
     public ODataValueContextOfIListOfTemplateFieldInfo getTemplateFieldDefinitionsNextLink(String nextLink,
             int maxPageSize) {
         return doGetTemplateFieldDefinitions(nextLink,
-                new ParametersForGetTemplateFieldDefinitions().setPrefer(mergeMaxSizeIntoPrefer(maxPageSize, null)));
+                new ParametersForGetTemplateFieldDefinitions().setPrefer(ApiClientUtils.mergeMaxSizeIntoPrefer(maxPageSize, null)));
     }
 
     @Override
     public void getTemplateFieldDefinitionsForEach(
             Function<ODataValueContextOfIListOfTemplateFieldInfo, Boolean> callback, Integer maxPageSize,
             ParametersForGetTemplateFieldDefinitions parameters) {
-        parameters.setPrefer(mergeMaxSizeIntoPrefer(maxPageSize, parameters.getPrefer()));
+        parameters.setPrefer(ApiClientUtils.mergeMaxSizeIntoPrefer(maxPageSize, parameters.getPrefer()));
         ODataValueContextOfIListOfTemplateFieldInfo response = getTemplateFieldDefinitions(parameters);
         while (response != null && callback.apply(response)) {
             String nextLink = response.getOdataNextLink();
@@ -164,9 +164,9 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
 
     @Override
     public WTemplateInfo getTemplateDefinitionById(ParametersForGetTemplateDefinitionById parameters) {
-        Map<String, Object> queryParameters = getParametersWithNonDefaultValue(new String[]{"String", "String"},
+        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "String"},
                 new String[]{"culture", "$select"}, new Object[]{parameters.getCulture(), parameters.getSelect()});
-        Map<String, Object> pathParameters = getParametersWithNonDefaultValue(new String[]{"String", "int"},
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int"},
                 new String[]{"repoId", "templateId"}, new Object[]{parameters.getRepoId(), parameters.getTemplateId()});
         return sendRequestParseResponse(httpClient, objectMapper, WTemplateInfo.class, httpRequestHandler,
                 baseUrl + "/v1/Repositories/{repoId}/TemplateDefinitions/{templateId}", "GET", null, null, null, null,

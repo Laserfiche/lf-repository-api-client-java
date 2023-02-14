@@ -27,9 +27,9 @@ public class AttributesClientImpl extends ApiClient implements AttributesClient 
 
     @Override
     public Attribute getTrusteeAttributeValueByKey(ParametersForGetTrusteeAttributeValueByKey parameters) {
-        Map<String, Object> queryParameters = getParametersWithNonDefaultValue(new String[]{"boolean"},
+        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"boolean"},
                 new String[]{"everyone"}, new Object[]{parameters.isEveryone()});
-        Map<String, Object> pathParameters = getParametersWithNonDefaultValue(new String[]{"String", "String"},
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "String"},
                 new String[]{"repoId", "attributeKey"},
                 new Object[]{parameters.getRepoId(), parameters.getAttributeKey()});
         return sendRequestParseResponse(httpClient, objectMapper, Attribute.class, httpRequestHandler,
@@ -45,13 +45,13 @@ public class AttributesClientImpl extends ApiClient implements AttributesClient 
 
     private ODataValueContextOfListOfAttribute doGetTrusteeAttributeKeyValuePairs(String url,
             ParametersForGetTrusteeAttributeKeyValuePairs parameters) {
-        Map<String, Object> queryParameters = getParametersWithNonDefaultValue(
+        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(
                 new String[]{"boolean", "String", "String", "int", "int", "boolean"},
                 new String[]{"everyone", "$select", "$orderby", "$top", "$skip", "$count"},
                 new Object[]{parameters.isEveryone(), parameters.getSelect(), parameters.getOrderby(), parameters.getTop(), parameters.getSkip(), parameters.isCount()});
-        Map<String, Object> pathParameters = getParametersWithNonDefaultValue(new String[]{"String"},
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"},
                 new String[]{"repoId"}, new Object[]{parameters.getRepoId()});
-        Map<String, Object> headerParameters = getParametersWithNonDefaultValue(new String[]{"String"},
+        Map<String, Object> headerParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"},
                 new String[]{"prefer"}, new Object[]{parameters.getPrefer()});
         Map<String, String> headerParametersWithStringTypeValue = headerParameters
                 .entrySet()
@@ -67,13 +67,13 @@ public class AttributesClientImpl extends ApiClient implements AttributesClient 
             int maxPageSize) {
         return doGetTrusteeAttributeKeyValuePairs(nextLink,
                 new ParametersForGetTrusteeAttributeKeyValuePairs().setPrefer(
-                        mergeMaxSizeIntoPrefer(maxPageSize, null)));
+                        ApiClientUtils.mergeMaxSizeIntoPrefer(maxPageSize, null)));
     }
 
     @Override
     public void getTrusteeAttributeKeyValuePairsForEach(Function<ODataValueContextOfListOfAttribute, Boolean> callback,
             Integer maxPageSize, ParametersForGetTrusteeAttributeKeyValuePairs parameters) {
-        parameters.setPrefer(mergeMaxSizeIntoPrefer(maxPageSize, parameters.getPrefer()));
+        parameters.setPrefer(ApiClientUtils.mergeMaxSizeIntoPrefer(maxPageSize, parameters.getPrefer()));
         ODataValueContextOfListOfAttribute response = getTrusteeAttributeKeyValuePairs(parameters);
         while (response != null && callback.apply(response)) {
             String nextLink = response.getOdataNextLink();

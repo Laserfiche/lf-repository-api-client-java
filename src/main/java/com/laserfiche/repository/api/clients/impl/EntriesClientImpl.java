@@ -35,13 +35,13 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
     }
 
     private ODataValueContextOfIListOfFieldValue doGetFieldValues(String url, ParametersForGetFieldValues parameters) {
-        Map<String, Object> queryParameters = getParametersWithNonDefaultValue(
+        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(
                 new String[]{"boolean", "String", "String", "String", "int", "int", "boolean"},
                 new String[]{"formatValue", "culture", "$select", "$orderby", "$top", "$skip", "$count"},
                 new Object[]{parameters.isFormatValue(), parameters.getCulture(), parameters.getSelect(), parameters.getOrderby(), parameters.getTop(), parameters.getSkip(), parameters.isCount()});
-        Map<String, Object> pathParameters = getParametersWithNonDefaultValue(new String[]{"String", "int"},
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int"},
                 new String[]{"repoId", "entryId"}, new Object[]{parameters.getRepoId(), parameters.getEntryId()});
-        Map<String, Object> headerParameters = getParametersWithNonDefaultValue(new String[]{"String"},
+        Map<String, Object> headerParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"},
                 new String[]{"prefer"}, new Object[]{parameters.getPrefer()});
         Map<String, String> headerParametersWithStringTypeValue = headerParameters
                 .entrySet()
@@ -55,13 +55,13 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
     @Override
     public ODataValueContextOfIListOfFieldValue getFieldValuesNextLink(String nextLink, int maxPageSize) {
         return doGetFieldValues(nextLink,
-                new ParametersForGetFieldValues().setPrefer(mergeMaxSizeIntoPrefer(maxPageSize, null)));
+                new ParametersForGetFieldValues().setPrefer(ApiClientUtils.mergeMaxSizeIntoPrefer(maxPageSize, null)));
     }
 
     @Override
     public void getFieldValuesForEach(Function<ODataValueContextOfIListOfFieldValue, Boolean> callback,
             Integer maxPageSize, ParametersForGetFieldValues parameters) {
-        parameters.setPrefer(mergeMaxSizeIntoPrefer(maxPageSize, parameters.getPrefer()));
+        parameters.setPrefer(ApiClientUtils.mergeMaxSizeIntoPrefer(maxPageSize, parameters.getPrefer()));
         ODataValueContextOfIListOfFieldValue response = getFieldValues(parameters);
         while (response != null && callback.apply(response)) {
             String nextLink = response.getOdataNextLink();
@@ -71,9 +71,9 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override
     public ODataValueOfIListOfFieldValue assignFieldValues(ParametersForAssignFieldValues parameters) {
-        Map<String, Object> queryParameters = getParametersWithNonDefaultValue(new String[]{"String"},
+        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"},
                 new String[]{"culture"}, new Object[]{parameters.getCulture()});
-        Map<String, Object> pathParameters = getParametersWithNonDefaultValue(new String[]{"String", "int"},
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int"},
                 new String[]{"repoId", "entryId"}, new Object[]{parameters.getRepoId(), parameters.getEntryId()});
         return sendRequestParseResponse(httpClient, objectMapper, ODataValueOfIListOfFieldValue.class,
                 httpRequestHandler, baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/fields", "PUT",
@@ -83,10 +83,10 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override
     public CreateEntryResult importDocument(ParametersForImportDocument parameters) {
-        Map<String, Object> queryParameters = getParametersWithNonDefaultValue(new String[]{"boolean", "String"},
+        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"boolean", "String"},
                 new String[]{"autoRename", "culture"},
                 new Object[]{parameters.isAutoRename(), parameters.getCulture()});
-        Map<String, Object> pathParameters = getParametersWithNonDefaultValue(new String[]{"String", "int", "String"},
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int", "String"},
                 new String[]{"repoId", "parentEntryId", "fileName"},
                 new Object[]{parameters.getRepoId(), parameters.getParentEntryId(), parameters.getFileName()});
         {
@@ -99,7 +99,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
             while (retryCount <= maxRetries && shouldRetry) {
                 try {
                     String url = baseUrl + "/v1/Repositories/{repoId}/Entries/{parentEntryId}/{fileName}";
-                    String requestUrl = beforeSend(url, headerParametersWithStringTypeValue, httpRequestHandler);
+                    String requestUrl = ApiClientUtils.beforeSend(url, headerParametersWithStringTypeValue, httpRequestHandler);
                     httpResponse = httpClient
                             .post(requestUrl)
                             .field("electronicDocument", parameters.getInputStream(), parameters.getFileName())
@@ -109,11 +109,11 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                             .routeParam(pathParameters)
                             .asObject(Object.class);
                     Object body = httpResponse.getBody();
-                    Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
+                    Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
                     HttpMethod httpMethod = HttpMethod.POST;
                     int statusCode = httpResponse.getStatus();
                     shouldRetry = httpRequestHandler.afterSend(
-                            new ResponseImpl((short) statusCode)) || isRetryableStatusCode(statusCode, httpMethod);
+                            new ResponseImpl((short) statusCode)) || ApiClientUtils.isRetryableStatusCode(statusCode, httpMethod);
                     if (!shouldRetry) {
                         if (httpResponse.getStatus() == 201) {
                             try {
@@ -194,13 +194,13 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     private ODataValueContextOfIListOfWEntryLinkInfo doGetLinkValuesFromEntry(String url,
             ParametersForGetLinkValuesFromEntry parameters) {
-        Map<String, Object> queryParameters = getParametersWithNonDefaultValue(
+        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(
                 new String[]{"String", "String", "int", "int", "boolean"},
                 new String[]{"$select", "$orderby", "$top", "$skip", "$count"},
                 new Object[]{parameters.getSelect(), parameters.getOrderby(), parameters.getTop(), parameters.getSkip(), parameters.isCount()});
-        Map<String, Object> pathParameters = getParametersWithNonDefaultValue(new String[]{"String", "int"},
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int"},
                 new String[]{"repoId", "entryId"}, new Object[]{parameters.getRepoId(), parameters.getEntryId()});
-        Map<String, Object> headerParameters = getParametersWithNonDefaultValue(new String[]{"String"},
+        Map<String, Object> headerParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"},
                 new String[]{"prefer"}, new Object[]{parameters.getPrefer()});
         Map<String, String> headerParametersWithStringTypeValue = headerParameters
                 .entrySet()
@@ -214,13 +214,13 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
     @Override
     public ODataValueContextOfIListOfWEntryLinkInfo getLinkValuesFromEntryNextLink(String nextLink, int maxPageSize) {
         return doGetLinkValuesFromEntry(nextLink,
-                new ParametersForGetLinkValuesFromEntry().setPrefer(mergeMaxSizeIntoPrefer(maxPageSize, null)));
+                new ParametersForGetLinkValuesFromEntry().setPrefer(ApiClientUtils.mergeMaxSizeIntoPrefer(maxPageSize, null)));
     }
 
     @Override
     public void getLinkValuesFromEntryForEach(Function<ODataValueContextOfIListOfWEntryLinkInfo, Boolean> callback,
             Integer maxPageSize, ParametersForGetLinkValuesFromEntry parameters) {
-        parameters.setPrefer(mergeMaxSizeIntoPrefer(maxPageSize, parameters.getPrefer()));
+        parameters.setPrefer(ApiClientUtils.mergeMaxSizeIntoPrefer(maxPageSize, parameters.getPrefer()));
         ODataValueContextOfIListOfWEntryLinkInfo response = getLinkValuesFromEntry(parameters);
         while (response != null && callback.apply(response)) {
             String nextLink = response.getOdataNextLink();
@@ -230,7 +230,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override
     public ODataValueOfIListOfWEntryLinkInfo assignEntryLinks(ParametersForAssignEntryLinks parameters) {
-        Map<String, Object> pathParameters = getParametersWithNonDefaultValue(new String[]{"String", "int"},
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int"},
                 new String[]{"repoId", "entryId"}, new Object[]{parameters.getRepoId(), parameters.getEntryId()});
         return sendRequestParseResponse(httpClient, objectMapper, ODataValueOfIListOfWEntryLinkInfo.class,
                 httpRequestHandler, baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/links", "PUT",
@@ -240,9 +240,9 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override
     public Entry writeTemplateValueToEntry(ParametersForWriteTemplateValueToEntry parameters) {
-        Map<String, Object> queryParameters = getParametersWithNonDefaultValue(new String[]{"String"},
+        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"},
                 new String[]{"culture"}, new Object[]{parameters.getCulture()});
-        Map<String, Object> pathParameters = getParametersWithNonDefaultValue(new String[]{"String", "int"},
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int"},
                 new String[]{"repoId", "entryId"}, new Object[]{parameters.getRepoId(), parameters.getEntryId()});
         return sendRequestParseResponse(httpClient, objectMapper, Entry.class, httpRequestHandler,
                 baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/template", "PUT", "application/json",
@@ -252,7 +252,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override
     public Entry deleteAssignedTemplate(ParametersForDeleteAssignedTemplate parameters) {
-        Map<String, Object> pathParameters = getParametersWithNonDefaultValue(new String[]{"String", "int"},
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int"},
                 new String[]{"repoId", "entryId"}, new Object[]{parameters.getRepoId(), parameters.getEntryId()});
         return sendRequestParseResponse(httpClient, objectMapper, Entry.class, httpRequestHandler,
                 baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/template", "DELETE", null, null, null, null,
@@ -261,7 +261,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override
     public Map<String, String[]> getDynamicFieldValues(ParametersForGetDynamicFieldValues parameters) {
-        Map<String, Object> pathParameters = getParametersWithNonDefaultValue(new String[]{"String", "int"},
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int"},
                 new String[]{"repoId", "entryId"}, new Object[]{parameters.getRepoId(), parameters.getEntryId()});
         return sendRequestParseResponse(httpClient, objectMapper, new HashMap<String, String[]>().getClass(),
                 httpRequestHandler,
@@ -272,10 +272,10 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override
     public FindEntryResult getEntryByPath(ParametersForGetEntryByPath parameters) {
-        Map<String, Object> queryParameters = getParametersWithNonDefaultValue(new String[]{"String", "boolean"},
+        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "boolean"},
                 new String[]{"fullPath", "fallbackToClosestAncestor"},
                 new Object[]{parameters.getFullPath(), parameters.isFallbackToClosestAncestor()});
-        Map<String, Object> pathParameters = getParametersWithNonDefaultValue(new String[]{"String"},
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"},
                 new String[]{"repoId"}, new Object[]{parameters.getRepoId()});
         return sendRequestParseResponse(httpClient, objectMapper, FindEntryResult.class, httpRequestHandler,
                 baseUrl + "/v1/Repositories/{repoId}/Entries/ByPath", "GET", null, null, null, null, queryParameters,
@@ -284,10 +284,10 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override
     public AcceptedOperation copyEntryAsync(ParametersForCopyEntryAsync parameters) {
-        Map<String, Object> queryParameters = getParametersWithNonDefaultValue(new String[]{"boolean", "String"},
+        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"boolean", "String"},
                 new String[]{"autoRename", "culture"},
                 new Object[]{parameters.isAutoRename(), parameters.getCulture()});
-        Map<String, Object> pathParameters = getParametersWithNonDefaultValue(new String[]{"String", "int"},
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int"},
                 new String[]{"repoId", "entryId"}, new Object[]{parameters.getRepoId(), parameters.getEntryId()});
         return sendRequestParseResponse(httpClient, objectMapper, AcceptedOperation.class, httpRequestHandler,
                 baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Folder/CopyAsync", "POST",
@@ -297,9 +297,9 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override
     public Entry getEntry(ParametersForGetEntry parameters) {
-        Map<String, Object> queryParameters = getParametersWithNonDefaultValue(new String[]{"String"},
+        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"},
                 new String[]{"$select"}, new Object[]{parameters.getSelect()});
-        Map<String, Object> pathParameters = getParametersWithNonDefaultValue(new String[]{"String", "int"},
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int"},
                 new String[]{"repoId", "entryId"}, new Object[]{parameters.getRepoId(), parameters.getEntryId()});
         return sendRequestParseResponse(httpClient, objectMapper, Entry.class, httpRequestHandler,
                 baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}", "GET", null, null, null, null, queryParameters,
@@ -308,10 +308,10 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override
     public Entry moveOrRenameEntry(ParametersForMoveOrRenameEntry parameters) {
-        Map<String, Object> queryParameters = getParametersWithNonDefaultValue(new String[]{"boolean", "String"},
+        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"boolean", "String"},
                 new String[]{"autoRename", "culture"},
                 new Object[]{parameters.isAutoRename(), parameters.getCulture()});
-        Map<String, Object> pathParameters = getParametersWithNonDefaultValue(new String[]{"String", "int"},
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int"},
                 new String[]{"repoId", "entryId"}, new Object[]{parameters.getRepoId(), parameters.getEntryId()});
         return sendRequestParseResponse(httpClient, objectMapper, Entry.class, httpRequestHandler,
                 baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}", "PATCH", "application/json",
@@ -321,7 +321,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override
     public AcceptedOperation deleteEntryInfo(ParametersForDeleteEntryInfo parameters) {
-        Map<String, Object> pathParameters = getParametersWithNonDefaultValue(new String[]{"String", "int"},
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int"},
                 new String[]{"repoId", "entryId"}, new Object[]{parameters.getRepoId(), parameters.getEntryId()});
         return sendRequestParseResponse(httpClient, objectMapper, AcceptedOperation.class, httpRequestHandler,
                 baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}", "DELETE", "application/json",
@@ -330,9 +330,9 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override
     public void exportDocumentWithAuditReason(ParametersForExportDocumentWithAuditReason parameters) {
-        Map<String, Object> pathParameters = getParametersWithNonDefaultValue(new String[]{"String", "int"},
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int"},
                 new String[]{"repoId", "entryId"}, new Object[]{parameters.getRepoId(), parameters.getEntryId()});
-        Map<String, Object> headerParameters = getParametersWithNonDefaultValue(new String[]{"String"},
+        Map<String, Object> headerParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"},
                 new String[]{"range"}, new Object[]{parameters.getRange()});
         Map<String, String> headerParametersWithStringTypeValue = headerParameters
                 .entrySet()
@@ -346,7 +346,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
             while (retryCount <= maxRetries && shouldRetry) {
                 try {
                     String url = baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Document/GetEdocWithAuditReason";
-                    String requestUrl = beforeSend(url, headerParametersWithStringTypeValue, httpRequestHandler);
+                    String requestUrl = ApiClientUtils.beforeSend(url, headerParametersWithStringTypeValue, httpRequestHandler);
                     httpClient
                             .post(requestUrl)
                             .routeParam(pathParameters)
@@ -360,7 +360,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                                             .accept(rawResponse.getContent());
                                 } else {
                                     ProblemDetails problemDetails = null;
-                                    Map<String, String> headersMap = getHeadersMap(rawResponse.getHeaders());
+                                    Map<String, String> headersMap = ApiClientUtils.getHeadersMap(rawResponse.getHeaders());
                                     try {
                                         String jsonString = rawResponse.getContentAsString();
                                         problemDetails = ProblemDetailsDeserializer.deserialize(objectMapper,
@@ -420,9 +420,9 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override
     public void exportDocument(ParametersForExportDocument parameters) {
-        Map<String, Object> pathParameters = getParametersWithNonDefaultValue(new String[]{"String", "int"},
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int"},
                 new String[]{"repoId", "entryId"}, new Object[]{parameters.getRepoId(), parameters.getEntryId()});
-        Map<String, Object> headerParameters = getParametersWithNonDefaultValue(new String[]{"String"},
+        Map<String, Object> headerParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"},
                 new String[]{"range"}, new Object[]{parameters.getRange()});
         Map<String, String> headerParametersWithStringTypeValue = headerParameters
                 .entrySet()
@@ -436,7 +436,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
             while (retryCount <= maxRetries && shouldRetry) {
                 try {
                     String url = baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Document/edoc";
-                    String requestUrl = beforeSend(url, headerParametersWithStringTypeValue, httpRequestHandler);
+                    String requestUrl = ApiClientUtils.beforeSend(url, headerParametersWithStringTypeValue, httpRequestHandler);
                     httpClient
                             .get(requestUrl)
                             .routeParam(pathParameters)
@@ -448,7 +448,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                                             .accept(rawResponse.getContent());
                                 } else {
                                     ProblemDetails problemDetails = null;
-                                    Map<String, String> headersMap = getHeadersMap(rawResponse.getHeaders());
+                                    Map<String, String> headersMap = ApiClientUtils.getHeadersMap(rawResponse.getHeaders());
                                     try {
                                         String jsonString = rawResponse.getContentAsString();
                                         problemDetails = ProblemDetailsDeserializer.deserialize(objectMapper,
@@ -508,7 +508,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override
     public ODataValueOfBoolean deleteDocument(ParametersForDeleteDocument parameters) {
-        Map<String, Object> pathParameters = getParametersWithNonDefaultValue(new String[]{"String", "int"},
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int"},
                 new String[]{"repoId", "entryId"}, new Object[]{parameters.getRepoId(), parameters.getEntryId()});
         return sendRequestParseResponse(httpClient, objectMapper, ODataValueOfBoolean.class, httpRequestHandler,
                 baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Document/edoc", "DELETE",
@@ -517,7 +517,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override
     public Map<String, String> getDocumentContentType(ParametersForGetDocumentContentType parameters) {
-        Map<String, Object> pathParameters = getParametersWithNonDefaultValue(new String[]{"String", "int"},
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int"},
                 new String[]{"repoId", "entryId"}, new Object[]{parameters.getRepoId(), parameters.getEntryId()});
         return sendRequestParseResponse(httpClient, objectMapper, new HashMap<String, String>().getClass(),
                 httpRequestHandler,
@@ -527,9 +527,9 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override
     public ODataValueOfBoolean deletePages(ParametersForDeletePages parameters) {
-        Map<String, Object> queryParameters = getParametersWithNonDefaultValue(new String[]{"String"},
+        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"},
                 new String[]{"pageRange"}, new Object[]{parameters.getPageRange()});
-        Map<String, Object> pathParameters = getParametersWithNonDefaultValue(new String[]{"String", "int"},
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int"},
                 new String[]{"repoId", "entryId"}, new Object[]{parameters.getRepoId(), parameters.getEntryId()});
         return sendRequestParseResponse(httpClient, objectMapper, ODataValueOfBoolean.class, httpRequestHandler,
                 baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Document/pages", "DELETE",
@@ -544,13 +544,13 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
     }
 
     private ODataValueContextOfIListOfEntry doGetEntryListing(String url, ParametersForGetEntryListing parameters) {
-        Map<String, Object> queryParameters = getParametersWithNonDefaultValue(
+        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(
                 new String[]{"boolean", "String[]", "boolean", "String", "String", "String", "int", "int", "boolean"},
                 new String[]{"groupByEntryType", "fields", "formatFields", "culture", "$select", "$orderby", "$top", "$skip", "$count"},
                 new Object[]{parameters.isGroupByEntryType(), parameters.getFields(), parameters.isFormatFields(), parameters.getCulture(), parameters.getSelect(), parameters.getOrderby(), parameters.getTop(), parameters.getSkip(), parameters.isCount()});
-        Map<String, Object> pathParameters = getParametersWithNonDefaultValue(new String[]{"String", "int"},
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int"},
                 new String[]{"repoId", "entryId"}, new Object[]{parameters.getRepoId(), parameters.getEntryId()});
-        Map<String, Object> headerParameters = getParametersWithNonDefaultValue(new String[]{"String"},
+        Map<String, Object> headerParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"},
                 new String[]{"prefer"}, new Object[]{parameters.getPrefer()});
         Map<String, String> headerParametersWithStringTypeValue = headerParameters
                 .entrySet()
@@ -567,13 +567,13 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
     @Override
     public ODataValueContextOfIListOfEntry getEntryListingNextLink(String nextLink, int maxPageSize) {
         return doGetEntryListing(nextLink,
-                new ParametersForGetEntryListing().setPrefer(mergeMaxSizeIntoPrefer(maxPageSize, null)));
+                new ParametersForGetEntryListing().setPrefer(ApiClientUtils.mergeMaxSizeIntoPrefer(maxPageSize, null)));
     }
 
     @Override
     public void getEntryListingForEach(Function<ODataValueContextOfIListOfEntry, Boolean> callback, Integer maxPageSize,
             ParametersForGetEntryListing parameters) {
-        parameters.setPrefer(mergeMaxSizeIntoPrefer(maxPageSize, parameters.getPrefer()));
+        parameters.setPrefer(ApiClientUtils.mergeMaxSizeIntoPrefer(maxPageSize, parameters.getPrefer()));
         ODataValueContextOfIListOfEntry response = getEntryListing(parameters);
         while (response != null && callback.apply(response)) {
             String nextLink = response.getOdataNextLink();
@@ -583,10 +583,10 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override
     public Entry createOrCopyEntry(ParametersForCreateOrCopyEntry parameters) {
-        Map<String, Object> queryParameters = getParametersWithNonDefaultValue(new String[]{"boolean", "String"},
+        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"boolean", "String"},
                 new String[]{"autoRename", "culture"},
                 new Object[]{parameters.isAutoRename(), parameters.getCulture()});
-        Map<String, Object> pathParameters = getParametersWithNonDefaultValue(new String[]{"String", "int"},
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int"},
                 new String[]{"repoId", "entryId"}, new Object[]{parameters.getRepoId(), parameters.getEntryId()});
         return sendRequestParseResponse(httpClient, objectMapper, Entry.class, httpRequestHandler,
                 baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Folder/children", "POST",
@@ -601,13 +601,13 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     private ODataValueContextOfIListOfWTagInfo doGetTagsAssignedToEntry(String url,
             ParametersForGetTagsAssignedToEntry parameters) {
-        Map<String, Object> queryParameters = getParametersWithNonDefaultValue(
+        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(
                 new String[]{"String", "String", "int", "int", "boolean"},
                 new String[]{"$select", "$orderby", "$top", "$skip", "$count"},
                 new Object[]{parameters.getSelect(), parameters.getOrderby(), parameters.getTop(), parameters.getSkip(), parameters.isCount()});
-        Map<String, Object> pathParameters = getParametersWithNonDefaultValue(new String[]{"String", "int"},
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int"},
                 new String[]{"repoId", "entryId"}, new Object[]{parameters.getRepoId(), parameters.getEntryId()});
-        Map<String, Object> headerParameters = getParametersWithNonDefaultValue(new String[]{"String"},
+        Map<String, Object> headerParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"},
                 new String[]{"prefer"}, new Object[]{parameters.getPrefer()});
         Map<String, String> headerParametersWithStringTypeValue = headerParameters
                 .entrySet()
@@ -621,13 +621,13 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
     @Override
     public ODataValueContextOfIListOfWTagInfo getTagsAssignedToEntryNextLink(String nextLink, int maxPageSize) {
         return doGetTagsAssignedToEntry(nextLink,
-                new ParametersForGetTagsAssignedToEntry().setPrefer(mergeMaxSizeIntoPrefer(maxPageSize, null)));
+                new ParametersForGetTagsAssignedToEntry().setPrefer(ApiClientUtils.mergeMaxSizeIntoPrefer(maxPageSize, null)));
     }
 
     @Override
     public void getTagsAssignedToEntryForEach(Function<ODataValueContextOfIListOfWTagInfo, Boolean> callback,
             Integer maxPageSize, ParametersForGetTagsAssignedToEntry parameters) {
-        parameters.setPrefer(mergeMaxSizeIntoPrefer(maxPageSize, parameters.getPrefer()));
+        parameters.setPrefer(ApiClientUtils.mergeMaxSizeIntoPrefer(maxPageSize, parameters.getPrefer()));
         ODataValueContextOfIListOfWTagInfo response = getTagsAssignedToEntry(parameters);
         while (response != null && callback.apply(response)) {
             String nextLink = response.getOdataNextLink();
@@ -637,7 +637,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override
     public ODataValueOfIListOfWTagInfo assignTags(ParametersForAssignTags parameters) {
-        Map<String, Object> pathParameters = getParametersWithNonDefaultValue(new String[]{"String", "int"},
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int"},
                 new String[]{"repoId", "entryId"}, new Object[]{parameters.getRepoId(), parameters.getEntryId()});
         return sendRequestParseResponse(httpClient, objectMapper, ODataValueOfIListOfWTagInfo.class, httpRequestHandler,
                 baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/tags", "PUT", "application/json",

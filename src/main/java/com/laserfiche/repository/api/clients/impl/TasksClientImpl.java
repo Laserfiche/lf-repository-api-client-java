@@ -24,7 +24,7 @@ public class TasksClientImpl extends ApiClient implements TasksClient {
 
     @Override
     public OperationProgress getOperationStatusAndProgress(ParametersForGetOperationStatusAndProgress parameters) {
-        Map<String, Object> pathParameters = getParametersWithNonDefaultValue(new String[]{"String", "String"},
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "String"},
                 new String[]{"repoId", "operationToken"},
                 new Object[]{parameters.getRepoId(), parameters.getOperationToken()});
         return sendRequestParseResponse(httpClient, objectMapper, OperationProgress.class, httpRequestHandler,
@@ -34,7 +34,7 @@ public class TasksClientImpl extends ApiClient implements TasksClient {
 
     @Override
     public boolean cancelOperation(ParametersForCancelOperation parameters) {
-        Map<String, Object> pathParameters = getParametersWithNonDefaultValue(new String[]{"String", "String"},
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "String"},
                 new String[]{"repoId", "operationToken"},
                 new Object[]{parameters.getRepoId(), parameters.getOperationToken()});
         return sendRequestParseResponse(httpClient, objectMapper, boolean.class, httpRequestHandler,

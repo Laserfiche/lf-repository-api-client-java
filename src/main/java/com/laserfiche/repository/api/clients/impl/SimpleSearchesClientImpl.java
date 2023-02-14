@@ -45,8 +45,8 @@ public class SimpleSearchesClientImpl extends ApiClient implements SimpleSearche
 
     @Override
     public ODataValueContextOfIListOfEntry createSimpleSearchOperation(ParametersForCreateSimpleSearchOperation parameters) {
-        Map<String, Object> queryParameters = getParametersWithNonDefaultValue(new String[] { "String[]", "boolean", "String", "String", "String", "boolean" }, new String[] { "fields", "formatFields", "culture", "$select", "$orderby", "$count" }, new Object[] { parameters.getFields(), parameters.isFormatFields(), parameters.getCulture(), parameters.getSelect(), parameters.getOrderby(), parameters.isCount() });
-        Map<String, Object> pathParameters = getParametersWithNonDefaultValue(new String[] { "String" }, new String[] { "repoId" }, new Object[] { parameters.getRepoId() });
+        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String[]", "boolean", "String", "String", "String", "boolean" }, new String[] { "fields", "formatFields", "culture", "$select", "$orderby", "$count" }, new Object[] { parameters.getFields(), parameters.isFormatFields(), parameters.getCulture(), parameters.getSelect(), parameters.getOrderby(), parameters.isCount() });
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String" }, new String[] { "repoId" }, new Object[] { parameters.getRepoId() });
         return sendRequestParseResponse(httpClient, objectMapper, ODataValueContextOfIListOfEntry.class, httpRequestHandler, baseUrl + "/v1/Repositories/{repoId}/SimpleSearches", "POST", "application/json", parameters.getRequestBody(), "fields", (queryParameters.get("fields") != null) ? (queryParameters.get("fields") instanceof String ? Arrays.asList(queryParameters.remove("fields")) : (List) queryParameters.remove("fields")) : new ArrayList(), queryParameters, pathParameters, new HashMap<String, String>(), false);
     }
 }

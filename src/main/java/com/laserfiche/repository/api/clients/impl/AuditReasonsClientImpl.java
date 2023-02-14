@@ -23,7 +23,7 @@ public class AuditReasonsClientImpl extends ApiClient implements AuditReasonsCli
 
     @Override
     public AuditReasons getAuditReasons(ParametersForGetAuditReasons parameters) {
-        Map<String, Object> pathParameters = getParametersWithNonDefaultValue(new String[]{"String"},
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"},
                 new String[]{"repoId"}, new Object[]{parameters.getRepoId()});
         return sendRequestParseResponse(httpClient, objectMapper, AuditReasons.class, httpRequestHandler,
                 baseUrl + "/v1/Repositories/{repoId}/AuditReasons", "GET", null, null, null, null, null, pathParameters,

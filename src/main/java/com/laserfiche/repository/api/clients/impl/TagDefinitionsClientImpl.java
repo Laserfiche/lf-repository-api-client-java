@@ -32,13 +32,13 @@ public class TagDefinitionsClientImpl extends ApiClient implements TagDefinition
 
     private ODataValueContextOfIListOfWTagInfo doGetTagDefinitions(String url,
             ParametersForGetTagDefinitions parameters) {
-        Map<String, Object> queryParameters = getParametersWithNonDefaultValue(
+        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(
                 new String[]{"String", "String", "String", "int", "int", "boolean"},
                 new String[]{"culture", "$select", "$orderby", "$top", "$skip", "$count"},
                 new Object[]{parameters.getCulture(), parameters.getSelect(), parameters.getOrderby(), parameters.getTop(), parameters.getSkip(), parameters.isCount()});
-        Map<String, Object> pathParameters = getParametersWithNonDefaultValue(new String[]{"String"},
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"},
                 new String[]{"repoId"}, new Object[]{parameters.getRepoId()});
-        Map<String, Object> headerParameters = getParametersWithNonDefaultValue(new String[]{"String"},
+        Map<String, Object> headerParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"},
                 new String[]{"prefer"}, new Object[]{parameters.getPrefer()});
         Map<String, String> headerParametersWithStringTypeValue = headerParameters
                 .entrySet()
@@ -52,13 +52,13 @@ public class TagDefinitionsClientImpl extends ApiClient implements TagDefinition
     @Override
     public ODataValueContextOfIListOfWTagInfo getTagDefinitionsNextLink(String nextLink, int maxPageSize) {
         return doGetTagDefinitions(nextLink,
-                new ParametersForGetTagDefinitions().setPrefer(mergeMaxSizeIntoPrefer(maxPageSize, null)));
+                new ParametersForGetTagDefinitions().setPrefer(ApiClientUtils.mergeMaxSizeIntoPrefer(maxPageSize, null)));
     }
 
     @Override
     public void getTagDefinitionsForEach(Function<ODataValueContextOfIListOfWTagInfo, Boolean> callback,
             Integer maxPageSize, ParametersForGetTagDefinitions parameters) {
-        parameters.setPrefer(mergeMaxSizeIntoPrefer(maxPageSize, parameters.getPrefer()));
+        parameters.setPrefer(ApiClientUtils.mergeMaxSizeIntoPrefer(maxPageSize, parameters.getPrefer()));
         ODataValueContextOfIListOfWTagInfo response = getTagDefinitions(parameters);
         while (response != null && callback.apply(response)) {
             String nextLink = response.getOdataNextLink();
@@ -68,9 +68,9 @@ public class TagDefinitionsClientImpl extends ApiClient implements TagDefinition
 
     @Override
     public WTagInfo getTagDefinitionById(ParametersForGetTagDefinitionById parameters) {
-        Map<String, Object> queryParameters = getParametersWithNonDefaultValue(new String[]{"String", "String"},
+        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "String"},
                 new String[]{"culture", "$select"}, new Object[]{parameters.getCulture(), parameters.getSelect()});
-        Map<String, Object> pathParameters = getParametersWithNonDefaultValue(new String[]{"String", "int"},
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int"},
                 new String[]{"repoId", "tagId"}, new Object[]{parameters.getRepoId(), parameters.getTagId()});
         return sendRequestParseResponse(httpClient, objectMapper, WTagInfo.class, httpRequestHandler,
                 baseUrl + "/v1/Repositories/{repoId}/TagDefinitions/{tagId}", "GET", null, null, null, null,

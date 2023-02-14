@@ -28,9 +28,9 @@ public class FieldDefinitionsClientImpl extends ApiClient implements FieldDefini
 
     @Override
     public WFieldInfo getFieldDefinitionById(ParametersForGetFieldDefinitionById parameters) {
-        Map<String, Object> queryParameters = getParametersWithNonDefaultValue(new String[]{"String", "String"},
+        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "String"},
                 new String[]{"culture", "$select"}, new Object[]{parameters.getCulture(), parameters.getSelect()});
-        Map<String, Object> pathParameters = getParametersWithNonDefaultValue(new String[]{"String", "int"},
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int"},
                 new String[]{"repoId", "fieldDefinitionId"},
                 new Object[]{parameters.getRepoId(), parameters.getFieldDefinitionId()});
         return sendRequestParseResponse(httpClient, objectMapper, WFieldInfo.class, httpRequestHandler,
@@ -45,13 +45,13 @@ public class FieldDefinitionsClientImpl extends ApiClient implements FieldDefini
 
     private ODataValueContextOfIListOfWFieldInfo doGetFieldDefinitions(String url,
             ParametersForGetFieldDefinitions parameters) {
-        Map<String, Object> queryParameters = getParametersWithNonDefaultValue(
+        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(
                 new String[]{"String", "String", "String", "int", "int", "boolean"},
                 new String[]{"culture", "$select", "$orderby", "$top", "$skip", "$count"},
                 new Object[]{parameters.getCulture(), parameters.getSelect(), parameters.getOrderby(), parameters.getTop(), parameters.getSkip(), parameters.isCount()});
-        Map<String, Object> pathParameters = getParametersWithNonDefaultValue(new String[]{"String"},
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"},
                 new String[]{"repoId"}, new Object[]{parameters.getRepoId()});
-        Map<String, Object> headerParameters = getParametersWithNonDefaultValue(new String[]{"String"},
+        Map<String, Object> headerParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"},
                 new String[]{"prefer"}, new Object[]{parameters.getPrefer()});
         Map<String, String> headerParametersWithStringTypeValue = headerParameters
                 .entrySet()
@@ -65,13 +65,13 @@ public class FieldDefinitionsClientImpl extends ApiClient implements FieldDefini
     @Override
     public ODataValueContextOfIListOfWFieldInfo getFieldDefinitionsNextLink(String nextLink, int maxPageSize) {
         return doGetFieldDefinitions(nextLink,
-                new ParametersForGetFieldDefinitions().setPrefer(mergeMaxSizeIntoPrefer(maxPageSize, null)));
+                new ParametersForGetFieldDefinitions().setPrefer(ApiClientUtils.mergeMaxSizeIntoPrefer(maxPageSize, null)));
     }
 
     @Override
     public void getFieldDefinitionsForEach(Function<ODataValueContextOfIListOfWFieldInfo, Boolean> callback,
             Integer maxPageSize, ParametersForGetFieldDefinitions parameters) {
-        parameters.setPrefer(mergeMaxSizeIntoPrefer(maxPageSize, parameters.getPrefer()));
+        parameters.setPrefer(ApiClientUtils.mergeMaxSizeIntoPrefer(maxPageSize, parameters.getPrefer()));
         ODataValueContextOfIListOfWFieldInfo response = getFieldDefinitions(parameters);
         while (response != null && callback.apply(response)) {
             String nextLink = response.getOdataNextLink();

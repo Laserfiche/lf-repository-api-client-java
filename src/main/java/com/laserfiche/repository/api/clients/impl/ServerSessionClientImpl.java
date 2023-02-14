@@ -26,7 +26,7 @@ public class ServerSessionClientImpl extends ApiClient implements ServerSessionC
 
     @Override
     public ODataValueOfBoolean invalidateServerSession(ParametersForInvalidateServerSession parameters) {
-        Map<String, Object> pathParameters = getParametersWithNonDefaultValue(new String[]{"String"},
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"},
                 new String[]{"repoId"}, new Object[]{parameters.getRepoId()});
         return sendRequestParseResponse(httpClient, objectMapper, ODataValueOfBoolean.class, httpRequestHandler,
                 baseUrl + "/v1/Repositories/{repoId}/ServerSession/Invalidate", "POST", null, null, null, null, null,
@@ -35,7 +35,7 @@ public class ServerSessionClientImpl extends ApiClient implements ServerSessionC
 
     @Override
     public ODataValueOfBoolean createServerSession(ParametersForCreateServerSession parameters) {
-        Map<String, Object> pathParameters = getParametersWithNonDefaultValue(new String[]{"String"},
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"},
                 new String[]{"repoId"}, new Object[]{parameters.getRepoId()});
         return sendRequestParseResponse(httpClient, objectMapper, ODataValueOfBoolean.class, httpRequestHandler,
                 baseUrl + "/v1/Repositories/{repoId}/ServerSession/Create", "POST", null, null, null, null, null,
@@ -44,7 +44,7 @@ public class ServerSessionClientImpl extends ApiClient implements ServerSessionC
 
     @Override
     public ODataValueOfDateTime refreshServerSession(ParametersForRefreshServerSession parameters) {
-        Map<String, Object> pathParameters = getParametersWithNonDefaultValue(new String[]{"String"},
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"},
                 new String[]{"repoId"}, new Object[]{parameters.getRepoId()});
         return sendRequestParseResponse(httpClient, objectMapper, ODataValueOfDateTime.class, httpRequestHandler,
                 baseUrl + "/v1/Repositories/{repoId}/ServerSession/Refresh", "POST", null, null, null, null, null,

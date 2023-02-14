@@ -24,7 +24,7 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
 
     @Override
     public OperationProgress getSearchStatus(ParametersForGetSearchStatus parameters) {
-        Map<String, Object> pathParameters = getParametersWithNonDefaultValue(new String[]{"String", "String"},
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "String"},
                 new String[]{"repoId", "searchToken"},
                 new Object[]{parameters.getRepoId(), parameters.getSearchToken()});
         return sendRequestParseResponse(httpClient, objectMapper, OperationProgress.class, httpRequestHandler,
@@ -34,7 +34,7 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
 
     @Override
     public ODataValueOfBoolean cancelOrCloseSearch(ParametersForCancelOrCloseSearch parameters) {
-        Map<String, Object> pathParameters = getParametersWithNonDefaultValue(new String[]{"String", "String"},
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "String"},
                 new String[]{"repoId", "searchToken"},
                 new Object[]{parameters.getRepoId(), parameters.getSearchToken()});
         return sendRequestParseResponse(httpClient, objectMapper, ODataValueOfBoolean.class, httpRequestHandler,
@@ -51,14 +51,14 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
 
     private ODataValueContextOfIListOfContextHit doGetSearchContextHits(String url,
             ParametersForGetSearchContextHits parameters) {
-        Map<String, Object> queryParameters = getParametersWithNonDefaultValue(
+        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(
                 new String[]{"String", "String", "int", "int", "boolean"},
                 new String[]{"$select", "$orderby", "$top", "$skip", "$count"},
                 new Object[]{parameters.getSelect(), parameters.getOrderby(), parameters.getTop(), parameters.getSkip(), parameters.isCount()});
-        Map<String, Object> pathParameters = getParametersWithNonDefaultValue(new String[]{"String", "String", "int"},
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "String", "int"},
                 new String[]{"repoId", "searchToken", "rowNumber"},
                 new Object[]{parameters.getRepoId(), parameters.getSearchToken(), parameters.getRowNumber()});
-        Map<String, Object> headerParameters = getParametersWithNonDefaultValue(new String[]{"String"},
+        Map<String, Object> headerParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"},
                 new String[]{"prefer"}, new Object[]{parameters.getPrefer()});
         Map<String, String> headerParametersWithStringTypeValue = headerParameters
                 .entrySet()
@@ -72,13 +72,13 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
     @Override
     public ODataValueContextOfIListOfContextHit getSearchContextHitsNextLink(String nextLink, int maxPageSize) {
         return doGetSearchContextHits(nextLink,
-                new ParametersForGetSearchContextHits().setPrefer(mergeMaxSizeIntoPrefer(maxPageSize, null)));
+                new ParametersForGetSearchContextHits().setPrefer(ApiClientUtils.mergeMaxSizeIntoPrefer(maxPageSize, null)));
     }
 
     @Override
     public void getSearchContextHitsForEach(Function<ODataValueContextOfIListOfContextHit, Boolean> callback,
             Integer maxPageSize, ParametersForGetSearchContextHits parameters) {
-        parameters.setPrefer(mergeMaxSizeIntoPrefer(maxPageSize, parameters.getPrefer()));
+        parameters.setPrefer(ApiClientUtils.mergeMaxSizeIntoPrefer(maxPageSize, parameters.getPrefer()));
         ODataValueContextOfIListOfContextHit response = getSearchContextHits(parameters);
         while (response != null && callback.apply(response)) {
             String nextLink = response.getOdataNextLink();
@@ -88,7 +88,7 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
 
     @Override
     public AcceptedOperation createSearchOperation(ParametersForCreateSearchOperation parameters) {
-        Map<String, Object> pathParameters = getParametersWithNonDefaultValue(new String[]{"String"},
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"},
                 new String[]{"repoId"}, new Object[]{parameters.getRepoId()});
         return sendRequestParseResponse(httpClient, objectMapper, AcceptedOperation.class, httpRequestHandler,
                 baseUrl + "/v1/Repositories/{repoId}/Searches", "POST", "application/json", parameters.getRequestBody(),
@@ -101,14 +101,14 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
     }
 
     private ODataValueContextOfIListOfEntry doGetSearchResults(String url, ParametersForGetSearchResults parameters) {
-        Map<String, Object> queryParameters = getParametersWithNonDefaultValue(
+        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(
                 new String[]{"boolean", "boolean", "String[]", "boolean", "String", "String", "String", "int", "int", "boolean"},
                 new String[]{"groupByEntryType", "refresh", "fields", "formatFields", "culture", "$select", "$orderby", "$top", "$skip", "$count"},
                 new Object[]{parameters.isGroupByEntryType(), parameters.isRefresh(), parameters.getFields(), parameters.isFormatFields(), parameters.getCulture(), parameters.getSelect(), parameters.getOrderby(), parameters.getTop(), parameters.getSkip(), parameters.isCount()});
-        Map<String, Object> pathParameters = getParametersWithNonDefaultValue(new String[]{"String", "String"},
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "String"},
                 new String[]{"repoId", "searchToken"},
                 new Object[]{parameters.getRepoId(), parameters.getSearchToken()});
-        Map<String, Object> headerParameters = getParametersWithNonDefaultValue(new String[]{"String"},
+        Map<String, Object> headerParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"},
                 new String[]{"prefer"}, new Object[]{parameters.getPrefer()});
         Map<String, String> headerParametersWithStringTypeValue = headerParameters
                 .entrySet()
@@ -125,13 +125,13 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
     @Override
     public ODataValueContextOfIListOfEntry getSearchResultsNextLink(String nextLink, int maxPageSize) {
         return doGetSearchResults(nextLink,
-                new ParametersForGetSearchResults().setPrefer(mergeMaxSizeIntoPrefer(maxPageSize, null)));
+                new ParametersForGetSearchResults().setPrefer(ApiClientUtils.mergeMaxSizeIntoPrefer(maxPageSize, null)));
     }
 
     @Override
     public void getSearchResultsForEach(Function<ODataValueContextOfIListOfEntry, Boolean> callback,
             Integer maxPageSize, ParametersForGetSearchResults parameters) {
-        parameters.setPrefer(mergeMaxSizeIntoPrefer(maxPageSize, parameters.getPrefer()));
+        parameters.setPrefer(ApiClientUtils.mergeMaxSizeIntoPrefer(maxPageSize, parameters.getPrefer()));
         ODataValueContextOfIListOfEntry response = getSearchResults(parameters);
         while (response != null && callback.apply(response)) {
             String nextLink = response.getOdataNextLink();
