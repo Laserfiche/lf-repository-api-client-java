@@ -45,6 +45,7 @@ public abstract class ApiClient {
         return json;
     }
 
+    //delete this method
     private static Map<String, String[]> parseDictionaryResponse(ObjectMapper objectMapper,
             HttpResponse<Object> httpResponse) {
         Object body = httpResponse.getBody();
@@ -79,6 +80,7 @@ public abstract class ApiClient {
         }
     }
 
+    //move this method to APiClientUtils
     protected static <TResponse> TResponse sendRequestWithRetry(UnirestInstance httpClient, ObjectMapper objectMapper,
             Class<TResponse> deserializedResponseType, HttpRequestHandler httpRequestHandler, String url,
             String requestMethod,
@@ -134,6 +136,7 @@ public abstract class ApiClient {
                     }
                 }
 
+                //try moving to API method in the client object
                 HttpMethod httpMethod = httpRequest.getHttpMethod();
                 Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
                 if (requestMethod.equals("HEAD")) {
@@ -151,6 +154,7 @@ public abstract class ApiClient {
                 shouldRetry = httpRequestHandler.afterSend(
                         new ResponseImpl((short) statusCode)) || ApiClientUtils.isRetryableStatusCode(statusCode,
                         httpMethod);
+                //move line 156 to 167 as a function into the ApiClientUtils class(?)
                 boolean isJsonResponse = ApiClientUtils.isJsonResponse(httpResponse);
                 if (isJsonResponse) {
                     Object body = httpResponse.getBody();
@@ -164,26 +168,14 @@ public abstract class ApiClient {
                     }
                 }
                 if (!shouldRetry) {
-                    if (isDynamicFieldValues) {
-                        return (TResponse) parseDictionaryResponse(objectMapper, httpResponse);
-                    } else {
+//                    if (isDynamicFieldValues) {
+//                        return (TResponse) parseDictionaryResponse(objectMapper, httpResponse);
+//                    } else {
                         return parseResponse.apply(httpResponse);
-                    }
+                    //}
                 }
             } catch (Exception err) {
-                if (err
-                        .getClass()
-                        .getName()
-                        .equals("com.laserfiche.api.client.model.ApiException")) {
-                    if (ApiClientUtils.shouldThrowException(requestMethod, queryStringFields, queryStringFieldList, url,
-                            (ApiException) err)) {
-                        throw err;
-                    } else {
-                        System.err.println(err);
-                    }
-                    break;
-                }
-                if (retryCount >= maxRetries) {
+                if (err instanceof ApiException || retryCount >= maxRetries) {
                     throw err;
                 }
                 shouldRetry = true;
@@ -195,10 +187,6 @@ public abstract class ApiClient {
         if (httpResponse == null) {
             throw new IllegalStateException("Undefined response, there is a bug");
         }
-        if (responseJson != null) {
-            return objectMapper.readValue(responseJson, deserializedResponseType);
-        } else {
-            throw new RuntimeException("Response does not contain Json");
-        }
+        return parseResponse.apply(httpResponse);
     }
 }

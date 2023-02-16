@@ -472,11 +472,42 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
         Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(
                 new String[]{"String", "int"}, new String[]{"repoId", "entryId"},
                 new Object[]{parameters.getRepoId(), parameters.getEntryId()});
-        return sendRequestWithRetry(httpClient, objectMapper, new HashMap<String, String[]>().getClass(),
+        Function<HttpResponse<Object>, Map<String, String[]>> parseResponse = (HttpResponse<Object> httpResponse) -> {
+        Object body = httpResponse.getBody();
+        Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
+        if (httpResponse.getStatus() == 200) {
+            try {
+                String responseJson = new JSONObject(body).toString();
+                return objectMapper.readValue(responseJson, new HashMap<String, String[]>().getClass());
+            } catch (Exception e) {
+                throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+            }
+        } else {
+            ProblemDetails problemDetails;
+            try {
+                String jsonString = new JSONObject(body).toString();
+                problemDetails = ProblemDetailsDeserializer.deserialize(objectMapper, jsonString);
+            } catch (Exception e) {
+                throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+            }
+            if (httpResponse.getStatus() == 400)
+                throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+            else if (httpResponse.getStatus() == 401)
+                throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+            else if (httpResponse.getStatus() == 403)
+                throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+            else if (httpResponse.getStatus() == 404)
+                throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+            else if (httpResponse.getStatus() == 429)
+                throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+            else
+                throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+        }};
+        return sendRequestWithRetry(httpClient, objectMapper, null,
                 httpRequestHandler,
                 baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/fields/GetDynamicFieldLogicValue", "POST",
                 "application/json", parameters.getRequestBody(), null, null, null, pathParameters,
-                new HashMap<String, String>(), true, null);
+                new HashMap<String, String>(), true, parseResponse);
     }
 
     @Override
