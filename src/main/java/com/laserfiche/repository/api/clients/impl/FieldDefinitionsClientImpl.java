@@ -1,12 +1,17 @@
 package com.laserfiche.repository.api.clients.impl;
 
+import com.laserfiche.api.client.deserialization.ProblemDetailsDeserializer;
 import com.laserfiche.api.client.httphandlers.HttpRequestHandler;
+import com.laserfiche.api.client.model.ApiException;
+import com.laserfiche.api.client.model.ProblemDetails;
 import com.laserfiche.repository.api.clients.FieldDefinitionsClient;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfWFieldInfo;
 import com.laserfiche.repository.api.clients.impl.model.WFieldInfo;
 import com.laserfiche.repository.api.clients.params.ParametersForGetFieldDefinitionById;
 import com.laserfiche.repository.api.clients.params.ParametersForGetFieldDefinitions;
+import kong.unirest.HttpResponse;
 import kong.unirest.UnirestInstance;
+import kong.unirest.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,14 +33,47 @@ public class FieldDefinitionsClientImpl extends ApiClient implements FieldDefini
 
     @Override
     public WFieldInfo getFieldDefinitionById(ParametersForGetFieldDefinitionById parameters) {
-        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "String"},
-                new String[]{"culture", "$select"}, new Object[]{parameters.getCulture(), parameters.getSelect()});
-        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int"},
-                new String[]{"repoId", "fieldDefinitionId"},
+        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(
+                new String[]{"String", "String"}, new String[]{"culture", "$select"},
+                new Object[]{parameters.getCulture(), parameters.getSelect()});
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(
+                new String[]{"String", "int"}, new String[]{"repoId", "fieldDefinitionId"},
                 new Object[]{parameters.getRepoId(), parameters.getFieldDefinitionId()});
-        return sendRequestParseResponse(httpClient, objectMapper, WFieldInfo.class, httpRequestHandler,
+        Function<HttpResponse<Object>, WFieldInfo> parseResponse = (HttpResponse<Object> httpResponse) -> {
+            Object body = httpResponse.getBody();
+            Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
+            if (httpResponse.getStatus() == 200) {
+                try {
+                    String responseJson = new JSONObject(body).toString();
+                    return objectMapper.readValue(responseJson, WFieldInfo.class);
+                } catch (Exception e) {
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+                }
+            } else {
+                ProblemDetails problemDetails;
+                try {
+                    String jsonString = new JSONObject(body).toString();
+                    problemDetails = ProblemDetailsDeserializer.deserialize(objectMapper, jsonString);
+                } catch (Exception e) {
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+                }
+                if (httpResponse.getStatus() == 400)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 401)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 403)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 404)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 429)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+            }
+        };
+        return sendRequestWithRetry(httpClient, objectMapper, WFieldInfo.class, httpRequestHandler,
                 baseUrl + "/v1/Repositories/{repoId}/FieldDefinitions/{fieldDefinitionId}", "GET", null, null, null,
-                null, queryParameters, pathParameters, new HashMap<String, String>(), false);
+                null, queryParameters, pathParameters, new HashMap<String, String>(), false, parseResponse);
     }
 
     @Override
@@ -57,15 +95,47 @@ public class FieldDefinitionsClientImpl extends ApiClient implements FieldDefini
                 .entrySet()
                 .stream()
                 .collect(Collectors.toMap(Map.Entry::getKey, e -> (String) e.getValue()));
-        return sendRequestParseResponse(httpClient, objectMapper, ODataValueContextOfIListOfWFieldInfo.class,
+        Function<HttpResponse<Object>, ODataValueContextOfIListOfWFieldInfo> parseResponse = (HttpResponse<Object> httpResponse) -> {
+            Object body = httpResponse.getBody();
+            Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
+            if (httpResponse.getStatus() == 200) {
+                try {
+                    String responseJson = new JSONObject(body).toString();
+                    return objectMapper.readValue(responseJson, ODataValueContextOfIListOfWFieldInfo.class);
+                } catch (Exception e) {
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+                }
+            } else {
+                ProblemDetails problemDetails;
+                try {
+                    String jsonString = new JSONObject(body).toString();
+                    problemDetails = ProblemDetailsDeserializer.deserialize(objectMapper, jsonString);
+                } catch (Exception e) {
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+                }
+                if (httpResponse.getStatus() == 400)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 401)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 403)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 404)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 429)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+            }
+        };
+        return sendRequestWithRetry(httpClient, objectMapper, ODataValueContextOfIListOfWFieldInfo.class,
                 httpRequestHandler, url, "GET", null, null, null, null, queryParameters, pathParameters,
-                headerParametersWithStringTypeValue, false);
+                headerParametersWithStringTypeValue, false, parseResponse);
     }
 
     @Override
     public ODataValueContextOfIListOfWFieldInfo getFieldDefinitionsNextLink(String nextLink, int maxPageSize) {
-        return doGetFieldDefinitions(nextLink,
-                new ParametersForGetFieldDefinitions().setPrefer(ApiClientUtils.mergeMaxSizeIntoPrefer(maxPageSize, null)));
+        return doGetFieldDefinitions(nextLink, new ParametersForGetFieldDefinitions().setPrefer(
+                ApiClientUtils.mergeMaxSizeIntoPrefer(maxPageSize, null)));
     }
 
     @Override
@@ -79,4 +149,5 @@ public class FieldDefinitionsClientImpl extends ApiClient implements FieldDefini
         }
     }
 }
+
 

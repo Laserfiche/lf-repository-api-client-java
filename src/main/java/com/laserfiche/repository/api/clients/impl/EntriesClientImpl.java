@@ -39,17 +39,50 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 new String[]{"boolean", "String", "String", "String", "int", "int", "boolean"},
                 new String[]{"formatValue", "culture", "$select", "$orderby", "$top", "$skip", "$count"},
                 new Object[]{parameters.isFormatValue(), parameters.getCulture(), parameters.getSelect(), parameters.getOrderby(), parameters.getTop(), parameters.getSkip(), parameters.isCount()});
-        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int"},
-                new String[]{"repoId", "entryId"}, new Object[]{parameters.getRepoId(), parameters.getEntryId()});
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(
+                new String[]{"String", "int"}, new String[]{"repoId", "entryId"},
+                new Object[]{parameters.getRepoId(), parameters.getEntryId()});
         Map<String, Object> headerParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"},
                 new String[]{"prefer"}, new Object[]{parameters.getPrefer()});
         Map<String, String> headerParametersWithStringTypeValue = headerParameters
                 .entrySet()
                 .stream()
                 .collect(Collectors.toMap(Map.Entry::getKey, e -> (String) e.getValue()));
-        return sendRequestParseResponse(httpClient, objectMapper, ODataValueContextOfIListOfFieldValue.class,
+        Function<HttpResponse<Object>, ODataValueContextOfIListOfFieldValue> parseResponse = (HttpResponse<Object> httpResponse) -> {
+            Object body = httpResponse.getBody();
+            Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
+            if (httpResponse.getStatus() == 200) {
+                try {
+                    String responseJson = new JSONObject(body).toString();
+                    return objectMapper.readValue(responseJson, ODataValueContextOfIListOfFieldValue.class);
+                } catch (Exception e) {
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+                }
+            } else {
+                ProblemDetails problemDetails;
+                try {
+                    String jsonString = new JSONObject(body).toString();
+                    problemDetails = ProblemDetailsDeserializer.deserialize(objectMapper, jsonString);
+                } catch (Exception e) {
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+                }
+                if (httpResponse.getStatus() == 400)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 401)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 403)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 404)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 429)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+            }
+        };
+        return sendRequestWithRetry(httpClient, objectMapper, ODataValueContextOfIListOfFieldValue.class,
                 httpRequestHandler, url, "GET", null, null, null, null, queryParameters, pathParameters,
-                headerParametersWithStringTypeValue, false);
+                headerParametersWithStringTypeValue, false, parseResponse);
     }
 
     @Override
@@ -73,21 +106,56 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
     public ODataValueOfIListOfFieldValue assignFieldValues(ParametersForAssignFieldValues parameters) {
         Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"},
                 new String[]{"culture"}, new Object[]{parameters.getCulture()});
-        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int"},
-                new String[]{"repoId", "entryId"}, new Object[]{parameters.getRepoId(), parameters.getEntryId()});
-        return sendRequestParseResponse(httpClient, objectMapper, ODataValueOfIListOfFieldValue.class,
-                httpRequestHandler, baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/fields", "PUT",
-                "application/json", parameters.getRequestBody(), null, null, queryParameters, pathParameters,
-                new HashMap<String, String>(), false);
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(
+                new String[]{"String", "int"}, new String[]{"repoId", "entryId"},
+                new Object[]{parameters.getRepoId(), parameters.getEntryId()});
+        Function<HttpResponse<Object>, ODataValueOfIListOfFieldValue> parseResponse = (HttpResponse<Object> httpResponse) -> {
+            Object body = httpResponse.getBody();
+            Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
+            if (httpResponse.getStatus() == 200) {
+                try {
+                    String responseJson = new JSONObject(body).toString();
+                    return objectMapper.readValue(responseJson, ODataValueOfIListOfFieldValue.class);
+                } catch (Exception e) {
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+                }
+            } else {
+                ProblemDetails problemDetails;
+                try {
+                    String jsonString = new JSONObject(body).toString();
+                    problemDetails = ProblemDetailsDeserializer.deserialize(objectMapper, jsonString);
+                } catch (Exception e) {
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+                }
+                if (httpResponse.getStatus() == 400)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 401)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 403)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 404)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 423)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 429)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+            }
+        };
+        return sendRequestWithRetry(httpClient, objectMapper, ODataValueOfIListOfFieldValue.class, httpRequestHandler,
+                baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/fields", "PUT", "application/json",
+                parameters.getRequestBody(), null, null, queryParameters, pathParameters, new HashMap<String, String>(),
+                false, parseResponse);
     }
 
     @Override
     public CreateEntryResult importDocument(ParametersForImportDocument parameters) {
-        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"boolean", "String"},
-                new String[]{"autoRename", "culture"},
+        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(
+                new String[]{"boolean", "String"}, new String[]{"autoRename", "culture"},
                 new Object[]{parameters.isAutoRename(), parameters.getCulture()});
-        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int", "String"},
-                new String[]{"repoId", "parentEntryId", "fileName"},
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(
+                new String[]{"String", "int", "String"}, new String[]{"repoId", "parentEntryId", "fileName"},
                 new Object[]{parameters.getRepoId(), parameters.getParentEntryId(), parameters.getFileName()});
         {
             Map<String, String> headerParametersWithStringTypeValue = new HashMap<String, String>();
@@ -99,7 +167,8 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
             while (retryCount <= maxRetries && shouldRetry) {
                 try {
                     String url = baseUrl + "/v1/Repositories/{repoId}/Entries/{parentEntryId}/{fileName}";
-                    String requestUrl = ApiClientUtils.beforeSend(url, headerParametersWithStringTypeValue, httpRequestHandler);
+                    String requestUrl = ApiClientUtils.beforeSend(url, headerParametersWithStringTypeValue,
+                            httpRequestHandler);
                     httpResponse = httpClient
                             .post(requestUrl)
                             .field("electronicDocument", parameters.getInputStream(), parameters.getFileName())
@@ -113,7 +182,8 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                     HttpMethod httpMethod = HttpMethod.POST;
                     int statusCode = httpResponse.getStatus();
                     shouldRetry = httpRequestHandler.afterSend(
-                            new ResponseImpl((short) statusCode)) || ApiClientUtils.isRetryableStatusCode(statusCode, httpMethod);
+                            new ResponseImpl((short) statusCode)) || ApiClientUtils.isRetryableStatusCode(statusCode,
+                            httpMethod);
                     if (!shouldRetry) {
                         if (httpResponse.getStatus() == 201) {
                             try {
@@ -198,23 +268,56 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 new String[]{"String", "String", "int", "int", "boolean"},
                 new String[]{"$select", "$orderby", "$top", "$skip", "$count"},
                 new Object[]{parameters.getSelect(), parameters.getOrderby(), parameters.getTop(), parameters.getSkip(), parameters.isCount()});
-        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int"},
-                new String[]{"repoId", "entryId"}, new Object[]{parameters.getRepoId(), parameters.getEntryId()});
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(
+                new String[]{"String", "int"}, new String[]{"repoId", "entryId"},
+                new Object[]{parameters.getRepoId(), parameters.getEntryId()});
         Map<String, Object> headerParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"},
                 new String[]{"prefer"}, new Object[]{parameters.getPrefer()});
         Map<String, String> headerParametersWithStringTypeValue = headerParameters
                 .entrySet()
                 .stream()
                 .collect(Collectors.toMap(Map.Entry::getKey, e -> (String) e.getValue()));
-        return sendRequestParseResponse(httpClient, objectMapper, ODataValueContextOfIListOfWEntryLinkInfo.class,
+        Function<HttpResponse<Object>, ODataValueContextOfIListOfWEntryLinkInfo> parseResponse = (HttpResponse<Object> httpResponse) -> {
+            Object body = httpResponse.getBody();
+            Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
+            if (httpResponse.getStatus() == 200) {
+                try {
+                    String responseJson = new JSONObject(body).toString();
+                    return objectMapper.readValue(responseJson, ODataValueContextOfIListOfWEntryLinkInfo.class);
+                } catch (Exception e) {
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+                }
+            } else {
+                ProblemDetails problemDetails;
+                try {
+                    String jsonString = new JSONObject(body).toString();
+                    problemDetails = ProblemDetailsDeserializer.deserialize(objectMapper, jsonString);
+                } catch (Exception e) {
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+                }
+                if (httpResponse.getStatus() == 400)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 401)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 403)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 404)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 429)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+            }
+        };
+        return sendRequestWithRetry(httpClient, objectMapper, ODataValueContextOfIListOfWEntryLinkInfo.class,
                 httpRequestHandler, url, "GET", null, null, null, null, queryParameters, pathParameters,
-                headerParametersWithStringTypeValue, false);
+                headerParametersWithStringTypeValue, false, parseResponse);
     }
 
     @Override
     public ODataValueContextOfIListOfWEntryLinkInfo getLinkValuesFromEntryNextLink(String nextLink, int maxPageSize) {
-        return doGetLinkValuesFromEntry(nextLink,
-                new ParametersForGetLinkValuesFromEntry().setPrefer(ApiClientUtils.mergeMaxSizeIntoPrefer(maxPageSize, null)));
+        return doGetLinkValuesFromEntry(nextLink, new ParametersForGetLinkValuesFromEntry().setPrefer(
+                ApiClientUtils.mergeMaxSizeIntoPrefer(maxPageSize, null)));
     }
 
     @Override
@@ -230,108 +333,384 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override
     public ODataValueOfIListOfWEntryLinkInfo assignEntryLinks(ParametersForAssignEntryLinks parameters) {
-        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int"},
-                new String[]{"repoId", "entryId"}, new Object[]{parameters.getRepoId(), parameters.getEntryId()});
-        return sendRequestParseResponse(httpClient, objectMapper, ODataValueOfIListOfWEntryLinkInfo.class,
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(
+                new String[]{"String", "int"}, new String[]{"repoId", "entryId"},
+                new Object[]{parameters.getRepoId(), parameters.getEntryId()});
+        Function<HttpResponse<Object>, ODataValueOfIListOfWEntryLinkInfo> parseResponse = (HttpResponse<Object> httpResponse) -> {
+            Object body = httpResponse.getBody();
+            Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
+            if (httpResponse.getStatus() == 200) {
+                try {
+                    String responseJson = new JSONObject(body).toString();
+                    return objectMapper.readValue(responseJson, ODataValueOfIListOfWEntryLinkInfo.class);
+                } catch (Exception e) {
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+                }
+            } else {
+                ProblemDetails problemDetails;
+                try {
+                    String jsonString = new JSONObject(body).toString();
+                    problemDetails = ProblemDetailsDeserializer.deserialize(objectMapper, jsonString);
+                } catch (Exception e) {
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+                }
+                if (httpResponse.getStatus() == 400)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 401)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 403)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 404)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 423)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 429)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+            }
+        };
+        return sendRequestWithRetry(httpClient, objectMapper, ODataValueOfIListOfWEntryLinkInfo.class,
                 httpRequestHandler, baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/links", "PUT",
                 "application/json", parameters.getRequestBody(), null, null, null, pathParameters,
-                new HashMap<String, String>(), false);
+                new HashMap<String, String>(), false, parseResponse);
     }
 
     @Override
     public Entry writeTemplateValueToEntry(ParametersForWriteTemplateValueToEntry parameters) {
         Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"},
                 new String[]{"culture"}, new Object[]{parameters.getCulture()});
-        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int"},
-                new String[]{"repoId", "entryId"}, new Object[]{parameters.getRepoId(), parameters.getEntryId()});
-        return sendRequestParseResponse(httpClient, objectMapper, Entry.class, httpRequestHandler,
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(
+                new String[]{"String", "int"}, new String[]{"repoId", "entryId"},
+                new Object[]{parameters.getRepoId(), parameters.getEntryId()});
+        Function<HttpResponse<Object>, Entry> parseResponse = (HttpResponse<Object> httpResponse) -> {
+            Object body = httpResponse.getBody();
+            Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
+            if (httpResponse.getStatus() == 200) {
+                try {
+                    String responseJson = new JSONObject(body).toString();
+                    return objectMapper.readValue(responseJson, Entry.class);
+                } catch (Exception e) {
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+                }
+            } else {
+                ProblemDetails problemDetails;
+                try {
+                    String jsonString = new JSONObject(body).toString();
+                    problemDetails = ProblemDetailsDeserializer.deserialize(objectMapper, jsonString);
+                } catch (Exception e) {
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+                }
+                if (httpResponse.getStatus() == 400)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 401)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 403)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 404)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 423)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 429)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+            }
+        };
+        return sendRequestWithRetry(httpClient, objectMapper, Entry.class, httpRequestHandler,
                 baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/template", "PUT", "application/json",
                 parameters.getRequestBody(), null, null, queryParameters, pathParameters, new HashMap<String, String>(),
-                false);
+                false, parseResponse);
     }
 
     @Override
     public Entry deleteAssignedTemplate(ParametersForDeleteAssignedTemplate parameters) {
-        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int"},
-                new String[]{"repoId", "entryId"}, new Object[]{parameters.getRepoId(), parameters.getEntryId()});
-        return sendRequestParseResponse(httpClient, objectMapper, Entry.class, httpRequestHandler,
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(
+                new String[]{"String", "int"}, new String[]{"repoId", "entryId"},
+                new Object[]{parameters.getRepoId(), parameters.getEntryId()});
+        Function<HttpResponse<Object>, Entry> parseResponse = (HttpResponse<Object> httpResponse) -> {
+            Object body = httpResponse.getBody();
+            Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
+            if (httpResponse.getStatus() == 200) {
+                try {
+                    String responseJson = new JSONObject(body).toString();
+                    return objectMapper.readValue(responseJson, Entry.class);
+                } catch (Exception e) {
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+                }
+            } else {
+                ProblemDetails problemDetails;
+                try {
+                    String jsonString = new JSONObject(body).toString();
+                    problemDetails = ProblemDetailsDeserializer.deserialize(objectMapper, jsonString);
+                } catch (Exception e) {
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+                }
+                if (httpResponse.getStatus() == 400)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 401)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 403)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 404)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 423)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 429)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+            }
+        };
+        return sendRequestWithRetry(httpClient, objectMapper, Entry.class, httpRequestHandler,
                 baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/template", "DELETE", null, null, null, null,
-                null, pathParameters, new HashMap<String, String>(), false);
+                null, pathParameters, new HashMap<String, String>(), false, parseResponse);
     }
 
     @Override
     public Map<String, String[]> getDynamicFieldValues(ParametersForGetDynamicFieldValues parameters) {
-        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int"},
-                new String[]{"repoId", "entryId"}, new Object[]{parameters.getRepoId(), parameters.getEntryId()});
-        return sendRequestParseResponse(httpClient, objectMapper, new HashMap<String, String[]>().getClass(),
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(
+                new String[]{"String", "int"}, new String[]{"repoId", "entryId"},
+                new Object[]{parameters.getRepoId(), parameters.getEntryId()});
+        return sendRequestWithRetry(httpClient, objectMapper, new HashMap<String, String[]>().getClass(),
                 httpRequestHandler,
                 baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/fields/GetDynamicFieldLogicValue", "POST",
                 "application/json", parameters.getRequestBody(), null, null, null, pathParameters,
-                new HashMap<String, String>(), true);
+                new HashMap<String, String>(), true, null);
     }
 
     @Override
     public FindEntryResult getEntryByPath(ParametersForGetEntryByPath parameters) {
-        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "boolean"},
-                new String[]{"fullPath", "fallbackToClosestAncestor"},
+        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(
+                new String[]{"String", "boolean"}, new String[]{"fullPath", "fallbackToClosestAncestor"},
                 new Object[]{parameters.getFullPath(), parameters.isFallbackToClosestAncestor()});
         Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"},
                 new String[]{"repoId"}, new Object[]{parameters.getRepoId()});
-        return sendRequestParseResponse(httpClient, objectMapper, FindEntryResult.class, httpRequestHandler,
+        Function<HttpResponse<Object>, FindEntryResult> parseResponse = (HttpResponse<Object> httpResponse) -> {
+            Object body = httpResponse.getBody();
+            Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
+            if (httpResponse.getStatus() == 200) {
+                try {
+                    String responseJson = new JSONObject(body).toString();
+                    return objectMapper.readValue(responseJson, FindEntryResult.class);
+                } catch (Exception e) {
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+                }
+            } else {
+                ProblemDetails problemDetails;
+                try {
+                    String jsonString = new JSONObject(body).toString();
+                    problemDetails = ProblemDetailsDeserializer.deserialize(objectMapper, jsonString);
+                } catch (Exception e) {
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+                }
+                if (httpResponse.getStatus() == 400)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 401)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 403)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 404)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 429)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+            }
+        };
+        return sendRequestWithRetry(httpClient, objectMapper, FindEntryResult.class, httpRequestHandler,
                 baseUrl + "/v1/Repositories/{repoId}/Entries/ByPath", "GET", null, null, null, null, queryParameters,
-                pathParameters, new HashMap<String, String>(), false);
+                pathParameters, new HashMap<String, String>(), false, parseResponse);
     }
 
     @Override
     public AcceptedOperation copyEntryAsync(ParametersForCopyEntryAsync parameters) {
-        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"boolean", "String"},
-                new String[]{"autoRename", "culture"},
+        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(
+                new String[]{"boolean", "String"}, new String[]{"autoRename", "culture"},
                 new Object[]{parameters.isAutoRename(), parameters.getCulture()});
-        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int"},
-                new String[]{"repoId", "entryId"}, new Object[]{parameters.getRepoId(), parameters.getEntryId()});
-        return sendRequestParseResponse(httpClient, objectMapper, AcceptedOperation.class, httpRequestHandler,
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(
+                new String[]{"String", "int"}, new String[]{"repoId", "entryId"},
+                new Object[]{parameters.getRepoId(), parameters.getEntryId()});
+        Function<HttpResponse<Object>, AcceptedOperation> parseResponse = (HttpResponse<Object> httpResponse) -> {
+            Object body = httpResponse.getBody();
+            Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
+            if (httpResponse.getStatus() == 201) {
+                try {
+                    String responseJson = new JSONObject(body).toString();
+                    return objectMapper.readValue(responseJson, AcceptedOperation.class);
+                } catch (Exception e) {
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+                }
+            } else {
+                ProblemDetails problemDetails;
+                try {
+                    String jsonString = new JSONObject(body).toString();
+                    problemDetails = ProblemDetailsDeserializer.deserialize(objectMapper, jsonString);
+                } catch (Exception e) {
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+                }
+                if (httpResponse.getStatus() == 400)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 401)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 403)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 404)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 429)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+            }
+        };
+        return sendRequestWithRetry(httpClient, objectMapper, AcceptedOperation.class, httpRequestHandler,
                 baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Folder/CopyAsync", "POST",
                 "application/json", parameters.getRequestBody(), null, null, queryParameters, pathParameters,
-                new HashMap<String, String>(), false);
+                new HashMap<String, String>(), false, parseResponse);
     }
 
     @Override
     public Entry getEntry(ParametersForGetEntry parameters) {
         Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"},
                 new String[]{"$select"}, new Object[]{parameters.getSelect()});
-        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int"},
-                new String[]{"repoId", "entryId"}, new Object[]{parameters.getRepoId(), parameters.getEntryId()});
-        return sendRequestParseResponse(httpClient, objectMapper, Entry.class, httpRequestHandler,
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(
+                new String[]{"String", "int"}, new String[]{"repoId", "entryId"},
+                new Object[]{parameters.getRepoId(), parameters.getEntryId()});
+        Function<HttpResponse<Object>, Entry> parseResponse = (HttpResponse<Object> httpResponse) -> {
+            Object body = httpResponse.getBody();
+            Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
+            if (httpResponse.getStatus() == 200) {
+                try {
+                    String responseJson = new JSONObject(body).toString();
+                    return objectMapper.readValue(responseJson, Entry.class);
+                } catch (Exception e) {
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+                }
+            } else {
+                ProblemDetails problemDetails;
+                try {
+                    String jsonString = new JSONObject(body).toString();
+                    problemDetails = ProblemDetailsDeserializer.deserialize(objectMapper, jsonString);
+                } catch (Exception e) {
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+                }
+                if (httpResponse.getStatus() == 400)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 401)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 403)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 404)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 429)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+            }
+        };
+        return sendRequestWithRetry(httpClient, objectMapper, Entry.class, httpRequestHandler,
                 baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}", "GET", null, null, null, null, queryParameters,
-                pathParameters, new HashMap<String, String>(), false);
+                pathParameters, new HashMap<String, String>(), false, parseResponse);
     }
 
     @Override
     public Entry moveOrRenameEntry(ParametersForMoveOrRenameEntry parameters) {
-        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"boolean", "String"},
-                new String[]{"autoRename", "culture"},
+        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(
+                new String[]{"boolean", "String"}, new String[]{"autoRename", "culture"},
                 new Object[]{parameters.isAutoRename(), parameters.getCulture()});
-        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int"},
-                new String[]{"repoId", "entryId"}, new Object[]{parameters.getRepoId(), parameters.getEntryId()});
-        return sendRequestParseResponse(httpClient, objectMapper, Entry.class, httpRequestHandler,
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(
+                new String[]{"String", "int"}, new String[]{"repoId", "entryId"},
+                new Object[]{parameters.getRepoId(), parameters.getEntryId()});
+        Function<HttpResponse<Object>, Entry> parseResponse = (HttpResponse<Object> httpResponse) -> {
+            Object body = httpResponse.getBody();
+            Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
+            if (httpResponse.getStatus() == 200) {
+                try {
+                    String responseJson = new JSONObject(body).toString();
+                    return objectMapper.readValue(responseJson, Entry.class);
+                } catch (Exception e) {
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+                }
+            } else {
+                ProblemDetails problemDetails;
+                try {
+                    String jsonString = new JSONObject(body).toString();
+                    problemDetails = ProblemDetailsDeserializer.deserialize(objectMapper, jsonString);
+                } catch (Exception e) {
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+                }
+                if (httpResponse.getStatus() == 400)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 401)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 403)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 404)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 409)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 423)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 429)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+            }
+        };
+        return sendRequestWithRetry(httpClient, objectMapper, Entry.class, httpRequestHandler,
                 baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}", "PATCH", "application/json",
                 parameters.getRequestBody(), null, null, queryParameters, pathParameters, new HashMap<String, String>(),
-                false);
+                false, parseResponse);
     }
 
     @Override
     public AcceptedOperation deleteEntryInfo(ParametersForDeleteEntryInfo parameters) {
-        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int"},
-                new String[]{"repoId", "entryId"}, new Object[]{parameters.getRepoId(), parameters.getEntryId()});
-        return sendRequestParseResponse(httpClient, objectMapper, AcceptedOperation.class, httpRequestHandler,
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(
+                new String[]{"String", "int"}, new String[]{"repoId", "entryId"},
+                new Object[]{parameters.getRepoId(), parameters.getEntryId()});
+        Function<HttpResponse<Object>, AcceptedOperation> parseResponse = (HttpResponse<Object> httpResponse) -> {
+            Object body = httpResponse.getBody();
+            Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
+            if (httpResponse.getStatus() == 201) {
+                try {
+                    String responseJson = new JSONObject(body).toString();
+                    return objectMapper.readValue(responseJson, AcceptedOperation.class);
+                } catch (Exception e) {
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+                }
+            } else {
+                ProblemDetails problemDetails;
+                try {
+                    String jsonString = new JSONObject(body).toString();
+                    problemDetails = ProblemDetailsDeserializer.deserialize(objectMapper, jsonString);
+                } catch (Exception e) {
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+                }
+                if (httpResponse.getStatus() == 400)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 401)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 403)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 404)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 429)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+            }
+        };
+        return sendRequestWithRetry(httpClient, objectMapper, AcceptedOperation.class, httpRequestHandler,
                 baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}", "DELETE", "application/json",
-                parameters.getRequestBody(), null, null, null, pathParameters, new HashMap<String, String>(), false);
+                parameters.getRequestBody(), null, null, null, pathParameters, new HashMap<String, String>(), false,
+                parseResponse);
     }
 
     @Override
     public void exportDocumentWithAuditReason(ParametersForExportDocumentWithAuditReason parameters) {
-        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int"},
-                new String[]{"repoId", "entryId"}, new Object[]{parameters.getRepoId(), parameters.getEntryId()});
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(
+                new String[]{"String", "int"}, new String[]{"repoId", "entryId"},
+                new Object[]{parameters.getRepoId(), parameters.getEntryId()});
         Map<String, Object> headerParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"},
                 new String[]{"range"}, new Object[]{parameters.getRange()});
         Map<String, String> headerParametersWithStringTypeValue = headerParameters
@@ -346,7 +725,8 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
             while (retryCount <= maxRetries && shouldRetry) {
                 try {
                     String url = baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Document/GetEdocWithAuditReason";
-                    String requestUrl = ApiClientUtils.beforeSend(url, headerParametersWithStringTypeValue, httpRequestHandler);
+                    String requestUrl = ApiClientUtils.beforeSend(url, headerParametersWithStringTypeValue,
+                            httpRequestHandler);
                     httpClient
                             .post(requestUrl)
                             .routeParam(pathParameters)
@@ -360,7 +740,8 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                                             .accept(rawResponse.getContent());
                                 } else {
                                     ProblemDetails problemDetails = null;
-                                    Map<String, String> headersMap = ApiClientUtils.getHeadersMap(rawResponse.getHeaders());
+                                    Map<String, String> headersMap = ApiClientUtils.getHeadersMap(
+                                            rawResponse.getHeaders());
                                     try {
                                         String jsonString = rawResponse.getContentAsString();
                                         problemDetails = ProblemDetailsDeserializer.deserialize(objectMapper,
@@ -420,8 +801,9 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override
     public void exportDocument(ParametersForExportDocument parameters) {
-        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int"},
-                new String[]{"repoId", "entryId"}, new Object[]{parameters.getRepoId(), parameters.getEntryId()});
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(
+                new String[]{"String", "int"}, new String[]{"repoId", "entryId"},
+                new Object[]{parameters.getRepoId(), parameters.getEntryId()});
         Map<String, Object> headerParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"},
                 new String[]{"range"}, new Object[]{parameters.getRange()});
         Map<String, String> headerParametersWithStringTypeValue = headerParameters
@@ -436,7 +818,8 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
             while (retryCount <= maxRetries && shouldRetry) {
                 try {
                     String url = baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Document/edoc";
-                    String requestUrl = ApiClientUtils.beforeSend(url, headerParametersWithStringTypeValue, httpRequestHandler);
+                    String requestUrl = ApiClientUtils.beforeSend(url, headerParametersWithStringTypeValue,
+                            httpRequestHandler);
                     httpClient
                             .get(requestUrl)
                             .routeParam(pathParameters)
@@ -448,7 +831,8 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                                             .accept(rawResponse.getContent());
                                 } else {
                                     ProblemDetails problemDetails = null;
-                                    Map<String, String> headersMap = ApiClientUtils.getHeadersMap(rawResponse.getHeaders());
+                                    Map<String, String> headersMap = ApiClientUtils.getHeadersMap(
+                                            rawResponse.getHeaders());
                                     try {
                                         String jsonString = rawResponse.getContentAsString();
                                         problemDetails = ProblemDetailsDeserializer.deserialize(objectMapper,
@@ -508,32 +892,104 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override
     public ODataValueOfBoolean deleteDocument(ParametersForDeleteDocument parameters) {
-        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int"},
-                new String[]{"repoId", "entryId"}, new Object[]{parameters.getRepoId(), parameters.getEntryId()});
-        return sendRequestParseResponse(httpClient, objectMapper, ODataValueOfBoolean.class, httpRequestHandler,
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(
+                new String[]{"String", "int"}, new String[]{"repoId", "entryId"},
+                new Object[]{parameters.getRepoId(), parameters.getEntryId()});
+        Function<HttpResponse<Object>, ODataValueOfBoolean> parseResponse = (HttpResponse<Object> httpResponse) -> {
+            Object body = httpResponse.getBody();
+            Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
+            if (httpResponse.getStatus() == 200) {
+                try {
+                    String responseJson = new JSONObject(body).toString();
+                    return objectMapper.readValue(responseJson, ODataValueOfBoolean.class);
+                } catch (Exception e) {
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+                }
+            } else {
+                ProblemDetails problemDetails;
+                try {
+                    String jsonString = new JSONObject(body).toString();
+                    problemDetails = ProblemDetailsDeserializer.deserialize(objectMapper, jsonString);
+                } catch (Exception e) {
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+                }
+                if (httpResponse.getStatus() == 400)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 401)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 403)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 404)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 423)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 429)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+            }
+        };
+        return sendRequestWithRetry(httpClient, objectMapper, ODataValueOfBoolean.class, httpRequestHandler,
                 baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Document/edoc", "DELETE",
-                null, null, null, null, null, pathParameters, new HashMap<String, String>(), false);
+                null, null, null, null, null, pathParameters, new HashMap<String, String>(), false, parseResponse);
     }
 
     @Override
     public Map<String, String> getDocumentContentType(ParametersForGetDocumentContentType parameters) {
-        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int"},
-                new String[]{"repoId", "entryId"}, new Object[]{parameters.getRepoId(), parameters.getEntryId()});
-        return sendRequestParseResponse(httpClient, objectMapper, new HashMap<String, String>().getClass(),
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(
+                new String[]{"String", "int"}, new String[]{"repoId", "entryId"},
+                new Object[]{parameters.getRepoId(), parameters.getEntryId()});
+        return sendRequestWithRetry(httpClient, objectMapper, new HashMap<String, String[]>().getClass(),
                 httpRequestHandler,
                 baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Document/edoc", "HEAD",
-                null, null, null, null, null, pathParameters, new HashMap<String, String>(), false);
+                null, null, null, null, null, pathParameters, new HashMap<String, String>(), false, null);
     }
 
     @Override
     public ODataValueOfBoolean deletePages(ParametersForDeletePages parameters) {
         Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"},
                 new String[]{"pageRange"}, new Object[]{parameters.getPageRange()});
-        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int"},
-                new String[]{"repoId", "entryId"}, new Object[]{parameters.getRepoId(), parameters.getEntryId()});
-        return sendRequestParseResponse(httpClient, objectMapper, ODataValueOfBoolean.class, httpRequestHandler,
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(
+                new String[]{"String", "int"}, new String[]{"repoId", "entryId"},
+                new Object[]{parameters.getRepoId(), parameters.getEntryId()});
+        Function<HttpResponse<Object>, ODataValueOfBoolean> parseResponse = (HttpResponse<Object> httpResponse) -> {
+            Object body = httpResponse.getBody();
+            Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
+            if (httpResponse.getStatus() == 200) {
+                try {
+                    String responseJson = new JSONObject(body).toString();
+                    return objectMapper.readValue(responseJson, ODataValueOfBoolean.class);
+                } catch (Exception e) {
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+                }
+            } else {
+                ProblemDetails problemDetails;
+                try {
+                    String jsonString = new JSONObject(body).toString();
+                    problemDetails = ProblemDetailsDeserializer.deserialize(objectMapper, jsonString);
+                } catch (Exception e) {
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+                }
+                if (httpResponse.getStatus() == 400)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 401)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 403)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 404)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 423)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 429)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+            }
+        };
+        return sendRequestWithRetry(httpClient, objectMapper, ODataValueOfBoolean.class, httpRequestHandler,
                 baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Document/pages", "DELETE",
-                null, null, null, null, queryParameters, pathParameters, new HashMap<String, String>(), false);
+                null, null, null, null, queryParameters, pathParameters, new HashMap<String, String>(), false,
+                parseResponse);
     }
 
     @Override
@@ -548,20 +1004,52 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 new String[]{"boolean", "String[]", "boolean", "String", "String", "String", "int", "int", "boolean"},
                 new String[]{"groupByEntryType", "fields", "formatFields", "culture", "$select", "$orderby", "$top", "$skip", "$count"},
                 new Object[]{parameters.isGroupByEntryType(), parameters.getFields(), parameters.isFormatFields(), parameters.getCulture(), parameters.getSelect(), parameters.getOrderby(), parameters.getTop(), parameters.getSkip(), parameters.isCount()});
-        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int"},
-                new String[]{"repoId", "entryId"}, new Object[]{parameters.getRepoId(), parameters.getEntryId()});
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(
+                new String[]{"String", "int"}, new String[]{"repoId", "entryId"},
+                new Object[]{parameters.getRepoId(), parameters.getEntryId()});
         Map<String, Object> headerParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"},
                 new String[]{"prefer"}, new Object[]{parameters.getPrefer()});
         Map<String, String> headerParametersWithStringTypeValue = headerParameters
                 .entrySet()
                 .stream()
                 .collect(Collectors.toMap(Map.Entry::getKey, e -> (String) e.getValue()));
-        return sendRequestParseResponse(httpClient, objectMapper, ODataValueContextOfIListOfEntry.class,
-                httpRequestHandler, url, "GET", null, null, "fields",
-                (queryParameters.get("fields") != null) ? (queryParameters.get(
+        Function<HttpResponse<Object>, ODataValueContextOfIListOfEntry> parseResponse = (HttpResponse<Object> httpResponse) -> {
+            Object body = httpResponse.getBody();
+            Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
+            if (httpResponse.getStatus() == 200) {
+                try {
+                    String responseJson = new JSONObject(body).toString();
+                    return objectMapper.readValue(responseJson, ODataValueContextOfIListOfEntry.class);
+                } catch (Exception e) {
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+                }
+            } else {
+                ProblemDetails problemDetails;
+                try {
+                    String jsonString = new JSONObject(body).toString();
+                    problemDetails = ProblemDetailsDeserializer.deserialize(objectMapper, jsonString);
+                } catch (Exception e) {
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+                }
+                if (httpResponse.getStatus() == 400)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 401)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 403)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 404)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 429)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+            }
+        };
+        return sendRequestWithRetry(httpClient, objectMapper, ODataValueContextOfIListOfEntry.class, httpRequestHandler,
+                url, "GET", null, null, "fields", (queryParameters.get("fields") != null) ? (queryParameters.get(
                         "fields") instanceof String ? Arrays.asList(
                         queryParameters.remove("fields")) : (List) queryParameters.remove("fields")) : new ArrayList(),
-                queryParameters, pathParameters, headerParametersWithStringTypeValue, false);
+                queryParameters, pathParameters, headerParametersWithStringTypeValue, false, parseResponse);
     }
 
     @Override
@@ -583,15 +1071,50 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override
     public Entry createOrCopyEntry(ParametersForCreateOrCopyEntry parameters) {
-        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"boolean", "String"},
-                new String[]{"autoRename", "culture"},
+        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(
+                new String[]{"boolean", "String"}, new String[]{"autoRename", "culture"},
                 new Object[]{parameters.isAutoRename(), parameters.getCulture()});
-        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int"},
-                new String[]{"repoId", "entryId"}, new Object[]{parameters.getRepoId(), parameters.getEntryId()});
-        return sendRequestParseResponse(httpClient, objectMapper, Entry.class, httpRequestHandler,
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(
+                new String[]{"String", "int"}, new String[]{"repoId", "entryId"},
+                new Object[]{parameters.getRepoId(), parameters.getEntryId()});
+        Function<HttpResponse<Object>, Entry> parseResponse = (HttpResponse<Object> httpResponse) -> {
+            Object body = httpResponse.getBody();
+            Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
+            if (httpResponse.getStatus() == 201) {
+                try {
+                    String responseJson = new JSONObject(body).toString();
+                    return objectMapper.readValue(responseJson, Entry.class);
+                } catch (Exception e) {
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+                }
+            } else {
+                ProblemDetails problemDetails;
+                try {
+                    String jsonString = new JSONObject(body).toString();
+                    problemDetails = ProblemDetailsDeserializer.deserialize(objectMapper, jsonString);
+                } catch (Exception e) {
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+                }
+                if (httpResponse.getStatus() == 400)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 401)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 403)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 404)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 409)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 429)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+            }
+        };
+        return sendRequestWithRetry(httpClient, objectMapper, Entry.class, httpRequestHandler,
                 baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Folder/children", "POST",
                 "application/json", parameters.getRequestBody(), null, null, queryParameters, pathParameters,
-                new HashMap<String, String>(), false);
+                new HashMap<String, String>(), false, parseResponse);
     }
 
     @Override
@@ -605,23 +1128,56 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 new String[]{"String", "String", "int", "int", "boolean"},
                 new String[]{"$select", "$orderby", "$top", "$skip", "$count"},
                 new Object[]{parameters.getSelect(), parameters.getOrderby(), parameters.getTop(), parameters.getSkip(), parameters.isCount()});
-        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int"},
-                new String[]{"repoId", "entryId"}, new Object[]{parameters.getRepoId(), parameters.getEntryId()});
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(
+                new String[]{"String", "int"}, new String[]{"repoId", "entryId"},
+                new Object[]{parameters.getRepoId(), parameters.getEntryId()});
         Map<String, Object> headerParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"},
                 new String[]{"prefer"}, new Object[]{parameters.getPrefer()});
         Map<String, String> headerParametersWithStringTypeValue = headerParameters
                 .entrySet()
                 .stream()
                 .collect(Collectors.toMap(Map.Entry::getKey, e -> (String) e.getValue()));
-        return sendRequestParseResponse(httpClient, objectMapper, ODataValueContextOfIListOfWTagInfo.class,
+        Function<HttpResponse<Object>, ODataValueContextOfIListOfWTagInfo> parseResponse = (HttpResponse<Object> httpResponse) -> {
+            Object body = httpResponse.getBody();
+            Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
+            if (httpResponse.getStatus() == 200) {
+                try {
+                    String responseJson = new JSONObject(body).toString();
+                    return objectMapper.readValue(responseJson, ODataValueContextOfIListOfWTagInfo.class);
+                } catch (Exception e) {
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+                }
+            } else {
+                ProblemDetails problemDetails;
+                try {
+                    String jsonString = new JSONObject(body).toString();
+                    problemDetails = ProblemDetailsDeserializer.deserialize(objectMapper, jsonString);
+                } catch (Exception e) {
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+                }
+                if (httpResponse.getStatus() == 400)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 401)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 403)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 404)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 429)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+            }
+        };
+        return sendRequestWithRetry(httpClient, objectMapper, ODataValueContextOfIListOfWTagInfo.class,
                 httpRequestHandler, url, "GET", null, null, null, null, queryParameters, pathParameters,
-                headerParametersWithStringTypeValue, false);
+                headerParametersWithStringTypeValue, false, parseResponse);
     }
 
     @Override
     public ODataValueContextOfIListOfWTagInfo getTagsAssignedToEntryNextLink(String nextLink, int maxPageSize) {
-        return doGetTagsAssignedToEntry(nextLink,
-                new ParametersForGetTagsAssignedToEntry().setPrefer(ApiClientUtils.mergeMaxSizeIntoPrefer(maxPageSize, null)));
+        return doGetTagsAssignedToEntry(nextLink, new ParametersForGetTagsAssignedToEntry().setPrefer(
+                ApiClientUtils.mergeMaxSizeIntoPrefer(maxPageSize, null)));
     }
 
     @Override
@@ -637,10 +1193,46 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override
     public ODataValueOfIListOfWTagInfo assignTags(ParametersForAssignTags parameters) {
-        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int"},
-                new String[]{"repoId", "entryId"}, new Object[]{parameters.getRepoId(), parameters.getEntryId()});
-        return sendRequestParseResponse(httpClient, objectMapper, ODataValueOfIListOfWTagInfo.class, httpRequestHandler,
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(
+                new String[]{"String", "int"}, new String[]{"repoId", "entryId"},
+                new Object[]{parameters.getRepoId(), parameters.getEntryId()});
+        Function<HttpResponse<Object>, ODataValueOfIListOfWTagInfo> parseResponse = (HttpResponse<Object> httpResponse) -> {
+            Object body = httpResponse.getBody();
+            Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
+            if (httpResponse.getStatus() == 200) {
+                try {
+                    String responseJson = new JSONObject(body).toString();
+                    return objectMapper.readValue(responseJson, ODataValueOfIListOfWTagInfo.class);
+                } catch (Exception e) {
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+                }
+            } else {
+                ProblemDetails problemDetails;
+                try {
+                    String jsonString = new JSONObject(body).toString();
+                    problemDetails = ProblemDetailsDeserializer.deserialize(objectMapper, jsonString);
+                } catch (Exception e) {
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+                }
+                if (httpResponse.getStatus() == 400)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 401)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 403)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 404)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 423)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 429)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+            }
+        };
+        return sendRequestWithRetry(httpClient, objectMapper, ODataValueOfIListOfWTagInfo.class, httpRequestHandler,
                 baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/tags", "PUT", "application/json",
-                parameters.getRequestBody(), null, null, null, pathParameters, new HashMap<String, String>(), false);
+                parameters.getRequestBody(), null, null, null, pathParameters, new HashMap<String, String>(), false,
+                parseResponse);
     }
 }

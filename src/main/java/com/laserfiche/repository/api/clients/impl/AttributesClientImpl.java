@@ -1,12 +1,17 @@
 package com.laserfiche.repository.api.clients.impl;
 
+import com.laserfiche.api.client.deserialization.ProblemDetailsDeserializer;
 import com.laserfiche.api.client.httphandlers.HttpRequestHandler;
+import com.laserfiche.api.client.model.ApiException;
+import com.laserfiche.api.client.model.ProblemDetails;
 import com.laserfiche.repository.api.clients.AttributesClient;
 import com.laserfiche.repository.api.clients.impl.model.Attribute;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfListOfAttribute;
 import com.laserfiche.repository.api.clients.params.ParametersForGetTrusteeAttributeKeyValuePairs;
 import com.laserfiche.repository.api.clients.params.ParametersForGetTrusteeAttributeValueByKey;
+import kong.unirest.HttpResponse;
 import kong.unirest.UnirestInstance;
+import kong.unirest.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,12 +34,44 @@ public class AttributesClientImpl extends ApiClient implements AttributesClient 
     public Attribute getTrusteeAttributeValueByKey(ParametersForGetTrusteeAttributeValueByKey parameters) {
         Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"boolean"},
                 new String[]{"everyone"}, new Object[]{parameters.isEveryone()});
-        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "String"},
-                new String[]{"repoId", "attributeKey"},
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(
+                new String[]{"String", "String"}, new String[]{"repoId", "attributeKey"},
                 new Object[]{parameters.getRepoId(), parameters.getAttributeKey()});
-        return sendRequestParseResponse(httpClient, objectMapper, Attribute.class, httpRequestHandler,
+        Function<HttpResponse<Object>, Attribute> parseResponse = (HttpResponse<Object> httpResponse) -> {
+            Object body = httpResponse.getBody();
+            Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
+            if (httpResponse.getStatus() == 200) {
+                try {
+                    String responseJson = new JSONObject(body).toString();
+                    return objectMapper.readValue(responseJson, Attribute.class);
+                } catch (Exception e) {
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+                }
+            } else {
+                ProblemDetails problemDetails;
+                try {
+                    String jsonString = new JSONObject(body).toString();
+                    problemDetails = ProblemDetailsDeserializer.deserialize(objectMapper, jsonString);
+                } catch (Exception e) {
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+                }
+                if (httpResponse.getStatus() == 400)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 401)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 403)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 404)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 429)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+            }
+        };
+        return sendRequestWithRetry(httpClient, objectMapper, Attribute.class, httpRequestHandler,
                 baseUrl + "/v1/Repositories/{repoId}/Attributes/{attributeKey}", "GET", null, null, null, null,
-                queryParameters, pathParameters, new HashMap<String, String>(), false);
+                queryParameters, pathParameters, new HashMap<String, String>(), false, parseResponse);
     }
 
     @Override
@@ -57,9 +94,41 @@ public class AttributesClientImpl extends ApiClient implements AttributesClient 
                 .entrySet()
                 .stream()
                 .collect(Collectors.toMap(Map.Entry::getKey, e -> (String) e.getValue()));
-        return sendRequestParseResponse(httpClient, objectMapper, ODataValueContextOfListOfAttribute.class,
+        Function<HttpResponse<Object>, ODataValueContextOfListOfAttribute> parseResponse = (HttpResponse<Object> httpResponse) -> {
+            Object body = httpResponse.getBody();
+            Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
+            if (httpResponse.getStatus() == 200) {
+                try {
+                    String responseJson = new JSONObject(body).toString();
+                    return objectMapper.readValue(responseJson, ODataValueContextOfListOfAttribute.class);
+                } catch (Exception e) {
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+                }
+            } else {
+                ProblemDetails problemDetails;
+                try {
+                    String jsonString = new JSONObject(body).toString();
+                    problemDetails = ProblemDetailsDeserializer.deserialize(objectMapper, jsonString);
+                } catch (Exception e) {
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+                }
+                if (httpResponse.getStatus() == 400)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 401)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 403)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 404)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 429)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+            }
+        };
+        return sendRequestWithRetry(httpClient, objectMapper, ODataValueContextOfListOfAttribute.class,
                 httpRequestHandler, url, "GET", null, null, null, null, queryParameters, pathParameters,
-                headerParametersWithStringTypeValue, false);
+                headerParametersWithStringTypeValue, false, parseResponse);
     }
 
     @Override

@@ -1,16 +1,22 @@
 package com.laserfiche.repository.api.clients.impl;
 
+import com.laserfiche.api.client.deserialization.ProblemDetailsDeserializer;
 import com.laserfiche.api.client.httphandlers.HttpRequestHandler;
+import com.laserfiche.api.client.model.ApiException;
+import com.laserfiche.api.client.model.ProblemDetails;
 import com.laserfiche.repository.api.clients.ServerSessionClient;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueOfBoolean;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueOfDateTime;
 import com.laserfiche.repository.api.clients.params.ParametersForCreateServerSession;
 import com.laserfiche.repository.api.clients.params.ParametersForInvalidateServerSession;
 import com.laserfiche.repository.api.clients.params.ParametersForRefreshServerSession;
+import kong.unirest.HttpResponse;
 import kong.unirest.UnirestInstance;
+import kong.unirest.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
 
 /**
  * The Laserfiche Repository ServerSession API client.
@@ -28,26 +34,116 @@ public class ServerSessionClientImpl extends ApiClient implements ServerSessionC
     public ODataValueOfBoolean invalidateServerSession(ParametersForInvalidateServerSession parameters) {
         Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"},
                 new String[]{"repoId"}, new Object[]{parameters.getRepoId()});
-        return sendRequestParseResponse(httpClient, objectMapper, ODataValueOfBoolean.class, httpRequestHandler,
+        Function<HttpResponse<Object>, ODataValueOfBoolean> parseResponse = (HttpResponse<Object> httpResponse) -> {
+            Object body = httpResponse.getBody();
+            Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
+            if (httpResponse.getStatus() == 200) {
+                try {
+                    String responseJson = new JSONObject(body).toString();
+                    return objectMapper.readValue(responseJson, ODataValueOfBoolean.class);
+                } catch (Exception e) {
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+                }
+            } else {
+                ProblemDetails problemDetails;
+                try {
+                    String jsonString = new JSONObject(body).toString();
+                    problemDetails = ProblemDetailsDeserializer.deserialize(objectMapper, jsonString);
+                } catch (Exception e) {
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+                }
+                if (httpResponse.getStatus() == 400)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 401)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 403)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 404)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 429)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+            }
+        };
+        return sendRequestWithRetry(httpClient, objectMapper, ODataValueOfBoolean.class, httpRequestHandler,
                 baseUrl + "/v1/Repositories/{repoId}/ServerSession/Invalidate", "POST", null, null, null, null, null,
-                pathParameters, new HashMap<String, String>(), false);
+                pathParameters, new HashMap<String, String>(), false, parseResponse);
     }
 
     @Override
     public ODataValueOfBoolean createServerSession(ParametersForCreateServerSession parameters) {
         Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"},
                 new String[]{"repoId"}, new Object[]{parameters.getRepoId()});
-        return sendRequestParseResponse(httpClient, objectMapper, ODataValueOfBoolean.class, httpRequestHandler,
+        Function<HttpResponse<Object>, ODataValueOfBoolean> parseResponse = (HttpResponse<Object> httpResponse) -> {
+            Object body = httpResponse.getBody();
+            Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
+            if (httpResponse.getStatus() == 200) {
+                try {
+                    String responseJson = new JSONObject(body).toString();
+                    return objectMapper.readValue(responseJson, ODataValueOfBoolean.class);
+                } catch (Exception e) {
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+                }
+            } else {
+                ProblemDetails problemDetails;
+                try {
+                    String jsonString = new JSONObject(body).toString();
+                    problemDetails = ProblemDetailsDeserializer.deserialize(objectMapper, jsonString);
+                } catch (Exception e) {
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+                }
+                if (httpResponse.getStatus() == 401)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 403)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+            }
+        };
+        return sendRequestWithRetry(httpClient, objectMapper, ODataValueOfBoolean.class, httpRequestHandler,
                 baseUrl + "/v1/Repositories/{repoId}/ServerSession/Create", "POST", null, null, null, null, null,
-                pathParameters, new HashMap<String, String>(), false);
+                pathParameters, new HashMap<String, String>(), false, parseResponse);
     }
 
     @Override
     public ODataValueOfDateTime refreshServerSession(ParametersForRefreshServerSession parameters) {
         Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"},
                 new String[]{"repoId"}, new Object[]{parameters.getRepoId()});
-        return sendRequestParseResponse(httpClient, objectMapper, ODataValueOfDateTime.class, httpRequestHandler,
+        Function<HttpResponse<Object>, ODataValueOfDateTime> parseResponse = (HttpResponse<Object> httpResponse) -> {
+            Object body = httpResponse.getBody();
+            Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
+            if (httpResponse.getStatus() == 200) {
+                try {
+                    String responseJson = new JSONObject(body).toString();
+                    return objectMapper.readValue(responseJson, ODataValueOfDateTime.class);
+                } catch (Exception e) {
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+                }
+            } else {
+                ProblemDetails problemDetails;
+                try {
+                    String jsonString = new JSONObject(body).toString();
+                    problemDetails = ProblemDetailsDeserializer.deserialize(objectMapper, jsonString);
+                } catch (Exception e) {
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+                }
+                if (httpResponse.getStatus() == 400)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 401)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 403)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 404)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 429)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+            }
+        };
+        return sendRequestWithRetry(httpClient, objectMapper, ODataValueOfDateTime.class, httpRequestHandler,
                 baseUrl + "/v1/Repositories/{repoId}/ServerSession/Refresh", "POST", null, null, null, null, null,
-                pathParameters, new HashMap<String, String>(), false);
+                pathParameters, new HashMap<String, String>(), false, parseResponse);
     }
 }

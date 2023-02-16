@@ -1,12 +1,17 @@
 package com.laserfiche.repository.api.clients.impl;
 
+import com.laserfiche.api.client.deserialization.ProblemDetailsDeserializer;
 import com.laserfiche.api.client.httphandlers.HttpRequestHandler;
+import com.laserfiche.api.client.model.ApiException;
+import com.laserfiche.api.client.model.ProblemDetails;
 import com.laserfiche.repository.api.clients.LinkDefinitionsClient;
 import com.laserfiche.repository.api.clients.impl.model.EntryLinkTypeInfo;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfEntryLinkTypeInfo;
 import com.laserfiche.repository.api.clients.params.ParametersForGetLinkDefinitionById;
 import com.laserfiche.repository.api.clients.params.ParametersForGetLinkDefinitions;
+import kong.unirest.HttpResponse;
 import kong.unirest.UnirestInstance;
+import kong.unirest.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,11 +35,44 @@ public class LinkDefinitionsClientImpl extends ApiClient implements LinkDefiniti
     public EntryLinkTypeInfo getLinkDefinitionById(ParametersForGetLinkDefinitionById parameters) {
         Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"},
                 new String[]{"$select"}, new Object[]{parameters.getSelect()});
-        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int"},
-                new String[]{"repoId", "linkTypeId"}, new Object[]{parameters.getRepoId(), parameters.getLinkTypeId()});
-        return sendRequestParseResponse(httpClient, objectMapper, EntryLinkTypeInfo.class, httpRequestHandler,
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(
+                new String[]{"String", "int"}, new String[]{"repoId", "linkTypeId"},
+                new Object[]{parameters.getRepoId(), parameters.getLinkTypeId()});
+        Function<HttpResponse<Object>, EntryLinkTypeInfo> parseResponse = (HttpResponse<Object> httpResponse) -> {
+            Object body = httpResponse.getBody();
+            Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
+            if (httpResponse.getStatus() == 200) {
+                try {
+                    String responseJson = new JSONObject(body).toString();
+                    return objectMapper.readValue(responseJson, EntryLinkTypeInfo.class);
+                } catch (Exception e) {
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+                }
+            } else {
+                ProblemDetails problemDetails;
+                try {
+                    String jsonString = new JSONObject(body).toString();
+                    problemDetails = ProblemDetailsDeserializer.deserialize(objectMapper, jsonString);
+                } catch (Exception e) {
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+                }
+                if (httpResponse.getStatus() == 400)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 401)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 403)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 404)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 429)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+            }
+        };
+        return sendRequestWithRetry(httpClient, objectMapper, EntryLinkTypeInfo.class, httpRequestHandler,
                 baseUrl + "/v1/Repositories/{repoId}/LinkDefinitions/{linkTypeId}", "GET", null, null, null, null,
-                queryParameters, pathParameters, new HashMap<String, String>(), false);
+                queryParameters, pathParameters, new HashMap<String, String>(), false, parseResponse);
     }
 
     @Override
@@ -56,15 +94,47 @@ public class LinkDefinitionsClientImpl extends ApiClient implements LinkDefiniti
                 .entrySet()
                 .stream()
                 .collect(Collectors.toMap(Map.Entry::getKey, e -> (String) e.getValue()));
-        return sendRequestParseResponse(httpClient, objectMapper, ODataValueContextOfIListOfEntryLinkTypeInfo.class,
+        Function<HttpResponse<Object>, ODataValueContextOfIListOfEntryLinkTypeInfo> parseResponse = (HttpResponse<Object> httpResponse) -> {
+            Object body = httpResponse.getBody();
+            Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
+            if (httpResponse.getStatus() == 200) {
+                try {
+                    String responseJson = new JSONObject(body).toString();
+                    return objectMapper.readValue(responseJson, ODataValueContextOfIListOfEntryLinkTypeInfo.class);
+                } catch (Exception e) {
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+                }
+            } else {
+                ProblemDetails problemDetails;
+                try {
+                    String jsonString = new JSONObject(body).toString();
+                    problemDetails = ProblemDetailsDeserializer.deserialize(objectMapper, jsonString);
+                } catch (Exception e) {
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+                }
+                if (httpResponse.getStatus() == 400)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 401)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 403)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 404)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 429)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+            }
+        };
+        return sendRequestWithRetry(httpClient, objectMapper, ODataValueContextOfIListOfEntryLinkTypeInfo.class,
                 httpRequestHandler, url, "GET", null, null, null, null, queryParameters, pathParameters,
-                headerParametersWithStringTypeValue, false);
+                headerParametersWithStringTypeValue, false, parseResponse);
     }
 
     @Override
     public ODataValueContextOfIListOfEntryLinkTypeInfo getLinkDefinitionsNextLink(String nextLink, int maxPageSize) {
-        return doGetLinkDefinitions(nextLink,
-                new ParametersForGetLinkDefinitions().setPrefer(ApiClientUtils.mergeMaxSizeIntoPrefer(maxPageSize, null)));
+        return doGetLinkDefinitions(nextLink, new ParametersForGetLinkDefinitions().setPrefer(
+                ApiClientUtils.mergeMaxSizeIntoPrefer(maxPageSize, null)));
     }
 
     @Override
@@ -78,3 +148,4 @@ public class LinkDefinitionsClientImpl extends ApiClient implements LinkDefiniti
         }
     }
 }
+
