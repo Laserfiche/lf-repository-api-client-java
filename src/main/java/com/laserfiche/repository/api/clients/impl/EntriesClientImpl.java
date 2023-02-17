@@ -234,7 +234,6 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                         throw err;
                     }
                     shouldRetry = true;
-                    System.err.println("Retrying fetch due to exception: " + err);
                 } finally {
                     retryCount++;
                 }
@@ -812,7 +811,6 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                         throw err;
                     }
                     shouldRetry = true;
-                    System.err.println("Retrying fetch due to exception: " + err);
                 } finally {
                     retryCount++;
                 }
@@ -900,7 +898,6 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                         throw err;
                     }
                     shouldRetry = true;
-                    System.err.println("Retrying fetch due to exception: " + err);
                 } finally {
                     retryCount++;
                 }
