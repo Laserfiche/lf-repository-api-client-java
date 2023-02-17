@@ -210,44 +210,6 @@ public class ApiClientUtils {
         return paramKeyValuePairs;
     }
 
-    protected static boolean shouldThrowException(String requestMethod, String queryStringFields,
-            Collection<?> queryStringFieldList, String url, ApiException err) {
-        if (requestMethod.equals(
-                "HEAD")) {
-            return true;
-        }
-        if (queryStringFields != null && queryStringFieldList != null) {
-            return true;
-        }
-        if (requestMethod.equals(
-                "PATCH")) {
-            return true;
-        }
-        if (requestMethod.equals("PUT") && url.contains("template")) {
-            return true;
-        }
-        if (url.contains(
-                "Task") && err
-                .getProblemDetails()
-                .getTitle()
-                .contains("Error")) {
-            return true;
-        }
-        if (err
-                .getProblemDetails()
-                .getTitle()
-                .equals("Authentication failed (reason: Invalid service principal key. (6-45)).")) {
-            return true;
-        }
-        if (err
-                .getProblemDetails()
-                .getTitle()
-                .equals("The user account name or password is incorrect. [9010]")) {
-            return true;
-        }
-        return false;
-    }
-
     private static boolean hasDefaultValue(String type, Object value) {
         switch (type) {
             case "int":

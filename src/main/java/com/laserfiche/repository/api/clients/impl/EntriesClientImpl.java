@@ -222,10 +222,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                         }
                     }
                 } catch (Exception err) {
-                    if (err
-                            .getClass()
-                            .getName()
-                            .equals("com.laserfiche.api.client.model.ApiException")) {
+                    if (err instanceof ApiException) {
                         if (httpResponse.getStatus() == 400 || httpResponse.getStatus() == 404 || httpResponse.getStatus() == 409 || httpResponse.getStatus() == 500) {
                             throw err;
                         } else {
@@ -803,10 +800,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                         throw exception[0];
                     }
                 } catch (Exception err) {
-                    if (err
-                            .getClass()
-                            .getName()
-                            .equals("com.laserfiche.api.client.model.ApiException")) {
+                    if (err instanceof ApiException) {
                         if (exception[0] != null) {
                             throw exception[0];
                         } else {
@@ -894,10 +888,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                         throw exception[0];
                     }
                 } catch (Exception err) {
-                    if (err
-                            .getClass()
-                            .getName()
-                            .equals("com.laserfiche.api.client.model.ApiException")) {
+                    if (err instanceof ApiException) {
                         if (exception[0] != null) {
                             throw exception[0];
                         } else {
