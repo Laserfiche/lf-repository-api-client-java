@@ -23,11 +23,8 @@ import java.util.function.Function;
  */
 public class ServerSessionClientImpl extends ApiClient implements ServerSessionClient {
 
-    private HttpRequestHandler httpRequestHandler;
-
     public ServerSessionClientImpl(String baseUrl, UnirestInstance httpClient, HttpRequestHandler httpRequestHandler) {
-        super(baseUrl, httpClient);
-        this.httpRequestHandler = httpRequestHandler;
+        super(baseUrl, httpClient, httpRequestHandler);
     }
 
     @Override

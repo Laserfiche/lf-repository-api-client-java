@@ -23,11 +23,8 @@ import java.util.stream.Collectors;
  */
 public class TagDefinitionsClientImpl extends ApiClient implements TagDefinitionsClient {
 
-    private HttpRequestHandler httpRequestHandler;
-
     public TagDefinitionsClientImpl(String baseUrl, UnirestInstance httpClient, HttpRequestHandler httpRequestHandler) {
-        super(baseUrl, httpClient);
-        this.httpRequestHandler = httpRequestHandler;
+        super(baseUrl, httpClient, httpRequestHandler);
     }
 
     @Override

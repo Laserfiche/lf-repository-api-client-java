@@ -21,11 +21,8 @@ import java.util.function.Function;
  */
 public class TasksClientImpl extends ApiClient implements TasksClient {
 
-    private HttpRequestHandler httpRequestHandler;
-
     public TasksClientImpl(String baseUrl, UnirestInstance httpClient, HttpRequestHandler httpRequestHandler) {
-        super(baseUrl, httpClient);
-        this.httpRequestHandler = httpRequestHandler;
+        super(baseUrl, httpClient, httpRequestHandler);
     }
 
     @Override

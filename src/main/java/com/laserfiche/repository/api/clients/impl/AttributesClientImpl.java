@@ -23,11 +23,8 @@ import java.util.stream.Collectors;
  */
 public class AttributesClientImpl extends ApiClient implements AttributesClient {
 
-    private HttpRequestHandler httpRequestHandler;
-
     public AttributesClientImpl(String baseUrl, UnirestInstance httpClient, HttpRequestHandler httpRequestHandler) {
-        super(baseUrl, httpClient);
-        this.httpRequestHandler = httpRequestHandler;
+        super(baseUrl, httpClient, httpRequestHandler);
     }
 
     @Override

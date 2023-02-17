@@ -23,12 +23,9 @@ import java.util.stream.Collectors;
  */
 public class LinkDefinitionsClientImpl extends ApiClient implements LinkDefinitionsClient {
 
-    private HttpRequestHandler httpRequestHandler;
-
     public LinkDefinitionsClientImpl(String baseUrl, UnirestInstance httpClient,
             HttpRequestHandler httpRequestHandler) {
-        super(baseUrl, httpClient);
-        this.httpRequestHandler = httpRequestHandler;
+        super(baseUrl, httpClient, httpRequestHandler);
     }
 
     @Override

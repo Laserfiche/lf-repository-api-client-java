@@ -26,12 +26,9 @@ import java.util.stream.Collectors;
  */
 public class TemplateDefinitionsClientImpl extends ApiClient implements TemplateDefinitionsClient {
 
-    private HttpRequestHandler httpRequestHandler;
-
     public TemplateDefinitionsClientImpl(String baseUrl, UnirestInstance httpClient,
             HttpRequestHandler httpRequestHandler) {
-        super(baseUrl, httpClient);
-        this.httpRequestHandler = httpRequestHandler;
+        super(baseUrl, httpClient, httpRequestHandler);
     }
 
     @Override

@@ -20,11 +20,8 @@ import java.util.function.Function;
  */
 public class AuditReasonsClientImpl extends ApiClient implements AuditReasonsClient {
 
-    private HttpRequestHandler httpRequestHandler;
-
     public AuditReasonsClientImpl(String baseUrl, UnirestInstance httpClient, HttpRequestHandler httpRequestHandler) {
-        super(baseUrl, httpClient);
-        this.httpRequestHandler = httpRequestHandler;
+        super(baseUrl, httpClient, httpRequestHandler);
     }
 
     @Override

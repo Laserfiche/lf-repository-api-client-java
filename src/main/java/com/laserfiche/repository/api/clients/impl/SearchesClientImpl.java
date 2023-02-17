@@ -20,11 +20,8 @@ import java.util.stream.Collectors;
  */
 public class SearchesClientImpl extends ApiClient implements SearchesClient {
 
-    private HttpRequestHandler httpRequestHandler;
-
     public SearchesClientImpl(String baseUrl, UnirestInstance httpClient, HttpRequestHandler httpRequestHandler) {
-        super(baseUrl, httpClient);
-        this.httpRequestHandler = httpRequestHandler;
+        super(baseUrl, httpClient, httpRequestHandler);
     }
 
     @Override

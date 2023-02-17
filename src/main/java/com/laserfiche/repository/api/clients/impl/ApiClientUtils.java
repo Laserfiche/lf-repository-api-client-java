@@ -138,20 +138,6 @@ public class ApiClientUtils {
         return url;
     }
 
-    protected static boolean isJsonResponse(HttpResponse<Object> httpResponse) {
-        List<String> ResponseContentType = httpResponse
-                .getHeaders()
-                .get("Content-Type");
-        for (int i = 0; i < ResponseContentType.size(); i++) {
-            if (ResponseContentType
-                    .get(i)
-                    .contains("json")) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     /**
      * Returns a Header Map containing the header name and value.
      *
@@ -291,7 +277,6 @@ public class ApiClientUtils {
         int maxRetries = 1;
         boolean shouldRetry = true;
         HttpResponse<Object> httpResponse = null;
-        String responseJson = null;
         while (retryCount <= maxRetries && shouldRetry) {
             try {
                 String requestUrl = ApiClientUtils.beforeSend(url, headerParametersWithStringTypeValue,
@@ -330,39 +315,12 @@ public class ApiClientUtils {
                         httpResponse = httpRequest.asObject(Object.class);
                     }
                 }
-
-                //try moving to API method in the client object
                 HttpMethod httpMethod = httpRequest.getHttpMethod();
-                Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
-                if (requestMethod.equals("HEAD")) {
-                    if (httpResponse.getStatus() == 200) {
-                        return (TResponse) httpResponse
-                                .getHeaders()
-                                .all()
-                                .stream()
-                                .collect(Collectors.toMap(Header::getName, Header::getValue));
-                    } else {
-                        throw ApiException.create(httpResponse.getStatus(), headersMap, null, null);
-                    }
-                }
                 int statusCode = httpResponse.getStatus();
                 shouldRetry = httpRequestHandler.afterSend(
                         new ResponseImpl((short) statusCode)) || ApiClientUtils.isRetryableStatusCode(statusCode,
                         httpMethod);
-                //move line 156 to 167 as a function into the ApiClientUtils class(?) and call from each api client method
-                boolean isJsonResponse = ApiClientUtils.isJsonResponse(httpResponse);
-                if (isJsonResponse) {
-                    Object body = httpResponse.getBody();
-                    if (body
-                            .getClass()
-                            .toString()
-                            .contains("Array")) {
-                        responseJson = new JSONArray(((ArrayList) body).toArray()).toString();
-                    } else {
-                        responseJson = new JSONObject(body).toString();
-                    }
-                }
-                if (!shouldRetry) {
+                if (!shouldRetry || requestMethod.equals("HEAD")) {
                     return parseResponse.apply(httpResponse);
                 }
             } catch (Exception err) {
@@ -370,7 +328,6 @@ public class ApiClientUtils {
                     throw err;
                 }
                 shouldRetry = true;
-                System.err.println("Retrying fetch due to exception: " + err);
             } finally {
                 retryCount++;
             }

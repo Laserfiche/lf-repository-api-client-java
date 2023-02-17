@@ -19,11 +19,8 @@ import java.util.function.Function;
  */
 public class SimpleSearchesClientImpl extends ApiClient implements SimpleSearchesClient {
 
-    private HttpRequestHandler httpRequestHandler;
-
     public SimpleSearchesClientImpl(String baseUrl, UnirestInstance httpClient, HttpRequestHandler httpRequestHandler) {
-        super(baseUrl, httpClient);
-        this.httpRequestHandler = httpRequestHandler;
+        super(baseUrl, httpClient, httpRequestHandler);
     }
 
     @Override

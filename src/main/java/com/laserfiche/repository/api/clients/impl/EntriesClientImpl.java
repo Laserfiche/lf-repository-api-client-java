@@ -8,6 +8,7 @@ import com.laserfiche.api.client.model.ProblemDetails;
 import com.laserfiche.repository.api.clients.EntriesClient;
 import com.laserfiche.repository.api.clients.impl.model.*;
 import com.laserfiche.repository.api.clients.params.*;
+import kong.unirest.Header;
 import kong.unirest.HttpMethod;
 import kong.unirest.HttpResponse;
 import kong.unirest.UnirestInstance;
@@ -22,11 +23,8 @@ import java.util.stream.Collectors;
  */
 public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
-    private HttpRequestHandler httpRequestHandler;
-
     public EntriesClientImpl(String baseUrl, UnirestInstance httpClient, HttpRequestHandler httpRequestHandler) {
-        super(baseUrl, httpClient);
-        this.httpRequestHandler = httpRequestHandler;
+        super(baseUrl, httpClient, httpRequestHandler);
     }
 
     @Override
@@ -968,9 +966,22 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
         Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(
                 new String[]{"String", "int"}, new String[]{"repoId", "entryId"},
                 new Object[]{parameters.getRepoId(), parameters.getEntryId()});
+        Function<HttpResponse<Object>, Map<String, String>> parseResponse = (HttpResponse<Object> httpResponse) -> {
+            Object body = httpResponse.getBody();
+            Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
+            if (httpResponse.getStatus() == 200) {
+                return httpResponse
+                        .getHeaders()
+                        .all()
+                        .stream()
+                        .collect(Collectors.toMap(Header::getName, Header::getValue));
+            } else {
+                throw ApiException.create(httpResponse.getStatus(), headersMap, null, null);
+            }
+        };
         return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler,
                 baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Document/edoc", "HEAD",
-                null, null, null, null, null, pathParameters, new HashMap<String, String>(), false, null);
+                null, null, null, null, null, pathParameters, new HashMap<String, String>(), false, parseResponse);
     }
 
     @Override

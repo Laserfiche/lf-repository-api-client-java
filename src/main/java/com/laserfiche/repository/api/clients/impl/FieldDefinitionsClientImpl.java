@@ -23,12 +23,9 @@ import java.util.stream.Collectors;
  */
 public class FieldDefinitionsClientImpl extends ApiClient implements FieldDefinitionsClient {
 
-    private HttpRequestHandler httpRequestHandler;
-
     public FieldDefinitionsClientImpl(String baseUrl, UnirestInstance httpClient,
             HttpRequestHandler httpRequestHandler) {
-        super(baseUrl, httpClient);
-        this.httpRequestHandler = httpRequestHandler;
+        super(baseUrl, httpClient, httpRequestHandler);
     }
 
     @Override

@@ -21,11 +21,8 @@ import java.util.function.Function;
  */
 public class RepositoriesClientImpl extends ApiClient implements RepositoriesClient {
 
-    private HttpRequestHandler httpRequestHandler;
-
     public RepositoriesClientImpl(String baseUrl, UnirestInstance httpClient, HttpRequestHandler httpRequestHandler) {
-        super(baseUrl, httpClient);
-        this.httpRequestHandler = httpRequestHandler;
+        super(baseUrl, httpClient, httpRequestHandler);
     }
 
     @Override
