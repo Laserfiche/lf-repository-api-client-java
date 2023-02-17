@@ -67,7 +67,7 @@ public class SimpleSearchesClientImpl extends ApiClient implements SimpleSearche
                     throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
             }
         };
-        return sendRequestWithRetry(httpClient, objectMapper, ODataValueContextOfIListOfEntry.class, httpRequestHandler,
+        return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler,
                 baseUrl + "/v1/Repositories/{repoId}/SimpleSearches", "POST", "application/json",
                 parameters.getRequestBody(), "fields", (queryParameters.get("fields") != null) ? (queryParameters.get(
                         "fields") instanceof String ? Arrays.asList(

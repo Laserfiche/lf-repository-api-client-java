@@ -66,7 +66,7 @@ public class ServerSessionClientImpl extends ApiClient implements ServerSessionC
                     throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
             }
         };
-        return sendRequestWithRetry(httpClient, objectMapper, ODataValueOfBoolean.class, httpRequestHandler,
+        return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler,
                 baseUrl + "/v1/Repositories/{repoId}/ServerSession/Invalidate", "POST", null, null, null, null, null,
                 pathParameters, new HashMap<String, String>(), false, parseResponse);
     }
@@ -101,7 +101,7 @@ public class ServerSessionClientImpl extends ApiClient implements ServerSessionC
                     throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
             }
         };
-        return sendRequestWithRetry(httpClient, objectMapper, ODataValueOfBoolean.class, httpRequestHandler,
+        return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler,
                 baseUrl + "/v1/Repositories/{repoId}/ServerSession/Create", "POST", null, null, null, null, null,
                 pathParameters, new HashMap<String, String>(), false, parseResponse);
     }
@@ -142,7 +142,7 @@ public class ServerSessionClientImpl extends ApiClient implements ServerSessionC
                     throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
             }
         };
-        return sendRequestWithRetry(httpClient, objectMapper, ODataValueOfDateTime.class, httpRequestHandler,
+        return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler,
                 baseUrl + "/v1/Repositories/{repoId}/ServerSession/Refresh", "POST", null, null, null, null, null,
                 pathParameters, new HashMap<String, String>(), false, parseResponse);
     }

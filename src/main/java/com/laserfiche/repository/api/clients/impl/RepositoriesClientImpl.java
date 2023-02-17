@@ -60,8 +60,7 @@ public class RepositoriesClientImpl extends ApiClient implements RepositoriesCli
                     throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
             }
         };
-        return sendRequestWithRetry(httpClient, objectMapper, RepositoryInfo[].class, httpRequestHandler,
-                baseUrl + "/v1/Repositories", "GET", null, null, null, null, null, null, new HashMap<String, String>(),
-                false, parseResponse);
+        return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler, baseUrl + "/v1/Repositories", "GET",
+                null, null, null, null, null, null, new HashMap<String, String>(), false, parseResponse);
     }
 }

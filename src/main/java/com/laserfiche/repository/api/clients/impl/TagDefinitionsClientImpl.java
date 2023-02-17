@@ -81,9 +81,8 @@ public class TagDefinitionsClientImpl extends ApiClient implements TagDefinition
                     throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
             }
         };
-        return sendRequestWithRetry(httpClient, objectMapper, ODataValueContextOfIListOfWTagInfo.class,
-                httpRequestHandler, url, "GET", null, null, null, null, queryParameters, pathParameters,
-                headerParametersWithStringTypeValue, false, parseResponse);
+        return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler, url, "GET", null, null, null, null,
+                queryParameters, pathParameters, headerParametersWithStringTypeValue, false, parseResponse);
     }
 
     @Override
@@ -143,7 +142,7 @@ public class TagDefinitionsClientImpl extends ApiClient implements TagDefinition
                     throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
             }
         };
-        return sendRequestWithRetry(httpClient, objectMapper, WTagInfo.class, httpRequestHandler,
+        return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler,
                 baseUrl + "/v1/Repositories/{repoId}/TagDefinitions/{tagId}", "GET", null, null, null, null,
                 queryParameters, pathParameters, new HashMap<String, String>(), false, parseResponse);
     }

@@ -71,7 +71,7 @@ public class FieldDefinitionsClientImpl extends ApiClient implements FieldDefini
                     throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
             }
         };
-        return sendRequestWithRetry(httpClient, objectMapper, WFieldInfo.class, httpRequestHandler,
+        return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler,
                 baseUrl + "/v1/Repositories/{repoId}/FieldDefinitions/{fieldDefinitionId}", "GET", null, null, null,
                 null, queryParameters, pathParameters, new HashMap<String, String>(), false, parseResponse);
     }
@@ -127,9 +127,8 @@ public class FieldDefinitionsClientImpl extends ApiClient implements FieldDefini
                     throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
             }
         };
-        return sendRequestWithRetry(httpClient, objectMapper, ODataValueContextOfIListOfWFieldInfo.class,
-                httpRequestHandler, url, "GET", null, null, null, null, queryParameters, pathParameters,
-                headerParametersWithStringTypeValue, false, parseResponse);
+        return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler, url, "GET", null, null, null, null,
+                queryParameters, pathParameters, headerParametersWithStringTypeValue, false, parseResponse);
     }
 
     @Override

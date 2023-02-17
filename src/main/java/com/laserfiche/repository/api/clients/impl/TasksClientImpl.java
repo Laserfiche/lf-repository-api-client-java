@@ -65,7 +65,7 @@ public class TasksClientImpl extends ApiClient implements TasksClient {
                     throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
             }
         };
-        return sendRequestWithRetry(httpClient, objectMapper, OperationProgress.class, httpRequestHandler,
+        return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler,
                 baseUrl + "/v1/Repositories/{repoId}/Tasks/{operationToken}", "GET", null, null, null, null, null,
                 pathParameters, new HashMap<String, String>(), false, parseResponse);
     }
@@ -102,7 +102,7 @@ public class TasksClientImpl extends ApiClient implements TasksClient {
                     throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
             }
         };
-        return sendRequestWithRetry(httpClient, objectMapper, boolean.class, httpRequestHandler,
+        return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler,
                 baseUrl + "/v1/Repositories/{repoId}/Tasks/{operationToken}", "DELETE", null, null, null, null, null,
                 pathParameters, new HashMap<String, String>(), false, parseResponse);
     }

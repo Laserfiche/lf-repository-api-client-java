@@ -1,20 +1,18 @@
 package com.laserfiche.repository.api.clients.impl;
 
-import com.laserfiche.api.client.httphandlers.BeforeSendResult;
-import com.laserfiche.api.client.httphandlers.HttpRequestHandler;
-import com.laserfiche.api.client.httphandlers.Request;
-import com.laserfiche.api.client.httphandlers.RequestImpl;
+import com.laserfiche.api.client.httphandlers.*;
 import com.laserfiche.api.client.model.ApiException;
 import com.laserfiche.api.client.model.ProblemDetails;
 import com.laserfiche.repository.api.clients.impl.model.APIServerException;
 import com.laserfiche.repository.api.clients.impl.model.CreateEntryOperations;
 import com.laserfiche.repository.api.clients.impl.model.CreateEntryResult;
-import kong.unirest.Header;
 import kong.unirest.Headers;
-import kong.unirest.HttpMethod;
-import kong.unirest.HttpResponse;
+import kong.unirest.*;
+import kong.unirest.json.JSONArray;
+import kong.unirest.json.JSONObject;
 
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -276,5 +274,110 @@ public class ApiClientUtils {
                         .equals("false");
         }
         return false;
+    }
+
+    public static <TResponse> TResponse sendRequestWithRetry(UnirestInstance httpClient,
+            HttpRequestHandler httpRequestHandler, String url,
+            String requestMethod,
+            String contentType,
+            Object requestBody,
+            String queryStringFields,
+            Collection<?> queryStringFieldList,
+            Map<String, Object> queryParameters, Map<String, Object> pathParameters,
+            Map<String, String> headerParametersWithStringTypeValue,
+            boolean isDynamicFieldValues,
+            Function<HttpResponse<Object>, TResponse> parseResponse) {
+        int retryCount = 0;
+        int maxRetries = 1;
+        boolean shouldRetry = true;
+        HttpResponse<Object> httpResponse = null;
+        String responseJson = null;
+        while (retryCount <= maxRetries && shouldRetry) {
+            try {
+                String requestUrl = ApiClientUtils.beforeSend(url, headerParametersWithStringTypeValue,
+                        httpRequestHandler);
+                final HttpRequestWithBody httpRequestWithBody = httpClient.request(requestMethod, requestUrl);
+                HttpRequest<?> httpRequest = httpRequestWithBody;
+                if (queryParameters != null) {
+                    httpRequestWithBody.queryString(queryParameters);
+                }
+                if (pathParameters != null) {
+                    httpRequestWithBody.routeParam(pathParameters);
+                }
+                if (headerParametersWithStringTypeValue != null) {
+                    httpRequestWithBody.headers(headerParametersWithStringTypeValue);
+                }
+                if (queryStringFields != null && queryStringFieldList != null) {
+                    httpRequestWithBody.queryString(queryStringFields, queryStringFieldList);
+                }
+                if (contentType != null) {
+                    httpRequestWithBody.contentType(contentType);
+                }
+                if (requestBody != null) {
+                    if (isDynamicFieldValues || requestMethod.equals("HEAD")) {
+                        httpResponse = httpRequestWithBody
+                                .body(requestBody)
+                                .asObject(new HashMap<String, String[]>().getClass());
+                    } else {
+                        httpResponse = httpRequestWithBody
+                                .body(requestBody)
+                                .asObject(Object.class);
+                    }
+                } else {
+                    if (isDynamicFieldValues || requestMethod.equals("HEAD")) {
+                        httpResponse = httpRequest.asObject(new HashMap<String, String[]>().getClass());
+                    } else {
+                        httpResponse = httpRequest.asObject(Object.class);
+                    }
+                }
+
+                //try moving to API method in the client object
+                HttpMethod httpMethod = httpRequest.getHttpMethod();
+                Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
+                if (requestMethod.equals("HEAD")) {
+                    if (httpResponse.getStatus() == 200) {
+                        return (TResponse) httpResponse
+                                .getHeaders()
+                                .all()
+                                .stream()
+                                .collect(Collectors.toMap(Header::getName, Header::getValue));
+                    } else {
+                        throw ApiException.create(httpResponse.getStatus(), headersMap, null, null);
+                    }
+                }
+                int statusCode = httpResponse.getStatus();
+                shouldRetry = httpRequestHandler.afterSend(
+                        new ResponseImpl((short) statusCode)) || ApiClientUtils.isRetryableStatusCode(statusCode,
+                        httpMethod);
+                //move line 156 to 167 as a function into the ApiClientUtils class(?) and call from each api client method
+                boolean isJsonResponse = ApiClientUtils.isJsonResponse(httpResponse);
+                if (isJsonResponse) {
+                    Object body = httpResponse.getBody();
+                    if (body
+                            .getClass()
+                            .toString()
+                            .contains("Array")) {
+                        responseJson = new JSONArray(((ArrayList) body).toArray()).toString();
+                    } else {
+                        responseJson = new JSONObject(body).toString();
+                    }
+                }
+                if (!shouldRetry) {
+                    return parseResponse.apply(httpResponse);
+                }
+            } catch (Exception err) {
+                if (err instanceof ApiException || retryCount >= maxRetries) {
+                    throw err;
+                }
+                shouldRetry = true;
+                System.err.println("Retrying fetch due to exception: " + err);
+            } finally {
+                retryCount++;
+            }
+        }
+        if (httpResponse == null) {
+            throw new IllegalStateException("Undefined response, there is a bug");
+        }
+        return parseResponse.apply(httpResponse);
     }
 }

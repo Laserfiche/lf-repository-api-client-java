@@ -86,9 +86,8 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
                     throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
             }
         };
-        return sendRequestWithRetry(httpClient, objectMapper, ODataValueContextOfIListOfWTemplateInfo.class,
-                httpRequestHandler, url, "GET", null, null, null, null, queryParameters, pathParameters,
-                headerParametersWithStringTypeValue, false, parseResponse);
+        return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler, url, "GET", null, null, null, null,
+                queryParameters, pathParameters, headerParametersWithStringTypeValue, false, parseResponse);
     }
 
     @Override
@@ -161,9 +160,8 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
                     throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
             }
         };
-        return sendRequestWithRetry(httpClient, objectMapper, ODataValueContextOfIListOfTemplateFieldInfo.class,
-                httpRequestHandler, url, "GET", null, null, null, null, queryParameters, pathParameters,
-                headerParametersWithStringTypeValue, false, parseResponse);
+        return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler, url, "GET", null, null, null, null,
+                queryParameters, pathParameters, headerParametersWithStringTypeValue, false, parseResponse);
     }
 
     @Override
@@ -240,9 +238,8 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
                     throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
             }
         };
-        return sendRequestWithRetry(httpClient, objectMapper, ODataValueContextOfIListOfTemplateFieldInfo.class,
-                httpRequestHandler, url, "GET", null, null, null, null, queryParameters, pathParameters,
-                headerParametersWithStringTypeValue, false, parseResponse);
+        return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler, url, "GET", null, null, null, null,
+                queryParameters, pathParameters, headerParametersWithStringTypeValue, false, parseResponse);
     }
 
     @Override
@@ -304,8 +301,9 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
                     throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
             }
         };
-        return sendRequestWithRetry(httpClient, objectMapper, WTemplateInfo.class, httpRequestHandler,
+        return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler,
                 baseUrl + "/v1/Repositories/{repoId}/TemplateDefinitions/{templateId}", "GET", null, null, null, null,
                 queryParameters, pathParameters, new HashMap<String, String>(), false, parseResponse);
     }
 }
+

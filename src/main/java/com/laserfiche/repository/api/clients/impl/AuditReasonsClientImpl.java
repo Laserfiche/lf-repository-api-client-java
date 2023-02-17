@@ -63,8 +63,9 @@ public class AuditReasonsClientImpl extends ApiClient implements AuditReasonsCli
                     throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
             }
         };
-        return sendRequestWithRetry(httpClient, objectMapper, AuditReasons.class, httpRequestHandler,
+        return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler,
                 baseUrl + "/v1/Repositories/{repoId}/AuditReasons", "GET", null, null, null, null, null, pathParameters,
                 new HashMap<String, String>(), false, parseResponse);
     }
 }
+

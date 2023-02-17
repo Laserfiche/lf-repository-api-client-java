@@ -69,7 +69,7 @@ public class AttributesClientImpl extends ApiClient implements AttributesClient 
                     throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
             }
         };
-        return sendRequestWithRetry(httpClient, objectMapper, Attribute.class, httpRequestHandler,
+        return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler,
                 baseUrl + "/v1/Repositories/{repoId}/Attributes/{attributeKey}", "GET", null, null, null, null,
                 queryParameters, pathParameters, new HashMap<String, String>(), false, parseResponse);
     }
@@ -126,9 +126,8 @@ public class AttributesClientImpl extends ApiClient implements AttributesClient 
                     throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
             }
         };
-        return sendRequestWithRetry(httpClient, objectMapper, ODataValueContextOfListOfAttribute.class,
-                httpRequestHandler, url, "GET", null, null, null, null, queryParameters, pathParameters,
-                headerParametersWithStringTypeValue, false, parseResponse);
+        return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler, url, "GET", null, null, null, null,
+                queryParameters, pathParameters, headerParametersWithStringTypeValue, false, parseResponse);
     }
 
     @Override

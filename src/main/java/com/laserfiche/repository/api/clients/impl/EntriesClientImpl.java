@@ -80,9 +80,8 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                     throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
             }
         };
-        return sendRequestWithRetry(httpClient, objectMapper, ODataValueContextOfIListOfFieldValue.class,
-                httpRequestHandler, url, "GET", null, null, null, null, queryParameters, pathParameters,
-                headerParametersWithStringTypeValue, false, parseResponse);
+        return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler, url, "GET", null, null, null, null,
+                queryParameters, pathParameters, headerParametersWithStringTypeValue, false, parseResponse);
     }
 
     @Override
@@ -143,7 +142,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                     throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
             }
         };
-        return sendRequestWithRetry(httpClient, objectMapper, ODataValueOfIListOfFieldValue.class, httpRequestHandler,
+        return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler,
                 baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/fields", "PUT", "application/json",
                 parameters.getRequestBody(), null, null, queryParameters, pathParameters, new HashMap<String, String>(),
                 false, parseResponse);
@@ -309,9 +308,8 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                     throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
             }
         };
-        return sendRequestWithRetry(httpClient, objectMapper, ODataValueContextOfIListOfWEntryLinkInfo.class,
-                httpRequestHandler, url, "GET", null, null, null, null, queryParameters, pathParameters,
-                headerParametersWithStringTypeValue, false, parseResponse);
+        return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler, url, "GET", null, null, null, null,
+                queryParameters, pathParameters, headerParametersWithStringTypeValue, false, parseResponse);
     }
 
     @Override
@@ -370,10 +368,10 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                     throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
             }
         };
-        return sendRequestWithRetry(httpClient, objectMapper, ODataValueOfIListOfWEntryLinkInfo.class,
-                httpRequestHandler, baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/links", "PUT",
-                "application/json", parameters.getRequestBody(), null, null, null, pathParameters,
-                new HashMap<String, String>(), false, parseResponse);
+        return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler,
+                baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/links", "PUT", "application/json",
+                parameters.getRequestBody(), null, null, null, pathParameters, new HashMap<String, String>(), false,
+                parseResponse);
     }
 
     @Override
@@ -417,7 +415,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                     throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
             }
         };
-        return sendRequestWithRetry(httpClient, objectMapper, Entry.class, httpRequestHandler,
+        return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler,
                 baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/template", "PUT", "application/json",
                 parameters.getRequestBody(), null, null, queryParameters, pathParameters, new HashMap<String, String>(),
                 false, parseResponse);
@@ -462,7 +460,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                     throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
             }
         };
-        return sendRequestWithRetry(httpClient, objectMapper, Entry.class, httpRequestHandler,
+        return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler,
                 baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/template", "DELETE", null, null, null, null,
                 null, pathParameters, new HashMap<String, String>(), false, parseResponse);
     }
@@ -473,38 +471,38 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 new String[]{"String", "int"}, new String[]{"repoId", "entryId"},
                 new Object[]{parameters.getRepoId(), parameters.getEntryId()});
         Function<HttpResponse<Object>, Map<String, String[]>> parseResponse = (HttpResponse<Object> httpResponse) -> {
-        Object body = httpResponse.getBody();
-        Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
-        if (httpResponse.getStatus() == 200) {
-            try {
-                String responseJson = new JSONObject(body).toString();
-                return objectMapper.readValue(responseJson, new HashMap<String, String[]>().getClass());
-            } catch (Exception e) {
-                throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+            Object body = httpResponse.getBody();
+            Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
+            if (httpResponse.getStatus() == 200) {
+                try {
+                    String responseJson = new JSONObject(body).toString();
+                    return objectMapper.readValue(responseJson, new HashMap<String, String[]>().getClass());
+                } catch (Exception e) {
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+                }
+            } else {
+                ProblemDetails problemDetails;
+                try {
+                    String jsonString = new JSONObject(body).toString();
+                    problemDetails = ProblemDetailsDeserializer.deserialize(objectMapper, jsonString);
+                } catch (Exception e) {
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+                }
+                if (httpResponse.getStatus() == 400)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 401)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 403)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 404)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else if (httpResponse.getStatus() == 429)
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                else
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
             }
-        } else {
-            ProblemDetails problemDetails;
-            try {
-                String jsonString = new JSONObject(body).toString();
-                problemDetails = ProblemDetailsDeserializer.deserialize(objectMapper, jsonString);
-            } catch (Exception e) {
-                throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
-            }
-            if (httpResponse.getStatus() == 400)
-                throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-            else if (httpResponse.getStatus() == 401)
-                throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-            else if (httpResponse.getStatus() == 403)
-                throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-            else if (httpResponse.getStatus() == 404)
-                throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-            else if (httpResponse.getStatus() == 429)
-                throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-            else
-                throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-        }};
-        return sendRequestWithRetry(httpClient, objectMapper, null,
-                httpRequestHandler,
+        };
+        return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler,
                 baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/fields/GetDynamicFieldLogicValue", "POST",
                 "application/json", parameters.getRequestBody(), null, null, null, pathParameters,
                 new HashMap<String, String>(), true, parseResponse);
@@ -549,7 +547,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                     throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
             }
         };
-        return sendRequestWithRetry(httpClient, objectMapper, FindEntryResult.class, httpRequestHandler,
+        return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler,
                 baseUrl + "/v1/Repositories/{repoId}/Entries/ByPath", "GET", null, null, null, null, queryParameters,
                 pathParameters, new HashMap<String, String>(), false, parseResponse);
     }
@@ -594,7 +592,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                     throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
             }
         };
-        return sendRequestWithRetry(httpClient, objectMapper, AcceptedOperation.class, httpRequestHandler,
+        return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler,
                 baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Folder/CopyAsync", "POST",
                 "application/json", parameters.getRequestBody(), null, null, queryParameters, pathParameters,
                 new HashMap<String, String>(), false, parseResponse);
@@ -639,7 +637,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                     throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
             }
         };
-        return sendRequestWithRetry(httpClient, objectMapper, Entry.class, httpRequestHandler,
+        return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler,
                 baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}", "GET", null, null, null, null, queryParameters,
                 pathParameters, new HashMap<String, String>(), false, parseResponse);
     }
@@ -688,7 +686,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                     throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
             }
         };
-        return sendRequestWithRetry(httpClient, objectMapper, Entry.class, httpRequestHandler,
+        return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler,
                 baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}", "PATCH", "application/json",
                 parameters.getRequestBody(), null, null, queryParameters, pathParameters, new HashMap<String, String>(),
                 false, parseResponse);
@@ -731,7 +729,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                     throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
             }
         };
-        return sendRequestWithRetry(httpClient, objectMapper, AcceptedOperation.class, httpRequestHandler,
+        return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler,
                 baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}", "DELETE", "application/json",
                 parameters.getRequestBody(), null, null, null, pathParameters, new HashMap<String, String>(), false,
                 parseResponse);
@@ -960,7 +958,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                     throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
             }
         };
-        return sendRequestWithRetry(httpClient, objectMapper, ODataValueOfBoolean.class, httpRequestHandler,
+        return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler,
                 baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Document/edoc", "DELETE",
                 null, null, null, null, null, pathParameters, new HashMap<String, String>(), false, parseResponse);
     }
@@ -970,8 +968,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
         Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(
                 new String[]{"String", "int"}, new String[]{"repoId", "entryId"},
                 new Object[]{parameters.getRepoId(), parameters.getEntryId()});
-        return sendRequestWithRetry(httpClient, objectMapper, new HashMap<String, String[]>().getClass(),
-                httpRequestHandler,
+        return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler,
                 baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Document/edoc", "HEAD",
                 null, null, null, null, null, pathParameters, new HashMap<String, String>(), false, null);
     }
@@ -1017,7 +1014,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                     throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
             }
         };
-        return sendRequestWithRetry(httpClient, objectMapper, ODataValueOfBoolean.class, httpRequestHandler,
+        return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler,
                 baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Document/pages", "DELETE",
                 null, null, null, null, queryParameters, pathParameters, new HashMap<String, String>(), false,
                 parseResponse);
@@ -1076,8 +1073,8 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                     throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
             }
         };
-        return sendRequestWithRetry(httpClient, objectMapper, ODataValueContextOfIListOfEntry.class, httpRequestHandler,
-                url, "GET", null, null, "fields", (queryParameters.get("fields") != null) ? (queryParameters.get(
+        return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler, url, "GET", null, null, "fields",
+                (queryParameters.get("fields") != null) ? (queryParameters.get(
                         "fields") instanceof String ? Arrays.asList(
                         queryParameters.remove("fields")) : (List) queryParameters.remove("fields")) : new ArrayList(),
                 queryParameters, pathParameters, headerParametersWithStringTypeValue, false, parseResponse);
@@ -1142,7 +1139,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                     throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
             }
         };
-        return sendRequestWithRetry(httpClient, objectMapper, Entry.class, httpRequestHandler,
+        return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler,
                 baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Folder/children", "POST",
                 "application/json", parameters.getRequestBody(), null, null, queryParameters, pathParameters,
                 new HashMap<String, String>(), false, parseResponse);
@@ -1200,9 +1197,8 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                     throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
             }
         };
-        return sendRequestWithRetry(httpClient, objectMapper, ODataValueContextOfIListOfWTagInfo.class,
-                httpRequestHandler, url, "GET", null, null, null, null, queryParameters, pathParameters,
-                headerParametersWithStringTypeValue, false, parseResponse);
+        return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler, url, "GET", null, null, null, null,
+                queryParameters, pathParameters, headerParametersWithStringTypeValue, false, parseResponse);
     }
 
     @Override
@@ -1261,9 +1257,10 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                     throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
             }
         };
-        return sendRequestWithRetry(httpClient, objectMapper, ODataValueOfIListOfWTagInfo.class, httpRequestHandler,
+        return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler,
                 baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/tags", "PUT", "application/json",
                 parameters.getRequestBody(), null, null, null, pathParameters, new HashMap<String, String>(), false,
                 parseResponse);
     }
 }
+

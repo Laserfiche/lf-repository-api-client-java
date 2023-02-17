@@ -64,7 +64,7 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
                     throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
             }
         };
-        return sendRequestWithRetry(httpClient, objectMapper, OperationProgress.class, httpRequestHandler,
+        return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler,
                 baseUrl + "/v1/Repositories/{repoId}/Searches/{searchToken}", "GET", null, null, null, null, null,
                 pathParameters, new HashMap<String, String>(), false, parseResponse);
     }
@@ -106,7 +106,7 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
                     throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
             }
         };
-        return sendRequestWithRetry(httpClient, objectMapper, ODataValueOfBoolean.class, httpRequestHandler,
+        return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler,
                 baseUrl + "/v1/Repositories/{repoId}/Searches/{searchToken}", "DELETE", null, null, null, null, null,
                 pathParameters, new HashMap<String, String>(), false, parseResponse);
     }
@@ -165,9 +165,8 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
                     throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
             }
         };
-        return sendRequestWithRetry(httpClient, objectMapper, ODataValueContextOfIListOfContextHit.class,
-                httpRequestHandler, url, "GET", null, null, null, null, queryParameters, pathParameters,
-                headerParametersWithStringTypeValue, false, parseResponse);
+        return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler, url, "GET", null, null, null, null,
+                queryParameters, pathParameters, headerParametersWithStringTypeValue, false, parseResponse);
     }
 
     @Override
@@ -223,7 +222,7 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
                     throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
             }
         };
-        return sendRequestWithRetry(httpClient, objectMapper, AcceptedOperation.class, httpRequestHandler,
+        return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler,
                 baseUrl + "/v1/Repositories/{repoId}/Searches", "POST", "application/json", parameters.getRequestBody(),
                 null, null, null, pathParameters, new HashMap<String, String>(), false, parseResponse);
     }
@@ -279,8 +278,8 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
                     throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
             }
         };
-        return sendRequestWithRetry(httpClient, objectMapper, ODataValueContextOfIListOfEntry.class, httpRequestHandler,
-                url, "GET", null, null, "fields", (queryParameters.get("fields") != null) ? (queryParameters.get(
+        return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler, url, "GET", null, null, "fields",
+                (queryParameters.get("fields") != null) ? (queryParameters.get(
                         "fields") instanceof String ? Arrays.asList(
                         queryParameters.remove("fields")) : (List) queryParameters.remove("fields")) : new ArrayList(),
                 queryParameters, pathParameters, headerParametersWithStringTypeValue, false, parseResponse);
@@ -303,4 +302,5 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
         }
     }
 }
+
 
