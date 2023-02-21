@@ -21,6 +21,9 @@
     }
   }
   ```
+- Added retry implementation when making an API call which retries when:
+  - 401 status code response is being returned
+  - Idempotent http request
 
 ## 1.2.0
 

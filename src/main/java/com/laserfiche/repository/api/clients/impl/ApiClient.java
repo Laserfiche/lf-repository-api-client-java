@@ -1,12 +1,8 @@
 package com.laserfiche.repository.api.clients.impl;
 
-import kong.unirest.Header;
-import kong.unirest.Headers;
+import com.laserfiche.api.client.httphandlers.HttpRequestHandler;
 import kong.unirest.ObjectMapper;
 import kong.unirest.UnirestInstance;
-
-import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * The base API client.
@@ -19,63 +15,15 @@ public abstract class ApiClient {
 
     protected ObjectMapper objectMapper;
 
-    public ApiClient(String baseUrl, UnirestInstance httpClient) {
+    protected HttpRequestHandler httpRequestHandler;
+
+    public ApiClient(String baseUrl, UnirestInstance httpClient, HttpRequestHandler httpRequestHandler) {
         this.baseUrl = baseUrl;
         this.httpClient = httpClient;
         this.objectMapper = httpClient
                 .config()
                 .getObjectMapper();
-    }
-
-    protected String mergeMaxSizeIntoPrefer(int maxSize, String prefer) {
-        if (maxSize == 0)
-            return prefer;
-        else
-            return prefer == null ? String.format("maxpagesize=%d", maxSize) : String.format("%s; maxpagesize=%d",
-                    prefer, maxSize);
-    }
-
-    protected Map<String, Object> getParametersWithNonDefaultValue(String[] parameterTypes, String[] parameterNames,
-            Object[] parameterValues) {
-        if (parameterTypes == null || parameterNames == null || parameterValues == null) {
-            throw new IllegalArgumentException("Input cannot be null.");
-        }
-        if (parameterTypes.length != parameterNames.length || parameterNames.length != parameterValues.length) {
-            throw new IllegalArgumentException(
-                    "The arrays for parameter types/names/values should have the same length.");
-        }
-        Map<String, Object> paramKeyValuePairs = new HashMap<>();
-        for (int i = 0; i < parameterValues.length; i++) {
-            if (parameterValues[i] != null && !hasDefaultValue(parameterTypes[i], parameterValues[i])) {
-                List<Object> values = new ArrayList<>();
-                if (parameterValues[i] instanceof Object[]) {
-                    Object[] objects = (Object[]) parameterValues[i];
-                    Collections.addAll(values, objects);
-                } else {
-                    values.add(parameterValues[i]);
-                }
-                if (values.size() == 1) {
-                    paramKeyValuePairs.put(parameterNames[i], values.get(0));
-                } else {
-                    paramKeyValuePairs.put(parameterNames[i], values);
-                }
-            }
-        }
-        return paramKeyValuePairs;
-    }
-
-    private boolean hasDefaultValue(String type, Object value) {
-        switch (type) {
-            case "int":
-                return value
-                        .toString()
-                        .equals("0");
-            case "boolean":
-                return value
-                        .toString()
-                        .equals("false");
-        }
-        return false;
+        this.httpRequestHandler = httpRequestHandler;
     }
 
     protected String toJson(Object object) {
@@ -86,12 +34,5 @@ public abstract class ApiClient {
             System.err.println(e);
         }
         return json;
-    }
-
-    protected Map<String, String> getHeadersMap(Headers headers) {
-        return headers
-                .all()
-                .stream()
-                .collect(Collectors.toMap(Header::getName, Header::getValue));
     }
 }

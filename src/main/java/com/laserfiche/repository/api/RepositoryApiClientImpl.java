@@ -1,6 +1,9 @@
 package com.laserfiche.repository.api;
 
 import com.laserfiche.api.client.deserialization.TokenClientObjectMapper;
+import com.laserfiche.api.client.httphandlers.HttpRequestHandler;
+import com.laserfiche.api.client.httphandlers.OAuthClientCredentialsHandler;
+import com.laserfiche.api.client.httphandlers.UsernamePasswordHandler;
 import com.laserfiche.api.client.model.AccessKey;
 import com.laserfiche.repository.api.clients.*;
 import com.laserfiche.repository.api.clients.impl.*;
@@ -15,7 +18,6 @@ import java.util.Map;
  */
 public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseable {
     private Map<String, String> defaultHeaders;
-    private final RepositoryApiClientInterceptor interceptor;
     private final UnirestInstance httpClient;
     private final AttributesClient attributesClient;
     private final AuditReasonsClient auditReasonsClient;
@@ -30,7 +32,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
     private final TasksClient tasksClient;
     private final TemplateDefinitionsClient templateDefinitionsClient;
 
-    protected RepositoryApiClientImpl(RepositoryApiClientInterceptor interceptor, String baseUrl) {
+    protected RepositoryApiClientImpl(String baseUrl, HttpRequestHandler httpHandler) {
         if (baseUrl.endsWith("/")) {
             baseUrl = baseUrl.substring(0, baseUrl.length() - 1);
         }
@@ -42,23 +44,21 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
         httpClient = Unirest.spawnInstance();
         httpClient
                 .config()
-                .setObjectMapper(objectMapper)
-                .interceptor(interceptor);
-        this.interceptor = interceptor;
+                .setObjectMapper(objectMapper);
 
         // Initialize repository API clients
-        attributesClient = new AttributesClientImpl(baseUrl, httpClient);
-        auditReasonsClient = new AuditReasonsClientImpl(baseUrl, httpClient);
-        entriesClient = new EntriesClientImpl(baseUrl, httpClient);
-        fieldDefinitionsClient = new FieldDefinitionsClientImpl(baseUrl, httpClient);
-        linkDefinitionsClient = new LinkDefinitionsClientImpl(baseUrl, httpClient);
-        repositoriesClient = new RepositoriesClientImpl(baseUrl, httpClient);
-        searchesClient = new SearchesClientImpl(baseUrl, httpClient);
-        serverSessionClient = new ServerSessionClientImpl(baseUrl, httpClient);
-        simpleSearchesClient = new SimpleSearchesClientImpl(baseUrl, httpClient);
-        tagDefinitionsClient = new TagDefinitionsClientImpl(baseUrl, httpClient);
-        tasksClient = new TasksClientImpl(baseUrl, httpClient);
-        templateDefinitionsClient = new TemplateDefinitionsClientImpl(baseUrl, httpClient);
+        attributesClient = new AttributesClientImpl(baseUrl, httpClient, httpHandler);
+        auditReasonsClient = new AuditReasonsClientImpl(baseUrl, httpClient, httpHandler);
+        entriesClient = new EntriesClientImpl(baseUrl, httpClient, httpHandler);
+        fieldDefinitionsClient = new FieldDefinitionsClientImpl(baseUrl, httpClient, httpHandler);
+        linkDefinitionsClient = new LinkDefinitionsClientImpl(baseUrl, httpClient, httpHandler);
+        repositoriesClient = new RepositoriesClientImpl(baseUrl, httpClient, httpHandler);
+        searchesClient = new SearchesClientImpl(baseUrl, httpClient, httpHandler);
+        serverSessionClient = new ServerSessionClientImpl(baseUrl, httpClient, httpHandler);
+        simpleSearchesClient = new SimpleSearchesClientImpl(baseUrl, httpClient, httpHandler);
+        tagDefinitionsClient = new TagDefinitionsClientImpl(baseUrl, httpClient, httpHandler);
+        tasksClient = new TasksClientImpl(baseUrl, httpClient, httpHandler);
+        templateDefinitionsClient = new TemplateDefinitionsClientImpl(baseUrl, httpClient, httpHandler);
     }
 
     /**
@@ -73,8 +73,8 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
         if (baseUrlDebug == null) {
             baseUrlDebug = "https://api." + accessKey.getDomain() + "/repository";
         }
-        RepositoryApiClientInterceptor interceptor = new OAuthInterceptor(servicePrincipalKey, accessKey);
-        return new RepositoryApiClientImpl(interceptor, baseUrlDebug);
+        HttpRequestHandler oauthHandler = new OAuthClientCredentialsHandler(servicePrincipalKey, accessKey);
+        return new RepositoryApiClientImpl(baseUrlDebug, oauthHandler);
     }
 
     /**
@@ -98,9 +98,8 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
      */
     public static RepositoryApiClient createFromUsernamePassword(String repositoryId, String username, String password,
             String baseUrl) {
-        RepositoryApiClientInterceptor interceptor = new SelfHostedInterceptor(repositoryId, username, password,
-                baseUrl, null);
-        return new RepositoryApiClientImpl(interceptor, baseUrl);
+        HttpRequestHandler usernamePasswordHandler = new UsernamePasswordHandler(repositoryId, username, password, baseUrl, null);
+        return new RepositoryApiClientImpl(baseUrl, usernamePasswordHandler);
     }
 
     @Override
@@ -181,9 +180,6 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
      */
     @Override
     public void close() {
-        if (interceptor != null) {
-            interceptor.close();
-        }
         httpClient.close();
     }
 }
