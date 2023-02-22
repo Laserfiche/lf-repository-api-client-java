@@ -64,18 +64,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 } catch (Exception e) {
                     throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
                 }
-                if (httpResponse.getStatus() == 400)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 401)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 403)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 404)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 429)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                throw ApiClientUtils.createApiException(httpResponse, problemDetails);
             }
         };
         return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler, url, "GET", null, null, null, null,
@@ -124,20 +113,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 } catch (Exception e) {
                     throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
                 }
-                if (httpResponse.getStatus() == 400)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 401)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 403)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 404)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 423)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 429)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                throw ApiClientUtils.createApiException(httpResponse, problemDetails);
             }
         };
         return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler,
@@ -288,18 +264,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 } catch (Exception e) {
                     throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
                 }
-                if (httpResponse.getStatus() == 400)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 401)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 403)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 404)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 429)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                throw ApiClientUtils.createApiException(httpResponse, problemDetails);
             }
         };
         return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler, url, "GET", null, null, null, null,
@@ -346,20 +311,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 } catch (Exception e) {
                     throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
                 }
-                if (httpResponse.getStatus() == 400)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 401)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 403)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 404)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 423)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 429)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                throw ApiClientUtils.createApiException(httpResponse, problemDetails);
             }
         };
         return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler,
@@ -393,20 +345,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 } catch (Exception e) {
                     throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
                 }
-                if (httpResponse.getStatus() == 400)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 401)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 403)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 404)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 423)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 429)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                throw ApiClientUtils.createApiException(httpResponse, problemDetails);
             }
         };
         return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler,
@@ -438,20 +377,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 } catch (Exception e) {
                     throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
                 }
-                if (httpResponse.getStatus() == 400)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 401)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 403)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 404)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 423)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 429)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                throw ApiClientUtils.createApiException(httpResponse, problemDetails);
             }
         };
         return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler,
@@ -482,18 +408,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 } catch (Exception e) {
                     throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
                 }
-                if (httpResponse.getStatus() == 400)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 401)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 403)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 404)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 429)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                throw ApiClientUtils.createApiException(httpResponse, problemDetails);
             }
         };
         return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler,
@@ -527,18 +442,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 } catch (Exception e) {
                     throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
                 }
-                if (httpResponse.getStatus() == 400)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 401)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 403)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 404)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 429)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                throw ApiClientUtils.createApiException(httpResponse, problemDetails);
             }
         };
         return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler,
@@ -572,18 +476,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 } catch (Exception e) {
                     throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
                 }
-                if (httpResponse.getStatus() == 400)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 401)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 403)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 404)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 429)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                throw ApiClientUtils.createApiException(httpResponse, problemDetails);
             }
         };
         return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler,
@@ -617,18 +510,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 } catch (Exception e) {
                     throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
                 }
-                if (httpResponse.getStatus() == 400)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 401)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 403)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 404)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 429)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                throw ApiClientUtils.createApiException(httpResponse, problemDetails);
             }
         };
         return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler,
@@ -662,22 +544,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 } catch (Exception e) {
                     throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
                 }
-                if (httpResponse.getStatus() == 400)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 401)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 403)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 404)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 409)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 423)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 429)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                throw ApiClientUtils.createApiException(httpResponse, problemDetails);
             }
         };
         return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler,
@@ -709,18 +576,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 } catch (Exception e) {
                     throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
                 }
-                if (httpResponse.getStatus() == 400)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 401)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 403)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 404)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 429)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                throw ApiClientUtils.createApiException(httpResponse, problemDetails);
             }
         };
         return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler,
@@ -928,20 +784,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 } catch (Exception e) {
                     throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
                 }
-                if (httpResponse.getStatus() == 400)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 401)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 403)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 404)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 423)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 429)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                throw ApiClientUtils.createApiException(httpResponse, problemDetails);
             }
         };
         return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler,
@@ -997,20 +840,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 } catch (Exception e) {
                     throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
                 }
-                if (httpResponse.getStatus() == 400)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 401)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 403)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 404)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 423)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 429)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                throw ApiClientUtils.createApiException(httpResponse, problemDetails);
             }
         };
         return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler,
@@ -1058,18 +888,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 } catch (Exception e) {
                     throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
                 }
-                if (httpResponse.getStatus() == 400)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 401)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 403)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 404)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 429)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                throw ApiClientUtils.createApiException(httpResponse, problemDetails);
             }
         };
         return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler, url, "GET", null, null, "fields",
@@ -1122,20 +941,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 } catch (Exception e) {
                     throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
                 }
-                if (httpResponse.getStatus() == 400)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 401)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 403)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 404)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 409)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 429)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                throw ApiClientUtils.createApiException(httpResponse, problemDetails);
             }
         };
         return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler,
@@ -1182,18 +988,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 } catch (Exception e) {
                     throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
                 }
-                if (httpResponse.getStatus() == 400)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 401)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 403)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 404)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 429)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                throw ApiClientUtils.createApiException(httpResponse, problemDetails);
             }
         };
         return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler, url, "GET", null, null, null, null,
@@ -1240,20 +1035,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 } catch (Exception e) {
                     throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
                 }
-                if (httpResponse.getStatus() == 400)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 401)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 403)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 404)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 423)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else if (httpResponse.getStatus() == 429)
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
-                else
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                throw ApiClientUtils.createApiException(httpResponse, problemDetails);
             }
         };
         return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler,
