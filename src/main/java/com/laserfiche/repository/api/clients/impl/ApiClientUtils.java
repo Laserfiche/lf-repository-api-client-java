@@ -83,10 +83,10 @@ public class ApiClientUtils {
                 .trim();
     }
 
-    protected static void createApiException(HttpResponse<Object> httpResponse, ProblemDetails problemDetails) {
+    protected static ApiException createApiException(HttpResponse<Object> httpResponse, ProblemDetails problemDetails) {
         int statusCode = httpResponse.getStatus();
         Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
-        throw ApiException.create(statusCode, headersMap, problemDetails, null);
+        return ApiException.create(statusCode, headersMap, problemDetails, null);
     }
 
     /**
