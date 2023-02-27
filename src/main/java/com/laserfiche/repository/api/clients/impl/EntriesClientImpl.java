@@ -643,6 +643,9 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                                     else if (rawResponse.getStatus() == 404)
                                         exception[0] = ApiException.create(rawResponse.getStatus(), headersMap,
                                                 problemDetails, null);
+                                    else if (rawResponse.getStatus() == 413)
+                                        exception[0] = ApiException.create(rawResponse.getStatus(), headersMap,
+                                                problemDetails, null);
                                     else if (rawResponse.getStatus() == 423)
                                         exception[0] = ApiException.create(rawResponse.getStatus(), headersMap,
                                                 problemDetails, null);
@@ -1058,4 +1061,3 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 parseResponse);
     }
 }
-
