@@ -600,6 +600,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
             final RuntimeException[] exception = {null};
             int retryCount = 0;
             int maxRetries = 1;
+            final int[] statusCode = {0};
             boolean shouldRetry = true;
             while (retryCount <= maxRetries && shouldRetry) {
                 try {
@@ -613,6 +614,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                             .contentType("application/json")
                             .body(parameters.getRequestBody())
                             .thenConsume(rawResponse -> {
+                                statusCode[0] = rawResponse.getStatus();
                                 if (rawResponse.getStatus() == 200 || rawResponse.getStatus() == 206) {
                                     parameters
                                             .getInputStreamConsumer()
@@ -651,15 +653,20 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                                         exception[0] = new RuntimeException(rawResponse.getStatusText());
                                 }
                             });
-                    if (exception[0] != null) {
-                        throw exception[0];
+                    shouldRetry = httpRequestHandler.afterSend(
+                            new ResponseImpl((short) statusCode[0])) || ApiClientUtils.isRetryableStatusCode(
+                            statusCode[0], HttpMethod.POST);
+                    if (!shouldRetry) {
+                        if (exception[0] != null) {
+                            throw exception[0];
+                        }
+                    } else {
+                        exception[0] = null;
                     }
                 } catch (Exception err) {
                     if (err instanceof ApiException) {
                         if (exception[0] != null) {
                             throw exception[0];
-                        } else {
-                            System.err.println(err);
                         }
                         break;
                     }
@@ -689,6 +696,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
             final RuntimeException[] exception = {null};
             int retryCount = 0;
             int maxRetries = 1;
+            final int[] statusCode = {0};
             boolean shouldRetry = true;
             while (retryCount <= maxRetries && shouldRetry) {
                 try {
@@ -700,6 +708,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                             .routeParam(pathParameters)
                             .headers(headerParametersWithStringTypeValue)
                             .thenConsume(rawResponse -> {
+                                statusCode[0] = rawResponse.getStatus();
                                 if (rawResponse.getStatus() == 200 || rawResponse.getStatus() == 206) {
                                     parameters
                                             .getInputStreamConsumer()
@@ -738,15 +747,20 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                                         exception[0] = new RuntimeException(rawResponse.getStatusText());
                                 }
                             });
-                    if (exception[0] != null) {
-                        throw exception[0];
+                    shouldRetry = httpRequestHandler.afterSend(
+                            new ResponseImpl((short) statusCode[0])) || ApiClientUtils.isRetryableStatusCode(
+                            statusCode[0], HttpMethod.GET);
+                    if (!shouldRetry) {
+                        if (exception[0] != null) {
+                            throw exception[0];
+                        }
+                    } else {
+                        exception[0] = null;
                     }
                 } catch (Exception err) {
                     if (err instanceof ApiException) {
                         if (exception[0] != null) {
                             throw exception[0];
-                        } else {
-                            System.err.println(err);
                         }
                         break;
                     }
