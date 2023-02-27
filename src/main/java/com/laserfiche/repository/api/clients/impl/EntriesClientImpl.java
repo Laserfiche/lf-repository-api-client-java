@@ -631,29 +631,8 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                                         exception[0] = ApiException.create(rawResponse.getStatus(), headersMap, null,
                                                 e);
                                     }
-                                    if (rawResponse.getStatus() == 400)
-                                        exception[0] = ApiException.create(rawResponse.getStatus(), headersMap,
-                                                problemDetails, null);
-                                    else if (rawResponse.getStatus() == 401)
-                                        exception[0] = ApiException.create(rawResponse.getStatus(), headersMap,
-                                                problemDetails, null);
-                                    else if (rawResponse.getStatus() == 403)
-                                        exception[0] = ApiException.create(rawResponse.getStatus(), headersMap,
-                                                problemDetails, null);
-                                    else if (rawResponse.getStatus() == 404)
-                                        exception[0] = ApiException.create(rawResponse.getStatus(), headersMap,
-                                                problemDetails, null);
-                                    else if (rawResponse.getStatus() == 413)
-                                        exception[0] = ApiException.create(rawResponse.getStatus(), headersMap,
-                                                problemDetails, null);
-                                    else if (rawResponse.getStatus() == 423)
-                                        exception[0] = ApiException.create(rawResponse.getStatus(), headersMap,
-                                                problemDetails, null);
-                                    else if (rawResponse.getStatus() == 429)
-                                        exception[0] = ApiException.create(rawResponse.getStatus(), headersMap,
-                                                problemDetails, null);
-                                    else
-                                        exception[0] = new RuntimeException(rawResponse.getStatusText());
+                                    exception[0] = ApiException.create(rawResponse.getStatus(), headersMap,
+                                            problemDetails, null);
                                 }
                             });
                     shouldRetry = httpRequestHandler.afterSend(
@@ -667,13 +646,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                         exception[0] = null;
                     }
                 } catch (Exception err) {
-                    if (err instanceof ApiException) {
-                        if (exception[0] != null) {
-                            throw exception[0];
-                        }
-                        break;
-                    }
-                    if (retryCount >= maxRetries) {
+                    if (err instanceof ApiException || retryCount >= maxRetries) {
                         throw err;
                     }
                     shouldRetry = true;
@@ -728,26 +701,8 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                                         exception[0] = ApiException.create(rawResponse.getStatus(), headersMap, null,
                                                 e);
                                     }
-                                    if (rawResponse.getStatus() == 400)
-                                        exception[0] = ApiException.create(rawResponse.getStatus(), headersMap,
-                                                problemDetails, null);
-                                    else if (rawResponse.getStatus() == 401)
-                                        exception[0] = ApiException.create(rawResponse.getStatus(), headersMap,
-                                                problemDetails, null);
-                                    else if (rawResponse.getStatus() == 403)
-                                        exception[0] = ApiException.create(rawResponse.getStatus(), headersMap,
-                                                problemDetails, null);
-                                    else if (rawResponse.getStatus() == 404)
-                                        exception[0] = ApiException.create(rawResponse.getStatus(), headersMap,
-                                                problemDetails, null);
-                                    else if (rawResponse.getStatus() == 423)
-                                        exception[0] = ApiException.create(rawResponse.getStatus(), headersMap,
-                                                problemDetails, null);
-                                    else if (rawResponse.getStatus() == 429)
-                                        exception[0] = ApiException.create(rawResponse.getStatus(), headersMap,
-                                                problemDetails, null);
-                                    else
-                                        exception[0] = new RuntimeException(rawResponse.getStatusText());
+                                    exception[0] = ApiException.create(rawResponse.getStatus(), headersMap,
+                                            problemDetails, null);
                                 }
                             });
                     shouldRetry = httpRequestHandler.afterSend(
@@ -761,13 +716,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                         exception[0] = null;
                     }
                 } catch (Exception err) {
-                    if (err instanceof ApiException) {
-                        if (exception[0] != null) {
-                            throw exception[0];
-                        }
-                        break;
-                    }
-                    if (retryCount >= maxRetries) {
+                    if (err instanceof ApiException || retryCount >= maxRetries) {
                         throw err;
                     }
                     shouldRetry = true;
