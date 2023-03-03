@@ -13,7 +13,7 @@ public class ParametersForDeletePages {
     /**
      * The requested document ID.
      */
-    private int entryId;
+    private Integer entryId;
 
     /**
      * The pages to be deleted.
@@ -46,7 +46,7 @@ public class ParametersForDeletePages {
      * @param entryId The requested document ID.
      * @return {@link ParametersForDeletePages} The return value
      */
-    public ParametersForDeletePages setEntryId(int entryId) {
+    public ParametersForDeletePages setEntryId(Integer entryId) {
         this.entryId = entryId;
         return this;
     }
@@ -54,9 +54,9 @@ public class ParametersForDeletePages {
     /**
      * The requested document ID.
      *
-     * @return int The return value
+     * @return {@link Integer} The return value
      */
-    public int getEntryId() {
+    public Integer getEntryId() {
         return this.entryId;
     }
 

@@ -13,7 +13,7 @@ public class ParametersForGetLinkValuesFromEntry {
     /**
      * The requested entry ID.
      */
-    private int entryId;
+    private Integer entryId;
 
     /**
      * An optional odata header. Can be used to set the maximum page size using odata.maxpagesize.
@@ -33,17 +33,17 @@ public class ParametersForGetLinkValuesFromEntry {
     /**
      * Limits the number of items returned from a collection.
      */
-    private int top;
+    private Integer top;
 
     /**
      * Excludes the specified number of items of the queried collection from the result.
      */
-    private int skip;
+    private Integer skip;
 
     /**
      * Indicates whether the total count of items within a collection are returned in the result.
      */
-    private boolean count;
+    private Boolean count;
 
     /**
      * Sets the value of the repoId parameter and returns the current object, to enable chaining further setters.
@@ -71,7 +71,7 @@ public class ParametersForGetLinkValuesFromEntry {
      * @param entryId The requested entry ID.
      * @return {@link ParametersForGetLinkValuesFromEntry} The return value
      */
-    public ParametersForGetLinkValuesFromEntry setEntryId(int entryId) {
+    public ParametersForGetLinkValuesFromEntry setEntryId(Integer entryId) {
         this.entryId = entryId;
         return this;
     }
@@ -79,9 +79,9 @@ public class ParametersForGetLinkValuesFromEntry {
     /**
      * The requested entry ID.
      *
-     * @return int The return value
+     * @return {@link Integer} The return value
      */
-    public int getEntryId() {
+    public Integer getEntryId() {
         return this.entryId;
     }
 
@@ -151,7 +151,7 @@ public class ParametersForGetLinkValuesFromEntry {
      * @param top Limits the number of items returned from a collection.
      * @return {@link ParametersForGetLinkValuesFromEntry} The return value
      */
-    public ParametersForGetLinkValuesFromEntry setTop(int top) {
+    public ParametersForGetLinkValuesFromEntry setTop(Integer top) {
         this.top = top;
         return this;
     }
@@ -159,9 +159,9 @@ public class ParametersForGetLinkValuesFromEntry {
     /**
      * Limits the number of items returned from a collection.
      *
-     * @return int The return value
+     * @return {@link Integer} The return value
      */
-    public int getTop() {
+    public Integer getTop() {
         return this.top;
     }
 
@@ -171,7 +171,7 @@ public class ParametersForGetLinkValuesFromEntry {
      * @param skip Excludes the specified number of items of the queried collection from the result.
      * @return {@link ParametersForGetLinkValuesFromEntry} The return value
      */
-    public ParametersForGetLinkValuesFromEntry setSkip(int skip) {
+    public ParametersForGetLinkValuesFromEntry setSkip(Integer skip) {
         this.skip = skip;
         return this;
     }
@@ -179,9 +179,9 @@ public class ParametersForGetLinkValuesFromEntry {
     /**
      * Excludes the specified number of items of the queried collection from the result.
      *
-     * @return int The return value
+     * @return {@link Integer} The return value
      */
-    public int getSkip() {
+    public Integer getSkip() {
         return this.skip;
     }
 
@@ -191,7 +191,7 @@ public class ParametersForGetLinkValuesFromEntry {
      * @param count Indicates whether the total count of items within a collection are returned in the result.
      * @return {@link ParametersForGetLinkValuesFromEntry} The return value
      */
-    public ParametersForGetLinkValuesFromEntry setCount(boolean count) {
+    public ParametersForGetLinkValuesFromEntry setCount(Boolean count) {
         this.count = count;
         return this;
     }
@@ -199,9 +199,9 @@ public class ParametersForGetLinkValuesFromEntry {
     /**
      * Indicates whether the total count of items within a collection are returned in the result.
      *
-     * @return boolean The return value
+     * @return {@link Boolean} The return value
      */
-    public boolean isCount() {
+    public Boolean isCount() {
         return this.count;
     }
 }

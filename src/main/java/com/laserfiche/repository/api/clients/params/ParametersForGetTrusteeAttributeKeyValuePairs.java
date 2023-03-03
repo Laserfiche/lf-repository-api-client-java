@@ -13,7 +13,7 @@ public class ParametersForGetTrusteeAttributeKeyValuePairs {
     /**
      * Boolean value that indicates whether to return attributes key value pairs associated with everyone or the currently authenticated user.
      */
-    private boolean everyone;
+    private Boolean everyone;
 
     /**
      * An optional OData header. Can be used to set the maximum page size using odata.maxpagesize.
@@ -33,17 +33,17 @@ public class ParametersForGetTrusteeAttributeKeyValuePairs {
     /**
      * Limits the number of items returned from a collection.
      */
-    private int top;
+    private Integer top;
 
     /**
      * Excludes the specified number of items of the queried collection from the result.
      */
-    private int skip;
+    private Integer skip;
 
     /**
      * Indicates whether the total count of items within a collection are returned in the result.
      */
-    private boolean count;
+    private Boolean count;
 
     /**
      * Sets the value of the repoId parameter and returns the current object, to enable chaining further setters.
@@ -71,7 +71,7 @@ public class ParametersForGetTrusteeAttributeKeyValuePairs {
      * @param everyone Boolean value that indicates whether to return attributes key value pairs associated with everyone or the currently authenticated user.
      * @return {@link ParametersForGetTrusteeAttributeKeyValuePairs} The return value
      */
-    public ParametersForGetTrusteeAttributeKeyValuePairs setEveryone(boolean everyone) {
+    public ParametersForGetTrusteeAttributeKeyValuePairs setEveryone(Boolean everyone) {
         this.everyone = everyone;
         return this;
     }
@@ -79,9 +79,9 @@ public class ParametersForGetTrusteeAttributeKeyValuePairs {
     /**
      * Boolean value that indicates whether to return attributes key value pairs associated with everyone or the currently authenticated user.
      *
-     * @return boolean The return value
+     * @return {@link Boolean} The return value
      */
-    public boolean isEveryone() {
+    public Boolean isEveryone() {
         return this.everyone;
     }
 
@@ -151,7 +151,7 @@ public class ParametersForGetTrusteeAttributeKeyValuePairs {
      * @param top Limits the number of items returned from a collection.
      * @return {@link ParametersForGetTrusteeAttributeKeyValuePairs} The return value
      */
-    public ParametersForGetTrusteeAttributeKeyValuePairs setTop(int top) {
+    public ParametersForGetTrusteeAttributeKeyValuePairs setTop(Integer top) {
         this.top = top;
         return this;
     }
@@ -159,9 +159,9 @@ public class ParametersForGetTrusteeAttributeKeyValuePairs {
     /**
      * Limits the number of items returned from a collection.
      *
-     * @return int The return value
+     * @return {@link Integer} The return value
      */
-    public int getTop() {
+    public Integer getTop() {
         return this.top;
     }
 
@@ -171,7 +171,7 @@ public class ParametersForGetTrusteeAttributeKeyValuePairs {
      * @param skip Excludes the specified number of items of the queried collection from the result.
      * @return {@link ParametersForGetTrusteeAttributeKeyValuePairs} The return value
      */
-    public ParametersForGetTrusteeAttributeKeyValuePairs setSkip(int skip) {
+    public ParametersForGetTrusteeAttributeKeyValuePairs setSkip(Integer skip) {
         this.skip = skip;
         return this;
     }
@@ -179,9 +179,9 @@ public class ParametersForGetTrusteeAttributeKeyValuePairs {
     /**
      * Excludes the specified number of items of the queried collection from the result.
      *
-     * @return int The return value
+     * @return {@link Integer} The return value
      */
-    public int getSkip() {
+    public Integer getSkip() {
         return this.skip;
     }
 
@@ -191,7 +191,7 @@ public class ParametersForGetTrusteeAttributeKeyValuePairs {
      * @param count Indicates whether the total count of items within a collection are returned in the result.
      * @return {@link ParametersForGetTrusteeAttributeKeyValuePairs} The return value
      */
-    public ParametersForGetTrusteeAttributeKeyValuePairs setCount(boolean count) {
+    public ParametersForGetTrusteeAttributeKeyValuePairs setCount(Boolean count) {
         this.count = count;
         return this;
     }
@@ -199,9 +199,9 @@ public class ParametersForGetTrusteeAttributeKeyValuePairs {
     /**
      * Indicates whether the total count of items within a collection are returned in the result.
      *
-     * @return boolean The return value
+     * @return {@link Boolean} The return value
      */
-    public boolean isCount() {
+    public Boolean isCount() {
         return this.count;
     }
 }

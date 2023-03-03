@@ -17,7 +17,7 @@ public class ParametersForImportDocument {
     /**
      * The entry ID of the folder that the document will be created in.
      */
-    private int parentEntryId;
+    private Integer parentEntryId;
 
     /**
      * The created document's file name.
@@ -28,7 +28,7 @@ public class ParametersForImportDocument {
      * An optional query parameter used to indicate if the new document should be automatically
      * renamed if an entry already exists with the given name in the folder. The default value is false.
      */
-    private boolean autoRename;
+    private Boolean autoRename;
 
     /**
      * An optional query parameter used to indicate the locale that should be used.
@@ -66,7 +66,7 @@ public class ParametersForImportDocument {
      * @param parentEntryId The entry ID of the folder that the document will be created in.
      * @return {@link ParametersForImportDocument} The return value
      */
-    public ParametersForImportDocument setParentEntryId(int parentEntryId) {
+    public ParametersForImportDocument setParentEntryId(Integer parentEntryId) {
         this.parentEntryId = parentEntryId;
         return this;
     }
@@ -74,9 +74,9 @@ public class ParametersForImportDocument {
     /**
      * The entry ID of the folder that the document will be created in.
      *
-     * @return int The return value
+     * @return {@link Integer} The return value
      */
-    public int getParentEntryId() {
+    public Integer getParentEntryId() {
         return this.parentEntryId;
     }
 
@@ -107,7 +107,7 @@ public class ParametersForImportDocument {
      *                   renamed if an entry already exists with the given name in the folder. The default value is false.
      * @return {@link ParametersForImportDocument} The return value
      */
-    public ParametersForImportDocument setAutoRename(boolean autoRename) {
+    public ParametersForImportDocument setAutoRename(Boolean autoRename) {
         this.autoRename = autoRename;
         return this;
     }
@@ -116,9 +116,9 @@ public class ParametersForImportDocument {
      * An optional query parameter used to indicate if the new document should be automatically
      * renamed if an entry already exists with the given name in the folder. The default value is false.
      *
-     * @return boolean The return value
+     * @return {@link Boolean} The return value
      */
-    public boolean isAutoRename() {
+    public Boolean isAutoRename() {
         return this.autoRename;
     }
 

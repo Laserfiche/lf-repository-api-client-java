@@ -13,7 +13,7 @@ public class ParametersForGetTemplateDefinitionById {
     /**
      * The requested template definition ID.
      */
-    private int templateId;
+    private Integer templateId;
 
     /**
      * An optional query parameter used to indicate the locale that should be used for formatting.
@@ -52,7 +52,7 @@ public class ParametersForGetTemplateDefinitionById {
      * @param templateId The requested template definition ID.
      * @return {@link ParametersForGetTemplateDefinitionById} The return value
      */
-    public ParametersForGetTemplateDefinitionById setTemplateId(int templateId) {
+    public ParametersForGetTemplateDefinitionById setTemplateId(Integer templateId) {
         this.templateId = templateId;
         return this;
     }
@@ -60,9 +60,9 @@ public class ParametersForGetTemplateDefinitionById {
     /**
      * The requested template definition ID.
      *
-     * @return int The return value
+     * @return {@link Integer} The return value
      */
-    public int getTemplateId() {
+    public Integer getTemplateId() {
         return this.templateId;
     }
 

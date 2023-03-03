@@ -13,7 +13,7 @@ public class ParametersForDeleteAssignedTemplate {
     /**
      * The ID of the entry that will have its template removed.
      */
-    private int entryId;
+    private Integer entryId;
 
     /**
      * Sets the value of the repoId parameter and returns the current object, to enable chaining further setters.
@@ -41,7 +41,7 @@ public class ParametersForDeleteAssignedTemplate {
      * @param entryId The ID of the entry that will have its template removed.
      * @return {@link ParametersForDeleteAssignedTemplate} The return value
      */
-    public ParametersForDeleteAssignedTemplate setEntryId(int entryId) {
+    public ParametersForDeleteAssignedTemplate setEntryId(Integer entryId) {
         this.entryId = entryId;
         return this;
     }
@@ -49,9 +49,9 @@ public class ParametersForDeleteAssignedTemplate {
     /**
      * The ID of the entry that will have its template removed.
      *
-     * @return int The return value
+     * @return {@link Integer} The return value
      */
-    public int getEntryId() {
+    public Integer getEntryId() {
         return this.entryId;
     }
 }

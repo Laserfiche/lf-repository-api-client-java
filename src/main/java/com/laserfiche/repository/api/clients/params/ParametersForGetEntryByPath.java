@@ -18,7 +18,7 @@ public class ParametersForGetEntryByPath {
     /**
      * An optional query parameter used to indicate whether or not the closest ancestor in the path should be returned if the initial entry path is not found. The default value is false.
      */
-    private boolean fallbackToClosestAncestor;
+    private Boolean fallbackToClosestAncestor;
 
     /**
      * Sets the value of the repoId parameter and returns the current object, to enable chaining further setters.
@@ -66,7 +66,7 @@ public class ParametersForGetEntryByPath {
      * @param fallbackToClosestAncestor An optional query parameter used to indicate whether or not the closest ancestor in the path should be returned if the initial entry path is not found. The default value is false.
      * @return {@link ParametersForGetEntryByPath} The return value
      */
-    public ParametersForGetEntryByPath setFallbackToClosestAncestor(boolean fallbackToClosestAncestor) {
+    public ParametersForGetEntryByPath setFallbackToClosestAncestor(Boolean fallbackToClosestAncestor) {
         this.fallbackToClosestAncestor = fallbackToClosestAncestor;
         return this;
     }
@@ -74,9 +74,9 @@ public class ParametersForGetEntryByPath {
     /**
      * An optional query parameter used to indicate whether or not the closest ancestor in the path should be returned if the initial entry path is not found. The default value is false.
      *
-     * @return boolean The return value
+     * @return {@link Boolean} The return value
      */
-    public boolean isFallbackToClosestAncestor() {
+    public Boolean isFallbackToClosestAncestor() {
         return this.fallbackToClosestAncestor;
     }
 }

@@ -28,17 +28,17 @@ public class ParametersForGetLinkDefinitions {
     /**
      * Limits the number of items returned from a collection.
      */
-    private int top;
+    private Integer top;
 
     /**
      * Excludes the specified number of items of the queried collection from the result.
      */
-    private int skip;
+    private Integer skip;
 
     /**
      * Indicates whether the total count of items within a collection are returned in the result.
      */
-    private boolean count;
+    private Boolean count;
 
     /**
      * Sets the value of the repoId parameter and returns the current object, to enable chaining further setters.
@@ -126,7 +126,7 @@ public class ParametersForGetLinkDefinitions {
      * @param top Limits the number of items returned from a collection.
      * @return {@link ParametersForGetLinkDefinitions} The return value
      */
-    public ParametersForGetLinkDefinitions setTop(int top) {
+    public ParametersForGetLinkDefinitions setTop(Integer top) {
         this.top = top;
         return this;
     }
@@ -134,9 +134,9 @@ public class ParametersForGetLinkDefinitions {
     /**
      * Limits the number of items returned from a collection.
      *
-     * @return int The return value
+     * @return {@link Integer} The return value
      */
-    public int getTop() {
+    public Integer getTop() {
         return this.top;
     }
 
@@ -146,7 +146,7 @@ public class ParametersForGetLinkDefinitions {
      * @param skip Excludes the specified number of items of the queried collection from the result.
      * @return {@link ParametersForGetLinkDefinitions} The return value
      */
-    public ParametersForGetLinkDefinitions setSkip(int skip) {
+    public ParametersForGetLinkDefinitions setSkip(Integer skip) {
         this.skip = skip;
         return this;
     }
@@ -154,9 +154,9 @@ public class ParametersForGetLinkDefinitions {
     /**
      * Excludes the specified number of items of the queried collection from the result.
      *
-     * @return int The return value
+     * @return {@link Integer} The return value
      */
-    public int getSkip() {
+    public Integer getSkip() {
         return this.skip;
     }
 
@@ -166,7 +166,7 @@ public class ParametersForGetLinkDefinitions {
      * @param count Indicates whether the total count of items within a collection are returned in the result.
      * @return {@link ParametersForGetLinkDefinitions} The return value
      */
-    public ParametersForGetLinkDefinitions setCount(boolean count) {
+    public ParametersForGetLinkDefinitions setCount(Boolean count) {
         this.count = count;
         return this;
     }
@@ -174,9 +174,9 @@ public class ParametersForGetLinkDefinitions {
     /**
      * Indicates whether the total count of items within a collection are returned in the result.
      *
-     * @return boolean The return value
+     * @return {@link Boolean} The return value
      */
-    public boolean isCount() {
+    public Boolean isCount() {
         return this.count;
     }
 }

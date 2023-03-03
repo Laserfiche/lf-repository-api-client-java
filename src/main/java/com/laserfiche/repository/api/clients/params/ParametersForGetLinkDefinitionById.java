@@ -13,7 +13,7 @@ public class ParametersForGetLinkDefinitionById {
     /**
      * The requested link type ID.
      */
-    private int linkTypeId;
+    private Integer linkTypeId;
 
     /**
      * Limits the properties returned in the result.
@@ -46,7 +46,7 @@ public class ParametersForGetLinkDefinitionById {
      * @param linkTypeId The requested link type ID.
      * @return {@link ParametersForGetLinkDefinitionById} The return value
      */
-    public ParametersForGetLinkDefinitionById setLinkTypeId(int linkTypeId) {
+    public ParametersForGetLinkDefinitionById setLinkTypeId(Integer linkTypeId) {
         this.linkTypeId = linkTypeId;
         return this;
     }
@@ -54,9 +54,9 @@ public class ParametersForGetLinkDefinitionById {
     /**
      * The requested link type ID.
      *
-     * @return int The return value
+     * @return {@link Integer} The return value
      */
-    public int getLinkTypeId() {
+    public Integer getLinkTypeId() {
         return this.linkTypeId;
     }
 

@@ -13,7 +13,7 @@ public class ParametersForGetFieldValues {
     /**
      * The requested entry ID.
      */
-    private int entryId;
+    private Integer entryId;
 
     /**
      * An optional OData header. Can be used to set the maximum page size using odata.maxpagesize.
@@ -22,14 +22,14 @@ public class ParametersForGetFieldValues {
 
     /**
      * An optional query parameter used to indicate if the field values should be formatted.
-     * The default value is false.
+     *            The default value is false.
      */
-    private boolean formatValue;
+    private Boolean formatValue;
 
     /**
      * An optional query parameter used to indicate the locale that should be used for formatting.
-     * The value should be a standard language tag. The formatValue query parameter must be set to true, otherwise
-     * culture will not be used for formatting.
+     *            The value should be a standard language tag. The formatValue query parameter must be set to true, otherwise
+     *            culture will not be used for formatting.
      */
     private String culture;
 
@@ -46,17 +46,17 @@ public class ParametersForGetFieldValues {
     /**
      * Limits the number of items returned from a collection.
      */
-    private int top;
+    private Integer top;
 
     /**
      * Excludes the specified number of items of the queried collection from the result.
      */
-    private int skip;
+    private Integer skip;
 
     /**
      * Indicates whether the total count of items within a collection are returned in the result.
      */
-    private boolean count;
+    private Boolean count;
 
     /**
      * Sets the value of the repoId parameter and returns the current object, to enable chaining further setters.
@@ -84,7 +84,7 @@ public class ParametersForGetFieldValues {
      * @param entryId The requested entry ID.
      * @return {@link ParametersForGetFieldValues} The return value
      */
-    public ParametersForGetFieldValues setEntryId(int entryId) {
+    public ParametersForGetFieldValues setEntryId(Integer entryId) {
         this.entryId = entryId;
         return this;
     }
@@ -92,9 +92,9 @@ public class ParametersForGetFieldValues {
     /**
      * The requested entry ID.
      *
-     * @return int The return value
+     * @return {@link Integer} The return value
      */
-    public int getEntryId() {
+    public Integer getEntryId() {
         return this.entryId;
     }
 
@@ -122,21 +122,21 @@ public class ParametersForGetFieldValues {
      * Sets the value of the formatValue parameter and returns the current object, to enable chaining further setters.
      *
      * @param formatValue An optional query parameter used to indicate if the field values should be formatted.
-     *                    The default value is false.
+     *            The default value is false.
      * @return {@link ParametersForGetFieldValues} The return value
      */
-    public ParametersForGetFieldValues setFormatValue(boolean formatValue) {
+    public ParametersForGetFieldValues setFormatValue(Boolean formatValue) {
         this.formatValue = formatValue;
         return this;
     }
 
     /**
      * An optional query parameter used to indicate if the field values should be formatted.
-     * The default value is false.
+     *            The default value is false.
      *
-     * @return boolean The return value
+     * @return {@link Boolean} The return value
      */
-    public boolean isFormatValue() {
+    public Boolean isFormatValue() {
         return this.formatValue;
     }
 
@@ -144,8 +144,8 @@ public class ParametersForGetFieldValues {
      * Sets the value of the culture parameter and returns the current object, to enable chaining further setters.
      *
      * @param culture An optional query parameter used to indicate the locale that should be used for formatting.
-     *                The value should be a standard language tag. The formatValue query parameter must be set to true, otherwise
-     *                culture will not be used for formatting.
+     *            The value should be a standard language tag. The formatValue query parameter must be set to true, otherwise
+     *            culture will not be used for formatting.
      * @return {@link ParametersForGetFieldValues} The return value
      */
     public ParametersForGetFieldValues setCulture(String culture) {
@@ -155,8 +155,8 @@ public class ParametersForGetFieldValues {
 
     /**
      * An optional query parameter used to indicate the locale that should be used for formatting.
-     * The value should be a standard language tag. The formatValue query parameter must be set to true, otherwise
-     * culture will not be used for formatting.
+     *            The value should be a standard language tag. The formatValue query parameter must be set to true, otherwise
+     *            culture will not be used for formatting.
      *
      * @return {@link String} The return value
      */
@@ -210,7 +210,7 @@ public class ParametersForGetFieldValues {
      * @param top Limits the number of items returned from a collection.
      * @return {@link ParametersForGetFieldValues} The return value
      */
-    public ParametersForGetFieldValues setTop(int top) {
+    public ParametersForGetFieldValues setTop(Integer top) {
         this.top = top;
         return this;
     }
@@ -218,9 +218,9 @@ public class ParametersForGetFieldValues {
     /**
      * Limits the number of items returned from a collection.
      *
-     * @return int The return value
+     * @return {@link Integer} The return value
      */
-    public int getTop() {
+    public Integer getTop() {
         return this.top;
     }
 
@@ -230,7 +230,7 @@ public class ParametersForGetFieldValues {
      * @param skip Excludes the specified number of items of the queried collection from the result.
      * @return {@link ParametersForGetFieldValues} The return value
      */
-    public ParametersForGetFieldValues setSkip(int skip) {
+    public ParametersForGetFieldValues setSkip(Integer skip) {
         this.skip = skip;
         return this;
     }
@@ -238,9 +238,9 @@ public class ParametersForGetFieldValues {
     /**
      * Excludes the specified number of items of the queried collection from the result.
      *
-     * @return int The return value
+     * @return {@link Integer} The return value
      */
-    public int getSkip() {
+    public Integer getSkip() {
         return this.skip;
     }
 
@@ -250,7 +250,7 @@ public class ParametersForGetFieldValues {
      * @param count Indicates whether the total count of items within a collection are returned in the result.
      * @return {@link ParametersForGetFieldValues} The return value
      */
-    public ParametersForGetFieldValues setCount(boolean count) {
+    public ParametersForGetFieldValues setCount(Boolean count) {
         this.count = count;
         return this;
     }
@@ -258,9 +258,9 @@ public class ParametersForGetFieldValues {
     /**
      * Indicates whether the total count of items within a collection are returned in the result.
      *
-     * @return boolean The return value
+     * @return {@link Boolean} The return value
      */
-    public boolean isCount() {
+    public Boolean isCount() {
         return this.count;
     }
 }

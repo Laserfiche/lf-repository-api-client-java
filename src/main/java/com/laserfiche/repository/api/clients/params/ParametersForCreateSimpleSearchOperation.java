@@ -20,7 +20,7 @@ public class ParametersForCreateSimpleSearchOperation {
     /**
      * Indicates whether the total count of items within a collection are returned in the result.
      */
-    private boolean count;
+    private Boolean count;
 
     /**
      * The requested repository ID.
@@ -35,14 +35,14 @@ public class ParametersForCreateSimpleSearchOperation {
     /**
      * Boolean for if field values should be formatted. Only applicable if Fields are specified.
      */
-    private boolean formatFields;
+    private Boolean formatFields;
 
     private SimpleSearchRequest requestBody;
 
     /**
      * An optional query parameter used to indicate the locale that should be used for formatting.
-     * The value should be a standard language tag. The formatFields query parameter must be set to true, otherwise
-     * culture will not be used for formatting.
+     *            The value should be a standard language tag. The formatFields query parameter must be set to true, otherwise
+     *            culture will not be used for formatting.
      */
     private String culture;
 
@@ -92,7 +92,7 @@ public class ParametersForCreateSimpleSearchOperation {
      * @param count Indicates whether the total count of items within a collection are returned in the result.
      * @return {@link ParametersForCreateSimpleSearchOperation} The return value
      */
-    public ParametersForCreateSimpleSearchOperation setCount(boolean count) {
+    public ParametersForCreateSimpleSearchOperation setCount(Boolean count) {
         this.count = count;
         return this;
     }
@@ -100,9 +100,9 @@ public class ParametersForCreateSimpleSearchOperation {
     /**
      * Indicates whether the total count of items within a collection are returned in the result.
      *
-     * @return boolean The return value
+     * @return {@link Boolean} The return value
      */
-    public boolean isCount() {
+    public Boolean isCount() {
         return this.count;
     }
 
@@ -152,7 +152,7 @@ public class ParametersForCreateSimpleSearchOperation {
      * @param formatFields Boolean for if field values should be formatted. Only applicable if Fields are specified.
      * @return {@link ParametersForCreateSimpleSearchOperation} The return value
      */
-    public ParametersForCreateSimpleSearchOperation setFormatFields(boolean formatFields) {
+    public ParametersForCreateSimpleSearchOperation setFormatFields(Boolean formatFields) {
         this.formatFields = formatFields;
         return this;
     }
@@ -160,9 +160,9 @@ public class ParametersForCreateSimpleSearchOperation {
     /**
      * Boolean for if field values should be formatted. Only applicable if Fields are specified.
      *
-     * @return boolean The return value
+     * @return {@link Boolean} The return value
      */
-    public boolean isFormatFields() {
+    public Boolean isFormatFields() {
         return this.formatFields;
     }
 
@@ -179,8 +179,8 @@ public class ParametersForCreateSimpleSearchOperation {
      * Sets the value of the culture parameter and returns the current object, to enable chaining further setters.
      *
      * @param culture An optional query parameter used to indicate the locale that should be used for formatting.
-     *                The value should be a standard language tag. The formatFields query parameter must be set to true, otherwise
-     *                culture will not be used for formatting.
+     *            The value should be a standard language tag. The formatFields query parameter must be set to true, otherwise
+     *            culture will not be used for formatting.
      * @return {@link ParametersForCreateSimpleSearchOperation} The return value
      */
     public ParametersForCreateSimpleSearchOperation setCulture(String culture) {
@@ -190,8 +190,8 @@ public class ParametersForCreateSimpleSearchOperation {
 
     /**
      * An optional query parameter used to indicate the locale that should be used for formatting.
-     * The value should be a standard language tag. The formatFields query parameter must be set to true, otherwise
-     * culture will not be used for formatting.
+     *            The value should be a standard language tag. The formatFields query parameter must be set to true, otherwise
+     *            culture will not be used for formatting.
      *
      * @return {@link String} The return value
      */

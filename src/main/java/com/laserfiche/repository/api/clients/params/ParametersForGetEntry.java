@@ -13,7 +13,7 @@ public class ParametersForGetEntry {
     /**
      * The requested entry ID.
      */
-    private int entryId;
+    private Integer entryId;
 
     /**
      * Limits the properties returned in the result.
@@ -46,7 +46,7 @@ public class ParametersForGetEntry {
      * @param entryId The requested entry ID.
      * @return {@link ParametersForGetEntry} The return value
      */
-    public ParametersForGetEntry setEntryId(int entryId) {
+    public ParametersForGetEntry setEntryId(Integer entryId) {
         this.entryId = entryId;
         return this;
     }
@@ -54,9 +54,9 @@ public class ParametersForGetEntry {
     /**
      * The requested entry ID.
      *
-     * @return int The return value
+     * @return {@link Integer} The return value
      */
-    public int getEntryId() {
+    public Integer getEntryId() {
         return this.entryId;
     }
 

@@ -18,12 +18,12 @@ public class ParametersForGetSearchResults {
     /**
      * An optional query parameter used to indicate if the result should be grouped by entry type or not.
      */
-    private boolean groupByEntryType;
+    private Boolean groupByEntryType;
 
     /**
      * If the search listing should be refreshed to show updated values.
      */
-    private boolean refresh;
+    private Boolean refresh;
 
     /**
      * Optional array of field names. Field values corresponding to the given field names will be returned for each search result.
@@ -33,7 +33,7 @@ public class ParametersForGetSearchResults {
     /**
      * Boolean for if field values should be formatted. Only applicable if Fields are specified.
      */
-    private boolean formatFields;
+    private Boolean formatFields;
 
     /**
      * An optional odata header. Can be used to set the maximum page size using odata.maxpagesize.
@@ -60,17 +60,17 @@ public class ParametersForGetSearchResults {
     /**
      * Limits the number of items returned from a collection.
      */
-    private int top;
+    private Integer top;
 
     /**
      * Excludes the specified number of items of the queried collection from the result.
      */
-    private int skip;
+    private Integer skip;
 
     /**
      * Indicates whether the total count of items within a collection are returned in the result.
      */
-    private boolean count;
+    private Boolean count;
 
     /**
      * Sets the value of the repoId parameter and returns the current object, to enable chaining further setters.
@@ -118,7 +118,7 @@ public class ParametersForGetSearchResults {
      * @param groupByEntryType An optional query parameter used to indicate if the result should be grouped by entry type or not.
      * @return {@link ParametersForGetSearchResults} The return value
      */
-    public ParametersForGetSearchResults setGroupByEntryType(boolean groupByEntryType) {
+    public ParametersForGetSearchResults setGroupByEntryType(Boolean groupByEntryType) {
         this.groupByEntryType = groupByEntryType;
         return this;
     }
@@ -126,9 +126,9 @@ public class ParametersForGetSearchResults {
     /**
      * An optional query parameter used to indicate if the result should be grouped by entry type or not.
      *
-     * @return boolean The return value
+     * @return {@link Boolean} The return value
      */
-    public boolean isGroupByEntryType() {
+    public Boolean isGroupByEntryType() {
         return this.groupByEntryType;
     }
 
@@ -138,7 +138,7 @@ public class ParametersForGetSearchResults {
      * @param refresh If the search listing should be refreshed to show updated values.
      * @return {@link ParametersForGetSearchResults} The return value
      */
-    public ParametersForGetSearchResults setRefresh(boolean refresh) {
+    public ParametersForGetSearchResults setRefresh(Boolean refresh) {
         this.refresh = refresh;
         return this;
     }
@@ -146,9 +146,9 @@ public class ParametersForGetSearchResults {
     /**
      * If the search listing should be refreshed to show updated values.
      *
-     * @return boolean The return value
+     * @return {@link Boolean} The return value
      */
-    public boolean isRefresh() {
+    public Boolean isRefresh() {
         return this.refresh;
     }
 
@@ -178,7 +178,7 @@ public class ParametersForGetSearchResults {
      * @param formatFields Boolean for if field values should be formatted. Only applicable if Fields are specified.
      * @return {@link ParametersForGetSearchResults} The return value
      */
-    public ParametersForGetSearchResults setFormatFields(boolean formatFields) {
+    public ParametersForGetSearchResults setFormatFields(Boolean formatFields) {
         this.formatFields = formatFields;
         return this;
     }
@@ -186,9 +186,9 @@ public class ParametersForGetSearchResults {
     /**
      * Boolean for if field values should be formatted. Only applicable if Fields are specified.
      *
-     * @return boolean The return value
+     * @return {@link Boolean} The return value
      */
-    public boolean isFormatFields() {
+    public Boolean isFormatFields() {
         return this.formatFields;
     }
 
@@ -282,7 +282,7 @@ public class ParametersForGetSearchResults {
      * @param top Limits the number of items returned from a collection.
      * @return {@link ParametersForGetSearchResults} The return value
      */
-    public ParametersForGetSearchResults setTop(int top) {
+    public ParametersForGetSearchResults setTop(Integer top) {
         this.top = top;
         return this;
     }
@@ -290,9 +290,9 @@ public class ParametersForGetSearchResults {
     /**
      * Limits the number of items returned from a collection.
      *
-     * @return int The return value
+     * @return {@link Integer} The return value
      */
-    public int getTop() {
+    public Integer getTop() {
         return this.top;
     }
 
@@ -302,7 +302,7 @@ public class ParametersForGetSearchResults {
      * @param skip Excludes the specified number of items of the queried collection from the result.
      * @return {@link ParametersForGetSearchResults} The return value
      */
-    public ParametersForGetSearchResults setSkip(int skip) {
+    public ParametersForGetSearchResults setSkip(Integer skip) {
         this.skip = skip;
         return this;
     }
@@ -310,9 +310,9 @@ public class ParametersForGetSearchResults {
     /**
      * Excludes the specified number of items of the queried collection from the result.
      *
-     * @return int The return value
+     * @return {@link Integer} The return value
      */
-    public int getSkip() {
+    public Integer getSkip() {
         return this.skip;
     }
 
@@ -322,7 +322,7 @@ public class ParametersForGetSearchResults {
      * @param count Indicates whether the total count of items within a collection are returned in the result.
      * @return {@link ParametersForGetSearchResults} The return value
      */
-    public ParametersForGetSearchResults setCount(boolean count) {
+    public ParametersForGetSearchResults setCount(Boolean count) {
         this.count = count;
         return this;
     }
@@ -330,9 +330,9 @@ public class ParametersForGetSearchResults {
     /**
      * Indicates whether the total count of items within a collection are returned in the result.
      *
-     * @return boolean The return value
+     * @return {@link Boolean} The return value
      */
-    public boolean isCount() {
+    public Boolean isCount() {
         return this.count;
     }
 }
