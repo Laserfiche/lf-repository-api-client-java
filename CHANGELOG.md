@@ -24,6 +24,8 @@
 - Added retry implementation when making an API call which retries when:
   - 401 status code response is being returned
   - Idempotent http request
+- Changed `boolean` to `Boolean` for all applicable fields in the `com.laserfiche.repository.api.clients.params` package 
+- Changed `int` to `Integer` for all applicable fields in the `com.laserfiche.repository.api.clients.params` package
 
 ## 1.2.0
 
