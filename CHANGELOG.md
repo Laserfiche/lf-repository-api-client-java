@@ -25,6 +25,9 @@
   - 401 status code response is being returned
   - Idempotent http request
 
+### Fixes
+- For sending an importDocument API with an invalid repo, changed error message displayed from `HTTP status code 404` to `Error: Repository with the given Id not found or no connection could be made.`
+
 ## 1.2.0
 
 ### Features
