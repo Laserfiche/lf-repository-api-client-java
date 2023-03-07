@@ -171,12 +171,9 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                                 try {
                                     String jsonString = new JSONObject(body).toString();
                                     if (httpResponse
-                                            .getBody()
-                                            .toString()
-                                            .contains("title") && httpResponse
-                                            .getBody()
-                                            .toString()
-                                            .contains("type")) {
+                                            .getHeaders()
+                                            .getFirst("Content-Type")
+                                            .contains("application/problem+json")) {
                                         problemDetails = ProblemDetailsDeserializer.deserialize(objectMapper,
                                                 jsonString);
                                     } else {
