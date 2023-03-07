@@ -170,18 +170,26 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                             if (httpResponse.getStatus() == 400 || httpResponse.getStatus() == 404 || httpResponse.getStatus() == 409 || httpResponse.getStatus() == 500) {
                                 try {
                                     String jsonString = new JSONObject(body).toString();
-                                    problemDetails = ProblemDetails.create(httpResponse.getStatus(), headersMap);
-                                    CreateEntryResult result = objectMapper.readValue(jsonString,
-                                            CreateEntryResult.class);
-                                    if (result != null && result.getOperations() != null) {
-                                        problemDetails
-                                                .getExtensions()
-                                                .put(CreateEntryResult.class.getSimpleName(), result);
-                                        String summary = ApiClientUtils.getCreateEntryResultSummary(result);
-                                        if (summary != null && !summary
-                                                .trim()
-                                                .isEmpty())
-                                            problemDetails.setTitle(summary);
+                                    if (httpResponse
+                                            .getHeaders()
+                                            .getFirst("Content-Type")
+                                            .contains("application/problem+json")) {
+                                        problemDetails = ProblemDetailsDeserializer.deserialize(objectMapper,
+                                                jsonString);
+                                    } else {
+                                        problemDetails = ProblemDetails.create(httpResponse.getStatus(), headersMap);
+                                        CreateEntryResult result = objectMapper.readValue(jsonString,
+                                                CreateEntryResult.class);
+                                        if (result != null && result.getOperations() != null) {
+                                            problemDetails
+                                                    .getExtensions()
+                                                    .put(CreateEntryResult.class.getSimpleName(), result);
+                                            String summary = ApiClientUtils.getCreateEntryResultSummary(result);
+                                            if (summary != null && !summary
+                                                    .trim()
+                                                    .isEmpty())
+                                                problemDetails.setTitle(summary);
+                                        }
                                     }
                                 } catch (Exception e) {
                                     throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
