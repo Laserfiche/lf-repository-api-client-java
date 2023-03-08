@@ -15,7 +15,7 @@ public class ParametersForMoveOrRenameEntry {
     /**
      * The requested entry ID.
      */
-    private int entryId;
+    private Integer entryId;
 
     private PatchEntryRequest requestBody;
 
@@ -23,7 +23,7 @@ public class ParametersForMoveOrRenameEntry {
      * An optional query parameter used to indicate if the entry should be automatically
      * renamed if another entry already exists with the same name in the folder. The default value is false.
      */
-    private boolean autoRename;
+    private Boolean autoRename;
 
     /**
      * An optional query parameter used to indicate the locale that should be used.
@@ -57,7 +57,7 @@ public class ParametersForMoveOrRenameEntry {
      * @param entryId The requested entry ID.
      * @return {@link ParametersForMoveOrRenameEntry} The return value
      */
-    public ParametersForMoveOrRenameEntry setEntryId(int entryId) {
+    public ParametersForMoveOrRenameEntry setEntryId(Integer entryId) {
         this.entryId = entryId;
         return this;
     }
@@ -65,9 +65,9 @@ public class ParametersForMoveOrRenameEntry {
     /**
      * The requested entry ID.
      *
-     * @return int The return value
+     * @return {@link Integer} The return value
      */
-    public int getEntryId() {
+    public Integer getEntryId() {
         return this.entryId;
     }
 
@@ -87,7 +87,7 @@ public class ParametersForMoveOrRenameEntry {
      *                   renamed if another entry already exists with the same name in the folder. The default value is false.
      * @return {@link ParametersForMoveOrRenameEntry} The return value
      */
-    public ParametersForMoveOrRenameEntry setAutoRename(boolean autoRename) {
+    public ParametersForMoveOrRenameEntry setAutoRename(Boolean autoRename) {
         this.autoRename = autoRename;
         return this;
     }
@@ -96,9 +96,9 @@ public class ParametersForMoveOrRenameEntry {
      * An optional query parameter used to indicate if the entry should be automatically
      * renamed if another entry already exists with the same name in the folder. The default value is false.
      *
-     * @return boolean The return value
+     * @return {@link Boolean} The return value
      */
-    public boolean isAutoRename() {
+    public Boolean isAutoRename() {
         return this.autoRename;
     }
 

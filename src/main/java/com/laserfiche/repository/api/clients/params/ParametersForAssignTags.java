@@ -15,7 +15,7 @@ public class ParametersForAssignTags {
     /**
      * The requested entry ID.
      */
-    private int entryId;
+    private Integer entryId;
 
     private PutTagRequest requestBody;
 
@@ -45,7 +45,7 @@ public class ParametersForAssignTags {
      * @param entryId The requested entry ID.
      * @return {@link ParametersForAssignTags} The return value
      */
-    public ParametersForAssignTags setEntryId(int entryId) {
+    public ParametersForAssignTags setEntryId(Integer entryId) {
         this.entryId = entryId;
         return this;
     }
@@ -53,9 +53,9 @@ public class ParametersForAssignTags {
     /**
      * The requested entry ID.
      *
-     * @return int The return value
+     * @return {@link Integer} The return value
      */
-    public int getEntryId() {
+    public Integer getEntryId() {
         return this.entryId;
     }
 

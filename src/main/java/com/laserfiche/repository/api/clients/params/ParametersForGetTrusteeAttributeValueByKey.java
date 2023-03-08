@@ -18,7 +18,7 @@ public class ParametersForGetTrusteeAttributeValueByKey {
     /**
      * Boolean value that indicates whether to return attributes associated with everyone or the currently authenticated user.
      */
-    private boolean everyone;
+    private Boolean everyone;
 
     /**
      * Sets the value of the repoId parameter and returns the current object, to enable chaining further setters.
@@ -66,7 +66,7 @@ public class ParametersForGetTrusteeAttributeValueByKey {
      * @param everyone Boolean value that indicates whether to return attributes associated with everyone or the currently authenticated user.
      * @return {@link ParametersForGetTrusteeAttributeValueByKey} The return value
      */
-    public ParametersForGetTrusteeAttributeValueByKey setEveryone(boolean everyone) {
+    public ParametersForGetTrusteeAttributeValueByKey setEveryone(Boolean everyone) {
         this.everyone = everyone;
         return this;
     }
@@ -74,9 +74,9 @@ public class ParametersForGetTrusteeAttributeValueByKey {
     /**
      * Boolean value that indicates whether to return attributes associated with everyone or the currently authenticated user.
      *
-     * @return boolean The return value
+     * @return {@link Boolean} The return value
      */
-    public boolean isEveryone() {
+    public Boolean isEveryone() {
         return this.everyone;
     }
 }

@@ -13,7 +13,7 @@ public class ParametersForGetFieldDefinitionById {
     /**
      * The requested field definition ID.
      */
-    private int fieldDefinitionId;
+    private Integer fieldDefinitionId;
 
     /**
      * An optional query parameter used to indicate the locale that should be used for formatting.
@@ -52,7 +52,7 @@ public class ParametersForGetFieldDefinitionById {
      * @param fieldDefinitionId The requested field definition ID.
      * @return {@link ParametersForGetFieldDefinitionById} The return value
      */
-    public ParametersForGetFieldDefinitionById setFieldDefinitionId(int fieldDefinitionId) {
+    public ParametersForGetFieldDefinitionById setFieldDefinitionId(Integer fieldDefinitionId) {
         this.fieldDefinitionId = fieldDefinitionId;
         return this;
     }
@@ -60,9 +60,9 @@ public class ParametersForGetFieldDefinitionById {
     /**
      * The requested field definition ID.
      *
-     * @return int The return value
+     * @return {@link Integer} The return value
      */
-    public int getFieldDefinitionId() {
+    public Integer getFieldDefinitionId() {
         return this.fieldDefinitionId;
     }
 

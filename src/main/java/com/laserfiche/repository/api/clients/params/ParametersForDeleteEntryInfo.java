@@ -15,7 +15,7 @@ public class ParametersForDeleteEntryInfo {
     /**
      * The requested entry ID.
      */
-    private int entryId;
+    private Integer entryId;
 
     private DeleteEntryWithAuditReason requestBody;
 
@@ -45,7 +45,7 @@ public class ParametersForDeleteEntryInfo {
      * @param entryId The requested entry ID.
      * @return {@link ParametersForDeleteEntryInfo} The return value
      */
-    public ParametersForDeleteEntryInfo setEntryId(int entryId) {
+    public ParametersForDeleteEntryInfo setEntryId(Integer entryId) {
         this.entryId = entryId;
         return this;
     }
@@ -53,9 +53,9 @@ public class ParametersForDeleteEntryInfo {
     /**
      * The requested entry ID.
      *
-     * @return int The return value
+     * @return {@link Integer} The return value
      */
-    public int getEntryId() {
+    public Integer getEntryId() {
         return this.entryId;
     }
 

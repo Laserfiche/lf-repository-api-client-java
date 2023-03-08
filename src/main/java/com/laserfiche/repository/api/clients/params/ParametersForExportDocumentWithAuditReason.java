@@ -18,7 +18,7 @@ public class ParametersForExportDocumentWithAuditReason {
     /**
      * The requested document ID.
      */
-    private int entryId;
+    private Integer entryId;
 
     private GetEdocWithAuditReasonRequest requestBody;
 
@@ -56,7 +56,7 @@ public class ParametersForExportDocumentWithAuditReason {
      * @param entryId The requested document ID.
      * @return {@link ParametersForExportDocumentWithAuditReason} The return value
      */
-    public ParametersForExportDocumentWithAuditReason setEntryId(int entryId) {
+    public ParametersForExportDocumentWithAuditReason setEntryId(Integer entryId) {
         this.entryId = entryId;
         return this;
     }
@@ -64,9 +64,9 @@ public class ParametersForExportDocumentWithAuditReason {
     /**
      * The requested document ID.
      *
-     * @return int The return value
+     * @return {@link Integer} The return value
      */
-    public int getEntryId() {
+    public Integer getEntryId() {
         return this.entryId;
     }
 

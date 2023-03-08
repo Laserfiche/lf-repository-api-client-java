@@ -17,7 +17,7 @@ public class ParametersForAssignFieldValues {
     /**
      * The entry ID of the entry that will have its fields updated.
      */
-    private int entryId;
+    private Integer entryId;
 
     private Map<String, FieldToUpdate> requestBody;
 
@@ -53,7 +53,7 @@ public class ParametersForAssignFieldValues {
      * @param entryId The entry ID of the entry that will have its fields updated.
      * @return {@link ParametersForAssignFieldValues} The return value
      */
-    public ParametersForAssignFieldValues setEntryId(int entryId) {
+    public ParametersForAssignFieldValues setEntryId(Integer entryId) {
         this.entryId = entryId;
         return this;
     }
@@ -61,9 +61,9 @@ public class ParametersForAssignFieldValues {
     /**
      * The entry ID of the entry that will have its fields updated.
      *
-     * @return int The return value
+     * @return {@link Integer} The return value
      */
-    public int getEntryId() {
+    public Integer getEntryId() {
         return this.entryId;
     }
 

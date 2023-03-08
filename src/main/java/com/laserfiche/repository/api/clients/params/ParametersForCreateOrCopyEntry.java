@@ -15,7 +15,7 @@ public class ParametersForCreateOrCopyEntry {
     /**
      * The folder ID that the entry will be created in.
      */
-    private int entryId;
+    private Integer entryId;
 
     private PostEntryChildrenRequest requestBody;
 
@@ -23,7 +23,7 @@ public class ParametersForCreateOrCopyEntry {
      * An optional query parameter used to indicate if the new entry should be automatically
      * renamed if an entry already exists with the given name in the folder. The default value is false.
      */
-    private boolean autoRename;
+    private Boolean autoRename;
 
     /**
      * An optional query parameter used to indicate the locale that should be used.
@@ -57,7 +57,7 @@ public class ParametersForCreateOrCopyEntry {
      * @param entryId The folder ID that the entry will be created in.
      * @return {@link ParametersForCreateOrCopyEntry} The return value
      */
-    public ParametersForCreateOrCopyEntry setEntryId(int entryId) {
+    public ParametersForCreateOrCopyEntry setEntryId(Integer entryId) {
         this.entryId = entryId;
         return this;
     }
@@ -65,9 +65,9 @@ public class ParametersForCreateOrCopyEntry {
     /**
      * The folder ID that the entry will be created in.
      *
-     * @return int The return value
+     * @return {@link Integer} The return value
      */
-    public int getEntryId() {
+    public Integer getEntryId() {
         return this.entryId;
     }
 
@@ -87,7 +87,7 @@ public class ParametersForCreateOrCopyEntry {
      *                   renamed if an entry already exists with the given name in the folder. The default value is false.
      * @return {@link ParametersForCreateOrCopyEntry} The return value
      */
-    public ParametersForCreateOrCopyEntry setAutoRename(boolean autoRename) {
+    public ParametersForCreateOrCopyEntry setAutoRename(Boolean autoRename) {
         this.autoRename = autoRename;
         return this;
     }
@@ -96,9 +96,9 @@ public class ParametersForCreateOrCopyEntry {
      * An optional query parameter used to indicate if the new entry should be automatically
      * renamed if an entry already exists with the given name in the folder. The default value is false.
      *
-     * @return boolean The return value
+     * @return {@link Boolean} The return value
      */
-    public boolean isAutoRename() {
+    public Boolean isAutoRename() {
         return this.autoRename;
     }
 

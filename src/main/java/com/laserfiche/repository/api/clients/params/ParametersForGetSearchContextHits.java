@@ -18,7 +18,7 @@ public class ParametersForGetSearchContextHits {
     /**
      * The search result listing row number to get context hits for.
      */
-    private int rowNumber;
+    private Integer rowNumber;
 
     /**
      * An optional OData header. Can be used to set the maximum page size using odata.maxpagesize.
@@ -38,17 +38,17 @@ public class ParametersForGetSearchContextHits {
     /**
      * Limits the number of items returned from a collection.
      */
-    private int top;
+    private Integer top;
 
     /**
      * Excludes the specified number of items of the queried collection from the result.
      */
-    private int skip;
+    private Integer skip;
 
     /**
      * Indicates whether the total count of items within a collection are returned in the result.
      */
-    private boolean count;
+    private Boolean count;
 
     /**
      * Sets the value of the repoId parameter and returns the current object, to enable chaining further setters.
@@ -96,7 +96,7 @@ public class ParametersForGetSearchContextHits {
      * @param rowNumber The search result listing row number to get context hits for.
      * @return {@link ParametersForGetSearchContextHits} The return value
      */
-    public ParametersForGetSearchContextHits setRowNumber(int rowNumber) {
+    public ParametersForGetSearchContextHits setRowNumber(Integer rowNumber) {
         this.rowNumber = rowNumber;
         return this;
     }
@@ -104,9 +104,9 @@ public class ParametersForGetSearchContextHits {
     /**
      * The search result listing row number to get context hits for.
      *
-     * @return int The return value
+     * @return {@link Integer} The return value
      */
-    public int getRowNumber() {
+    public Integer getRowNumber() {
         return this.rowNumber;
     }
 
@@ -176,7 +176,7 @@ public class ParametersForGetSearchContextHits {
      * @param top Limits the number of items returned from a collection.
      * @return {@link ParametersForGetSearchContextHits} The return value
      */
-    public ParametersForGetSearchContextHits setTop(int top) {
+    public ParametersForGetSearchContextHits setTop(Integer top) {
         this.top = top;
         return this;
     }
@@ -184,9 +184,9 @@ public class ParametersForGetSearchContextHits {
     /**
      * Limits the number of items returned from a collection.
      *
-     * @return int The return value
+     * @return {@link Integer} The return value
      */
-    public int getTop() {
+    public Integer getTop() {
         return this.top;
     }
 
@@ -196,7 +196,7 @@ public class ParametersForGetSearchContextHits {
      * @param skip Excludes the specified number of items of the queried collection from the result.
      * @return {@link ParametersForGetSearchContextHits} The return value
      */
-    public ParametersForGetSearchContextHits setSkip(int skip) {
+    public ParametersForGetSearchContextHits setSkip(Integer skip) {
         this.skip = skip;
         return this;
     }
@@ -204,9 +204,9 @@ public class ParametersForGetSearchContextHits {
     /**
      * Excludes the specified number of items of the queried collection from the result.
      *
-     * @return int The return value
+     * @return {@link Integer} The return value
      */
-    public int getSkip() {
+    public Integer getSkip() {
         return this.skip;
     }
 
@@ -216,7 +216,7 @@ public class ParametersForGetSearchContextHits {
      * @param count Indicates whether the total count of items within a collection are returned in the result.
      * @return {@link ParametersForGetSearchContextHits} The return value
      */
-    public ParametersForGetSearchContextHits setCount(boolean count) {
+    public ParametersForGetSearchContextHits setCount(Boolean count) {
         this.count = count;
         return this;
     }
@@ -224,9 +224,9 @@ public class ParametersForGetSearchContextHits {
     /**
      * Indicates whether the total count of items within a collection are returned in the result.
      *
-     * @return boolean The return value
+     * @return {@link Boolean} The return value
      */
-    public boolean isCount() {
+    public Boolean isCount() {
         return this.count;
     }
 }

@@ -13,12 +13,12 @@ public class ParametersForGetEntryListing {
     /**
      * The folder ID.
      */
-    private int entryId;
+    private Integer entryId;
 
     /**
      * An optional query parameter used to indicate if the result should be grouped by entry type or not.
      */
-    private boolean groupByEntryType;
+    private Boolean groupByEntryType;
 
     /**
      * Optional array of field names. Field values corresponding to the given field names will be returned for each entry.
@@ -28,7 +28,7 @@ public class ParametersForGetEntryListing {
     /**
      * Boolean for if field values should be formatted. Only applicable if Fields are specified.
      */
-    private boolean formatFields;
+    private Boolean formatFields;
 
     /**
      * An optional OData header. Can be used to set the maximum page size using odata.maxpagesize.
@@ -37,8 +37,8 @@ public class ParametersForGetEntryListing {
 
     /**
      * An optional query parameter used to indicate the locale that should be used for formatting.
-     * The value should be a standard language tag. The formatFields query parameter must be set to true, otherwise
-     * culture will not be used for formatting.
+     *            The value should be a standard language tag. The formatFields query parameter must be set to true, otherwise
+     *            culture will not be used for formatting.
      */
     private String culture;
 
@@ -55,17 +55,17 @@ public class ParametersForGetEntryListing {
     /**
      * Limits the number of items returned from a collection.
      */
-    private int top;
+    private Integer top;
 
     /**
      * Excludes the specified number of items of the queried collection from the result.
      */
-    private int skip;
+    private Integer skip;
 
     /**
      * Indicates whether the total count of items within a collection are returned in the result.
      */
-    private boolean count;
+    private Boolean count;
 
     /**
      * Sets the value of the repoId parameter and returns the current object, to enable chaining further setters.
@@ -93,7 +93,7 @@ public class ParametersForGetEntryListing {
      * @param entryId The folder ID.
      * @return {@link ParametersForGetEntryListing} The return value
      */
-    public ParametersForGetEntryListing setEntryId(int entryId) {
+    public ParametersForGetEntryListing setEntryId(Integer entryId) {
         this.entryId = entryId;
         return this;
     }
@@ -101,9 +101,9 @@ public class ParametersForGetEntryListing {
     /**
      * The folder ID.
      *
-     * @return int The return value
+     * @return {@link Integer} The return value
      */
-    public int getEntryId() {
+    public Integer getEntryId() {
         return this.entryId;
     }
 
@@ -113,7 +113,7 @@ public class ParametersForGetEntryListing {
      * @param groupByEntryType An optional query parameter used to indicate if the result should be grouped by entry type or not.
      * @return {@link ParametersForGetEntryListing} The return value
      */
-    public ParametersForGetEntryListing setGroupByEntryType(boolean groupByEntryType) {
+    public ParametersForGetEntryListing setGroupByEntryType(Boolean groupByEntryType) {
         this.groupByEntryType = groupByEntryType;
         return this;
     }
@@ -121,9 +121,9 @@ public class ParametersForGetEntryListing {
     /**
      * An optional query parameter used to indicate if the result should be grouped by entry type or not.
      *
-     * @return boolean The return value
+     * @return {@link Boolean} The return value
      */
-    public boolean isGroupByEntryType() {
+    public Boolean isGroupByEntryType() {
         return this.groupByEntryType;
     }
 
@@ -153,7 +153,7 @@ public class ParametersForGetEntryListing {
      * @param formatFields Boolean for if field values should be formatted. Only applicable if Fields are specified.
      * @return {@link ParametersForGetEntryListing} The return value
      */
-    public ParametersForGetEntryListing setFormatFields(boolean formatFields) {
+    public ParametersForGetEntryListing setFormatFields(Boolean formatFields) {
         this.formatFields = formatFields;
         return this;
     }
@@ -161,9 +161,9 @@ public class ParametersForGetEntryListing {
     /**
      * Boolean for if field values should be formatted. Only applicable if Fields are specified.
      *
-     * @return boolean The return value
+     * @return {@link Boolean} The return value
      */
-    public boolean isFormatFields() {
+    public Boolean isFormatFields() {
         return this.formatFields;
     }
 
@@ -191,8 +191,8 @@ public class ParametersForGetEntryListing {
      * Sets the value of the culture parameter and returns the current object, to enable chaining further setters.
      *
      * @param culture An optional query parameter used to indicate the locale that should be used for formatting.
-     *                The value should be a standard language tag. The formatFields query parameter must be set to true, otherwise
-     *                culture will not be used for formatting.
+     *            The value should be a standard language tag. The formatFields query parameter must be set to true, otherwise
+     *            culture will not be used for formatting.
      * @return {@link ParametersForGetEntryListing} The return value
      */
     public ParametersForGetEntryListing setCulture(String culture) {
@@ -202,8 +202,8 @@ public class ParametersForGetEntryListing {
 
     /**
      * An optional query parameter used to indicate the locale that should be used for formatting.
-     * The value should be a standard language tag. The formatFields query parameter must be set to true, otherwise
-     * culture will not be used for formatting.
+     *            The value should be a standard language tag. The formatFields query parameter must be set to true, otherwise
+     *            culture will not be used for formatting.
      *
      * @return {@link String} The return value
      */
@@ -257,7 +257,7 @@ public class ParametersForGetEntryListing {
      * @param top Limits the number of items returned from a collection.
      * @return {@link ParametersForGetEntryListing} The return value
      */
-    public ParametersForGetEntryListing setTop(int top) {
+    public ParametersForGetEntryListing setTop(Integer top) {
         this.top = top;
         return this;
     }
@@ -265,9 +265,9 @@ public class ParametersForGetEntryListing {
     /**
      * Limits the number of items returned from a collection.
      *
-     * @return int The return value
+     * @return {@link Integer} The return value
      */
-    public int getTop() {
+    public Integer getTop() {
         return this.top;
     }
 
@@ -277,7 +277,7 @@ public class ParametersForGetEntryListing {
      * @param skip Excludes the specified number of items of the queried collection from the result.
      * @return {@link ParametersForGetEntryListing} The return value
      */
-    public ParametersForGetEntryListing setSkip(int skip) {
+    public ParametersForGetEntryListing setSkip(Integer skip) {
         this.skip = skip;
         return this;
     }
@@ -285,9 +285,9 @@ public class ParametersForGetEntryListing {
     /**
      * Excludes the specified number of items of the queried collection from the result.
      *
-     * @return int The return value
+     * @return {@link Integer} The return value
      */
-    public int getSkip() {
+    public Integer getSkip() {
         return this.skip;
     }
 
@@ -297,7 +297,7 @@ public class ParametersForGetEntryListing {
      * @param count Indicates whether the total count of items within a collection are returned in the result.
      * @return {@link ParametersForGetEntryListing} The return value
      */
-    public ParametersForGetEntryListing setCount(boolean count) {
+    public ParametersForGetEntryListing setCount(Boolean count) {
         this.count = count;
         return this;
     }
@@ -305,9 +305,9 @@ public class ParametersForGetEntryListing {
     /**
      * Indicates whether the total count of items within a collection are returned in the result.
      *
-     * @return boolean The return value
+     * @return {@link Boolean} The return value
      */
-    public boolean isCount() {
+    public Boolean isCount() {
         return this.count;
     }
 }

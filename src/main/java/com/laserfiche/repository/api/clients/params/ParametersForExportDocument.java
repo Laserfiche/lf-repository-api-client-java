@@ -16,11 +16,11 @@ public class ParametersForExportDocument {
     /**
      * The requested document ID.
      */
-    private int entryId;
+    private Integer entryId;
 
     /**
      * An optional header used to retrieve partial content of the edoc. Only supports single
-     * range with byte unit.
+     *            range with byte unit.
      */
     private String range;
 
@@ -52,7 +52,7 @@ public class ParametersForExportDocument {
      * @param entryId The requested document ID.
      * @return {@link ParametersForExportDocument} The return value
      */
-    public ParametersForExportDocument setEntryId(int entryId) {
+    public ParametersForExportDocument setEntryId(Integer entryId) {
         this.entryId = entryId;
         return this;
     }
@@ -60,9 +60,9 @@ public class ParametersForExportDocument {
     /**
      * The requested document ID.
      *
-     * @return int The return value
+     * @return {@link Integer} The return value
      */
-    public int getEntryId() {
+    public Integer getEntryId() {
         return this.entryId;
     }
 
@@ -70,7 +70,7 @@ public class ParametersForExportDocument {
      * Sets the value of the range parameter and returns the current object, to enable chaining further setters.
      *
      * @param range An optional header used to retrieve partial content of the edoc. Only supports single
-     *              range with byte unit.
+     *            range with byte unit.
      * @return {@link ParametersForExportDocument} The return value
      */
     public ParametersForExportDocument setRange(String range) {
@@ -80,7 +80,7 @@ public class ParametersForExportDocument {
 
     /**
      * An optional header used to retrieve partial content of the edoc. Only supports single
-     * range with byte unit.
+     *            range with byte unit.
      *
      * @return {@link String} The return value
      */

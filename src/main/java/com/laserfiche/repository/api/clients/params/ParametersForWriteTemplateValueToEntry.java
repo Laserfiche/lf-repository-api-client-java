@@ -15,7 +15,7 @@ public class ParametersForWriteTemplateValueToEntry {
     /**
      * The ID of entry that will have its template updated.
      */
-    private int entryId;
+    private Integer entryId;
 
     private PutTemplateRequest requestBody;
 
@@ -51,7 +51,7 @@ public class ParametersForWriteTemplateValueToEntry {
      * @param entryId The ID of entry that will have its template updated.
      * @return {@link ParametersForWriteTemplateValueToEntry} The return value
      */
-    public ParametersForWriteTemplateValueToEntry setEntryId(int entryId) {
+    public ParametersForWriteTemplateValueToEntry setEntryId(Integer entryId) {
         this.entryId = entryId;
         return this;
     }
@@ -59,9 +59,9 @@ public class ParametersForWriteTemplateValueToEntry {
     /**
      * The ID of entry that will have its template updated.
      *
-     * @return int The return value
+     * @return {@link Integer} The return value
      */
-    public int getEntryId() {
+    public Integer getEntryId() {
         return this.entryId;
     }
 

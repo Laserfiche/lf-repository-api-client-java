@@ -13,7 +13,7 @@ public class ParametersForGetTagDefinitionById {
     /**
      * The requested tag definition ID.
      */
-    private int tagId;
+    private Integer tagId;
 
     /**
      * An optional query parameter used to indicate the locale that should be used for formatting.
@@ -52,7 +52,7 @@ public class ParametersForGetTagDefinitionById {
      * @param tagId The requested tag definition ID.
      * @return {@link ParametersForGetTagDefinitionById} The return value
      */
-    public ParametersForGetTagDefinitionById setTagId(int tagId) {
+    public ParametersForGetTagDefinitionById setTagId(Integer tagId) {
         this.tagId = tagId;
         return this;
     }
@@ -60,9 +60,9 @@ public class ParametersForGetTagDefinitionById {
     /**
      * The requested tag definition ID.
      *
-     * @return int The return value
+     * @return {@link Integer} The return value
      */
-    public int getTagId() {
+    public Integer getTagId() {
         return this.tagId;
     }
 

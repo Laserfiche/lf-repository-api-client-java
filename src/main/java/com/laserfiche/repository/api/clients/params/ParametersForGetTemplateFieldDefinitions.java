@@ -13,7 +13,7 @@ public class ParametersForGetTemplateFieldDefinitions {
     /**
      * The requested template definition ID.
      */
-    private int templateId;
+    private Integer templateId;
 
     /**
      * An optional OData header. Can be used to set the maximum page size using odata.maxpagesize.
@@ -39,17 +39,17 @@ public class ParametersForGetTemplateFieldDefinitions {
     /**
      * Limits the number of items returned from a collection.
      */
-    private int top;
+    private Integer top;
 
     /**
      * Excludes the specified number of items of the queried collection from the result.
      */
-    private int skip;
+    private Integer skip;
 
     /**
      * Indicates whether the total count of items within a collection are returned in the result.
      */
-    private boolean count;
+    private Boolean count;
 
     /**
      * Sets the value of the repoId parameter and returns the current object, to enable chaining further setters.
@@ -77,7 +77,7 @@ public class ParametersForGetTemplateFieldDefinitions {
      * @param templateId The requested template definition ID.
      * @return {@link ParametersForGetTemplateFieldDefinitions} The return value
      */
-    public ParametersForGetTemplateFieldDefinitions setTemplateId(int templateId) {
+    public ParametersForGetTemplateFieldDefinitions setTemplateId(Integer templateId) {
         this.templateId = templateId;
         return this;
     }
@@ -85,9 +85,9 @@ public class ParametersForGetTemplateFieldDefinitions {
     /**
      * The requested template definition ID.
      *
-     * @return int The return value
+     * @return {@link Integer} The return value
      */
-    public int getTemplateId() {
+    public Integer getTemplateId() {
         return this.templateId;
     }
 
@@ -179,7 +179,7 @@ public class ParametersForGetTemplateFieldDefinitions {
      * @param top Limits the number of items returned from a collection.
      * @return {@link ParametersForGetTemplateFieldDefinitions} The return value
      */
-    public ParametersForGetTemplateFieldDefinitions setTop(int top) {
+    public ParametersForGetTemplateFieldDefinitions setTop(Integer top) {
         this.top = top;
         return this;
     }
@@ -187,9 +187,9 @@ public class ParametersForGetTemplateFieldDefinitions {
     /**
      * Limits the number of items returned from a collection.
      *
-     * @return int The return value
+     * @return {@link Integer} The return value
      */
-    public int getTop() {
+    public Integer getTop() {
         return this.top;
     }
 
@@ -199,7 +199,7 @@ public class ParametersForGetTemplateFieldDefinitions {
      * @param skip Excludes the specified number of items of the queried collection from the result.
      * @return {@link ParametersForGetTemplateFieldDefinitions} The return value
      */
-    public ParametersForGetTemplateFieldDefinitions setSkip(int skip) {
+    public ParametersForGetTemplateFieldDefinitions setSkip(Integer skip) {
         this.skip = skip;
         return this;
     }
@@ -207,9 +207,9 @@ public class ParametersForGetTemplateFieldDefinitions {
     /**
      * Excludes the specified number of items of the queried collection from the result.
      *
-     * @return int The return value
+     * @return {@link Integer} The return value
      */
-    public int getSkip() {
+    public Integer getSkip() {
         return this.skip;
     }
 
@@ -219,7 +219,7 @@ public class ParametersForGetTemplateFieldDefinitions {
      * @param count Indicates whether the total count of items within a collection are returned in the result.
      * @return {@link ParametersForGetTemplateFieldDefinitions} The return value
      */
-    public ParametersForGetTemplateFieldDefinitions setCount(boolean count) {
+    public ParametersForGetTemplateFieldDefinitions setCount(Boolean count) {
         this.count = count;
         return this;
     }
@@ -227,9 +227,9 @@ public class ParametersForGetTemplateFieldDefinitions {
     /**
      * Indicates whether the total count of items within a collection are returned in the result.
      *
-     * @return boolean The return value
+     * @return {@link Boolean} The return value
      */
-    public boolean isCount() {
+    public Boolean isCount() {
         return this.count;
     }
 }

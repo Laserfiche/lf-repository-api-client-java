@@ -15,7 +15,7 @@ public class ParametersForGetDynamicFieldValues {
     /**
      * The requested entry ID.
      */
-    private int entryId;
+    private Integer entryId;
 
     private GetDynamicFieldLogicValueRequest requestBody;
 
@@ -45,7 +45,7 @@ public class ParametersForGetDynamicFieldValues {
      * @param entryId The requested entry ID.
      * @return {@link ParametersForGetDynamicFieldValues} The return value
      */
-    public ParametersForGetDynamicFieldValues setEntryId(int entryId) {
+    public ParametersForGetDynamicFieldValues setEntryId(Integer entryId) {
         this.entryId = entryId;
         return this;
     }
@@ -53,9 +53,9 @@ public class ParametersForGetDynamicFieldValues {
     /**
      * The requested entry ID.
      *
-     * @return int The return value
+     * @return {@link Integer} The return value
      */
-    public int getEntryId() {
+    public Integer getEntryId() {
         return this.entryId;
     }
 
