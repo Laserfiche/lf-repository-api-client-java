@@ -24,6 +24,7 @@
 - Added retry implementation when making an API call which retries when:
   - 401 status code response is being returned
   - Idempotent http request
+- Added both `exportDocumentAsStream` and `exportDocumentWithAuditReasonAsStream` API methods in the `EntriesClientImpl` 
 
 ## 1.2.0
 

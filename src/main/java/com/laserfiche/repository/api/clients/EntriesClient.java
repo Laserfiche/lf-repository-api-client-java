@@ -2,7 +2,9 @@ package com.laserfiche.repository.api.clients;
 
 import com.laserfiche.repository.api.clients.impl.model.*;
 import com.laserfiche.repository.api.clients.params.*;
+import jdk.internal.util.xml.impl.Input;
 
+import java.io.InputStream;
 import java.util.Map;
 import java.util.function.Function;
 
@@ -189,6 +191,8 @@ public interface EntriesClient {
      */
     void exportDocumentWithAuditReason(ParametersForExportDocumentWithAuditReason parameters);
 
+    InputStream exportDocumentWithAuditReasonAsStream(ParametersForExportDocumentWithAuditReason parameters);
+
     /**
      * - Returns an entry's edoc resource in a stream format.
      * - Provide an entry ID, and get the edoc resource as part of the response content.
@@ -197,6 +201,8 @@ public interface EntriesClient {
      * @param parameters An object of type {@link ParametersForExportDocument} which encapsulates the parameters of {@link #exportDocument exportDocument} method.
      */
     void exportDocument(ParametersForExportDocument parameters);
+
+    InputStream exportDocumentAsStream(ParametersForExportDocument parameters);
 
     /**
      * - Delete the edoc associated with the provided entry ID.
