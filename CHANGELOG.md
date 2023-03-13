@@ -7,7 +7,7 @@
 - Added retry implementation when making an API call which retries when:
   - 401 status code response is being returned
   - Idempotent http request
-- Added an option when constructing the `RepositoryApiClient` to specify the request scope(s) for the access token.
+- Added an option when constructing the `RepositoryApiClient` to specify the requested scope(s) for the access token.
 
 ### Fixes
 - The ApiClient class is now abstract.
