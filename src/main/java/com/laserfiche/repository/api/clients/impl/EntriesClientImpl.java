@@ -204,13 +204,18 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                             }
                             throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
                         }
+                    } else {
+                        if (retryCount == maxRetries) {
+                            String jsonString = new JSONObject(body).toString();
+                            ProblemDetails problemDetails = ProblemDetailsDeserializer.deserialize(objectMapper,
+                                    jsonString);
+                            throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                        }
                     }
                 } catch (Exception err) {
                     if (err instanceof ApiException) {
-                        if (httpResponse.getStatus() == 400 || httpResponse.getStatus() == 404 || httpResponse.getStatus() == 409 || httpResponse.getStatus() == 500) {
+                        if (httpResponse.getStatus() == 400 || httpResponse.getStatus() == 404 || httpResponse.getStatus() == 409 || httpResponse.getStatus() == 500 || retryCount == maxRetries) {
                             throw err;
-                        } else {
-                            System.err.println(err);
                         }
                         break;
                     }
@@ -651,6 +656,9 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                             throw exception[0];
                         }
                     } else {
+                        if (retryCount == maxRetries) {
+                            throw exception[0];
+                        }
                         exception[0] = null;
                     }
                 } catch (Exception err) {
@@ -721,6 +729,9 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                             throw exception[0];
                         }
                     } else {
+                        if (retryCount == maxRetries) {
+                            throw exception[0];
+                        }
                         exception[0] = null;
                     }
                 } catch (Exception err) {
