@@ -68,13 +68,24 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
      * @param baseUrlDebug Optional override for the Laserfiche repository API base url.
      * @return {@link RepositoryApiClient}
      */
-    public static RepositoryApiClient createFromAccessKey(String servicePrincipalKey, AccessKey accessKey,
+    public static RepositoryApiClient createFromAccessKey(String servicePrincipalKey, AccessKey accessKey, String scope,
             String baseUrlDebug) {
         if (baseUrlDebug == null) {
             baseUrlDebug = "https://api." + accessKey.getDomain() + "/repository";
         }
-        HttpRequestHandler oauthHandler = new OAuthClientCredentialsHandler(servicePrincipalKey, accessKey);
+        HttpRequestHandler oauthHandler = new OAuthClientCredentialsHandler(servicePrincipalKey, accessKey, scope);
         return new RepositoryApiClientImpl(baseUrlDebug, oauthHandler);
+    }
+
+    /**
+     * Creates a new Laserfiche repository client that will use Laserfiche Cloud OAuth client credentials to get access tokens.
+     * @param servicePrincipalKey The service principal key created for the service principal from the Laserfiche Account Administration.
+     * @param accessKey The access key exported from the Laserfiche Developer Console.
+     * @param scope The requested space-delimited scopes for the access token.
+     * @return {@link RepositoryApiClient}
+     */
+    public static RepositoryApiClient createFromAccessKey(String servicePrincipalKey, AccessKey accessKey, String scope) {
+        return createFromAccessKey(servicePrincipalKey, accessKey, scope, null);
     }
 
     /**
