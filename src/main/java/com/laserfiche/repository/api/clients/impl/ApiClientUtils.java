@@ -89,6 +89,12 @@ public class ApiClientUtils {
         return ApiException.create(statusCode, headersMap, problemDetails, null);
     }
 
+    protected static ApiException createApiExceptionForExportDocumentAsStream(HttpResponse<byte[]> httpResponse, ProblemDetails problemDetails) {
+        int statusCode = httpResponse.getStatus();
+        Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
+        return ApiException.create(statusCode, headersMap, problemDetails, null);
+    }
+
     /**
      * Sets the authorization bearer token and returns a Request Url.
      *

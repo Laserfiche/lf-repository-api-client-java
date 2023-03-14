@@ -14,6 +14,7 @@ import kong.unirest.HttpResponse;
 import kong.unirest.UnirestInstance;
 import kong.unirest.json.JSONObject;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.*;
 import java.util.function.Function;
@@ -828,58 +829,43 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 .stream()
                 .collect(Collectors.toMap(Map.Entry::getKey, e -> (String) e.getValue()));
         {
-            final RuntimeException[] exception = {null};
             int retryCount = 0;
             int maxRetries = 1;
-            final int[] statusCode = {0};
-            final InputStream[] inputStreams = {null};
+            InputStream inputStream = null;
+            HttpResponse<byte[]> httpResponse;
             boolean shouldRetry = true;
             while (retryCount <= maxRetries && shouldRetry) {
                 try {
                     String url = baseUrl + "/v1/Repositories/{repoId}/Entries/{entryId}/Laserfiche.Repository.Document/edoc";
                     String requestUrl = ApiClientUtils.beforeSend(url, headerParametersWithStringTypeValue,
                             httpRequestHandler);
-                    httpClient
+                    httpResponse = httpClient
                             .get(requestUrl)
                             .routeParam(pathParameters)
                             .headers(headerParametersWithStringTypeValue)
-                            .thenConsume(rawResponse -> {
-                                statusCode[0] = rawResponse.getStatus();
-                                if (rawResponse.getStatus() == 200 || rawResponse.getStatus() == 206) {
-                                    inputStreams[0] = rawResponse.getContent();
-                                } else {
-                                    ProblemDetails problemDetails = null;
-                                    Map<String, String> headersMap = ApiClientUtils.getHeadersMap(
-                                            rawResponse.getHeaders());
-                                    try {
-                                        String jsonString = rawResponse.getContentAsString();
-                                        problemDetails = ProblemDetailsDeserializer.deserialize(objectMapper,
-                                                jsonString);
-                                    } catch (Exception e) {
-                                        exception[0] = ApiException.create(rawResponse.getStatus(), headersMap, null,
-                                                e);
-                                    }
-                                    exception[0] = ApiException.create(rawResponse.getStatus(), headersMap,
-                                            problemDetails, null);
-                                }
-                            });
+                            .asBytes();
+                    int statusCode = httpResponse.getStatus();
                     shouldRetry = httpRequestHandler.afterSend(
-                            new ResponseImpl((short) statusCode[0])) || ApiClientUtils.isRetryableStatusCode(
-                            statusCode[0], HttpMethod.GET);
+                            new ResponseImpl((short) statusCode)) || ApiClientUtils.isRetryableStatusCode(
+                            statusCode, HttpMethod.GET);
                     if (!shouldRetry) {
-                        if (inputStreams[0] != null) {
-                            return inputStreams[0];
-                        } else if (exception[0] != null) {
-                            throw exception[0];
+                        if (statusCode == 200 || statusCode == 206) {
+                            inputStream = new ByteArrayInputStream(httpResponse.getBody());
+                            return inputStream;
+                        } else {
+                            ProblemDetails problemDetails;
+                            Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
+                            try {
+                                problemDetails = ProblemDetails.create(httpResponse.getStatus(), headersMap);
+                            } catch (Exception e) {
+                                throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+                            }
+                            throw ApiClientUtils.createApiExceptionForExportDocumentAsStream(httpResponse,
+                                    problemDetails);
                         }
-                    } else {
-                        if (retryCount == maxRetries) {
-                            throw exception[0];
-                        }
-                        exception[0] = null;
                     }
                 } catch (Exception err) {
-                    if (err instanceof ApiException) {
+                    if (err instanceof ApiException || retryCount == maxRetries) {
                         throw err;
                     }
                     shouldRetry = true;
@@ -887,10 +873,10 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                     retryCount++;
                 }
             }
-            if (inputStreams[0] == null) {
+            if (inputStream == null) {
                 throw new IllegalStateException("Undefined response, there is a bug");
             }
-            return inputStreams[0];
+            return inputStream;
         }
     }
 
