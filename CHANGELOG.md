@@ -1,5 +1,7 @@
 ## 2.0.0
+
 ### Features
+
 - **[BREAKING]** For every API, the parameters are now encapsulated into a parameter class.
 - **[BREAKING]** Enum values are now following Java naming convention.
 - **[BREAKING]** Every async API are replaced with normal blocking API.
@@ -8,6 +10,7 @@
   - 401 status code response is being returned
   - Idempotent http request
 - Added an option when constructing the `RepositoryApiClient` to specify the requested scope(s) for the access token.
+- Added both `exportDocumentAsStream` and `exportDocumentWithAuditReasonAsStream` API methods in the `EntriesClientImpl` object along with the `EntriesClient` interface
 
 ### Fixes
 - The ApiClient class is now abstract.
@@ -27,12 +30,7 @@
     }
   }
   ```
-
-- Added retry implementation when making an API call which retries when:
-  - 401 status code response is being returned
-  - Idempotent http request
-- Added both `exportDocumentAsStream` and `exportDocumentWithAuditReasonAsStream` API methods in the `EntriesClientImpl` object along with the `EntriesClient` interface 
-
+  
 ## 1.2.0
 
 ### Features

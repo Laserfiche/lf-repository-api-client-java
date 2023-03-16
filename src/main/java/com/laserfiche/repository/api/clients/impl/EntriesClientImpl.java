@@ -721,8 +721,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                             } catch (Exception e) {
                                 throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
                             }
-                            throw ApiClientUtils.createApiExceptionForExportDocumentAsStream(httpResponse,
-                                    problemDetails);
+                            throw ApiClientUtils.createApiException(httpResponse, problemDetails);
                         }
                     } else {
                         if (retryCount == maxRetries) {
@@ -732,8 +731,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                             } catch (Exception e) {
                                 throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
                             }
-                            throw ApiClientUtils.createApiExceptionForExportDocumentAsStream(httpResponse,
-                                    problemDetails);
+                            throw ApiClientUtils.createApiException(httpResponse, problemDetails);
                         }
                     }
                 } catch (Exception err) {
@@ -869,8 +867,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                             } catch (Exception e) {
                                 throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
                             }
-                            throw ApiClientUtils.createApiExceptionForExportDocumentAsStream(httpResponse,
-                                    problemDetails);
+                            throw ApiClientUtils.createApiException(httpResponse, problemDetails);
                         }
                     } else {
                         if (retryCount == maxRetries) {
@@ -880,8 +877,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                             } catch (Exception e) {
                                 throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
                             }
-                            throw ApiClientUtils.createApiExceptionForExportDocumentAsStream(httpResponse,
-                                    problemDetails);
+                            throw ApiClientUtils.createApiException(httpResponse, problemDetails);
                         }
                     }
                 } catch (Exception err) {
