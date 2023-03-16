@@ -83,7 +83,7 @@ public class ApiClientUtils {
                 .trim();
     }
 
-    protected static ApiException createApiException(HttpResponse<Object> httpResponse, ProblemDetails problemDetails) {
+    protected static ApiException createApiException(HttpResponse<?> httpResponse, ProblemDetails problemDetails) {
         int statusCode = httpResponse.getStatus();
         Map<String, String> headersMap = getHeadersMap(httpResponse.getHeaders());
         return ApiException.create(statusCode, headersMap, problemDetails, null);
