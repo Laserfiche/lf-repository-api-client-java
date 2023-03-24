@@ -50,6 +50,7 @@ public class BaseTest {
                 .ignoreIfMissing()
                 .load();
         try {
+            System.out.println(getEnvironmentVariable(AUTHORIZATION_TYPE));
             authorizationType = AuthorizationType.valueOf(getEnvironmentVariable(AUTHORIZATION_TYPE));
             testHeaderValue = getEnvironmentVariable(TEST_HEADER);
         } catch (EnumConstantNotPresentException e) {
@@ -75,6 +76,7 @@ public class BaseTest {
 
     private static String getEnvironmentVariable(String environmentVariableName) {
         String environmentVariable = System.getenv(environmentVariableName);
+        System.out.println(environmentVariable);
         if (nullOrEmpty(environmentVariable)) {
             environmentVariable = System.getProperty(environmentVariableName);
             if (nullOrEmpty(environmentVariable) && IS_NOT_GITHUB_ENVIRONMENT)
