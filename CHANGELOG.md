@@ -18,6 +18,8 @@
 - Added an option when constructing the `RepositoryApiClient` to specify the requested scope(s) for the access token.
 - Added both `exportDocumentAsStream` and `exportDocumentWithAuditReasonAsStream` API methods in the `EntriesClientImpl` object along with the `EntriesClient` interface
 
+#### Note: accidently published version 2.0.1 so there is no difference between version 2.0.1 and 2.0.0
+
 ### Fixes
 - The ApiClient class is now abstract.
 - Only throw the `ApiException` type when error API responses occur.
