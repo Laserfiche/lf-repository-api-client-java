@@ -50,7 +50,7 @@ public class BaseTest {
                 .ignoreIfMissing()
                 .load();
         try {
-            System.out.println(getEnvironmentVariable(AUTHORIZATION_TYPE));
+            System.out.println(System.getenv());
             authorizationType = AuthorizationType.valueOf(getEnvironmentVariable(AUTHORIZATION_TYPE));
             testHeaderValue = getEnvironmentVariable(TEST_HEADER);
         } catch (EnumConstantNotPresentException e) {
