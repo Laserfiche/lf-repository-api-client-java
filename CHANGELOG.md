@@ -1,3 +1,9 @@
+## 2.0.2
+
+### Fixes
+
+- Updated the pom.xml file to use the maven central version of the client core rather than the `SNAPSHOT` version
+
 ## 2.0.0
 
 ### Features
