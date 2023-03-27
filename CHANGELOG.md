@@ -1,3 +1,9 @@
+## 2.0.2
+
+### Fixes
+
+- Updated the [Java Client Core Repository](https://github.com/Laserfiche/lf-api-client-core-java) dependency to release version 2.2.0
+
 ## 2.0.0
 
 ### Features
