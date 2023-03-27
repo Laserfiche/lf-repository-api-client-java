@@ -2,7 +2,7 @@
 
 ### Fixes
 
-- Updated the pom.xml file to use the maven central version of the [java client core repo](https://github.com/Laserfiche/lf-api-client-core-java) rather than the `SNAPSHOT` version
+- Updated the [Java Client Core Repository](https://github.com/Laserfiche/lf-api-client-core-java) dependency in pom.xml file to use the maven central version of rather than the `SNAPSHOT` version
 
 ## 2.0.0
 
