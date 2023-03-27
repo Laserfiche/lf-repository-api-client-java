@@ -2,7 +2,7 @@
 
 ### Fixes
 
-- Updated the [Java Client Core Repository](https://github.com/Laserfiche/lf-api-client-core-java) dependency in pom.xml file to use the maven central version of rather than the `SNAPSHOT` version
+- Updated the [Java Client Core Repository](https://github.com/Laserfiche/lf-api-client-core-java) dependency to release version 2.2.0
 
 ## 2.0.0
 
@@ -17,8 +17,6 @@
   - Idempotent http request
 - Added an option when constructing the `RepositoryApiClient` to specify the requested scope(s) for the access token.
 - Added both `exportDocumentAsStream` and `exportDocumentWithAuditReasonAsStream` API methods in the `EntriesClientImpl` object along with the `EntriesClient` interface
-
-#### Note: accidently published version 2.0.1 so there is no difference between version 2.0.1 and 2.0.0
 
 ### Fixes
 - The ApiClient class is now abstract.
