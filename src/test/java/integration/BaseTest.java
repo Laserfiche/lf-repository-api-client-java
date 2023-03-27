@@ -50,11 +50,7 @@ public class BaseTest {
                 .ignoreIfMissing()
                 .load();
         try {
-            if (IS_NOT_GITHUB_ENVIRONMENT){
-                authorizationType = AuthorizationType.valueOf(getEnvironmentVariable(AUTHORIZATION_TYPE));}
-            else{
-                authorizationType = AuthorizationType.CLOUD_ACCESS_KEY;
-            }
+            authorizationType = AuthorizationType.CLOUD_ACCESS_KEY;
             testHeaderValue = getEnvironmentVariable(TEST_HEADER);
         } catch (EnumConstantNotPresentException e) {
             throw new EnumConstantNotPresentException(AuthorizationType.class,
