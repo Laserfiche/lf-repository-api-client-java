@@ -50,7 +50,7 @@ public class BaseTest {
                 .ignoreIfMissing()
                 .load();
         try {
-            authorizationType = AuthorizationType.CLOUD_ACCESS_KEY;
+            authorizationType = AuthorizationType.valueOf(getEnvironmentVariable(AUTHORIZATION_TYPE));
             testHeaderValue = getEnvironmentVariable(TEST_HEADER);
         } catch (EnumConstantNotPresentException e) {
             throw new EnumConstantNotPresentException(AuthorizationType.class,
