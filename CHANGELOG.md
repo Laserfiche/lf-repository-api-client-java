@@ -1,3 +1,9 @@
+## 2.0.3
+
+### Features
+
+- Added `getSelfHostedRepositoryList(String url)` to `RepositoriesClientImpl` for self hosted users
+
 ## 2.0.2
 
 ### Fixes
