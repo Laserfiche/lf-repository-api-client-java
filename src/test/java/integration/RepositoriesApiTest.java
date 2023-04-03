@@ -2,12 +2,12 @@ package integration;
 
 import com.laserfiche.repository.api.RepositoryApiClientImpl;
 import com.laserfiche.repository.api.clients.RepositoriesClient;
-import com.laserfiche.repository.api.clients.impl.RepositoriesClientImpl;
 import com.laserfiche.repository.api.clients.impl.model.RepositoryInfo;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.DisabledIf;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class RepositoriesApiTest extends BaseTest {
     @Test
@@ -16,13 +16,17 @@ class RepositoriesApiTest extends BaseTest {
         RepositoryInfo[] repositoryInfoList = client.getRepositoryList();
         boolean foundRepo = false;
         assertNotNull(repositoryInfoList);
-        for (RepositoryInfo repositoryInfo : repositoryInfoList){
+        for (RepositoryInfo repositoryInfo : repositoryInfoList) {
             assertNotNull(repositoryInfo.getRepoId());
-            if(!authorizationType.equals(AuthorizationType.API_SERVER_USERNAME_PASSWORD)){
+            if (!authorizationType.equals(AuthorizationType.API_SERVER_USERNAME_PASSWORD)) {
                 assertNotNull(repositoryInfo.getWebclientUrl());
-                assertTrue(repositoryInfo.getWebclientUrl().contains(repositoryInfo.getRepoId()));
+                assertTrue(repositoryInfo
+                        .getWebclientUrl()
+                        .contains(repositoryInfo.getRepoId()));
             }
-            if(repositoryInfo.getRepoId().equalsIgnoreCase(repositoryId)){
+            if (repositoryInfo
+                    .getRepoId()
+                    .equalsIgnoreCase(repositoryId)) {
                 foundRepo = true;
             }
         }
@@ -32,14 +36,18 @@ class RepositoriesApiTest extends BaseTest {
     @Test
     @DisabledIf("isCloudEnvironment")
     void getSelfHostedRepositoryList_WithNoAuthentication_ReturnSuccessful() {
-        RepositoryInfo[] repositoryInfoList = RepositoriesClientImpl.getSelfHostedRepositoryList(baseUrl);
+        RepositoryInfo[] repositoryInfoList = RepositoryApiClientImpl.getSelfHostedRepositoryList(baseUrl);
         assertNotNull(repositoryInfoList);
         boolean foundRepo = false;
-        for (RepositoryInfo repositoryInfo : repositoryInfoList){
+        for (RepositoryInfo repositoryInfo : repositoryInfoList) {
             assertNotNull(repositoryInfo.getRepoId());
             assertNotNull(repositoryInfo.getWebclientUrl());
-            assertTrue(repositoryInfo.getWebclientUrl().contains(repositoryInfo.getRepoId()));
-            if(repositoryInfo.getRepoId().equalsIgnoreCase(repositoryId)){
+            assertTrue(repositoryInfo
+                    .getWebclientUrl()
+                    .contains(repositoryInfo.getRepoId()));
+            if (repositoryInfo
+                    .getRepoId()
+                    .equalsIgnoreCase(repositoryId)) {
                 foundRepo = true;
             }
         }

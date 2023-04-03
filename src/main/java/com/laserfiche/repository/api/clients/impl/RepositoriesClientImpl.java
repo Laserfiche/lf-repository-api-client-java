@@ -1,15 +1,12 @@
 package com.laserfiche.repository.api.clients.impl;
 
 import com.laserfiche.api.client.deserialization.ProblemDetailsDeserializer;
-import com.laserfiche.api.client.deserialization.TokenClientObjectMapper;
 import com.laserfiche.api.client.httphandlers.HttpRequestHandler;
 import com.laserfiche.api.client.model.ApiException;
 import com.laserfiche.api.client.model.ProblemDetails;
 import com.laserfiche.repository.api.clients.RepositoriesClient;
 import com.laserfiche.repository.api.clients.impl.model.RepositoryInfo;
 import kong.unirest.HttpResponse;
-import kong.unirest.ObjectMapper;
-import kong.unirest.Unirest;
 import kong.unirest.UnirestInstance;
 import kong.unirest.json.JSONArray;
 import kong.unirest.json.JSONObject;
@@ -53,28 +50,5 @@ public class RepositoriesClientImpl extends ApiClient implements RepositoriesCli
         };
         return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler, baseUrl + "/v1/Repositories", "GET",
                 null, null, null, null, null, null, new HashMap<String, String>(), false, parseResponse);
-    }
-
-    public static RepositoryInfo[] getSelfHostedRepositoryList(String url) {
-        Map<String, String> headerKeyValuePairs = new HashMap<>();
-        headerKeyValuePairs.put("accept", "application/json");
-        HttpResponse<Object> httpResponse = null;
-        if (url.endsWith("/")) {
-            url = url.substring(0, url.length() - 1);
-        }
-        String baseUrl = url + "/v1/Repositories";
-        String responseJson;
-        ObjectMapper objectMapper = new TokenClientObjectMapper();
-        UnirestInstance httpClient = Unirest.spawnInstance();
-        httpClient
-                .config()
-                .setObjectMapper(objectMapper);
-        httpResponse = httpClient
-                .get(baseUrl)
-                .headers(headerKeyValuePairs)
-                .asObject(Object.class);
-        Object body = httpResponse.getBody();
-        responseJson = new JSONArray(((ArrayList) body).toArray()).toString();
-        return objectMapper.readValue(responseJson, RepositoryInfo[].class);
     }
 }
