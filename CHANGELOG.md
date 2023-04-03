@@ -2,7 +2,7 @@
 
 ### Features
 
-- Added `getSelfHostedRepositoryList(String url)` to `RepositoriesClientImpl` for self hosted users
+- Added `getSelfHostedRepositoryList(String url)` to `RepositoryApiClientImpl` for self hosted users
 
 ## 2.0.2
 
