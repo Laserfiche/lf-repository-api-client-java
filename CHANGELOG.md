@@ -1,8 +1,8 @@
-## 2.0.3
+## 2.0.3 Pre-release
 
 ### Features
 
-- Added `getSelfHostedRepositoryList(String url)` to `RepositoryApiClientImpl` for self hosted users
+- Added `RepositoriesClientImpl.getSelfHostedRepositoryList` method that will enable self hosted users to get their repository list without an access token.
 
 ## 2.0.2
 

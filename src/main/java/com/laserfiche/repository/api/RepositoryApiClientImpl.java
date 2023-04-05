@@ -124,35 +124,6 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
         return new RepositoryApiClientImpl(baseUrl, usernamePasswordHandler);
     }
 
-    /**
-     * Returns the repository resource list that current user has access to given the API server base URL. Only available in Laserfiche Self-Hosted.
-     *
-     * @param url API server base URL e.g., https://{APIServerName}/LFRepositoryAPI
-     * @return Get the respository resource list successfully.
-     */
-    public static RepositoryInfo[] getSelfHostedRepositoryList(String url) {
-        Map<String, String> headerKeyValuePairs = new HashMap<>();
-        headerKeyValuePairs.put("accept", "application/json");
-        HttpResponse<Object> httpResponse = null;
-        if (url.endsWith("/")) {
-            url = url.substring(0, url.length() - 1);
-        }
-        String baseUrl = url + "/v1/Repositories";
-        String responseJson;
-        ObjectMapper objectMapper = new TokenClientObjectMapper();
-        UnirestInstance httpClient = Unirest.spawnInstance();
-        httpClient
-                .config()
-                .setObjectMapper(objectMapper);
-        httpResponse = httpClient
-                .get(baseUrl)
-                .headers(headerKeyValuePairs)
-                .asObject(Object.class);
-        Object body = httpResponse.getBody();
-        responseJson = new JSONArray(((ArrayList) body).toArray()).toString();
-        return objectMapper.readValue(responseJson, RepositoryInfo[].class);
-    }
-
     @Override
     public void setDefaultRequestHeaders(Map<String, String> defaultRequestHeaders) {
         defaultHeaders = defaultRequestHeaders;

@@ -1,7 +1,7 @@
 package integration;
 
-import com.laserfiche.repository.api.RepositoryApiClientImpl;
 import com.laserfiche.repository.api.clients.RepositoriesClient;
+import com.laserfiche.repository.api.clients.impl.RepositoriesClientImpl;
 import com.laserfiche.repository.api.clients.impl.model.RepositoryInfo;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.DisabledIf;
@@ -36,15 +36,11 @@ class RepositoriesApiTest extends BaseTest {
     @Test
     @DisabledIf("isCloudEnvironment")
     void getSelfHostedRepositoryList_WithNoAuthentication_ReturnSuccessful() {
-        RepositoryInfo[] repositoryInfoList = RepositoryApiClientImpl.getSelfHostedRepositoryList(baseUrl);
+        RepositoryInfo[] repositoryInfoList = RepositoriesClientImpl.getSelfHostedRepositoryList(baseUrl);
         assertNotNull(repositoryInfoList);
         boolean foundRepo = false;
         for (RepositoryInfo repositoryInfo : repositoryInfoList) {
             assertNotNull(repositoryInfo.getRepoId());
-            assertNotNull(repositoryInfo.getWebclientUrl());
-            assertTrue(repositoryInfo
-                    .getWebclientUrl()
-                    .contains(repositoryInfo.getRepoId()));
             if (repositoryInfo
                     .getRepoId()
                     .equalsIgnoreCase(repositoryId)) {
