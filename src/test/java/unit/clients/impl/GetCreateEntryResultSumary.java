@@ -9,7 +9,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class ApiClientUtilsTest {
+class GetCreateEntryResultSumary {
     @Test
     void getCreateEntryResultSummary_NullCreateEntryResult() {
         String result = ApiClientUtils.getCreateEntryResultSummary(null);
