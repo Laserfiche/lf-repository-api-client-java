@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class GetHeaders {
-    private Map<String, String> headerParametersWithStringTypeValue = new HashMap<String, String>();
+    private final Map<String, String> headerParametersWithStringTypeValue = new HashMap<String, String>();
     private Headers header;
 
     @BeforeEach

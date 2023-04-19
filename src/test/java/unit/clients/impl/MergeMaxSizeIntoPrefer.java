@@ -8,8 +8,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class MergeMaxSizeIntoPrefer {
-    private int maxSize = 1;
-    private String prefer = "maxpagesize";
+    private final int maxSize = 1;
+    private final String prefer = "maxpagesize";
+    private final int negativeMaxSize = -1;
 
     @Test
     void mergeMaxSizeIntoPrefer_ZeroMaxSize_NullPrefer() {
@@ -37,7 +38,7 @@ public class MergeMaxSizeIntoPrefer {
 
     @Test
     void mergeMaxSizeIntoPrefer_NegativeMaxSize_StringPrefer() {
-        String result = ApiClientUtils.mergeMaxSizeIntoPrefer(-1, prefer);
-        assertEquals(String.format("%s; maxpagesize=%d", prefer, -1), result);
+        String result = ApiClientUtils.mergeMaxSizeIntoPrefer(negativeMaxSize, prefer);
+        assertEquals(String.format("%s; maxpagesize=%d", prefer, negativeMaxSize), result);
     }
 }
