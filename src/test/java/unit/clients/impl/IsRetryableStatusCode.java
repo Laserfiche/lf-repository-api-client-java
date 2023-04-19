@@ -15,8 +15,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 public class IsRetryableStatusCode {
-    private HttpMethod requestMethod;
-
     @ParameterizedTest
     @MethodSource("statusCodes")
     void isRetryableStatusCode_NullRequestMethod(int statusCode) {
