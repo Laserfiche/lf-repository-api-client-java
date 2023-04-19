@@ -71,4 +71,39 @@ public class GetHeaders {
         assertNotNull(headerParametersWithStringTypeValue);
         assertEquals(result, headerParametersWithStringTypeValue);
     }
+
+    @Test
+    void getHeaderMap_AddKeyToHeaderMap(){
+        for (int i = 0; i < 5; i++) {
+            headerParametersWithStringTypeValue.put(String.format("test%s", i), "test");
+        }
+        header.add(headerParametersWithStringTypeValue);
+        Map<String, String> result = ApiClientUtils.getHeadersMap(header);
+        assertNotNull(headerParametersWithStringTypeValue);
+        assertEquals(result, headerParametersWithStringTypeValue);
+        header.clear();
+        headerParametersWithStringTypeValue.put("test6", "test");
+        header.add(headerParametersWithStringTypeValue);
+        result = ApiClientUtils.getHeadersMap(header);
+        assertNotNull(headerParametersWithStringTypeValue);
+        assertEquals(result, headerParametersWithStringTypeValue);
+    }
+
+    @Test
+    void getHeaderMap_DeleteKeyToHeaderMap(){
+        for (int i = 0; i < 5; i++) {
+            headerParametersWithStringTypeValue.put(String.format("test%s", i), "test");
+        }
+        header.add(headerParametersWithStringTypeValue);
+        Map<String, String> result = ApiClientUtils.getHeadersMap(header);
+        assertNotNull(headerParametersWithStringTypeValue);
+        assertEquals(result, headerParametersWithStringTypeValue);
+        header.clear();
+        headerParametersWithStringTypeValue.remove(1);
+        header.add(headerParametersWithStringTypeValue);
+        result = ApiClientUtils.getHeadersMap(header);
+        assertNotNull(headerParametersWithStringTypeValue);
+        assertEquals(result, headerParametersWithStringTypeValue);
+    }
+
 }
