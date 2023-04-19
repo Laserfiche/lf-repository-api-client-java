@@ -2,80 +2,50 @@ package unit.clients.impl;
 
 import com.laserfiche.repository.api.clients.impl.ApiClientUtils;
 import kong.unirest.HttpMethod;
-import org.junit.jupiter.api.Test;
+import kong.unirest.HttpStatus;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.stream.Stream;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 public class IsRetryableStatusCode {
     private HttpMethod requestMethod;
-    @Test
-    void isRetryableStatusCode_NullRequestMethod_InvalidStatusCode(){
-        boolean result = ApiClientUtils.isRetryableStatusCode(0,null);
-        assertTrue(result);
-    }
-    @Test
-    void isRetryableStatusCode_NullRequestMethod_NotFoundStatusCode(){
-        boolean result = ApiClientUtils.isRetryableStatusCode(404,null);
-        assertTrue(result);
-    }
-    @Test
-    void isRetryableStatusCode_NullRequestMethod_TimeoutStatusCode(){
-        boolean result = ApiClientUtils.isRetryableStatusCode(408,null);
-        assertTrue(result);
-    }
-    @Test
-    void isRetryableStatusCode_NullRequestMethod_ServerErrorCode() {
-        boolean result = ApiClientUtils.isRetryableStatusCode(500, null);
-        assertTrue(result);
+
+    @ParameterizedTest
+    @MethodSource("statusCodes")
+    void isRetryableStatusCode_NullRequestMethod(int statusCode) {
+        Assertions.assertThrows(
+                NullPointerException.class, () -> ApiClientUtils.isRetryableStatusCode(statusCode, null));
     }
 
-    @Test
-    void isRetryableStatusCode_PostRequestMethod_InvalidStatusCode(){
-        requestMethod = HttpMethod.POST;
-        boolean result = ApiClientUtils.isRetryableStatusCode(0,requestMethod);
-        assertTrue(result);
-    }
-    @Test
-    void isRetryableStatusCode_PostRequestMethod_NotFoundStatusCode(){
-        requestMethod = HttpMethod.POST;
-        boolean result = ApiClientUtils.isRetryableStatusCode(404,requestMethod);
-        assertTrue(result);
-    }
-    @Test
-    void isRetryableStatusCode_PostRequestMethod_TimeoutStatusCode(){
-        requestMethod = HttpMethod.POST;
-        boolean result = ApiClientUtils.isRetryableStatusCode(408,requestMethod);
-        assertTrue(result);
-    }
-    @Test
-    void isRetryableStatusCode_PostRequestMethod_ServerErrorCode() {
-        requestMethod = HttpMethod.POST;
-        boolean result = ApiClientUtils.isRetryableStatusCode(500, requestMethod);
-        assertTrue(result);
+    @ParameterizedTest
+    @MethodSource("statusCodes")
+    void isRetryableStatusCode_PostRequestMethod(int statusCode) {
+        boolean result = ApiClientUtils.isRetryableStatusCode(statusCode, HttpMethod.POST);
+        assertFalse(result);
     }
 
-    @Test
-    void isRetryableStatusCode_GetRequestMethod_InvalidStatusCode(){
-        requestMethod = HttpMethod.GET;
-        boolean result = ApiClientUtils.isRetryableStatusCode(0,requestMethod);
-        assertTrue(result);
+    @ParameterizedTest
+    @MethodSource("statusCodes")
+    void isRetryableStatusCode_GetRequestMethod_InvalidStatusCode(int statusCode) {
+        boolean result = ApiClientUtils.isRetryableStatusCode(statusCode, HttpMethod.GET);
+        if (statusCode == 408 || statusCode == 500) {
+            assertTrue(result);
+        } else {
+            assertFalse(result);
+        }
     }
-    @Test
-    void isRetryableStatusCode_GetRequestMethod_NotFoundStatusCode(){
-        requestMethod = HttpMethod.GET;
-        boolean result = ApiClientUtils.isRetryableStatusCode(404,requestMethod);
-        assertTrue(result);
-    }
-    @Test
-    void isRetryableStatusCode_GetRequestMethod_TimeoutStatusCode(){
-        requestMethod = HttpMethod.GET;
-        boolean result = ApiClientUtils.isRetryableStatusCode(408,requestMethod);
-        assertTrue(result);
-    }
-    @Test
-    void isRetryableStatusCode_GetRequestMethod_ServerErrorCode() {
-        requestMethod = HttpMethod.GET;
-        boolean result = ApiClientUtils.isRetryableStatusCode(500, requestMethod);
-        assertTrue(result);
+
+    private static Stream<Arguments> statusCodes() {
+        return Stream.of(arguments(0),
+                arguments(HttpStatus.REQUEST_TIMEOUT),
+                arguments(HttpStatus.NOT_FOUND),
+                arguments(HttpStatus.INTERNAL_SERVER_ERROR));
     }
 }
