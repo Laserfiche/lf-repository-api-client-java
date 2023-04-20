@@ -31,7 +31,7 @@ public class IsRetryableStatusCode {
 
     @ParameterizedTest
     @MethodSource("statusCodes")
-    void isRetryableStatusCode_GetRequestMethod_InvalidStatusCodes(int statusCode) {
+    void isRetryableStatusCode_GetRequestMethod(int statusCode) {
         boolean result = ApiClientUtils.isRetryableStatusCode(statusCode, HttpMethod.GET);
         if (statusCode == 408 || statusCode == 500) {
             assertTrue(result);
