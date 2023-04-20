@@ -1,4 +1,4 @@
-package unit.clients.impl;
+package unit.clients.impl.ApiClientUtils;
 
 import com.laserfiche.repository.api.clients.impl.ApiClientUtils;
 import com.laserfiche.repository.api.clients.impl.model.*;
