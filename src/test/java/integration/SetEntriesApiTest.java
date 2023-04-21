@@ -4,6 +4,7 @@ import com.laserfiche.repository.api.RepositoryApiClient;
 import com.laserfiche.repository.api.clients.impl.model.*;
 import com.laserfiche.repository.api.clients.params.*;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -15,11 +16,17 @@ import java.util.concurrent.ExecutionException;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class SetEntriesApiTest extends BaseTest {
-    RepositoryApiClient client = repositoryApiClient;
+    RepositoryApiClient client;
 
-    RepositoryApiClient createEntryClient = repositoryApiClient;
+    RepositoryApiClient createEntryClient;
 
     Entry entry = null;
+
+    @BeforeEach
+    void perTestSetup() {
+        client = repositoryApiClient;
+        createEntryClient = repositoryApiClient;
+    }
 
     @AfterEach
     void deleteEntry() {

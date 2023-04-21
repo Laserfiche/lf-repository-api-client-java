@@ -10,7 +10,9 @@ import com.laserfiche.repository.api.clients.impl.model.TemplateFieldInfo;
 import com.laserfiche.repository.api.clients.params.ParametersForCreateOrCopyEntry;
 import io.github.cdimascio.dotenv.Dotenv;
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 
 import java.util.HashMap;
 import java.util.List;
@@ -41,8 +43,8 @@ public class BaseTest {
     protected static final String AUTHORIZATION_TYPE = "AUTHORIZATION_TYPE";
     protected static AuthorizationType authorizationType;
     private static final boolean IS_NOT_GITHUB_ENVIRONMENT = nullOrEmpty(System.getenv("GITHUB_WORKSPACE"));
-    @BeforeAll
-    public static void setUp() {
+    @BeforeEach
+    public void setUp() {
         Dotenv dotenv = Dotenv
                 .configure()
                 .filename(".env")
@@ -84,8 +86,8 @@ public class BaseTest {
         return environmentVariable;
     }
 
-    @AfterAll
-    public static void tearDown() {
+    @AfterEach
+    public void tearDown() {
         repositoryApiClient.close();
         repositoryApiClient = null;
     }

@@ -19,7 +19,7 @@ import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@Disabled("Rate limiting issue")
+//@Disabled("Rate limiting issue")
 class EntriesApiTest extends BaseTest {
     EntriesClient client;
     RepositoryApiClient createEntryClient;
