@@ -6,13 +6,17 @@ import com.laserfiche.repository.api.RepositoryApiClient;
 import com.laserfiche.repository.api.clients.EntriesClient;
 import com.laserfiche.repository.api.clients.impl.model.*;
 import com.laserfiche.repository.api.clients.params.*;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
@@ -26,10 +30,22 @@ class EntriesApiTest extends BaseTest {
 
     String nonExistingPath = "\\Non Existing Path";
 
+    List<Entry> createdEntries = new ArrayList<>();
+
     @BeforeEach
     void perTestSetup() {
         client = repositoryApiClient.getEntriesClient();
         createEntryClient = repositoryApiClient;
+    }
+
+    @AfterEach
+    void deleteEntries() {
+        for (Entry entry : createdEntries) {
+            client.deleteEntryInfo(new ParametersForDeleteEntryInfo()
+                    .setRepoId(repositoryId)
+                    .setEntryId(entry.getId())
+                    .setRequestBody(new DeleteEntryWithAuditReason()));
+        }
     }
 
     @Test
@@ -411,26 +427,25 @@ class EntriesApiTest extends BaseTest {
     }
 
     @Test
-    void getDocumentContentType_ReturnsExpectedHeaders() {
-        ODataValueContextOfIListOfEntry entryList = client
-                .getEntryListing(new ParametersForGetEntryListing()
-                        .setRepoId(repositoryId)
-                        .setEntryId(1)
-                        .setPrefer("maxpagesize=100"));
-        assertNotNull(entryList);
+    void getDocumentContentType_ReturnsExpectedHeaders() throws FileNotFoundException {
+        Entry parentFolder = BaseTest.createEntry(createEntryClient, "EntriesTest", 1, true);
+        createdEntries.add(parentFolder);
 
-        Optional<Entry> optionalEntry = entryList
-                .getValue()
-                .stream()
-                .filter(entry -> entry.getEntryType() == EntryType.DOCUMENT && entry.getId() < 5000)
-                .findFirst();
-        Entry entry = optionalEntry.get();
-        assertNotNull(entry);
+        String fileName = "GetDocumentContentTypeTest.pdf";
+        String filePath = "src/test/java/integration/test.pdf";
+        File fileToImport = new File(filePath);
+        CreateEntryResult document = client.importDocument(new ParametersForImportDocument()
+                .setRepoId(repositoryId)
+                .setParentEntryId(parentFolder.getId())
+                .setFileName(fileName)
+                .setAutoRename(true)
+                .setInputStream(new FileInputStream(fileToImport))
+                .setRequestBody(new PostEntryWithEdocMetadataRequest()));
 
         Map<String, String> headers = client
                 .getDocumentContentType(new ParametersForGetDocumentContentType()
                         .setRepoId(repositoryId)
-                        .setEntryId(entry.getId()));
+                        .setEntryId(document.getOperations().getEntryCreate().getEntryId()));
         assertNotNull(headers.get("Content-Type"));
         assertNotNull(headers.get("Content-Length"));
     }
@@ -521,12 +536,15 @@ class EntriesApiTest extends BaseTest {
 
     @Test
     void writeTemplateValueToEntry_ReturnsCorrectErrorMessage_For_Invalid_TemplateName() {
+        Entry parentFolder = BaseTest.createEntry(createEntryClient, "EntriesTest", 1, true);
+        createdEntries.add(parentFolder);
+
         PutTemplateRequest request = new PutTemplateRequest();
         request.setTemplateName("fake_template");
         ApiException apiException = Assertions.assertThrows(ApiException.class, () -> client
                 .writeTemplateValueToEntry(new ParametersForWriteTemplateValueToEntry()
                         .setRepoId(repositoryId)
-                        .setEntryId(3)
+                        .setEntryId(parentFolder.getId())
                         .setRequestBody(request)));
         assertNotNull(apiException);
         assertEquals(404, apiException.getStatusCode());

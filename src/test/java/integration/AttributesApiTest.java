@@ -53,7 +53,7 @@ class AttributesApiTest extends BaseTest {
 
     @Test
     void getAttributeValueByKey_NextLink() throws InterruptedException {
-        int maxPageSize = 5;
+        int maxPageSize = 3;
         ODataValueContextOfListOfAttribute attributeList = client.getTrusteeAttributeKeyValuePairs(
                 new ParametersForGetTrusteeAttributeKeyValuePairs()
                         .setRepoId(repositoryId)
