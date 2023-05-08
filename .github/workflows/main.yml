@@ -47,6 +47,7 @@ jobs:
         ACCESS_KEY: ${{ secrets.DEV_CA_PUBLIC_USE_INTEGRATION_TEST_ACCESS_KEY }}
         SERVICE_PRINCIPAL_KEY: ${{ secrets.DEV_CA_PUBLIC_USE_TESTOAUTHSERVICEPRINCIPAL_SERVICE_PRINCIPAL_KEY }}
         REPOSITORY_ID: ${{ secrets.DEV_CA_PUBLIC_USE_REPOSITORY_ID_1 }}
+        AUTHORIZATION_TYPE: ${{ secrets.AUTHORIZATION_TYPE }}
         TEST_HEADER: ${{ secrets.TEST_HEADER }}
       run: mvn -Dtest=integration.*Test test
 
@@ -68,6 +69,7 @@ jobs:
         APISERVER_USERNAME: ${{ secrets.APISERVER_USERNAME }}
         APISERVER_PASSWORD: ${{ secrets.APISERVER_PASSWORD }}
         APISERVER_REPOSITORY_API_BASE_URL: ${{ secrets.APISERVER_REPOSITORY_API_BASE_URL }}
+        AUTHORIZATION_TYPE: ${{ secrets.APISERVER_AUTHORIZATION_TYPE }}
       run: mvn -Dtest=integration.*Test test
 
     - name: Publish self-hosted test results
