@@ -38,7 +38,7 @@ public class BaseTest {
     private static final String USERNAME = "APISERVER_USERNAME";
     private static final String PASSWORD = "APISERVER_PASSWORD";
     private static final String BASE_URL = "APISERVER_REPOSITORY_API_BASE_URL";
-    private static final String AUTHORIZATION_TYPE = "AUTHORIZATION_TYPE";
+    protected static final String AUTHORIZATION_TYPE = "AUTHORIZATION_TYPE";
     protected static AuthorizationType authorizationType;
     private static final boolean IS_NOT_GITHUB_ENVIRONMENT = nullOrEmpty(System.getenv("GITHUB_WORKSPACE"));
     @BeforeAll
@@ -73,7 +73,7 @@ public class BaseTest {
         repositoryApiClient = createClient();
     }
 
-    private static String getEnvironmentVariable(String environmentVariableName) {
+    protected static String getEnvironmentVariable(String environmentVariableName) {
         String environmentVariable = System.getenv(environmentVariableName);
         if (nullOrEmpty(environmentVariable)) {
             environmentVariable = System.getProperty(environmentVariableName);

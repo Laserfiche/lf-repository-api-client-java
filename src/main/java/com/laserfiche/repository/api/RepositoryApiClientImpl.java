@@ -7,10 +7,15 @@ import com.laserfiche.api.client.httphandlers.UsernamePasswordHandler;
 import com.laserfiche.api.client.model.AccessKey;
 import com.laserfiche.repository.api.clients.*;
 import com.laserfiche.repository.api.clients.impl.*;
+import com.laserfiche.repository.api.clients.impl.model.RepositoryInfo;
+import kong.unirest.HttpResponse;
 import kong.unirest.ObjectMapper;
 import kong.unirest.Unirest;
 import kong.unirest.UnirestInstance;
+import kong.unirest.json.JSONArray;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -63,24 +68,39 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
 
     /**
      * Creates a new Laserfiche repository client that will use Laserfiche Cloud OAuth client credentials to get access tokens.
+     *
      * @param servicePrincipalKey The service principal key created for the service principal from the Laserfiche Account Administration.
-     * @param accessKey The access key exported from the Laserfiche Developer Console.
-     * @param baseUrlDebug Optional override for the Laserfiche repository API base url.
+     * @param accessKey           The access key exported from the Laserfiche Developer Console.
+     * @param baseUrlDebug        Optional override for the Laserfiche repository API base url.
      * @return {@link RepositoryApiClient}
      */
-    public static RepositoryApiClient createFromAccessKey(String servicePrincipalKey, AccessKey accessKey,
+    public static RepositoryApiClient createFromAccessKey(String servicePrincipalKey, AccessKey accessKey, String scope,
             String baseUrlDebug) {
         if (baseUrlDebug == null) {
             baseUrlDebug = "https://api." + accessKey.getDomain() + "/repository";
         }
-        HttpRequestHandler oauthHandler = new OAuthClientCredentialsHandler(servicePrincipalKey, accessKey);
+        HttpRequestHandler oauthHandler = new OAuthClientCredentialsHandler(servicePrincipalKey, accessKey, scope);
         return new RepositoryApiClientImpl(baseUrlDebug, oauthHandler);
     }
 
     /**
      * Creates a new Laserfiche repository client that will use Laserfiche Cloud OAuth client credentials to get access tokens.
+     *
      * @param servicePrincipalKey The service principal key created for the service principal from the Laserfiche Account Administration.
-     * @param accessKey The access key exported from the Laserfiche Developer Console.
+     * @param accessKey           The access key exported from the Laserfiche Developer Console.
+     * @param scope               The requested space-delimited scopes for the access token.
+     * @return {@link RepositoryApiClient}
+     */
+    public static RepositoryApiClient createFromAccessKey(String servicePrincipalKey, AccessKey accessKey,
+            String scope) {
+        return createFromAccessKey(servicePrincipalKey, accessKey, scope, null);
+    }
+
+    /**
+     * Creates a new Laserfiche repository client that will use Laserfiche Cloud OAuth client credentials to get access tokens.
+     *
+     * @param servicePrincipalKey The service principal key created for the service principal from the Laserfiche Account Administration.
+     * @param accessKey           The access key exported from the Laserfiche Developer Console.
      * @return {@link RepositoryApiClient}
      */
     public static RepositoryApiClient createFromAccessKey(String servicePrincipalKey, AccessKey accessKey) {
@@ -90,15 +110,17 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
     /**
      * Creates a new Laserfiche repository client that will use username and password to get access tokens for Laserfiche API.
      * Password credentials grant type is implemented by the Laserfiche Self-Hosted API server. Not available in cloud.
+     *
      * @param repositoryId The repository ID.
-     * @param username The username.
-     * @param password The password.
-     * @param baseUrl API server base URL e.g., https://{APIServerName}/LFRepositoryAPI.
+     * @param username     The username.
+     * @param password     The password.
+     * @param baseUrl      API server base URL e.g., https://{APIServerName}/LFRepositoryAPI.
      * @return {@link RepositoryApiClient}
      */
     public static RepositoryApiClient createFromUsernamePassword(String repositoryId, String username, String password,
             String baseUrl) {
-        HttpRequestHandler usernamePasswordHandler = new UsernamePasswordHandler(repositoryId, username, password, baseUrl, null);
+        HttpRequestHandler usernamePasswordHandler = new UsernamePasswordHandler(repositoryId, username, password,
+                baseUrl, null);
         return new RepositoryApiClientImpl(baseUrl, usernamePasswordHandler);
     }
 

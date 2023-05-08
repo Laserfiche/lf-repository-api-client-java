@@ -9,6 +9,7 @@ import com.laserfiche.repository.api.clients.params.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -22,6 +23,7 @@ import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@Disabled("Rate limiting issue")
 class EntriesApiTest extends BaseTest {
     EntriesClient client;
     RepositoryApiClient createEntryClient;
@@ -525,8 +527,11 @@ class EntriesApiTest extends BaseTest {
                         .setEntryId(1)));
         assertNotNull(apiException);
         assertEquals(404, apiException.getStatusCode());
-        assertEquals("Error: Repository with the given Id not found or no connection could be made.", apiException.getMessage());
-        assertTrue(apiException.getHeaders().size() > 0);
+        assertEquals("Error: Repository with the given Id not found or no connection could be made.",
+                apiException.getMessage());
+        assertTrue(apiException
+                .getHeaders()
+                .size() > 0);
         ProblemDetails problemDetails = apiException.getProblemDetails();
         assertNotNull(problemDetails);
         assertEquals(apiException.getStatusCode(), problemDetails.getStatus());

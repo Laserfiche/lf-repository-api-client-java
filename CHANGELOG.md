@@ -1,10 +1,31 @@
+## 2.0.3 Pre-release
+
+### Features
+
+- Added `RepositoriesClientImpl.getSelfHostedRepositoryList` method that will enable self hosted users to get their repository list without an access token.
+
+## 2.0.2
+
+### Fixes
+
+- Updated the [Java Client Core Repository](https://github.com/Laserfiche/lf-api-client-core-java) dependency to release version 2.2.0
+
 ## 2.0.0
+
+### Features
 
 - **[BREAKING]** For every API, the parameters are now encapsulated into a parameter class.
 - **[BREAKING]** Enum values are now following Java naming convention.
 - **[BREAKING]** Every async API are replaced with normal blocking API.
-- The ApiClient class is now abstract.
 - Improved documentation.
+- Added retry implementation when making an API call which retries when:
+  - 401 status code response is being returned
+  - Idempotent http request
+- Added an option when constructing the `RepositoryApiClient` to specify the requested scope(s) for the access token.
+- Added both `exportDocumentAsStream` and `exportDocumentWithAuditReasonAsStream` API methods in the `EntriesClientImpl` object along with the `EntriesClient` interface
+
+### Fixes
+- The ApiClient class is now abstract.
 - Only throw the `ApiException` type when error API responses occur.
 - **[BREAKING]** `EntriesClient.importDocument` API v1 can succeed in creating a document, but fail in setting some or all of its metadata components. To retrieve errors in the case of a partial success, inspect the content of the `ProblemDetails.getExtensions()`. See example below.
   ```java
@@ -21,10 +42,7 @@
     }
   }
   ```
-- Added retry implementation when making an API call which retries when:
-  - 401 status code response is being returned
-  - Idempotent http request
-
+  
 ## 1.2.0
 
 ### Features

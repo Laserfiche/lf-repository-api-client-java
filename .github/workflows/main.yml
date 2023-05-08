@@ -1,4 +1,4 @@
-name: lf-api-client-core-java-CI
+name: lf-repository-api-client-java-CI
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 env:
-  VERSION_PREFIX: 2.0.0
+  VERSION_PREFIX: 2.0.3
 
 jobs:
   build-n-test:
