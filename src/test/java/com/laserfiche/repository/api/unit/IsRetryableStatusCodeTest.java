@@ -1,4 +1,4 @@
-package unit.clients.impl.ApiClientUtils;
+package com.laserfiche.repository.api.unit;
 
 import com.laserfiche.repository.api.clients.impl.ApiClientUtils;
 import kong.unirest.HttpMethod;
@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
-public class IsRetryableStatusCode {
+public class IsRetryableStatusCodeTest {
     @ParameterizedTest
     @MethodSource("statusCodes")
     void isRetryableStatusCode_NullRequestMethod(int statusCode) {

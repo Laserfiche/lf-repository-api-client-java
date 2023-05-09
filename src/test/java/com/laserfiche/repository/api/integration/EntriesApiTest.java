@@ -1,4 +1,4 @@
-package integration;
+package com.laserfiche.repository.api.integration;
 
 import com.laserfiche.api.client.model.ApiException;
 import com.laserfiche.api.client.model.ProblemDetails;
@@ -430,7 +430,7 @@ class EntriesApiTest extends BaseTest {
 
     @Test
     void getDocumentContentType_ReturnsExpectedHeaders() throws FileNotFoundException {
-        Entry parentFolder = BaseTest.createEntry(createEntryClient, "EntriesTest", 1, true);
+        Entry parentFolder = createEntry(createEntryClient, "EntriesTest", 1, true);
         createdEntries.add(parentFolder);
 
         String fileName = "GetDocumentContentTypeTest.pdf";
@@ -541,7 +541,7 @@ class EntriesApiTest extends BaseTest {
 
     @Test
     void writeTemplateValueToEntry_ReturnsCorrectErrorMessage_For_Invalid_TemplateName() {
-        Entry parentFolder = BaseTest.createEntry(createEntryClient, "EntriesTest", 1, true);
+        Entry parentFolder = createEntry(createEntryClient, "EntriesTest", 1, true);
         createdEntries.add(parentFolder);
 
         PutTemplateRequest request = new PutTemplateRequest();

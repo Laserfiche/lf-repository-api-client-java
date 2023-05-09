@@ -1,13 +1,12 @@
-package unit.clients.impl.ApiClientUtils;
+package com.laserfiche.repository.api.unit;
 
 import com.laserfiche.repository.api.clients.impl.ApiClientUtils;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-public class MergeMaxSizeIntoPrefer {
+public class MergeMaxSizeIntoPreferTest {
     private final int maxSize = 1;
     private final String prefer = "maxpagesize";
     private final int negativeMaxSize = -1;
