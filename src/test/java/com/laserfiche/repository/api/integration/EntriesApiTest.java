@@ -434,7 +434,7 @@ class EntriesApiTest extends BaseTest {
         createdEntries.add(parentFolder);
 
         String fileName = "GetDocumentContentTypeTest.pdf";
-        String filePath = "src/test/java/integration/test.pdf";
+        String filePath = "src/test/java/com/laserfiche/repository/api/integration/test.pdf";
         File fileToImport = new File(filePath);
         CreateEntryResult document = client.importDocument(new ParametersForImportDocument()
                 .setRepoId(repositoryId)
