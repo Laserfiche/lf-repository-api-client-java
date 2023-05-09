@@ -29,7 +29,7 @@ jobs:
       run: mvn -B package -Dmaven.test.skip=true --file pom.xml
 
     - name: Run unit tests
-      run: mvn -Dtest=unit.clients.impl.*Test test
+      run: mvn -Dtest="unit.clients.impl.*Test" test
 
     - name: Publish unit test results
       uses: EnricoMi/publish-unit-test-result-action@v1
@@ -49,7 +49,7 @@ jobs:
         REPOSITORY_ID: ${{ secrets.DEV_CA_PUBLIC_USE_REPOSITORY_ID_1 }}
         AUTHORIZATION_TYPE: ${{ secrets.AUTHORIZATION_TYPE }}
         TEST_HEADER: ${{ secrets.TEST_HEADER }}
-      run: mvn -Dtest=integration.*Test test
+      run: mvn -Dtest="integration.*Test" test
 
     - name: Publish cloud test results
       uses: EnricoMi/publish-unit-test-result-action@v1
@@ -70,7 +70,7 @@ jobs:
         APISERVER_PASSWORD: ${{ secrets.APISERVER_PASSWORD }}
         APISERVER_REPOSITORY_API_BASE_URL: ${{ secrets.APISERVER_REPOSITORY_API_BASE_URL }}
         AUTHORIZATION_TYPE: ${{ secrets.APISERVER_AUTHORIZATION_TYPE }}
-      run: mvn -Dtest=integration.*Test test
+      run: mvn -Dtest="integration.*Test" test
 
     - name: Publish self-hosted test results
       uses: EnricoMi/publish-unit-test-result-action@v1
