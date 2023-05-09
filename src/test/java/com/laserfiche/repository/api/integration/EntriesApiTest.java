@@ -41,13 +41,15 @@ class EntriesApiTest extends BaseTest {
     }
 
     @AfterEach
-    void deleteEntries() {
+    void deleteEntries() throws InterruptedException {
         for (Entry entry : createdEntries) {
             client.deleteEntryInfo(new ParametersForDeleteEntryInfo()
                     .setRepoId(repositoryId)
                     .setEntryId(entry.getId())
                     .setRequestBody(new DeleteEntryWithAuditReason()));
+            TimeUnit.SECONDS.sleep(5);
         }
+        createdEntries.clear();
     }
 
     @Test

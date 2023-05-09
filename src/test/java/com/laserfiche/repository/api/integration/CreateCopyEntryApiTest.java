@@ -30,7 +30,7 @@ public class CreateCopyEntryApiTest extends BaseTest {
     }
 
     @AfterEach
-    void deleteEntries() {
+    void deleteEntries() throws InterruptedException {
         for (Entry createdEntry : createdEntries) {
             if (createdEntry != null) {
                 DeleteEntryWithAuditReason body = new DeleteEntryWithAuditReason();
@@ -42,6 +42,7 @@ public class CreateCopyEntryApiTest extends BaseTest {
                                 .setEntryId(num)
                                 .setRequestBody(body));
             }
+            TimeUnit.SECONDS.sleep(5);
         }
         createdEntries.clear();
     }
