@@ -3,6 +3,7 @@ package com.laserfiche.repository.api.clients;
 import com.laserfiche.repository.api.clients.impl.model.*;
 import com.laserfiche.repository.api.clients.params.*;
 
+import java.io.InputStream;
 import java.util.Map;
 import java.util.function.Function;
 
@@ -190,6 +191,14 @@ public interface EntriesClient {
     void exportDocumentWithAuditReason(ParametersForExportDocumentWithAuditReason parameters);
 
     /**
+     * Returns the input stream of an entry's edoc resource while including an audit reason.
+     *
+     * @param parameters An object of type {@link ParametersForExportDocumentWithAuditReason} which encapsulates the parameters of {@link #exportDocumentWithAuditReason exportDocumentWithAuditReason} method.
+     * @return {@link InputStream} The return value
+     */
+    InputStream exportDocumentWithAuditReasonAsStream(ParametersForExportDocumentWithAuditReason parameters);
+
+    /**
      * - Returns an entry's edoc resource in a stream format.
      * - Provide an entry ID, and get the edoc resource as part of the response content.
      * - Optional header: Range. Use the Range header (single range with byte unit) to retrieve partial content of the edoc, rather than the entire edoc.
@@ -197,6 +206,14 @@ public interface EntriesClient {
      * @param parameters An object of type {@link ParametersForExportDocument} which encapsulates the parameters of {@link #exportDocument exportDocument} method.
      */
     void exportDocument(ParametersForExportDocument parameters);
+
+    /**
+     * Returns the input stream of an entry's edoc resource.
+     *
+     * @param parameters An object of type {@link ParametersForExportDocument} which encapsulates the parameters of {@link #exportDocument exportDocument} method.
+     * @return {@link InputStream} The return value
+     */
+    InputStream exportDocumentAsStream(ParametersForExportDocument parameters);
 
     /**
      * - Delete the edoc associated with the provided entry ID.
@@ -210,6 +227,7 @@ public interface EntriesClient {
      * - Returns information about the edoc content of an entry, without downloading the edoc in its entirety.
      * - Provide an entry ID, and get back the Content-Type and Content-Length in the response headers.
      * - This route does not provide a way to download the actual edoc. Instead, it just gives metadata information about the edoc associated with the entry.
+     * - If an error occurs, the error message can be found in the X-APIServer-Error HTTP response header.
      *
      * @param parameters An object of type {@link ParametersForGetDocumentContentType} which encapsulates the parameters of {@link #getDocumentContentType getDocumentContentType} method.
      * @return Map&lt;String,String&gt; The return value
@@ -228,7 +246,7 @@ public interface EntriesClient {
     /**
      * - Returns the children entries of a folder in the repository.
      * - Provide an entry ID (must be a folder), and get a paged listing of entries in that folder. Used as a way of navigating through the repository.
-     * - Default page size: 100. Allowed OData query options: Select | Count | OrderBy | Skip | Top | SkipToken | Prefer. OData $OrderBy syntax should follow: &quot;PropertyName direction,PropertyName2 direction&quot;. Sort order can be either value &quot;asc&quot; or &quot;desc&quot;. Optional query parameters: groupByOrderType (bool). This query parameter decides if results are returned in groups based on their entry type. Entries returned in the listing are not automatically converted to their subtype (Folder, Shortcut, Document), so clients who want model-specific information should request it via the GET entry by ID route.
+     * - Default page size: 150. Allowed OData query options: Select | Count | OrderBy | Skip | Top | SkipToken | Prefer. OData $OrderBy syntax should follow: &quot;PropertyName direction,PropertyName2 direction&quot;. Sort order can be either value &quot;asc&quot; or &quot;desc&quot;. Optional query parameters: groupByOrderType (bool). This query parameter decides if results are returned in groups based on their entry type. Entries returned in the listing are not automatically converted to their subtype (Folder, Shortcut, Document), so clients who want model-specific information should request it via the GET entry by ID route.
      * - Optionally returns field values for the entries in the folder. Each field name needs to be specified in the request. Maximum limit of 10 field names.
      * - If field values are requested, only the first value is returned if it is a multi value field.
      * - Null or Empty field values should not be used to determine if a field is assigned to the entry.
