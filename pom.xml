@@ -97,7 +97,6 @@
             </property>
           </systemProperties>
           <argLine>-Xms512m -Xmx1500m</argLine>
-          <parallel>methods</parallel>
           <forkMode>pertest</forkMode>
         </configuration>
       </plugin>
