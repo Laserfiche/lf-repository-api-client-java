@@ -47,7 +47,6 @@ class EntriesApiTest extends BaseTest {
                     .setRepoId(repositoryId)
                     .setEntryId(entry.getId())
                     .setRequestBody(new DeleteEntryWithAuditReason()));
-            TimeUnit.SECONDS.sleep(5);
         }
         createdEntries.clear();
     }

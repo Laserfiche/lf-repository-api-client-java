@@ -42,7 +42,7 @@ public class CreateCopyEntryApiTest extends BaseTest {
                                 .setEntryId(num)
                                 .setRequestBody(body));
             }
-            TimeUnit.SECONDS.sleep(5);
+            TimeUnit.SECONDS.sleep(10);
         }
         createdEntries.clear();
     }

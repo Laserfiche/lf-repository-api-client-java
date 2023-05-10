@@ -22,12 +22,13 @@ public class SearchApiTest extends BaseTest {
     }
 
     @AfterEach
-    void cancelCloseSearch() {
+    void cancelCloseSearch() throws InterruptedException {
         if (searchToken != null) {
             client.cancelOrCloseSearch(new ParametersForCancelOrCloseSearch()
                     .setRepoId(repositoryId)
                     .setSearchToken(searchToken));
         }
+        TimeUnit.SECONDS.sleep(10);
     }
 
     @Test

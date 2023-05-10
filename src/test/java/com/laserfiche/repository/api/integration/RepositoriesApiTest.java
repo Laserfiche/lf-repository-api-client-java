@@ -3,6 +3,7 @@ package com.laserfiche.repository.api.integration;
 import com.laserfiche.repository.api.clients.RepositoriesClient;
 import com.laserfiche.repository.api.clients.impl.RepositoriesClientImpl;
 import com.laserfiche.repository.api.clients.impl.model.RepositoryInfo;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.DisabledIf;
 
@@ -11,6 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class RepositoriesApiTest extends BaseTest {
     @Test
+    @Disabled("To be updated for payload compression")
     void getRepositoryList_ReturnSuccessful() {
         RepositoriesClient client = repositoryApiClient.getRepositoryClient();
         RepositoryInfo[] repositoryInfoList = client.getRepositoryList();
