@@ -169,6 +169,7 @@ public class CreateCopyEntryApiTest extends BaseTest {
                         .setRepoId(repositoryId)
                         .setEntryId(testFolder.getId())
                         .setRequestBody(deleteEntryWithAuditReason));
+        TimeUnit.SECONDS.sleep(5);
         assertNotNull(deleteEntryResponse);
     }
 
