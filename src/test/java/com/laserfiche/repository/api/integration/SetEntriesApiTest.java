@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -22,7 +23,7 @@ public class SetEntriesApiTest extends BaseTest {
     Entry entry = null;
 
     @AfterEach
-    void deleteEntry() {
+    void deleteEntry() throws InterruptedException {
         if (entry != null) {
             DeleteEntryWithAuditReason body = new DeleteEntryWithAuditReason();
             Integer num = entry
@@ -34,6 +35,7 @@ public class SetEntriesApiTest extends BaseTest {
                             .setEntryId(num)
                             .setRequestBody(body));
         }
+        TimeUnit.SECONDS.sleep(10);
         entry = null;
     }
 

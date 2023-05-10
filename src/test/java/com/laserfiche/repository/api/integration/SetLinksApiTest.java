@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -29,7 +30,7 @@ public class SetLinksApiTest extends BaseTest {
     }
 
     @AfterEach
-    void deleteEntries() {
+    void deleteEntries() throws InterruptedException {
         for (Entry createdEntry : createdEntries) {
             if (createdEntry != null) {
                 DeleteEntryWithAuditReason body = new DeleteEntryWithAuditReason();
@@ -40,6 +41,7 @@ public class SetLinksApiTest extends BaseTest {
                                 .setEntryId(createdEntry.getId())
                                 .setRequestBody(body));
             }
+            TimeUnit.SECONDS.sleep(10);
         }
     }
 
