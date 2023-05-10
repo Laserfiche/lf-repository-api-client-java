@@ -17,6 +17,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -32,7 +33,7 @@ public class ImportDocumentApiTest extends BaseTest {
     }
 
     @AfterEach
-    public void deleteEntries() {
+    public void deleteEntries() throws InterruptedException {
         if (createdEntryId != 0) {
             DeleteEntryWithAuditReason body = new DeleteEntryWithAuditReason();
             client.deleteEntryInfo(new ParametersForDeleteEntryInfo()
@@ -40,6 +41,7 @@ public class ImportDocumentApiTest extends BaseTest {
                     .setEntryId(createdEntryId)
                     .setRequestBody(body));
         }
+        TimeUnit.SECONDS.sleep(10);
     }
 
     @Test
