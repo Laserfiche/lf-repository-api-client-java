@@ -221,7 +221,3 @@ jobs:
           commit-message: "Automated documentation update for ${{ env.DOCUMENTATION_VERSION }} by action ${{ github.run_id }}"
           body: "Automated documentation update for ${{ env.DOCUMENTATION_VERSION }} by action ${{ github.run_id }}"
           assignees: ${{ github.actor }}
-
-
-
-
