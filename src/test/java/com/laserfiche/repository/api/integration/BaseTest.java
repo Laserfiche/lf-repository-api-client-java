@@ -141,11 +141,11 @@ public class BaseTest {
     }
 
     public static void WaitUntilTaskEnds(AcceptedOperation task) throws InterruptedException {
-        WaitUntilTaskEnds(task, Duration.ofMillis(100), Duration.ofSeconds(30));
+        WaitUntilTaskEnds(task, Duration.ofMillis(500), Duration.ofSeconds(30));
     }
 
     public static void WaitUntilSearchEnds(AcceptedOperation search) throws InterruptedException {
-        WaitUntilSearchEnds(search, Duration.ofMillis(100), Duration.ofSeconds(30));
+        WaitUntilSearchEnds(search, Duration.ofMillis(500), Duration.ofSeconds(30));
     }
 
     public static void WaitUntilTaskEnds(AcceptedOperation task, Duration interval, Duration timeout) throws InterruptedException {
