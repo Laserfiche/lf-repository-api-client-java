@@ -23,12 +23,13 @@ public class SearchApiTest extends BaseTest {
 
     @AfterEach
     void cancelCloseSearch() throws InterruptedException {
+        System.out.println("Cleaning up test...");
         if (searchToken != null) {
-            client.cancelOrCloseSearch(new ParametersForCancelOrCloseSearch()
+            ODataValueOfBoolean result = client.cancelOrCloseSearch(new ParametersForCancelOrCloseSearch()
                     .setRepoId(repositoryId)
                     .setSearchToken(searchToken));
+            System.out.println(result.isValue());
         }
-        TimeUnit.SECONDS.sleep(10);
     }
 
     @Test
@@ -45,7 +46,7 @@ public class SearchApiTest extends BaseTest {
 
         assertNotNull(searchToken);
 
-        TimeUnit.SECONDS.sleep(5);
+        WaitUntilSearchEnds(searchResponse);
 
         ODataValueContextOfIListOfEntry searchResults = client.getSearchResults(new ParametersForGetSearchResults()
                 .setRepoId(repositoryId)
@@ -83,7 +84,7 @@ public class SearchApiTest extends BaseTest {
 
         assertNotNull(searchToken);
 
-        TimeUnit.SECONDS.sleep(5);
+        WaitUntilSearchEnds(searchResponse);
 
         ODataValueContextOfIListOfEntry searchResultResponse = client.getSearchResults(
                 new ParametersForGetSearchResults()
@@ -104,7 +105,7 @@ public class SearchApiTest extends BaseTest {
 
         assertNotNull(searchToken);
 
-        TimeUnit.SECONDS.sleep(5);
+        WaitUntilSearchEnds(searchResponse);
 
         OperationProgress searchStatusResponse = client.getSearchStatus(new ParametersForGetSearchStatus()
                 .setRepoId(repositoryId)
@@ -114,7 +115,7 @@ public class SearchApiTest extends BaseTest {
     }
 
     @Test
-    void closeSearchOperations_CloseSearch() {
+    void closeSearchOperations_CloseSearch() throws InterruptedException {
         AdvancedSearchRequest request = new AdvancedSearchRequest();
         request.setSearchCommand("({LF:Basic ~= \"search text\", option=\"DFANLT\"})");
 
@@ -133,6 +134,7 @@ public class SearchApiTest extends BaseTest {
                         .setSearchToken(searchToken));
 
         assertTrue(closeSearchResponse.isValue());
+        TimeUnit.SECONDS.sleep(5);
     }
 
 
@@ -152,7 +154,7 @@ public class SearchApiTest extends BaseTest {
                 .trim()
                 .isEmpty());
 
-        TimeUnit.SECONDS.sleep(10);
+        WaitUntilSearchEnds(searchResponse);
 
         ODataValueContextOfIListOfEntry searchResults = client.getSearchResults(
                 new ParametersForGetSearchResults()
@@ -188,17 +190,17 @@ public class SearchApiTest extends BaseTest {
         AdvancedSearchRequest request = new AdvancedSearchRequest();
         request.setSearchCommand("({LF:Basic ~= \"search text\", option=\"NLT\"})");
 
-        AcceptedOperation searchOperationResponse = client.createSearchOperation(
+        AcceptedOperation searchResponse = client.createSearchOperation(
                 new ParametersForCreateSearchOperation()
                         .setRepoId(repositoryId)
                         .setRequestBody(request));
 
-        searchToken = searchOperationResponse.getToken();
+        searchToken = searchResponse.getToken();
         assertTrue(searchToken != null && !searchToken
                 .trim()
                 .isEmpty());
 
-        TimeUnit.SECONDS.sleep(10);
+        WaitUntilSearchEnds(searchResponse);
 
         Function<ODataValueContextOfIListOfEntry, Boolean> callback = data -> {
             if (data.getOdataNextLink() != null) {
@@ -232,7 +234,7 @@ public class SearchApiTest extends BaseTest {
 
         assertNotNull(searchToken);
 
-        TimeUnit.SECONDS.sleep(5);
+        WaitUntilSearchEnds(searchResponse);
 
         ODataValueContextOfIListOfEntry searchResults = client.getSearchResults(
                 new ParametersForGetSearchResults()
@@ -289,7 +291,7 @@ public class SearchApiTest extends BaseTest {
 
         assertNotNull(searchToken);
 
-        TimeUnit.SECONDS.sleep(5);
+        WaitUntilSearchEnds(searchResponse);
 
         ODataValueContextOfIListOfEntry searchResultResponse = client.getSearchResults(
                 new ParametersForGetSearchResults()

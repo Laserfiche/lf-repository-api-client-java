@@ -57,9 +57,6 @@ class FieldDefinitionsApiTest extends BaseTest {
 
         ODataValueContextOfIListOfWFieldInfo nextLinkResult = client.getFieldDefinitionsNextLink(
                 nextLink, maxPageSize);
-        assertNotNull(nextLinkResult);
-
-        TimeUnit.SECONDS.sleep(10);
 
         assertNotNull(nextLinkResult);
         assertTrue(nextLinkResult

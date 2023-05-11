@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.sql.Time;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -44,7 +45,7 @@ public class TasksApiTest extends BaseTest {
 
         assertNotNull(token);
 
-        TimeUnit.SECONDS.sleep(10);
+        WaitUntilTaskEnds(result);
 
         Exception thrown = Assertions.assertThrows(ApiException.class, () -> {
             client.cancelOperation(new ParametersForCancelOperation()
@@ -78,7 +79,9 @@ public class TasksApiTest extends BaseTest {
                 .setRepoId(repositoryId)
                 .setOperationToken(token));
         assertTrue(cancellationResult);
-        TimeUnit.SECONDS.sleep(10);
+
+        TimeUnit.SECONDS.sleep(5);
+        deleteEntry(deleteEntry.getId());
     }
 
     @Test
@@ -99,7 +102,7 @@ public class TasksApiTest extends BaseTest {
 
         assertNotNull(token);
 
-        TimeUnit.SECONDS.sleep(5);
+        WaitUntilTaskEnds(result);
 
         OperationProgress operationProgressResponse = client.getOperationStatusAndProgress(
                 new ParametersForGetOperationStatusAndProgress()

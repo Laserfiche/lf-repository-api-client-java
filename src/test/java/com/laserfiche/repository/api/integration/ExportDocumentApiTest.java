@@ -11,6 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.*;
+import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
@@ -29,18 +30,9 @@ public class ExportDocumentApiTest extends BaseTest {
     }
 
     @AfterEach
-    public void deleteEntries() throws InterruptedException {
-        if (createdEntryId != 0) {
-            DeleteEntryWithAuditReason body = new DeleteEntryWithAuditReason();
-            client
-                    .deleteEntryInfo(new ParametersForDeleteEntryInfo()
-                            .setRepoId(repositoryId)
-                            .setEntryId(createdEntryId)
-                            .setRequestBody(body));
-            TimeUnit.SECONDS.sleep(10);
-        }
+    void perTestCleanUp() throws InterruptedException {
+        deleteEntry(createdEntryId);
     }
-
 
     @Test
     void exportDocument_Returns_Exported_File() {

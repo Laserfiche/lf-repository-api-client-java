@@ -30,19 +30,8 @@ public class SetLinksApiTest extends BaseTest {
     }
 
     @AfterEach
-    void deleteEntries() throws InterruptedException {
-        for (Entry createdEntry : createdEntries) {
-            if (createdEntry != null) {
-                DeleteEntryWithAuditReason body = new DeleteEntryWithAuditReason();
-                client
-                        .getEntriesClient()
-                        .deleteEntryInfo(new ParametersForDeleteEntryInfo()
-                                .setRepoId(repositoryId)
-                                .setEntryId(createdEntry.getId())
-                                .setRequestBody(body));
-            }
-            TimeUnit.SECONDS.sleep(10);
-        }
+    void perTestCleanUp() throws InterruptedException {
+        deleteEntries(createdEntries);
     }
 
     @Test

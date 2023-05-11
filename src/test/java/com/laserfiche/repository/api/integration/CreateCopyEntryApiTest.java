@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -30,21 +31,8 @@ public class CreateCopyEntryApiTest extends BaseTest {
     }
 
     @AfterEach
-    void deleteEntries() throws InterruptedException {
-        for (Entry createdEntry : createdEntries) {
-            if (createdEntry != null) {
-                DeleteEntryWithAuditReason body = new DeleteEntryWithAuditReason();
-                Integer num = createdEntry.getId();
-                repositoryApiClient
-                        .getEntriesClient()
-                        .deleteEntryInfo(new ParametersForDeleteEntryInfo()
-                                .setRepoId(repositoryId)
-                                .setEntryId(num)
-                                .setRequestBody(body));
-            }
-            TimeUnit.SECONDS.sleep(10);
-        }
-        createdEntries.clear();
+    void perTestCleanUp() throws InterruptedException {
+        deleteEntries(createdEntries);
     }
 
     @Test
@@ -152,8 +140,7 @@ public class CreateCopyEntryApiTest extends BaseTest {
                 .setAutoRename(true));
         String opToken = copyEntryResponse
                 .getToken();
-
-        TimeUnit.SECONDS.sleep(5);
+        WaitUntilTaskEnds(copyEntryResponse, Duration.ofMillis(100), Duration.ofSeconds(30));
 
         OperationProgress getOperationStatusAndProgressResponse = repositoryApiClient
                 .getTasksClient()
@@ -169,7 +156,8 @@ public class CreateCopyEntryApiTest extends BaseTest {
                         .setRepoId(repositoryId)
                         .setEntryId(testFolder.getId())
                         .setRequestBody(deleteEntryWithAuditReason));
-        TimeUnit.SECONDS.sleep(5);
+        WaitUntilTaskEnds(deleteEntryResponse, Duration.ofMillis(100), Duration.ofSeconds(30));
+
         assertNotNull(deleteEntryResponse);
     }
 

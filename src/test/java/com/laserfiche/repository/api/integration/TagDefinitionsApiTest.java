@@ -49,8 +49,6 @@ class TagDefinitionsApiTest extends BaseTest {
         ODataValueContextOfIListOfWTagInfo nextLinkResponse = client.getTagDefinitionsNextLink(
                 nextLink, maxPageSize);
         assertNotNull(nextLinkResponse);
-        TimeUnit.SECONDS.sleep(10);
-        assertNotNull(nextLinkResponse);
         assertTrue(nextLinkResponse
                 .getValue()
                 .size() <= maxPageSize);
@@ -62,8 +60,6 @@ class TagDefinitionsApiTest extends BaseTest {
                 .getTagDefinitions(new ParametersForGetTagDefinitions().setRepoId(repositoryId));
 
         assertNotNull(tagInfoList);
-
-        TimeUnit.SECONDS.sleep(10);
 
         int maxPageSize = 90;
         Function<ODataValueContextOfIListOfWTagInfo, Boolean> callback = data -> {

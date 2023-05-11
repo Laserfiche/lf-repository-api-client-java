@@ -1,20 +1,24 @@
 package com.laserfiche.repository.api.integration;
 
 import com.laserfiche.api.client.model.AccessKey;
+import com.laserfiche.api.client.model.ApiException;
 import com.laserfiche.repository.api.RepositoryApiClient;
 import com.laserfiche.repository.api.RepositoryApiClientImpl;
-import com.laserfiche.repository.api.clients.impl.model.Entry;
-import com.laserfiche.repository.api.clients.impl.model.PostEntryChildrenEntryType;
-import com.laserfiche.repository.api.clients.impl.model.PostEntryChildrenRequest;
-import com.laserfiche.repository.api.clients.impl.model.TemplateFieldInfo;
+import com.laserfiche.repository.api.clients.impl.model.*;
 import com.laserfiche.repository.api.clients.params.ParametersForCreateOrCopyEntry;
+import com.laserfiche.repository.api.clients.params.ParametersForDeleteEntryInfo;
+import com.laserfiche.repository.api.clients.params.ParametersForGetOperationStatusAndProgress;
+import com.laserfiche.repository.api.clients.params.ParametersForGetSearchStatus;
 import io.github.cdimascio.dotenv.Dotenv;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 
+import java.time.Duration;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 enum AuthorizationType {
     CLOUD_ACCESS_KEY,
@@ -134,5 +138,71 @@ public class BaseTest {
 
     public static boolean nullOrEmpty(String str) {
         return str == null || str.length() == 0;
+    }
+
+    public static void WaitUntilTaskEnds(AcceptedOperation task) throws InterruptedException {
+        WaitUntilTaskEnds(task, Duration.ofMillis(100), Duration.ofSeconds(30));
+    }
+
+    public static void WaitUntilSearchEnds(AcceptedOperation search) throws InterruptedException {
+        WaitUntilSearchEnds(search, Duration.ofMillis(100), Duration.ofSeconds(30));
+    }
+
+    public static void WaitUntilTaskEnds(AcceptedOperation task, Duration interval, Duration timeout) throws InterruptedException {
+        int maxIteration = (int) (timeout.toMillis() / interval.toMillis());
+        int count = 0;
+        while (count < maxIteration) {
+            OperationProgress progress = repositoryApiClient.getTasksClient().getOperationStatusAndProgress(
+                    new ParametersForGetOperationStatusAndProgress()
+                            .setRepoId(repositoryId)
+                            .setOperationToken(task.getToken()));
+            if (progress.getStatus() != OperationStatus.IN_PROGRESS) {
+                System.out.println(progress.getStatus());
+                return;
+            }
+            TimeUnit.MILLISECONDS.sleep(interval.toMillis());
+            count++;
+            System.out.println(progress.getStatus());
+        }
+        throw new RuntimeException("WaitUntilTaskEnds timeout");
+    }
+
+    public static void WaitUntilSearchEnds(AcceptedOperation search, Duration interval, Duration timeout) throws InterruptedException {
+        int maxIteration = (int) (timeout.toMillis() / interval.toMillis());
+        int count = 0;
+        while (count < maxIteration) {
+            OperationProgress progress = repositoryApiClient.getSearchesClient().getSearchStatus(
+                    new ParametersForGetSearchStatus()
+                            .setRepoId(repositoryId)
+                            .setSearchToken(search.getToken()));
+            if (progress.getStatus() != OperationStatus.IN_PROGRESS) {
+                System.out.println(progress.getStatus());
+                return;
+            }
+            TimeUnit.MILLISECONDS.sleep(interval.toMillis());
+            count++;
+            System.out.println(progress.getStatus());
+        }
+        throw new RuntimeException("WaitUntilSearchEnds timeout");
+    }
+
+    public static void deleteEntry(int entryId) throws InterruptedException {
+        if (entryId != 0) {
+            DeleteEntryWithAuditReason body = new DeleteEntryWithAuditReason();
+            AcceptedOperation deleteEntryResponse = repositoryApiClient.getEntriesClient().deleteEntryInfo(
+                    new ParametersForDeleteEntryInfo()
+                            .setRepoId(repositoryId)
+                            .setEntryId(entryId)
+                            .setRequestBody(body));
+            WaitUntilTaskEnds(deleteEntryResponse);
+        }
+    }
+
+    public static void deleteEntries(List<Entry> entries) throws InterruptedException {
+        for (Entry entry : entries) {
+            if (entry != null) {
+                deleteEntry(entry.getId());
+            }
+        }
     }
 }

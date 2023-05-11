@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -41,14 +42,8 @@ class EntriesApiTest extends BaseTest {
     }
 
     @AfterEach
-    void deleteEntries() throws InterruptedException {
-        for (Entry entry : createdEntries) {
-            client.deleteEntryInfo(new ParametersForDeleteEntryInfo()
-                    .setRepoId(repositoryId)
-                    .setEntryId(entry.getId())
-                    .setRequestBody(new DeleteEntryWithAuditReason()));
-        }
-        createdEntries.clear();
+    void perTestCleanUp() throws InterruptedException {
+        deleteEntries(createdEntries);
     }
 
     @Test
@@ -119,9 +114,6 @@ class EntriesApiTest extends BaseTest {
 
         ODataValueContextOfIListOfEntry nextLinkResult = client.getEntryListingNextLink(nextLink,
                 maxPageSize);
-        assertNotNull(nextLinkResult);
-
-        TimeUnit.SECONDS.sleep(10);
 
         assertNotNull(nextLinkResult);
         assertTrue(nextLinkResult
@@ -191,9 +183,6 @@ class EntriesApiTest extends BaseTest {
 
         ODataValueContextOfIListOfFieldValue nextLinkResult = client.getFieldValuesNextLink(
                 nextLink, maxPageSize);
-        assertNotNull(nextLinkResult);
-
-        TimeUnit.SECONDS.sleep(10);
 
         assertNotNull(nextLinkResult);
         assertTrue(nextLinkResult
@@ -248,9 +237,6 @@ class EntriesApiTest extends BaseTest {
 
         ODataValueContextOfIListOfWEntryLinkInfo nextLinkResult = client.getLinkValuesFromEntryNextLink(
                 nextLink, maxPageSize);
-        assertNotNull(nextLinkResult);
-
-        TimeUnit.SECONDS.sleep(10);
 
         assertNotNull(nextLinkResult);
         assertTrue(nextLinkResult
@@ -280,7 +266,7 @@ class EntriesApiTest extends BaseTest {
     }
 
     @Test
-    void deleteEntry_ReturnOperationToken() {
+    void deleteEntry_ReturnOperationToken() throws InterruptedException {
         Entry entryToDelete = createEntry(createEntryClient,
                 "RepositoryApiClientIntegrationTest Java DeleteFolder", 1, true);
 
@@ -288,6 +274,7 @@ class EntriesApiTest extends BaseTest {
                 .setRepoId(repositoryId)
                 .setEntryId(entryToDelete.getId())
                 .setRequestBody(new DeleteEntryWithAuditReason()));
+        WaitUntilTaskEnds(deleteEntryResponse, Duration.ofMillis(100), Duration.ofSeconds(30));
 
         String token = deleteEntryResponse
                 .getToken();
@@ -320,9 +307,6 @@ class EntriesApiTest extends BaseTest {
 
         ODataValueContextOfIListOfWTagInfo nextLinkResult = client.getTagsAssignedToEntryNextLink(
                 nextLink, maxPageSize);
-        assertNotNull(nextLinkResult);
-
-        TimeUnit.SECONDS.sleep(10);
 
         assertNotNull(nextLinkResult);
         assertTrue(nextLinkResult

@@ -6,6 +6,7 @@ import com.laserfiche.repository.api.clients.params.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,23 +21,11 @@ public class SetEntriesApiTest extends BaseTest {
 
     RepositoryApiClient createEntryClient = repositoryApiClient;
 
-    Entry entry = null;
+    Entry entry;
 
     @AfterEach
-    void deleteEntry() throws InterruptedException {
-        if (entry != null) {
-            DeleteEntryWithAuditReason body = new DeleteEntryWithAuditReason();
-            Integer num = entry
-                    .getId();
-            repositoryApiClient
-                    .getEntriesClient()
-                    .deleteEntryInfo(new ParametersForDeleteEntryInfo()
-                            .setRepoId(repositoryId)
-                            .setEntryId(num)
-                            .setRequestBody(body));
-        }
-        TimeUnit.SECONDS.sleep(10);
-        entry = null;
+    void perTestCleanUp() throws InterruptedException {
+        deleteEntry(entry.getId());
     }
 
     @Test
