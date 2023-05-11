@@ -4,7 +4,12 @@ Use the Laserfiche Repository API to access data in a Laserfiche repository. Imp
 
 ## Documentation
 
-- [Java Doc for Laserfiche Repository API Client](https://s01.oss.sonatype.org/service/local/repositories/releases/archive/com/laserfiche/lf-repository-api-client/1.0.0/lf-repository-api-client-1.0.0-javadoc.jar/!/index.html)
+- [Laserfiche Developer Center](https://developer.laserfiche.com/)
+- [Java Doc for Laserfiche Repository API Client](https://s01.oss.sonatype.org/service/local/repositories/releases/archive/com/laserfiche/lf-repository-api-client/2.0.2/lf-repository-api-client-2.0.2-javadoc.jar/!/index.html)
+
+## Change Log
+
+See CHANGELOG [here](https://github.com/Laserfiche/lf-repository-api-client-java/blob/HEAD/CHANGELOG.md).
 
 ## Installation
 
@@ -14,6 +19,10 @@ Include the following in your pom.xml file:
 <dependency>
     <groupId>com.laserfiche</groupId>
     <artifactId>lf-repository-api-client</artifactId>
-    <version>1.0.0</version>
+    <version>2.0.2</version>
 </dependency>
 ```
+
+### Build, Test, and Package
+
+See the [.github/workflows/main.yml](https://github.com/Laserfiche/lf-repository-api-client-java/blob/HEAD/.github/workflows/main.yml).
