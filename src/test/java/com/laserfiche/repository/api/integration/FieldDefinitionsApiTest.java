@@ -1,4 +1,4 @@
-package integration;
+package com.laserfiche.repository.api.integration;
 
 import com.laserfiche.repository.api.clients.FieldDefinitionsClient;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfWFieldInfo;
@@ -57,9 +57,6 @@ class FieldDefinitionsApiTest extends BaseTest {
 
         ODataValueContextOfIListOfWFieldInfo nextLinkResult = client.getFieldDefinitionsNextLink(
                 nextLink, maxPageSize);
-        assertNotNull(nextLinkResult);
-
-        TimeUnit.SECONDS.sleep(10);
 
         assertNotNull(nextLinkResult);
         assertTrue(nextLinkResult

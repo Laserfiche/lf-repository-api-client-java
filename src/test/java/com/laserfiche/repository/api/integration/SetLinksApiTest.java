@@ -1,4 +1,4 @@
-package integration;
+package com.laserfiche.repository.api.integration;
 
 import com.laserfiche.repository.api.RepositoryApiClient;
 import com.laserfiche.repository.api.clients.impl.model.*;
@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -29,18 +30,8 @@ public class SetLinksApiTest extends BaseTest {
     }
 
     @AfterEach
-    void deleteEntries() {
-        for (Entry createdEntry : createdEntries) {
-            if (createdEntry != null) {
-                DeleteEntryWithAuditReason body = new DeleteEntryWithAuditReason();
-                client
-                        .getEntriesClient()
-                        .deleteEntryInfo(new ParametersForDeleteEntryInfo()
-                                .setRepoId(repositoryId)
-                                .setEntryId(createdEntry.getId())
-                                .setRequestBody(body));
-            }
-        }
+    void perTestCleanUp() throws InterruptedException {
+        deleteEntries(createdEntries);
     }
 
     @Test

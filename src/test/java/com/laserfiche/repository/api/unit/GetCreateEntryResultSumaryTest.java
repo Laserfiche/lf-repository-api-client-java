@@ -1,4 +1,4 @@
-package unit.clients.impl.ApiClientUtils;
+package com.laserfiche.repository.api.unit;
 
 import com.laserfiche.repository.api.clients.impl.ApiClientUtils;
 import com.laserfiche.repository.api.clients.impl.model.*;
@@ -9,7 +9,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class GetCreateEntryResultSumary {
+class GetCreateEntryResultSumaryTest {
     @Test
     void getCreateEntryResultSummary_NullCreateEntryResult() {
         String result = ApiClientUtils.getCreateEntryResultSummary(null);

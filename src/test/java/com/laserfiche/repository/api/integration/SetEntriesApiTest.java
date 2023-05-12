@@ -1,4 +1,4 @@
-package integration;
+package com.laserfiche.repository.api.integration;
 
 import com.laserfiche.repository.api.RepositoryApiClient;
 import com.laserfiche.repository.api.clients.impl.model.*;
@@ -6,11 +6,13 @@ import com.laserfiche.repository.api.clients.params.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -19,22 +21,11 @@ public class SetEntriesApiTest extends BaseTest {
 
     RepositoryApiClient createEntryClient = repositoryApiClient;
 
-    Entry entry = null;
+    Entry entry;
 
     @AfterEach
-    void deleteEntry() {
-        if (entry != null) {
-            DeleteEntryWithAuditReason body = new DeleteEntryWithAuditReason();
-            Integer num = entry
-                    .getId();
-            repositoryApiClient
-                    .getEntriesClient()
-                    .deleteEntryInfo(new ParametersForDeleteEntryInfo()
-                            .setRepoId(repositoryId)
-                            .setEntryId(num)
-                            .setRequestBody(body));
-        }
-        entry = null;
+    void perTestCleanUp() throws InterruptedException {
+        deleteEntry(entry.getId());
     }
 
     @Test

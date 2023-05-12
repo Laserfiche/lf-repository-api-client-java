@@ -1,4 +1,4 @@
-package unit.clients.impl.ApiClientUtils;
+package com.laserfiche.repository.api.unit;
 
 import com.laserfiche.repository.api.clients.impl.ApiClientUtils;
 import kong.unirest.Headers;
@@ -13,7 +13,7 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class GetHeaders {
+public class GetHeadersTest {
     private final Map<String, String> headerParametersWithStringTypeValue = new HashMap<String, String>();
     private Headers header;
 

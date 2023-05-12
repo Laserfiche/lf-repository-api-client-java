@@ -1,4 +1,4 @@
-package integration;
+package com.laserfiche.repository.api.integration;
 
 import com.laserfiche.api.client.model.ApiException;
 import com.laserfiche.repository.api.clients.EntriesClient;
@@ -15,8 +15,10 @@ import org.junit.jupiter.api.Test;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.time.Duration;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -32,14 +34,8 @@ public class ImportDocumentApiTest extends BaseTest {
     }
 
     @AfterEach
-    public void deleteEntries() {
-        if (createdEntryId != 0) {
-            DeleteEntryWithAuditReason body = new DeleteEntryWithAuditReason();
-            client.deleteEntryInfo(new ParametersForDeleteEntryInfo()
-                    .setRepoId(repositoryId)
-                    .setEntryId(createdEntryId)
-                    .setRequestBody(body));
-        }
+    void perTestCleanUp() throws InterruptedException {
+        deleteEntry(createdEntryId);
     }
 
     @Test

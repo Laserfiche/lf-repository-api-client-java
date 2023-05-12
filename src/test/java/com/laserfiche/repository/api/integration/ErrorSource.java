@@ -1,4 +1,4 @@
-package integration;
+package com.laserfiche.repository.api.integration;
 
 public enum ErrorSource {
     API_SERVER("Api Server"),
