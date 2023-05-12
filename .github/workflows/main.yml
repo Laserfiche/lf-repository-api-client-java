@@ -78,6 +78,7 @@ jobs:
       run: rm -r ./docs_temp
 
   publish-preview-package:
+
     runs-on: ubuntu-latest
     environment: preview
     if: ${{ github.run_attempt != 1 }}
@@ -127,6 +128,7 @@ jobs:
         message: Workflow run ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
   publish-production-package:
+
     runs-on: ubuntu-latest
     environment: production
     if: ${{ github.run_attempt != 1 }}
@@ -176,6 +178,7 @@ jobs:
         message: Workflow run ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
   publish-documentation:
+
     runs-on: ubuntu-latest
     timeout-minutes: 10
     environment: github-pages
