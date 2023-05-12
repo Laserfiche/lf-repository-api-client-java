@@ -157,12 +157,10 @@ public class BaseTest {
                             .setRepoId(repositoryId)
                             .setOperationToken(task.getToken()));
             if (progress.getStatus() != OperationStatus.IN_PROGRESS) {
-                System.out.println(progress.getStatus());
                 return;
             }
             TimeUnit.MILLISECONDS.sleep(interval.toMillis());
             count++;
-            System.out.println(progress.getStatus());
         }
         throw new RuntimeException("WaitUntilTaskEnds timeout");
     }
@@ -176,12 +174,10 @@ public class BaseTest {
                             .setRepoId(repositoryId)
                             .setSearchToken(search.getToken()));
             if (progress.getStatus() != OperationStatus.IN_PROGRESS) {
-                System.out.println(progress.getStatus());
                 return;
             }
             TimeUnit.MILLISECONDS.sleep(interval.toMillis());
             count++;
-            System.out.println(progress.getStatus());
         }
         throw new RuntimeException("WaitUntilSearchEnds timeout");
     }
