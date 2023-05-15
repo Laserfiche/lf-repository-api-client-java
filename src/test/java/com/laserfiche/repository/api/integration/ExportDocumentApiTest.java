@@ -5,10 +5,7 @@ import com.laserfiche.repository.api.clients.AuditReasonsClient;
 import com.laserfiche.repository.api.clients.EntriesClient;
 import com.laserfiche.repository.api.clients.impl.model.*;
 import com.laserfiche.repository.api.clients.params.*;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.io.*;
 import java.util.function.Consumer;
@@ -18,7 +15,9 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ExportDocumentApiTest extends BaseTest {
     private EntriesClient client;
     private AuditReasonsClient auditReasonsClient;
-    private int createdEntryId;
+    private static int testEntryId;
+    private static long testEntryFileSize;
+    private static File exportedFile;
 
     @BeforeEach
     public void perTestSetup() {
@@ -28,13 +27,44 @@ public class ExportDocumentApiTest extends BaseTest {
 
     @AfterEach
     void perTestCleanUp() throws InterruptedException {
-        deleteEntry(createdEntryId);
+        if (exportedFile != null){
+            exportedFile.delete();
+            exportedFile = null;
+        }
+    }
+
+    @BeforeAll
+    static void classSetup() {
+        try {
+            String fileName = "RepositoryApiClientIntegrationTest Java ExportDocumentApiTest";
+            String filePath = "src/test/java/com/laserfiche/repository/api/integration/test.pdf";
+            File fileToImport = new File(filePath);
+            testEntryFileSize = fileToImport.length();
+            CreateEntryResult result = repositoryApiClient.getEntriesClient()
+                    .importDocument(new ParametersForImportDocument()
+                            .setRepoId(repositoryId)
+                            .setParentEntryId(1)
+                            .setFileName(fileName)
+                            .setAutoRename(true)
+                            .setInputStream(new FileInputStream(fileToImport))
+                            .setRequestBody(new PostEntryWithEdocMetadataRequest()));
+
+            CreateEntryOperations operations = result.getOperations();
+            testEntryId = operations
+                    .getEntryCreate()
+                    .getEntryId();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @AfterAll
+    static void classCleanUp() throws InterruptedException {
+        deleteEntry(testEntryId);
     }
 
     @Test
     void exportDocument_Returns_Exported_File() {
-        createEmptyDocument();
-
         final String FILE_NAME = "exportDocument_temp_file.txt";
         Consumer<InputStream> consumer = inputStream -> {
             File exportedFile = new File(FILE_NAME);
@@ -55,19 +85,15 @@ public class ExportDocumentApiTest extends BaseTest {
 
         client.exportDocument(new ParametersForExportDocument()
                 .setRepoId(repositoryId)
-                .setEntryId(createdEntryId)
+                .setEntryId(testEntryId)
                 .setInputStreamConsumer(consumer));
-        File exportedFile = new File(FILE_NAME);
+        exportedFile = new File(FILE_NAME);
         assertTrue(exportedFile.exists());
-        assertEquals(0, exportedFile.length());
-        boolean exportedFileIsDeletedSuccessfully = exportedFile.delete();
-        assertTrue(exportedFileIsDeletedSuccessfully);
+        assertEquals(testEntryFileSize, exportedFile.length());
     }
 
     @Test
     void exportDocumentWithAuditReason_Returns_Exported_File() {
-        createEmptyDocument();
-
         AuditReasons auditReasons = auditReasonsClient.getAuditReasons(
                 new ParametersForGetAuditReasons().setRepoId(repositoryId));
         final String FILE_NAME = "exportDocument_temp_file.txt";
@@ -98,20 +124,16 @@ public class ExportDocumentApiTest extends BaseTest {
                 .getName());
         client.exportDocumentWithAuditReason(new ParametersForExportDocumentWithAuditReason()
                 .setRepoId(repositoryId)
-                .setEntryId(createdEntryId)
+                .setEntryId(testEntryId)
                 .setInputStreamConsumer(consumer)
                 .setRequestBody(requestBody));
-        File exportedFile = new File(FILE_NAME);
+        exportedFile = new File(FILE_NAME);
         assertTrue(exportedFile.exists());
-        assertEquals(0, exportedFile.length());
-        boolean exportedFileIsDeletedSuccessfully = exportedFile.delete();
-        assertTrue(exportedFileIsDeletedSuccessfully);
+        assertEquals(testEntryFileSize, exportedFile.length());
     }
 
     @Test
     void exportDocumentAsStream_Returns_Exported_File() throws IOException {
-        createEmptyDocument();
-
         final String FILE_NAME = "exportDocument_temp_file.txt";
         Consumer<InputStream> consumer = inputStream -> {
             File exportedFile = new File(FILE_NAME);
@@ -131,24 +153,20 @@ public class ExportDocumentApiTest extends BaseTest {
         };
         ParametersForExportDocument input = new ParametersForExportDocument()
                 .setRepoId(repositoryId)
-                .setEntryId(createdEntryId)
+                .setEntryId(testEntryId)
                 .setInputStreamConsumer(consumer);
         InputStream inputStream = client.exportDocumentAsStream(input);
         input
                 .getInputStreamConsumer()
                 .accept(inputStream);
         inputStream.close();
-        File exportedFile = new File(FILE_NAME);
+        exportedFile = new File(FILE_NAME);
         assertTrue(exportedFile.exists());
-        assertEquals(0, exportedFile.length());
-        boolean exportedFileIsDeletedSuccessfully = exportedFile.delete();
-        assertTrue(exportedFileIsDeletedSuccessfully);
+        assertEquals(testEntryFileSize, exportedFile.length());
     }
 
     @Test
     void exportDocumentWithAuditReasonAsStream_Returns_Exported_File() throws IOException {
-        createEmptyDocument();
-
         AuditReasons auditReasons = auditReasonsClient.getAuditReasons(
                 new ParametersForGetAuditReasons().setRepoId(repositoryId));
         final String FILE_NAME = "exportDocument_temp_file.txt";
@@ -179,7 +197,7 @@ public class ExportDocumentApiTest extends BaseTest {
                 .getName());
         ParametersForExportDocumentWithAuditReason input = new ParametersForExportDocumentWithAuditReason()
                 .setRepoId(repositoryId)
-                .setEntryId(createdEntryId)
+                .setEntryId(testEntryId)
                 .setInputStreamConsumer(consumer)
                 .setRequestBody(requestBody);
         InputStream inputStream = client.exportDocumentWithAuditReasonAsStream(input);
@@ -187,11 +205,9 @@ public class ExportDocumentApiTest extends BaseTest {
                 .getInputStreamConsumer()
                 .accept(inputStream);
         inputStream.close();
-        File exportedFile = new File(FILE_NAME);
+        exportedFile = new File(FILE_NAME);
         assertTrue(exportedFile.exists());
-        assertEquals(0, exportedFile.length());
-        boolean exportedFileIsDeletedSuccessfully = exportedFile.delete();
-        assertTrue(exportedFileIsDeletedSuccessfully);
+        assertEquals(testEntryFileSize, exportedFile.length());
     }
 
     @Test
@@ -293,27 +309,4 @@ public class ExportDocumentApiTest extends BaseTest {
         assertNotNull(exportedFile);
         assertFalse(exportedFile.exists());
     }
-
-    private void createEmptyDocument() {
-        try {
-            String fileName = "RepositoryApiClientIntegrationTest Java ExportDocumentApiTest";
-            File toUpload = File.createTempFile(fileName, "txt");
-            CreateEntryResult result = client
-                    .importDocument(new ParametersForImportDocument()
-                            .setRepoId(repositoryId)
-                            .setParentEntryId(1)
-                            .setFileName(fileName)
-                            .setAutoRename(true)
-                            .setInputStream(new FileInputStream(toUpload))
-                            .setRequestBody(new PostEntryWithEdocMetadataRequest()));
-
-            CreateEntryOperations operations = result.getOperations();
-            createdEntryId = operations
-                    .getEntryCreate()
-                    .getEntryId();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
 }

@@ -26,7 +26,7 @@ public class CreateCopyEntryApiTest extends BaseTest {
 
     @BeforeAll
     static void classSetup() {
-        String name = "RepositoryApiClientIntegrationTest Java ParentFolder";
+        String name = "RepositoryApiClientIntegrationTest Java TestClassParentFolder";
         testClassParentFolder = createEntry(repositoryApiClient, name, 1, true);
     }
 
