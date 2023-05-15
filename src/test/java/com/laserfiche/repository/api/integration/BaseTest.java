@@ -1,7 +1,6 @@
 package com.laserfiche.repository.api.integration;
 
 import com.laserfiche.api.client.model.AccessKey;
-import com.laserfiche.api.client.model.ApiException;
 import com.laserfiche.repository.api.RepositoryApiClient;
 import com.laserfiche.repository.api.RepositoryApiClientImpl;
 import com.laserfiche.repository.api.clients.impl.model.*;
@@ -14,7 +13,6 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 
 import java.time.Duration;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -127,7 +125,7 @@ public class BaseTest {
                         .setAutoRename(autoRename));
     }
 
-    public static Boolean allFalse(List<TemplateFieldInfo> arr) {
+    public static Boolean noTemplateFieldDefinitionsRequired(List<TemplateFieldInfo> arr) {
         for (TemplateFieldInfo templateFieldInfo : arr) {
             if (templateFieldInfo.isRequired()) {
                 return false;

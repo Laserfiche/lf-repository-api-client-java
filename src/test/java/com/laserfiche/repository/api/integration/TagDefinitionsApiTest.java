@@ -8,7 +8,7 @@ import com.laserfiche.repository.api.clients.params.ParametersForGetTagDefinitio
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -56,14 +56,11 @@ class TagDefinitionsApiTest extends BaseTest {
 
     @Test
     void getTagDefinitions_ForEach() throws InterruptedException {
-        ODataValueContextOfIListOfWTagInfo tagInfoList = client
-                .getTagDefinitions(new ParametersForGetTagDefinitions().setRepoId(repositoryId));
-
-        assertNotNull(tagInfoList);
-
-        int maxPageSize = 90;
+        AtomicInteger pageCount = new AtomicInteger();
+        int maxPages = 2;
+        int maxPageSize = 1;
         Function<ODataValueContextOfIListOfWTagInfo, Boolean> callback = data -> {
-            if (data.getOdataNextLink() != null) {
+            if (data.getOdataNextLink() != null && pageCount.incrementAndGet() <= maxPages) {
                 assertNotEquals(0, data
                         .getValue()
                         .size());
@@ -77,6 +74,7 @@ class TagDefinitionsApiTest extends BaseTest {
         };
         client.getTagDefinitionsForEach(callback, maxPageSize, new ParametersForGetTagDefinitions().setRepoId(
                 repositoryId));
+        assertTrue(pageCount.get() > 1);
     }
 
     @Test

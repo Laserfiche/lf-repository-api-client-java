@@ -11,8 +11,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.*;
-import java.time.Duration;
-import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -26,7 +24,6 @@ public class ExportDocumentApiTest extends BaseTest {
     public void perTestSetup() {
         client = repositoryApiClient.getEntriesClient();
         auditReasonsClient = repositoryApiClient.getAuditReasonsClient();
-        createEmptyDocument();
     }
 
     @AfterEach
@@ -36,6 +33,8 @@ public class ExportDocumentApiTest extends BaseTest {
 
     @Test
     void exportDocument_Returns_Exported_File() {
+        createEmptyDocument();
+
         final String FILE_NAME = "exportDocument_temp_file.txt";
         Consumer<InputStream> consumer = inputStream -> {
             File exportedFile = new File(FILE_NAME);
@@ -67,6 +66,8 @@ public class ExportDocumentApiTest extends BaseTest {
 
     @Test
     void exportDocumentWithAuditReason_Returns_Exported_File() {
+        createEmptyDocument();
+
         AuditReasons auditReasons = auditReasonsClient.getAuditReasons(
                 new ParametersForGetAuditReasons().setRepoId(repositoryId));
         final String FILE_NAME = "exportDocument_temp_file.txt";
@@ -109,6 +110,8 @@ public class ExportDocumentApiTest extends BaseTest {
 
     @Test
     void exportDocumentAsStream_Returns_Exported_File() throws IOException {
+        createEmptyDocument();
+
         final String FILE_NAME = "exportDocument_temp_file.txt";
         Consumer<InputStream> consumer = inputStream -> {
             File exportedFile = new File(FILE_NAME);
@@ -144,6 +147,8 @@ public class ExportDocumentApiTest extends BaseTest {
 
     @Test
     void exportDocumentWithAuditReasonAsStream_Returns_Exported_File() throws IOException {
+        createEmptyDocument();
+
         AuditReasons auditReasons = auditReasonsClient.getAuditReasons(
                 new ParametersForGetAuditReasons().setRepoId(repositoryId));
         final String FILE_NAME = "exportDocument_temp_file.txt";
@@ -198,7 +203,7 @@ public class ExportDocumentApiTest extends BaseTest {
         Exception thrown = Assertions.assertThrows(ApiException.class, () -> {
             client.exportDocument(new ParametersForExportDocument()
                     .setRepoId(repositoryId)
-                    .setEntryId(-createdEntryId)
+                    .setEntryId(-1)
                     .setInputStreamConsumer(consumer));
         });
         Assertions.assertEquals("Specified argument was out of the range of valid values. (Parameter 'entryId')",
@@ -228,7 +233,7 @@ public class ExportDocumentApiTest extends BaseTest {
         Exception thrown = Assertions.assertThrows(ApiException.class, () -> {
             client.exportDocumentWithAuditReason(new ParametersForExportDocumentWithAuditReason()
                     .setRepoId(repositoryId)
-                    .setEntryId(-createdEntryId)
+                    .setEntryId(-1)
                     .setInputStreamConsumer(consumer)
                     .setRequestBody(requestBody));
         });
@@ -248,7 +253,7 @@ public class ExportDocumentApiTest extends BaseTest {
         Exception thrown = Assertions.assertThrows(ApiException.class, () -> {
             client.exportDocumentAsStream(new ParametersForExportDocument()
                     .setRepoId(repositoryId)
-                    .setEntryId(-createdEntryId)
+                    .setEntryId(-1)
                     .setInputStreamConsumer(consumer));
         });
         Assertions.assertEquals("Specified argument was out of the range of valid values. (Parameter 'entryId')",
@@ -278,7 +283,7 @@ public class ExportDocumentApiTest extends BaseTest {
         Exception thrown = Assertions.assertThrows(ApiException.class, () -> {
             client.exportDocumentWithAuditReasonAsStream(new ParametersForExportDocumentWithAuditReason()
                     .setRepoId(repositoryId)
-                    .setEntryId(-createdEntryId)
+                    .setEntryId(-1)
                     .setInputStreamConsumer(consumer)
                     .setRequestBody(requestBody));
         });
@@ -291,7 +296,7 @@ public class ExportDocumentApiTest extends BaseTest {
 
     private void createEmptyDocument() {
         try {
-            String fileName = "JavaClientLibrary_ExportDocumentApiTest";
+            String fileName = "RepositoryApiClientIntegrationTest Java ExportDocumentApiTest";
             File toUpload = File.createTempFile(fileName, "txt");
             CreateEntryResult result = client
                     .importDocument(new ParametersForImportDocument()

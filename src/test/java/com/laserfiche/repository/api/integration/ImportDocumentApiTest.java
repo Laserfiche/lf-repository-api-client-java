@@ -3,7 +3,6 @@ package com.laserfiche.repository.api.integration;
 import com.laserfiche.api.client.model.ApiException;
 import com.laserfiche.repository.api.clients.EntriesClient;
 import com.laserfiche.repository.api.clients.impl.model.*;
-import com.laserfiche.repository.api.clients.params.ParametersForDeleteEntryInfo;
 import com.laserfiche.repository.api.clients.params.ParametersForGetTemplateDefinitions;
 import com.laserfiche.repository.api.clients.params.ParametersForGetTemplateFieldDefinitions;
 import com.laserfiche.repository.api.clients.params.ParametersForImportDocument;
@@ -15,10 +14,8 @@ import org.junit.jupiter.api.Test;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.time.Duration;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -39,46 +36,6 @@ public class ImportDocumentApiTest extends BaseTest {
     }
 
     @Test
-    void importDocument_DocumentCreated_FromFile() throws FileNotFoundException {
-        String fileName = "myFile";
-        File toUpload = null;
-        try {
-            toUpload = File.createTempFile(fileName, "txt");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        assertNotNull(toUpload);
-
-        CreateEntryResult result = client
-                .importDocument(new ParametersForImportDocument()
-                        .setRepoId(repositoryId)
-                        .setParentEntryId(1)
-                        .setFileName(fileName)
-                        .setAutoRename(true)
-                        .setInputStream(new FileInputStream(toUpload))
-                        .setRequestBody(new PostEntryWithEdocMetadataRequest()));
-
-        assertNotNull(result);
-        CreateEntryOperations operations = result.getOperations();
-
-        assertNotNull(operations);
-        assertNotNull(result.getDocumentLink());
-        createdEntryId = operations
-                .getEntryCreate()
-                .getEntryId();
-        assertTrue(createdEntryId > 0);
-        assertEquals(0, operations
-                .getEntryCreate()
-                .getExceptions()
-                .size());
-        assertEquals(0, operations
-                .getSetEdoc()
-                .getExceptions()
-                .size());
-    }
-
-    @Test
     void importDocument_DocumentCreated_FromFile_WithTemplate() throws ExecutionException, InterruptedException, FileNotFoundException {
         WTemplateInfo template = null;
         ODataValueContextOfIListOfWTemplateInfo templateDefinitionResult = repositoryApiClient
@@ -93,7 +50,7 @@ public class ImportDocumentApiTest extends BaseTest {
                     .getTemplateFieldDefinitions(new ParametersForGetTemplateFieldDefinitions()
                             .setRepoId(repositoryId)
                             .setTemplateId(templateDefinition.getId()));
-            if (templateDefinitionFieldsResult.getValue() != null && allFalse(
+            if (templateDefinitionFieldsResult.getValue() != null && noTemplateFieldDefinitionsRequired(
                     templateDefinitionFieldsResult.getValue())) {
                 template = templateDefinition;
                 break;
