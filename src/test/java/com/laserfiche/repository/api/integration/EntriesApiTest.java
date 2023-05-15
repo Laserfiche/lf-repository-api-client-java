@@ -125,7 +125,7 @@ class EntriesApiTest extends BaseTest {
         int maxPages = 2;
         int maxPageSize = 3;
         Function<ODataValueContextOfIListOfEntry, Boolean> callback = entries -> {
-            if (entries.getOdataNextLink() != null && pageCount.incrementAndGet() <= maxPages) {
+            if (pageCount.incrementAndGet() <= maxPages && entries.getOdataNextLink() != null) {
                 assertNotEquals(0, entries
                         .getValue()
                         .size());

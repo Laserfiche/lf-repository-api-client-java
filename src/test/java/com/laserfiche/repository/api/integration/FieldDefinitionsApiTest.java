@@ -70,7 +70,7 @@ class FieldDefinitionsApiTest extends BaseTest {
         int maxPages = 2;
         int maxPageSize = 3;
         Function<ODataValueContextOfIListOfWFieldInfo, Boolean> callback = fieldInfoList -> {
-            if (fieldInfoList.getOdataNextLink() != null && pageCount.incrementAndGet() <= maxPages) {
+            if (pageCount.incrementAndGet() <= maxPages && fieldInfoList.getOdataNextLink() != null) {
                 assertNotEquals(0, fieldInfoList
                         .getValue()
                         .size());

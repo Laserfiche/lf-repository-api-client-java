@@ -35,7 +35,7 @@ public class SearchApiTest extends BaseTest {
     @Test
     void getSearchContextHits_ReturnContextHits() throws InterruptedException {
         AdvancedSearchRequest request = new AdvancedSearchRequest();
-        request.setSearchCommand("({LF:Basic ~= \"Laserfiche\", option=\"DLT\"})");
+        request.setSearchCommand("{LF:Basic ~= \"Laserfiche\", option=\"DLT\"} & {LF:name=\"Laserfiche Cloud Overview\", Type=\"DFS\"}");
 
         AcceptedOperation searchResponse = client
                 .createSearchOperation(new ParametersForCreateSearchOperation()
@@ -188,7 +188,7 @@ public class SearchApiTest extends BaseTest {
         WaitUntilSearchEnds(searchResponse);
 
         Function<ODataValueContextOfIListOfEntry, Boolean> callback = data -> {
-            if (data.getOdataNextLink() != null && pageCount.incrementAndGet() <= maxPages) {
+            if (pageCount.incrementAndGet() <= maxPages && data.getOdataNextLink() != null) {
                 assertNotEquals(0, data
                         .getValue()
                         .size());
@@ -210,8 +210,7 @@ public class SearchApiTest extends BaseTest {
     void getSearchContextHits_NextLink() throws InterruptedException {
         int maxPageSize = 1;
         AdvancedSearchRequest request = new AdvancedSearchRequest();
-        request.setSearchCommand("({LF:Basic ~= \"Laserfiche\", option=\"ALT\"})");
-        request.setFuzzyFactor(2);
+        request.setSearchCommand("{LF:Basic ~= \"Laserfiche\", option=\"DLT\"} & {LF:name=\"Laserfiche Cloud Overview\", Type=\"DFS\"}");
 
         AcceptedOperation searchResponse = client.createSearchOperation(new ParametersForCreateSearchOperation()
                 .setRepoId(repositoryId)
@@ -268,8 +267,7 @@ public class SearchApiTest extends BaseTest {
         int maxPages = 2;
         int maxPageSize = 1;
         AdvancedSearchRequest request = new AdvancedSearchRequest();
-        request.setSearchCommand("({LF:Basic ~= \"Laserfiche\", option=\"ALT\"})");
-        request.setFuzzyFactor(2);
+        request.setSearchCommand("{LF:Basic ~= \"Laserfiche\", option=\"DLT\"} & {LF:name=\"Laserfiche Cloud Overview\", Type=\"DFS\"}");
 
         AcceptedOperation searchResponse = client.createSearchOperation(new ParametersForCreateSearchOperation()
                 .setRepoId(repositoryId)
@@ -296,7 +294,7 @@ public class SearchApiTest extends BaseTest {
                 .getRowNumber();
 
         Function<ODataValueContextOfIListOfContextHit, Boolean> callback = data -> {
-            if (data.getOdataNextLink() != null && pageCount.incrementAndGet() <= maxPages) {
+            if (pageCount.incrementAndGet() <= maxPages && data.getOdataNextLink() != null) {
                 assertNotEquals(0, data
                         .getValue()
                         .size());

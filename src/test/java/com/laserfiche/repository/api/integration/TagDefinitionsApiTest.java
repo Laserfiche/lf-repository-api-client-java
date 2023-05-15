@@ -60,7 +60,7 @@ class TagDefinitionsApiTest extends BaseTest {
         int maxPages = 2;
         int maxPageSize = 1;
         Function<ODataValueContextOfIListOfWTagInfo, Boolean> callback = data -> {
-            if (data.getOdataNextLink() != null && pageCount.incrementAndGet() <= maxPages) {
+            if (pageCount.incrementAndGet() <= maxPages && data.getOdataNextLink() != null) {
                 assertNotEquals(0, data
                         .getValue()
                         .size());

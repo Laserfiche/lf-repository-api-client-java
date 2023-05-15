@@ -87,7 +87,7 @@ class TemplateDefinitionsApiTest extends BaseTest {
         int maxPages = 2;
         int maxPageSize = 3;
         Function<ODataValueContextOfIListOfWTemplateInfo, Boolean> callback = listOfWTemplateInfo -> {
-            if (listOfWTemplateInfo.getOdataNextLink() != null && pageCount.incrementAndGet() <= maxPages) {
+            if (pageCount.incrementAndGet() <= maxPages && listOfWTemplateInfo.getOdataNextLink() != null) {
                 assertNotEquals(0, listOfWTemplateInfo
                         .getValue()
                         .size());
@@ -160,7 +160,7 @@ class TemplateDefinitionsApiTest extends BaseTest {
         int maxPages = 2;
         int maxPageSize = 1;
         Function<ODataValueContextOfIListOfTemplateFieldInfo, Boolean> callback = fieldInfoList -> {
-            if (fieldInfoList.getOdataNextLink() != null && pageCount.incrementAndGet() <= maxPages) {
+            if (pageCount.incrementAndGet() <= maxPages && fieldInfoList.getOdataNextLink() != null) {
                 assertNotEquals(0, fieldInfoList
                         .getValue()
                         .size());

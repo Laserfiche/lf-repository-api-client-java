@@ -81,7 +81,7 @@ class AttributesApiTest extends BaseTest {
         int maxPages = 2;
         int maxPageSize = 3;
         Function<ODataValueContextOfListOfAttribute, Boolean> callback = attributes -> {
-            if (attributes.getOdataNextLink() != null && pageCount.incrementAndGet() <= maxPages) {
+            if (pageCount.incrementAndGet() <= maxPages && attributes.getOdataNextLink() != null) {
                 assertNotEquals(0, attributes
                         .getValue()
                         .size());
