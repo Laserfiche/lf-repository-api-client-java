@@ -52,7 +52,7 @@ public class ImportDocumentApiTest extends BaseTest {
                     .getTemplateFieldDefinitions(new ParametersForGetTemplateFieldDefinitions()
                             .setRepoId(repositoryId)
                             .setTemplateId(templateDefinition.getId()));
-            if (templateDefinitionFieldsResult.getValue() != null && noTemplateFieldDefinitionsRequired(
+            if (templateDefinitionFieldsResult.getValue() != null && noRequiredFieldDefinitionsInTemplate(
                     templateDefinitionFieldsResult.getValue())) {
                 template = templateDefinition;
                 break;

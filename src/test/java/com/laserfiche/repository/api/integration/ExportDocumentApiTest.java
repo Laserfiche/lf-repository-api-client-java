@@ -23,19 +23,20 @@ public class ExportDocumentApiTest extends BaseTest {
     public void perTestSetup() {
         client = repositoryApiClient.getEntriesClient();
         auditReasonsClient = repositoryApiClient.getAuditReasonsClient();
+        exportedFile = null;
     }
 
     @AfterEach
     void perTestCleanUp() throws InterruptedException {
         if (exportedFile != null){
             exportedFile.delete();
-            exportedFile = null;
         }
     }
 
     @BeforeAll
     static void classSetup() {
         try {
+            // Import a document that will be exported by tests in this class
             String fileName = "RepositoryApiClientIntegrationTest Java ExportDocumentApiTest";
             String filePath = "src/test/java/com/laserfiche/repository/api/integration/test.pdf";
             File fileToImport = new File(filePath);

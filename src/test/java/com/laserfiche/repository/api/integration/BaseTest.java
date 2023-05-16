@@ -125,7 +125,7 @@ public class BaseTest {
                         .setAutoRename(autoRename));
     }
 
-    public static Boolean noTemplateFieldDefinitionsRequired(List<TemplateFieldInfo> arr) {
+    public static Boolean noRequiredFieldDefinitionsInTemplate(List<TemplateFieldInfo> arr) {
         for (TemplateFieldInfo templateFieldInfo : arr) {
             if (templateFieldInfo.isRequired()) {
                 return false;

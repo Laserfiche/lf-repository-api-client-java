@@ -84,7 +84,7 @@ public class SetEntriesApiTest extends BaseTest {
                             .setRepoId(repositoryId)
                             .setTemplateId(templateDefinition.getId()));
             if (templateDefinitionsFieldsResponse
-                    .getValue() != null && noTemplateFieldDefinitionsRequired(templateDefinitionsFieldsResponse.getValue())) {
+                    .getValue() != null && noRequiredFieldDefinitionsInTemplate(templateDefinitionsFieldsResponse.getValue())) {
                 template = templateDefinition;
                 break;
             }
@@ -187,7 +187,7 @@ public class SetEntriesApiTest extends BaseTest {
                             .setRepoId(repositoryId)
                             .setTemplateId(templateDefinition.getId()));
             if (templateDefinitionsFieldsResponse
-                    .getValue() != null && noTemplateFieldDefinitionsRequired(
+                    .getValue() != null && noRequiredFieldDefinitionsInTemplate(
                     templateDefinitionsFieldsResponse.getValue())) {
                 template = templateDefinition;
                 break;

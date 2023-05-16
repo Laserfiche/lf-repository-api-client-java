@@ -197,7 +197,7 @@ class EntriesApiTest extends BaseTest {
         int maxPages = 2;
         int maxPageSize = 1;
         Function<ODataValueContextOfIListOfFieldValue, Boolean> callback = fieldValues -> {
-            if (fieldValues.getOdataNextLink() != null && pageCount.incrementAndGet() <= maxPages) {
+            if (pageCount.incrementAndGet() <= maxPages && fieldValues.getOdataNextLink() != null) {
                 assertNotEquals(0, fieldValues
                         .getValue()
                         .size());
@@ -253,7 +253,7 @@ class EntriesApiTest extends BaseTest {
         int maxPages = 2;
         int maxPageSize = 1;
         Function<ODataValueContextOfIListOfWEntryLinkInfo, Boolean> callback = entryLinkIntoList -> {
-            if (entryLinkIntoList.getOdataNextLink() != null && pageCount.incrementAndGet() <= maxPages) {
+            if (pageCount.incrementAndGet() <= maxPages && entryLinkIntoList.getOdataNextLink() != null) {
                 assertNotEquals(0, entryLinkIntoList
                         .getValue()
                         .size());
@@ -325,7 +325,7 @@ class EntriesApiTest extends BaseTest {
         int maxPages = 2;
         int maxPageSize = 1;
         Function<ODataValueContextOfIListOfWTagInfo, Boolean> callback = tagInfoList -> {
-            if (tagInfoList.getOdataNextLink() != null && pageCount.incrementAndGet() <= maxPages) {
+            if (pageCount.incrementAndGet() <= maxPages && tagInfoList.getOdataNextLink() != null) {
                 assertNotEquals(0, tagInfoList
                         .getValue()
                         .size());
