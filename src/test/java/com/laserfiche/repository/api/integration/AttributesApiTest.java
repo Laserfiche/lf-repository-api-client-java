@@ -1,4 +1,4 @@
-package integration;
+package com.laserfiche.repository.api.integration;
 
 import com.laserfiche.repository.api.clients.AttributesClient;
 import com.laserfiche.repository.api.clients.impl.model.Attribute;
@@ -53,7 +53,7 @@ class AttributesApiTest extends BaseTest {
 
     @Test
     void getAttributeValueByKey_NextLink() throws InterruptedException {
-        int maxPageSize = 5;
+        int maxPageSize = 3;
         ODataValueContextOfListOfAttribute attributeList = client.getTrusteeAttributeKeyValuePairs(
                 new ParametersForGetTrusteeAttributeKeyValuePairs()
                         .setRepoId(repositoryId)

@@ -1,4 +1,4 @@
-package integration;
+package com.laserfiche.repository.api.integration;
 
 import com.laserfiche.repository.api.clients.TemplateDefinitionsClient;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfTemplateFieldInfo;
@@ -78,8 +78,6 @@ class TemplateDefinitionsApiTest extends BaseTest {
         ODataValueContextOfIListOfWTemplateInfo nextLinkResponse = client.getTemplateDefinitionsNextLink(
                 nextLink, maxPageSize);
         assertNotNull(nextLinkResponse);
-        TimeUnit.SECONDS.sleep(10);
-        assertNotNull(nextLinkResponse);
         assertTrue(nextLinkResponse
                 .getValue()
                 .size() <= maxPageSize);
@@ -91,8 +89,6 @@ class TemplateDefinitionsApiTest extends BaseTest {
                 .getTemplateDefinitions(new ParametersForGetTemplateDefinitions().setRepoId(repositoryId));
 
         assertNotNull(templateInfoList);
-
-        TimeUnit.SECONDS.sleep(10);
 
         int maxPageSize = 90;
         Function<ODataValueContextOfIListOfWTemplateInfo, Boolean> callback = listOfWTemplateInfo -> {
@@ -148,8 +144,6 @@ class TemplateDefinitionsApiTest extends BaseTest {
         ODataValueContextOfIListOfTemplateFieldInfo nextLinkResponse = client.getTemplateFieldDefinitionsNextLink(
                 nextLink, maxPageSize);
         assertNotNull(nextLinkResponse);
-        TimeUnit.SECONDS.sleep(10);
-        assertNotNull(nextLinkResponse);
         assertTrue(nextLinkResponse
                 .getValue()
                 .size() <= maxPageSize);
@@ -176,8 +170,6 @@ class TemplateDefinitionsApiTest extends BaseTest {
         Assertions.assertSame(result
                 .getValue()
                 .size(), tempDef.getFieldCount());
-
-        TimeUnit.SECONDS.sleep(10);
 
         int maxPageSize = 90;
         Function<ODataValueContextOfIListOfTemplateFieldInfo, Boolean> callback = fieldInfoList -> {
