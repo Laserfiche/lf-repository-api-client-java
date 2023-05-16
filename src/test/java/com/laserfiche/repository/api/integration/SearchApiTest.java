@@ -5,15 +5,14 @@ import com.laserfiche.repository.api.clients.impl.model.*;
 import com.laserfiche.repository.api.clients.params.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@Disabled("Rate limiting issue")
 public class SearchApiTest extends BaseTest {
     SearchesClient client;
     private String searchToken = "";
@@ -36,8 +35,7 @@ public class SearchApiTest extends BaseTest {
     @Test
     void getSearchContextHits_ReturnContextHits() throws InterruptedException {
         AdvancedSearchRequest request = new AdvancedSearchRequest();
-        request.setSearchCommand("({LF:Basic ~= \"*\", option=\"DFANLT\"})");
-        request.setFuzzyFactor(2);
+        request.setSearchCommand("{LF:Basic ~= \"Laserfiche\", option=\"DLT\"} & {LF:name=\"Laserfiche Cloud Overview\", Type=\"DFS\"}");
 
         AcceptedOperation searchResponse = client
                 .createSearchOperation(new ParametersForCreateSearchOperation()
@@ -49,33 +47,18 @@ public class SearchApiTest extends BaseTest {
 
         WaitUntilSearchEnds(searchResponse);
 
-        ODataValueContextOfIListOfEntry searchResults = client.getSearchResults(new ParametersForGetSearchResults()
-                .setRepoId(repositoryId)
-                .setSearchToken(searchToken));
-
-        assertNotNull(searchResults);
-        assertTrue(searchResults
-                .getValue()
-                .size() > 0);
-
-        int rowNum = searchResults
-                .getValue()
-                .get(0)
-                .getRowNumber();
-
         ODataValueContextOfIListOfContextHit contextHitResponse = client
                 .getSearchContextHits(new ParametersForGetSearchContextHits()
                         .setRepoId(repositoryId)
                         .setSearchToken(searchToken)
-                        .setRowNumber(rowNum));
-
+                        .setRowNumber(1));
         assertNotNull(contextHitResponse);
     }
 
     @Test
     void getSearchResults_ReturnSearchResults() throws InterruptedException {
         AdvancedSearchRequest request = new AdvancedSearchRequest();
-        request.setSearchCommand("({LF:Basic ~= \"search text\", option=\"DFANLT\"})");
+        request.setSearchCommand("({LF:Basic ~= \"Laserfiche\", option=\"NLT\"})");
 
         AcceptedOperation searchResponse = client.createSearchOperation(new ParametersForCreateSearchOperation()
                 .setRepoId(repositoryId)
@@ -97,7 +80,7 @@ public class SearchApiTest extends BaseTest {
     @Test
     void getSearchStatus_ReturnSearchStatus() throws InterruptedException {
         AdvancedSearchRequest request = new AdvancedSearchRequest();
-        request.setSearchCommand("({LF:Basic ~= \"search text\", option=\"DFANLT\"})");
+        request.setSearchCommand("({LF:Basic ~= \"Laserfiche\", option=\"NLT\"})");
 
         AcceptedOperation searchResponse = client.createSearchOperation(new ParametersForCreateSearchOperation()
                 .setRepoId(repositoryId)
@@ -118,7 +101,7 @@ public class SearchApiTest extends BaseTest {
     @Test
     void closeSearchOperations_CloseSearch() throws InterruptedException {
         AdvancedSearchRequest request = new AdvancedSearchRequest();
-        request.setSearchCommand("({LF:Basic ~= \"search text\", option=\"DFANLT\"})");
+        request.setSearchCommand("({LF:Basic ~= \"Laserfiche\", option=\"NLT\"})");
 
         AcceptedOperation searchOperationResponse = client
                 .createSearchOperation(new ParametersForCreateSearchOperation()
@@ -144,7 +127,7 @@ public class SearchApiTest extends BaseTest {
         int maxPageSize = 1;
 
         AdvancedSearchRequest request = new AdvancedSearchRequest();
-        request.setSearchCommand("({LF:Basic ~= \"search text\", option=\"NLT\"})");
+        request.setSearchCommand("({LF:Basic ~= \"Laserfiche\", option=\"NLT\"})");
 
         AcceptedOperation searchResponse = client.createSearchOperation(new ParametersForCreateSearchOperation()
                 .setRepoId(repositoryId)
@@ -186,10 +169,11 @@ public class SearchApiTest extends BaseTest {
 
     @Test
     void getSearchResults_ForEach() throws InterruptedException {
-        int maxPageSize = 1;
-
+        AtomicInteger pageCount = new AtomicInteger();
+        int maxPages = 2;
+        int maxPageSize = 3;
         AdvancedSearchRequest request = new AdvancedSearchRequest();
-        request.setSearchCommand("({LF:Basic ~= \"search text\", option=\"NLT\"})");
+        request.setSearchCommand("({LF:Basic ~= \"Laserfiche\", option=\"NLT\"})");
 
         AcceptedOperation searchResponse = client.createSearchOperation(
                 new ParametersForCreateSearchOperation()
@@ -204,7 +188,7 @@ public class SearchApiTest extends BaseTest {
         WaitUntilSearchEnds(searchResponse);
 
         Function<ODataValueContextOfIListOfEntry, Boolean> callback = data -> {
-            if (data.getOdataNextLink() != null) {
+            if (pageCount.incrementAndGet() <= maxPages && data.getOdataNextLink() != null) {
                 assertNotEquals(0, data
                         .getValue()
                         .size());
@@ -219,14 +203,14 @@ public class SearchApiTest extends BaseTest {
         client.getSearchResultsForEach(callback, maxPageSize, new ParametersForGetSearchResults()
                 .setRepoId(repositoryId)
                 .setSearchToken(searchToken));
+        assertTrue(pageCount.get() > 1);
     }
 
     @Test
     void getSearchContextHits_NextLink() throws InterruptedException {
         int maxPageSize = 1;
         AdvancedSearchRequest request = new AdvancedSearchRequest();
-        request.setSearchCommand("({LF:Basic ~= \"*\", option=\"DFANLT\"})");
-        request.setFuzzyFactor(2);
+        request.setSearchCommand("{LF:Basic ~= \"Laserfiche\", option=\"DLT\"} & {LF:name=\"Laserfiche Cloud Overview\", Type=\"DFS\"}");
 
         AcceptedOperation searchResponse = client.createSearchOperation(new ParametersForCreateSearchOperation()
                 .setRepoId(repositoryId)
@@ -257,13 +241,14 @@ public class SearchApiTest extends BaseTest {
                 .getSearchContextHits(new ParametersForGetSearchContextHits()
                         .setRepoId(repositoryId)
                         .setSearchToken(searchToken)
-                        .setRowNumber(rowNum));
+                        .setRowNumber(rowNum)
+                        .setPrefer(String.format("maxpagesize=%d", maxPageSize)));
 
         assertNotNull(contextHitResponse);
 
-        String nextLink = searchResults.getOdataNextLink();
+        String nextLink = contextHitResponse.getOdataNextLink();
         assertNotNull(nextLink);
-        assertTrue(searchResults
+        assertTrue(contextHitResponse
                 .getValue()
                 .size() <= maxPageSize);
 
@@ -278,16 +263,16 @@ public class SearchApiTest extends BaseTest {
 
     @Test
     void getSearchContextHits_ForEach() throws InterruptedException {
+        AtomicInteger pageCount = new AtomicInteger();
+        int maxPages = 2;
         int maxPageSize = 1;
         AdvancedSearchRequest request = new AdvancedSearchRequest();
-        request.setSearchCommand("({LF:Basic ~= \"*\", option=\"DFANLT\"})");
-        request.setFuzzyFactor(2);
+        request.setSearchCommand("{LF:Basic ~= \"Laserfiche\", option=\"DLT\"} & {LF:name=\"Laserfiche Cloud Overview\", Type=\"DFS\"}");
 
         AcceptedOperation searchResponse = client.createSearchOperation(new ParametersForCreateSearchOperation()
                 .setRepoId(repositoryId)
                 .setRequestBody(request));
         searchToken = searchResponse.getToken();
-
         assertNotNull(searchToken);
 
         WaitUntilSearchEnds(searchResponse);
@@ -308,16 +293,8 @@ public class SearchApiTest extends BaseTest {
                 .get(0)
                 .getRowNumber();
 
-        ODataValueContextOfIListOfContextHit contextHitResponse = client
-                .getSearchContextHits(new ParametersForGetSearchContextHits()
-                        .setRepoId(repositoryId)
-                        .setSearchToken(searchToken)
-                        .setRowNumber(rowNum));
-
-        assertNotNull(contextHitResponse);
-
         Function<ODataValueContextOfIListOfContextHit, Boolean> callback = data -> {
-            if (data.getOdataNextLink() != null) {
+            if (pageCount.incrementAndGet() <= maxPages && data.getOdataNextLink() != null) {
                 assertNotEquals(0, data
                         .getValue()
                         .size());
@@ -333,6 +310,7 @@ public class SearchApiTest extends BaseTest {
                 new ParametersForGetSearchContextHits()
                         .setRepoId(repositoryId)
                         .setSearchToken(searchToken)
-                        .setRowNumber(1));
+                        .setRowNumber(rowNum));
+        assertTrue(pageCount.get() > 1);
     }
 }

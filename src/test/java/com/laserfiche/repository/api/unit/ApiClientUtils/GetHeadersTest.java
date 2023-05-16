@@ -1,4 +1,4 @@
-package com.laserfiche.repository.api.unit;
+package com.laserfiche.repository.api.unit.ApiClientUtils;
 
 import com.laserfiche.repository.api.clients.impl.ApiClientUtils;
 import kong.unirest.Headers;
@@ -52,6 +52,18 @@ public class GetHeadersTest {
         Map<String, String> result = ApiClientUtils.getHeadersMap(header);
         assertNotNull(headerParametersWithStringTypeValue);
         assertEquals(result, headerParametersWithStringTypeValue);
+    }
+
+    @Test
+    void getHeadersMap_DuplicateKeys() {
+        String headerKey = "test";
+        String expectedValue = "0, 1, 2, 3, 4";
+        for (int i = 0; i < 5; i++) {
+            header.add(headerKey, Integer.toString(i));
+        }
+        Map<String, String> result = ApiClientUtils.getHeadersMap(header);
+        assertNotNull(headerParametersWithStringTypeValue);
+        assertEquals(expectedValue, result.get(headerKey));
     }
 
     @Test

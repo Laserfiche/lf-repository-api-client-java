@@ -8,7 +8,7 @@ import com.laserfiche.repository.api.clients.params.ParametersForGetFieldDefinit
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -41,7 +41,7 @@ class FieldDefinitionsApiTest extends BaseTest {
 
     @Test
     void getFieldDefinitions_NextLink() throws InterruptedException {
-        int maxPageSize = 10;
+        int maxPageSize = 3;
         ODataValueContextOfIListOfWFieldInfo fieldInfoList = client
                 .getFieldDefinitions(new ParametersForGetFieldDefinitions()
                         .setRepoId(repositoryId)
@@ -66,9 +66,11 @@ class FieldDefinitionsApiTest extends BaseTest {
 
     @Test
     void getFieldDefinitions_ForEach() {
-        int maxPageSize = 10;
+        AtomicInteger pageCount = new AtomicInteger();
+        int maxPages = 2;
+        int maxPageSize = 3;
         Function<ODataValueContextOfIListOfWFieldInfo, Boolean> callback = fieldInfoList -> {
-            if (fieldInfoList.getOdataNextLink() != null) {
+            if (pageCount.incrementAndGet() <= maxPages && fieldInfoList.getOdataNextLink() != null) {
                 assertNotEquals(0, fieldInfoList
                         .getValue()
                         .size());
@@ -82,5 +84,6 @@ class FieldDefinitionsApiTest extends BaseTest {
         };
         client.getFieldDefinitionsForEach(callback, maxPageSize,
                 new ParametersForGetFieldDefinitions().setRepoId(repositoryId));
+        assertTrue(pageCount.get() > 1);
     }
 }
