@@ -3,79 +3,38 @@ package com.laserfiche.repository.api.integration;
 import com.laserfiche.api.client.model.ApiException;
 import com.laserfiche.repository.api.clients.EntriesClient;
 import com.laserfiche.repository.api.clients.impl.model.*;
-import com.laserfiche.repository.api.clients.params.ParametersForDeleteEntryInfo;
 import com.laserfiche.repository.api.clients.params.ParametersForGetTemplateDefinitions;
 import com.laserfiche.repository.api.clients.params.ParametersForGetTemplateFieldDefinitions;
 import com.laserfiche.repository.api.clients.params.ParametersForImportDocument;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.time.Duration;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ImportDocumentApiTest extends BaseTest {
-    EntriesClient client;
+    static Entry testClassParentFolder;
 
-    int createdEntryId;
+    EntriesClient client;
 
     @BeforeEach
     public void perTestSetup() {
         client = repositoryApiClient.getEntriesClient();
-        createdEntryId = 0;
     }
 
-    @AfterEach
-    void perTestCleanUp() throws InterruptedException {
-        deleteEntry(createdEntryId);
+    @BeforeAll
+    static void classSetup() {
+        String name = "RepositoryApiClientIntegrationTest Java TestClassParentFolder";
+        testClassParentFolder = createEntry(repositoryApiClient, name, 1, true);
     }
 
-    @Test
-    void importDocument_DocumentCreated_FromFile() throws FileNotFoundException {
-        String fileName = "myFile";
-        File toUpload = null;
-        try {
-            toUpload = File.createTempFile(fileName, "txt");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        assertNotNull(toUpload);
-
-        CreateEntryResult result = client
-                .importDocument(new ParametersForImportDocument()
-                        .setRepoId(repositoryId)
-                        .setParentEntryId(1)
-                        .setFileName(fileName)
-                        .setAutoRename(true)
-                        .setInputStream(new FileInputStream(toUpload))
-                        .setRequestBody(new PostEntryWithEdocMetadataRequest()));
-
-        assertNotNull(result);
-        CreateEntryOperations operations = result.getOperations();
-
-        assertNotNull(operations);
-        assertNotNull(result.getDocumentLink());
-        createdEntryId = operations
-                .getEntryCreate()
-                .getEntryId();
-        assertTrue(createdEntryId > 0);
-        assertEquals(0, operations
-                .getEntryCreate()
-                .getExceptions()
-                .size());
-        assertEquals(0, operations
-                .getSetEdoc()
-                .getExceptions()
-                .size());
+    @AfterAll
+    static void classCleanUp() throws InterruptedException {
+        deleteEntry(testClassParentFolder.getId());
     }
 
     @Test
@@ -93,7 +52,7 @@ public class ImportDocumentApiTest extends BaseTest {
                     .getTemplateFieldDefinitions(new ParametersForGetTemplateFieldDefinitions()
                             .setRepoId(repositoryId)
                             .setTemplateId(templateDefinition.getId()));
-            if (templateDefinitionFieldsResult.getValue() != null && allFalse(
+            if (templateDefinitionFieldsResult.getValue() != null && noRequiredFieldDefinitionsInTemplate(
                     templateDefinitionFieldsResult.getValue())) {
                 template = templateDefinition;
                 break;
@@ -101,7 +60,6 @@ public class ImportDocumentApiTest extends BaseTest {
         }
         assertNotNull(template);
 
-        int parentEntryId = 1;
         String fileName = "myFile";
         File toUpload = null;
         try {
@@ -116,7 +74,7 @@ public class ImportDocumentApiTest extends BaseTest {
         CreateEntryResult result = client
                 .importDocument(new ParametersForImportDocument()
                         .setRepoId(repositoryId)
-                        .setParentEntryId(parentEntryId)
+                        .setParentEntryId(testClassParentFolder.getId())
                         .setFileName(fileName)
                         .setAutoRename(true)
                         .setInputStream(new FileInputStream(toUpload))
@@ -129,7 +87,7 @@ public class ImportDocumentApiTest extends BaseTest {
                 .getEntryCreate()
                 .getExceptions()
                 .size());
-        createdEntryId = operations
+        int createdEntryId = operations
                 .getEntryCreate()
                 .getEntryId();
         assertTrue(createdEntryId > 0);
@@ -158,7 +116,7 @@ public class ImportDocumentApiTest extends BaseTest {
         result = client
                 .importDocument(new ParametersForImportDocument()
                         .setRepoId(repositoryId)
-                        .setParentEntryId(1)
+                        .setParentEntryId(testClassParentFolder.getId())
                         .setFileName(fileName)
                         .setAutoRename(true)
                         .setInputStream(inputStream)
@@ -169,7 +127,7 @@ public class ImportDocumentApiTest extends BaseTest {
 
         assertNotNull(operations);
         assertNotNull(result.getDocumentLink());
-        createdEntryId = operations
+        int createdEntryId = operations
                 .getEntryCreate()
                 .getEntryId();
         assertTrue(createdEntryId > 0);
@@ -194,7 +152,7 @@ public class ImportDocumentApiTest extends BaseTest {
         result = client
                 .importDocument(new ParametersForImportDocument()
                         .setRepoId(repositoryId)
-                        .setParentEntryId(1)
+                        .setParentEntryId(testClassParentFolder.getId())
                         .setFileName(fileName)
                         .setAutoRename(true)
                         .setInputStream(inputStream)
@@ -205,7 +163,7 @@ public class ImportDocumentApiTest extends BaseTest {
 
         assertNotNull(operations);
         assertNotNull(result.getDocumentLink());
-        createdEntryId = operations
+        int createdEntryId = operations
                 .getEntryCreate()
                 .getEntryId();
         assertTrue(createdEntryId > 0);
@@ -231,7 +189,7 @@ public class ImportDocumentApiTest extends BaseTest {
         ApiException apiException = assertThrows(ApiException.class, () -> client
                 .importDocument(new ParametersForImportDocument()
                         .setRepoId(repositoryId)
-                        .setParentEntryId(1)
+                        .setParentEntryId(testClassParentFolder.getId())
                         .setFileName(fileName)
                         .setAutoRename(true)
                         .setInputStream(inputStream)
@@ -251,7 +209,7 @@ public class ImportDocumentApiTest extends BaseTest {
 
         assertNotNull(operations);
         assertNotNull(result.getDocumentLink());
-        createdEntryId = operations
+        int createdEntryId = operations
                 .getEntryCreate()
                 .getEntryId();
         assertTrue(createdEntryId > 0);

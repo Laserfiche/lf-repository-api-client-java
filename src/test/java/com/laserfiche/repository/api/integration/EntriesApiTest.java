@@ -9,7 +9,6 @@ import com.laserfiche.repository.api.clients.params.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -19,12 +18,11 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@Disabled("Rate limiting issue")
 class EntriesApiTest extends BaseTest {
     EntriesClient client;
     RepositoryApiClient createEntryClient;
@@ -123,9 +121,11 @@ class EntriesApiTest extends BaseTest {
 
     @Test
     void getEntryListing_ForEach() {
-        int maxPageSize = 10;
+        AtomicInteger pageCount = new AtomicInteger();
+        int maxPages = 2;
+        int maxPageSize = 3;
         Function<ODataValueContextOfIListOfEntry, Boolean> callback = entries -> {
-            if (entries.getOdataNextLink() != null) {
+            if (pageCount.incrementAndGet() <= maxPages && entries.getOdataNextLink() != null) {
                 assertNotEquals(0, entries
                         .getValue()
                         .size());
@@ -141,6 +141,7 @@ class EntriesApiTest extends BaseTest {
                 new ParametersForGetEntryListing()
                         .setRepoId(repositoryId)
                         .setEntryId(1));
+        assertTrue(pageCount.get() > 1);
     }
 
     @Test
@@ -192,9 +193,11 @@ class EntriesApiTest extends BaseTest {
 
     @Test
     void getFieldValues_ForEach() {
-        int maxPageSize = 90;
+        AtomicInteger pageCount = new AtomicInteger();
+        int maxPages = 2;
+        int maxPageSize = 1;
         Function<ODataValueContextOfIListOfFieldValue, Boolean> callback = fieldValues -> {
-            if (fieldValues.getOdataNextLink() != null) {
+            if (pageCount.incrementAndGet() <= maxPages && fieldValues.getOdataNextLink() != null) {
                 assertNotEquals(0, fieldValues
                         .getValue()
                         .size());
@@ -246,9 +249,11 @@ class EntriesApiTest extends BaseTest {
 
     @Test
     void getLinkValuesFromEntry_ForEach() {
-        int maxPageSize = 90;
+        AtomicInteger pageCount = new AtomicInteger();
+        int maxPages = 2;
+        int maxPageSize = 1;
         Function<ODataValueContextOfIListOfWEntryLinkInfo, Boolean> callback = entryLinkIntoList -> {
-            if (entryLinkIntoList.getOdataNextLink() != null) {
+            if (pageCount.incrementAndGet() <= maxPages && entryLinkIntoList.getOdataNextLink() != null) {
                 assertNotEquals(0, entryLinkIntoList
                         .getValue()
                         .size());
@@ -316,9 +321,11 @@ class EntriesApiTest extends BaseTest {
 
     @Test
     void getTagsAssignedToEntry_ForEach() {
-        int maxPageSize = 90;
+        AtomicInteger pageCount = new AtomicInteger();
+        int maxPages = 2;
+        int maxPageSize = 1;
         Function<ODataValueContextOfIListOfWTagInfo, Boolean> callback = tagInfoList -> {
-            if (tagInfoList.getOdataNextLink() != null) {
+            if (pageCount.incrementAndGet() <= maxPages && tagInfoList.getOdataNextLink() != null) {
                 assertNotEquals(0, tagInfoList
                         .getValue()
                         .size());
@@ -453,30 +460,6 @@ class EntriesApiTest extends BaseTest {
         assertNotNull(problemDetails.getType());
         assertNotNull(problemDetails.getInstance());
         assertNotNull(problemDetails.getStatus());
-    }
-
-    @Test
-    void getEntryListing_WithOneField_ReturnEntries() {
-        String[] fieldNames = {"Sender"};
-        ODataValueContextOfIListOfEntry entries = client
-                .getEntryListing(new ParametersForGetEntryListing()
-                        .setRepoId(repositoryId)
-                        .setEntryId(1)
-                        .setFields(fieldNames)
-                        .setPrefer("maxpagesize=5"));
-        assertNotNull(entries);
-        for (Entry entry : entries.getValue()) {
-            int numberOfReturnedFields = (int) entry
-                    .getFields()
-                    .stream()
-                    .filter(entryFieldValue -> entryFieldValue
-                            .getFieldName()
-                            .equalsIgnoreCase(fieldNames[0]) || entryFieldValue
-                            .getFieldName()
-                            .equalsIgnoreCase(fieldNames[1]))
-                    .count();
-            assertEquals(fieldNames.length, numberOfReturnedFields);
-        }
     }
 
     @Test

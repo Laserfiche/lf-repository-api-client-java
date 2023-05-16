@@ -148,7 +148,7 @@ public class ApiClientUtils {
         return headers
                 .all()
                 .stream()
-                .collect(Collectors.toMap(Header::getName, Header::getValue));
+                .collect(Collectors.toMap(Header::getName, Header::getValue, (value1, value2) -> String.format("%s, %s", value1, value2)));
     }
 
     /**

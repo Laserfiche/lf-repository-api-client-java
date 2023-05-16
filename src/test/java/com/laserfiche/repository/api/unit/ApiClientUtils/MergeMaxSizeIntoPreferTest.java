@@ -1,4 +1,4 @@
-package com.laserfiche.repository.api.unit;
+package com.laserfiche.repository.api.unit.ApiClientUtils;
 
 import com.laserfiche.repository.api.clients.impl.ApiClientUtils;
 import org.junit.jupiter.api.Test;

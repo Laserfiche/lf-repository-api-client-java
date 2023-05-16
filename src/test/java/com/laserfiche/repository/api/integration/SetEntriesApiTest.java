@@ -3,29 +3,32 @@ package com.laserfiche.repository.api.integration;
 import com.laserfiche.repository.api.RepositoryApiClient;
 import com.laserfiche.repository.api.clients.impl.model.*;
 import com.laserfiche.repository.api.clients.params.*;
-import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class SetEntriesApiTest extends BaseTest {
+    static Entry testClassParentFolder;
+
     RepositoryApiClient client = repositoryApiClient;
 
-    RepositoryApiClient createEntryClient = repositoryApiClient;
+    @BeforeAll
+    static void classSetup() {
+        String name = "RepositoryApiClientIntegrationTest Java TestClassParentFolder";
+        testClassParentFolder = createEntry(repositoryApiClient, name, 1, true);
+    }
 
-    Entry entry;
-
-    @AfterEach
-    void perTestCleanUp() throws InterruptedException {
-        deleteEntry(entry.getId());
+    @AfterAll
+    static void classCleanUp() throws InterruptedException {
+        deleteEntry(testClassParentFolder.getId());
     }
 
     @Test
@@ -46,7 +49,7 @@ public class SetEntriesApiTest extends BaseTest {
         request
                 .getTags()
                 .add(tag);
-        entry = createEntry(client, "RepositoryApiClientIntegrationTest Java SetTags", 1, true);
+        Entry entry = createEntry(client, "RepositoryApiClientIntegrationTest Java SetTags", testClassParentFolder.getId(), true);
         Integer num = entry.getId();
 
         ODataValueOfIListOfWTagInfo assignTagsResponse = repositoryApiClient
@@ -81,7 +84,7 @@ public class SetEntriesApiTest extends BaseTest {
                             .setRepoId(repositoryId)
                             .setTemplateId(templateDefinition.getId()));
             if (templateDefinitionsFieldsResponse
-                    .getValue() != null && allFalse(templateDefinitionsFieldsResponse.getValue())) {
+                    .getValue() != null && noRequiredFieldDefinitionsInTemplate(templateDefinitionsFieldsResponse.getValue())) {
                 template = templateDefinition;
                 break;
             }
@@ -91,7 +94,7 @@ public class SetEntriesApiTest extends BaseTest {
 
         PutTemplateRequest request = new PutTemplateRequest();
         request.setTemplateName(template.getName());
-        entry = createEntry(client, "RepositoryApiClientIntegrationTest Java DeleteTemplate", 1, true);
+        Entry entry = createEntry(client, "RepositoryApiClientIntegrationTest Java DeleteTemplate", testClassParentFolder.getId(), true);
 
         Entry setTemplateResponse = repositoryApiClient
                 .getEntriesClient()
@@ -111,7 +114,7 @@ public class SetEntriesApiTest extends BaseTest {
         WFieldInfo field = null;
         String fieldValue = "a";
 
-        // Find a field definition that accepts String and has constraint.
+        // Find a field definition that accepts String and has no constraint.
         ODataValueContextOfIListOfWFieldInfo fieldDefinitionsResponse = repositoryApiClient
                 .getFieldDefinitionsClient()
                 .getFieldDefinitions(new ParametersForGetFieldDefinitions().setRepoId(repositoryId));
@@ -145,7 +148,7 @@ public class SetEntriesApiTest extends BaseTest {
         valueToUpdate.setPosition(1);
         valueToUpdate.setValue(fieldValue);
 
-        entry = createEntry(client, "RepositoryApiClientIntegrationTest Java SetFields", 1, true);
+        Entry entry = createEntry(client, "RepositoryApiClientIntegrationTest Java SetFields", testClassParentFolder.getId(), true);
         Integer entryId = entry
                 .getId();
 
@@ -184,7 +187,7 @@ public class SetEntriesApiTest extends BaseTest {
                             .setRepoId(repositoryId)
                             .setTemplateId(templateDefinition.getId()));
             if (templateDefinitionsFieldsResponse
-                    .getValue() != null && allFalse(
+                    .getValue() != null && noRequiredFieldDefinitionsInTemplate(
                     templateDefinitionsFieldsResponse.getValue())) {
                 template = templateDefinition;
                 break;
@@ -196,7 +199,7 @@ public class SetEntriesApiTest extends BaseTest {
         PutTemplateRequest request = new PutTemplateRequest();
         request.setTemplateName(template.getName());
 
-        entry = createEntry(createEntryClient, "RepositoryApiClientIntegrationTest Java DeleteTemplate", 1, true);
+        Entry entry = createEntry(client, "RepositoryApiClientIntegrationTest Java DeleteTemplate", testClassParentFolder.getId(), true);
 
         Entry writeTemplateValueToEntryResponse = client
                 .getEntriesClient()
