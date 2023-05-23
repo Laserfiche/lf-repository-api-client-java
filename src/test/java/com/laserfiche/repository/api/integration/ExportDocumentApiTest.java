@@ -38,8 +38,7 @@ public class ExportDocumentApiTest extends BaseTest {
         try {
             // Import a document that will be exported by tests in this class
             String fileName = "RepositoryApiClientIntegrationTest Java ExportDocumentApiTest";
-            String filePath = "src/test/java/com/laserfiche/repository/api/integration/test.pdf";
-            File fileToImport = new File(filePath);
+            File fileToImport = new File(TEST_FILE_PATH);
             testEntryFileSize = fileToImport.length();
             CreateEntryResult result = repositoryApiClient.getEntriesClient()
                     .importDocument(new ParametersForImportDocument()
@@ -48,6 +47,7 @@ public class ExportDocumentApiTest extends BaseTest {
                             .setFileName(fileName)
                             .setAutoRename(true)
                             .setInputStream(new FileInputStream(fileToImport))
+                            .setContentType("application/pdf")
                             .setRequestBody(new PostEntryWithEdocMetadataRequest()));
 
             CreateEntryOperations operations = result.getOperations();

@@ -36,6 +36,14 @@ public class ParametersForImportDocument {
      */
     private String culture;
 
+    /**
+     * The content type of the file.
+     */
+    private String contentType;
+
+    /**
+     * An InputStream object to read the raw bytes for the file to be uploaded.
+     */
     private InputStream inputStream;
 
     private PostEntryWithEdocMetadataRequest requestBody;
@@ -144,11 +152,40 @@ public class ParametersForImportDocument {
         return this.culture;
     }
 
+    /**
+     * Sets the value of the contentType parameter and returns the current object, to enable chaining further setters.
+     *
+     * @return {@link ParametersForImportDocument} The return value
+     */
+    public ParametersForImportDocument setContentType(String contentType) {
+        this.contentType = contentType;
+        return this;
+    }
+
+    /**
+     * The content type of the file.
+     *
+     * @return {@link String} The return value
+     */
+    public String getContentType() {
+        return this.contentType;
+    }
+
+    /**
+     * Sets the value of the inputStream parameter and returns the current object, to enable chaining further setters.
+     *
+     * @return {@link ParametersForImportDocument} The return value
+     */
     public ParametersForImportDocument setInputStream(InputStream inputStream) {
         this.inputStream = inputStream;
         return this;
     }
 
+    /**
+     * An InputStream object to read the raw bytes for the file to be uploaded.
+     *
+     * @return {@link InputStream} The return value
+     */
     public InputStream getInputStream() {
         return this.inputStream;
     }

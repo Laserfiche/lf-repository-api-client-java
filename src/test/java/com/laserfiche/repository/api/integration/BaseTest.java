@@ -43,6 +43,8 @@ public class BaseTest {
     protected static final String AUTHORIZATION_TYPE = "AUTHORIZATION_TYPE";
     protected static AuthorizationType authorizationType;
     private static final boolean IS_NOT_GITHUB_ENVIRONMENT = nullOrEmpty(System.getenv("GITHUB_WORKSPACE"));
+    protected static final String TEST_FILE_PATH = "src/test/java/com/laserfiche/repository/api/integration/test.pdf";
+
     @BeforeAll
     public static void setUp() {
         Dotenv dotenv = Dotenv
