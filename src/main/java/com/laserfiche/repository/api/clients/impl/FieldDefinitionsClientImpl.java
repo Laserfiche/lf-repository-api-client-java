@@ -123,5 +123,3 @@ public class FieldDefinitionsClientImpl extends ApiClient implements FieldDefini
         }
     }
 }
-
-

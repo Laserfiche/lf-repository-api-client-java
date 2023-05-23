@@ -17,7 +17,7 @@ public class ParametersForGetFieldDefinitions {
 
     /**
      * An optional query parameter used to indicate the locale that should be used for formatting.
-     *            The value should be a standard language tag.
+     * The value should be a standard language tag.
      */
     private String culture;
 
@@ -90,7 +90,7 @@ public class ParametersForGetFieldDefinitions {
      * Sets the value of the culture parameter and returns the current object, to enable chaining further setters.
      *
      * @param culture An optional query parameter used to indicate the locale that should be used for formatting.
-     *            The value should be a standard language tag.
+     *                The value should be a standard language tag.
      * @return {@link ParametersForGetFieldDefinitions} The return value
      */
     public ParametersForGetFieldDefinitions setCulture(String culture) {
@@ -100,7 +100,7 @@ public class ParametersForGetFieldDefinitions {
 
     /**
      * An optional query parameter used to indicate the locale that should be used for formatting.
-     *            The value should be a standard language tag.
+     * The value should be a standard language tag.
      *
      * @return {@link String} The return value
      */

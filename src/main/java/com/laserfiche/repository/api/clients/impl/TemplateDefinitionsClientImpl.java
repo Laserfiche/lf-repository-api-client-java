@@ -259,4 +259,3 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
                 queryParameters, pathParameters, new HashMap<String, String>(), false, parseResponse);
     }
 }
-
