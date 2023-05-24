@@ -122,5 +122,3 @@ public class LinkDefinitionsClientImpl extends ApiClient implements LinkDefiniti
         }
     }
 }
-
-

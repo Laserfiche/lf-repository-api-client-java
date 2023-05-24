@@ -8,8 +8,6 @@ import com.laserfiche.repository.api.clients.impl.model.CreateEntryOperations;
 import com.laserfiche.repository.api.clients.impl.model.CreateEntryResult;
 import kong.unirest.Headers;
 import kong.unirest.*;
-import kong.unirest.json.JSONArray;
-import kong.unirest.json.JSONObject;
 
 import java.util.*;
 import java.util.function.Function;
@@ -148,7 +146,8 @@ public class ApiClientUtils {
         return headers
                 .all()
                 .stream()
-                .collect(Collectors.toMap(Header::getName, Header::getValue, (value1, value2) -> String.format("%s, %s", value1, value2)));
+                .collect(Collectors.toMap(Header::getName, Header::getValue,
+                        (value1, value2) -> String.format("%s, %s", value1, value2)));
     }
 
     /**

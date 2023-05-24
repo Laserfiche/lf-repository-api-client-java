@@ -8,10 +8,7 @@ import com.laserfiche.api.client.model.ProblemDetails;
 import com.laserfiche.repository.api.clients.EntriesClient;
 import com.laserfiche.repository.api.clients.impl.model.*;
 import com.laserfiche.repository.api.clients.params.*;
-import kong.unirest.Header;
-import kong.unirest.HttpMethod;
-import kong.unirest.HttpResponse;
-import kong.unirest.UnirestInstance;
+import kong.unirest.*;
 import kong.unirest.json.JSONObject;
 
 import java.io.ByteArrayInputStream;
@@ -146,7 +143,9 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                             httpRequestHandler);
                     httpResponse = httpClient
                             .post(requestUrl)
-                            .field("electronicDocument", parameters.getInputStream(), parameters.getFileName())
+                            .field("electronicDocument", parameters.getInputStream(),
+                                    parameters.getContentType() == null ? ContentType.APPLICATION_OCTET_STREAM : ContentType.create(
+                                            parameters.getContentType()), parameters.getFileName())
                             .field("request", toJson(parameters.getRequestBody()))
                             .queryString(queryParameters)
                             .headers(headerParametersWithStringTypeValue)
@@ -706,8 +705,8 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                             .asBytes();
                     int statusCode = httpResponse.getStatus();
                     shouldRetry = httpRequestHandler.afterSend(
-                            new ResponseImpl((short) statusCode)) || ApiClientUtils.isRetryableStatusCode(
-                            statusCode, HttpMethod.POST);
+                            new ResponseImpl((short) statusCode)) || ApiClientUtils.isRetryableStatusCode(statusCode,
+                            HttpMethod.POST);
                     Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
                     ProblemDetails problemDetails;
                     if (!shouldRetry) {
@@ -852,8 +851,8 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                             .asBytes();
                     int statusCode = httpResponse.getStatus();
                     shouldRetry = httpRequestHandler.afterSend(
-                            new ResponseImpl((short) statusCode)) || ApiClientUtils.isRetryableStatusCode(
-                            statusCode, HttpMethod.GET);
+                            new ResponseImpl((short) statusCode)) || ApiClientUtils.isRetryableStatusCode(statusCode,
+                            HttpMethod.GET);
                     Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
                     ProblemDetails problemDetails;
                     if (!shouldRetry) {

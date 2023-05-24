@@ -244,4 +244,3 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
         }
     }
 }
-

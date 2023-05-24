@@ -37,8 +37,8 @@ public class ParametersForGetEntryListing {
 
     /**
      * An optional query parameter used to indicate the locale that should be used for formatting.
-     *            The value should be a standard language tag. The formatFields query parameter must be set to true, otherwise
-     *            culture will not be used for formatting.
+     * The value should be a standard language tag. The formatFields query parameter must be set to true, otherwise
+     * culture will not be used for formatting.
      */
     private String culture;
 
@@ -191,8 +191,8 @@ public class ParametersForGetEntryListing {
      * Sets the value of the culture parameter and returns the current object, to enable chaining further setters.
      *
      * @param culture An optional query parameter used to indicate the locale that should be used for formatting.
-     *            The value should be a standard language tag. The formatFields query parameter must be set to true, otherwise
-     *            culture will not be used for formatting.
+     *                The value should be a standard language tag. The formatFields query parameter must be set to true, otherwise
+     *                culture will not be used for formatting.
      * @return {@link ParametersForGetEntryListing} The return value
      */
     public ParametersForGetEntryListing setCulture(String culture) {
@@ -202,8 +202,8 @@ public class ParametersForGetEntryListing {
 
     /**
      * An optional query parameter used to indicate the locale that should be used for formatting.
-     *            The value should be a standard language tag. The formatFields query parameter must be set to true, otherwise
-     *            culture will not be used for formatting.
+     * The value should be a standard language tag. The formatFields query parameter must be set to true, otherwise
+     * culture will not be used for formatting.
      *
      * @return {@link String} The return value
      */

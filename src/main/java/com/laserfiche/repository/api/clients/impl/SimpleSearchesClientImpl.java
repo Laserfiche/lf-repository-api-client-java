@@ -61,4 +61,3 @@ public class SimpleSearchesClientImpl extends ApiClient implements SimpleSearche
                 queryParameters, pathParameters, new HashMap<String, String>(), false, parseResponse);
     }
 }
-

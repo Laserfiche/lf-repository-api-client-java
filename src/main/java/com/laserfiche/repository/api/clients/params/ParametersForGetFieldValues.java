@@ -22,14 +22,14 @@ public class ParametersForGetFieldValues {
 
     /**
      * An optional query parameter used to indicate if the field values should be formatted.
-     *            The default value is false.
+     * The default value is false.
      */
     private Boolean formatValue;
 
     /**
      * An optional query parameter used to indicate the locale that should be used for formatting.
-     *            The value should be a standard language tag. The formatValue query parameter must be set to true, otherwise
-     *            culture will not be used for formatting.
+     * The value should be a standard language tag. The formatValue query parameter must be set to true, otherwise
+     * culture will not be used for formatting.
      */
     private String culture;
 
@@ -122,7 +122,7 @@ public class ParametersForGetFieldValues {
      * Sets the value of the formatValue parameter and returns the current object, to enable chaining further setters.
      *
      * @param formatValue An optional query parameter used to indicate if the field values should be formatted.
-     *            The default value is false.
+     *                    The default value is false.
      * @return {@link ParametersForGetFieldValues} The return value
      */
     public ParametersForGetFieldValues setFormatValue(Boolean formatValue) {
@@ -132,7 +132,7 @@ public class ParametersForGetFieldValues {
 
     /**
      * An optional query parameter used to indicate if the field values should be formatted.
-     *            The default value is false.
+     * The default value is false.
      *
      * @return {@link Boolean} The return value
      */
@@ -144,8 +144,8 @@ public class ParametersForGetFieldValues {
      * Sets the value of the culture parameter and returns the current object, to enable chaining further setters.
      *
      * @param culture An optional query parameter used to indicate the locale that should be used for formatting.
-     *            The value should be a standard language tag. The formatValue query parameter must be set to true, otherwise
-     *            culture will not be used for formatting.
+     *                The value should be a standard language tag. The formatValue query parameter must be set to true, otherwise
+     *                culture will not be used for formatting.
      * @return {@link ParametersForGetFieldValues} The return value
      */
     public ParametersForGetFieldValues setCulture(String culture) {
@@ -155,8 +155,8 @@ public class ParametersForGetFieldValues {
 
     /**
      * An optional query parameter used to indicate the locale that should be used for formatting.
-     *            The value should be a standard language tag. The formatValue query parameter must be set to true, otherwise
-     *            culture will not be used for formatting.
+     * The value should be a standard language tag. The formatValue query parameter must be set to true, otherwise
+     * culture will not be used for formatting.
      *
      * @return {@link String} The return value
      */

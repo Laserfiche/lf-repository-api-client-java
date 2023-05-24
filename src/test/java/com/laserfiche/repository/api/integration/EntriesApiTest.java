@@ -425,15 +425,15 @@ class EntriesApiTest extends BaseTest {
         Entry parentFolder = createEntry(createEntryClient, "EntriesTest", 1, true);
         createdEntries.add(parentFolder);
 
-        String fileName = "GetDocumentContentTypeTest.pdf";
-        String filePath = "src/test/java/com/laserfiche/repository/api/integration/test.pdf";
-        File fileToImport = new File(filePath);
+        String fileName = "RepositoryApiClientIntegrationTest Java GetDocumentContentTypeTest.pdf";
+        File fileToImport = new File(TEST_FILE_PATH);
         CreateEntryResult document = client.importDocument(new ParametersForImportDocument()
                 .setRepoId(repositoryId)
                 .setParentEntryId(parentFolder.getId())
                 .setFileName(fileName)
                 .setAutoRename(true)
                 .setInputStream(new FileInputStream(fileToImport))
+                .setContentType("application/pdf")
                 .setRequestBody(new PostEntryWithEdocMetadataRequest()));
 
         Map<String, String> headers = client

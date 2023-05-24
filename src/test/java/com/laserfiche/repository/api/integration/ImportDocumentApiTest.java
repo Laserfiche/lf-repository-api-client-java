@@ -60,25 +60,18 @@ public class ImportDocumentApiTest extends BaseTest {
         }
         assertNotNull(template);
 
-        String fileName = "myFile";
-        File toUpload = null;
-        try {
-            toUpload = File.createTempFile(fileName, "txt");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        assertNotNull(toUpload);
+        String fileName = "RepositoryApiClientIntegrationTest Java ImportTest";
+        File fileToImport = new File(TEST_FILE_PATH);
         PostEntryWithEdocMetadataRequest request = new PostEntryWithEdocMetadataRequest();
         request.setTemplate(template.getName());
-
-        CreateEntryResult result = client
-                .importDocument(new ParametersForImportDocument()
-                        .setRepoId(repositoryId)
-                        .setParentEntryId(testClassParentFolder.getId())
-                        .setFileName(fileName)
-                        .setAutoRename(true)
-                        .setInputStream(new FileInputStream(toUpload))
-                        .setRequestBody(request));
+        CreateEntryResult result = client.importDocument(new ParametersForImportDocument()
+                .setRepoId(repositoryId)
+                .setParentEntryId(testClassParentFolder.getId())
+                .setFileName(fileName)
+                .setAutoRename(true)
+                .setInputStream(new FileInputStream(fileToImport))
+                .setContentType("application/pdf")
+                .setRequestBody(request));
 
         CreateEntryOperations operations = result.getOperations();
         assertNotNull(operations);

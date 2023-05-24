@@ -20,10 +20,13 @@ public class ParametersForExportDocument {
 
     /**
      * An optional header used to retrieve partial content of the edoc. Only supports single
-     *            range with byte unit.
+     * range with byte unit.
      */
     private String range;
 
+    /**
+     * A Consumer&lt;InputStream&gt; object that is provided with the response's inputStream to consume it, if the request has been successful.
+     */
     private Consumer<InputStream> inputStreamConsumer;
 
     /**
@@ -70,7 +73,7 @@ public class ParametersForExportDocument {
      * Sets the value of the range parameter and returns the current object, to enable chaining further setters.
      *
      * @param range An optional header used to retrieve partial content of the edoc. Only supports single
-     *            range with byte unit.
+     *              range with byte unit.
      * @return {@link ParametersForExportDocument} The return value
      */
     public ParametersForExportDocument setRange(String range) {
@@ -80,7 +83,7 @@ public class ParametersForExportDocument {
 
     /**
      * An optional header used to retrieve partial content of the edoc. Only supports single
-     *            range with byte unit.
+     * range with byte unit.
      *
      * @return {@link String} The return value
      */
@@ -88,11 +91,21 @@ public class ParametersForExportDocument {
         return this.range;
     }
 
+    /**
+     * Sets the value of the inputStreamConsumer parameter and returns the current object, to enable chaining further setters.
+     *
+     * @return {@link ParametersForExportDocument} The return value
+     */
     public ParametersForExportDocument setInputStreamConsumer(Consumer<InputStream> inputStreamConsumer) {
         this.inputStreamConsumer = inputStreamConsumer;
         return this;
     }
 
+    /**
+     * A Consumer&lt;InputStream&gt; object that is provided with the response's inputStream to consume it, if the request has been successful.
+     *
+     * @return Consumer&lt;InputStream&gt; The return value
+     */
     public Consumer<InputStream> getInputStreamConsumer() {
         return this.inputStreamConsumer;
     }

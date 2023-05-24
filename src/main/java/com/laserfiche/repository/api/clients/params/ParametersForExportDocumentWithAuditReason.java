@@ -28,6 +28,9 @@ public class ParametersForExportDocumentWithAuditReason {
      */
     private String range;
 
+    /**
+     * A Consumer&lt;InputStream&gt; object that is provided with the response's inputStream to consume it, if the request has been successful.
+     */
     private Consumer<InputStream> inputStreamConsumer;
 
     /**
@@ -101,12 +104,22 @@ public class ParametersForExportDocumentWithAuditReason {
         return this.range;
     }
 
+    /**
+     * Sets the value of the inputStreamConsumer parameter and returns the current object, to enable chaining further setters.
+     *
+     * @return {@link ParametersForExportDocumentWithAuditReason} The return value
+     */
     public ParametersForExportDocumentWithAuditReason setInputStreamConsumer(
             Consumer<InputStream> inputStreamConsumer) {
         this.inputStreamConsumer = inputStreamConsumer;
         return this;
     }
 
+    /**
+     * A Consumer&lt;InputStream&gt; object that is provided with the response's inputStream to consume it, if the request has been successful.
+     *
+     * @return Consumer&lt;InputStream&gt; The return value
+     */
     public Consumer<InputStream> getInputStreamConsumer() {
         return this.inputStreamConsumer;
     }
