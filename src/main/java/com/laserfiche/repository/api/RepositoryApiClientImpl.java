@@ -11,6 +11,7 @@ import kong.unirest.ObjectMapper;
 import kong.unirest.Unirest;
 import kong.unirest.UnirestInstance;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -18,6 +19,7 @@ import java.util.Map;
  */
 public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseable {
     private Map<String, String> defaultHeaders;
+    private Map<String, String> gzipCompressionHeaders = new HashMap<>();
     private final UnirestInstance httpClient;
     private final AttributesClient attributesClient;
     private final AuditReasonsClient auditReasonsClient;
@@ -48,9 +50,8 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
 
         // Add compression header if a client is created
         if (httpClient != null) {
-            httpClient
-                    .config()
-                    .setDefaultHeader("Accept-Encoding", "gzip");
+            gzipCompressionHeaders.put("Accept-Encoding", "gzip");
+            setDefaultRequestHeaders(gzipCompressionHeaders);
         }
 
         // Initialize repository API clients
@@ -129,9 +130,14 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
     @Override
     public void setDefaultRequestHeaders(Map<String, String> defaultRequestHeaders) {
         defaultHeaders = defaultRequestHeaders;
-        httpClient
+        if (!httpClient
                 .config()
-                .clearDefaultHeaders();
+                .getDefaultHeaders()
+                .containsKey("Accept-Encoding")) {
+            httpClient
+                    .config()
+                    .clearDefaultHeaders();
+        }
         for (String Key : defaultRequestHeaders.keySet()) {
             httpClient
                     .config()
