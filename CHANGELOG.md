@@ -3,6 +3,7 @@
 ### Features
 
 - Added `RepositoriesClient.getSelfHostedRepositoryList` method that will enable self-hosted users to get their repository list without an access token.
+- Added the gzip compression header which will compress every API response to improve performance
 
 ### Fixes
 - Fixed a bug in `EntriesClient.importDocument` where imported documents have an incorrect mime type. Clients will need to use the `ParametersForImportDocument.setContentType()` method to set the mime type of the imported document. 
