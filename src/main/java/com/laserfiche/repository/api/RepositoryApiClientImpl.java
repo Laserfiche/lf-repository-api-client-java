@@ -19,7 +19,6 @@ import java.util.Map;
  */
 public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseable {
     private Map<String, String> defaultHeaders;
-    private Map<String, String> gzipCompressionHeaders = new HashMap<>();
     private final UnirestInstance httpClient;
     private final AttributesClient attributesClient;
     private final AuditReasonsClient auditReasonsClient;
@@ -50,6 +49,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
 
         // Add compression header if a client is created
         if (httpClient != null) {
+            Map<String, String> gzipCompressionHeaders = new HashMap<>();
             gzipCompressionHeaders.put("Accept-Encoding", "gzip");
             setDefaultRequestHeaders(gzipCompressionHeaders);
         }
@@ -130,14 +130,9 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
     @Override
     public void setDefaultRequestHeaders(Map<String, String> defaultRequestHeaders) {
         defaultHeaders = defaultRequestHeaders;
-        if (!httpClient
+        httpClient
                 .config()
-                .getDefaultHeaders()
-                .containsKey("Accept-Encoding")) {
-            httpClient
-                    .config()
-                    .clearDefaultHeaders();
-        }
+                .clearDefaultHeaders();
         for (String Key : defaultRequestHeaders.keySet()) {
             httpClient
                     .config()
