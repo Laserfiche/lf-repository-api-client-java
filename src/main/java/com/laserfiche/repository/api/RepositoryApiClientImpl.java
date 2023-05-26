@@ -7,14 +7,10 @@ import com.laserfiche.api.client.httphandlers.UsernamePasswordHandler;
 import com.laserfiche.api.client.model.AccessKey;
 import com.laserfiche.repository.api.clients.*;
 import com.laserfiche.repository.api.clients.impl.*;
-import com.laserfiche.repository.api.clients.impl.model.RepositoryInfo;
-import kong.unirest.HttpResponse;
 import kong.unirest.ObjectMapper;
 import kong.unirest.Unirest;
 import kong.unirest.UnirestInstance;
-import kong.unirest.json.JSONArray;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -50,6 +46,13 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
         httpClient
                 .config()
                 .setObjectMapper(objectMapper);
+
+        // Add compression header if a client is created
+        if (httpClient != null) {
+            Map<String, String> gzipCompressionHeaders = new HashMap<>();
+            gzipCompressionHeaders.put("Accept-Encoding", "gzip");
+            setDefaultRequestHeaders(gzipCompressionHeaders);
+        }
 
         // Initialize repository API clients
         attributesClient = new AttributesClientImpl(baseUrl, httpClient, httpHandler);
