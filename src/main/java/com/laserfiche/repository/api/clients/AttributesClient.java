@@ -1,9 +1,7 @@
 package com.laserfiche.repository.api.clients;
 
-import com.laserfiche.repository.api.clients.impl.model.Attribute;
-import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfListOfAttribute;
-import com.laserfiche.repository.api.clients.params.ParametersForGetTrusteeAttributeKeyValuePairs;
-import com.laserfiche.repository.api.clients.params.ParametersForGetTrusteeAttributeValueByKey;
+import com.laserfiche.repository.api.clients.impl.model.*;
+import com.laserfiche.repository.api.clients.params.*;
 import java.util.function.Function;
 
 /** The Laserfiche Repository Attributes API client. */
@@ -11,10 +9,10 @@ public interface AttributesClient {
 
   /**
    * - Returns the attribute associated with the key. Alternatively, return the attribute associated
-   * with the key within &quot;Everyone&quot; group. - Optional query parameters: everyone (bool,
-   * default false). When true, the server only searches for the attribute value with the given key
-   * upon the authenticated users attributes. If false, only the authenticated users attributes will
-   * be queried.
+   * with the key within &quot;Everyone&quot; group.<br>
+   * - Optional query parameters: everyone (bool, default false). When true, the server only
+   * searches for the attribute value with the given key upon the authenticated users attributes. If
+   * false, only the authenticated users attributes will be queried.
    *
    * @param parameters An object of type {@link ParametersForGetTrusteeAttributeValueByKey} which
    *     encapsulates the parameters of {@link #getTrusteeAttributeValueByKey
@@ -26,8 +24,9 @@ public interface AttributesClient {
   /**
    * - Returns the attribute key value pairs associated with the authenticated user. Alternatively,
    * return only the attribute key value pairs that are associated with the &quot;Everyone&quot;
-   * group. - Attribute keys can be used with subsequent calls to get specific attribute values. -
-   * Default page size: 100. Allowed OData query options: Select, Count, OrderBy, Skip, Top,
+   * group.<br>
+   * - Attribute keys can be used with subsequent calls to get specific attribute values.<br>
+   * - Default page size: 100. Allowed OData query options: Select, Count, OrderBy, Skip, Top,
    * SkipToken, Prefer. Optional query parameters: everyone (bool, default false). When true, this
    * route does not return the attributes that are tied to the currently authenticated user, but
    * rather the attributes assigned to the &quot;Everyone&quot; group. Note when this is true, the

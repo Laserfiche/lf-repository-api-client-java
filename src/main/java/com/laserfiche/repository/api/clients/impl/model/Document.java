@@ -1,13 +1,12 @@
 package com.laserfiche.repository.api.clients.impl.model;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
+import com.laserfiche.api.client.model.Edoc;
+import com.laserfiche.api.client.model.Entry;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Objects;
 
-@javax.annotation.Generated(
-    value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen",
-    date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Document extends Entry {
 
@@ -44,7 +43,7 @@ public class Document extends Entry {
   }
 
   /**
-   * Returns the size of the electronic document attached to the represented document, if there is
+   * Returns he size of the electronic document attached to the represented document, if there is
    * one, in bytes.
    *
    * @return elecDocumentSize
@@ -66,7 +65,7 @@ public class Document extends Entry {
   }
 
   /**
-   * Returns the extension for the document.
+   * Returns he extension for the document.
    *
    * @return extension
    */
@@ -85,7 +84,7 @@ public class Document extends Entry {
   }
 
   /**
-   * Returns a boolean indicating if there is an electronic document attached to the represented
+   * Returns boolean indicating if there is an electronic document attached to the represented
    * document.
    *
    * @return isElectronicDocument
@@ -108,7 +107,7 @@ public class Document extends Entry {
   }
 
   /**
-   * Returns a boolean indicating if the represented document is a record.
+   * Returns boolean indicating if the represented document is a record.
    *
    * @return isRecord
    */
@@ -128,7 +127,7 @@ public class Document extends Entry {
   }
 
   /**
-   * Returns the MIME type of the electronic document.
+   * Returns he MIME type of the electronic document.
    *
    * @return mimeType
    */
@@ -147,7 +146,7 @@ public class Document extends Entry {
   }
 
   /**
-   * Returns the page count of the represented document.
+   * Returns he page count of the represented document.
    *
    * @return pageCount
    */
@@ -166,7 +165,7 @@ public class Document extends Entry {
   }
 
   /**
-   * Returns a boolean indicating if the represented document is checked out.
+   * Returns boolean indicating if the represented document is checked out.
    *
    * @return isCheckedOut
    */
@@ -186,7 +185,7 @@ public class Document extends Entry {
   }
 
   /**
-   * Returns a boolean indicating if the represented document is under version control.
+   * Returns boolean indicating if the represented document is under version control.
    *
    * @return isUnderVersionControl
    */
@@ -207,7 +206,7 @@ public class Document extends Entry {
   }
 
   /**
-   * Returns edoc
+   * Returns et edoc
    *
    * @return edoc
    */
@@ -221,7 +220,7 @@ public class Document extends Entry {
   }
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) {
       return true;
     }
@@ -278,7 +277,7 @@ public class Document extends Entry {
     return sb.toString();
   }
 
-  private String toIndentedString(Object o) {
+  private String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }

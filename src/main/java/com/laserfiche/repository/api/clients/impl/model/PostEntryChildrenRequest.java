@@ -1,13 +1,11 @@
 package com.laserfiche.repository.api.clients.impl.model;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
+import com.laserfiche.api.client.model.PostEntryChildrenEntryType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Objects;
 
-@javax.annotation.Generated(
-    value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen",
-    date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class PostEntryChildrenRequest {
 
@@ -32,7 +30,7 @@ public class PostEntryChildrenRequest {
   }
 
   /**
-   * Returns the name of the entry.
+   * Returns he name of the entry.
    *
    * @return name
    */
@@ -51,7 +49,7 @@ public class PostEntryChildrenRequest {
   }
 
   /**
-   * Returns entryType
+   * Returns et entryType
    *
    * @return entryType
    */
@@ -70,7 +68,7 @@ public class PostEntryChildrenRequest {
   }
 
   /**
-   * Returns the TargetId is only needed for creating a shortcut. This will be the entry ID of the
+   * Returns he TargetId is only needed for creating a shortcut. This will be the entry ID of the
    * shortcut target.
    *
    * @return targetId
@@ -92,7 +90,7 @@ public class PostEntryChildrenRequest {
   }
 
   /**
-   * Returns the SourceId is needed for some operations that require a source/destination. One
+   * Returns he SourceId is needed for some operations that require a source/destination. One
    * example is the Copy operation.
    *
    * @return sourceId
@@ -114,7 +112,7 @@ public class PostEntryChildrenRequest {
   }
 
   /**
-   * Returns the name of the volume to use. Will use the default parent entry volume if not
+   * Returns he name of the volume to use. Will use the default parent entry volume if not
    * specified. This is ignored in Laserfiche Cloud.
    *
    * @return volumeName
@@ -131,7 +129,7 @@ public class PostEntryChildrenRequest {
   }
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) {
       return true;
     }
@@ -164,7 +162,7 @@ public class PostEntryChildrenRequest {
     return sb.toString();
   }
 
-  private String toIndentedString(Object o) {
+  private String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }

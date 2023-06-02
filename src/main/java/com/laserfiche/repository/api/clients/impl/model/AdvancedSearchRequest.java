@@ -1,13 +1,11 @@
 package com.laserfiche.repository.api.clients.impl.model;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
+import com.laserfiche.api.client.model.FuzzyType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Objects;
 
-@javax.annotation.Generated(
-    value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen",
-    date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class AdvancedSearchRequest {
 
@@ -26,7 +24,7 @@ public class AdvancedSearchRequest {
   }
 
   /**
-   * Returns search command for advanced search
+   * Returns earch command for advanced search
    *
    * @return searchCommand
    */
@@ -45,7 +43,7 @@ public class AdvancedSearchRequest {
   }
 
   /**
-   * Returns fuzzyType
+   * Returns et fuzzyType
    *
    * @return fuzzyType
    */
@@ -64,7 +62,7 @@ public class AdvancedSearchRequest {
   }
 
   /**
-   * Returns fuzzy factor (percentage as int or int value)
+   * Returns uzzy factor (percentage as int or int value)
    *
    * @return fuzzyFactor
    */
@@ -78,7 +76,7 @@ public class AdvancedSearchRequest {
   }
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) {
       return true;
     }
@@ -107,7 +105,7 @@ public class AdvancedSearchRequest {
     return sb.toString();
   }
 
-  private String toIndentedString(Object o) {
+  private String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }

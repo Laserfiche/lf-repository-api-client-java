@@ -1,13 +1,11 @@
 package com.laserfiche.repository.api.clients.impl.model;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
+import com.laserfiche.api.client.model.Watermark;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Objects;
 
-@javax.annotation.Generated(
-    value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen",
-    date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class WTagInfo {
 
@@ -35,7 +33,7 @@ public class WTagInfo {
   }
 
   /**
-   * Returns the ID of the tag definition.
+   * Returns he ID of the tag definition.
    *
    * @return id
    */
@@ -54,7 +52,7 @@ public class WTagInfo {
   }
 
   /**
-   * Returns the name of the tag definition.
+   * Returns he name of the tag definition.
    *
    * @return name
    */
@@ -73,7 +71,7 @@ public class WTagInfo {
   }
 
   /**
-   * Returns the localized name of the tag definition.
+   * Returns he localized name of the tag definition.
    *
    * @return displayName
    */
@@ -92,7 +90,7 @@ public class WTagInfo {
   }
 
   /**
-   * Returns the description of the tag definition.
+   * Returns he description of the tag definition.
    *
    * @return description
    */
@@ -111,7 +109,7 @@ public class WTagInfo {
   }
 
   /**
-   * Returns a boolean indicating whether or not the tag definition is classified as a security tag
+   * Returns boolean indicating whether or not the tag definition is classified as a security tag
    * (true) or an informational tag (false).
    *
    * @return isSecure
@@ -134,7 +132,7 @@ public class WTagInfo {
   }
 
   /**
-   * Returns watermark
+   * Returns et watermark
    *
    * @return watermark
    */
@@ -148,7 +146,7 @@ public class WTagInfo {
   }
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) {
       return true;
     }
@@ -183,7 +181,7 @@ public class WTagInfo {
     return sb.toString();
   }
 
-  private String toIndentedString(Object o) {
+  private String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }

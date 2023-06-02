@@ -1,15 +1,12 @@
 package com.laserfiche.repository.api.clients.impl.model;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-@javax.annotation.Generated(
-    value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen",
-    date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class WEntryLinkInfo {
 
@@ -58,7 +55,7 @@ public class WEntryLinkInfo {
   }
 
   /**
-   * Returns the ID of the entry link.
+   * Returns he ID of the entry link.
    *
    * @return linkId
    */
@@ -77,7 +74,7 @@ public class WEntryLinkInfo {
   }
 
   /**
-   * Returns the ID of the source entry of the represented link.
+   * Returns he ID of the source entry of the represented link.
    *
    * @return sourceId
    */
@@ -96,7 +93,7 @@ public class WEntryLinkInfo {
   }
 
   /**
-   * Returns the full path to the source entry of the represented link.
+   * Returns he full path to the source entry of the represented link.
    *
    * @return sourceFullPath
    */
@@ -115,7 +112,7 @@ public class WEntryLinkInfo {
   }
 
   /**
-   * Returns the label for the source entry in the link type.
+   * Returns he label for the source entry in the link type.
    *
    * @return sourceLabel
    */
@@ -134,7 +131,7 @@ public class WEntryLinkInfo {
   }
 
   /**
-   * Returns the ID of the target entry of the represented link.
+   * Returns he ID of the target entry of the represented link.
    *
    * @return targetId
    */
@@ -153,7 +150,7 @@ public class WEntryLinkInfo {
   }
 
   /**
-   * Returns the full path to the target entry of the represented link.
+   * Returns he full path to the target entry of the represented link.
    *
    * @return targetFullPath
    */
@@ -172,7 +169,7 @@ public class WEntryLinkInfo {
   }
 
   /**
-   * Returns the label for the target entry in the link type.
+   * Returns he label for the target entry in the link type.
    *
    * @return targetLabel
    */
@@ -191,7 +188,7 @@ public class WEntryLinkInfo {
   }
 
   /**
-   * Returns the descriptive text for the represented entry link.
+   * Returns he descriptive text for the represented entry link.
    *
    * @return description
    */
@@ -210,7 +207,7 @@ public class WEntryLinkInfo {
   }
 
   /**
-   * Returns the description of the link type.
+   * Returns he description of the link type.
    *
    * @return linkTypeDescription
    */
@@ -229,7 +226,7 @@ public class WEntryLinkInfo {
   }
 
   /**
-   * Returns the ID of the entry link type.
+   * Returns he ID of the entry link type.
    *
    * @return linkTypeId
    */
@@ -256,7 +253,7 @@ public class WEntryLinkInfo {
   }
 
   /**
-   * Returns the properties for the entry link.
+   * Returns he properties for the entry link.
    *
    * @return linkProperties
    */
@@ -275,7 +272,7 @@ public class WEntryLinkInfo {
   }
 
   /**
-   * Returns the navigation link to the source entry.
+   * Returns he navigation link to the source entry.
    *
    * @return sourceLink
    */
@@ -294,7 +291,7 @@ public class WEntryLinkInfo {
   }
 
   /**
-   * Returns the navigation link to the target entry.
+   * Returns he navigation link to the target entry.
    *
    * @return targetLink
    */
@@ -308,7 +305,7 @@ public class WEntryLinkInfo {
   }
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) {
       return true;
     }
@@ -372,7 +369,7 @@ public class WEntryLinkInfo {
     return sb.toString();
   }
 
-  private String toIndentedString(Object o) {
+  private String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }

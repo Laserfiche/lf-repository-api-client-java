@@ -1,18 +1,15 @@
 package com.laserfiche.repository.api.clients.impl.model;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.*;
+import com.laserfiche.api.client.model.EntryFieldValue;
+import com.laserfiche.api.client.model.EntryType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import org.threeten.bp.OffsetDateTime;
 
-@javax.annotation.Generated(
-    value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen",
-    date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen")
 @JsonTypeInfo(
     use = JsonTypeInfo.Id.NAME,
     include = JsonTypeInfo.As.EXISTING_PROPERTY,
@@ -85,7 +82,7 @@ public class Entry {
   }
 
   /**
-   * Returns the ID of the entry.
+   * Returns he ID of the entry.
    *
    * @return id
    */
@@ -104,7 +101,7 @@ public class Entry {
   }
 
   /**
-   * Returns the name of the entry.
+   * Returns he name of the entry.
    *
    * @return name
    */
@@ -123,7 +120,7 @@ public class Entry {
   }
 
   /**
-   * Returns the ID of the parent entry.
+   * Returns he ID of the parent entry.
    *
    * @return parentId
    */
@@ -142,7 +139,7 @@ public class Entry {
   }
 
   /**
-   * Returns the full path in the Laserfiche repository to the entry.
+   * Returns he full path in the Laserfiche repository to the entry.
    *
    * @return fullPath
    */
@@ -161,7 +158,7 @@ public class Entry {
   }
 
   /**
-   * Returns the path in the Laserfiche repository to the parent folder.
+   * Returns he path in the Laserfiche repository to the parent folder.
    *
    * @return folderPath
    */
@@ -180,7 +177,7 @@ public class Entry {
   }
 
   /**
-   * Returns the name of the user that created this entry.
+   * Returns he name of the user that created this entry.
    *
    * @return creator
    */
@@ -199,7 +196,7 @@ public class Entry {
   }
 
   /**
-   * Returns the creation time of the entry.
+   * Returns he creation time of the entry.
    *
    * @return creationTime
    */
@@ -218,7 +215,7 @@ public class Entry {
   }
 
   /**
-   * Returns the last modification time of the entry.
+   * Returns he last modification time of the entry.
    *
    * @return lastModifiedTime
    */
@@ -237,7 +234,7 @@ public class Entry {
   }
 
   /**
-   * Returns entryType
+   * Returns et entryType
    *
    * @return entryType
    */
@@ -256,7 +253,7 @@ public class Entry {
   }
 
   /**
-   * Returns a boolean indicating if this entry is a container object; it can have other entries as
+   * Returns boolean indicating if this entry is a container object; it can have other entries as
    * children.
    *
    * @return isContainer
@@ -279,7 +276,7 @@ public class Entry {
   }
 
   /**
-   * Returns a boolean indicating if this entry is a leaf object; it cannot have other entries as
+   * Returns boolean indicating if this entry is a leaf object; it cannot have other entries as
    * children.
    *
    * @return isLeaf
@@ -302,7 +299,7 @@ public class Entry {
   }
 
   /**
-   * Returns the name of the template assigned to this entry.
+   * Returns he name of the template assigned to this entry.
    *
    * @return templateName
    */
@@ -321,7 +318,7 @@ public class Entry {
   }
 
   /**
-   * Returns the id of the template assigned to this entry.
+   * Returns he id of the template assigned to this entry.
    *
    * @return templateId
    */
@@ -348,7 +345,7 @@ public class Entry {
   }
 
   /**
-   * Returns the names of the fields assigned to the template assigned to this entry.
+   * Returns he names of the fields assigned to the template assigned to this entry.
    *
    * @return templateFieldNames
    */
@@ -367,7 +364,7 @@ public class Entry {
   }
 
   /**
-   * Returns the name of the volume that this entry is associated with.
+   * Returns he name of the volume that this entry is associated with.
    *
    * @return volumeName
    */
@@ -386,7 +383,7 @@ public class Entry {
   }
 
   /**
-   * Returns row number assigned to this entry in the listing.
+   * Returns ow number assigned to this entry in the listing.
    *
    * @return rowNumber
    */
@@ -413,7 +410,7 @@ public class Entry {
   }
 
   /**
-   * Returns the fields assigned to this entry.
+   * Returns he fields assigned to this entry.
    *
    * @return fields
    */
@@ -427,7 +424,7 @@ public class Entry {
   }
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) {
       return true;
     }
@@ -501,7 +498,7 @@ public class Entry {
     return sb.toString();
   }
 
-  private String toIndentedString(Object o) {
+  private String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }

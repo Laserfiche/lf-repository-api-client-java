@@ -1,16 +1,14 @@
 package com.laserfiche.repository.api.clients.impl.model;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
+import com.laserfiche.api.client.model.WFieldType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-@javax.annotation.Generated(
-    value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen",
-    date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class EntryFieldValue {
 
@@ -41,7 +39,7 @@ public class EntryFieldValue {
   }
 
   /**
-   * Returns the name of the field.
+   * Returns he name of the field.
    *
    * @return fieldName
    */
@@ -68,7 +66,7 @@ public class EntryFieldValue {
   }
 
   /**
-   * Returns the values assigned to the field.
+   * Returns he values assigned to the field.
    *
    * @return values
    */
@@ -87,7 +85,7 @@ public class EntryFieldValue {
   }
 
   /**
-   * Returns fieldType
+   * Returns et fieldType
    *
    * @return fieldType
    */
@@ -106,7 +104,7 @@ public class EntryFieldValue {
   }
 
   /**
-   * Returns the ID of the field.
+   * Returns he ID of the field.
    *
    * @return fieldId
    */
@@ -125,7 +123,7 @@ public class EntryFieldValue {
   }
 
   /**
-   * Returns a boolean indicating if the represented field supports multiple values.
+   * Returns boolean indicating if the represented field supports multiple values.
    *
    * @return isMultiValue
    */
@@ -145,7 +143,7 @@ public class EntryFieldValue {
   }
 
   /**
-   * Returns a boolean indicating if the represented field must have a value set on entries assigned
+   * Returns boolean indicating if the represented field must have a value set on entries assigned
    * to a template that the field is a member of.
    *
    * @return isRequired
@@ -168,7 +166,7 @@ public class EntryFieldValue {
   }
 
   /**
-   * Returns a boolean indicating if there are more field values.
+   * Returns boolean indicating if there are more field values.
    *
    * @return hasMoreValues
    */
@@ -182,7 +180,7 @@ public class EntryFieldValue {
   }
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) {
       return true;
     }
@@ -220,7 +218,7 @@ public class EntryFieldValue {
     return sb.toString();
   }
 
-  private String toIndentedString(Object o) {
+  private String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }

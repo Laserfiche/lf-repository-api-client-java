@@ -8,10 +8,11 @@ import java.util.function.Function;
 public interface SearchesClient {
 
   /**
-   * - Returns search status. - Provide a token (returned in the create search asynchronous route),
-   * and get the search status, progress, and any errors that may have occurred. When the search is
-   * completed, the Location header can be inspected as a link to the search results. -
-   * OperationStatus can be one of the following : NotStarted, InProgress, Completed, Failed, or
+   * - Returns search status.<br>
+   * - Provide a token (returned in the create search asynchronous route), and get the search
+   * status, progress, and any errors that may have occurred. When the search is completed, the
+   * Location header can be inspected as a link to the search results.<br>
+   * - OperationStatus can be one of the following : NotStarted, InProgress, Completed, Failed, or
    * Canceled.
    *
    * @param parameters An object of type {@link ParametersForGetSearchStatus} which encapsulates the
@@ -21,7 +22,8 @@ public interface SearchesClient {
   OperationProgress getSearchStatus(ParametersForGetSearchStatus parameters);
 
   /**
-   * - Cancels a currently running search. - Closes a completed search.
+   * - Cancels a currently running search.<br>
+   * - Closes a completed search.
    *
    * @param parameters An object of type {@link ParametersForCancelOrCloseSearch} which encapsulates
    *     the parameters of {@link #cancelOrCloseSearch cancelOrCloseSearch} method.
@@ -30,10 +32,11 @@ public interface SearchesClient {
   ODataValueOfBoolean cancelOrCloseSearch(ParametersForCancelOrCloseSearch parameters);
 
   /**
-   * - Returns the context hits associated with a search result entry. - Given a searchToken, and
-   * rowNumber associated with a search entry in the listing, return the context hits for that
-   * entry. - Default page size: 100. Allowed OData query options: Select | Count | OrderBy | Skip |
-   * Top | SkipToken | Prefer.
+   * - Returns the context hits associated with a search result entry.<br>
+   * - Given a searchToken, and rowNumber associated with a search entry in the listing, return the
+   * context hits for that entry.<br>
+   * - Default page size: 100. Allowed OData query options: Select | Count | OrderBy | Skip | Top |
+   * SkipToken | Prefer.
    *
    * @param parameters An object of type {@link ParametersForGetSearchContextHits} which
    *     encapsulates the parameters of {@link #getSearchContextHits getSearchContextHits} method.
@@ -69,11 +72,12 @@ public interface SearchesClient {
       ParametersForGetSearchContextHits parameters);
 
   /**
-   * - Runs a search operation on the repository. - Optional body parameters: FuzzyType: (default
-   * none), which can be used to determine what is considered a match by number of letters or
-   * percentage. FuzzyFactor: integer value that determines the degree to which a search will be
-   * considered a match (integer value for NumberOfLetters, or int value representing a percentage).
-   * The status for search operations must be checked via the Search specific status checking route.
+   * - Runs a search operation on the repository.<br>
+   * - Optional body parameters: FuzzyType: (default none), which can be used to determine what is
+   * considered a match by number of letters or percentage. FuzzyFactor: integer value that
+   * determines the degree to which a search will be considered a match (integer value for
+   * NumberOfLetters, or int value representing a percentage). The status for search operations must
+   * be checked via the Search specific status checking route.
    *
    * @param parameters An object of type {@link ParametersForCreateSearchOperation} which
    *     encapsulates the parameters of {@link #createSearchOperation createSearchOperation} method.
@@ -82,18 +86,22 @@ public interface SearchesClient {
   AcceptedOperation createSearchOperation(ParametersForCreateSearchOperation parameters);
 
   /**
-   * - Returns a search result listing if the search is completed. - Optional query parameter:
-   * groupByOrderType (default false). This query parameter decides whether or not results are
-   * returned in groups based on their entry type. - Optional query parameter: refresh (default
-   * false). If the search listing should be refreshed to show updated values. - Default page size:
-   * 150. Allowed OData query options: Select | Count | OrderBy | Skip | Top | SkipToken | Prefer.
-   * OData $OrderBy syntax should follow: &quot;PropertyName direction,PropertyName2
-   * direction&quot;. sort order can be either &quot;asc&quot; or &quot;desc&quot;. Search results
-   * expire after 5 minutes, but can be refreshed by retrieving the results again. - Optionally
-   * returns field values for the entries in the search result listing. Each field name needs to be
-   * specified in the request. Maximum limit of 10 field names. - If field values are requested,
-   * only the first value is returned if it is a multi value field. - Null or Empty field values
-   * should not be used to determine if a field is assigned to the entry.
+   * - Returns a search result listing if the search is completed.<br>
+   * - Optional query parameter: groupByOrderType (default false). This query parameter decides
+   * whether or not results are returned in groups based on their entry type.<br>
+   * - Optional query parameter: refresh (default false). If the search listing should be refreshed
+   * to show updated values.<br>
+   * - Default page size: 150. Allowed OData query options: Select | Count | OrderBy | Skip | Top |
+   * SkipToken | Prefer. OData $OrderBy syntax should follow: &quot;PropertyName
+   * direction,PropertyName2 direction&quot;. sort order can be either &quot;asc&quot; or
+   * &quot;desc&quot;. Search results expire after 5 minutes, but can be refreshed by retrieving the
+   * results again.<br>
+   * - Optionally returns field values for the entries in the search result listing. Each field name
+   * needs to be specified in the request. Maximum limit of 10 field names.<br>
+   * - If field values are requested, only the first value is returned if it is a multi value field.
+   * <br>
+   * - Null or Empty field values should not be used to determine if a field is assigned to the
+   * entry.
    *
    * @param parameters An object of type {@link ParametersForGetSearchResults} which encapsulates
    *     the parameters of {@link #getSearchResults getSearchResults} method.

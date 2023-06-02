@@ -1,13 +1,11 @@
 package com.laserfiche.repository.api.clients.impl.model;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
+import com.laserfiche.api.client.model.HitType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Objects;
 
-@javax.annotation.Generated(
-    value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen",
-    date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ContextHit {
 
@@ -62,7 +60,7 @@ public class ContextHit {
   }
 
   /**
-   * Returns hitType
+   * Returns et hitType
    *
    * @return hitType
    */
@@ -81,7 +79,7 @@ public class ContextHit {
   }
 
   /**
-   * Returns a boolean indicating if this context hit occurs on an annotation.
+   * Returns boolean indicating if this context hit occurs on an annotation.
    *
    * @return isAnnotationHit
    */
@@ -101,7 +99,7 @@ public class ContextHit {
   }
 
   /**
-   * Returns the ID of the annotation that the context hit is in.
+   * Returns he ID of the annotation that the context hit is in.
    *
    * @return annotationId
    */
@@ -120,7 +118,7 @@ public class ContextHit {
   }
 
   /**
-   * Returns the page number in the document of the search hit&#x27;s context.
+   * Returns he page number in the document of the search hit&#x27;s context.
    *
    * @return pageNumber
    */
@@ -139,7 +137,7 @@ public class ContextHit {
   }
 
   /**
-   * Returns the offset from the beginning of the page of the starting character of the search
+   * Returns he offset from the beginning of the page of the starting character of the search
    * hit&#x27;s context line.
    *
    * @return pageOffset
@@ -161,7 +159,7 @@ public class ContextHit {
   }
 
   /**
-   * Returns the line of context for the search hit.
+   * Returns he line of context for the search hit.
    *
    * @return context
    */
@@ -180,7 +178,7 @@ public class ContextHit {
   }
 
   /**
-   * Returns the character offset from the beginning of the context line of the start of the first
+   * Returns he character offset from the beginning of the context line of the start of the first
    * highlight.
    *
    * @return highlight1Offset
@@ -202,7 +200,7 @@ public class ContextHit {
   }
 
   /**
-   * Returns the length of the first highlight in characters.
+   * Returns he length of the first highlight in characters.
    *
    * @return highlight1Length
    */
@@ -221,7 +219,7 @@ public class ContextHit {
   }
 
   /**
-   * Returns the character offset from the beginning of the context line of the start of the second
+   * Returns he character offset from the beginning of the context line of the start of the second
    * highlight.
    *
    * @return highlight2Offset
@@ -243,7 +241,7 @@ public class ContextHit {
   }
 
   /**
-   * Returns the length of the second highlight in characters.
+   * Returns he length of the second highlight in characters.
    *
    * @return highlight2Length
    */
@@ -262,7 +260,7 @@ public class ContextHit {
   }
 
   /**
-   * Returns the number of words in the context hit.
+   * Returns he number of words in the context hit.
    *
    * @return hitWidth
    */
@@ -281,7 +279,7 @@ public class ContextHit {
   }
 
   /**
-   * Returns the number of hits in the electronic document.
+   * Returns he number of hits in the electronic document.
    *
    * @return edocHitCount
    */
@@ -300,7 +298,7 @@ public class ContextHit {
   }
 
   /**
-   * Returns the number of hits in the template.
+   * Returns he number of hits in the template.
    *
    * @return fieldHitCount
    */
@@ -319,7 +317,7 @@ public class ContextHit {
   }
 
   /**
-   * Returns the name of a template field containing the hit.
+   * Returns he name of a template field containing the hit.
    *
    * @return fieldName
    */
@@ -338,7 +336,7 @@ public class ContextHit {
   }
 
   /**
-   * Returns the hit number.
+   * Returns he hit number.
    *
    * @return hitNumber
    */
@@ -352,7 +350,7 @@ public class ContextHit {
   }
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) {
       return true;
     }
@@ -420,7 +418,7 @@ public class ContextHit {
     return sb.toString();
   }
 
-  private String toIndentedString(Object o) {
+  private String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }

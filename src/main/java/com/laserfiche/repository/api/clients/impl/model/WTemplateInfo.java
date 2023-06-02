@@ -1,13 +1,11 @@
 package com.laserfiche.repository.api.clients.impl.model;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
+import com.laserfiche.api.client.model.LFColor;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Objects;
 
-@javax.annotation.Generated(
-    value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen",
-    date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class WTemplateInfo {
 
@@ -35,7 +33,7 @@ public class WTemplateInfo {
   }
 
   /**
-   * Returns the ID of the template definition.
+   * Returns he ID of the template definition.
    *
    * @return id
    */
@@ -54,7 +52,7 @@ public class WTemplateInfo {
   }
 
   /**
-   * Returns the name of the template definition.
+   * Returns he name of the template definition.
    *
    * @return name
    */
@@ -73,7 +71,7 @@ public class WTemplateInfo {
   }
 
   /**
-   * Returns the localized name of the template definition.
+   * Returns he localized name of the template definition.
    *
    * @return displayName
    */
@@ -92,7 +90,7 @@ public class WTemplateInfo {
   }
 
   /**
-   * Returns the description of the template definition.
+   * Returns he description of the template definition.
    *
    * @return description
    */
@@ -111,7 +109,7 @@ public class WTemplateInfo {
   }
 
   /**
-   * Returns color
+   * Returns et color
    *
    * @return color
    */
@@ -130,7 +128,7 @@ public class WTemplateInfo {
   }
 
   /**
-   * Returns the number of fields assigned to the template.
+   * Returns he number of fields assigned to the template.
    *
    * @return fieldCount
    */
@@ -144,7 +142,7 @@ public class WTemplateInfo {
   }
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) {
       return true;
     }
@@ -179,7 +177,7 @@ public class WTemplateInfo {
     return sb.toString();
   }
 
-  private String toIndentedString(Object o) {
+  private String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }

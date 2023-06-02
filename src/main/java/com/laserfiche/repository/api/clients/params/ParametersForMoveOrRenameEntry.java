@@ -1,6 +1,6 @@
 package com.laserfiche.repository.api.clients.params;
 
-import com.laserfiche.repository.api.clients.impl.model.PatchEntryRequest;
+import com.laserfiche.repository.api.clients.impl.model.*;
 
 /**
  * The encapsulated parameters for {@link
@@ -95,8 +95,9 @@ public class ParametersForMoveOrRenameEntry {
   }
 
   /**
-   * An optional query parameter used to indicate if the entry should be automatically renamed if
-   * another entry already exists with the same name in the folder. The default value is false.
+   * An optional query parameter used to indicate if the entry should be automatically<br>
+   * renamed if another entry already exists with the same name in the folder. The default value is
+   * false.
    *
    * @return {@link Boolean} The return value
    */
@@ -118,8 +119,8 @@ public class ParametersForMoveOrRenameEntry {
   }
 
   /**
-   * An optional query parameter used to indicate the locale that should be used. The value should
-   * be a standard language tag.
+   * An optional query parameter used to indicate the locale that should be used.<br>
+   * The value should be a standard language tag.
    *
    * @return {@link String} The return value
    */

@@ -1,15 +1,14 @@
 package com.laserfiche.repository.api.clients.impl.model;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
+import com.laserfiche.api.client.model.WFieldFormat;
+import com.laserfiche.api.client.model.WFieldType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@javax.annotation.Generated(
-    value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen",
-    date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class WFieldInfo {
 
@@ -64,7 +63,7 @@ public class WFieldInfo {
   }
 
   /**
-   * Returns the name of the field.
+   * Returns he name of the field.
    *
    * @return name
    */
@@ -83,7 +82,7 @@ public class WFieldInfo {
   }
 
   /**
-   * Returns the localized name of the field.
+   * Returns he localized name of the field.
    *
    * @return displayName
    */
@@ -102,7 +101,7 @@ public class WFieldInfo {
   }
 
   /**
-   * Returns the ID of the field.
+   * Returns he ID of the field.
    *
    * @return id
    */
@@ -121,7 +120,7 @@ public class WFieldInfo {
   }
 
   /**
-   * Returns the description of the field.
+   * Returns he description of the field.
    *
    * @return description
    */
@@ -140,7 +139,7 @@ public class WFieldInfo {
   }
 
   /**
-   * Returns fieldType
+   * Returns et fieldType
    *
    * @return fieldType
    */
@@ -159,7 +158,7 @@ public class WFieldInfo {
   }
 
   /**
-   * Returns the length of the field for variable length data types.
+   * Returns he length of the field for variable length data types.
    *
    * @return length
    */
@@ -178,7 +177,7 @@ public class WFieldInfo {
   }
 
   /**
-   * Returns the default value of the field for new entries that are assigned to a template the
+   * Returns he default value of the field for new entries that are assigned to a template the
    * represented field is a member of.
    *
    * @return defaultValue
@@ -200,7 +199,7 @@ public class WFieldInfo {
   }
 
   /**
-   * Returns a boolean indicating if the represented template field supports multiple values.
+   * Returns boolean indicating if the represented template field supports multiple values.
    *
    * @return isMultiValue
    */
@@ -222,7 +221,7 @@ public class WFieldInfo {
   }
 
   /**
-   * Returns a boolean indicating if the represented field must have a value set on entries assigned
+   * Returns boolean indicating if the represented field must have a value set on entries assigned
    * to a template that the field is a member of.
    *
    * @return isRequired
@@ -245,7 +244,7 @@ public class WFieldInfo {
   }
 
   /**
-   * Returns the constraint for values stored in the represented field.
+   * Returns he constraint for values stored in the represented field.
    *
    * @return constraint
    */
@@ -264,7 +263,7 @@ public class WFieldInfo {
   }
 
   /**
-   * Returns the error string that will be returned when the field constraint is violated when
+   * Returns he error string that will be returned when the field constraint is violated when
    * setting a value for this field.
    *
    * @return constraintError
@@ -294,7 +293,7 @@ public class WFieldInfo {
   }
 
   /**
-   * Returns the list of items assigned to the represented field.
+   * Returns he list of items assigned to the represented field.
    *
    * @return listValues
    */
@@ -313,7 +312,7 @@ public class WFieldInfo {
   }
 
   /**
-   * Returns format
+   * Returns et format
    *
    * @return format
    */
@@ -332,7 +331,7 @@ public class WFieldInfo {
   }
 
   /**
-   * Returns the name of the currency that will be using when formatting the represented field when
+   * Returns he name of the currency that will be using when formatting the represented field when
    * the Format property is set to the Currency member of the WFieldFormat enumeration.
    *
    * @return currency
@@ -354,7 +353,7 @@ public class WFieldInfo {
   }
 
   /**
-   * Returns the custom format pattern for fields that are configured to use a custom format.
+   * Returns he custom format pattern for fields that are configured to use a custom format.
    *
    * @return formatPattern
    */
@@ -370,7 +369,7 @@ public class WFieldInfo {
   }
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) {
       return true;
     }
@@ -438,7 +437,7 @@ public class WFieldInfo {
     return sb.toString();
   }
 
-  private String toIndentedString(Object o) {
+  private String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }

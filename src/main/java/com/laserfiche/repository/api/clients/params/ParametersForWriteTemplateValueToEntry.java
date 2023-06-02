@@ -1,6 +1,6 @@
 package com.laserfiche.repository.api.clients.params;
 
-import com.laserfiche.repository.api.clients.impl.model.PutTemplateRequest;
+import com.laserfiche.repository.api.clients.impl.model.*;
 
 /**
  * The encapsulated parameters for {@link
@@ -89,8 +89,9 @@ public class ParametersForWriteTemplateValueToEntry {
   }
 
   /**
-   * An optional query parameter used to indicate the locale that should be used. The value should
-   * be a standard language tag. This may be used when setting field values with tokens.
+   * An optional query parameter used to indicate the locale that should be used.<br>
+   * The value should be a standard language tag. This may be used when setting field values with
+   * tokens.
    *
    * @return {@link String} The return value
    */

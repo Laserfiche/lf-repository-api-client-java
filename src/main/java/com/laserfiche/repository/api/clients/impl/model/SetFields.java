@@ -1,7 +1,7 @@
 package com.laserfiche.repository.api.clients.impl.model;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
+import com.laserfiche.api.client.model.APIServerException;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,9 +9,7 @@ import java.util.Objects;
 
 /** The result of trying to assign fields to the entry. */
 @Schema(description = "The result of trying to assign fields to the entry.")
-@javax.annotation.Generated(
-    value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen",
-    date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class SetFields {
 
@@ -35,7 +33,7 @@ public class SetFields {
   }
 
   /**
-   * Returns the list of exceptions that occured when trying to perform the operation.
+   * Returns he list of exceptions that occured when trying to perform the operation.
    *
    * @return exceptions
    */
@@ -54,7 +52,7 @@ public class SetFields {
   }
 
   /**
-   * Returns the number of fields assigned to the entry.
+   * Returns he number of fields assigned to the entry.
    *
    * @return fieldCount
    */
@@ -68,7 +66,7 @@ public class SetFields {
   }
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) {
       return true;
     }
@@ -95,7 +93,7 @@ public class SetFields {
     return sb.toString();
   }
 
-  private String toIndentedString(Object o) {
+  private String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }

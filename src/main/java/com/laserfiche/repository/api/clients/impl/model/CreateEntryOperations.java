@@ -1,7 +1,12 @@
 package com.laserfiche.repository.api.clients.impl.model;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
+import com.laserfiche.api.client.model.EntryCreate;
+import com.laserfiche.api.client.model.SetEdoc;
+import com.laserfiche.api.client.model.SetFields;
+import com.laserfiche.api.client.model.SetLinks;
+import com.laserfiche.api.client.model.SetTags;
+import com.laserfiche.api.client.model.SetTemplate;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Objects;
 
@@ -12,9 +17,7 @@ import java.util.Objects;
 @Schema(
     description =
         "The results of each operation needed in order to create the electronic document with optional template and fields.")
-@javax.annotation.Generated(
-    value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen",
-    date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CreateEntryOperations {
 
@@ -42,7 +45,7 @@ public class CreateEntryOperations {
   }
 
   /**
-   * Returns entryCreate
+   * Returns et entryCreate
    *
    * @return entryCreate
    */
@@ -61,7 +64,7 @@ public class CreateEntryOperations {
   }
 
   /**
-   * Returns setEdoc
+   * Returns et setEdoc
    *
    * @return setEdoc
    */
@@ -80,7 +83,7 @@ public class CreateEntryOperations {
   }
 
   /**
-   * Returns setTemplate
+   * Returns et setTemplate
    *
    * @return setTemplate
    */
@@ -99,7 +102,7 @@ public class CreateEntryOperations {
   }
 
   /**
-   * Returns setFields
+   * Returns et setFields
    *
    * @return setFields
    */
@@ -118,7 +121,7 @@ public class CreateEntryOperations {
   }
 
   /**
-   * Returns setTags
+   * Returns et setTags
    *
    * @return setTags
    */
@@ -137,7 +140,7 @@ public class CreateEntryOperations {
   }
 
   /**
-   * Returns setLinks
+   * Returns et setLinks
    *
    * @return setLinks
    */
@@ -151,7 +154,7 @@ public class CreateEntryOperations {
   }
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) {
       return true;
     }
@@ -186,7 +189,7 @@ public class CreateEntryOperations {
     return sb.toString();
   }
 
-  private String toIndentedString(Object o) {
+  private String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }
