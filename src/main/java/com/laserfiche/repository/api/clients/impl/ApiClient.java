@@ -4,35 +4,32 @@ import com.laserfiche.api.client.httphandlers.HttpRequestHandler;
 import kong.unirest.ObjectMapper;
 import kong.unirest.UnirestInstance;
 
-/**
- * The base API client.
- */
+/** The base API client. */
 public abstract class ApiClient {
 
-    protected String baseUrl;
+  protected String baseUrl;
 
-    protected UnirestInstance httpClient;
+  protected UnirestInstance httpClient;
 
-    protected ObjectMapper objectMapper;
+  protected ObjectMapper objectMapper;
 
-    protected HttpRequestHandler httpRequestHandler;
+  protected HttpRequestHandler httpRequestHandler;
 
-    public ApiClient(String baseUrl, UnirestInstance httpClient, HttpRequestHandler httpRequestHandler) {
-        this.baseUrl = baseUrl;
-        this.httpClient = httpClient;
-        this.objectMapper = httpClient
-                .config()
-                .getObjectMapper();
-        this.httpRequestHandler = httpRequestHandler;
+  public ApiClient(
+      String baseUrl, UnirestInstance httpClient, HttpRequestHandler httpRequestHandler) {
+    this.baseUrl = baseUrl;
+    this.httpClient = httpClient;
+    this.objectMapper = httpClient.config().getObjectMapper();
+    this.httpRequestHandler = httpRequestHandler;
+  }
+
+  protected String toJson(Object object) {
+    String json = null;
+    try {
+      json = objectMapper.writeValue(object);
+    } catch (RuntimeException e) {
+      System.err.println(e);
     }
-
-    protected String toJson(Object object) {
-        String json = null;
-        try {
-            json = objectMapper.writeValue(object);
-        } catch (RuntimeException e) {
-            System.err.println(e);
-        }
-        return json;
-    }
+    return json;
+  }
 }
