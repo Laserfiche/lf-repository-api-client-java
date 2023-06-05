@@ -1,5 +1,7 @@
 package com.laserfiche.repository.api.clients.params;
 
+import com.laserfiche.repository.api.clients.impl.model.*;
+
 /**
  * The encapsulated parameters for {@link
  * com.laserfiche.repository.api.clients.impl.TemplateDefinitionsClientImpl#getTemplateFieldDefinitionsByTemplateName(ParametersForGetTemplateFieldDefinitionsByTemplateName)
@@ -116,8 +118,8 @@ public class ParametersForGetTemplateFieldDefinitionsByTemplateName {
   }
 
   /**
-   * An optional query parameter used to indicate the locale that should be used for formatting. The
-   * value should be a standard language tag.
+   * An optional query parameter used to indicate the locale that should be used for formatting.<br>
+   * The value should be a standard language tag.
    *
    * @return {@link String} The return value
    */

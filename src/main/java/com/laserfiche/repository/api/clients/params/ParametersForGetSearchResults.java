@@ -1,5 +1,7 @@
 package com.laserfiche.repository.api.clients.params;
 
+import com.laserfiche.repository.api.clients.impl.model.*;
+
 /**
  * The encapsulated parameters for {@link
  * com.laserfiche.repository.api.clients.impl.SearchesClientImpl#getSearchResults(ParametersForGetSearchResults)
@@ -224,9 +226,10 @@ public class ParametersForGetSearchResults {
   }
 
   /**
-   * An optional query parameter used to indicate the locale that should be used for formatting. The
-   * value should be a standard language tag. The formatFields query parameter must be set to true,
-   * otherwise culture will not be used for formatting.
+   * An optional query parameter used to indicate the locale that should be used for formatting.<br>
+   * The value should be a standard language tag. The formatFields query parameter must be set to
+   * true, otherwise<br>
+   * culture will not be used for formatting.
    *
    * @return {@link String} The return value
    */

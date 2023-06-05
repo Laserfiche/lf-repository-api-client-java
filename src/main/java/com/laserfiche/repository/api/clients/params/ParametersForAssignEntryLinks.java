@@ -1,6 +1,6 @@
 package com.laserfiche.repository.api.clients.params;
 
-import com.laserfiche.repository.api.clients.impl.model.PutLinksRequest;
+import com.laserfiche.repository.api.clients.impl.model.*;
 import java.util.List;
 
 /**

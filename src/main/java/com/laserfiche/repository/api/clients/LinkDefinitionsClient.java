@@ -1,19 +1,18 @@
 package com.laserfiche.repository.api.clients;
 
-import com.laserfiche.repository.api.clients.impl.model.EntryLinkTypeInfo;
-import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfEntryLinkTypeInfo;
-import com.laserfiche.repository.api.clients.params.ParametersForGetLinkDefinitionById;
-import com.laserfiche.repository.api.clients.params.ParametersForGetLinkDefinitions;
+import com.laserfiche.repository.api.clients.impl.model.*;
+import com.laserfiche.repository.api.clients.params.*;
 import java.util.function.Function;
 
 /** The Laserfiche Repository LinkDefinitions API client. */
 public interface LinkDefinitionsClient {
 
   /**
-   * - Returns a single link definition associated with the specified ID. - Provide a link type ID
-   * and get the associated link definition. Useful when a route provides a minimal amount of
-   * details and more information about the specific link definition is needed. - Allowed OData
-   * query options: Select
+   * - Returns a single link definition associated with the specified ID.<br>
+   * - Provide a link type ID and get the associated link definition. Useful when a route provides a
+   * minimal amount of details and more information about the specific link definition is needed.
+   * <br>
+   * - Allowed OData query options: Select
    *
    * @param parameters An object of type {@link ParametersForGetLinkDefinitionById} which
    *     encapsulates the parameters of {@link #getLinkDefinitionById getLinkDefinitionById} method.
@@ -22,10 +21,12 @@ public interface LinkDefinitionsClient {
   EntryLinkTypeInfo getLinkDefinitionById(ParametersForGetLinkDefinitionById parameters);
 
   /**
-   * - Returns the link definitions in the repository. - Provide a repository ID and get a paged
-   * listing of link definitions available in the repository. Useful when trying to display all link
-   * definitions available, not only links assigned to a specific entry. - Default page size: 100.
-   * Allowed OData query options: Select | Count | OrderBy | Skip | Top | SkipToken | Prefer.
+   * - Returns the link definitions in the repository.<br>
+   * - Provide a repository ID and get a paged listing of link definitions available in the
+   * repository. Useful when trying to display all link definitions available, not only links
+   * assigned to a specific entry.<br>
+   * - Default page size: 100. Allowed OData query options: Select | Count | OrderBy | Skip | Top |
+   * SkipToken | Prefer.
    *
    * @param parameters An object of type {@link ParametersForGetLinkDefinitions} which encapsulates
    *     the parameters of {@link #getLinkDefinitions getLinkDefinitions} method.
