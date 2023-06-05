@@ -1,17 +1,18 @@
 package com.laserfiche.repository.api.clients.params;
 
 /**
- * The encapsulated parameters for {@link com.laserfiche.repository.api.clients.impl.TemplateDefinitionsClientImpl#getTemplateDefinitions(ParametersForGetTemplateDefinitions) getTemplateDefinitions}.
+ * The encapsulated parameters for {@link
+ * com.laserfiche.repository.api.clients.impl.TemplateDefinitionsClientImpl#getTemplateDefinitions(ParametersForGetTemplateDefinitions)
+ * getTemplateDefinitions}.
  */
 public class ParametersForGetTemplateDefinitions {
 
-    /**
-     * The requested repository ID.
-     */
+    /** The requested repository ID. */
     private String repoId;
 
     /**
-     * An optional query parameter. Can be used to get a single template definition using the template name.
+     * An optional query parameter. Can be used to get a single template definition using the
+     * template name.
      */
     private String templateName;
 
@@ -26,24 +27,16 @@ public class ParametersForGetTemplateDefinitions {
      */
     private String culture;
 
-    /**
-     * Limits the properties returned in the result.
-     */
+    /** Limits the properties returned in the result. */
     private String select;
 
-    /**
-     * Specifies the order in which items are returned. The maximum number of expressions is 5.
-     */
+    /** Specifies the order in which items are returned. The maximum number of expressions is 5. */
     private String orderby;
 
-    /**
-     * Limits the number of items returned from a collection.
-     */
+    /** Limits the number of items returned from a collection. */
     private Integer top;
 
-    /**
-     * Excludes the specified number of items of the queried collection from the result.
-     */
+    /** Excludes the specified number of items of the queried collection from the result. */
     private Integer skip;
 
     /**
@@ -52,7 +45,8 @@ public class ParametersForGetTemplateDefinitions {
     private Boolean count;
 
     /**
-     * Sets the value of the repoId parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the repoId parameter and returns the current object, to enable chaining
+     * further setters.
      *
      * @param repoId The requested repository ID.
      * @return {@link ParametersForGetTemplateDefinitions} The return value
@@ -72,9 +66,11 @@ public class ParametersForGetTemplateDefinitions {
     }
 
     /**
-     * Sets the value of the templateName parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the templateName parameter and returns the current object, to enable
+     * chaining further setters.
      *
-     * @param templateName An optional query parameter. Can be used to get a single template definition using the template name.
+     * @param templateName An optional query parameter. Can be used to get a single template
+     *     definition using the template name.
      * @return {@link ParametersForGetTemplateDefinitions} The return value
      */
     public ParametersForGetTemplateDefinitions setTemplateName(String templateName) {
@@ -83,7 +79,8 @@ public class ParametersForGetTemplateDefinitions {
     }
 
     /**
-     * An optional query parameter. Can be used to get a single template definition using the template name.
+     * An optional query parameter. Can be used to get a single template definition using the
+     * template name.
      *
      * @return {@link String} The return value
      */
@@ -92,9 +89,11 @@ public class ParametersForGetTemplateDefinitions {
     }
 
     /**
-     * Sets the value of the prefer parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the prefer parameter and returns the current object, to enable chaining
+     * further setters.
      *
-     * @param prefer An optional OData header. Can be used to set the maximum page size using odata.maxpagesize.
+     * @param prefer An optional OData header. Can be used to set the maximum page size using
+     *     odata.maxpagesize.
      * @return {@link ParametersForGetTemplateDefinitions} The return value
      */
     public ParametersForGetTemplateDefinitions setPrefer(String prefer) {
@@ -112,10 +111,11 @@ public class ParametersForGetTemplateDefinitions {
     }
 
     /**
-     * Sets the value of the culture parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the culture parameter and returns the current object, to enable chaining
+     * further setters.
      *
-     * @param culture An optional query parameter used to indicate the locale that should be used for formatting.
-     *                The value should be a standard language tag.
+     * @param culture An optional query parameter used to indicate the locale that should be used
+     *     for formatting. The value should be a standard language tag.
      * @return {@link ParametersForGetTemplateDefinitions} The return value
      */
     public ParametersForGetTemplateDefinitions setCulture(String culture) {
@@ -134,7 +134,8 @@ public class ParametersForGetTemplateDefinitions {
     }
 
     /**
-     * Sets the value of the select parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the select parameter and returns the current object, to enable chaining
+     * further setters.
      *
      * @param select Limits the properties returned in the result.
      * @return {@link ParametersForGetTemplateDefinitions} The return value
@@ -154,9 +155,11 @@ public class ParametersForGetTemplateDefinitions {
     }
 
     /**
-     * Sets the value of the orderby parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the orderby parameter and returns the current object, to enable chaining
+     * further setters.
      *
-     * @param orderby Specifies the order in which items are returned. The maximum number of expressions is 5.
+     * @param orderby Specifies the order in which items are returned. The maximum number of
+     *     expressions is 5.
      * @return {@link ParametersForGetTemplateDefinitions} The return value
      */
     public ParametersForGetTemplateDefinitions setOrderby(String orderby) {
@@ -174,7 +177,8 @@ public class ParametersForGetTemplateDefinitions {
     }
 
     /**
-     * Sets the value of the top parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the top parameter and returns the current object, to enable chaining
+     * further setters.
      *
      * @param top Limits the number of items returned from a collection.
      * @return {@link ParametersForGetTemplateDefinitions} The return value
@@ -194,7 +198,8 @@ public class ParametersForGetTemplateDefinitions {
     }
 
     /**
-     * Sets the value of the skip parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the skip parameter and returns the current object, to enable chaining
+     * further setters.
      *
      * @param skip Excludes the specified number of items of the queried collection from the result.
      * @return {@link ParametersForGetTemplateDefinitions} The return value
@@ -214,9 +219,11 @@ public class ParametersForGetTemplateDefinitions {
     }
 
     /**
-     * Sets the value of the count parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the count parameter and returns the current object, to enable chaining
+     * further setters.
      *
-     * @param count Indicates whether the total count of items within a collection are returned in the result.
+     * @param count Indicates whether the total count of items within a collection are returned in
+     *     the result.
      * @return {@link ParametersForGetTemplateDefinitions} The return value
      */
     public ParametersForGetTemplateDefinitions setCount(Boolean count) {

@@ -1,5 +1,8 @@
 package com.laserfiche.repository.api.integration;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import com.laserfiche.api.client.model.ApiException;
 import com.laserfiche.repository.api.RepositoryApiClient;
 import com.laserfiche.repository.api.clients.TasksClient;
@@ -7,15 +10,10 @@ import com.laserfiche.repository.api.clients.impl.model.*;
 import com.laserfiche.repository.api.clients.params.ParametersForCancelOperation;
 import com.laserfiche.repository.api.clients.params.ParametersForDeleteEntryInfo;
 import com.laserfiche.repository.api.clients.params.ParametersForGetOperationStatusAndProgress;
+import java.util.concurrent.TimeUnit;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.sql.Time;
-import java.util.concurrent.TimeUnit;
-
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TasksApiTest extends BaseTest {
     TasksClient client;
@@ -29,17 +27,23 @@ public class TasksApiTest extends BaseTest {
 
     @Test
     void cancelOperation_OperationEndedBeforeCancel() throws InterruptedException {
-        Entry deleteEntry = createEntry(createEntryClient, "RepositoryApiClientIntegrationTest Java CancelOperation", 1,
-                true);
+        Entry deleteEntry =
+                createEntry(
+                        createEntryClient,
+                        "RepositoryApiClientIntegrationTest Java CancelOperation",
+                        1,
+                        true);
 
         DeleteEntryWithAuditReason body = new DeleteEntryWithAuditReason();
 
-        AcceptedOperation result = repositoryApiClient
-                .getEntriesClient()
-                .deleteEntryInfo(new ParametersForDeleteEntryInfo()
-                        .setRepoId(repositoryId)
-                        .setEntryId(deleteEntry.getId())
-                        .setRequestBody(body));
+        AcceptedOperation result =
+                repositoryApiClient
+                        .getEntriesClient()
+                        .deleteEntryInfo(
+                                new ParametersForDeleteEntryInfo()
+                                        .setRepoId(repositoryId)
+                                        .setEntryId(deleteEntry.getId())
+                                        .setRequestBody(body));
 
         String token = result.getToken();
 
@@ -47,37 +51,50 @@ public class TasksApiTest extends BaseTest {
 
         WaitUntilTaskEnds(result);
 
-        Exception thrown = Assertions.assertThrows(ApiException.class, () -> {
-            client.cancelOperation(new ParametersForCancelOperation()
-                    .setRepoId(repositoryId)
-                    .setOperationToken(token));
-        });
+        Exception thrown =
+                Assertions.assertThrows(
+                        ApiException.class,
+                        () -> {
+                            client.cancelOperation(
+                                    new ParametersForCancelOperation()
+                                            .setRepoId(repositoryId)
+                                            .setOperationToken(token));
+                        });
 
         Assertions.assertEquals(
-                String.format("%s: Cannot cancel completed operation.", Error.class.getSimpleName()),
+                String.format(
+                        "%s: Cannot cancel completed operation.", Error.class.getSimpleName()),
                 thrown.getMessage());
     }
 
     @Test
     void cancelOperation_OperationCancelledSuccessfully() throws InterruptedException {
-        Entry deleteEntry = createEntry(createEntryClient, "RepositoryApiClientIntegrationTest Java CancelOperation", 1,
-                true);
+        Entry deleteEntry =
+                createEntry(
+                        createEntryClient,
+                        "RepositoryApiClientIntegrationTest Java CancelOperation",
+                        1,
+                        true);
 
         DeleteEntryWithAuditReason body = new DeleteEntryWithAuditReason();
 
-        AcceptedOperation result = repositoryApiClient
-                .getEntriesClient()
-                .deleteEntryInfo(new ParametersForDeleteEntryInfo()
-                        .setRepoId(repositoryId)
-                        .setEntryId(deleteEntry.getId())
-                        .setRequestBody(body));
+        AcceptedOperation result =
+                repositoryApiClient
+                        .getEntriesClient()
+                        .deleteEntryInfo(
+                                new ParametersForDeleteEntryInfo()
+                                        .setRepoId(repositoryId)
+                                        .setEntryId(deleteEntry.getId())
+                                        .setRequestBody(body));
 
         String token = result.getToken();
         assertNotNull(token);
 
-        boolean cancellationResult = client.cancelOperation(new ParametersForCancelOperation()
-                .setRepoId(repositoryId)
-                .setOperationToken(token));
+        boolean cancellationResult =
+                client.cancelOperation(
+                        new ParametersForCancelOperation()
+                                .setRepoId(repositoryId)
+                                .setOperationToken(token));
         assertTrue(cancellationResult);
 
         TimeUnit.SECONDS.sleep(5);
@@ -86,17 +103,23 @@ public class TasksApiTest extends BaseTest {
 
     @Test
     void getOperationStatus_ReturnStatus() throws InterruptedException {
-        Entry deleteEntry = createEntry(createEntryClient, "RepositoryApiClientIntegrationTest Java GetOperationStatus",
-                1, true);
+        Entry deleteEntry =
+                createEntry(
+                        createEntryClient,
+                        "RepositoryApiClientIntegrationTest Java GetOperationStatus",
+                        1,
+                        true);
 
         DeleteEntryWithAuditReason body = new DeleteEntryWithAuditReason();
 
-        AcceptedOperation result = repositoryApiClient
-                .getEntriesClient()
-                .deleteEntryInfo(new ParametersForDeleteEntryInfo()
-                        .setRepoId(repositoryId)
-                        .setEntryId(deleteEntry.getId())
-                        .setRequestBody(body));
+        AcceptedOperation result =
+                repositoryApiClient
+                        .getEntriesClient()
+                        .deleteEntryInfo(
+                                new ParametersForDeleteEntryInfo()
+                                        .setRepoId(repositoryId)
+                                        .setEntryId(deleteEntry.getId())
+                                        .setRequestBody(body));
 
         String token = result.getToken();
 
@@ -104,10 +127,11 @@ public class TasksApiTest extends BaseTest {
 
         WaitUntilTaskEnds(result);
 
-        OperationProgress operationProgressResponse = client.getOperationStatusAndProgress(
-                new ParametersForGetOperationStatusAndProgress()
-                        .setRepoId(repositoryId)
-                        .setOperationToken(token));
+        OperationProgress operationProgressResponse =
+                client.getOperationStatusAndProgress(
+                        new ParametersForGetOperationStatusAndProgress()
+                                .setRepoId(repositoryId)
+                                .setOperationToken(token));
 
         assertNotNull(operationProgressResponse);
         Assertions.assertSame(operationProgressResponse.getStatus(), OperationStatus.COMPLETED);

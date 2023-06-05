@@ -1,27 +1,24 @@
 package com.laserfiche.repository.api.clients.params;
 
 /**
- * The encapsulated parameters for {@link com.laserfiche.repository.api.clients.impl.LinkDefinitionsClientImpl#getLinkDefinitionById(ParametersForGetLinkDefinitionById) getLinkDefinitionById}.
+ * The encapsulated parameters for {@link
+ * com.laserfiche.repository.api.clients.impl.LinkDefinitionsClientImpl#getLinkDefinitionById(ParametersForGetLinkDefinitionById)
+ * getLinkDefinitionById}.
  */
 public class ParametersForGetLinkDefinitionById {
 
-    /**
-     * The requested repository ID.
-     */
+    /** The requested repository ID. */
     private String repoId;
 
-    /**
-     * The requested link type ID.
-     */
+    /** The requested link type ID. */
     private Integer linkTypeId;
 
-    /**
-     * Limits the properties returned in the result.
-     */
+    /** Limits the properties returned in the result. */
     private String select;
 
     /**
-     * Sets the value of the repoId parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the repoId parameter and returns the current object, to enable chaining
+     * further setters.
      *
      * @param repoId The requested repository ID.
      * @return {@link ParametersForGetLinkDefinitionById} The return value
@@ -41,7 +38,8 @@ public class ParametersForGetLinkDefinitionById {
     }
 
     /**
-     * Sets the value of the linkTypeId parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the linkTypeId parameter and returns the current object, to enable chaining
+     * further setters.
      *
      * @param linkTypeId The requested link type ID.
      * @return {@link ParametersForGetLinkDefinitionById} The return value
@@ -61,7 +59,8 @@ public class ParametersForGetLinkDefinitionById {
     }
 
     /**
-     * Sets the value of the select parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the select parameter and returns the current object, to enable chaining
+     * further setters.
      *
      * @param select Limits the properties returned in the result.
      * @return {@link ParametersForGetLinkDefinitionById} The return value

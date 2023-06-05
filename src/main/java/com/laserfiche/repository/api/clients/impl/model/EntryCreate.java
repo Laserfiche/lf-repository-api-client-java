@@ -3,16 +3,15 @@ package com.laserfiche.repository.api.clients.impl.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-/**
- * The result of trying to create the entry.
- */
+/** The result of trying to create the entry. */
 @Schema(description = "The result of trying to create the entry.")
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
+@javax.annotation.Generated(
+        value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen",
+        date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class EntryCreate {
 
@@ -40,7 +39,9 @@ public class EntryCreate {
      *
      * @return exceptions
      */
-    @Schema(description = "The list of exceptions that occured when trying to perform the operation.")
+    @Schema(
+            description =
+                    "The list of exceptions that occured when trying to perform the operation.")
     public List<APIServerException> getExceptions() {
         return exceptions;
     }
@@ -59,7 +60,9 @@ public class EntryCreate {
      *
      * @return entryId
      */
-    @Schema(description = "The id of the created entry. If the id is 0, then the entry was not created.")
+    @Schema(
+            description =
+                    "The id of the created entry. If the id is 0, then the entry was not created.")
     public Integer getEntryId() {
         return entryId;
     }
@@ -77,8 +80,8 @@ public class EntryCreate {
             return false;
         }
         EntryCreate entryCreate = (EntryCreate) o;
-        return Objects.equals(this.exceptions, entryCreate.exceptions) && Objects.equals(this.entryId,
-                entryCreate.entryId);
+        return Objects.equals(this.exceptions, entryCreate.exceptions)
+                && Objects.equals(this.entryId, entryCreate.entryId);
     }
 
     @Override
@@ -90,14 +93,8 @@ public class EntryCreate {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class EntryCreate {\n");
-        sb
-                .append("    exceptions: ")
-                .append(toIndentedString(exceptions))
-                .append("\n");
-        sb
-                .append("    entryId: ")
-                .append(toIndentedString(entryId))
-                .append("\n");
+        sb.append("    exceptions: ").append(toIndentedString(exceptions)).append("\n");
+        sb.append("    entryId: ").append(toIndentedString(entryId)).append("\n");
         sb.append("}");
         return sb.toString();
     }
@@ -106,8 +103,6 @@ public class EntryCreate {
         if (o == null) {
             return "null";
         }
-        return o
-                .toString()
-                .replace("\n", "\n    ");
+        return o.toString().replace("\n", "\n    ");
     }
 }

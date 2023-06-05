@@ -1,17 +1,18 @@
 package com.laserfiche.repository.api.clients.params;
 
 /**
- * The encapsulated parameters for {@link com.laserfiche.repository.api.clients.impl.ServerSessionClientImpl#createServerSession(ParametersForCreateServerSession) createServerSession}.
+ * The encapsulated parameters for {@link
+ * com.laserfiche.repository.api.clients.impl.ServerSessionClientImpl#createServerSession(ParametersForCreateServerSession)
+ * createServerSession}.
  */
 public class ParametersForCreateServerSession {
 
-    /**
-     * The requested repository ID.
-     */
+    /** The requested repository ID. */
     private String repoId;
 
     /**
-     * Sets the value of the repoId parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the repoId parameter and returns the current object, to enable chaining
+     * further setters.
      *
      * @param repoId The requested repository ID.
      * @return {@link ParametersForCreateServerSession} The return value

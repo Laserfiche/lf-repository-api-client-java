@@ -1,22 +1,21 @@
 package com.laserfiche.repository.api.clients.params;
 
 /**
- * The encapsulated parameters for {@link com.laserfiche.repository.api.clients.impl.TasksClientImpl#cancelOperation(ParametersForCancelOperation) cancelOperation}.
+ * The encapsulated parameters for {@link
+ * com.laserfiche.repository.api.clients.impl.TasksClientImpl#cancelOperation(ParametersForCancelOperation)
+ * cancelOperation}.
  */
 public class ParametersForCancelOperation {
 
-    /**
-     * The requested repository ID
-     */
+    /** The requested repository ID */
     private String repoId;
 
-    /**
-     * The operation token
-     */
+    /** The operation token */
     private String operationToken;
 
     /**
-     * Sets the value of the repoId parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the repoId parameter and returns the current object, to enable chaining
+     * further setters.
      *
      * @param repoId The requested repository ID
      * @return {@link ParametersForCancelOperation} The return value
@@ -36,7 +35,8 @@ public class ParametersForCancelOperation {
     }
 
     /**
-     * Sets the value of the operationToken parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the operationToken parameter and returns the current object, to enable
+     * chaining further setters.
      *
      * @param operationToken The operation token
      * @return {@link ParametersForCancelOperation} The return value

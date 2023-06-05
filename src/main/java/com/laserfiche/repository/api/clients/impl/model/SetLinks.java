@@ -3,16 +3,15 @@ package com.laserfiche.repository.api.clients.impl.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-/**
- * The result of trying to assign a entry link to the entry.
- */
+/** The result of trying to assign a entry link to the entry. */
 @Schema(description = "The result of trying to assign a entry link to the entry.")
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
+@javax.annotation.Generated(
+        value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen",
+        date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class SetLinks {
 
@@ -40,7 +39,9 @@ public class SetLinks {
      *
      * @return exceptions
      */
-    @Schema(description = "The list of exceptions that occured when trying to perform the operation.")
+    @Schema(
+            description =
+                    "The list of exceptions that occured when trying to perform the operation.")
     public List<APIServerException> getExceptions() {
         return exceptions;
     }
@@ -85,8 +86,8 @@ public class SetLinks {
             return false;
         }
         SetLinks setLinks = (SetLinks) o;
-        return Objects.equals(this.exceptions, setLinks.exceptions) && Objects.equals(this.otherEntryIds,
-                setLinks.otherEntryIds);
+        return Objects.equals(this.exceptions, setLinks.exceptions)
+                && Objects.equals(this.otherEntryIds, setLinks.otherEntryIds);
     }
 
     @Override
@@ -98,14 +99,8 @@ public class SetLinks {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class SetLinks {\n");
-        sb
-                .append("    exceptions: ")
-                .append(toIndentedString(exceptions))
-                .append("\n");
-        sb
-                .append("    otherEntryIds: ")
-                .append(toIndentedString(otherEntryIds))
-                .append("\n");
+        sb.append("    exceptions: ").append(toIndentedString(exceptions)).append("\n");
+        sb.append("    otherEntryIds: ").append(toIndentedString(otherEntryIds)).append("\n");
         sb.append("}");
         return sb.toString();
     }
@@ -114,8 +109,6 @@ public class SetLinks {
         if (o == null) {
             return "null";
         }
-        return o
-                .toString()
-                .replace("\n", "\n    ");
+        return o.toString().replace("\n", "\n    ");
     }
 }

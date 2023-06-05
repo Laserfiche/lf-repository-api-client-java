@@ -2,9 +2,7 @@ package com.laserfiche.repository.api.clients;
 
 import com.laserfiche.repository.api.clients.impl.model.RepositoryInfo;
 
-/**
- * The Laserfiche Repository Repositories API client.
- */
+/** The Laserfiche Repository Repositories API client. */
 public interface RepositoriesClient {
 
     /**

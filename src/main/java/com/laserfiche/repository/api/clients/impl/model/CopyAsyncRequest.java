@@ -3,10 +3,11 @@ package com.laserfiche.repository.api.clients.impl.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.util.Objects;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
+@javax.annotation.Generated(
+        value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen",
+        date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CopyAsyncRequest {
 
@@ -63,11 +64,14 @@ public class CopyAsyncRequest {
     }
 
     /**
-     * Returns the name of the volume to use. Will use the default parent entry volume if not specified. This is ignored in Laserfiche Cloud.
+     * Returns the name of the volume to use. Will use the default parent entry volume if not
+     * specified. This is ignored in Laserfiche Cloud.
      *
      * @return volumeName
      */
-    @Schema(description = "The name of the volume to use. Will use the default parent entry volume if not specified. This is ignored in Laserfiche Cloud.")
+    @Schema(
+            description =
+                    "The name of the volume to use. Will use the default parent entry volume if not specified. This is ignored in Laserfiche Cloud.")
     public String getVolumeName() {
         return volumeName;
     }
@@ -85,8 +89,9 @@ public class CopyAsyncRequest {
             return false;
         }
         CopyAsyncRequest copyAsyncRequest = (CopyAsyncRequest) o;
-        return Objects.equals(this.name, copyAsyncRequest.name) && Objects.equals(this.sourceId,
-                copyAsyncRequest.sourceId) && Objects.equals(this.volumeName, copyAsyncRequest.volumeName);
+        return Objects.equals(this.name, copyAsyncRequest.name)
+                && Objects.equals(this.sourceId, copyAsyncRequest.sourceId)
+                && Objects.equals(this.volumeName, copyAsyncRequest.volumeName);
     }
 
     @Override
@@ -98,18 +103,9 @@ public class CopyAsyncRequest {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class CopyAsyncRequest {\n");
-        sb
-                .append("    name: ")
-                .append(toIndentedString(name))
-                .append("\n");
-        sb
-                .append("    sourceId: ")
-                .append(toIndentedString(sourceId))
-                .append("\n");
-        sb
-                .append("    volumeName: ")
-                .append(toIndentedString(volumeName))
-                .append("\n");
+        sb.append("    name: ").append(toIndentedString(name)).append("\n");
+        sb.append("    sourceId: ").append(toIndentedString(sourceId)).append("\n");
+        sb.append("    volumeName: ").append(toIndentedString(volumeName)).append("\n");
         sb.append("}");
         return sb.toString();
     }
@@ -118,8 +114,6 @@ public class CopyAsyncRequest {
         if (o == null) {
             return "null";
         }
-        return o
-                .toString()
-                .replace("\n", "\n    ");
+        return o.toString().replace("\n", "\n    ");
     }
 }

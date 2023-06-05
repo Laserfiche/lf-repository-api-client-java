@@ -1,27 +1,27 @@
 package com.laserfiche.repository.api.clients.params;
 
 /**
- * The encapsulated parameters for {@link com.laserfiche.repository.api.clients.impl.AttributesClientImpl#getTrusteeAttributeValueByKey(ParametersForGetTrusteeAttributeValueByKey) getTrusteeAttributeValueByKey}.
+ * The encapsulated parameters for {@link
+ * com.laserfiche.repository.api.clients.impl.AttributesClientImpl#getTrusteeAttributeValueByKey(ParametersForGetTrusteeAttributeValueByKey)
+ * getTrusteeAttributeValueByKey}.
  */
 public class ParametersForGetTrusteeAttributeValueByKey {
 
-    /**
-     * The requested repository ID.
-     */
+    /** The requested repository ID. */
     private String repoId;
 
-    /**
-     * The requested attribute key.
-     */
+    /** The requested attribute key. */
     private String attributeKey;
 
     /**
-     * Boolean value that indicates whether to return attributes associated with everyone or the currently authenticated user.
+     * Boolean value that indicates whether to return attributes associated with everyone or the
+     * currently authenticated user.
      */
     private Boolean everyone;
 
     /**
-     * Sets the value of the repoId parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the repoId parameter and returns the current object, to enable chaining
+     * further setters.
      *
      * @param repoId The requested repository ID.
      * @return {@link ParametersForGetTrusteeAttributeValueByKey} The return value
@@ -41,7 +41,8 @@ public class ParametersForGetTrusteeAttributeValueByKey {
     }
 
     /**
-     * Sets the value of the attributeKey parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the attributeKey parameter and returns the current object, to enable
+     * chaining further setters.
      *
      * @param attributeKey The requested attribute key.
      * @return {@link ParametersForGetTrusteeAttributeValueByKey} The return value
@@ -61,9 +62,11 @@ public class ParametersForGetTrusteeAttributeValueByKey {
     }
 
     /**
-     * Sets the value of the everyone parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the everyone parameter and returns the current object, to enable chaining
+     * further setters.
      *
-     * @param everyone Boolean value that indicates whether to return attributes associated with everyone or the currently authenticated user.
+     * @param everyone Boolean value that indicates whether to return attributes associated with
+     *     everyone or the currently authenticated user.
      * @return {@link ParametersForGetTrusteeAttributeValueByKey} The return value
      */
     public ParametersForGetTrusteeAttributeValueByKey setEveryone(Boolean everyone) {
@@ -72,7 +75,8 @@ public class ParametersForGetTrusteeAttributeValueByKey {
     }
 
     /**
-     * Boolean value that indicates whether to return attributes associated with everyone or the currently authenticated user.
+     * Boolean value that indicates whether to return attributes associated with everyone or the
+     * currently authenticated user.
      *
      * @return {@link Boolean} The return value
      */

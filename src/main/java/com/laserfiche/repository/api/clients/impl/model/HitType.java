@@ -3,11 +3,8 @@ package com.laserfiche.repository.api.clients.impl.model;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
-/**
- * The type of context hit.
- */
+/** The type of context hit. */
 public enum HitType {
-
     PAGE_CONTENT("PageContent"),
     NOTE("Note"),
     CALLOUT("Callout"),

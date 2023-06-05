@@ -3,12 +3,13 @@ package com.laserfiche.repository.api.clients.impl.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
+@javax.annotation.Generated(
+        value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen",
+        date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class PutLinksRequest {
 
@@ -95,8 +96,9 @@ public class PutLinksRequest {
             return false;
         }
         PutLinksRequest putLinksRequest = (PutLinksRequest) o;
-        return Objects.equals(this.targetId, putLinksRequest.targetId) && Objects.equals(this.linkTypeId,
-                putLinksRequest.linkTypeId) && Objects.equals(this.customProperties, putLinksRequest.customProperties);
+        return Objects.equals(this.targetId, putLinksRequest.targetId)
+                && Objects.equals(this.linkTypeId, putLinksRequest.linkTypeId)
+                && Objects.equals(this.customProperties, putLinksRequest.customProperties);
     }
 
     @Override
@@ -108,18 +110,9 @@ public class PutLinksRequest {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class PutLinksRequest {\n");
-        sb
-                .append("    targetId: ")
-                .append(toIndentedString(targetId))
-                .append("\n");
-        sb
-                .append("    linkTypeId: ")
-                .append(toIndentedString(linkTypeId))
-                .append("\n");
-        sb
-                .append("    customProperties: ")
-                .append(toIndentedString(customProperties))
-                .append("\n");
+        sb.append("    targetId: ").append(toIndentedString(targetId)).append("\n");
+        sb.append("    linkTypeId: ").append(toIndentedString(linkTypeId)).append("\n");
+        sb.append("    customProperties: ").append(toIndentedString(customProperties)).append("\n");
         sb.append("}");
         return sb.toString();
     }
@@ -128,8 +121,6 @@ public class PutLinksRequest {
         if (o == null) {
             return "null";
         }
-        return o
-                .toString()
-                .replace("\n", "\n    ");
+        return o.toString().replace("\n", "\n    ");
     }
 }

@@ -3,12 +3,13 @@ package com.laserfiche.repository.api.clients.impl.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
+@javax.annotation.Generated(
+        value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen",
+        date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Rule {
 
@@ -33,7 +34,9 @@ public class Rule {
      *
      * @return ancestors
      */
-    @Schema(description = "The IDs of the parent fields in the template according to the form logic rule.")
+    @Schema(
+            description =
+                    "The IDs of the parent fields in the template according to the form logic rule.")
     public List<Integer> getAncestors() {
         return ancestors;
     }
@@ -63,10 +66,7 @@ public class Rule {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class Rule {\n");
-        sb
-                .append("    ancestors: ")
-                .append(toIndentedString(ancestors))
-                .append("\n");
+        sb.append("    ancestors: ").append(toIndentedString(ancestors)).append("\n");
         sb.append("}");
         return sb.toString();
     }
@@ -75,8 +75,6 @@ public class Rule {
         if (o == null) {
             return "null";
         }
-        return o
-                .toString()
-                .replace("\n", "\n    ");
+        return o.toString().replace("\n", "\n    ");
     }
 }

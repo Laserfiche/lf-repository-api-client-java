@@ -3,10 +3,11 @@ package com.laserfiche.repository.api.clients.impl.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.util.Objects;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
+@javax.annotation.Generated(
+        value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen",
+        date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class WTagInfo {
 
@@ -110,11 +111,14 @@ public class WTagInfo {
     }
 
     /**
-     * Returns a boolean indicating whether or not the tag definition is classified as a security tag (true) or an informational tag (false).
+     * Returns a boolean indicating whether or not the tag definition is classified as a security
+     * tag (true) or an informational tag (false).
      *
      * @return isSecure
      */
-    @Schema(description = "A boolean indicating whether or not the tag definition is classified as a security tag (true) or an informational tag (false).")
+    @Schema(
+            description =
+                    "A boolean indicating whether or not the tag definition is classified as a security tag (true) or an informational tag (false).")
     @JsonProperty("isSecure")
     public Boolean isSecure() {
         return isSecure;
@@ -152,10 +156,12 @@ public class WTagInfo {
             return false;
         }
         WTagInfo wtagInfo = (WTagInfo) o;
-        return Objects.equals(this.id, wtagInfo.id) && Objects.equals(this.name, wtagInfo.name) && Objects.equals(
-                this.displayName, wtagInfo.displayName) && Objects.equals(this.description,
-                wtagInfo.description) && Objects.equals(this.isSecure, wtagInfo.isSecure) && Objects.equals(
-                this.watermark, wtagInfo.watermark);
+        return Objects.equals(this.id, wtagInfo.id)
+                && Objects.equals(this.name, wtagInfo.name)
+                && Objects.equals(this.displayName, wtagInfo.displayName)
+                && Objects.equals(this.description, wtagInfo.description)
+                && Objects.equals(this.isSecure, wtagInfo.isSecure)
+                && Objects.equals(this.watermark, wtagInfo.watermark);
     }
 
     @Override
@@ -167,30 +173,12 @@ public class WTagInfo {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class WTagInfo {\n");
-        sb
-                .append("    id: ")
-                .append(toIndentedString(id))
-                .append("\n");
-        sb
-                .append("    name: ")
-                .append(toIndentedString(name))
-                .append("\n");
-        sb
-                .append("    displayName: ")
-                .append(toIndentedString(displayName))
-                .append("\n");
-        sb
-                .append("    description: ")
-                .append(toIndentedString(description))
-                .append("\n");
-        sb
-                .append("    isSecure: ")
-                .append(toIndentedString(isSecure))
-                .append("\n");
-        sb
-                .append("    watermark: ")
-                .append(toIndentedString(watermark))
-                .append("\n");
+        sb.append("    id: ").append(toIndentedString(id)).append("\n");
+        sb.append("    name: ").append(toIndentedString(name)).append("\n");
+        sb.append("    displayName: ").append(toIndentedString(displayName)).append("\n");
+        sb.append("    description: ").append(toIndentedString(description)).append("\n");
+        sb.append("    isSecure: ").append(toIndentedString(isSecure)).append("\n");
+        sb.append("    watermark: ").append(toIndentedString(watermark)).append("\n");
         sb.append("}");
         return sb.toString();
     }
@@ -199,8 +187,6 @@ public class WTagInfo {
         if (o == null) {
             return "null";
         }
-        return o
-                .toString()
-                .replace("\n", "\n    ");
+        return o.toString().replace("\n", "\n    ");
     }
 }

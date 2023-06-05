@@ -3,16 +3,15 @@ package com.laserfiche.repository.api.clients.impl.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-/**
- * The result of trying to assign fields to the entry.
- */
+/** The result of trying to assign fields to the entry. */
 @Schema(description = "The result of trying to assign fields to the entry.")
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
+@javax.annotation.Generated(
+        value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen",
+        date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class SetFields {
 
@@ -40,7 +39,9 @@ public class SetFields {
      *
      * @return exceptions
      */
-    @Schema(description = "The list of exceptions that occured when trying to perform the operation.")
+    @Schema(
+            description =
+                    "The list of exceptions that occured when trying to perform the operation.")
     public List<APIServerException> getExceptions() {
         return exceptions;
     }
@@ -77,8 +78,8 @@ public class SetFields {
             return false;
         }
         SetFields setFields = (SetFields) o;
-        return Objects.equals(this.exceptions, setFields.exceptions) && Objects.equals(this.fieldCount,
-                setFields.fieldCount);
+        return Objects.equals(this.exceptions, setFields.exceptions)
+                && Objects.equals(this.fieldCount, setFields.fieldCount);
     }
 
     @Override
@@ -90,14 +91,8 @@ public class SetFields {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class SetFields {\n");
-        sb
-                .append("    exceptions: ")
-                .append(toIndentedString(exceptions))
-                .append("\n");
-        sb
-                .append("    fieldCount: ")
-                .append(toIndentedString(fieldCount))
-                .append("\n");
+        sb.append("    exceptions: ").append(toIndentedString(exceptions)).append("\n");
+        sb.append("    fieldCount: ").append(toIndentedString(fieldCount)).append("\n");
         sb.append("}");
         return sb.toString();
     }
@@ -106,8 +101,6 @@ public class SetFields {
         if (o == null) {
             return "null";
         }
-        return o
-                .toString()
-                .replace("\n", "\n    ");
+        return o.toString().replace("\n", "\n    ");
     }
 }

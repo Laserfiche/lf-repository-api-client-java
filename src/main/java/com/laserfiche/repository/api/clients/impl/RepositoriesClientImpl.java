@@ -7,6 +7,10 @@ import com.laserfiche.api.client.model.ApiException;
 import com.laserfiche.api.client.model.ProblemDetails;
 import com.laserfiche.repository.api.clients.RepositoriesClient;
 import com.laserfiche.repository.api.clients.impl.model.RepositoryInfo;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Function;
 import kong.unirest.HttpResponse;
 import kong.unirest.ObjectMapper;
 import kong.unirest.Unirest;
@@ -14,49 +18,63 @@ import kong.unirest.UnirestInstance;
 import kong.unirest.json.JSONArray;
 import kong.unirest.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Function;
-
-/**
- * The Laserfiche Repository Repositories API client.
- */
+/** The Laserfiche Repository Repositories API client. */
 public class RepositoriesClientImpl extends ApiClient implements RepositoriesClient {
 
-    public RepositoriesClientImpl(String baseUrl, UnirestInstance httpClient, HttpRequestHandler httpRequestHandler) {
+    public RepositoriesClientImpl(
+            String baseUrl, UnirestInstance httpClient, HttpRequestHandler httpRequestHandler) {
         super(baseUrl, httpClient, httpRequestHandler);
     }
 
     @Override
     public RepositoryInfo[] getRepositoryList() {
-        Function<HttpResponse<Object>, RepositoryInfo[]> parseResponse = (HttpResponse<Object> httpResponse) -> {
-            Object body = httpResponse.getBody();
-            Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
-            if (httpResponse.getStatus() == 200) {
-                try {
-                    String responseJson = new JSONArray(((ArrayList) body).toArray()).toString();
-                    return objectMapper.readValue(responseJson, RepositoryInfo[].class);
-                } catch (Exception e) {
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
-                }
-            } else {
-                ProblemDetails problemDetails;
-                try {
-                    String jsonString = new JSONObject(body).toString();
-                    problemDetails = ProblemDetailsDeserializer.deserialize(objectMapper, jsonString);
-                } catch (Exception e) {
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
-                }
-                throw ApiClientUtils.createApiException(httpResponse, problemDetails);
-            }
-        };
-        return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler, baseUrl + "/v1/Repositories", "GET",
-                null, null, null, null, null, null, new HashMap<String, String>(), false, parseResponse);
+        Function<HttpResponse<Object>, RepositoryInfo[]> parseResponse =
+                (HttpResponse<Object> httpResponse) -> {
+                    Object body = httpResponse.getBody();
+                    Map<String, String> headersMap =
+                            ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
+                    if (httpResponse.getStatus() == 200) {
+                        try {
+                            String responseJson =
+                                    new JSONArray(((ArrayList) body).toArray()).toString();
+                            return objectMapper.readValue(responseJson, RepositoryInfo[].class);
+                        } catch (Exception e) {
+                            throw ApiException.create(
+                                    httpResponse.getStatus(), headersMap, null, e);
+                        }
+                    } else {
+                        ProblemDetails problemDetails;
+                        try {
+                            String jsonString = new JSONObject(body).toString();
+                            problemDetails =
+                                    ProblemDetailsDeserializer.deserialize(
+                                            objectMapper, jsonString);
+                        } catch (Exception e) {
+                            throw ApiException.create(
+                                    httpResponse.getStatus(), headersMap, null, e);
+                        }
+                        throw ApiClientUtils.createApiException(httpResponse, problemDetails);
+                    }
+                };
+        return ApiClientUtils.sendRequestWithRetry(
+                httpClient,
+                httpRequestHandler,
+                baseUrl + "/v1/Repositories",
+                "GET",
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                new HashMap<String, String>(),
+                false,
+                parseResponse);
     }
 
     /**
-     * Returns the repository resource list that current user has access to given the API server base URL. Only available in Laserfiche Self-Hosted.
+     * Returns the repository resource list that current user has access to given the API server
+     * base URL. Only available in Laserfiche Self-Hosted.
      *
      * @param url API server base URL e.g., https://{APIServerName}/LFRepositoryAPI
      * @return Get the repository resource list successfully.
@@ -72,15 +90,12 @@ public class RepositoriesClientImpl extends ApiClient implements RepositoriesCli
         String baseUrl = url + "/v1/Repositories";
         ObjectMapper objectMapper = new TokenClientObjectMapper();
         try (UnirestInstance httpClient = Unirest.spawnInstance()) {
-            httpClient
-                    .config()
-                    .setObjectMapper(objectMapper);
-            httpResponse = httpClient
-                    .get(baseUrl)
-                    .headers(headerKeyValuePairs)
-                    .asObject(Object.class);
+            httpClient.config().setObjectMapper(objectMapper);
+            httpResponse =
+                    httpClient.get(baseUrl).headers(headerKeyValuePairs).asObject(Object.class);
             Object body = httpResponse.getBody();
-            Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
+            Map<String, String> headersMap =
+                    ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
             if (httpResponse.getStatus() == 200) {
                 try {
                     responseJson = new JSONArray(((ArrayList) body).toArray()).toString();
@@ -92,7 +107,8 @@ public class RepositoriesClientImpl extends ApiClient implements RepositoriesCli
                 ProblemDetails problemDetails;
                 try {
                     String jsonString = new JSONObject(body).toString();
-                    problemDetails = ProblemDetailsDeserializer.deserialize(objectMapper, jsonString);
+                    problemDetails =
+                            ProblemDetailsDeserializer.deserialize(objectMapper, jsonString);
                 } catch (Exception e) {
                     throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
                 }

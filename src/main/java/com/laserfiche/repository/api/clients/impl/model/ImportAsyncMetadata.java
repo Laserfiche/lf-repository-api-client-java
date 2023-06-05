@@ -3,10 +3,11 @@ package com.laserfiche.repository.api.clients.impl.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.util.*;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
+@javax.annotation.Generated(
+        value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen",
+        date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ImportAsyncMetadata {
 
@@ -109,8 +110,9 @@ public class ImportAsyncMetadata {
             return false;
         }
         ImportAsyncMetadata importAsyncMetadata = (ImportAsyncMetadata) o;
-        return Objects.equals(this.fields, importAsyncMetadata.fields) && Objects.equals(this.tags,
-                importAsyncMetadata.tags) && Objects.equals(this.links, importAsyncMetadata.links);
+        return Objects.equals(this.fields, importAsyncMetadata.fields)
+                && Objects.equals(this.tags, importAsyncMetadata.tags)
+                && Objects.equals(this.links, importAsyncMetadata.links);
     }
 
     @Override
@@ -122,18 +124,9 @@ public class ImportAsyncMetadata {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class ImportAsyncMetadata {\n");
-        sb
-                .append("    fields: ")
-                .append(toIndentedString(fields))
-                .append("\n");
-        sb
-                .append("    tags: ")
-                .append(toIndentedString(tags))
-                .append("\n");
-        sb
-                .append("    links: ")
-                .append(toIndentedString(links))
-                .append("\n");
+        sb.append("    fields: ").append(toIndentedString(fields)).append("\n");
+        sb.append("    tags: ").append(toIndentedString(tags)).append("\n");
+        sb.append("    links: ").append(toIndentedString(links)).append("\n");
         sb.append("}");
         return sb.toString();
     }
@@ -142,8 +135,6 @@ public class ImportAsyncMetadata {
         if (o == null) {
             return "null";
         }
-        return o
-                .toString()
-                .replace("\n", "\n    ");
+        return o.toString().replace("\n", "\n    ");
     }
 }

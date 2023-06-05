@@ -3,11 +3,8 @@ package com.laserfiche.repository.api.clients.impl.model;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
-/**
- * Gets or Sets WatermarkPosition
- */
+/** Gets or Sets WatermarkPosition */
 public enum WatermarkPosition {
-
     TOP_LEFT("TopLeft"),
     TOP_CENTER("TopCenter"),
     TOP_RIGHT("TopRight"),

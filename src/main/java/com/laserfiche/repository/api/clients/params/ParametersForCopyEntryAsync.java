@@ -3,36 +3,35 @@ package com.laserfiche.repository.api.clients.params;
 import com.laserfiche.repository.api.clients.impl.model.CopyAsyncRequest;
 
 /**
- * The encapsulated parameters for {@link com.laserfiche.repository.api.clients.impl.EntriesClientImpl#copyEntryAsync(ParametersForCopyEntryAsync) copyEntryAsync}.
+ * The encapsulated parameters for {@link
+ * com.laserfiche.repository.api.clients.impl.EntriesClientImpl#copyEntryAsync(ParametersForCopyEntryAsync)
+ * copyEntryAsync}.
  */
 public class ParametersForCopyEntryAsync {
 
-    /**
-     * The requested repository ID.
-     */
+    /** The requested repository ID. */
     private String repoId;
 
-    /**
-     * The folder ID that the entry will be created in.
-     */
+    /** The folder ID that the entry will be created in. */
     private Integer entryId;
 
     private CopyAsyncRequest requestBody;
 
     /**
-     * An optional query parameter used to indicate if the new entry should be automatically
-     * renamed if an entry already exists with the given name in the folder. The default value is false.
+     * An optional query parameter used to indicate if the new entry should be automatically renamed
+     * if an entry already exists with the given name in the folder. The default value is false.
      */
     private Boolean autoRename;
 
     /**
-     * An optional query parameter used to indicate the locale that should be used.
-     * The value should be a standard language tag.
+     * An optional query parameter used to indicate the locale that should be used. The value should
+     * be a standard language tag.
      */
     private String culture;
 
     /**
-     * Sets the value of the repoId parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the repoId parameter and returns the current object, to enable chaining
+     * further setters.
      *
      * @param repoId The requested repository ID.
      * @return {@link ParametersForCopyEntryAsync} The return value
@@ -52,7 +51,8 @@ public class ParametersForCopyEntryAsync {
     }
 
     /**
-     * Sets the value of the entryId parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the entryId parameter and returns the current object, to enable chaining
+     * further setters.
      *
      * @param entryId The folder ID that the entry will be created in.
      * @return {@link ParametersForCopyEntryAsync} The return value
@@ -81,10 +81,12 @@ public class ParametersForCopyEntryAsync {
     }
 
     /**
-     * Sets the value of the autoRename parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the autoRename parameter and returns the current object, to enable chaining
+     * further setters.
      *
-     * @param autoRename An optional query parameter used to indicate if the new entry should be automatically
-     *                   renamed if an entry already exists with the given name in the folder. The default value is false.
+     * @param autoRename An optional query parameter used to indicate if the new entry should be
+     *     automatically renamed if an entry already exists with the given name in the folder. The
+     *     default value is false.
      * @return {@link ParametersForCopyEntryAsync} The return value
      */
     public ParametersForCopyEntryAsync setAutoRename(Boolean autoRename) {
@@ -93,8 +95,8 @@ public class ParametersForCopyEntryAsync {
     }
 
     /**
-     * An optional query parameter used to indicate if the new entry should be automatically
-     * renamed if an entry already exists with the given name in the folder. The default value is false.
+     * An optional query parameter used to indicate if the new entry should be automatically renamed
+     * if an entry already exists with the given name in the folder. The default value is false.
      *
      * @return {@link Boolean} The return value
      */
@@ -103,10 +105,11 @@ public class ParametersForCopyEntryAsync {
     }
 
     /**
-     * Sets the value of the culture parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the culture parameter and returns the current object, to enable chaining
+     * further setters.
      *
      * @param culture An optional query parameter used to indicate the locale that should be used.
-     *                The value should be a standard language tag.
+     *     The value should be a standard language tag.
      * @return {@link ParametersForCopyEntryAsync} The return value
      */
     public ParametersForCopyEntryAsync setCulture(String culture) {
@@ -115,8 +118,8 @@ public class ParametersForCopyEntryAsync {
     }
 
     /**
-     * An optional query parameter used to indicate the locale that should be used.
-     * The value should be a standard language tag.
+     * An optional query parameter used to indicate the locale that should be used. The value should
+     * be a standard language tag.
      *
      * @return {@link String} The return value
      */

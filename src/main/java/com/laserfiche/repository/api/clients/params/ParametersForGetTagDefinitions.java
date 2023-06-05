@@ -1,13 +1,13 @@
 package com.laserfiche.repository.api.clients.params;
 
 /**
- * The encapsulated parameters for {@link com.laserfiche.repository.api.clients.impl.TagDefinitionsClientImpl#getTagDefinitions(ParametersForGetTagDefinitions) getTagDefinitions}.
+ * The encapsulated parameters for {@link
+ * com.laserfiche.repository.api.clients.impl.TagDefinitionsClientImpl#getTagDefinitions(ParametersForGetTagDefinitions)
+ * getTagDefinitions}.
  */
 public class ParametersForGetTagDefinitions {
 
-    /**
-     * The requested repository ID.
-     */
+    /** The requested repository ID. */
     private String repoId;
 
     /**
@@ -21,24 +21,16 @@ public class ParametersForGetTagDefinitions {
      */
     private String culture;
 
-    /**
-     * Limits the properties returned in the result.
-     */
+    /** Limits the properties returned in the result. */
     private String select;
 
-    /**
-     * Specifies the order in which items are returned. The maximum number of expressions is 5.
-     */
+    /** Specifies the order in which items are returned. The maximum number of expressions is 5. */
     private String orderby;
 
-    /**
-     * Limits the number of items returned from a collection.
-     */
+    /** Limits the number of items returned from a collection. */
     private Integer top;
 
-    /**
-     * Excludes the specified number of items of the queried collection from the result.
-     */
+    /** Excludes the specified number of items of the queried collection from the result. */
     private Integer skip;
 
     /**
@@ -47,7 +39,8 @@ public class ParametersForGetTagDefinitions {
     private Boolean count;
 
     /**
-     * Sets the value of the repoId parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the repoId parameter and returns the current object, to enable chaining
+     * further setters.
      *
      * @param repoId The requested repository ID.
      * @return {@link ParametersForGetTagDefinitions} The return value
@@ -67,9 +60,11 @@ public class ParametersForGetTagDefinitions {
     }
 
     /**
-     * Sets the value of the prefer parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the prefer parameter and returns the current object, to enable chaining
+     * further setters.
      *
-     * @param prefer An optional OData header. Can be used to set the maximum page size using odata.maxpagesize.
+     * @param prefer An optional OData header. Can be used to set the maximum page size using
+     *     odata.maxpagesize.
      * @return {@link ParametersForGetTagDefinitions} The return value
      */
     public ParametersForGetTagDefinitions setPrefer(String prefer) {
@@ -87,10 +82,11 @@ public class ParametersForGetTagDefinitions {
     }
 
     /**
-     * Sets the value of the culture parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the culture parameter and returns the current object, to enable chaining
+     * further setters.
      *
-     * @param culture An optional query parameter used to indicate the locale that should be used for formatting.
-     *                The value should be a standard language tag.
+     * @param culture An optional query parameter used to indicate the locale that should be used
+     *     for formatting. The value should be a standard language tag.
      * @return {@link ParametersForGetTagDefinitions} The return value
      */
     public ParametersForGetTagDefinitions setCulture(String culture) {
@@ -109,7 +105,8 @@ public class ParametersForGetTagDefinitions {
     }
 
     /**
-     * Sets the value of the select parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the select parameter and returns the current object, to enable chaining
+     * further setters.
      *
      * @param select Limits the properties returned in the result.
      * @return {@link ParametersForGetTagDefinitions} The return value
@@ -129,9 +126,11 @@ public class ParametersForGetTagDefinitions {
     }
 
     /**
-     * Sets the value of the orderby parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the orderby parameter and returns the current object, to enable chaining
+     * further setters.
      *
-     * @param orderby Specifies the order in which items are returned. The maximum number of expressions is 5.
+     * @param orderby Specifies the order in which items are returned. The maximum number of
+     *     expressions is 5.
      * @return {@link ParametersForGetTagDefinitions} The return value
      */
     public ParametersForGetTagDefinitions setOrderby(String orderby) {
@@ -149,7 +148,8 @@ public class ParametersForGetTagDefinitions {
     }
 
     /**
-     * Sets the value of the top parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the top parameter and returns the current object, to enable chaining
+     * further setters.
      *
      * @param top Limits the number of items returned from a collection.
      * @return {@link ParametersForGetTagDefinitions} The return value
@@ -169,7 +169,8 @@ public class ParametersForGetTagDefinitions {
     }
 
     /**
-     * Sets the value of the skip parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the skip parameter and returns the current object, to enable chaining
+     * further setters.
      *
      * @param skip Excludes the specified number of items of the queried collection from the result.
      * @return {@link ParametersForGetTagDefinitions} The return value
@@ -189,9 +190,11 @@ public class ParametersForGetTagDefinitions {
     }
 
     /**
-     * Sets the value of the count parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the count parameter and returns the current object, to enable chaining
+     * further setters.
      *
-     * @param count Indicates whether the total count of items within a collection are returned in the result.
+     * @param count Indicates whether the total count of items within a collection are returned in
+     *     the result.
      * @return {@link ParametersForGetTagDefinitions} The return value
      */
     public ParametersForGetTagDefinitions setCount(Boolean count) {

@@ -1,13 +1,12 @@
 package com.laserfiche.repository.api.unit.ApiClientUtils;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import com.laserfiche.repository.api.clients.impl.ApiClientUtils;
 import com.laserfiche.repository.api.clients.impl.model.*;
-import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
 
 class GetCreateEntryResultSumaryTest {
     @Test
@@ -164,7 +163,10 @@ class GetCreateEntryResultSumaryTest {
 
         String result = ApiClientUtils.getCreateEntryResultSummary(createEntryResult);
 
-        String expectedResult = String.format("EntryId=%s. %2$s %3$s %2$s %3$s %2$s %3$s", entryId, errorMessage1, errorMessage2);
+        String expectedResult =
+                String.format(
+                        "EntryId=%s. %2$s %3$s %2$s %3$s %2$s %3$s",
+                        entryId, errorMessage1, errorMessage2);
         assertEquals(expectedResult, result);
     }
 }

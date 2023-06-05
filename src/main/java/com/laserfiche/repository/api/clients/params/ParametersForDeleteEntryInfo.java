@@ -3,24 +3,23 @@ package com.laserfiche.repository.api.clients.params;
 import com.laserfiche.repository.api.clients.impl.model.DeleteEntryWithAuditReason;
 
 /**
- * The encapsulated parameters for {@link com.laserfiche.repository.api.clients.impl.EntriesClientImpl#deleteEntryInfo(ParametersForDeleteEntryInfo) deleteEntryInfo}.
+ * The encapsulated parameters for {@link
+ * com.laserfiche.repository.api.clients.impl.EntriesClientImpl#deleteEntryInfo(ParametersForDeleteEntryInfo)
+ * deleteEntryInfo}.
  */
 public class ParametersForDeleteEntryInfo {
 
-    /**
-     * The requested repository ID.
-     */
+    /** The requested repository ID. */
     private String repoId;
 
-    /**
-     * The requested entry ID.
-     */
+    /** The requested entry ID. */
     private Integer entryId;
 
     private DeleteEntryWithAuditReason requestBody;
 
     /**
-     * Sets the value of the repoId parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the repoId parameter and returns the current object, to enable chaining
+     * further setters.
      *
      * @param repoId The requested repository ID.
      * @return {@link ParametersForDeleteEntryInfo} The return value
@@ -40,7 +39,8 @@ public class ParametersForDeleteEntryInfo {
     }
 
     /**
-     * Sets the value of the entryId parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the entryId parameter and returns the current object, to enable chaining
+     * further setters.
      *
      * @param entryId The requested entry ID.
      * @return {@link ParametersForDeleteEntryInfo} The return value

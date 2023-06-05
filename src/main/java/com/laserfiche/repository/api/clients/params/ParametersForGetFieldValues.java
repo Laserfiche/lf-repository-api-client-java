@@ -1,18 +1,16 @@
 package com.laserfiche.repository.api.clients.params;
 
 /**
- * The encapsulated parameters for {@link com.laserfiche.repository.api.clients.impl.EntriesClientImpl#getFieldValues(ParametersForGetFieldValues) getFieldValues}.
+ * The encapsulated parameters for {@link
+ * com.laserfiche.repository.api.clients.impl.EntriesClientImpl#getFieldValues(ParametersForGetFieldValues)
+ * getFieldValues}.
  */
 public class ParametersForGetFieldValues {
 
-    /**
-     * The requested repository ID.
-     */
+    /** The requested repository ID. */
     private String repoId;
 
-    /**
-     * The requested entry ID.
-     */
+    /** The requested entry ID. */
     private Integer entryId;
 
     /**
@@ -21,36 +19,28 @@ public class ParametersForGetFieldValues {
     private String prefer;
 
     /**
-     * An optional query parameter used to indicate if the field values should be formatted.
-     * The default value is false.
+     * An optional query parameter used to indicate if the field values should be formatted. The
+     * default value is false.
      */
     private Boolean formatValue;
 
     /**
      * An optional query parameter used to indicate the locale that should be used for formatting.
-     * The value should be a standard language tag. The formatValue query parameter must be set to true, otherwise
-     * culture will not be used for formatting.
+     * The value should be a standard language tag. The formatValue query parameter must be set to
+     * true, otherwise culture will not be used for formatting.
      */
     private String culture;
 
-    /**
-     * Limits the properties returned in the result.
-     */
+    /** Limits the properties returned in the result. */
     private String select;
 
-    /**
-     * Specifies the order in which items are returned. The maximum number of expressions is 5.
-     */
+    /** Specifies the order in which items are returned. The maximum number of expressions is 5. */
     private String orderby;
 
-    /**
-     * Limits the number of items returned from a collection.
-     */
+    /** Limits the number of items returned from a collection. */
     private Integer top;
 
-    /**
-     * Excludes the specified number of items of the queried collection from the result.
-     */
+    /** Excludes the specified number of items of the queried collection from the result. */
     private Integer skip;
 
     /**
@@ -59,7 +49,8 @@ public class ParametersForGetFieldValues {
     private Boolean count;
 
     /**
-     * Sets the value of the repoId parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the repoId parameter and returns the current object, to enable chaining
+     * further setters.
      *
      * @param repoId The requested repository ID.
      * @return {@link ParametersForGetFieldValues} The return value
@@ -79,7 +70,8 @@ public class ParametersForGetFieldValues {
     }
 
     /**
-     * Sets the value of the entryId parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the entryId parameter and returns the current object, to enable chaining
+     * further setters.
      *
      * @param entryId The requested entry ID.
      * @return {@link ParametersForGetFieldValues} The return value
@@ -99,9 +91,11 @@ public class ParametersForGetFieldValues {
     }
 
     /**
-     * Sets the value of the prefer parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the prefer parameter and returns the current object, to enable chaining
+     * further setters.
      *
-     * @param prefer An optional OData header. Can be used to set the maximum page size using odata.maxpagesize.
+     * @param prefer An optional OData header. Can be used to set the maximum page size using
+     *     odata.maxpagesize.
      * @return {@link ParametersForGetFieldValues} The return value
      */
     public ParametersForGetFieldValues setPrefer(String prefer) {
@@ -119,10 +113,11 @@ public class ParametersForGetFieldValues {
     }
 
     /**
-     * Sets the value of the formatValue parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the formatValue parameter and returns the current object, to enable
+     * chaining further setters.
      *
-     * @param formatValue An optional query parameter used to indicate if the field values should be formatted.
-     *                    The default value is false.
+     * @param formatValue An optional query parameter used to indicate if the field values should be
+     *     formatted. The default value is false.
      * @return {@link ParametersForGetFieldValues} The return value
      */
     public ParametersForGetFieldValues setFormatValue(Boolean formatValue) {
@@ -131,8 +126,8 @@ public class ParametersForGetFieldValues {
     }
 
     /**
-     * An optional query parameter used to indicate if the field values should be formatted.
-     * The default value is false.
+     * An optional query parameter used to indicate if the field values should be formatted. The
+     * default value is false.
      *
      * @return {@link Boolean} The return value
      */
@@ -141,11 +136,12 @@ public class ParametersForGetFieldValues {
     }
 
     /**
-     * Sets the value of the culture parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the culture parameter and returns the current object, to enable chaining
+     * further setters.
      *
-     * @param culture An optional query parameter used to indicate the locale that should be used for formatting.
-     *                The value should be a standard language tag. The formatValue query parameter must be set to true, otherwise
-     *                culture will not be used for formatting.
+     * @param culture An optional query parameter used to indicate the locale that should be used
+     *     for formatting. The value should be a standard language tag. The formatValue query
+     *     parameter must be set to true, otherwise culture will not be used for formatting.
      * @return {@link ParametersForGetFieldValues} The return value
      */
     public ParametersForGetFieldValues setCulture(String culture) {
@@ -155,8 +151,8 @@ public class ParametersForGetFieldValues {
 
     /**
      * An optional query parameter used to indicate the locale that should be used for formatting.
-     * The value should be a standard language tag. The formatValue query parameter must be set to true, otherwise
-     * culture will not be used for formatting.
+     * The value should be a standard language tag. The formatValue query parameter must be set to
+     * true, otherwise culture will not be used for formatting.
      *
      * @return {@link String} The return value
      */
@@ -165,7 +161,8 @@ public class ParametersForGetFieldValues {
     }
 
     /**
-     * Sets the value of the select parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the select parameter and returns the current object, to enable chaining
+     * further setters.
      *
      * @param select Limits the properties returned in the result.
      * @return {@link ParametersForGetFieldValues} The return value
@@ -185,9 +182,11 @@ public class ParametersForGetFieldValues {
     }
 
     /**
-     * Sets the value of the orderby parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the orderby parameter and returns the current object, to enable chaining
+     * further setters.
      *
-     * @param orderby Specifies the order in which items are returned. The maximum number of expressions is 5.
+     * @param orderby Specifies the order in which items are returned. The maximum number of
+     *     expressions is 5.
      * @return {@link ParametersForGetFieldValues} The return value
      */
     public ParametersForGetFieldValues setOrderby(String orderby) {
@@ -205,7 +204,8 @@ public class ParametersForGetFieldValues {
     }
 
     /**
-     * Sets the value of the top parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the top parameter and returns the current object, to enable chaining
+     * further setters.
      *
      * @param top Limits the number of items returned from a collection.
      * @return {@link ParametersForGetFieldValues} The return value
@@ -225,7 +225,8 @@ public class ParametersForGetFieldValues {
     }
 
     /**
-     * Sets the value of the skip parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the skip parameter and returns the current object, to enable chaining
+     * further setters.
      *
      * @param skip Excludes the specified number of items of the queried collection from the result.
      * @return {@link ParametersForGetFieldValues} The return value
@@ -245,9 +246,11 @@ public class ParametersForGetFieldValues {
     }
 
     /**
-     * Sets the value of the count parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the count parameter and returns the current object, to enable chaining
+     * further setters.
      *
-     * @param count Indicates whether the total count of items within a collection are returned in the result.
+     * @param count Indicates whether the total count of items within a collection are returned in
+     *     the result.
      * @return {@link ParametersForGetFieldValues} The return value
      */
     public ParametersForGetFieldValues setCount(Boolean count) {

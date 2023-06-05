@@ -1,18 +1,16 @@
 package com.laserfiche.repository.api.clients.params;
 
 /**
- * The encapsulated parameters for {@link com.laserfiche.repository.api.clients.impl.FieldDefinitionsClientImpl#getFieldDefinitionById(ParametersForGetFieldDefinitionById) getFieldDefinitionById}.
+ * The encapsulated parameters for {@link
+ * com.laserfiche.repository.api.clients.impl.FieldDefinitionsClientImpl#getFieldDefinitionById(ParametersForGetFieldDefinitionById)
+ * getFieldDefinitionById}.
  */
 public class ParametersForGetFieldDefinitionById {
 
-    /**
-     * The requested repository ID.
-     */
+    /** The requested repository ID. */
     private String repoId;
 
-    /**
-     * The requested field definition ID.
-     */
+    /** The requested field definition ID. */
     private Integer fieldDefinitionId;
 
     /**
@@ -21,13 +19,12 @@ public class ParametersForGetFieldDefinitionById {
      */
     private String culture;
 
-    /**
-     * Limits the properties returned in the result.
-     */
+    /** Limits the properties returned in the result. */
     private String select;
 
     /**
-     * Sets the value of the repoId parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the repoId parameter and returns the current object, to enable chaining
+     * further setters.
      *
      * @param repoId The requested repository ID.
      * @return {@link ParametersForGetFieldDefinitionById} The return value
@@ -47,7 +44,8 @@ public class ParametersForGetFieldDefinitionById {
     }
 
     /**
-     * Sets the value of the fieldDefinitionId parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the fieldDefinitionId parameter and returns the current object, to enable
+     * chaining further setters.
      *
      * @param fieldDefinitionId The requested field definition ID.
      * @return {@link ParametersForGetFieldDefinitionById} The return value
@@ -67,10 +65,11 @@ public class ParametersForGetFieldDefinitionById {
     }
 
     /**
-     * Sets the value of the culture parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the culture parameter and returns the current object, to enable chaining
+     * further setters.
      *
-     * @param culture An optional query parameter used to indicate the locale that should be used for formatting.
-     *                The value should be a standard language tag.
+     * @param culture An optional query parameter used to indicate the locale that should be used
+     *     for formatting. The value should be a standard language tag.
      * @return {@link ParametersForGetFieldDefinitionById} The return value
      */
     public ParametersForGetFieldDefinitionById setCulture(String culture) {
@@ -89,7 +88,8 @@ public class ParametersForGetFieldDefinitionById {
     }
 
     /**
-     * Sets the value of the select parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the select parameter and returns the current object, to enable chaining
+     * further setters.
      *
      * @param select Limits the properties returned in the result.
      * @return {@link ParametersForGetFieldDefinitionById} The return value

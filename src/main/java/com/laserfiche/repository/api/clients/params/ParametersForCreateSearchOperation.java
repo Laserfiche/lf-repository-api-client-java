@@ -3,19 +3,20 @@ package com.laserfiche.repository.api.clients.params;
 import com.laserfiche.repository.api.clients.impl.model.AdvancedSearchRequest;
 
 /**
- * The encapsulated parameters for {@link com.laserfiche.repository.api.clients.impl.SearchesClientImpl#createSearchOperation(ParametersForCreateSearchOperation) createSearchOperation}.
+ * The encapsulated parameters for {@link
+ * com.laserfiche.repository.api.clients.impl.SearchesClientImpl#createSearchOperation(ParametersForCreateSearchOperation)
+ * createSearchOperation}.
  */
 public class ParametersForCreateSearchOperation {
 
-    /**
-     * The requested repository ID.
-     */
+    /** The requested repository ID. */
     private String repoId;
 
     private AdvancedSearchRequest requestBody;
 
     /**
-     * Sets the value of the repoId parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the repoId parameter and returns the current object, to enable chaining
+     * further setters.
      *
      * @param repoId The requested repository ID.
      * @return {@link ParametersForCreateSearchOperation} The return value

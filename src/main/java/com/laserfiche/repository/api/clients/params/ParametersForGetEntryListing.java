@@ -1,33 +1,31 @@
 package com.laserfiche.repository.api.clients.params;
 
 /**
- * The encapsulated parameters for {@link com.laserfiche.repository.api.clients.impl.EntriesClientImpl#getEntryListing(ParametersForGetEntryListing) getEntryListing}.
+ * The encapsulated parameters for {@link
+ * com.laserfiche.repository.api.clients.impl.EntriesClientImpl#getEntryListing(ParametersForGetEntryListing)
+ * getEntryListing}.
  */
 public class ParametersForGetEntryListing {
 
-    /**
-     * The requested repository ID.
-     */
+    /** The requested repository ID. */
     private String repoId;
 
-    /**
-     * The folder ID.
-     */
+    /** The folder ID. */
     private Integer entryId;
 
     /**
-     * An optional query parameter used to indicate if the result should be grouped by entry type or not.
+     * An optional query parameter used to indicate if the result should be grouped by entry type or
+     * not.
      */
     private Boolean groupByEntryType;
 
     /**
-     * Optional array of field names. Field values corresponding to the given field names will be returned for each entry.
+     * Optional array of field names. Field values corresponding to the given field names will be
+     * returned for each entry.
      */
     private String[] fields;
 
-    /**
-     * Boolean for if field values should be formatted. Only applicable if Fields are specified.
-     */
+    /** Boolean for if field values should be formatted. Only applicable if Fields are specified. */
     private Boolean formatFields;
 
     /**
@@ -37,29 +35,21 @@ public class ParametersForGetEntryListing {
 
     /**
      * An optional query parameter used to indicate the locale that should be used for formatting.
-     * The value should be a standard language tag. The formatFields query parameter must be set to true, otherwise
-     * culture will not be used for formatting.
+     * The value should be a standard language tag. The formatFields query parameter must be set to
+     * true, otherwise culture will not be used for formatting.
      */
     private String culture;
 
-    /**
-     * Limits the properties returned in the result.
-     */
+    /** Limits the properties returned in the result. */
     private String select;
 
-    /**
-     * Specifies the order in which items are returned. The maximum number of expressions is 5.
-     */
+    /** Specifies the order in which items are returned. The maximum number of expressions is 5. */
     private String orderby;
 
-    /**
-     * Limits the number of items returned from a collection.
-     */
+    /** Limits the number of items returned from a collection. */
     private Integer top;
 
-    /**
-     * Excludes the specified number of items of the queried collection from the result.
-     */
+    /** Excludes the specified number of items of the queried collection from the result. */
     private Integer skip;
 
     /**
@@ -68,7 +58,8 @@ public class ParametersForGetEntryListing {
     private Boolean count;
 
     /**
-     * Sets the value of the repoId parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the repoId parameter and returns the current object, to enable chaining
+     * further setters.
      *
      * @param repoId The requested repository ID.
      * @return {@link ParametersForGetEntryListing} The return value
@@ -88,7 +79,8 @@ public class ParametersForGetEntryListing {
     }
 
     /**
-     * Sets the value of the entryId parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the entryId parameter and returns the current object, to enable chaining
+     * further setters.
      *
      * @param entryId The folder ID.
      * @return {@link ParametersForGetEntryListing} The return value
@@ -108,9 +100,11 @@ public class ParametersForGetEntryListing {
     }
 
     /**
-     * Sets the value of the groupByEntryType parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the groupByEntryType parameter and returns the current object, to enable
+     * chaining further setters.
      *
-     * @param groupByEntryType An optional query parameter used to indicate if the result should be grouped by entry type or not.
+     * @param groupByEntryType An optional query parameter used to indicate if the result should be
+     *     grouped by entry type or not.
      * @return {@link ParametersForGetEntryListing} The return value
      */
     public ParametersForGetEntryListing setGroupByEntryType(Boolean groupByEntryType) {
@@ -119,7 +113,8 @@ public class ParametersForGetEntryListing {
     }
 
     /**
-     * An optional query parameter used to indicate if the result should be grouped by entry type or not.
+     * An optional query parameter used to indicate if the result should be grouped by entry type or
+     * not.
      *
      * @return {@link Boolean} The return value
      */
@@ -128,9 +123,11 @@ public class ParametersForGetEntryListing {
     }
 
     /**
-     * Sets the value of the fields parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the fields parameter and returns the current object, to enable chaining
+     * further setters.
      *
-     * @param fields Optional array of field names. Field values corresponding to the given field names will be returned for each entry.
+     * @param fields Optional array of field names. Field values corresponding to the given field
+     *     names will be returned for each entry.
      * @return {@link ParametersForGetEntryListing} The return value
      */
     public ParametersForGetEntryListing setFields(String[] fields) {
@@ -139,7 +136,8 @@ public class ParametersForGetEntryListing {
     }
 
     /**
-     * Optional array of field names. Field values corresponding to the given field names will be returned for each entry.
+     * Optional array of field names. Field values corresponding to the given field names will be
+     * returned for each entry.
      *
      * @return {@link String[]} The return value
      */
@@ -148,9 +146,11 @@ public class ParametersForGetEntryListing {
     }
 
     /**
-     * Sets the value of the formatFields parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the formatFields parameter and returns the current object, to enable
+     * chaining further setters.
      *
-     * @param formatFields Boolean for if field values should be formatted. Only applicable if Fields are specified.
+     * @param formatFields Boolean for if field values should be formatted. Only applicable if
+     *     Fields are specified.
      * @return {@link ParametersForGetEntryListing} The return value
      */
     public ParametersForGetEntryListing setFormatFields(Boolean formatFields) {
@@ -168,9 +168,11 @@ public class ParametersForGetEntryListing {
     }
 
     /**
-     * Sets the value of the prefer parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the prefer parameter and returns the current object, to enable chaining
+     * further setters.
      *
-     * @param prefer An optional OData header. Can be used to set the maximum page size using odata.maxpagesize.
+     * @param prefer An optional OData header. Can be used to set the maximum page size using
+     *     odata.maxpagesize.
      * @return {@link ParametersForGetEntryListing} The return value
      */
     public ParametersForGetEntryListing setPrefer(String prefer) {
@@ -188,11 +190,12 @@ public class ParametersForGetEntryListing {
     }
 
     /**
-     * Sets the value of the culture parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the culture parameter and returns the current object, to enable chaining
+     * further setters.
      *
-     * @param culture An optional query parameter used to indicate the locale that should be used for formatting.
-     *                The value should be a standard language tag. The formatFields query parameter must be set to true, otherwise
-     *                culture will not be used for formatting.
+     * @param culture An optional query parameter used to indicate the locale that should be used
+     *     for formatting. The value should be a standard language tag. The formatFields query
+     *     parameter must be set to true, otherwise culture will not be used for formatting.
      * @return {@link ParametersForGetEntryListing} The return value
      */
     public ParametersForGetEntryListing setCulture(String culture) {
@@ -202,8 +205,8 @@ public class ParametersForGetEntryListing {
 
     /**
      * An optional query parameter used to indicate the locale that should be used for formatting.
-     * The value should be a standard language tag. The formatFields query parameter must be set to true, otherwise
-     * culture will not be used for formatting.
+     * The value should be a standard language tag. The formatFields query parameter must be set to
+     * true, otherwise culture will not be used for formatting.
      *
      * @return {@link String} The return value
      */
@@ -212,7 +215,8 @@ public class ParametersForGetEntryListing {
     }
 
     /**
-     * Sets the value of the select parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the select parameter and returns the current object, to enable chaining
+     * further setters.
      *
      * @param select Limits the properties returned in the result.
      * @return {@link ParametersForGetEntryListing} The return value
@@ -232,9 +236,11 @@ public class ParametersForGetEntryListing {
     }
 
     /**
-     * Sets the value of the orderby parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the orderby parameter and returns the current object, to enable chaining
+     * further setters.
      *
-     * @param orderby Specifies the order in which items are returned. The maximum number of expressions is 5.
+     * @param orderby Specifies the order in which items are returned. The maximum number of
+     *     expressions is 5.
      * @return {@link ParametersForGetEntryListing} The return value
      */
     public ParametersForGetEntryListing setOrderby(String orderby) {
@@ -252,7 +258,8 @@ public class ParametersForGetEntryListing {
     }
 
     /**
-     * Sets the value of the top parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the top parameter and returns the current object, to enable chaining
+     * further setters.
      *
      * @param top Limits the number of items returned from a collection.
      * @return {@link ParametersForGetEntryListing} The return value
@@ -272,7 +279,8 @@ public class ParametersForGetEntryListing {
     }
 
     /**
-     * Sets the value of the skip parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the skip parameter and returns the current object, to enable chaining
+     * further setters.
      *
      * @param skip Excludes the specified number of items of the queried collection from the result.
      * @return {@link ParametersForGetEntryListing} The return value
@@ -292,9 +300,11 @@ public class ParametersForGetEntryListing {
     }
 
     /**
-     * Sets the value of the count parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the count parameter and returns the current object, to enable chaining
+     * further setters.
      *
-     * @param count Indicates whether the total count of items within a collection are returned in the result.
+     * @param count Indicates whether the total count of items within a collection are returned in
+     *     the result.
      * @return {@link ParametersForGetEntryListing} The return value
      */
     public ParametersForGetEntryListing setCount(Boolean count) {

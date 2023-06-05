@@ -7,50 +7,68 @@ import com.laserfiche.api.client.model.ProblemDetails;
 import com.laserfiche.repository.api.clients.AuditReasonsClient;
 import com.laserfiche.repository.api.clients.impl.model.AuditReasons;
 import com.laserfiche.repository.api.clients.params.ParametersForGetAuditReasons;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Function;
 import kong.unirest.HttpResponse;
 import kong.unirest.UnirestInstance;
 import kong.unirest.json.JSONObject;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Function;
-
-/**
- * The Laserfiche Repository AuditReasons API client.
- */
+/** The Laserfiche Repository AuditReasons API client. */
 public class AuditReasonsClientImpl extends ApiClient implements AuditReasonsClient {
 
-    public AuditReasonsClientImpl(String baseUrl, UnirestInstance httpClient, HttpRequestHandler httpRequestHandler) {
+    public AuditReasonsClientImpl(
+            String baseUrl, UnirestInstance httpClient, HttpRequestHandler httpRequestHandler) {
         super(baseUrl, httpClient, httpRequestHandler);
     }
 
     @Override
     public AuditReasons getAuditReasons(ParametersForGetAuditReasons parameters) {
-        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"},
-                new String[]{"repoId"}, new Object[]{parameters.getRepoId()});
-        Function<HttpResponse<Object>, AuditReasons> parseResponse = (HttpResponse<Object> httpResponse) -> {
-            Object body = httpResponse.getBody();
-            Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
-            if (httpResponse.getStatus() == 200) {
-                try {
-                    String responseJson = new JSONObject(body).toString();
-                    return objectMapper.readValue(responseJson, AuditReasons.class);
-                } catch (Exception e) {
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
-                }
-            } else {
-                ProblemDetails problemDetails;
-                try {
-                    String jsonString = new JSONObject(body).toString();
-                    problemDetails = ProblemDetailsDeserializer.deserialize(objectMapper, jsonString);
-                } catch (Exception e) {
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
-                }
-                throw ApiClientUtils.createApiException(httpResponse, problemDetails);
-            }
-        };
-        return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler,
-                baseUrl + "/v1/Repositories/{repoId}/AuditReasons", "GET", null, null, null, null, null, pathParameters,
-                new HashMap<String, String>(), false, parseResponse);
+        Map<String, Object> pathParameters =
+                ApiClientUtils.getParametersWithNonDefaultValue(
+                        new String[] {"String"},
+                        new String[] {"repoId"},
+                        new Object[] {parameters.getRepoId()});
+        Function<HttpResponse<Object>, AuditReasons> parseResponse =
+                (HttpResponse<Object> httpResponse) -> {
+                    Object body = httpResponse.getBody();
+                    Map<String, String> headersMap =
+                            ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
+                    if (httpResponse.getStatus() == 200) {
+                        try {
+                            String responseJson = new JSONObject(body).toString();
+                            return objectMapper.readValue(responseJson, AuditReasons.class);
+                        } catch (Exception e) {
+                            throw ApiException.create(
+                                    httpResponse.getStatus(), headersMap, null, e);
+                        }
+                    } else {
+                        ProblemDetails problemDetails;
+                        try {
+                            String jsonString = new JSONObject(body).toString();
+                            problemDetails =
+                                    ProblemDetailsDeserializer.deserialize(
+                                            objectMapper, jsonString);
+                        } catch (Exception e) {
+                            throw ApiException.create(
+                                    httpResponse.getStatus(), headersMap, null, e);
+                        }
+                        throw ApiClientUtils.createApiException(httpResponse, problemDetails);
+                    }
+                };
+        return ApiClientUtils.sendRequestWithRetry(
+                httpClient,
+                httpRequestHandler,
+                baseUrl + "/v1/Repositories/{repoId}/AuditReasons",
+                "GET",
+                null,
+                null,
+                null,
+                null,
+                null,
+                pathParameters,
+                new HashMap<String, String>(),
+                false,
+                parseResponse);
     }
 }

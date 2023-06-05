@@ -3,10 +3,11 @@ package com.laserfiche.repository.api.clients.impl.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.util.Objects;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
+@javax.annotation.Generated(
+        value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen",
+        date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class RepositoryInfo {
 
@@ -85,8 +86,9 @@ public class RepositoryInfo {
             return false;
         }
         RepositoryInfo repositoryInfo = (RepositoryInfo) o;
-        return Objects.equals(this.repoId, repositoryInfo.repoId) && Objects.equals(this.repoName,
-                repositoryInfo.repoName) && Objects.equals(this.webclientUrl, repositoryInfo.webclientUrl);
+        return Objects.equals(this.repoId, repositoryInfo.repoId)
+                && Objects.equals(this.repoName, repositoryInfo.repoName)
+                && Objects.equals(this.webclientUrl, repositoryInfo.webclientUrl);
     }
 
     @Override
@@ -98,18 +100,9 @@ public class RepositoryInfo {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class RepositoryInfo {\n");
-        sb
-                .append("    repoId: ")
-                .append(toIndentedString(repoId))
-                .append("\n");
-        sb
-                .append("    repoName: ")
-                .append(toIndentedString(repoName))
-                .append("\n");
-        sb
-                .append("    webclientUrl: ")
-                .append(toIndentedString(webclientUrl))
-                .append("\n");
+        sb.append("    repoId: ").append(toIndentedString(repoId)).append("\n");
+        sb.append("    repoName: ").append(toIndentedString(repoName)).append("\n");
+        sb.append("    webclientUrl: ").append(toIndentedString(webclientUrl)).append("\n");
         sb.append("}");
         return sb.toString();
     }
@@ -118,8 +111,6 @@ public class RepositoryInfo {
         if (o == null) {
             return "null";
         }
-        return o
-                .toString()
-                .replace("\n", "\n    ");
+        return o.toString().replace("\n", "\n    ");
     }
 }

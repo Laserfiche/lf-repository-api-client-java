@@ -3,10 +3,11 @@ package com.laserfiche.repository.api.clients.impl.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.util.Objects;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
+@javax.annotation.Generated(
+        value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen",
+        date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Attribute {
 
@@ -63,7 +64,8 @@ public class Attribute {
             return false;
         }
         Attribute attribute = (Attribute) o;
-        return Objects.equals(this.key, attribute.key) && Objects.equals(this.value, attribute.value);
+        return Objects.equals(this.key, attribute.key)
+                && Objects.equals(this.value, attribute.value);
     }
 
     @Override
@@ -75,14 +77,8 @@ public class Attribute {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class Attribute {\n");
-        sb
-                .append("    key: ")
-                .append(toIndentedString(key))
-                .append("\n");
-        sb
-                .append("    value: ")
-                .append(toIndentedString(value))
-                .append("\n");
+        sb.append("    key: ").append(toIndentedString(key)).append("\n");
+        sb.append("    value: ").append(toIndentedString(value)).append("\n");
         sb.append("}");
         return sb.toString();
     }
@@ -91,8 +87,6 @@ public class Attribute {
         if (o == null) {
             return "null";
         }
-        return o
-                .toString()
-                .replace("\n", "\n    ");
+        return o.toString().replace("\n", "\n    ");
     }
 }

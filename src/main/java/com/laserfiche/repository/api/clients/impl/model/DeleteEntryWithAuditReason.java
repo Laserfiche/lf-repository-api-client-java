@@ -3,10 +3,11 @@ package com.laserfiche.repository.api.clients.impl.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.util.Objects;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
+@javax.annotation.Generated(
+        value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen",
+        date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class DeleteEntryWithAuditReason {
 
@@ -63,8 +64,8 @@ public class DeleteEntryWithAuditReason {
             return false;
         }
         DeleteEntryWithAuditReason deleteEntryWithAuditReason = (DeleteEntryWithAuditReason) o;
-        return Objects.equals(this.auditReasonId, deleteEntryWithAuditReason.auditReasonId) && Objects.equals(
-                this.comment, deleteEntryWithAuditReason.comment);
+        return Objects.equals(this.auditReasonId, deleteEntryWithAuditReason.auditReasonId)
+                && Objects.equals(this.comment, deleteEntryWithAuditReason.comment);
     }
 
     @Override
@@ -76,14 +77,8 @@ public class DeleteEntryWithAuditReason {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class DeleteEntryWithAuditReason {\n");
-        sb
-                .append("    auditReasonId: ")
-                .append(toIndentedString(auditReasonId))
-                .append("\n");
-        sb
-                .append("    comment: ")
-                .append(toIndentedString(comment))
-                .append("\n");
+        sb.append("    auditReasonId: ").append(toIndentedString(auditReasonId)).append("\n");
+        sb.append("    comment: ").append(toIndentedString(comment)).append("\n");
         sb.append("}");
         return sb.toString();
     }
@@ -92,8 +87,6 @@ public class DeleteEntryWithAuditReason {
         if (o == null) {
             return "null";
         }
-        return o
-                .toString()
-                .replace("\n", "\n    ");
+        return o.toString().replace("\n", "\n    ");
     }
 }

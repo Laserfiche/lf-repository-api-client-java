@@ -1,5 +1,8 @@
 package com.laserfiche.repository.api.integration;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import com.laserfiche.repository.api.clients.LinkDefinitionsClient;
 import com.laserfiche.repository.api.clients.impl.model.EntryLinkTypeInfo;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfEntryLinkTypeInfo;
@@ -7,9 +10,6 @@ import com.laserfiche.repository.api.clients.params.ParametersForGetLinkDefiniti
 import com.laserfiche.repository.api.clients.params.ParametersForGetLinkDefinitions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class LinkDefinitionsApiTest extends BaseTest {
     LinkDefinitionsClient client;
@@ -21,25 +21,26 @@ public class LinkDefinitionsApiTest extends BaseTest {
 
     @Test
     void getLinkDefinitions_ReturnAllLinks() {
-        ODataValueContextOfIListOfEntryLinkTypeInfo linkDefinitionsResponse = client.getLinkDefinitions(
-                new ParametersForGetLinkDefinitions().setRepoId(repositoryId));
+        ODataValueContextOfIListOfEntryLinkTypeInfo linkDefinitionsResponse =
+                client.getLinkDefinitions(
+                        new ParametersForGetLinkDefinitions().setRepoId(repositoryId));
 
         assertNotNull(linkDefinitionsResponse.getValue());
     }
 
     @Test
     void getLinkDefinitionsById_ReturnLinkDefinition() {
-        ODataValueContextOfIListOfEntryLinkTypeInfo allLinkDefinitionsResult = client.getLinkDefinitions(
-                new ParametersForGetLinkDefinitions().setRepoId(repositoryId));
-        EntryLinkTypeInfo firstLinkDefinition = allLinkDefinitionsResult
-                .getValue()
-                .get(0);
+        ODataValueContextOfIListOfEntryLinkTypeInfo allLinkDefinitionsResult =
+                client.getLinkDefinitions(
+                        new ParametersForGetLinkDefinitions().setRepoId(repositoryId));
+        EntryLinkTypeInfo firstLinkDefinition = allLinkDefinitionsResult.getValue().get(0);
         assertNotNull(firstLinkDefinition);
 
-        EntryLinkTypeInfo linkDefinitions = client.getLinkDefinitionById(
-                new ParametersForGetLinkDefinitionById()
-                        .setRepoId(repositoryId)
-                        .setLinkTypeId(firstLinkDefinition.getLinkTypeId()));
+        EntryLinkTypeInfo linkDefinitions =
+                client.getLinkDefinitionById(
+                        new ParametersForGetLinkDefinitionById()
+                                .setRepoId(repositoryId)
+                                .setLinkTypeId(firstLinkDefinition.getLinkTypeId()));
 
         assertNotNull(linkDefinitions);
         assertEquals(linkDefinitions.getLinkTypeId(), firstLinkDefinition.getLinkTypeId());

@@ -1,55 +1,48 @@
 package com.laserfiche.repository.api.clients.params;
 
 import com.laserfiche.repository.api.clients.impl.model.PostEntryWithEdocMetadataRequest;
-
 import java.io.InputStream;
 
 /**
- * The encapsulated parameters for {@link com.laserfiche.repository.api.clients.impl.EntriesClientImpl#importDocument(ParametersForImportDocument) importDocument}.
+ * The encapsulated parameters for {@link
+ * com.laserfiche.repository.api.clients.impl.EntriesClientImpl#importDocument(ParametersForImportDocument)
+ * importDocument}.
  */
 public class ParametersForImportDocument {
 
-    /**
-     * The requested repository ID.
-     */
+    /** The requested repository ID. */
     private String repoId;
 
-    /**
-     * The entry ID of the folder that the document will be created in.
-     */
+    /** The entry ID of the folder that the document will be created in. */
     private Integer parentEntryId;
 
-    /**
-     * The created document's file name.
-     */
+    /** The created document's file name. */
     private String fileName;
 
     /**
      * An optional query parameter used to indicate if the new document should be automatically
-     * renamed if an entry already exists with the given name in the folder. The default value is false.
+     * renamed if an entry already exists with the given name in the folder. The default value is
+     * false.
      */
     private Boolean autoRename;
 
     /**
-     * An optional query parameter used to indicate the locale that should be used.
-     * The value should be a standard language tag. This may be used when setting field values with tokens.
+     * An optional query parameter used to indicate the locale that should be used. The value should
+     * be a standard language tag. This may be used when setting field values with tokens.
      */
     private String culture;
 
-    /**
-     * The content type of the file.
-     */
+    /** The content type of the file. */
     private String contentType;
 
-    /**
-     * An InputStream object to read the raw bytes for the file to be uploaded.
-     */
+    /** An InputStream object to read the raw bytes for the file to be uploaded. */
     private InputStream inputStream;
 
     private PostEntryWithEdocMetadataRequest requestBody;
 
     /**
-     * Sets the value of the repoId parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the repoId parameter and returns the current object, to enable chaining
+     * further setters.
      *
      * @param repoId The requested repository ID.
      * @return {@link ParametersForImportDocument} The return value
@@ -69,7 +62,8 @@ public class ParametersForImportDocument {
     }
 
     /**
-     * Sets the value of the parentEntryId parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the parentEntryId parameter and returns the current object, to enable
+     * chaining further setters.
      *
      * @param parentEntryId The entry ID of the folder that the document will be created in.
      * @return {@link ParametersForImportDocument} The return value
@@ -89,7 +83,8 @@ public class ParametersForImportDocument {
     }
 
     /**
-     * Sets the value of the fileName parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the fileName parameter and returns the current object, to enable chaining
+     * further setters.
      *
      * @param fileName The created document's file name.
      * @return {@link ParametersForImportDocument} The return value
@@ -109,10 +104,12 @@ public class ParametersForImportDocument {
     }
 
     /**
-     * Sets the value of the autoRename parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the autoRename parameter and returns the current object, to enable chaining
+     * further setters.
      *
-     * @param autoRename An optional query parameter used to indicate if the new document should be automatically
-     *                   renamed if an entry already exists with the given name in the folder. The default value is false.
+     * @param autoRename An optional query parameter used to indicate if the new document should be
+     *     automatically renamed if an entry already exists with the given name in the folder. The
+     *     default value is false.
      * @return {@link ParametersForImportDocument} The return value
      */
     public ParametersForImportDocument setAutoRename(Boolean autoRename) {
@@ -122,7 +119,8 @@ public class ParametersForImportDocument {
 
     /**
      * An optional query parameter used to indicate if the new document should be automatically
-     * renamed if an entry already exists with the given name in the folder. The default value is false.
+     * renamed if an entry already exists with the given name in the folder. The default value is
+     * false.
      *
      * @return {@link Boolean} The return value
      */
@@ -131,10 +129,12 @@ public class ParametersForImportDocument {
     }
 
     /**
-     * Sets the value of the culture parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the culture parameter and returns the current object, to enable chaining
+     * further setters.
      *
      * @param culture An optional query parameter used to indicate the locale that should be used.
-     *                The value should be a standard language tag. This may be used when setting field values with tokens.
+     *     The value should be a standard language tag. This may be used when setting field values
+     *     with tokens.
      * @return {@link ParametersForImportDocument} The return value
      */
     public ParametersForImportDocument setCulture(String culture) {
@@ -143,8 +143,8 @@ public class ParametersForImportDocument {
     }
 
     /**
-     * An optional query parameter used to indicate the locale that should be used.
-     * The value should be a standard language tag. This may be used when setting field values with tokens.
+     * An optional query parameter used to indicate the locale that should be used. The value should
+     * be a standard language tag. This may be used when setting field values with tokens.
      *
      * @return {@link String} The return value
      */
@@ -153,7 +153,8 @@ public class ParametersForImportDocument {
     }
 
     /**
-     * Sets the value of the contentType parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the contentType parameter and returns the current object, to enable
+     * chaining further setters.
      *
      * @return {@link ParametersForImportDocument} The return value
      */
@@ -172,7 +173,8 @@ public class ParametersForImportDocument {
     }
 
     /**
-     * Sets the value of the inputStream parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the inputStream parameter and returns the current object, to enable
+     * chaining further setters.
      *
      * @return {@link ParametersForImportDocument} The return value
      */
@@ -190,7 +192,8 @@ public class ParametersForImportDocument {
         return this.inputStream;
     }
 
-    public ParametersForImportDocument setRequestBody(PostEntryWithEdocMetadataRequest requestBody) {
+    public ParametersForImportDocument setRequestBody(
+            PostEntryWithEdocMetadataRequest requestBody) {
         this.requestBody = requestBody;
         return this;
     }

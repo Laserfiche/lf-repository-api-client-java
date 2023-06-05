@@ -1,38 +1,34 @@
 package com.laserfiche.repository.api.clients.params;
 
 /**
- * The encapsulated parameters for {@link com.laserfiche.repository.api.clients.impl.SearchesClientImpl#getSearchResults(ParametersForGetSearchResults) getSearchResults}.
+ * The encapsulated parameters for {@link
+ * com.laserfiche.repository.api.clients.impl.SearchesClientImpl#getSearchResults(ParametersForGetSearchResults)
+ * getSearchResults}.
  */
 public class ParametersForGetSearchResults {
 
-    /**
-     * The requested repository ID.
-     */
+    /** The requested repository ID. */
     private String repoId;
 
-    /**
-     * The requested searchToken.
-     */
+    /** The requested searchToken. */
     private String searchToken;
 
     /**
-     * An optional query parameter used to indicate if the result should be grouped by entry type or not.
+     * An optional query parameter used to indicate if the result should be grouped by entry type or
+     * not.
      */
     private Boolean groupByEntryType;
 
-    /**
-     * If the search listing should be refreshed to show updated values.
-     */
+    /** If the search listing should be refreshed to show updated values. */
     private Boolean refresh;
 
     /**
-     * Optional array of field names. Field values corresponding to the given field names will be returned for each search result.
+     * Optional array of field names. Field values corresponding to the given field names will be
+     * returned for each search result.
      */
     private String[] fields;
 
-    /**
-     * Boolean for if field values should be formatted. Only applicable if Fields are specified.
-     */
+    /** Boolean for if field values should be formatted. Only applicable if Fields are specified. */
     private Boolean formatFields;
 
     /**
@@ -42,29 +38,21 @@ public class ParametersForGetSearchResults {
 
     /**
      * An optional query parameter used to indicate the locale that should be used for formatting.
-     * The value should be a standard language tag. The formatFields query parameter must be set to true, otherwise
-     * culture will not be used for formatting.
+     * The value should be a standard language tag. The formatFields query parameter must be set to
+     * true, otherwise culture will not be used for formatting.
      */
     private String culture;
 
-    /**
-     * Limits the properties returned in the result.
-     */
+    /** Limits the properties returned in the result. */
     private String select;
 
-    /**
-     * Specifies the order in which items are returned. The maximum number of expressions is 5.
-     */
+    /** Specifies the order in which items are returned. The maximum number of expressions is 5. */
     private String orderby;
 
-    /**
-     * Limits the number of items returned from a collection.
-     */
+    /** Limits the number of items returned from a collection. */
     private Integer top;
 
-    /**
-     * Excludes the specified number of items of the queried collection from the result.
-     */
+    /** Excludes the specified number of items of the queried collection from the result. */
     private Integer skip;
 
     /**
@@ -73,7 +61,8 @@ public class ParametersForGetSearchResults {
     private Boolean count;
 
     /**
-     * Sets the value of the repoId parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the repoId parameter and returns the current object, to enable chaining
+     * further setters.
      *
      * @param repoId The requested repository ID.
      * @return {@link ParametersForGetSearchResults} The return value
@@ -93,7 +82,8 @@ public class ParametersForGetSearchResults {
     }
 
     /**
-     * Sets the value of the searchToken parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the searchToken parameter and returns the current object, to enable
+     * chaining further setters.
      *
      * @param searchToken The requested searchToken.
      * @return {@link ParametersForGetSearchResults} The return value
@@ -113,9 +103,11 @@ public class ParametersForGetSearchResults {
     }
 
     /**
-     * Sets the value of the groupByEntryType parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the groupByEntryType parameter and returns the current object, to enable
+     * chaining further setters.
      *
-     * @param groupByEntryType An optional query parameter used to indicate if the result should be grouped by entry type or not.
+     * @param groupByEntryType An optional query parameter used to indicate if the result should be
+     *     grouped by entry type or not.
      * @return {@link ParametersForGetSearchResults} The return value
      */
     public ParametersForGetSearchResults setGroupByEntryType(Boolean groupByEntryType) {
@@ -124,7 +116,8 @@ public class ParametersForGetSearchResults {
     }
 
     /**
-     * An optional query parameter used to indicate if the result should be grouped by entry type or not.
+     * An optional query parameter used to indicate if the result should be grouped by entry type or
+     * not.
      *
      * @return {@link Boolean} The return value
      */
@@ -133,7 +126,8 @@ public class ParametersForGetSearchResults {
     }
 
     /**
-     * Sets the value of the refresh parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the refresh parameter and returns the current object, to enable chaining
+     * further setters.
      *
      * @param refresh If the search listing should be refreshed to show updated values.
      * @return {@link ParametersForGetSearchResults} The return value
@@ -153,9 +147,11 @@ public class ParametersForGetSearchResults {
     }
 
     /**
-     * Sets the value of the fields parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the fields parameter and returns the current object, to enable chaining
+     * further setters.
      *
-     * @param fields Optional array of field names. Field values corresponding to the given field names will be returned for each search result.
+     * @param fields Optional array of field names. Field values corresponding to the given field
+     *     names will be returned for each search result.
      * @return {@link ParametersForGetSearchResults} The return value
      */
     public ParametersForGetSearchResults setFields(String[] fields) {
@@ -164,7 +160,8 @@ public class ParametersForGetSearchResults {
     }
 
     /**
-     * Optional array of field names. Field values corresponding to the given field names will be returned for each search result.
+     * Optional array of field names. Field values corresponding to the given field names will be
+     * returned for each search result.
      *
      * @return {@link String[]} The return value
      */
@@ -173,9 +170,11 @@ public class ParametersForGetSearchResults {
     }
 
     /**
-     * Sets the value of the formatFields parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the formatFields parameter and returns the current object, to enable
+     * chaining further setters.
      *
-     * @param formatFields Boolean for if field values should be formatted. Only applicable if Fields are specified.
+     * @param formatFields Boolean for if field values should be formatted. Only applicable if
+     *     Fields are specified.
      * @return {@link ParametersForGetSearchResults} The return value
      */
     public ParametersForGetSearchResults setFormatFields(Boolean formatFields) {
@@ -193,9 +192,11 @@ public class ParametersForGetSearchResults {
     }
 
     /**
-     * Sets the value of the prefer parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the prefer parameter and returns the current object, to enable chaining
+     * further setters.
      *
-     * @param prefer An optional odata header. Can be used to set the maximum page size using odata.maxpagesize.
+     * @param prefer An optional odata header. Can be used to set the maximum page size using
+     *     odata.maxpagesize.
      * @return {@link ParametersForGetSearchResults} The return value
      */
     public ParametersForGetSearchResults setPrefer(String prefer) {
@@ -213,11 +214,12 @@ public class ParametersForGetSearchResults {
     }
 
     /**
-     * Sets the value of the culture parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the culture parameter and returns the current object, to enable chaining
+     * further setters.
      *
-     * @param culture An optional query parameter used to indicate the locale that should be used for formatting.
-     *                The value should be a standard language tag. The formatFields query parameter must be set to true, otherwise
-     *                culture will not be used for formatting.
+     * @param culture An optional query parameter used to indicate the locale that should be used
+     *     for formatting. The value should be a standard language tag. The formatFields query
+     *     parameter must be set to true, otherwise culture will not be used for formatting.
      * @return {@link ParametersForGetSearchResults} The return value
      */
     public ParametersForGetSearchResults setCulture(String culture) {
@@ -227,8 +229,8 @@ public class ParametersForGetSearchResults {
 
     /**
      * An optional query parameter used to indicate the locale that should be used for formatting.
-     * The value should be a standard language tag. The formatFields query parameter must be set to true, otherwise
-     * culture will not be used for formatting.
+     * The value should be a standard language tag. The formatFields query parameter must be set to
+     * true, otherwise culture will not be used for formatting.
      *
      * @return {@link String} The return value
      */
@@ -237,7 +239,8 @@ public class ParametersForGetSearchResults {
     }
 
     /**
-     * Sets the value of the select parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the select parameter and returns the current object, to enable chaining
+     * further setters.
      *
      * @param select Limits the properties returned in the result.
      * @return {@link ParametersForGetSearchResults} The return value
@@ -257,9 +260,11 @@ public class ParametersForGetSearchResults {
     }
 
     /**
-     * Sets the value of the orderby parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the orderby parameter and returns the current object, to enable chaining
+     * further setters.
      *
-     * @param orderby Specifies the order in which items are returned. The maximum number of expressions is 5.
+     * @param orderby Specifies the order in which items are returned. The maximum number of
+     *     expressions is 5.
      * @return {@link ParametersForGetSearchResults} The return value
      */
     public ParametersForGetSearchResults setOrderby(String orderby) {
@@ -277,7 +282,8 @@ public class ParametersForGetSearchResults {
     }
 
     /**
-     * Sets the value of the top parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the top parameter and returns the current object, to enable chaining
+     * further setters.
      *
      * @param top Limits the number of items returned from a collection.
      * @return {@link ParametersForGetSearchResults} The return value
@@ -297,7 +303,8 @@ public class ParametersForGetSearchResults {
     }
 
     /**
-     * Sets the value of the skip parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the skip parameter and returns the current object, to enable chaining
+     * further setters.
      *
      * @param skip Excludes the specified number of items of the queried collection from the result.
      * @return {@link ParametersForGetSearchResults} The return value
@@ -317,9 +324,11 @@ public class ParametersForGetSearchResults {
     }
 
     /**
-     * Sets the value of the count parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the count parameter and returns the current object, to enable chaining
+     * further setters.
      *
-     * @param count Indicates whether the total count of items within a collection are returned in the result.
+     * @param count Indicates whether the total count of items within a collection are returned in
+     *     the result.
      * @return {@link ParametersForGetSearchResults} The return value
      */
     public ParametersForGetSearchResults setCount(Boolean count) {

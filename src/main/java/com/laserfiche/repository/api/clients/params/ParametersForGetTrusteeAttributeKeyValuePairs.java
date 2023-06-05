@@ -1,17 +1,18 @@
 package com.laserfiche.repository.api.clients.params;
 
 /**
- * The encapsulated parameters for {@link com.laserfiche.repository.api.clients.impl.AttributesClientImpl#getTrusteeAttributeKeyValuePairs(ParametersForGetTrusteeAttributeKeyValuePairs) getTrusteeAttributeKeyValuePairs}.
+ * The encapsulated parameters for {@link
+ * com.laserfiche.repository.api.clients.impl.AttributesClientImpl#getTrusteeAttributeKeyValuePairs(ParametersForGetTrusteeAttributeKeyValuePairs)
+ * getTrusteeAttributeKeyValuePairs}.
  */
 public class ParametersForGetTrusteeAttributeKeyValuePairs {
 
-    /**
-     * The requested repository ID.
-     */
+    /** The requested repository ID. */
     private String repoId;
 
     /**
-     * Boolean value that indicates whether to return attributes key value pairs associated with everyone or the currently authenticated user.
+     * Boolean value that indicates whether to return attributes key value pairs associated with
+     * everyone or the currently authenticated user.
      */
     private Boolean everyone;
 
@@ -20,24 +21,16 @@ public class ParametersForGetTrusteeAttributeKeyValuePairs {
      */
     private String prefer;
 
-    /**
-     * Limits the properties returned in the result.
-     */
+    /** Limits the properties returned in the result. */
     private String select;
 
-    /**
-     * Specifies the order in which items are returned. The maximum number of expressions is 5.
-     */
+    /** Specifies the order in which items are returned. The maximum number of expressions is 5. */
     private String orderby;
 
-    /**
-     * Limits the number of items returned from a collection.
-     */
+    /** Limits the number of items returned from a collection. */
     private Integer top;
 
-    /**
-     * Excludes the specified number of items of the queried collection from the result.
-     */
+    /** Excludes the specified number of items of the queried collection from the result. */
     private Integer skip;
 
     /**
@@ -46,7 +39,8 @@ public class ParametersForGetTrusteeAttributeKeyValuePairs {
     private Boolean count;
 
     /**
-     * Sets the value of the repoId parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the repoId parameter and returns the current object, to enable chaining
+     * further setters.
      *
      * @param repoId The requested repository ID.
      * @return {@link ParametersForGetTrusteeAttributeKeyValuePairs} The return value
@@ -66,9 +60,11 @@ public class ParametersForGetTrusteeAttributeKeyValuePairs {
     }
 
     /**
-     * Sets the value of the everyone parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the everyone parameter and returns the current object, to enable chaining
+     * further setters.
      *
-     * @param everyone Boolean value that indicates whether to return attributes key value pairs associated with everyone or the currently authenticated user.
+     * @param everyone Boolean value that indicates whether to return attributes key value pairs
+     *     associated with everyone or the currently authenticated user.
      * @return {@link ParametersForGetTrusteeAttributeKeyValuePairs} The return value
      */
     public ParametersForGetTrusteeAttributeKeyValuePairs setEveryone(Boolean everyone) {
@@ -77,7 +73,8 @@ public class ParametersForGetTrusteeAttributeKeyValuePairs {
     }
 
     /**
-     * Boolean value that indicates whether to return attributes key value pairs associated with everyone or the currently authenticated user.
+     * Boolean value that indicates whether to return attributes key value pairs associated with
+     * everyone or the currently authenticated user.
      *
      * @return {@link Boolean} The return value
      */
@@ -86,9 +83,11 @@ public class ParametersForGetTrusteeAttributeKeyValuePairs {
     }
 
     /**
-     * Sets the value of the prefer parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the prefer parameter and returns the current object, to enable chaining
+     * further setters.
      *
-     * @param prefer An optional OData header. Can be used to set the maximum page size using odata.maxpagesize.
+     * @param prefer An optional OData header. Can be used to set the maximum page size using
+     *     odata.maxpagesize.
      * @return {@link ParametersForGetTrusteeAttributeKeyValuePairs} The return value
      */
     public ParametersForGetTrusteeAttributeKeyValuePairs setPrefer(String prefer) {
@@ -106,7 +105,8 @@ public class ParametersForGetTrusteeAttributeKeyValuePairs {
     }
 
     /**
-     * Sets the value of the select parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the select parameter and returns the current object, to enable chaining
+     * further setters.
      *
      * @param select Limits the properties returned in the result.
      * @return {@link ParametersForGetTrusteeAttributeKeyValuePairs} The return value
@@ -126,9 +126,11 @@ public class ParametersForGetTrusteeAttributeKeyValuePairs {
     }
 
     /**
-     * Sets the value of the orderby parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the orderby parameter and returns the current object, to enable chaining
+     * further setters.
      *
-     * @param orderby Specifies the order in which items are returned. The maximum number of expressions is 5.
+     * @param orderby Specifies the order in which items are returned. The maximum number of
+     *     expressions is 5.
      * @return {@link ParametersForGetTrusteeAttributeKeyValuePairs} The return value
      */
     public ParametersForGetTrusteeAttributeKeyValuePairs setOrderby(String orderby) {
@@ -146,7 +148,8 @@ public class ParametersForGetTrusteeAttributeKeyValuePairs {
     }
 
     /**
-     * Sets the value of the top parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the top parameter and returns the current object, to enable chaining
+     * further setters.
      *
      * @param top Limits the number of items returned from a collection.
      * @return {@link ParametersForGetTrusteeAttributeKeyValuePairs} The return value
@@ -166,7 +169,8 @@ public class ParametersForGetTrusteeAttributeKeyValuePairs {
     }
 
     /**
-     * Sets the value of the skip parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the skip parameter and returns the current object, to enable chaining
+     * further setters.
      *
      * @param skip Excludes the specified number of items of the queried collection from the result.
      * @return {@link ParametersForGetTrusteeAttributeKeyValuePairs} The return value
@@ -186,9 +190,11 @@ public class ParametersForGetTrusteeAttributeKeyValuePairs {
     }
 
     /**
-     * Sets the value of the count parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the count parameter and returns the current object, to enable chaining
+     * further setters.
      *
-     * @param count Indicates whether the total count of items within a collection are returned in the result.
+     * @param count Indicates whether the total count of items within a collection are returned in
+     *     the result.
      * @return {@link ParametersForGetTrusteeAttributeKeyValuePairs} The return value
      */
     public ParametersForGetTrusteeAttributeKeyValuePairs setCount(Boolean count) {

@@ -7,16 +7,13 @@ import com.laserfiche.api.client.httphandlers.UsernamePasswordHandler;
 import com.laserfiche.api.client.model.AccessKey;
 import com.laserfiche.repository.api.clients.*;
 import com.laserfiche.repository.api.clients.impl.*;
+import java.util.HashMap;
+import java.util.Map;
 import kong.unirest.ObjectMapper;
 import kong.unirest.Unirest;
 import kong.unirest.UnirestInstance;
 
-import java.util.HashMap;
-import java.util.Map;
-
-/**
- * The Laserfiche Repository API client.
- */
+/** The Laserfiche Repository API client. */
 public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseable {
     private Map<String, String> defaultHeaders;
     private final UnirestInstance httpClient;
@@ -43,9 +40,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
 
         // Initialize HTTP client
         httpClient = Unirest.spawnInstance();
-        httpClient
-                .config()
-                .setObjectMapper(objectMapper);
+        httpClient.config().setObjectMapper(objectMapper);
 
         // Add compression header if a client is created
         if (httpClient != null) {
@@ -66,77 +61,83 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
         simpleSearchesClient = new SimpleSearchesClientImpl(baseUrl, httpClient, httpHandler);
         tagDefinitionsClient = new TagDefinitionsClientImpl(baseUrl, httpClient, httpHandler);
         tasksClient = new TasksClientImpl(baseUrl, httpClient, httpHandler);
-        templateDefinitionsClient = new TemplateDefinitionsClientImpl(baseUrl, httpClient, httpHandler);
+        templateDefinitionsClient =
+                new TemplateDefinitionsClientImpl(baseUrl, httpClient, httpHandler);
     }
 
     /**
-     * Creates a new Laserfiche repository client that will use Laserfiche Cloud OAuth client credentials to get access tokens.
+     * Creates a new Laserfiche repository client that will use Laserfiche Cloud OAuth client
+     * credentials to get access tokens.
      *
-     * @param servicePrincipalKey The service principal key created for the service principal from the Laserfiche Account Administration.
-     * @param accessKey           The access key exported from the Laserfiche Developer Console.
-     * @param baseUrlDebug        Optional override for the Laserfiche repository API base url.
+     * @param servicePrincipalKey The service principal key created for the service principal from
+     *     the Laserfiche Account Administration.
+     * @param accessKey The access key exported from the Laserfiche Developer Console.
+     * @param baseUrlDebug Optional override for the Laserfiche repository API base url.
      * @return {@link RepositoryApiClient}
      */
-    public static RepositoryApiClient createFromAccessKey(String servicePrincipalKey, AccessKey accessKey, String scope,
-            String baseUrlDebug) {
+    public static RepositoryApiClient createFromAccessKey(
+            String servicePrincipalKey, AccessKey accessKey, String scope, String baseUrlDebug) {
         if (baseUrlDebug == null) {
             baseUrlDebug = "https://api." + accessKey.getDomain() + "/repository";
         }
-        HttpRequestHandler oauthHandler = new OAuthClientCredentialsHandler(servicePrincipalKey, accessKey, scope);
+        HttpRequestHandler oauthHandler =
+                new OAuthClientCredentialsHandler(servicePrincipalKey, accessKey, scope);
         return new RepositoryApiClientImpl(baseUrlDebug, oauthHandler);
     }
 
     /**
-     * Creates a new Laserfiche repository client that will use Laserfiche Cloud OAuth client credentials to get access tokens.
+     * Creates a new Laserfiche repository client that will use Laserfiche Cloud OAuth client
+     * credentials to get access tokens.
      *
-     * @param servicePrincipalKey The service principal key created for the service principal from the Laserfiche Account Administration.
-     * @param accessKey           The access key exported from the Laserfiche Developer Console.
-     * @param scope               The requested space-delimited scopes for the access token.
+     * @param servicePrincipalKey The service principal key created for the service principal from
+     *     the Laserfiche Account Administration.
+     * @param accessKey The access key exported from the Laserfiche Developer Console.
+     * @param scope The requested space-delimited scopes for the access token.
      * @return {@link RepositoryApiClient}
      */
-    public static RepositoryApiClient createFromAccessKey(String servicePrincipalKey, AccessKey accessKey,
-            String scope) {
+    public static RepositoryApiClient createFromAccessKey(
+            String servicePrincipalKey, AccessKey accessKey, String scope) {
         return createFromAccessKey(servicePrincipalKey, accessKey, scope, null);
     }
 
     /**
-     * Creates a new Laserfiche repository client that will use Laserfiche Cloud OAuth client credentials to get access tokens.
+     * Creates a new Laserfiche repository client that will use Laserfiche Cloud OAuth client
+     * credentials to get access tokens.
      *
-     * @param servicePrincipalKey The service principal key created for the service principal from the Laserfiche Account Administration.
-     * @param accessKey           The access key exported from the Laserfiche Developer Console.
+     * @param servicePrincipalKey The service principal key created for the service principal from
+     *     the Laserfiche Account Administration.
+     * @param accessKey The access key exported from the Laserfiche Developer Console.
      * @return {@link RepositoryApiClient}
      */
-    public static RepositoryApiClient createFromAccessKey(String servicePrincipalKey, AccessKey accessKey) {
+    public static RepositoryApiClient createFromAccessKey(
+            String servicePrincipalKey, AccessKey accessKey) {
         return createFromAccessKey(servicePrincipalKey, accessKey, null);
     }
 
     /**
-     * Creates a new Laserfiche repository client that will use username and password to get access tokens for Laserfiche API.
-     * Password credentials grant type is implemented by the Laserfiche Self-Hosted API server. Not available in cloud.
+     * Creates a new Laserfiche repository client that will use username and password to get access
+     * tokens for Laserfiche API. Password credentials grant type is implemented by the Laserfiche
+     * Self-Hosted API server. Not available in cloud.
      *
      * @param repositoryId The repository ID.
-     * @param username     The username.
-     * @param password     The password.
-     * @param baseUrl      API server base URL e.g., https://{APIServerName}/LFRepositoryAPI.
+     * @param username The username.
+     * @param password The password.
+     * @param baseUrl API server base URL e.g., https://{APIServerName}/LFRepositoryAPI.
      * @return {@link RepositoryApiClient}
      */
-    public static RepositoryApiClient createFromUsernamePassword(String repositoryId, String username, String password,
-            String baseUrl) {
-        HttpRequestHandler usernamePasswordHandler = new UsernamePasswordHandler(repositoryId, username, password,
-                baseUrl, null);
+    public static RepositoryApiClient createFromUsernamePassword(
+            String repositoryId, String username, String password, String baseUrl) {
+        HttpRequestHandler usernamePasswordHandler =
+                new UsernamePasswordHandler(repositoryId, username, password, baseUrl, null);
         return new RepositoryApiClientImpl(baseUrl, usernamePasswordHandler);
     }
 
     @Override
     public void setDefaultRequestHeaders(Map<String, String> defaultRequestHeaders) {
         defaultHeaders = defaultRequestHeaders;
-        httpClient
-                .config()
-                .clearDefaultHeaders();
+        httpClient.config().clearDefaultHeaders();
         for (String Key : defaultRequestHeaders.keySet()) {
-            httpClient
-                    .config()
-                    .setDefaultHeader(Key, defaultHeaders.get(Key));
+            httpClient.config().setDefaultHeader(Key, defaultHeaders.get(Key));
         }
     }
 
@@ -200,9 +201,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
         return templateDefinitionsClient;
     }
 
-    /**
-     * Release the thread pool held by the underlying HTTP clients.
-     */
+    /** Release the thread pool held by the underlying HTTP clients. */
     @Override
     public void close() {
         httpClient.close();

@@ -3,12 +3,13 @@ package com.laserfiche.repository.api.clients.impl.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
+@javax.annotation.Generated(
+        value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen",
+        date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class WEntryLinkInfo {
 
@@ -315,81 +316,58 @@ public class WEntryLinkInfo {
             return false;
         }
         WEntryLinkInfo wentryLinkInfo = (WEntryLinkInfo) o;
-        return Objects.equals(this.linkId, wentryLinkInfo.linkId) && Objects.equals(this.sourceId,
-                wentryLinkInfo.sourceId) && Objects.equals(this.sourceFullPath,
-                wentryLinkInfo.sourceFullPath) && Objects.equals(this.sourceLabel,
-                wentryLinkInfo.sourceLabel) && Objects.equals(this.targetId, wentryLinkInfo.targetId) && Objects.equals(
-                this.targetFullPath, wentryLinkInfo.targetFullPath) && Objects.equals(this.targetLabel,
-                wentryLinkInfo.targetLabel) && Objects.equals(this.description,
-                wentryLinkInfo.description) && Objects.equals(this.linkTypeDescription,
-                wentryLinkInfo.linkTypeDescription) && Objects.equals(this.linkTypeId,
-                wentryLinkInfo.linkTypeId) && Objects.equals(this.linkProperties,
-                wentryLinkInfo.linkProperties) && Objects.equals(this.sourceLink,
-                wentryLinkInfo.sourceLink) && Objects.equals(this.targetLink, wentryLinkInfo.targetLink);
+        return Objects.equals(this.linkId, wentryLinkInfo.linkId)
+                && Objects.equals(this.sourceId, wentryLinkInfo.sourceId)
+                && Objects.equals(this.sourceFullPath, wentryLinkInfo.sourceFullPath)
+                && Objects.equals(this.sourceLabel, wentryLinkInfo.sourceLabel)
+                && Objects.equals(this.targetId, wentryLinkInfo.targetId)
+                && Objects.equals(this.targetFullPath, wentryLinkInfo.targetFullPath)
+                && Objects.equals(this.targetLabel, wentryLinkInfo.targetLabel)
+                && Objects.equals(this.description, wentryLinkInfo.description)
+                && Objects.equals(this.linkTypeDescription, wentryLinkInfo.linkTypeDescription)
+                && Objects.equals(this.linkTypeId, wentryLinkInfo.linkTypeId)
+                && Objects.equals(this.linkProperties, wentryLinkInfo.linkProperties)
+                && Objects.equals(this.sourceLink, wentryLinkInfo.sourceLink)
+                && Objects.equals(this.targetLink, wentryLinkInfo.targetLink);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(linkId, sourceId, sourceFullPath, sourceLabel, targetId, targetFullPath, targetLabel,
-                description, linkTypeDescription, linkTypeId, linkProperties, sourceLink, targetLink);
+        return Objects.hash(
+                linkId,
+                sourceId,
+                sourceFullPath,
+                sourceLabel,
+                targetId,
+                targetFullPath,
+                targetLabel,
+                description,
+                linkTypeDescription,
+                linkTypeId,
+                linkProperties,
+                sourceLink,
+                targetLink);
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class WEntryLinkInfo {\n");
-        sb
-                .append("    linkId: ")
-                .append(toIndentedString(linkId))
-                .append("\n");
-        sb
-                .append("    sourceId: ")
-                .append(toIndentedString(sourceId))
-                .append("\n");
-        sb
-                .append("    sourceFullPath: ")
-                .append(toIndentedString(sourceFullPath))
-                .append("\n");
-        sb
-                .append("    sourceLabel: ")
-                .append(toIndentedString(sourceLabel))
-                .append("\n");
-        sb
-                .append("    targetId: ")
-                .append(toIndentedString(targetId))
-                .append("\n");
-        sb
-                .append("    targetFullPath: ")
-                .append(toIndentedString(targetFullPath))
-                .append("\n");
-        sb
-                .append("    targetLabel: ")
-                .append(toIndentedString(targetLabel))
-                .append("\n");
-        sb
-                .append("    description: ")
-                .append(toIndentedString(description))
-                .append("\n");
-        sb
-                .append("    linkTypeDescription: ")
+        sb.append("    linkId: ").append(toIndentedString(linkId)).append("\n");
+        sb.append("    sourceId: ").append(toIndentedString(sourceId)).append("\n");
+        sb.append("    sourceFullPath: ").append(toIndentedString(sourceFullPath)).append("\n");
+        sb.append("    sourceLabel: ").append(toIndentedString(sourceLabel)).append("\n");
+        sb.append("    targetId: ").append(toIndentedString(targetId)).append("\n");
+        sb.append("    targetFullPath: ").append(toIndentedString(targetFullPath)).append("\n");
+        sb.append("    targetLabel: ").append(toIndentedString(targetLabel)).append("\n");
+        sb.append("    description: ").append(toIndentedString(description)).append("\n");
+        sb.append("    linkTypeDescription: ")
                 .append(toIndentedString(linkTypeDescription))
                 .append("\n");
-        sb
-                .append("    linkTypeId: ")
-                .append(toIndentedString(linkTypeId))
-                .append("\n");
-        sb
-                .append("    linkProperties: ")
-                .append(toIndentedString(linkProperties))
-                .append("\n");
-        sb
-                .append("    sourceLink: ")
-                .append(toIndentedString(sourceLink))
-                .append("\n");
-        sb
-                .append("    targetLink: ")
-                .append(toIndentedString(targetLink))
-                .append("\n");
+        sb.append("    linkTypeId: ").append(toIndentedString(linkTypeId)).append("\n");
+        sb.append("    linkProperties: ").append(toIndentedString(linkProperties)).append("\n");
+        sb.append("    sourceLink: ").append(toIndentedString(sourceLink)).append("\n");
+        sb.append("    targetLink: ").append(toIndentedString(targetLink)).append("\n");
         sb.append("}");
         return sb.toString();
     }
@@ -398,8 +376,6 @@ public class WEntryLinkInfo {
         if (o == null) {
             return "null";
         }
-        return o
-                .toString()
-                .replace("\n", "\n    ");
+        return o.toString().replace("\n", "\n    ");
     }
 }

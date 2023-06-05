@@ -4,9 +4,7 @@ import com.laserfiche.api.client.httphandlers.HttpRequestHandler;
 import kong.unirest.ObjectMapper;
 import kong.unirest.UnirestInstance;
 
-/**
- * The base API client.
- */
+/** The base API client. */
 public abstract class ApiClient {
 
     protected String baseUrl;
@@ -17,12 +15,11 @@ public abstract class ApiClient {
 
     protected HttpRequestHandler httpRequestHandler;
 
-    public ApiClient(String baseUrl, UnirestInstance httpClient, HttpRequestHandler httpRequestHandler) {
+    public ApiClient(
+            String baseUrl, UnirestInstance httpClient, HttpRequestHandler httpRequestHandler) {
         this.baseUrl = baseUrl;
         this.httpClient = httpClient;
-        this.objectMapper = httpClient
-                .config()
-                .getObjectMapper();
+        this.objectMapper = httpClient.config().getObjectMapper();
         this.httpRequestHandler = httpRequestHandler;
     }
 

@@ -3,12 +3,13 @@ package com.laserfiche.repository.api.clients.impl.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
+@javax.annotation.Generated(
+        value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen",
+        date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class WFieldInfo {
 
@@ -177,11 +178,14 @@ public class WFieldInfo {
     }
 
     /**
-     * Returns the default value of the field for new entries that are assigned to a template the represented field is a member of.
+     * Returns the default value of the field for new entries that are assigned to a template the
+     * represented field is a member of.
      *
      * @return defaultValue
      */
-    @Schema(description = "The default value of the field for new entries that are assigned to a template the represented field is a member of.")
+    @Schema(
+            description =
+                    "The default value of the field for new entries that are assigned to a template the represented field is a member of.")
     public String getDefaultValue() {
         return defaultValue;
     }
@@ -200,7 +204,9 @@ public class WFieldInfo {
      *
      * @return isMultiValue
      */
-    @Schema(description = "A boolean indicating if the represented template field supports multiple values.")
+    @Schema(
+            description =
+                    "A boolean indicating if the represented template field supports multiple values.")
     @JsonProperty("isMultiValue")
     public Boolean isMultiValue() {
         return isMultiValue;
@@ -216,11 +222,14 @@ public class WFieldInfo {
     }
 
     /**
-     * Returns a boolean indicating if the represented field must have a value set on entries assigned to a template that the field is a member of.
+     * Returns a boolean indicating if the represented field must have a value set on entries
+     * assigned to a template that the field is a member of.
      *
      * @return isRequired
      */
-    @Schema(description = "A boolean indicating if the represented field must have a value set on entries assigned to a template that the field is a member of.")
+    @Schema(
+            description =
+                    "A boolean indicating if the represented field must have a value set on entries assigned to a template that the field is a member of.")
     @JsonProperty("isRequired")
     public Boolean isRequired() {
         return isRequired;
@@ -255,11 +264,14 @@ public class WFieldInfo {
     }
 
     /**
-     * Returns the error string that will be returned when the field constraint is violated when setting a value for this field.
+     * Returns the error string that will be returned when the field constraint is violated when
+     * setting a value for this field.
      *
      * @return constraintError
      */
-    @Schema(description = "The error string that will be returned when the field constraint is violated when setting a value for this field.")
+    @Schema(
+            description =
+                    "The error string that will be returned when the field constraint is violated when setting a value for this field.")
     public String getConstraintError() {
         return constraintError;
     }
@@ -320,11 +332,14 @@ public class WFieldInfo {
     }
 
     /**
-     * Returns the name of the currency that will be using when formatting the represented field when the Format property is set to the Currency member of the WFieldFormat enumeration.
+     * Returns the name of the currency that will be using when formatting the represented field
+     * when the Format property is set to the Currency member of the WFieldFormat enumeration.
      *
      * @return currency
      */
-    @Schema(description = "The name of the currency that will be using when formatting the represented field when the Format property is set to the Currency member of the WFieldFormat enumeration.")
+    @Schema(
+            description =
+                    "The name of the currency that will be using when formatting the represented field when the Format property is set to the Currency member of the WFieldFormat enumeration.")
     public String getCurrency() {
         return currency;
     }
@@ -343,7 +358,9 @@ public class WFieldInfo {
      *
      * @return formatPattern
      */
-    @Schema(description = "The custom format pattern for fields that are configured to use a custom format.")
+    @Schema(
+            description =
+                    "The custom format pattern for fields that are configured to use a custom format.")
     public String getFormatPattern() {
         return formatPattern;
     }
@@ -361,88 +378,62 @@ public class WFieldInfo {
             return false;
         }
         WFieldInfo wfieldInfo = (WFieldInfo) o;
-        return Objects.equals(this.name, wfieldInfo.name) && Objects.equals(this.displayName,
-                wfieldInfo.displayName) && Objects.equals(this.id, wfieldInfo.id) && Objects.equals(this.description,
-                wfieldInfo.description) && Objects.equals(this.fieldType, wfieldInfo.fieldType) && Objects.equals(
-                this.length, wfieldInfo.length) && Objects.equals(this.defaultValue,
-                wfieldInfo.defaultValue) && Objects.equals(this.isMultiValue,
-                wfieldInfo.isMultiValue) && Objects.equals(this.isRequired, wfieldInfo.isRequired) && Objects.equals(
-                this.constraint, wfieldInfo.constraint) && Objects.equals(this.constraintError,
-                wfieldInfo.constraintError) && Objects.equals(this.listValues, wfieldInfo.listValues) && Objects.equals(
-                this.format, wfieldInfo.format) && Objects.equals(this.currency, wfieldInfo.currency) && Objects.equals(
-                this.formatPattern, wfieldInfo.formatPattern);
+        return Objects.equals(this.name, wfieldInfo.name)
+                && Objects.equals(this.displayName, wfieldInfo.displayName)
+                && Objects.equals(this.id, wfieldInfo.id)
+                && Objects.equals(this.description, wfieldInfo.description)
+                && Objects.equals(this.fieldType, wfieldInfo.fieldType)
+                && Objects.equals(this.length, wfieldInfo.length)
+                && Objects.equals(this.defaultValue, wfieldInfo.defaultValue)
+                && Objects.equals(this.isMultiValue, wfieldInfo.isMultiValue)
+                && Objects.equals(this.isRequired, wfieldInfo.isRequired)
+                && Objects.equals(this.constraint, wfieldInfo.constraint)
+                && Objects.equals(this.constraintError, wfieldInfo.constraintError)
+                && Objects.equals(this.listValues, wfieldInfo.listValues)
+                && Objects.equals(this.format, wfieldInfo.format)
+                && Objects.equals(this.currency, wfieldInfo.currency)
+                && Objects.equals(this.formatPattern, wfieldInfo.formatPattern);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, displayName, id, description, fieldType, length, defaultValue, isMultiValue,
-                isRequired, constraint, constraintError, listValues, format, currency, formatPattern);
+        return Objects.hash(
+                name,
+                displayName,
+                id,
+                description,
+                fieldType,
+                length,
+                defaultValue,
+                isMultiValue,
+                isRequired,
+                constraint,
+                constraintError,
+                listValues,
+                format,
+                currency,
+                formatPattern);
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class WFieldInfo {\n");
-        sb
-                .append("    name: ")
-                .append(toIndentedString(name))
-                .append("\n");
-        sb
-                .append("    displayName: ")
-                .append(toIndentedString(displayName))
-                .append("\n");
-        sb
-                .append("    id: ")
-                .append(toIndentedString(id))
-                .append("\n");
-        sb
-                .append("    description: ")
-                .append(toIndentedString(description))
-                .append("\n");
-        sb
-                .append("    fieldType: ")
-                .append(toIndentedString(fieldType))
-                .append("\n");
-        sb
-                .append("    length: ")
-                .append(toIndentedString(length))
-                .append("\n");
-        sb
-                .append("    defaultValue: ")
-                .append(toIndentedString(defaultValue))
-                .append("\n");
-        sb
-                .append("    isMultiValue: ")
-                .append(toIndentedString(isMultiValue))
-                .append("\n");
-        sb
-                .append("    isRequired: ")
-                .append(toIndentedString(isRequired))
-                .append("\n");
-        sb
-                .append("    constraint: ")
-                .append(toIndentedString(constraint))
-                .append("\n");
-        sb
-                .append("    constraintError: ")
-                .append(toIndentedString(constraintError))
-                .append("\n");
-        sb
-                .append("    listValues: ")
-                .append(toIndentedString(listValues))
-                .append("\n");
-        sb
-                .append("    format: ")
-                .append(toIndentedString(format))
-                .append("\n");
-        sb
-                .append("    currency: ")
-                .append(toIndentedString(currency))
-                .append("\n");
-        sb
-                .append("    formatPattern: ")
-                .append(toIndentedString(formatPattern))
-                .append("\n");
+        sb.append("    name: ").append(toIndentedString(name)).append("\n");
+        sb.append("    displayName: ").append(toIndentedString(displayName)).append("\n");
+        sb.append("    id: ").append(toIndentedString(id)).append("\n");
+        sb.append("    description: ").append(toIndentedString(description)).append("\n");
+        sb.append("    fieldType: ").append(toIndentedString(fieldType)).append("\n");
+        sb.append("    length: ").append(toIndentedString(length)).append("\n");
+        sb.append("    defaultValue: ").append(toIndentedString(defaultValue)).append("\n");
+        sb.append("    isMultiValue: ").append(toIndentedString(isMultiValue)).append("\n");
+        sb.append("    isRequired: ").append(toIndentedString(isRequired)).append("\n");
+        sb.append("    constraint: ").append(toIndentedString(constraint)).append("\n");
+        sb.append("    constraintError: ").append(toIndentedString(constraintError)).append("\n");
+        sb.append("    listValues: ").append(toIndentedString(listValues)).append("\n");
+        sb.append("    format: ").append(toIndentedString(format)).append("\n");
+        sb.append("    currency: ").append(toIndentedString(currency)).append("\n");
+        sb.append("    formatPattern: ").append(toIndentedString(formatPattern)).append("\n");
         sb.append("}");
         return sb.toString();
     }
@@ -451,8 +442,6 @@ public class WFieldInfo {
         if (o == null) {
             return "null";
         }
-        return o
-                .toString()
-                .replace("\n", "\n    ");
+        return o.toString().replace("\n", "\n    ");
     }
 }

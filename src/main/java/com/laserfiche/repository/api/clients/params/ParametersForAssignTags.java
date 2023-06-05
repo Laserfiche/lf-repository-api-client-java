@@ -3,24 +3,23 @@ package com.laserfiche.repository.api.clients.params;
 import com.laserfiche.repository.api.clients.impl.model.PutTagRequest;
 
 /**
- * The encapsulated parameters for {@link com.laserfiche.repository.api.clients.impl.EntriesClientImpl#assignTags(ParametersForAssignTags) assignTags}.
+ * The encapsulated parameters for {@link
+ * com.laserfiche.repository.api.clients.impl.EntriesClientImpl#assignTags(ParametersForAssignTags)
+ * assignTags}.
  */
 public class ParametersForAssignTags {
 
-    /**
-     * The requested repository ID.
-     */
+    /** The requested repository ID. */
     private String repoId;
 
-    /**
-     * The requested entry ID.
-     */
+    /** The requested entry ID. */
     private Integer entryId;
 
     private PutTagRequest requestBody;
 
     /**
-     * Sets the value of the repoId parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the repoId parameter and returns the current object, to enable chaining
+     * further setters.
      *
      * @param repoId The requested repository ID.
      * @return {@link ParametersForAssignTags} The return value
@@ -40,7 +39,8 @@ public class ParametersForAssignTags {
     }
 
     /**
-     * Sets the value of the entryId parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the entryId parameter and returns the current object, to enable chaining
+     * further setters.
      *
      * @param entryId The requested entry ID.
      * @return {@link ParametersForAssignTags} The return value

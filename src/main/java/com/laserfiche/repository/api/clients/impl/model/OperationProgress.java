@@ -3,13 +3,14 @@ package com.laserfiche.repository.api.clients.impl.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
-import org.threeten.bp.OffsetDateTime;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import org.threeten.bp.OffsetDateTime;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
+@javax.annotation.Generated(
+        value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen",
+        date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class OperationProgress {
 
@@ -50,7 +51,9 @@ public class OperationProgress {
      *
      * @return operationToken
      */
-    @Schema(description = "The operation token of the operation associated with this OperationProgress.")
+    @Schema(
+            description =
+                    "The operation token of the operation associated with this OperationProgress.")
     public String getOperationToken() {
         return operationToken;
     }
@@ -88,7 +91,9 @@ public class OperationProgress {
      *
      * @return percentComplete
      */
-    @Schema(description = "Determines what percentage of the execution of the associated operation is completed.")
+    @Schema(
+            description =
+                    "Determines what percentage of the execution of the associated operation is completed.")
     public Integer getPercentComplete() {
         return percentComplete;
     }
@@ -134,7 +139,9 @@ public class OperationProgress {
      *
      * @return errors
      */
-    @Schema(description = "The list of errors occurred during the execution of the associated operation.")
+    @Schema(
+            description =
+                    "The list of errors occurred during the execution of the associated operation.")
     public List<OperationErrorItem> getErrors() {
         return errors;
     }
@@ -149,11 +156,14 @@ public class OperationProgress {
     }
 
     /**
-     * Returns the URI which can be used (via api call) to access the result(s) of the associated operation.
+     * Returns the URI which can be used (via api call) to access the result(s) of the associated
+     * operation.
      *
      * @return redirectUri
      */
-    @Schema(description = "The URI which can be used (via api call) to access the result(s) of the associated operation.")
+    @Schema(
+            description =
+                    "The URI which can be used (via api call) to access the result(s) of the associated operation.")
     public String getRedirectUri() {
         return redirectUri;
     }
@@ -168,11 +178,14 @@ public class OperationProgress {
     }
 
     /**
-     * Returns the ID of the entry affected (e.g. created or modified) by the execution of the associated operation.
+     * Returns the ID of the entry affected (e.g. created or modified) by the execution of the
+     * associated operation.
      *
      * @return entryId
      */
-    @Schema(description = "The ID of the entry affected (e.g. created or modified) by the execution of the associated operation.")
+    @Schema(
+            description =
+                    "The ID of the entry affected (e.g. created or modified) by the execution of the associated operation.")
     public Integer getEntryId() {
         return entryId;
     }
@@ -191,7 +204,9 @@ public class OperationProgress {
      *
      * @return startTimestamp
      */
-    @Schema(description = "The timestamp representing when the associated operation's execution is started.")
+    @Schema(
+            description =
+                    "The timestamp representing when the associated operation's execution is started.")
     public OffsetDateTime getStartTimestamp() {
         return startTimestamp;
     }
@@ -206,11 +221,14 @@ public class OperationProgress {
     }
 
     /**
-     * Returns the timestamp representing the last time when the associated task&#x27;s status has changed.
+     * Returns the timestamp representing the last time when the associated task&#x27;s status has
+     * changed.
      *
      * @return statusTimestamp
      */
-    @Schema(description = "The timestamp representing the last time when the associated task's status has changed.")
+    @Schema(
+            description =
+                    "The timestamp representing the last time when the associated task's status has changed.")
     public OffsetDateTime getStatusTimestamp() {
         return statusTimestamp;
     }
@@ -228,62 +246,44 @@ public class OperationProgress {
             return false;
         }
         OperationProgress operationProgress = (OperationProgress) o;
-        return Objects.equals(this.operationToken, operationProgress.operationToken) && Objects.equals(
-                this.operationType, operationProgress.operationType) && Objects.equals(this.percentComplete,
-                operationProgress.percentComplete) && Objects.equals(this.status,
-                operationProgress.status) && Objects.equals(this.errors, operationProgress.errors) && Objects.equals(
-                this.redirectUri, operationProgress.redirectUri) && Objects.equals(this.entryId,
-                operationProgress.entryId) && Objects.equals(this.startTimestamp,
-                operationProgress.startTimestamp) && Objects.equals(this.statusTimestamp,
-                operationProgress.statusTimestamp);
+        return Objects.equals(this.operationToken, operationProgress.operationToken)
+                && Objects.equals(this.operationType, operationProgress.operationType)
+                && Objects.equals(this.percentComplete, operationProgress.percentComplete)
+                && Objects.equals(this.status, operationProgress.status)
+                && Objects.equals(this.errors, operationProgress.errors)
+                && Objects.equals(this.redirectUri, operationProgress.redirectUri)
+                && Objects.equals(this.entryId, operationProgress.entryId)
+                && Objects.equals(this.startTimestamp, operationProgress.startTimestamp)
+                && Objects.equals(this.statusTimestamp, operationProgress.statusTimestamp);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(operationToken, operationType, percentComplete, status, errors, redirectUri, entryId,
-                startTimestamp, statusTimestamp);
+        return Objects.hash(
+                operationToken,
+                operationType,
+                percentComplete,
+                status,
+                errors,
+                redirectUri,
+                entryId,
+                startTimestamp,
+                statusTimestamp);
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class OperationProgress {\n");
-        sb
-                .append("    operationToken: ")
-                .append(toIndentedString(operationToken))
-                .append("\n");
-        sb
-                .append("    operationType: ")
-                .append(toIndentedString(operationType))
-                .append("\n");
-        sb
-                .append("    percentComplete: ")
-                .append(toIndentedString(percentComplete))
-                .append("\n");
-        sb
-                .append("    status: ")
-                .append(toIndentedString(status))
-                .append("\n");
-        sb
-                .append("    errors: ")
-                .append(toIndentedString(errors))
-                .append("\n");
-        sb
-                .append("    redirectUri: ")
-                .append(toIndentedString(redirectUri))
-                .append("\n");
-        sb
-                .append("    entryId: ")
-                .append(toIndentedString(entryId))
-                .append("\n");
-        sb
-                .append("    startTimestamp: ")
-                .append(toIndentedString(startTimestamp))
-                .append("\n");
-        sb
-                .append("    statusTimestamp: ")
-                .append(toIndentedString(statusTimestamp))
-                .append("\n");
+        sb.append("    operationToken: ").append(toIndentedString(operationToken)).append("\n");
+        sb.append("    operationType: ").append(toIndentedString(operationType)).append("\n");
+        sb.append("    percentComplete: ").append(toIndentedString(percentComplete)).append("\n");
+        sb.append("    status: ").append(toIndentedString(status)).append("\n");
+        sb.append("    errors: ").append(toIndentedString(errors)).append("\n");
+        sb.append("    redirectUri: ").append(toIndentedString(redirectUri)).append("\n");
+        sb.append("    entryId: ").append(toIndentedString(entryId)).append("\n");
+        sb.append("    startTimestamp: ").append(toIndentedString(startTimestamp)).append("\n");
+        sb.append("    statusTimestamp: ").append(toIndentedString(statusTimestamp)).append("\n");
         sb.append("}");
         return sb.toString();
     }
@@ -292,8 +292,6 @@ public class OperationProgress {
         if (o == null) {
             return "null";
         }
-        return o
-                .toString()
-                .replace("\n", "\n    ");
+        return o.toString().replace("\n", "\n    ");
     }
 }
