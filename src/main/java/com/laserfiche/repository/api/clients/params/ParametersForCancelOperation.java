@@ -1,5 +1,7 @@
 package com.laserfiche.repository.api.clients.params;
 
+import com.laserfiche.repository.api.clients.impl.model.*;
+
 /**
  * The encapsulated parameters for {@link com.laserfiche.repository.api.clients.impl.TasksClientImpl#cancelOperation(ParametersForCancelOperation) cancelOperation}.
  */

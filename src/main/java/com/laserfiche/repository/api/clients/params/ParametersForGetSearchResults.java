@@ -1,5 +1,7 @@
 package com.laserfiche.repository.api.clients.params;
 
+import com.laserfiche.repository.api.clients.impl.model.*;
+
 /**
  * The encapsulated parameters for {@link com.laserfiche.repository.api.clients.impl.SearchesClientImpl#getSearchResults(ParametersForGetSearchResults) getSearchResults}.
  */
@@ -42,8 +44,8 @@ public class ParametersForGetSearchResults {
 
     /**
      * An optional query parameter used to indicate the locale that should be used for formatting.
-     * The value should be a standard language tag. The formatFields query parameter must be set to true, otherwise
-     * culture will not be used for formatting.
+     *             The value should be a standard language tag. The formatFields query parameter must be set to true, otherwise
+     *             culture will not be used for formatting.
      */
     private String culture;
 
@@ -216,8 +218,8 @@ public class ParametersForGetSearchResults {
      * Sets the value of the culture parameter and returns the current object, to enable chaining further setters.
      *
      * @param culture An optional query parameter used to indicate the locale that should be used for formatting.
-     *                The value should be a standard language tag. The formatFields query parameter must be set to true, otherwise
-     *                culture will not be used for formatting.
+     *             The value should be a standard language tag. The formatFields query parameter must be set to true, otherwise
+     *             culture will not be used for formatting.
      * @return {@link ParametersForGetSearchResults} The return value
      */
     public ParametersForGetSearchResults setCulture(String culture) {
@@ -226,9 +228,7 @@ public class ParametersForGetSearchResults {
     }
 
     /**
-     * An optional query parameter used to indicate the locale that should be used for formatting.
-     * The value should be a standard language tag. The formatFields query parameter must be set to true, otherwise
-     * culture will not be used for formatting.
+     * An optional query parameter used to indicate the locale that should be used for formatting.<br>            The value should be a standard language tag. The formatFields query parameter must be set to true, otherwise<br>            culture will not be used for formatting.
      *
      * @return {@link String} The return value
      */

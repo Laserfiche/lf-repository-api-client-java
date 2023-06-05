@@ -1,6 +1,6 @@
 package com.laserfiche.repository.api.clients.params;
 
-import com.laserfiche.repository.api.clients.impl.model.GetEdocWithAuditReasonRequest;
+import com.laserfiche.repository.api.clients.impl.model.*;
 import java.io.InputStream;
 import java.util.function.Consumer;
 
@@ -23,7 +23,7 @@ public class ParametersForExportDocumentWithAuditReason {
 
     /**
      * An optional header used to retrieve partial content of the edoc. Only supports single
-     * range with byte unit.
+     *             range with byte unit.
      */
     private String range;
 
@@ -85,7 +85,7 @@ public class ParametersForExportDocumentWithAuditReason {
      * Sets the value of the range parameter and returns the current object, to enable chaining further setters.
      *
      * @param range An optional header used to retrieve partial content of the edoc. Only supports single
-     *              range with byte unit.
+     *             range with byte unit.
      * @return {@link ParametersForExportDocumentWithAuditReason} The return value
      */
     public ParametersForExportDocumentWithAuditReason setRange(String range) {
@@ -94,8 +94,7 @@ public class ParametersForExportDocumentWithAuditReason {
     }
 
     /**
-     * An optional header used to retrieve partial content of the edoc. Only supports single
-     * range with byte unit.
+     * An optional header used to retrieve partial content of the edoc. Only supports single<br>            range with byte unit.
      *
      * @return {@link String} The return value
      */

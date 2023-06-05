@@ -1,16 +1,13 @@
 package com.laserfiche.repository.api.clients.impl.model;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-@javax.annotation.Generated(
-        value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen",
-        date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class EntryFieldValue {
 
@@ -42,7 +39,6 @@ public class EntryFieldValue {
 
     /**
      * Returns the name of the field.
-     *
      * @return fieldName
      */
     @Schema(description = "The name of the field.")
@@ -69,7 +65,6 @@ public class EntryFieldValue {
 
     /**
      * Returns the values assigned to the field.
-     *
      * @return values
      */
     @Schema(description = "The values assigned to the field.")
@@ -88,7 +83,6 @@ public class EntryFieldValue {
 
     /**
      * Returns fieldType
-     *
      * @return fieldType
      */
     @Schema(description = "")
@@ -107,7 +101,6 @@ public class EntryFieldValue {
 
     /**
      * Returns the ID of the field.
-     *
      * @return fieldId
      */
     @Schema(description = "The ID of the field.")
@@ -126,7 +119,6 @@ public class EntryFieldValue {
 
     /**
      * Returns a boolean indicating if the represented field supports multiple values.
-     *
      * @return isMultiValue
      */
     @Schema(description = "A boolean indicating if the represented field supports multiple values.")
@@ -146,7 +138,6 @@ public class EntryFieldValue {
 
     /**
      * Returns a boolean indicating if the represented field must have a value set on entries assigned to a template that the field is a member of.
-     *
      * @return isRequired
      */
     @Schema(
@@ -168,7 +159,6 @@ public class EntryFieldValue {
 
     /**
      * Returns a boolean indicating if there are more field values.
-     *
      * @return hasMoreValues
      */
     @Schema(description = "A boolean indicating if there are more field values.")
@@ -181,7 +171,7 @@ public class EntryFieldValue {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(java.lang.Object o) {
         if (this == o) {
             return true;
         }
@@ -218,7 +208,7 @@ public class EntryFieldValue {
         return sb.toString();
     }
 
-    private String toIndentedString(Object o) {
+    private String toIndentedString(java.lang.Object o) {
         if (o == null) {
             return "null";
         }

@@ -1,13 +1,10 @@
 package com.laserfiche.repository.api.clients.impl.model;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Objects;
 
-@javax.annotation.Generated(
-        value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen",
-        date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class LinkToUpdate {
 
@@ -27,7 +24,6 @@ public class LinkToUpdate {
 
     /**
      * Returns the id of the link assigned to the entry.
-     *
      * @return linkTypeId
      */
     @Schema(description = "The id of the link assigned to the entry.")
@@ -46,7 +42,6 @@ public class LinkToUpdate {
 
     /**
      * Returns the id of the other source linked to the entry.
-     *
      * @return otherSourceId
      */
     @Schema(description = "The id of the other source linked to the entry.")
@@ -65,7 +60,6 @@ public class LinkToUpdate {
 
     /**
      * Returns whether the entry is the source for the link.
-     *
      * @return isSource
      */
     @Schema(description = "Whether the entry is the source for the link.")
@@ -79,7 +73,7 @@ public class LinkToUpdate {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(java.lang.Object o) {
         if (this == o) {
             return true;
         }
@@ -108,7 +102,7 @@ public class LinkToUpdate {
         return sb.toString();
     }
 
-    private String toIndentedString(Object o) {
+    private String toIndentedString(java.lang.Object o) {
         if (o == null) {
             return "null";
         }
