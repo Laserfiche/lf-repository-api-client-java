@@ -3,13 +3,14 @@ package com.laserfiche.repository.api.clients.impl.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
-import org.threeten.bp.OffsetDateTime;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import org.threeten.bp.OffsetDateTime;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
+@javax.annotation.Generated(
+        value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen",
+        date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class OperationProgress {
 
@@ -153,7 +154,9 @@ public class OperationProgress {
      *
      * @return redirectUri
      */
-    @Schema(description = "The URI which can be used (via api call) to access the result(s) of the associated operation.")
+    @Schema(
+            description =
+                    "The URI which can be used (via api call) to access the result(s) of the associated operation.")
     public String getRedirectUri() {
         return redirectUri;
     }
@@ -172,7 +175,9 @@ public class OperationProgress {
      *
      * @return entryId
      */
-    @Schema(description = "The ID of the entry affected (e.g. created or modified) by the execution of the associated operation.")
+    @Schema(
+            description =
+                    "The ID of the entry affected (e.g. created or modified) by the execution of the associated operation.")
     public Integer getEntryId() {
         return entryId;
     }
@@ -228,60 +233,50 @@ public class OperationProgress {
             return false;
         }
         OperationProgress operationProgress = (OperationProgress) o;
-        return Objects.equals(this.operationToken, operationProgress.operationToken) && Objects.equals(
-                this.operationType, operationProgress.operationType) && Objects.equals(this.percentComplete,
-                operationProgress.percentComplete) && Objects.equals(this.status,
-                operationProgress.status) && Objects.equals(this.errors, operationProgress.errors) && Objects.equals(
-                this.redirectUri, operationProgress.redirectUri) && Objects.equals(this.entryId,
-                operationProgress.entryId) && Objects.equals(this.startTimestamp,
-                operationProgress.startTimestamp) && Objects.equals(this.statusTimestamp,
-                operationProgress.statusTimestamp);
+        return Objects.equals(this.operationToken, operationProgress.operationToken)
+                && Objects.equals(this.operationType, operationProgress.operationType)
+                && Objects.equals(this.percentComplete, operationProgress.percentComplete)
+                && Objects.equals(this.status, operationProgress.status)
+                && Objects.equals(this.errors, operationProgress.errors)
+                && Objects.equals(this.redirectUri, operationProgress.redirectUri)
+                && Objects.equals(this.entryId, operationProgress.entryId)
+                && Objects.equals(this.startTimestamp, operationProgress.startTimestamp)
+                && Objects.equals(this.statusTimestamp, operationProgress.statusTimestamp);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(operationToken, operationType, percentComplete, status, errors, redirectUri, entryId,
-                startTimestamp, statusTimestamp);
+        return Objects.hash(
+                operationToken,
+                operationType,
+                percentComplete,
+                status,
+                errors,
+                redirectUri,
+                entryId,
+                startTimestamp,
+                statusTimestamp);
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class OperationProgress {\n");
-        sb
-                .append("    operationToken: ")
+        sb.append("    operationToken: ")
                 .append(toIndentedString(operationToken))
                 .append("\n");
-        sb
-                .append("    operationType: ")
-                .append(toIndentedString(operationType))
-                .append("\n");
-        sb
-                .append("    percentComplete: ")
+        sb.append("    operationType: ").append(toIndentedString(operationType)).append("\n");
+        sb.append("    percentComplete: ")
                 .append(toIndentedString(percentComplete))
                 .append("\n");
-        sb
-                .append("    status: ")
-                .append(toIndentedString(status))
-                .append("\n");
-        sb
-                .append("    errors: ")
-                .append(toIndentedString(errors))
-                .append("\n");
-        sb
-                .append("    redirectUri: ")
-                .append(toIndentedString(redirectUri))
-                .append("\n");
-        sb
-                .append("    entryId: ")
-                .append(toIndentedString(entryId))
-                .append("\n");
-        sb
-                .append("    startTimestamp: ")
+        sb.append("    status: ").append(toIndentedString(status)).append("\n");
+        sb.append("    errors: ").append(toIndentedString(errors)).append("\n");
+        sb.append("    redirectUri: ").append(toIndentedString(redirectUri)).append("\n");
+        sb.append("    entryId: ").append(toIndentedString(entryId)).append("\n");
+        sb.append("    startTimestamp: ")
                 .append(toIndentedString(startTimestamp))
                 .append("\n");
-        sb
-                .append("    statusTimestamp: ")
+        sb.append("    statusTimestamp: ")
                 .append(toIndentedString(statusTimestamp))
                 .append("\n");
         sb.append("}");
@@ -292,8 +287,6 @@ public class OperationProgress {
         if (o == null) {
             return "null";
         }
-        return o
-                .toString()
-                .replace("\n", "\n    ");
+        return o.toString().replace("\n", "\n    ");
     }
 }

@@ -1,17 +1,16 @@
 package com.laserfiche.repository.api.unit.ApiClientUtils;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import com.laserfiche.repository.api.clients.impl.ApiClientUtils;
+import java.util.HashMap;
+import java.util.Map;
 import kong.unirest.Headers;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class GetHeadersTest {
     private final Map<String, String> headerParametersWithStringTypeValue = new HashMap<String, String>();
@@ -30,8 +29,7 @@ public class GetHeadersTest {
 
     @Test
     void getHeadersMap_AllNullParameters() {
-        Assertions.assertThrows(
-                NullPointerException.class, () -> ApiClientUtils.getHeadersMap(null));
+        Assertions.assertThrows(NullPointerException.class, () -> ApiClientUtils.getHeadersMap(null));
     }
 
     @Test
@@ -85,7 +83,7 @@ public class GetHeadersTest {
     }
 
     @Test
-    void getHeaderMap_AddKeyToHeaderMap(){
+    void getHeaderMap_AddKeyToHeaderMap() {
         for (int i = 0; i < 5; i++) {
             headerParametersWithStringTypeValue.put(String.format("test%s", i), "test");
         }
@@ -102,7 +100,7 @@ public class GetHeadersTest {
     }
 
     @Test
-    void getHeaderMap_DeleteKeyToHeaderMap(){
+    void getHeaderMap_DeleteKeyToHeaderMap() {
         for (int i = 0; i < 5; i++) {
             headerParametersWithStringTypeValue.put(String.format("test%s", i), "test");
         }
@@ -117,5 +115,4 @@ public class GetHeadersTest {
         assertNotNull(headerParametersWithStringTypeValue);
         assertEquals(result, headerParametersWithStringTypeValue);
     }
-
 }

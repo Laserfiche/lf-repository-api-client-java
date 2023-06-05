@@ -9,14 +9,13 @@ import com.laserfiche.repository.api.clients.params.ParametersForDeleteEntryInfo
 import com.laserfiche.repository.api.clients.params.ParametersForGetOperationStatusAndProgress;
 import com.laserfiche.repository.api.clients.params.ParametersForGetSearchStatus;
 import io.github.cdimascio.dotenv.Dotenv;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 
 enum AuthorizationType {
     CLOUD_ACCESS_KEY,
@@ -47,8 +46,7 @@ public class BaseTest {
 
     @BeforeAll
     public static void setUp() {
-        Dotenv dotenv = Dotenv
-                .configure()
+        Dotenv dotenv = Dotenv.configure()
                 .filename(".env")
                 .systemProperties()
                 .ignoreIfMissing()
@@ -57,8 +55,8 @@ public class BaseTest {
             authorizationType = AuthorizationType.valueOf(getEnvironmentVariable(AUTHORIZATION_TYPE));
             testHeaderValue = getEnvironmentVariable(TEST_HEADER);
         } catch (EnumConstantNotPresentException e) {
-            throw new EnumConstantNotPresentException(AuthorizationType.class,
-                    getEnvironmentVariable(AUTHORIZATION_TYPE));
+            throw new EnumConstantNotPresentException(
+                    AuthorizationType.class, getEnvironmentVariable(AUTHORIZATION_TYPE));
         }
         repositoryId = getEnvironmentVariable(REPOSITORY_ID);
         if (authorizationType == AuthorizationType.CLOUD_ACCESS_KEY) {
@@ -97,29 +95,26 @@ public class BaseTest {
     public static RepositoryApiClient createClient() {
         if (repositoryApiClient == null) {
             if (authorizationType.equals(AuthorizationType.CLOUD_ACCESS_KEY)) {
-                if (nullOrEmpty(servicePrincipalKey) || accessKey == null)
-                    return null;
+                if (nullOrEmpty(servicePrincipalKey) || accessKey == null) return null;
                 repositoryApiClient = RepositoryApiClientImpl.createFromAccessKey(servicePrincipalKey, accessKey);
             } else if (authorizationType.equals(AuthorizationType.API_SERVER_USERNAME_PASSWORD)) {
                 if (nullOrEmpty(repositoryId) || nullOrEmpty(username) || nullOrEmpty(password) || nullOrEmpty(baseUrl))
                     return null;
-                repositoryApiClient = RepositoryApiClientImpl.createFromUsernamePassword(repositoryId, username,
-                        password,
-                        baseUrl);
+                repositoryApiClient =
+                        RepositoryApiClientImpl.createFromUsernamePassword(repositoryId, username, password, baseUrl);
             }
             repositoryApiClient.setDefaultRequestHeaders(testHeaders);
         }
         return repositoryApiClient;
     }
 
-    public static Entry createEntry(RepositoryApiClient client, String entryName,
-            Integer parentEntryId, Boolean autoRename) {
+    public static Entry createEntry(
+            RepositoryApiClient client, String entryName, Integer parentEntryId, Boolean autoRename) {
         PostEntryChildrenRequest request = new PostEntryChildrenRequest();
         request.setEntryType(PostEntryChildrenEntryType.FOLDER);
         request.setName(entryName);
 
-        return client
-                .getEntriesClient()
+        return client.getEntriesClient()
                 .createOrCopyEntry(new ParametersForCreateOrCopyEntry()
                         .setRepoId(repositoryId)
                         .setEntryId(parentEntryId)
@@ -148,12 +143,14 @@ public class BaseTest {
         WaitUntilSearchEnds(search, Duration.ofMillis(500), Duration.ofSeconds(30));
     }
 
-    public static void WaitUntilTaskEnds(AcceptedOperation task, Duration interval, Duration timeout) throws InterruptedException {
+    public static void WaitUntilTaskEnds(AcceptedOperation task, Duration interval, Duration timeout)
+            throws InterruptedException {
         int maxIteration = (int) (timeout.toMillis() / interval.toMillis());
         int count = 0;
         while (count < maxIteration) {
-            OperationProgress progress = repositoryApiClient.getTasksClient().getOperationStatusAndProgress(
-                    new ParametersForGetOperationStatusAndProgress()
+            OperationProgress progress = repositoryApiClient
+                    .getTasksClient()
+                    .getOperationStatusAndProgress(new ParametersForGetOperationStatusAndProgress()
                             .setRepoId(repositoryId)
                             .setOperationToken(task.getToken()));
             if (progress.getStatus() != OperationStatus.IN_PROGRESS) {
@@ -165,12 +162,14 @@ public class BaseTest {
         throw new RuntimeException("WaitUntilTaskEnds timeout");
     }
 
-    public static void WaitUntilSearchEnds(AcceptedOperation search, Duration interval, Duration timeout) throws InterruptedException {
+    public static void WaitUntilSearchEnds(AcceptedOperation search, Duration interval, Duration timeout)
+            throws InterruptedException {
         int maxIteration = (int) (timeout.toMillis() / interval.toMillis());
         int count = 0;
         while (count < maxIteration) {
-            OperationProgress progress = repositoryApiClient.getSearchesClient().getSearchStatus(
-                    new ParametersForGetSearchStatus()
+            OperationProgress progress = repositoryApiClient
+                    .getSearchesClient()
+                    .getSearchStatus(new ParametersForGetSearchStatus()
                             .setRepoId(repositoryId)
                             .setSearchToken(search.getToken()));
             if (progress.getStatus() != OperationStatus.IN_PROGRESS) {
@@ -185,8 +184,9 @@ public class BaseTest {
     public static void deleteEntry(int entryId) throws InterruptedException {
         if (entryId != 0) {
             DeleteEntryWithAuditReason body = new DeleteEntryWithAuditReason();
-            AcceptedOperation deleteEntryResponse = repositoryApiClient.getEntriesClient().deleteEntryInfo(
-                    new ParametersForDeleteEntryInfo()
+            AcceptedOperation deleteEntryResponse = repositoryApiClient
+                    .getEntriesClient()
+                    .deleteEntryInfo(new ParametersForDeleteEntryInfo()
                             .setRepoId(repositoryId)
                             .setEntryId(entryId)
                             .setRequestBody(body));

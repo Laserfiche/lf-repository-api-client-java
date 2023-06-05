@@ -7,8 +7,9 @@ import com.fasterxml.jackson.annotation.JsonValue;
  * Gets or Sets FuzzyType
  */
 public enum FuzzyType {
-
-    NONE("None"), PERCENTAGE("Percentage"), NUMBER_OF_LETTERS("NumberOfLetters");
+    NONE("None"),
+    PERCENTAGE("Percentage"),
+    NUMBER_OF_LETTERS("NumberOfLetters");
 
     private String value;
 

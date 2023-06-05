@@ -4,7 +4,6 @@ import com.laserfiche.repository.api.clients.impl.model.Attribute;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfListOfAttribute;
 import com.laserfiche.repository.api.clients.params.ParametersForGetTrusteeAttributeKeyValuePairs;
 import com.laserfiche.repository.api.clients.params.ParametersForGetTrusteeAttributeValueByKey;
-
 import java.util.function.Function;
 
 /**
@@ -48,6 +47,8 @@ public interface AttributesClient {
      * @param maxPageSize Optionally specify the maximum number of items to retrieve.
      * @param parameters  An object of type {@link ParametersForGetTrusteeAttributeKeyValuePairs} which encapsulates the parameters of {@link #getTrusteeAttributeKeyValuePairs getTrusteeAttributeKeyValuePairs} method.
      */
-    void getTrusteeAttributeKeyValuePairsForEach(Function<ODataValueContextOfListOfAttribute, Boolean> callback,
-            Integer maxPageSize, ParametersForGetTrusteeAttributeKeyValuePairs parameters);
+    void getTrusteeAttributeKeyValuePairsForEach(
+            Function<ODataValueContextOfListOfAttribute, Boolean> callback,
+            Integer maxPageSize,
+            ParametersForGetTrusteeAttributeKeyValuePairs parameters);
 }

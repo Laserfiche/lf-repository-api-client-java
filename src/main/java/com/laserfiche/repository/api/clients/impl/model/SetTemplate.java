@@ -3,7 +3,6 @@ package com.laserfiche.repository.api.clients.impl.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -12,7 +11,9 @@ import java.util.Objects;
  * The result of trying to assign a template to the entry.
  */
 @Schema(description = "The result of trying to assign a template to the entry.")
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
+@javax.annotation.Generated(
+        value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen",
+        date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class SetTemplate {
 
@@ -59,7 +60,9 @@ public class SetTemplate {
      *
      * @return template
      */
-    @Schema(description = "The name of the template assigned to the entry. If this is null, then no template was assigned.")
+    @Schema(
+            description =
+                    "The name of the template assigned to the entry. If this is null, then no template was assigned.")
     public String getTemplate() {
         return template;
     }
@@ -77,8 +80,8 @@ public class SetTemplate {
             return false;
         }
         SetTemplate setTemplate = (SetTemplate) o;
-        return Objects.equals(this.exceptions, setTemplate.exceptions) && Objects.equals(this.template,
-                setTemplate.template);
+        return Objects.equals(this.exceptions, setTemplate.exceptions)
+                && Objects.equals(this.template, setTemplate.template);
     }
 
     @Override
@@ -90,14 +93,8 @@ public class SetTemplate {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class SetTemplate {\n");
-        sb
-                .append("    exceptions: ")
-                .append(toIndentedString(exceptions))
-                .append("\n");
-        sb
-                .append("    template: ")
-                .append(toIndentedString(template))
-                .append("\n");
+        sb.append("    exceptions: ").append(toIndentedString(exceptions)).append("\n");
+        sb.append("    template: ").append(toIndentedString(template)).append("\n");
         sb.append("}");
         return sb.toString();
     }
@@ -106,8 +103,6 @@ public class SetTemplate {
         if (o == null) {
             return "null";
         }
-        return o
-                .toString()
-                .replace("\n", "\n    ");
+        return o.toString().replace("\n", "\n    ");
     }
 }

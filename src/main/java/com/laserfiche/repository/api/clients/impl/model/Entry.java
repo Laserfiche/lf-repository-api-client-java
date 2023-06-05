@@ -5,15 +5,26 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import io.swagger.v3.oas.annotations.media.Schema;
-import org.threeten.bp.OffsetDateTime;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import org.threeten.bp.OffsetDateTime;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "entryType", visible = true, defaultImpl = Entry.class)
-@JsonSubTypes({@JsonSubTypes.Type(value = Document.class, name = "Document"), @JsonSubTypes.Type(value = Folder.class, name = "Folder"), @JsonSubTypes.Type(value = Shortcut.class, name = "Shortcut"), @JsonSubTypes.Type(value = RecordSeries.class, name = "RecordSeries")})
+@javax.annotation.Generated(
+        value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen",
+        date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.EXISTING_PROPERTY,
+        property = "entryType",
+        visible = true,
+        defaultImpl = Entry.class)
+@JsonSubTypes({
+    @JsonSubTypes.Type(value = Document.class, name = "Document"),
+    @JsonSubTypes.Type(value = Folder.class, name = "Folder"),
+    @JsonSubTypes.Type(value = Shortcut.class, name = "Shortcut"),
+    @JsonSubTypes.Type(value = RecordSeries.class, name = "RecordSeries")
+})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Entry {
 
@@ -249,7 +260,9 @@ public class Entry {
      *
      * @return isContainer
      */
-    @Schema(description = "A boolean indicating if this entry is a container object; it can have other entries as children.")
+    @Schema(
+            description =
+                    "A boolean indicating if this entry is a container object; it can have other entries as children.")
     @JsonProperty("isContainer")
     public Boolean isContainer() {
         return isContainer;
@@ -269,7 +282,9 @@ public class Entry {
      *
      * @return isLeaf
      */
-    @Schema(description = "A boolean indicating if this entry is a leaf object; it cannot have other entries as children.")
+    @Schema(
+            description =
+                    "A boolean indicating if this entry is a leaf object; it cannot have other entries as children.")
     @JsonProperty("isLeaf")
     public Boolean isLeaf() {
         return isLeaf;
@@ -418,22 +433,44 @@ public class Entry {
             return false;
         }
         Entry entry = (Entry) o;
-        return Objects.equals(this.id, entry.id) && Objects.equals(this.name, entry.name) && Objects.equals(
-                this.parentId, entry.parentId) && Objects.equals(this.fullPath, entry.fullPath) && Objects.equals(
-                this.folderPath, entry.folderPath) && Objects.equals(this.creator, entry.creator) && Objects.equals(
-                this.creationTime, entry.creationTime) && Objects.equals(this.lastModifiedTime,
-                entry.lastModifiedTime) && Objects.equals(this.entryType, entry.entryType) && Objects.equals(
-                this.isContainer, entry.isContainer) && Objects.equals(this.isLeaf, entry.isLeaf) && Objects.equals(
-                this.templateName, entry.templateName) && Objects.equals(this.templateId,
-                entry.templateId) && Objects.equals(this.templateFieldNames,
-                entry.templateFieldNames) && Objects.equals(this.volumeName, entry.volumeName) && Objects.equals(
-                this.rowNumber, entry.rowNumber) && Objects.equals(this.fields, entry.fields);
+        return Objects.equals(this.id, entry.id)
+                && Objects.equals(this.name, entry.name)
+                && Objects.equals(this.parentId, entry.parentId)
+                && Objects.equals(this.fullPath, entry.fullPath)
+                && Objects.equals(this.folderPath, entry.folderPath)
+                && Objects.equals(this.creator, entry.creator)
+                && Objects.equals(this.creationTime, entry.creationTime)
+                && Objects.equals(this.lastModifiedTime, entry.lastModifiedTime)
+                && Objects.equals(this.entryType, entry.entryType)
+                && Objects.equals(this.isContainer, entry.isContainer)
+                && Objects.equals(this.isLeaf, entry.isLeaf)
+                && Objects.equals(this.templateName, entry.templateName)
+                && Objects.equals(this.templateId, entry.templateId)
+                && Objects.equals(this.templateFieldNames, entry.templateFieldNames)
+                && Objects.equals(this.volumeName, entry.volumeName)
+                && Objects.equals(this.rowNumber, entry.rowNumber)
+                && Objects.equals(this.fields, entry.fields);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, parentId, fullPath, folderPath, creator, creationTime, lastModifiedTime,
-                entryType, isContainer, isLeaf, templateName, templateId, templateFieldNames, volumeName, rowNumber,
+        return Objects.hash(
+                id,
+                name,
+                parentId,
+                fullPath,
+                folderPath,
+                creator,
+                creationTime,
+                lastModifiedTime,
+                entryType,
+                isContainer,
+                isLeaf,
+                templateName,
+                templateId,
+                templateFieldNames,
+                volumeName,
+                rowNumber,
                 fields);
     }
 
@@ -441,74 +478,27 @@ public class Entry {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class Entry {\n");
-        sb
-                .append("    id: ")
-                .append(toIndentedString(id))
-                .append("\n");
-        sb
-                .append("    name: ")
-                .append(toIndentedString(name))
-                .append("\n");
-        sb
-                .append("    parentId: ")
-                .append(toIndentedString(parentId))
-                .append("\n");
-        sb
-                .append("    fullPath: ")
-                .append(toIndentedString(fullPath))
-                .append("\n");
-        sb
-                .append("    folderPath: ")
-                .append(toIndentedString(folderPath))
-                .append("\n");
-        sb
-                .append("    creator: ")
-                .append(toIndentedString(creator))
-                .append("\n");
-        sb
-                .append("    creationTime: ")
-                .append(toIndentedString(creationTime))
-                .append("\n");
-        sb
-                .append("    lastModifiedTime: ")
+        sb.append("    id: ").append(toIndentedString(id)).append("\n");
+        sb.append("    name: ").append(toIndentedString(name)).append("\n");
+        sb.append("    parentId: ").append(toIndentedString(parentId)).append("\n");
+        sb.append("    fullPath: ").append(toIndentedString(fullPath)).append("\n");
+        sb.append("    folderPath: ").append(toIndentedString(folderPath)).append("\n");
+        sb.append("    creator: ").append(toIndentedString(creator)).append("\n");
+        sb.append("    creationTime: ").append(toIndentedString(creationTime)).append("\n");
+        sb.append("    lastModifiedTime: ")
                 .append(toIndentedString(lastModifiedTime))
                 .append("\n");
-        sb
-                .append("    entryType: ")
-                .append(toIndentedString(entryType))
-                .append("\n");
-        sb
-                .append("    isContainer: ")
-                .append(toIndentedString(isContainer))
-                .append("\n");
-        sb
-                .append("    isLeaf: ")
-                .append(toIndentedString(isLeaf))
-                .append("\n");
-        sb
-                .append("    templateName: ")
-                .append(toIndentedString(templateName))
-                .append("\n");
-        sb
-                .append("    templateId: ")
-                .append(toIndentedString(templateId))
-                .append("\n");
-        sb
-                .append("    templateFieldNames: ")
+        sb.append("    entryType: ").append(toIndentedString(entryType)).append("\n");
+        sb.append("    isContainer: ").append(toIndentedString(isContainer)).append("\n");
+        sb.append("    isLeaf: ").append(toIndentedString(isLeaf)).append("\n");
+        sb.append("    templateName: ").append(toIndentedString(templateName)).append("\n");
+        sb.append("    templateId: ").append(toIndentedString(templateId)).append("\n");
+        sb.append("    templateFieldNames: ")
                 .append(toIndentedString(templateFieldNames))
                 .append("\n");
-        sb
-                .append("    volumeName: ")
-                .append(toIndentedString(volumeName))
-                .append("\n");
-        sb
-                .append("    rowNumber: ")
-                .append(toIndentedString(rowNumber))
-                .append("\n");
-        sb
-                .append("    fields: ")
-                .append(toIndentedString(fields))
-                .append("\n");
+        sb.append("    volumeName: ").append(toIndentedString(volumeName)).append("\n");
+        sb.append("    rowNumber: ").append(toIndentedString(rowNumber)).append("\n");
+        sb.append("    fields: ").append(toIndentedString(fields)).append("\n");
         sb.append("}");
         return sb.toString();
     }
@@ -517,8 +507,6 @@ public class Entry {
         if (o == null) {
             return "null";
         }
-        return o
-                .toString()
-                .replace("\n", "\n    ");
+        return o.toString().replace("\n", "\n    ");
     }
 }

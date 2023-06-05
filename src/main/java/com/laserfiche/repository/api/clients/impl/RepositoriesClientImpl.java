@@ -7,17 +7,16 @@ import com.laserfiche.api.client.model.ApiException;
 import com.laserfiche.api.client.model.ProblemDetails;
 import com.laserfiche.repository.api.clients.RepositoriesClient;
 import com.laserfiche.repository.api.clients.impl.model.RepositoryInfo;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Function;
 import kong.unirest.HttpResponse;
 import kong.unirest.ObjectMapper;
 import kong.unirest.Unirest;
 import kong.unirest.UnirestInstance;
 import kong.unirest.json.JSONArray;
 import kong.unirest.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Function;
 
 /**
  * The Laserfiche Repository Repositories API client.
@@ -51,8 +50,20 @@ public class RepositoriesClientImpl extends ApiClient implements RepositoriesCli
                 throw ApiClientUtils.createApiException(httpResponse, problemDetails);
             }
         };
-        return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler, baseUrl + "/v1/Repositories", "GET",
-                null, null, null, null, null, null, new HashMap<String, String>(), false, parseResponse);
+        return ApiClientUtils.sendRequestWithRetry(
+                httpClient,
+                httpRequestHandler,
+                baseUrl + "/v1/Repositories",
+                "GET",
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                new HashMap<String, String>(),
+                false,
+                parseResponse);
     }
 
     /**
@@ -72,13 +83,8 @@ public class RepositoriesClientImpl extends ApiClient implements RepositoriesCli
         String baseUrl = url + "/v1/Repositories";
         ObjectMapper objectMapper = new TokenClientObjectMapper();
         try (UnirestInstance httpClient = Unirest.spawnInstance()) {
-            httpClient
-                    .config()
-                    .setObjectMapper(objectMapper);
-            httpResponse = httpClient
-                    .get(baseUrl)
-                    .headers(headerKeyValuePairs)
-                    .asObject(Object.class);
+            httpClient.config().setObjectMapper(objectMapper);
+            httpResponse = httpClient.get(baseUrl).headers(headerKeyValuePairs).asObject(Object.class);
             Object body = httpResponse.getBody();
             Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
             if (httpResponse.getStatus() == 200) {

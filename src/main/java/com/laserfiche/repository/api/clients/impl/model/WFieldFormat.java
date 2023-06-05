@@ -7,7 +7,6 @@ import com.fasterxml.jackson.annotation.JsonValue;
  * Enumeration of Laserfiche template field formats.
  */
 public enum WFieldFormat {
-
     NONE("None"),
     SHORT_DATE("ShortDate"),
     LONG_DATE("LongDate"),

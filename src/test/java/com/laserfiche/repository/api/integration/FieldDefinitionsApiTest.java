@@ -1,17 +1,16 @@
 package com.laserfiche.repository.api.integration;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import com.laserfiche.repository.api.clients.FieldDefinitionsClient;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfWFieldInfo;
 import com.laserfiche.repository.api.clients.impl.model.WFieldInfo;
 import com.laserfiche.repository.api.clients.params.ParametersForGetFieldDefinitionById;
 import com.laserfiche.repository.api.clients.params.ParametersForGetFieldDefinitions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
-
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 class FieldDefinitionsApiTest extends BaseTest {
     FieldDefinitionsClient client;
@@ -23,18 +22,17 @@ class FieldDefinitionsApiTest extends BaseTest {
 
     @Test
     void getFieldDefinitionById_ReturnField() {
-        WFieldInfo fieldInfo = client
-                .getFieldDefinitionById(new ParametersForGetFieldDefinitionById()
-                        .setRepoId(repositoryId)
-                        .setFieldDefinitionId(1));
+        WFieldInfo fieldInfo = client.getFieldDefinitionById(new ParametersForGetFieldDefinitionById()
+                .setRepoId(repositoryId)
+                .setFieldDefinitionId(1));
 
         assertNotNull(fieldInfo);
     }
 
     @Test
     void getFieldDefinitions_ReturnAllFields() {
-        ODataValueContextOfIListOfWFieldInfo fieldInfoList = client
-                .getFieldDefinitions(new ParametersForGetFieldDefinitions().setRepoId(repositoryId));
+        ODataValueContextOfIListOfWFieldInfo fieldInfoList =
+                client.getFieldDefinitions(new ParametersForGetFieldDefinitions().setRepoId(repositoryId));
 
         assertNotNull(fieldInfoList);
     }
@@ -42,8 +40,8 @@ class FieldDefinitionsApiTest extends BaseTest {
     @Test
     void getFieldDefinitions_NextLink() throws InterruptedException {
         int maxPageSize = 3;
-        ODataValueContextOfIListOfWFieldInfo fieldInfoList = client
-                .getFieldDefinitions(new ParametersForGetFieldDefinitions()
+        ODataValueContextOfIListOfWFieldInfo fieldInfoList =
+                client.getFieldDefinitions(new ParametersForGetFieldDefinitions()
                         .setRepoId(repositoryId)
                         .setPrefer(String.format("maxpagesize=%d", maxPageSize)));
         assertNotNull(fieldInfoList);
@@ -51,17 +49,12 @@ class FieldDefinitionsApiTest extends BaseTest {
         String nextLink = fieldInfoList.getOdataNextLink();
         assertNotNull(nextLink);
 
-        assertTrue(fieldInfoList
-                .getValue()
-                .size() <= maxPageSize);
+        assertTrue(fieldInfoList.getValue().size() <= maxPageSize);
 
-        ODataValueContextOfIListOfWFieldInfo nextLinkResult = client.getFieldDefinitionsNextLink(
-                nextLink, maxPageSize);
+        ODataValueContextOfIListOfWFieldInfo nextLinkResult = client.getFieldDefinitionsNextLink(nextLink, maxPageSize);
 
         assertNotNull(nextLinkResult);
-        assertTrue(nextLinkResult
-                .getValue()
-                .size() <= maxPageSize);
+        assertTrue(nextLinkResult.getValue().size() <= maxPageSize);
     }
 
     @Test
@@ -71,19 +64,15 @@ class FieldDefinitionsApiTest extends BaseTest {
         int maxPageSize = 3;
         Function<ODataValueContextOfIListOfWFieldInfo, Boolean> callback = fieldInfoList -> {
             if (pageCount.incrementAndGet() <= maxPages && fieldInfoList.getOdataNextLink() != null) {
-                assertNotEquals(0, fieldInfoList
-                        .getValue()
-                        .size());
-                assertTrue(fieldInfoList
-                        .getValue()
-                        .size() <= maxPageSize);
+                assertNotEquals(0, fieldInfoList.getValue().size());
+                assertTrue(fieldInfoList.getValue().size() <= maxPageSize);
                 return true;
             } else {
                 return false;
             }
         };
-        client.getFieldDefinitionsForEach(callback, maxPageSize,
-                new ParametersForGetFieldDefinitions().setRepoId(repositoryId));
+        client.getFieldDefinitionsForEach(
+                callback, maxPageSize, new ParametersForGetFieldDefinitions().setRepoId(repositoryId));
         assertTrue(pageCount.get() > 1);
     }
 }

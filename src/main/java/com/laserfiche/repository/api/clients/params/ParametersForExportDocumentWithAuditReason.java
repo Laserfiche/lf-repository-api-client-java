@@ -1,7 +1,6 @@
 package com.laserfiche.repository.api.clients.params;
 
 import com.laserfiche.repository.api.clients.impl.model.GetEdocWithAuditReasonRequest;
-
 import java.io.InputStream;
 import java.util.function.Consumer;
 

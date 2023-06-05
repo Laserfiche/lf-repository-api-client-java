@@ -3,10 +3,11 @@ package com.laserfiche.repository.api.clients.impl.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.util.Objects;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
+@javax.annotation.Generated(
+        value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen",
+        date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class EntryLinkTypeInfo {
 
@@ -107,10 +108,10 @@ public class EntryLinkTypeInfo {
             return false;
         }
         EntryLinkTypeInfo entryLinkTypeInfo = (EntryLinkTypeInfo) o;
-        return Objects.equals(this.linkTypeId, entryLinkTypeInfo.linkTypeId) && Objects.equals(this.sourceLabel,
-                entryLinkTypeInfo.sourceLabel) && Objects.equals(this.targetLabel,
-                entryLinkTypeInfo.targetLabel) && Objects.equals(this.linkTypeDescription,
-                entryLinkTypeInfo.linkTypeDescription);
+        return Objects.equals(this.linkTypeId, entryLinkTypeInfo.linkTypeId)
+                && Objects.equals(this.sourceLabel, entryLinkTypeInfo.sourceLabel)
+                && Objects.equals(this.targetLabel, entryLinkTypeInfo.targetLabel)
+                && Objects.equals(this.linkTypeDescription, entryLinkTypeInfo.linkTypeDescription);
     }
 
     @Override
@@ -122,20 +123,10 @@ public class EntryLinkTypeInfo {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class EntryLinkTypeInfo {\n");
-        sb
-                .append("    linkTypeId: ")
-                .append(toIndentedString(linkTypeId))
-                .append("\n");
-        sb
-                .append("    sourceLabel: ")
-                .append(toIndentedString(sourceLabel))
-                .append("\n");
-        sb
-                .append("    targetLabel: ")
-                .append(toIndentedString(targetLabel))
-                .append("\n");
-        sb
-                .append("    linkTypeDescription: ")
+        sb.append("    linkTypeId: ").append(toIndentedString(linkTypeId)).append("\n");
+        sb.append("    sourceLabel: ").append(toIndentedString(sourceLabel)).append("\n");
+        sb.append("    targetLabel: ").append(toIndentedString(targetLabel)).append("\n");
+        sb.append("    linkTypeDescription: ")
                 .append(toIndentedString(linkTypeDescription))
                 .append("\n");
         sb.append("}");
@@ -146,8 +137,6 @@ public class EntryLinkTypeInfo {
         if (o == null) {
             return "null";
         }
-        return o
-                .toString()
-                .replace("\n", "\n    ");
+        return o.toString().replace("\n", "\n    ");
     }
 }

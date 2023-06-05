@@ -7,12 +7,11 @@ import com.laserfiche.api.client.httphandlers.UsernamePasswordHandler;
 import com.laserfiche.api.client.model.AccessKey;
 import com.laserfiche.repository.api.clients.*;
 import com.laserfiche.repository.api.clients.impl.*;
+import java.util.HashMap;
+import java.util.Map;
 import kong.unirest.ObjectMapper;
 import kong.unirest.Unirest;
 import kong.unirest.UnirestInstance;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * The Laserfiche Repository API client.
@@ -43,9 +42,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
 
         // Initialize HTTP client
         httpClient = Unirest.spawnInstance();
-        httpClient
-                .config()
-                .setObjectMapper(objectMapper);
+        httpClient.config().setObjectMapper(objectMapper);
 
         // Add compression header if a client is created
         if (httpClient != null) {
@@ -77,8 +74,8 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
      * @param baseUrlDebug        Optional override for the Laserfiche repository API base url.
      * @return {@link RepositoryApiClient}
      */
-    public static RepositoryApiClient createFromAccessKey(String servicePrincipalKey, AccessKey accessKey, String scope,
-            String baseUrlDebug) {
+    public static RepositoryApiClient createFromAccessKey(
+            String servicePrincipalKey, AccessKey accessKey, String scope, String baseUrlDebug) {
         if (baseUrlDebug == null) {
             baseUrlDebug = "https://api." + accessKey.getDomain() + "/repository";
         }
@@ -94,8 +91,8 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
      * @param scope               The requested space-delimited scopes for the access token.
      * @return {@link RepositoryApiClient}
      */
-    public static RepositoryApiClient createFromAccessKey(String servicePrincipalKey, AccessKey accessKey,
-            String scope) {
+    public static RepositoryApiClient createFromAccessKey(
+            String servicePrincipalKey, AccessKey accessKey, String scope) {
         return createFromAccessKey(servicePrincipalKey, accessKey, scope, null);
     }
 
@@ -120,23 +117,19 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
      * @param baseUrl      API server base URL e.g., https://{APIServerName}/LFRepositoryAPI.
      * @return {@link RepositoryApiClient}
      */
-    public static RepositoryApiClient createFromUsernamePassword(String repositoryId, String username, String password,
-            String baseUrl) {
-        HttpRequestHandler usernamePasswordHandler = new UsernamePasswordHandler(repositoryId, username, password,
-                baseUrl, null);
+    public static RepositoryApiClient createFromUsernamePassword(
+            String repositoryId, String username, String password, String baseUrl) {
+        HttpRequestHandler usernamePasswordHandler =
+                new UsernamePasswordHandler(repositoryId, username, password, baseUrl, null);
         return new RepositoryApiClientImpl(baseUrl, usernamePasswordHandler);
     }
 
     @Override
     public void setDefaultRequestHeaders(Map<String, String> defaultRequestHeaders) {
         defaultHeaders = defaultRequestHeaders;
-        httpClient
-                .config()
-                .clearDefaultHeaders();
+        httpClient.config().clearDefaultHeaders();
         for (String Key : defaultRequestHeaders.keySet()) {
-            httpClient
-                    .config()
-                    .setDefaultHeader(Key, defaultHeaders.get(Key));
+            httpClient.config().setDefaultHeader(Key, defaultHeaders.get(Key));
         }
     }
 

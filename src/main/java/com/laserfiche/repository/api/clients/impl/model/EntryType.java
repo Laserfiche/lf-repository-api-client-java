@@ -7,8 +7,10 @@ import com.fasterxml.jackson.annotation.JsonValue;
  * Gets or Sets EntryType
  */
 public enum EntryType {
-
-    FOLDER("Folder"), RECORD_SERIES("RecordSeries"), DOCUMENT("Document"), SHORTCUT("Shortcut");
+    FOLDER("Folder"),
+    RECORD_SERIES("RecordSeries"),
+    DOCUMENT("Document"),
+    SHORTCUT("Shortcut");
 
     private String value;
 

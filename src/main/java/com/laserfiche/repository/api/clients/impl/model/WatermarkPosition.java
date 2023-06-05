@@ -7,7 +7,6 @@ import com.fasterxml.jackson.annotation.JsonValue;
  * Gets or Sets WatermarkPosition
  */
 public enum WatermarkPosition {
-
     TOP_LEFT("TopLeft"),
     TOP_CENTER("TopCenter"),
     TOP_RIGHT("TopRight"),

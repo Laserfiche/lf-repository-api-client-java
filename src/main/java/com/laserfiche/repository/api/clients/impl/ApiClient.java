@@ -20,9 +20,7 @@ public abstract class ApiClient {
     public ApiClient(String baseUrl, UnirestInstance httpClient, HttpRequestHandler httpRequestHandler) {
         this.baseUrl = baseUrl;
         this.httpClient = httpClient;
-        this.objectMapper = httpClient
-                .config()
-                .getObjectMapper();
+        this.objectMapper = httpClient.config().getObjectMapper();
         this.httpRequestHandler = httpRequestHandler;
     }
 

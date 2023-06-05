@@ -10,13 +10,12 @@ import com.laserfiche.repository.api.clients.impl.model.ODataValueOfDateTime;
 import com.laserfiche.repository.api.clients.params.ParametersForCreateServerSession;
 import com.laserfiche.repository.api.clients.params.ParametersForInvalidateServerSession;
 import com.laserfiche.repository.api.clients.params.ParametersForRefreshServerSession;
-import kong.unirest.HttpResponse;
-import kong.unirest.UnirestInstance;
-import kong.unirest.json.JSONObject;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
+import kong.unirest.HttpResponse;
+import kong.unirest.UnirestInstance;
+import kong.unirest.json.JSONObject;
 
 /**
  * The Laserfiche Repository ServerSession API client.
@@ -29,8 +28,8 @@ public class ServerSessionClientImpl extends ApiClient implements ServerSessionC
 
     @Override
     public ODataValueOfBoolean invalidateServerSession(ParametersForInvalidateServerSession parameters) {
-        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"},
-                new String[]{"repoId"}, new Object[]{parameters.getRepoId()});
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(
+                new String[] {"String"}, new String[] {"repoId"}, new Object[] {parameters.getRepoId()});
         Function<HttpResponse<Object>, ODataValueOfBoolean> parseResponse = (HttpResponse<Object> httpResponse) -> {
             Object body = httpResponse.getBody();
             Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
@@ -52,15 +51,26 @@ public class ServerSessionClientImpl extends ApiClient implements ServerSessionC
                 throw ApiClientUtils.createApiException(httpResponse, problemDetails);
             }
         };
-        return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler,
-                baseUrl + "/v1/Repositories/{repoId}/ServerSession/Invalidate", "POST", null, null, null, null, null,
-                pathParameters, new HashMap<String, String>(), false, parseResponse);
+        return ApiClientUtils.sendRequestWithRetry(
+                httpClient,
+                httpRequestHandler,
+                baseUrl + "/v1/Repositories/{repoId}/ServerSession/Invalidate",
+                "POST",
+                null,
+                null,
+                null,
+                null,
+                null,
+                pathParameters,
+                new HashMap<String, String>(),
+                false,
+                parseResponse);
     }
 
     @Override
     public ODataValueOfBoolean createServerSession(ParametersForCreateServerSession parameters) {
-        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"},
-                new String[]{"repoId"}, new Object[]{parameters.getRepoId()});
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(
+                new String[] {"String"}, new String[] {"repoId"}, new Object[] {parameters.getRepoId()});
         Function<HttpResponse<Object>, ODataValueOfBoolean> parseResponse = (HttpResponse<Object> httpResponse) -> {
             Object body = httpResponse.getBody();
             Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
@@ -82,15 +92,26 @@ public class ServerSessionClientImpl extends ApiClient implements ServerSessionC
                 throw ApiClientUtils.createApiException(httpResponse, problemDetails);
             }
         };
-        return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler,
-                baseUrl + "/v1/Repositories/{repoId}/ServerSession/Create", "POST", null, null, null, null, null,
-                pathParameters, new HashMap<String, String>(), false, parseResponse);
+        return ApiClientUtils.sendRequestWithRetry(
+                httpClient,
+                httpRequestHandler,
+                baseUrl + "/v1/Repositories/{repoId}/ServerSession/Create",
+                "POST",
+                null,
+                null,
+                null,
+                null,
+                null,
+                pathParameters,
+                new HashMap<String, String>(),
+                false,
+                parseResponse);
     }
 
     @Override
     public ODataValueOfDateTime refreshServerSession(ParametersForRefreshServerSession parameters) {
-        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"},
-                new String[]{"repoId"}, new Object[]{parameters.getRepoId()});
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(
+                new String[] {"String"}, new String[] {"repoId"}, new Object[] {parameters.getRepoId()});
         Function<HttpResponse<Object>, ODataValueOfDateTime> parseResponse = (HttpResponse<Object> httpResponse) -> {
             Object body = httpResponse.getBody();
             Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
@@ -112,8 +133,19 @@ public class ServerSessionClientImpl extends ApiClient implements ServerSessionC
                 throw ApiClientUtils.createApiException(httpResponse, problemDetails);
             }
         };
-        return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler,
-                baseUrl + "/v1/Repositories/{repoId}/ServerSession/Refresh", "POST", null, null, null, null, null,
-                pathParameters, new HashMap<String, String>(), false, parseResponse);
+        return ApiClientUtils.sendRequestWithRetry(
+                httpClient,
+                httpRequestHandler,
+                baseUrl + "/v1/Repositories/{repoId}/ServerSession/Refresh",
+                "POST",
+                null,
+                null,
+                null,
+                null,
+                null,
+                pathParameters,
+                new HashMap<String, String>(),
+                false,
+                parseResponse);
     }
 }

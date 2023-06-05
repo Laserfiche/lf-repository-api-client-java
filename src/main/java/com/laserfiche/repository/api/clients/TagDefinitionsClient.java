@@ -4,7 +4,6 @@ import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIList
 import com.laserfiche.repository.api.clients.impl.model.WTagInfo;
 import com.laserfiche.repository.api.clients.params.ParametersForGetTagDefinitionById;
 import com.laserfiche.repository.api.clients.params.ParametersForGetTagDefinitions;
-
 import java.util.function.Function;
 
 /**
@@ -38,7 +37,9 @@ public interface TagDefinitionsClient {
      * @param maxPageSize Optionally specify the maximum number of items to retrieve.
      * @param parameters  An object of type {@link ParametersForGetTagDefinitions} which encapsulates the parameters of {@link #getTagDefinitions getTagDefinitions} method.
      */
-    void getTagDefinitionsForEach(Function<ODataValueContextOfIListOfWTagInfo, Boolean> callback, Integer maxPageSize,
+    void getTagDefinitionsForEach(
+            Function<ODataValueContextOfIListOfWTagInfo, Boolean> callback,
+            Integer maxPageSize,
             ParametersForGetTagDefinitions parameters);
 
     /**
