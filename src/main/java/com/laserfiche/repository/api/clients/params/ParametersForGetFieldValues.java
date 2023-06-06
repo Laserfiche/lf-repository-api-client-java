@@ -1,5 +1,7 @@
 package com.laserfiche.repository.api.clients.params;
 
+import com.laserfiche.repository.api.clients.impl.model.*;
+
 /**
  * The encapsulated parameters for {@link
  * com.laserfiche.repository.api.clients.impl.EntriesClientImpl#getFieldValues(ParametersForGetFieldValues)
@@ -126,8 +128,8 @@ public class ParametersForGetFieldValues {
     }
 
     /**
-     * An optional query parameter used to indicate if the field values should be formatted. The
-     * default value is false.
+     * An optional query parameter used to indicate if the field values should be formatted.<br>
+     * The default value is false.
      *
      * @return {@link Boolean} The return value
      */
@@ -151,8 +153,10 @@ public class ParametersForGetFieldValues {
 
     /**
      * An optional query parameter used to indicate the locale that should be used for formatting.
+     * <br>
      * The value should be a standard language tag. The formatValue query parameter must be set to
-     * true, otherwise culture will not be used for formatting.
+     * true, otherwise<br>
+     * culture will not be used for formatting.
      *
      * @return {@link String} The return value
      */
