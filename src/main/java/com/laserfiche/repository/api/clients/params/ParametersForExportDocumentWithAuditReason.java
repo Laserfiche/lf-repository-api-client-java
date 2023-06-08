@@ -1,6 +1,6 @@
 package com.laserfiche.repository.api.clients.params;
 
-import com.laserfiche.repository.api.clients.impl.model.GetEdocWithAuditReasonRequest;
+import com.laserfiche.repository.api.clients.impl.model.*;
 import java.io.InputStream;
 import java.util.function.Consumer;
 
@@ -97,8 +97,8 @@ public class ParametersForExportDocumentWithAuditReason {
     }
 
     /**
-     * An optional header used to retrieve partial content of the edoc. Only supports single range
-     * with byte unit.
+     * An optional header used to retrieve partial content of the edoc. Only supports single<br>
+     * range with byte unit.
      *
      * @return {@link String} The return value
      */

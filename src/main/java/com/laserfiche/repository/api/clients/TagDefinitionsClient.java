@@ -1,19 +1,19 @@
 package com.laserfiche.repository.api.clients;
 
-import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfWTagInfo;
-import com.laserfiche.repository.api.clients.impl.model.WTagInfo;
-import com.laserfiche.repository.api.clients.params.ParametersForGetTagDefinitionById;
-import com.laserfiche.repository.api.clients.params.ParametersForGetTagDefinitions;
+import com.laserfiche.repository.api.clients.impl.model.*;
+import com.laserfiche.repository.api.clients.params.*;
 import java.util.function.Function;
 
 /** The Laserfiche Repository TagDefinitions API client. */
 public interface TagDefinitionsClient {
 
     /**
-     * - Returns all tag definitions in the repository. - Provide a repository ID and get a paged
-     * listing of tag definitions available in the repository. Useful when trying to display all tag
-     * definitions available, not only tags assigned to a specific entry. - Default page size: 100.
-     * Allowed OData query options: Select | Count | OrderBy | Skip | Top | SkipToken | Prefer.
+     * - Returns all tag definitions in the repository.<br>
+     * - Provide a repository ID and get a paged listing of tag definitions available in the
+     * repository. Useful when trying to display all tag definitions available, not only tags
+     * assigned to a specific entry.<br>
+     * - Default page size: 100. Allowed OData query options: Select | Count | OrderBy | Skip | Top
+     * | SkipToken | Prefer.
      *
      * @param parameters An object of type {@link ParametersForGetTagDefinitions} which encapsulates
      *     the parameters of {@link #getTagDefinitions getTagDefinitions} method.
@@ -47,10 +47,11 @@ public interface TagDefinitionsClient {
             ParametersForGetTagDefinitions parameters);
 
     /**
-     * - Returns a single tag definition. - Provide a tag definition ID, and get the single tag
-     * definition associated with that ID. Useful when another route provides a minimal amount of
-     * details, and more information about the specific tag is needed. - Allowed OData query
-     * options: Select
+     * - Returns a single tag definition.<br>
+     * - Provide a tag definition ID, and get the single tag definition associated with that ID.
+     * Useful when another route provides a minimal amount of details, and more information about
+     * the specific tag is needed.<br>
+     * - Allowed OData query options: Select
      *
      * @param parameters An object of type {@link ParametersForGetTagDefinitionById} which
      *     encapsulates the parameters of {@link #getTagDefinitionById getTagDefinitionById} method.

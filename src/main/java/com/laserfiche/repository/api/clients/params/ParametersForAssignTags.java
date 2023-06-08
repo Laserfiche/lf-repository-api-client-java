@@ -1,6 +1,6 @@
 package com.laserfiche.repository.api.clients.params;
 
-import com.laserfiche.repository.api.clients.impl.model.PutTagRequest;
+import com.laserfiche.repository.api.clients.impl.model.*;
 
 /**
  * The encapsulated parameters for {@link

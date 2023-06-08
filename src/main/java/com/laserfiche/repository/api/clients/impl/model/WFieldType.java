@@ -1,7 +1,6 @@
 package com.laserfiche.repository.api.clients.impl.model;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.annotation.*;
 
 /** Enumeration of Laserfiche template field types. */
 public enum WFieldType {
