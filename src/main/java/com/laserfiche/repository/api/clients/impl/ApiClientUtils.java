@@ -6,12 +6,11 @@ import com.laserfiche.api.client.model.ProblemDetails;
 import com.laserfiche.repository.api.clients.impl.model.APIServerException;
 import com.laserfiche.repository.api.clients.impl.model.CreateEntryOperations;
 import com.laserfiche.repository.api.clients.impl.model.CreateEntryResult;
-import kong.unirest.Headers;
-import kong.unirest.*;
-
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import kong.unirest.*;
+import kong.unirest.Headers;
 
 /**
  * Internal helper class containing utility functions for the RepositoryApiClient.
@@ -32,49 +31,38 @@ public class ApiClientUtils {
         if (createEntryResult != null && createEntryResult.getOperations() != null) {
             CreateEntryOperations operations = createEntryResult.getOperations();
             if (operations.getEntryCreate() != null) {
-                Integer entryId = operations
-                        .getEntryCreate()
-                        .getEntryId();
+                Integer entryId = operations.getEntryCreate().getEntryId();
                 if (entryId != null && entryId > 0) {
                     messages.add(String.format("EntryId=%s.", entryId));
                 }
-                messages.add(getErrorMessagesFromAPIServerExceptions(operations
-                        .getEntryCreate()
-                        .getExceptions()));
+                messages.add(getErrorMessagesFromAPIServerExceptions(
+                        operations.getEntryCreate().getExceptions()));
             }
             if (operations.getSetEdoc() != null)
-                messages.add(getErrorMessagesFromAPIServerExceptions(operations
-                        .getSetEdoc()
-                        .getExceptions()));
+                messages.add(getErrorMessagesFromAPIServerExceptions(
+                        operations.getSetEdoc().getExceptions()));
             if (operations.getSetTemplate() != null)
-                messages.add(getErrorMessagesFromAPIServerExceptions(operations
-                        .getSetTemplate()
-                        .getExceptions()));
+                messages.add(getErrorMessagesFromAPIServerExceptions(
+                        operations.getSetTemplate().getExceptions()));
             if (operations.getSetFields() != null)
-                messages.add(getErrorMessagesFromAPIServerExceptions(operations
-                        .getSetFields()
-                        .getExceptions()));
+                messages.add(getErrorMessagesFromAPIServerExceptions(
+                        operations.getSetFields().getExceptions()));
             if (operations.getSetTags() != null)
-                messages.add(getErrorMessagesFromAPIServerExceptions(operations
-                        .getSetTags()
-                        .getExceptions()));
+                messages.add(getErrorMessagesFromAPIServerExceptions(
+                        operations.getSetTags().getExceptions()));
             if (operations.getSetLinks() != null)
-                messages.add(getErrorMessagesFromAPIServerExceptions(operations
-                        .getSetLinks()
-                        .getExceptions()));
+                messages.add(getErrorMessagesFromAPIServerExceptions(
+                        operations.getSetLinks().getExceptions()));
         }
-        return messages
-                .stream()
+        return messages.stream()
                 .filter(Objects::nonNull)
                 .collect(Collectors.joining(" "))
                 .trim();
     }
 
     private static String getErrorMessagesFromAPIServerExceptions(Collection<APIServerException> errors) {
-        if (errors == null || errors.isEmpty())
-            return null;
-        return errors
-                .stream()
+        if (errors == null || errors.isEmpty()) return null;
+        return errors.stream()
                 .filter(Objects::nonNull)
                 .map(APIServerException::getMessage)
                 .collect(Collectors.joining(" "))
@@ -95,14 +83,14 @@ public class ApiClientUtils {
      * @param httpRequestHandler                  The HTTP request handler.
      * @return Sets the authorization bearer token and returns a Request Url.
      */
-    public static String beforeSend(String url, Map<String, String> headerParametersWithStringTypeValue,
+    public static String beforeSend(
+            String url,
+            Map<String, String> headerParametersWithStringTypeValue,
             HttpRequestHandler httpRequestHandler) {
         String requestUrl;
         Request customRequest = new RequestImpl();
         BeforeSendResult beforeSendResult = httpRequestHandler.beforeSend(customRequest);
-        String authorizationValue = customRequest
-                .headers()
-                .get("Authorization");
+        String authorizationValue = customRequest.headers().get("Authorization");
         if (authorizationValue != null) {
             headerParametersWithStringTypeValue.put("Authorization", authorizationValue);
         }
@@ -116,8 +104,7 @@ public class ApiClientUtils {
     }
 
     private static String getRepositoryEndpoint(String regionDomain) {
-        if (regionDomain == null)
-            throw new IllegalArgumentException("regionDomain is null.");
+        if (regionDomain == null) throw new IllegalArgumentException("regionDomain is null.");
         return "https://api." + regionDomain + "/repository";
     }
 
@@ -143,10 +130,10 @@ public class ApiClientUtils {
      * @return Returns a Header Map containing the header name and value.
      */
     public static Map<String, String> getHeadersMap(Headers headers) {
-        return headers
-                .all()
-                .stream()
-                .collect(Collectors.toMap(Header::getName, Header::getValue,
+        return headers.all().stream()
+                .collect(Collectors.toMap(
+                        Header::getName,
+                        Header::getValue,
                         (value1, value2) -> String.format("%s, %s", value1, value2)));
     }
 
@@ -158,9 +145,7 @@ public class ApiClientUtils {
      * @return Returns a boolean value that determines whether or not to re-send the same API request.
      */
     public static boolean isRetryableStatusCode(int statusCode, HttpMethod requestMethod) {
-        boolean isIdempotent = !requestMethod
-                .toString()
-                .equals("POST");
+        boolean isIdempotent = !requestMethod.toString().equals("POST");
         return (statusCode >= 500 || statusCode == 408) && isIdempotent;
     }
 
@@ -172,16 +157,15 @@ public class ApiClientUtils {
      * @return Returns a Header Map containing the header name and value.
      */
     public static String mergeMaxSizeIntoPrefer(int maxSize, String prefer) {
-        if (maxSize == 0)
-            return prefer;
+        if (maxSize == 0) return prefer;
         else
-            return prefer == null ? String.format("maxpagesize=%d", maxSize) : String.format("%s; maxpagesize=%d",
-                    prefer, maxSize);
+            return prefer == null
+                    ? String.format("maxpagesize=%d", maxSize)
+                    : String.format("%s; maxpagesize=%d", prefer, maxSize);
     }
 
-    protected static Map<String, Object> getParametersWithNonDefaultValue(String[] parameterTypes,
-            String[] parameterNames,
-            Object[] parameterValues) {
+    protected static Map<String, Object> getParametersWithNonDefaultValue(
+            String[] parameterTypes, String[] parameterNames, Object[] parameterValues) {
         if (parameterTypes == null || parameterNames == null || parameterValues == null) {
             throw new IllegalArgumentException("Input cannot be null.");
         }
@@ -212,25 +196,24 @@ public class ApiClientUtils {
     private static boolean hasDefaultValue(String type, Object value) {
         switch (type) {
             case "int":
-                return value
-                        .toString()
-                        .equals("0");
+                return value.toString().equals("0");
             case "boolean":
-                return value
-                        .toString()
-                        .equals("false");
+                return value.toString().equals("false");
         }
         return false;
     }
 
-    public static <TResponse> TResponse sendRequestWithRetry(UnirestInstance httpClient,
-            HttpRequestHandler httpRequestHandler, String url,
+    public static <TResponse> TResponse sendRequestWithRetry(
+            UnirestInstance httpClient,
+            HttpRequestHandler httpRequestHandler,
+            String url,
             String requestMethod,
             String contentType,
             Object requestBody,
             String queryStringFields,
             Collection<?> queryStringFieldList,
-            Map<String, Object> queryParameters, Map<String, Object> pathParameters,
+            Map<String, Object> queryParameters,
+            Map<String, Object> pathParameters,
             Map<String, String> headerParametersWithStringTypeValue,
             boolean isDynamicFieldValues,
             Function<HttpResponse<Object>, TResponse> parseResponse) {
@@ -240,8 +223,8 @@ public class ApiClientUtils {
         HttpResponse<Object> httpResponse = null;
         while (retryCount <= maxRetries && shouldRetry) {
             try {
-                String requestUrl = ApiClientUtils.beforeSend(url, headerParametersWithStringTypeValue,
-                        httpRequestHandler);
+                String requestUrl =
+                        ApiClientUtils.beforeSend(url, headerParametersWithStringTypeValue, httpRequestHandler);
                 final HttpRequestWithBody httpRequestWithBody = httpClient.request(requestMethod, requestUrl);
                 HttpRequest<?> httpRequest = httpRequestWithBody;
                 if (queryParameters != null) {
@@ -265,9 +248,7 @@ public class ApiClientUtils {
                                 .body(requestBody)
                                 .asObject(new HashMap<String, String[]>().getClass());
                     } else {
-                        httpResponse = httpRequestWithBody
-                                .body(requestBody)
-                                .asObject(Object.class);
+                        httpResponse = httpRequestWithBody.body(requestBody).asObject(Object.class);
                     }
                 } else {
                     if (isDynamicFieldValues || requestMethod.equals("HEAD")) {
@@ -278,9 +259,8 @@ public class ApiClientUtils {
                 }
                 HttpMethod httpMethod = httpRequest.getHttpMethod();
                 int statusCode = httpResponse.getStatus();
-                shouldRetry = httpRequestHandler.afterSend(
-                        new ResponseImpl((short) statusCode)) || ApiClientUtils.isRetryableStatusCode(statusCode,
-                        httpMethod);
+                shouldRetry = httpRequestHandler.afterSend(new ResponseImpl((short) statusCode))
+                        || ApiClientUtils.isRetryableStatusCode(statusCode, httpMethod);
                 if (!shouldRetry || requestMethod.equals("HEAD")) {
                     return parseResponse.apply(httpResponse);
                 }

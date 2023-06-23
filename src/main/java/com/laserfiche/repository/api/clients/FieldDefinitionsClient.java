@@ -4,7 +4,6 @@ import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIList
 import com.laserfiche.repository.api.clients.impl.model.WFieldInfo;
 import com.laserfiche.repository.api.clients.params.ParametersForGetFieldDefinitionById;
 import com.laserfiche.repository.api.clients.params.ParametersForGetFieldDefinitions;
-
 import java.util.function.Function;
 
 /**
@@ -48,6 +47,8 @@ public interface FieldDefinitionsClient {
      * @param maxPageSize Optionally specify the maximum number of items to retrieve.
      * @param parameters  An object of type {@link ParametersForGetFieldDefinitions} which encapsulates the parameters of {@link #getFieldDefinitions getFieldDefinitions} method.
      */
-    void getFieldDefinitionsForEach(Function<ODataValueContextOfIListOfWFieldInfo, Boolean> callback,
-            Integer maxPageSize, ParametersForGetFieldDefinitions parameters);
+    void getFieldDefinitionsForEach(
+            Function<ODataValueContextOfIListOfWFieldInfo, Boolean> callback,
+            Integer maxPageSize,
+            ParametersForGetFieldDefinitions parameters);
 }

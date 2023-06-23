@@ -7,8 +7,8 @@ import com.fasterxml.jackson.annotation.JsonValue;
  * Gets or Sets PostEntryChildrenEntryType
  */
 public enum PostEntryChildrenEntryType {
-
-    FOLDER("Folder"), SHORTCUT("Shortcut");
+    FOLDER("Folder"),
+    SHORTCUT("Shortcut");
 
     private String value;
 

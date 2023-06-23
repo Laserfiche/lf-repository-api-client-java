@@ -3,10 +3,11 @@ package com.laserfiche.repository.api.clients.impl.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.util.Objects;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
+@javax.annotation.Generated(
+        value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen",
+        date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class FieldValue extends EntryFieldValue {
 
@@ -23,7 +24,9 @@ public class FieldValue extends EntryFieldValue {
      *
      * @return groupId
      */
-    @Schema(description = "The group id of the multi value field group. If the field is not a part of a multi value field group, then there is no group id.")
+    @Schema(
+            description =
+                    "The group id of the multi value field group. If the field is not a part of a multi value field group, then there is no group id.")
     public Integer getGroupId() {
         return groupId;
     }
@@ -53,14 +56,8 @@ public class FieldValue extends EntryFieldValue {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class FieldValue {\n");
-        sb
-                .append("    ")
-                .append(toIndentedString(super.toString()))
-                .append("\n");
-        sb
-                .append("    groupId: ")
-                .append(toIndentedString(groupId))
-                .append("\n");
+        sb.append("    ").append(toIndentedString(super.toString())).append("\n");
+        sb.append("    groupId: ").append(toIndentedString(groupId)).append("\n");
         sb.append("}");
         return sb.toString();
     }
@@ -69,8 +66,6 @@ public class FieldValue extends EntryFieldValue {
         if (o == null) {
             return "null";
         }
-        return o
-                .toString()
-                .replace("\n", "\n    ");
+        return o.toString().replace("\n", "\n    ");
     }
 }

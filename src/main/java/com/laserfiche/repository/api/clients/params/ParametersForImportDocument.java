@@ -1,7 +1,6 @@
 package com.laserfiche.repository.api.clients.params;
 
 import com.laserfiche.repository.api.clients.impl.model.PostEntryWithEdocMetadataRequest;
-
 import java.io.InputStream;
 
 /**

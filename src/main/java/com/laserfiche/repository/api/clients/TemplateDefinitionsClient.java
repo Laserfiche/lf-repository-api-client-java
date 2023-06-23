@@ -7,7 +7,6 @@ import com.laserfiche.repository.api.clients.params.ParametersForGetTemplateDefi
 import com.laserfiche.repository.api.clients.params.ParametersForGetTemplateDefinitions;
 import com.laserfiche.repository.api.clients.params.ParametersForGetTemplateFieldDefinitions;
 import com.laserfiche.repository.api.clients.params.ParametersForGetTemplateFieldDefinitionsByTemplateName;
-
 import java.util.function.Function;
 
 /**
@@ -41,8 +40,10 @@ public interface TemplateDefinitionsClient {
      * @param maxPageSize Optionally specify the maximum number of items to retrieve.
      * @param parameters  An object of type {@link ParametersForGetTemplateDefinitions} which encapsulates the parameters of {@link #getTemplateDefinitions getTemplateDefinitions} method.
      */
-    void getTemplateDefinitionsForEach(Function<ODataValueContextOfIListOfWTemplateInfo, Boolean> callback,
-            Integer maxPageSize, ParametersForGetTemplateDefinitions parameters);
+    void getTemplateDefinitionsForEach(
+            Function<ODataValueContextOfIListOfWTemplateInfo, Boolean> callback,
+            Integer maxPageSize,
+            ParametersForGetTemplateDefinitions parameters);
 
     /**
      * - Returns the field definitions assigned to a template definition.
@@ -62,8 +63,8 @@ public interface TemplateDefinitionsClient {
      * @param maxPageSize Optionally specify the maximum number of items to retrieve.
      * @return {@link ODataValueContextOfIListOfTemplateFieldInfo} The return value
      */
-    ODataValueContextOfIListOfTemplateFieldInfo getTemplateFieldDefinitionsByTemplateNameNextLink(String nextLink,
-            int maxPageSize);
+    ODataValueContextOfIListOfTemplateFieldInfo getTemplateFieldDefinitionsByTemplateNameNextLink(
+            String nextLink, int maxPageSize);
 
     /**
      * Provides the functionality to iteratively (i.e. through paging) call {@link #getTemplateFieldDefinitionsByTemplateName getTemplateFieldDefinitionsByTemplateName}, and apply a function on the response of each iteration.
@@ -73,7 +74,8 @@ public interface TemplateDefinitionsClient {
      * @param parameters  An object of type {@link ParametersForGetTemplateFieldDefinitionsByTemplateName} which encapsulates the parameters of {@link #getTemplateFieldDefinitionsByTemplateName getTemplateFieldDefinitionsByTemplateName} method.
      */
     void getTemplateFieldDefinitionsByTemplateNameForEach(
-            Function<ODataValueContextOfIListOfTemplateFieldInfo, Boolean> callback, Integer maxPageSize,
+            Function<ODataValueContextOfIListOfTemplateFieldInfo, Boolean> callback,
+            Integer maxPageSize,
             ParametersForGetTemplateFieldDefinitionsByTemplateName parameters);
 
     /**
@@ -103,8 +105,10 @@ public interface TemplateDefinitionsClient {
      * @param maxPageSize Optionally specify the maximum number of items to retrieve.
      * @param parameters  An object of type {@link ParametersForGetTemplateFieldDefinitions} which encapsulates the parameters of {@link #getTemplateFieldDefinitions getTemplateFieldDefinitions} method.
      */
-    void getTemplateFieldDefinitionsForEach(Function<ODataValueContextOfIListOfTemplateFieldInfo, Boolean> callback,
-            Integer maxPageSize, ParametersForGetTemplateFieldDefinitions parameters);
+    void getTemplateFieldDefinitionsForEach(
+            Function<ODataValueContextOfIListOfTemplateFieldInfo, Boolean> callback,
+            Integer maxPageSize,
+            ParametersForGetTemplateFieldDefinitions parameters);
 
     /**
      * - Returns a single template definition (including field definitions, if relevant).

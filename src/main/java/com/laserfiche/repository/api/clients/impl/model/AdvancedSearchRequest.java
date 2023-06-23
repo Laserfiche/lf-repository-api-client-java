@@ -3,10 +3,11 @@ package com.laserfiche.repository.api.clients.impl.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.util.Objects;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
+@javax.annotation.Generated(
+        value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen",
+        date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class AdvancedSearchRequest {
 
@@ -85,8 +86,9 @@ public class AdvancedSearchRequest {
             return false;
         }
         AdvancedSearchRequest advancedSearchRequest = (AdvancedSearchRequest) o;
-        return Objects.equals(this.searchCommand, advancedSearchRequest.searchCommand) && Objects.equals(this.fuzzyType,
-                advancedSearchRequest.fuzzyType) && Objects.equals(this.fuzzyFactor, advancedSearchRequest.fuzzyFactor);
+        return Objects.equals(this.searchCommand, advancedSearchRequest.searchCommand)
+                && Objects.equals(this.fuzzyType, advancedSearchRequest.fuzzyType)
+                && Objects.equals(this.fuzzyFactor, advancedSearchRequest.fuzzyFactor);
     }
 
     @Override
@@ -98,18 +100,9 @@ public class AdvancedSearchRequest {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class AdvancedSearchRequest {\n");
-        sb
-                .append("    searchCommand: ")
-                .append(toIndentedString(searchCommand))
-                .append("\n");
-        sb
-                .append("    fuzzyType: ")
-                .append(toIndentedString(fuzzyType))
-                .append("\n");
-        sb
-                .append("    fuzzyFactor: ")
-                .append(toIndentedString(fuzzyFactor))
-                .append("\n");
+        sb.append("    searchCommand: ").append(toIndentedString(searchCommand)).append("\n");
+        sb.append("    fuzzyType: ").append(toIndentedString(fuzzyType)).append("\n");
+        sb.append("    fuzzyFactor: ").append(toIndentedString(fuzzyFactor)).append("\n");
         sb.append("}");
         return sb.toString();
     }
@@ -118,8 +111,6 @@ public class AdvancedSearchRequest {
         if (o == null) {
             return "null";
         }
-        return o
-                .toString()
-                .replace("\n", "\n    ");
+        return o.toString().replace("\n", "\n    ");
     }
 }

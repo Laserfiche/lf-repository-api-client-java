@@ -4,7 +4,6 @@ import com.laserfiche.repository.api.clients.impl.model.EntryLinkTypeInfo;
 import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfEntryLinkTypeInfo;
 import com.laserfiche.repository.api.clients.params.ParametersForGetLinkDefinitionById;
 import com.laserfiche.repository.api.clients.params.ParametersForGetLinkDefinitions;
-
 import java.util.function.Function;
 
 /**
@@ -48,6 +47,8 @@ public interface LinkDefinitionsClient {
      * @param maxPageSize Optionally specify the maximum number of items to retrieve.
      * @param parameters  An object of type {@link ParametersForGetLinkDefinitions} which encapsulates the parameters of {@link #getLinkDefinitions getLinkDefinitions} method.
      */
-    void getLinkDefinitionsForEach(Function<ODataValueContextOfIListOfEntryLinkTypeInfo, Boolean> callback,
-            Integer maxPageSize, ParametersForGetLinkDefinitions parameters);
+    void getLinkDefinitionsForEach(
+            Function<ODataValueContextOfIListOfEntryLinkTypeInfo, Boolean> callback,
+            Integer maxPageSize,
+            ParametersForGetLinkDefinitions parameters);
 }

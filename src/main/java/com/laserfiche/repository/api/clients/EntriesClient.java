@@ -2,7 +2,6 @@ package com.laserfiche.repository.api.clients;
 
 import com.laserfiche.repository.api.clients.impl.model.*;
 import com.laserfiche.repository.api.clients.params.*;
-
 import java.io.InputStream;
 import java.util.Map;
 import java.util.function.Function;
@@ -38,7 +37,9 @@ public interface EntriesClient {
      * @param maxPageSize Optionally specify the maximum number of items to retrieve.
      * @param parameters  An object of type {@link ParametersForGetFieldValues} which encapsulates the parameters of {@link #getFieldValues getFieldValues} method.
      */
-    void getFieldValuesForEach(Function<ODataValueContextOfIListOfFieldValue, Boolean> callback, Integer maxPageSize,
+    void getFieldValuesForEach(
+            Function<ODataValueContextOfIListOfFieldValue, Boolean> callback,
+            Integer maxPageSize,
             ParametersForGetFieldValues parameters);
 
     /**
@@ -87,8 +88,10 @@ public interface EntriesClient {
      * @param maxPageSize Optionally specify the maximum number of items to retrieve.
      * @param parameters  An object of type {@link ParametersForGetLinkValuesFromEntry} which encapsulates the parameters of {@link #getLinkValuesFromEntry getLinkValuesFromEntry} method.
      */
-    void getLinkValuesFromEntryForEach(Function<ODataValueContextOfIListOfWEntryLinkInfo, Boolean> callback,
-            Integer maxPageSize, ParametersForGetLinkValuesFromEntry parameters);
+    void getLinkValuesFromEntryForEach(
+            Function<ODataValueContextOfIListOfWEntryLinkInfo, Boolean> callback,
+            Integer maxPageSize,
+            ParametersForGetLinkValuesFromEntry parameters);
 
     /**
      * - Assign links to an entry.
@@ -272,7 +275,9 @@ public interface EntriesClient {
      * @param maxPageSize Optionally specify the maximum number of items to retrieve.
      * @param parameters  An object of type {@link ParametersForGetEntryListing} which encapsulates the parameters of {@link #getEntryListing getEntryListing} method.
      */
-    void getEntryListingForEach(Function<ODataValueContextOfIListOfEntry, Boolean> callback, Integer maxPageSize,
+    void getEntryListingForEach(
+            Function<ODataValueContextOfIListOfEntry, Boolean> callback,
+            Integer maxPageSize,
             ParametersForGetEntryListing parameters);
 
     /**
@@ -311,8 +316,10 @@ public interface EntriesClient {
      * @param maxPageSize Optionally specify the maximum number of items to retrieve.
      * @param parameters  An object of type {@link ParametersForGetTagsAssignedToEntry} which encapsulates the parameters of {@link #getTagsAssignedToEntry getTagsAssignedToEntry} method.
      */
-    void getTagsAssignedToEntryForEach(Function<ODataValueContextOfIListOfWTagInfo, Boolean> callback,
-            Integer maxPageSize, ParametersForGetTagsAssignedToEntry parameters);
+    void getTagsAssignedToEntryForEach(
+            Function<ODataValueContextOfIListOfWTagInfo, Boolean> callback,
+            Integer maxPageSize,
+            ParametersForGetTagsAssignedToEntry parameters);
 
     /**
      * - Assign tags to an entry.

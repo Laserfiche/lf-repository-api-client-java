@@ -3,10 +3,11 @@ package com.laserfiche.repository.api.clients.impl.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.util.Objects;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
+@javax.annotation.Generated(
+        value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen",
+        date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class WAuditReason {
 
@@ -75,14 +76,8 @@ public class WAuditReason {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class WAuditReason {\n");
-        sb
-                .append("    id: ")
-                .append(toIndentedString(id))
-                .append("\n");
-        sb
-                .append("    name: ")
-                .append(toIndentedString(name))
-                .append("\n");
+        sb.append("    id: ").append(toIndentedString(id)).append("\n");
+        sb.append("    name: ").append(toIndentedString(name)).append("\n");
         sb.append("}");
         return sb.toString();
     }
@@ -91,8 +86,6 @@ public class WAuditReason {
         if (o == null) {
             return "null";
         }
-        return o
-                .toString()
-                .replace("\n", "\n    ");
+        return o.toString().replace("\n", "\n    ");
     }
 }

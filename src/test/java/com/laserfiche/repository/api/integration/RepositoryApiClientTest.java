@@ -1,13 +1,13 @@
 package com.laserfiche.repository.api.integration;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import com.laserfiche.api.client.model.ApiException;
 import com.laserfiche.repository.api.RepositoryApiClient;
 import com.laserfiche.repository.api.RepositoryApiClientImpl;
 import com.laserfiche.repository.api.clients.impl.model.Entry;
 import com.laserfiche.repository.api.clients.params.ParametersForGetEntry;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class RepositoryApiClientTest extends BaseTest {
     @Test
@@ -17,8 +17,8 @@ class RepositoryApiClientTest extends BaseTest {
             if (authorizationType.equals(AuthorizationType.CLOUD_ACCESS_KEY)) {
                 invalidClient = RepositoryApiClientImpl.createFromAccessKey("fake key", accessKey);
             } else if (authorizationType.equals(AuthorizationType.API_SERVER_USERNAME_PASSWORD)) {
-                invalidClient = RepositoryApiClientImpl.createFromUsernamePassword(repositoryId, username,
-                        "fake password", baseUrl);
+                invalidClient = RepositoryApiClientImpl.createFromUsernamePassword(
+                        repositoryId, username, "fake password", baseUrl);
             } else {
                 fail(String.format("Test not implemented for AuthorizationType %s.", authorizationType));
             }
@@ -26,32 +26,19 @@ class RepositoryApiClientTest extends BaseTest {
             final RepositoryApiClient finalInvalidClient = invalidClient;
             ApiException exception = assertThrows(ApiException.class, () -> finalInvalidClient
                     .getEntriesClient()
-                    .getEntry(new ParametersForGetEntry()
-                            .setRepoId(repositoryId)
-                            .setEntryId(1)));
+                    .getEntry(
+                            new ParametersForGetEntry().setRepoId(repositoryId).setEntryId(1)));
 
             assertEquals(401, exception.getStatusCode());
-            assertEquals(exception.getStatusCode(), exception
-                    .getProblemDetails()
-                    .getStatus());
-            assertEquals(exception.getMessage(), exception
-                    .getProblemDetails()
-                    .getTitle());
-            assertTrue(exception
-                    .getHeaders()
-                    .size() > 0);
-            assertNotNull(exception
-                    .getProblemDetails()
-                    .getOperationId());
-            assertNotNull(exception
-                    .getProblemDetails()
-                    .getInstance());
-            assertNotNull(exception
-                    .getProblemDetails()
-                    .getType());
+            assertEquals(
+                    exception.getStatusCode(), exception.getProblemDetails().getStatus());
+            assertEquals(exception.getMessage(), exception.getProblemDetails().getTitle());
+            assertTrue(exception.getHeaders().size() > 0);
+            assertNotNull(exception.getProblemDetails().getOperationId());
+            assertNotNull(exception.getProblemDetails().getInstance());
+            assertNotNull(exception.getProblemDetails().getType());
         } finally {
-            if (invalidClient != null)
-                invalidClient.close();
+            if (invalidClient != null) invalidClient.close();
         }
     }
 
@@ -69,15 +56,12 @@ class RepositoryApiClientTest extends BaseTest {
             }
 
             int entryId = 1;
-            Entry entry = client
-                    .getEntriesClient()
-                    .getEntry(new ParametersForGetEntry()
-                            .setRepoId(repositoryId)
-                            .setEntryId(entryId));
+            Entry entry = client.getEntriesClient()
+                    .getEntry(
+                            new ParametersForGetEntry().setRepoId(repositoryId).setEntryId(entryId));
             assertEquals(entryId, entry.getId());
         } finally {
-            if (client != null)
-                client.close();
+            if (client != null) client.close();
         }
     }
 
@@ -98,17 +82,14 @@ class RepositoryApiClientTest extends BaseTest {
             final RepositoryApiClient finalClient = client;
             ApiException exception = assertThrows(ApiException.class, () -> finalClient
                     .getEntriesClient()
-                    .getEntry(new ParametersForGetEntry()
-                            .setRepoId(repositoryId)
-                            .setEntryId(entryId)));
+                    .getEntry(
+                            new ParametersForGetEntry().setRepoId(repositoryId).setEntryId(entryId)));
 
             assertEquals(403, exception.getStatusCode());
-            assertEquals(exception.getStatusCode(), exception
-                    .getProblemDetails()
-                    .getStatus());
+            assertEquals(
+                    exception.getStatusCode(), exception.getProblemDetails().getStatus());
         } finally {
-            if (client != null)
-                client.close();
+            if (client != null) client.close();
         }
     }
 }

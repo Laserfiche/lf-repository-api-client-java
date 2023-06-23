@@ -7,7 +7,6 @@ import com.fasterxml.jackson.annotation.JsonValue;
  * The type of context hit.
  */
 public enum HitType {
-
     PAGE_CONTENT("PageContent"),
     NOTE("Note"),
     CALLOUT("Callout"),

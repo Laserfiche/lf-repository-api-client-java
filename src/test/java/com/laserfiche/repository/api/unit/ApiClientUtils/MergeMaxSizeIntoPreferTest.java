@@ -1,10 +1,10 @@
 package com.laserfiche.repository.api.unit.ApiClientUtils;
 
-import com.laserfiche.repository.api.clients.impl.ApiClientUtils;
-import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+
+import com.laserfiche.repository.api.clients.impl.ApiClientUtils;
+import org.junit.jupiter.api.Test;
 
 public class MergeMaxSizeIntoPreferTest {
     private final int maxSize = 1;

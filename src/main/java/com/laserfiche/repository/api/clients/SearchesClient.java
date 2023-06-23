@@ -2,7 +2,6 @@ package com.laserfiche.repository.api.clients;
 
 import com.laserfiche.repository.api.clients.impl.model.*;
 import com.laserfiche.repository.api.clients.params.*;
-
 import java.util.function.Function;
 
 /**
@@ -55,8 +54,10 @@ public interface SearchesClient {
      * @param maxPageSize Optionally specify the maximum number of items to retrieve.
      * @param parameters  An object of type {@link ParametersForGetSearchContextHits} which encapsulates the parameters of {@link #getSearchContextHits getSearchContextHits} method.
      */
-    void getSearchContextHitsForEach(Function<ODataValueContextOfIListOfContextHit, Boolean> callback,
-            Integer maxPageSize, ParametersForGetSearchContextHits parameters);
+    void getSearchContextHitsForEach(
+            Function<ODataValueContextOfIListOfContextHit, Boolean> callback,
+            Integer maxPageSize,
+            ParametersForGetSearchContextHits parameters);
 
     /**
      * - Runs a search operation on the repository.
@@ -97,6 +98,8 @@ public interface SearchesClient {
      * @param maxPageSize Optionally specify the maximum number of items to retrieve.
      * @param parameters  An object of type {@link ParametersForGetSearchResults} which encapsulates the parameters of {@link #getSearchResults getSearchResults} method.
      */
-    void getSearchResultsForEach(Function<ODataValueContextOfIListOfEntry, Boolean> callback, Integer maxPageSize,
+    void getSearchResultsForEach(
+            Function<ODataValueContextOfIListOfEntry, Boolean> callback,
+            Integer maxPageSize,
             ParametersForGetSearchResults parameters);
 }
