@@ -1,13 +1,10 @@
 package com.laserfiche.repository.api.clients.impl.model;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Objects;
 
-@javax.annotation.Generated(
-        value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen",
-        date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ContextHit {
 
@@ -63,7 +60,6 @@ public class ContextHit {
 
     /**
      * Returns hitType
-     *
      * @return hitType
      */
     @Schema(description = "")
@@ -82,7 +78,6 @@ public class ContextHit {
 
     /**
      * Returns a boolean indicating if this context hit occurs on an annotation.
-     *
      * @return isAnnotationHit
      */
     @Schema(description = "A boolean indicating if this context hit occurs on an annotation.")
@@ -102,7 +97,6 @@ public class ContextHit {
 
     /**
      * Returns the ID of the annotation that the context hit is in.
-     *
      * @return annotationId
      */
     @Schema(description = "The ID of the annotation that the context hit is in.")
@@ -121,7 +115,6 @@ public class ContextHit {
 
     /**
      * Returns the page number in the document of the search hit&#x27;s context.
-     *
      * @return pageNumber
      */
     @Schema(description = "The page number in the document of the search hit's context.")
@@ -140,7 +133,6 @@ public class ContextHit {
 
     /**
      * Returns the offset from the beginning of the page of the starting character of the search hit&#x27;s context line.
-     *
      * @return pageOffset
      */
     @Schema(
@@ -161,7 +153,6 @@ public class ContextHit {
 
     /**
      * Returns the line of context for the search hit.
-     *
      * @return context
      */
     @Schema(description = "The line of context for the search hit.")
@@ -180,7 +171,6 @@ public class ContextHit {
 
     /**
      * Returns the character offset from the beginning of the context line of the start of the first highlight.
-     *
      * @return highlight1Offset
      */
     @Schema(
@@ -201,7 +191,6 @@ public class ContextHit {
 
     /**
      * Returns the length of the first highlight in characters.
-     *
      * @return highlight1Length
      */
     @Schema(description = "The length of the first highlight in characters.")
@@ -220,7 +209,6 @@ public class ContextHit {
 
     /**
      * Returns the character offset from the beginning of the context line of the start of the second highlight.
-     *
      * @return highlight2Offset
      */
     @Schema(
@@ -241,7 +229,6 @@ public class ContextHit {
 
     /**
      * Returns the length of the second highlight in characters.
-     *
      * @return highlight2Length
      */
     @Schema(description = "The length of the second highlight in characters.")
@@ -260,7 +247,6 @@ public class ContextHit {
 
     /**
      * Returns the number of words in the context hit.
-     *
      * @return hitWidth
      */
     @Schema(description = "The number of words in the context hit.")
@@ -279,7 +265,6 @@ public class ContextHit {
 
     /**
      * Returns the number of hits in the electronic document.
-     *
      * @return edocHitCount
      */
     @Schema(description = "The number of hits in the electronic document.")
@@ -298,7 +283,6 @@ public class ContextHit {
 
     /**
      * Returns the number of hits in the template.
-     *
      * @return fieldHitCount
      */
     @Schema(description = "The number of hits in the template.")
@@ -317,7 +301,6 @@ public class ContextHit {
 
     /**
      * Returns the name of a template field containing the hit.
-     *
      * @return fieldName
      */
     @Schema(description = "The name of a template field containing the hit.")
@@ -336,7 +319,6 @@ public class ContextHit {
 
     /**
      * Returns the hit number.
-     *
      * @return hitNumber
      */
     @Schema(description = "The hit number.")
@@ -349,7 +331,7 @@ public class ContextHit {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(java.lang.Object o) {
         if (this == o) {
             return true;
         }
@@ -427,7 +409,7 @@ public class ContextHit {
         return sb.toString();
     }
 
-    private String toIndentedString(Object o) {
+    private String toIndentedString(java.lang.Object o) {
         if (o == null) {
             return "null";
         }

@@ -1,6 +1,6 @@
 package com.laserfiche.repository.api.clients.params;
 
-import com.laserfiche.repository.api.clients.impl.model.PostEntryWithEdocMetadataRequest;
+import com.laserfiche.repository.api.clients.impl.model.*;
 import java.io.InputStream;
 
 /**
@@ -25,13 +25,13 @@ public class ParametersForImportDocument {
 
     /**
      * An optional query parameter used to indicate if the new document should be automatically
-     * renamed if an entry already exists with the given name in the folder. The default value is false.
+     *             renamed if an entry already exists with the given name in the folder. The default value is false.
      */
     private Boolean autoRename;
 
     /**
      * An optional query parameter used to indicate the locale that should be used.
-     * The value should be a standard language tag. This may be used when setting field values with tokens.
+     *             The value should be a standard language tag. This may be used when setting field values with tokens.
      */
     private String culture;
 
@@ -111,7 +111,7 @@ public class ParametersForImportDocument {
      * Sets the value of the autoRename parameter and returns the current object, to enable chaining further setters.
      *
      * @param autoRename An optional query parameter used to indicate if the new document should be automatically
-     *                   renamed if an entry already exists with the given name in the folder. The default value is false.
+     *             renamed if an entry already exists with the given name in the folder. The default value is false.
      * @return {@link ParametersForImportDocument} The return value
      */
     public ParametersForImportDocument setAutoRename(Boolean autoRename) {
@@ -120,8 +120,7 @@ public class ParametersForImportDocument {
     }
 
     /**
-     * An optional query parameter used to indicate if the new document should be automatically
-     * renamed if an entry already exists with the given name in the folder. The default value is false.
+     * An optional query parameter used to indicate if the new document should be automatically<br>            renamed if an entry already exists with the given name in the folder. The default value is false.
      *
      * @return {@link Boolean} The return value
      */
@@ -133,7 +132,7 @@ public class ParametersForImportDocument {
      * Sets the value of the culture parameter and returns the current object, to enable chaining further setters.
      *
      * @param culture An optional query parameter used to indicate the locale that should be used.
-     *                The value should be a standard language tag. This may be used when setting field values with tokens.
+     *             The value should be a standard language tag. This may be used when setting field values with tokens.
      * @return {@link ParametersForImportDocument} The return value
      */
     public ParametersForImportDocument setCulture(String culture) {
@@ -142,8 +141,7 @@ public class ParametersForImportDocument {
     }
 
     /**
-     * An optional query parameter used to indicate the locale that should be used.
-     * The value should be a standard language tag. This may be used when setting field values with tokens.
+     * An optional query parameter used to indicate the locale that should be used.<br>            The value should be a standard language tag. This may be used when setting field values with tokens.
      *
      * @return {@link String} The return value
      */

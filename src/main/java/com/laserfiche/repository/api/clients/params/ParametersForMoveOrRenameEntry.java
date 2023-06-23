@@ -1,6 +1,6 @@
 package com.laserfiche.repository.api.clients.params;
 
-import com.laserfiche.repository.api.clients.impl.model.PatchEntryRequest;
+import com.laserfiche.repository.api.clients.impl.model.*;
 
 /**
  * The encapsulated parameters for {@link com.laserfiche.repository.api.clients.impl.EntriesClientImpl#moveOrRenameEntry(ParametersForMoveOrRenameEntry) moveOrRenameEntry}.
@@ -21,13 +21,13 @@ public class ParametersForMoveOrRenameEntry {
 
     /**
      * An optional query parameter used to indicate if the entry should be automatically
-     * renamed if another entry already exists with the same name in the folder. The default value is false.
+     *             renamed if another entry already exists with the same name in the folder. The default value is false.
      */
     private Boolean autoRename;
 
     /**
      * An optional query parameter used to indicate the locale that should be used.
-     * The value should be a standard language tag.
+     *             The value should be a standard language tag.
      */
     private String culture;
 
@@ -84,7 +84,7 @@ public class ParametersForMoveOrRenameEntry {
      * Sets the value of the autoRename parameter and returns the current object, to enable chaining further setters.
      *
      * @param autoRename An optional query parameter used to indicate if the entry should be automatically
-     *                   renamed if another entry already exists with the same name in the folder. The default value is false.
+     *             renamed if another entry already exists with the same name in the folder. The default value is false.
      * @return {@link ParametersForMoveOrRenameEntry} The return value
      */
     public ParametersForMoveOrRenameEntry setAutoRename(Boolean autoRename) {
@@ -93,8 +93,7 @@ public class ParametersForMoveOrRenameEntry {
     }
 
     /**
-     * An optional query parameter used to indicate if the entry should be automatically
-     * renamed if another entry already exists with the same name in the folder. The default value is false.
+     * An optional query parameter used to indicate if the entry should be automatically<br>            renamed if another entry already exists with the same name in the folder. The default value is false.
      *
      * @return {@link Boolean} The return value
      */
@@ -106,7 +105,7 @@ public class ParametersForMoveOrRenameEntry {
      * Sets the value of the culture parameter and returns the current object, to enable chaining further setters.
      *
      * @param culture An optional query parameter used to indicate the locale that should be used.
-     *                The value should be a standard language tag.
+     *             The value should be a standard language tag.
      * @return {@link ParametersForMoveOrRenameEntry} The return value
      */
     public ParametersForMoveOrRenameEntry setCulture(String culture) {
@@ -115,8 +114,7 @@ public class ParametersForMoveOrRenameEntry {
     }
 
     /**
-     * An optional query parameter used to indicate the locale that should be used.
-     * The value should be a standard language tag.
+     * An optional query parameter used to indicate the locale that should be used.<br>            The value should be a standard language tag.
      *
      * @return {@link String} The return value
      */

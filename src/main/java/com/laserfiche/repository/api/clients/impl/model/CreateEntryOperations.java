@@ -1,7 +1,6 @@
 package com.laserfiche.repository.api.clients.impl.model;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Objects;
 
@@ -11,9 +10,7 @@ import java.util.Objects;
 @Schema(
         description =
                 "The results of each operation needed in order to create the electronic document with optional template and fields.")
-@javax.annotation.Generated(
-        value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen",
-        date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CreateEntryOperations {
 
@@ -42,7 +39,6 @@ public class CreateEntryOperations {
 
     /**
      * Returns entryCreate
-     *
      * @return entryCreate
      */
     @Schema(description = "")
@@ -61,7 +57,6 @@ public class CreateEntryOperations {
 
     /**
      * Returns setEdoc
-     *
      * @return setEdoc
      */
     @Schema(description = "")
@@ -80,7 +75,6 @@ public class CreateEntryOperations {
 
     /**
      * Returns setTemplate
-     *
      * @return setTemplate
      */
     @Schema(description = "")
@@ -99,7 +93,6 @@ public class CreateEntryOperations {
 
     /**
      * Returns setFields
-     *
      * @return setFields
      */
     @Schema(description = "")
@@ -118,7 +111,6 @@ public class CreateEntryOperations {
 
     /**
      * Returns setTags
-     *
      * @return setTags
      */
     @Schema(description = "")
@@ -137,7 +129,6 @@ public class CreateEntryOperations {
 
     /**
      * Returns setLinks
-     *
      * @return setLinks
      */
     @Schema(description = "")
@@ -150,7 +141,7 @@ public class CreateEntryOperations {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(java.lang.Object o) {
         if (this == o) {
             return true;
         }
@@ -185,7 +176,7 @@ public class CreateEntryOperations {
         return sb.toString();
     }
 
-    private String toIndentedString(Object o) {
+    private String toIndentedString(java.lang.Object o) {
         if (o == null) {
             return "null";
         }

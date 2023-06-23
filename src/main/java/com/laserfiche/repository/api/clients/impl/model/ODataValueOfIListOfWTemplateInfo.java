@@ -1,15 +1,12 @@
 package com.laserfiche.repository.api.clients.impl.model;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@javax.annotation.Generated(
-        value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen",
-        date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ODataValueOfIListOfWTemplateInfo {
 
@@ -31,7 +28,6 @@ public class ODataValueOfIListOfWTemplateInfo {
 
     /**
      * Returns value
-     *
      * @return value
      */
     @Schema(description = "")
@@ -44,7 +40,7 @@ public class ODataValueOfIListOfWTemplateInfo {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(java.lang.Object o) {
         if (this == o) {
             return true;
         }
@@ -69,7 +65,7 @@ public class ODataValueOfIListOfWTemplateInfo {
         return sb.toString();
     }
 
-    private String toIndentedString(Object o) {
+    private String toIndentedString(java.lang.Object o) {
         if (o == null) {
             return "null";
         }

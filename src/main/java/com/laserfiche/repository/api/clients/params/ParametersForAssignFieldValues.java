@@ -1,6 +1,6 @@
 package com.laserfiche.repository.api.clients.params;
 
-import com.laserfiche.repository.api.clients.impl.model.FieldToUpdate;
+import com.laserfiche.repository.api.clients.impl.model.*;
 import java.util.Map;
 
 /**
@@ -22,7 +22,7 @@ public class ParametersForAssignFieldValues {
 
     /**
      * An optional query parameter used to indicate the locale that should be used.
-     * The value should be a standard language tag. This may be used when setting field values with tokens.
+     *             The value should be a standard language tag. This may be used when setting field values with tokens.
      */
     private String culture;
 
@@ -79,7 +79,7 @@ public class ParametersForAssignFieldValues {
      * Sets the value of the culture parameter and returns the current object, to enable chaining further setters.
      *
      * @param culture An optional query parameter used to indicate the locale that should be used.
-     *                The value should be a standard language tag. This may be used when setting field values with tokens.
+     *             The value should be a standard language tag. This may be used when setting field values with tokens.
      * @return {@link ParametersForAssignFieldValues} The return value
      */
     public ParametersForAssignFieldValues setCulture(String culture) {
@@ -88,8 +88,7 @@ public class ParametersForAssignFieldValues {
     }
 
     /**
-     * An optional query parameter used to indicate the locale that should be used.
-     * The value should be a standard language tag. This may be used when setting field values with tokens.
+     * An optional query parameter used to indicate the locale that should be used.<br>            The value should be a standard language tag. This may be used when setting field values with tokens.
      *
      * @return {@link String} The return value
      */

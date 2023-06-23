@@ -6,7 +6,8 @@ import com.laserfiche.api.client.httphandlers.HttpRequestHandler;
 import com.laserfiche.api.client.model.ApiException;
 import com.laserfiche.api.client.model.ProblemDetails;
 import com.laserfiche.repository.api.clients.RepositoriesClient;
-import com.laserfiche.repository.api.clients.impl.model.RepositoryInfo;
+import com.laserfiche.repository.api.clients.impl.model.*;
+import com.laserfiche.repository.api.clients.params.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -70,7 +71,7 @@ public class RepositoriesClientImpl extends ApiClient implements RepositoriesCli
      * Returns the repository resource list that current user has access to given the API server base URL. Only available in Laserfiche Self-Hosted.
      *
      * @param url API server base URL e.g., https://{APIServerName}/LFRepositoryAPI
-     * @return Get the repository resource list successfully.
+     * @return  Get the repository resource list successfully.
      */
     public static RepositoryInfo[] getSelfHostedRepositoryList(String url) {
         Map<String, String> headerKeyValuePairs = new HashMap<>();
