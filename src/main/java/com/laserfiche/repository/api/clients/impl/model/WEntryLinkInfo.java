@@ -1,15 +1,12 @@
 package com.laserfiche.repository.api.clients.impl.model;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-@javax.annotation.Generated(
-        value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen",
-        date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class WEntryLinkInfo {
 
@@ -59,7 +56,6 @@ public class WEntryLinkInfo {
 
     /**
      * Returns the ID of the entry link.
-     *
      * @return linkId
      */
     @Schema(description = "The ID of the entry link.")
@@ -78,7 +74,6 @@ public class WEntryLinkInfo {
 
     /**
      * Returns the ID of the source entry of the represented link.
-     *
      * @return sourceId
      */
     @Schema(description = "The ID of the source entry of the represented link.")
@@ -97,7 +92,6 @@ public class WEntryLinkInfo {
 
     /**
      * Returns the full path to the source entry of the represented link.
-     *
      * @return sourceFullPath
      */
     @Schema(description = "The full path to the source entry of the represented link.")
@@ -116,7 +110,6 @@ public class WEntryLinkInfo {
 
     /**
      * Returns the label for the source entry in the link type.
-     *
      * @return sourceLabel
      */
     @Schema(description = "The label for the source entry in the link type.")
@@ -135,7 +128,6 @@ public class WEntryLinkInfo {
 
     /**
      * Returns the ID of the target entry of the represented link.
-     *
      * @return targetId
      */
     @Schema(description = "The ID of the target entry of the represented link.")
@@ -154,7 +146,6 @@ public class WEntryLinkInfo {
 
     /**
      * Returns the full path to the target entry of the represented link.
-     *
      * @return targetFullPath
      */
     @Schema(description = "The full path to the target entry of the represented link.")
@@ -173,7 +164,6 @@ public class WEntryLinkInfo {
 
     /**
      * Returns the label for the target entry in the link type.
-     *
      * @return targetLabel
      */
     @Schema(description = "The label for the target entry in the link type.")
@@ -192,7 +182,6 @@ public class WEntryLinkInfo {
 
     /**
      * Returns the descriptive text for the represented entry link.
-     *
      * @return description
      */
     @Schema(description = "The descriptive text for the represented entry link.")
@@ -211,7 +200,6 @@ public class WEntryLinkInfo {
 
     /**
      * Returns the description of the link type.
-     *
      * @return linkTypeDescription
      */
     @Schema(description = "The description of the link type.")
@@ -230,7 +218,6 @@ public class WEntryLinkInfo {
 
     /**
      * Returns the ID of the entry link type.
-     *
      * @return linkTypeId
      */
     @Schema(description = "The ID of the entry link type.")
@@ -257,7 +244,6 @@ public class WEntryLinkInfo {
 
     /**
      * Returns the properties for the entry link.
-     *
      * @return linkProperties
      */
     @Schema(description = "The properties for the entry link.")
@@ -276,7 +262,6 @@ public class WEntryLinkInfo {
 
     /**
      * Returns the navigation link to the source entry.
-     *
      * @return sourceLink
      */
     @Schema(description = "The navigation link to the source entry.")
@@ -295,7 +280,6 @@ public class WEntryLinkInfo {
 
     /**
      * Returns the navigation link to the target entry.
-     *
      * @return targetLink
      */
     @Schema(description = "The navigation link to the target entry.")
@@ -308,7 +292,7 @@ public class WEntryLinkInfo {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(java.lang.Object o) {
         if (this == o) {
             return true;
         }
@@ -378,7 +362,7 @@ public class WEntryLinkInfo {
         return sb.toString();
     }
 
-    private String toIndentedString(Object o) {
+    private String toIndentedString(java.lang.Object o) {
         if (o == null) {
             return "null";
         }

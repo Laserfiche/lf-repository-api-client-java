@@ -1,13 +1,10 @@
 package com.laserfiche.repository.api.clients.impl.model;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Objects;
 
-@javax.annotation.Generated(
-        value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen",
-        date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class EntryLinkTypeInfo {
 
@@ -30,7 +27,6 @@ public class EntryLinkTypeInfo {
 
     /**
      * Returns the ID of the entry link type.
-     *
      * @return linkTypeId
      */
     @Schema(description = "The ID of the entry link type.")
@@ -49,7 +45,6 @@ public class EntryLinkTypeInfo {
 
     /**
      * Returns the label for the source entry in the link type.
-     *
      * @return sourceLabel
      */
     @Schema(description = "The label for the source entry in the link type.")
@@ -68,7 +63,6 @@ public class EntryLinkTypeInfo {
 
     /**
      * Returns the label for the target entry in the link type.
-     *
      * @return targetLabel
      */
     @Schema(description = "The label for the target entry in the link type.")
@@ -87,7 +81,6 @@ public class EntryLinkTypeInfo {
 
     /**
      * Returns the description of the link type.
-     *
      * @return linkTypeDescription
      */
     @Schema(description = "The description of the link type.")
@@ -100,7 +93,7 @@ public class EntryLinkTypeInfo {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(java.lang.Object o) {
         if (this == o) {
             return true;
         }
@@ -133,7 +126,7 @@ public class EntryLinkTypeInfo {
         return sb.toString();
     }
 
-    private String toIndentedString(Object o) {
+    private String toIndentedString(java.lang.Object o) {
         if (o == null) {
             return "null";
         }

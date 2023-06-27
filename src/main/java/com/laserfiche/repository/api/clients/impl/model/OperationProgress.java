@@ -1,16 +1,13 @@
 package com.laserfiche.repository.api.clients.impl.model;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import org.threeten.bp.OffsetDateTime;
 
-@javax.annotation.Generated(
-        value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen",
-        date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class OperationProgress {
 
@@ -48,7 +45,6 @@ public class OperationProgress {
 
     /**
      * Returns the operation token of the operation associated with this OperationProgress.
-     *
      * @return operationToken
      */
     @Schema(description = "The operation token of the operation associated with this OperationProgress.")
@@ -67,7 +63,6 @@ public class OperationProgress {
 
     /**
      * Returns the type of the operation associated with this OperationProgress.
-     *
      * @return operationType
      */
     @Schema(description = "The type of the operation associated with this OperationProgress.")
@@ -86,7 +81,6 @@ public class OperationProgress {
 
     /**
      * Returns determines what percentage of the execution of the associated operation is completed.
-     *
      * @return percentComplete
      */
     @Schema(description = "Determines what percentage of the execution of the associated operation is completed.")
@@ -105,7 +99,6 @@ public class OperationProgress {
 
     /**
      * Returns status
-     *
      * @return status
      */
     @Schema(description = "")
@@ -132,7 +125,6 @@ public class OperationProgress {
 
     /**
      * Returns the list of errors occurred during the execution of the associated operation.
-     *
      * @return errors
      */
     @Schema(description = "The list of errors occurred during the execution of the associated operation.")
@@ -151,7 +143,6 @@ public class OperationProgress {
 
     /**
      * Returns the URI which can be used (via api call) to access the result(s) of the associated operation.
-     *
      * @return redirectUri
      */
     @Schema(
@@ -172,7 +163,6 @@ public class OperationProgress {
 
     /**
      * Returns the ID of the entry affected (e.g. created or modified) by the execution of the associated operation.
-     *
      * @return entryId
      */
     @Schema(
@@ -193,7 +183,6 @@ public class OperationProgress {
 
     /**
      * Returns the timestamp representing when the associated operation&#x27;s execution is started.
-     *
      * @return startTimestamp
      */
     @Schema(description = "The timestamp representing when the associated operation's execution is started.")
@@ -212,7 +201,6 @@ public class OperationProgress {
 
     /**
      * Returns the timestamp representing the last time when the associated task&#x27;s status has changed.
-     *
      * @return statusTimestamp
      */
     @Schema(description = "The timestamp representing the last time when the associated task's status has changed.")
@@ -225,7 +213,7 @@ public class OperationProgress {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(java.lang.Object o) {
         if (this == o) {
             return true;
         }
@@ -283,7 +271,7 @@ public class OperationProgress {
         return sb.toString();
     }
 
-    private String toIndentedString(Object o) {
+    private String toIndentedString(java.lang.Object o) {
         if (o == null) {
             return "null";
         }

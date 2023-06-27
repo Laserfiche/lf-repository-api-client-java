@@ -10,10 +10,18 @@ import com.laserfiche.repository.api.clients.impl.model.*;
 import com.laserfiche.repository.api.clients.params.*;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import kong.unirest.*;
+import kong.unirest.ContentType;
+import kong.unirest.Header;
+import kong.unirest.HttpMethod;
+import kong.unirest.HttpResponse;
+import kong.unirest.UnirestInstance;
 import kong.unirest.json.JSONObject;
 
 /**

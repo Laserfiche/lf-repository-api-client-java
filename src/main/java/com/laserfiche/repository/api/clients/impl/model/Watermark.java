@@ -1,13 +1,10 @@
 package com.laserfiche.repository.api.clients.impl.model;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Objects;
 
-@javax.annotation.Generated(
-        value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen",
-        date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Watermark {
 
@@ -36,7 +33,6 @@ public class Watermark {
 
     /**
      * Returns the watermark text associated with the tag defintion.
-     *
      * @return watermarkText
      */
     @Schema(description = "The watermark text associated with the tag defintion.")
@@ -55,7 +51,6 @@ public class Watermark {
 
     /**
      * Returns the size of the watermark text, in points, associated with the tag definition.
-     *
      * @return watermarkTextSize
      */
     @Schema(description = "The size of the watermark text, in points, associated with the tag definition.")
@@ -74,7 +69,6 @@ public class Watermark {
 
     /**
      * Returns watermarkPosition
-     *
      * @return watermarkPosition
      */
     @Schema(description = "")
@@ -93,7 +87,6 @@ public class Watermark {
 
     /**
      * Returns the rotation angle, in degrees, of the watermark associated with the tag definition.
-     *
      * @return watermarkRotationAngle
      */
     @Schema(description = "The rotation angle, in degrees, of the watermark associated with the tag definition.")
@@ -112,7 +105,6 @@ public class Watermark {
 
     /**
      * Returns a boolean indicating whether or not the watermark associated with the tag is mandatory.
-     *
      * @return isWatermarkMandatory
      */
     @Schema(description = "A boolean indicating whether or not the watermark associated with the tag is mandatory.")
@@ -132,7 +124,6 @@ public class Watermark {
 
     /**
      * Returns the intensity of the watermark associated with the tag definition. Valid value  ranges from 0 to 100, with -1 as the default values.
-     *
      * @return watermarkIntensity
      */
     @Schema(
@@ -147,7 +138,7 @@ public class Watermark {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(java.lang.Object o) {
         if (this == o) {
             return true;
         }
@@ -198,7 +189,7 @@ public class Watermark {
         return sb.toString();
     }
 
-    private String toIndentedString(Object o) {
+    private String toIndentedString(java.lang.Object o) {
         if (o == null) {
             return "null";
         }

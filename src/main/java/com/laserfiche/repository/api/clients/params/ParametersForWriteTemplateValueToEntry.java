@@ -1,6 +1,6 @@
 package com.laserfiche.repository.api.clients.params;
 
-import com.laserfiche.repository.api.clients.impl.model.PutTemplateRequest;
+import com.laserfiche.repository.api.clients.impl.model.*;
 
 /**
  * The encapsulated parameters for {@link com.laserfiche.repository.api.clients.impl.EntriesClientImpl#writeTemplateValueToEntry(ParametersForWriteTemplateValueToEntry) writeTemplateValueToEntry}.
@@ -21,7 +21,7 @@ public class ParametersForWriteTemplateValueToEntry {
 
     /**
      * An optional query parameter used to indicate the locale that should be used.
-     * The value should be a standard language tag. This may be used when setting field values with tokens.
+     *             The value should be a standard language tag. This may be used when setting field values with tokens.
      */
     private String culture;
 
@@ -78,7 +78,7 @@ public class ParametersForWriteTemplateValueToEntry {
      * Sets the value of the culture parameter and returns the current object, to enable chaining further setters.
      *
      * @param culture An optional query parameter used to indicate the locale that should be used.
-     *                The value should be a standard language tag. This may be used when setting field values with tokens.
+     *             The value should be a standard language tag. This may be used when setting field values with tokens.
      * @return {@link ParametersForWriteTemplateValueToEntry} The return value
      */
     public ParametersForWriteTemplateValueToEntry setCulture(String culture) {
@@ -87,8 +87,7 @@ public class ParametersForWriteTemplateValueToEntry {
     }
 
     /**
-     * An optional query parameter used to indicate the locale that should be used.
-     * The value should be a standard language tag. This may be used when setting field values with tokens.
+     * An optional query parameter used to indicate the locale that should be used.<br>            The value should be a standard language tag. This may be used when setting field values with tokens.
      *
      * @return {@link String} The return value
      */

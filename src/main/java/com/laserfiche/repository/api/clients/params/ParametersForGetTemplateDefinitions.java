@@ -1,5 +1,7 @@
 package com.laserfiche.repository.api.clients.params;
 
+import com.laserfiche.repository.api.clients.impl.model.*;
+
 /**
  * The encapsulated parameters for {@link com.laserfiche.repository.api.clients.impl.TemplateDefinitionsClientImpl#getTemplateDefinitions(ParametersForGetTemplateDefinitions) getTemplateDefinitions}.
  */
@@ -22,7 +24,7 @@ public class ParametersForGetTemplateDefinitions {
 
     /**
      * An optional query parameter used to indicate the locale that should be used for formatting.
-     * The value should be a standard language tag.
+     *             The value should be a standard language tag.
      */
     private String culture;
 
@@ -115,7 +117,7 @@ public class ParametersForGetTemplateDefinitions {
      * Sets the value of the culture parameter and returns the current object, to enable chaining further setters.
      *
      * @param culture An optional query parameter used to indicate the locale that should be used for formatting.
-     *                The value should be a standard language tag.
+     *             The value should be a standard language tag.
      * @return {@link ParametersForGetTemplateDefinitions} The return value
      */
     public ParametersForGetTemplateDefinitions setCulture(String culture) {
@@ -124,8 +126,7 @@ public class ParametersForGetTemplateDefinitions {
     }
 
     /**
-     * An optional query parameter used to indicate the locale that should be used for formatting.
-     * The value should be a standard language tag.
+     * An optional query parameter used to indicate the locale that should be used for formatting.<br>            The value should be a standard language tag.
      *
      * @return {@link String} The return value
      */

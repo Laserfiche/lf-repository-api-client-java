@@ -1,15 +1,12 @@
 package com.laserfiche.repository.api.clients.impl.model;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@javax.annotation.Generated(
-        value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen",
-        date = "2022-12-14T10:52:17.843020700-05:00[America/New_York]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class WFieldInfo {
 
@@ -65,7 +62,6 @@ public class WFieldInfo {
 
     /**
      * Returns the name of the field.
-     *
      * @return name
      */
     @Schema(description = "The name of the field.")
@@ -84,7 +80,6 @@ public class WFieldInfo {
 
     /**
      * Returns the localized name of the field.
-     *
      * @return displayName
      */
     @Schema(description = "The localized name of the field.")
@@ -103,7 +98,6 @@ public class WFieldInfo {
 
     /**
      * Returns the ID of the field.
-     *
      * @return id
      */
     @Schema(description = "The ID of the field.")
@@ -122,7 +116,6 @@ public class WFieldInfo {
 
     /**
      * Returns the description of the field.
-     *
      * @return description
      */
     @Schema(description = "The description of the field.")
@@ -141,7 +134,6 @@ public class WFieldInfo {
 
     /**
      * Returns fieldType
-     *
      * @return fieldType
      */
     @Schema(description = "")
@@ -160,7 +152,6 @@ public class WFieldInfo {
 
     /**
      * Returns the length of the field for variable length data types.
-     *
      * @return length
      */
     @Schema(description = "The length of the field for variable length data types.")
@@ -179,7 +170,6 @@ public class WFieldInfo {
 
     /**
      * Returns the default value of the field for new entries that are assigned to a template the represented field is a member of.
-     *
      * @return defaultValue
      */
     @Schema(
@@ -200,7 +190,6 @@ public class WFieldInfo {
 
     /**
      * Returns a boolean indicating if the represented template field supports multiple values.
-     *
      * @return isMultiValue
      */
     @Schema(description = "A boolean indicating if the represented template field supports multiple values.")
@@ -220,7 +209,6 @@ public class WFieldInfo {
 
     /**
      * Returns a boolean indicating if the represented field must have a value set on entries assigned to a template that the field is a member of.
-     *
      * @return isRequired
      */
     @Schema(
@@ -242,7 +230,6 @@ public class WFieldInfo {
 
     /**
      * Returns the constraint for values stored in the represented field.
-     *
      * @return constraint
      */
     @Schema(description = "The constraint for values stored in the represented field.")
@@ -261,7 +248,6 @@ public class WFieldInfo {
 
     /**
      * Returns the error string that will be returned when the field constraint is violated when setting a value for this field.
-     *
      * @return constraintError
      */
     @Schema(
@@ -290,7 +276,6 @@ public class WFieldInfo {
 
     /**
      * Returns the list of items assigned to the represented field.
-     *
      * @return listValues
      */
     @Schema(description = "The list of items assigned to the represented field.")
@@ -309,7 +294,6 @@ public class WFieldInfo {
 
     /**
      * Returns format
-     *
      * @return format
      */
     @Schema(description = "")
@@ -328,7 +312,6 @@ public class WFieldInfo {
 
     /**
      * Returns the name of the currency that will be using when formatting the represented field when the Format property is set to the Currency member of the WFieldFormat enumeration.
-     *
      * @return currency
      */
     @Schema(
@@ -349,7 +332,6 @@ public class WFieldInfo {
 
     /**
      * Returns the custom format pattern for fields that are configured to use a custom format.
-     *
      * @return formatPattern
      */
     @Schema(description = "The custom format pattern for fields that are configured to use a custom format.")
@@ -362,7 +344,7 @@ public class WFieldInfo {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(java.lang.Object o) {
         if (this == o) {
             return true;
         }
@@ -432,7 +414,7 @@ public class WFieldInfo {
         return sb.toString();
     }
 
-    private String toIndentedString(Object o) {
+    private String toIndentedString(java.lang.Object o) {
         if (o == null) {
             return "null";
         }
