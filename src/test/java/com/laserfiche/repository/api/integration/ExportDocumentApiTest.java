@@ -324,9 +324,13 @@ public class ExportDocumentApiTest extends BaseTest {
 
     boolean doAuditReasonsNotExist() {
         try {
-            AuditReasons auditReasons = repositoryApiClient.getAuditReasonsClient().getAuditReasons(
-                    new ParametersForGetAuditReasons().setRepoId(repositoryId));
-            if(auditReasons.getExportDocument().size() == 0){
+            AuditReasons auditReasons = repositoryApiClient
+                    .getAuditReasonsClient()
+                    .getAuditReasons(
+                            new ParametersForGetAuditReasons().setRepoId(repositoryId));
+            if (auditReasons
+                    .getExportDocument()
+                    .size() == 0) {
                 return true;
             }
         } catch (Exception e) {
