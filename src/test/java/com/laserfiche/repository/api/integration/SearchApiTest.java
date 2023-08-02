@@ -27,7 +27,6 @@ public class SearchApiTest extends BaseTest {
             ODataValueOfBoolean result = client.cancelOrCloseSearch(new ParametersForCancelOrCloseSearch()
                     .setRepoId(repositoryId)
                     .setSearchToken(searchToken));
-            System.out.println(result.isValue());
         }
     }
 

@@ -90,7 +90,6 @@ public class ExportDocumentApiTest extends BaseTest {
                 e.printStackTrace();
             }
         };
-
         client.exportDocument(new ParametersForExportDocument()
                 .setRepoId(repositoryId)
                 .setEntryId(testEntryId)
