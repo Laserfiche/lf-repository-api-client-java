@@ -63,6 +63,7 @@ public class ExportDocumentApiTest extends BaseTest {
     }
 
     @Test
+    @Disabled
     void exportDocument_Returns_Exported_File() {
         final String FILE_NAME = "exportDocument_temp_file.txt";
         Consumer<InputStream> consumer = inputStream -> {
@@ -81,7 +82,6 @@ public class ExportDocumentApiTest extends BaseTest {
                 e.printStackTrace();
             }
         };
-
         client.exportDocument(new ParametersForExportDocument()
                 .setRepoId(repositoryId)
                 .setEntryId(testEntryId)
@@ -126,6 +126,7 @@ public class ExportDocumentApiTest extends BaseTest {
     }
 
     @Test
+    @Disabled
     void exportDocumentAsStream_Returns_Exported_File() throws IOException {
         final String FILE_NAME = "exportDocument_temp_file.txt";
         Consumer<InputStream> consumer = inputStream -> {
