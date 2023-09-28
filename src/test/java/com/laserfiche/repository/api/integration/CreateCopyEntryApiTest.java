@@ -1,8 +1,5 @@
 package com.laserfiche.repository.api.integration;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
 import com.laserfiche.api.client.model.ApiException;
 import com.laserfiche.api.client.model.ProblemDetails;
 import com.laserfiche.repository.api.RepositoryApiClient;
@@ -11,6 +8,8 @@ import com.laserfiche.repository.api.clients.impl.model.*;
 import com.laserfiche.repository.api.clients.params.*;
 import java.time.Duration;
 import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class CreateCopyEntryApiTest extends BaseTest {
     static Entry testClassParentFolder;
@@ -38,15 +37,15 @@ public class CreateCopyEntryApiTest extends BaseTest {
     void createCopyEntry_CreateFolder() {
         String newEntryName = "RepositoryApiClientIntegrationTest Java CreateFolder";
 
-        PostEntryChildrenRequest request = new PostEntryChildrenRequest();
-        request.setEntryType(PostEntryChildrenEntryType.FOLDER);
+        CreateEntryRequest request = new CreateEntryRequest();
+        request.setEntryType(CreateEntryRequestEntryType.FOLDER);
         request.setName(newEntryName);
+        request.setAutoRename(true);
 
-        Entry createdEntry = client.createOrCopyEntry(new ParametersForCreateOrCopyEntry()
-                .setRepoId(repositoryId)
+        Entry createdEntry = client.createEntry(new ParametersForCreateEntry()
+                .setRepositoryId(repositoryId)
                 .setEntryId(testClassParentFolder.getId())
-                .setRequestBody(request)
-                .setAutoRename(true));
+                .setRequestBody(request));
 
         assertNotNull(createdEntry);
 
@@ -66,16 +65,16 @@ public class CreateCopyEntryApiTest extends BaseTest {
         assertEquals(targetEntry.getEntryType(), EntryType.FOLDER);
 
         newEntryName = "RepositoryApiClientIntegrationTest Java CreateShortcut";
-        PostEntryChildrenRequest request = new PostEntryChildrenRequest();
-        request.setEntryType(PostEntryChildrenEntryType.SHORTCUT);
+        CreateEntryRequest request = new CreateEntryRequest();
+        request.setEntryType(CreateEntryRequestEntryType.SHORTCUT);
         request.setName(newEntryName);
         request.setTargetId(targetEntry.getId());
+        request.setAutoRename(true);
 
-        Entry shortCut = client.createOrCopyEntry(new ParametersForCreateOrCopyEntry()
-                .setRepoId(repositoryId)
+        Entry shortCut = client.createEntry(new ParametersForCreateEntry()
+                .setRepositoryId(repositoryId)
                 .setEntryId(testClassParentFolder.getId())
-                .setRequestBody(request)
-                .setAutoRename(true));
+                .setRequestBody(request));
 
         assertNotNull(shortCut);
         assertEquals(testClassParentFolder.getId(), shortCut.getParentId());
@@ -92,25 +91,26 @@ public class CreateCopyEntryApiTest extends BaseTest {
         assertEquals(targetEntry.getParentId(), testClassParentFolder.getId());
         assertEquals(targetEntry.getEntryType(), EntryType.FOLDER);
 
-        CopyAsyncRequest copyAsyncRequest = new CopyAsyncRequest();
+        StartCopyEntryRequest copyAsyncRequest = new StartCopyEntryRequest();
         copyAsyncRequest.setName("RepositoryApiClientIntegrationTest Java CopiedEntry");
         copyAsyncRequest.setSourceId(targetEntry.getId());
+        copyAsyncRequest.setAutoRename(true);
 
-        AcceptedOperation copyEntryResponse = client.copyEntryAsync(new ParametersForCopyEntryAsync()
-                .setRepoId(repositoryId)
+        StartTaskResponse copyEntryResponse = client.startCopyEntry(new ParametersForStartCopyEntry()
+                .setRepositoryId(repositoryId)
                 .setEntryId(testClassParentFolder.getId())
-                .setRequestBody(copyAsyncRequest)
-                .setAutoRename(true));
-        String opToken = copyEntryResponse.getToken();
-        WaitUntilTaskEnds(copyEntryResponse, Duration.ofMillis(100), Duration.ofSeconds(30));
+                .setRequestBody(copyAsyncRequest));
+        String taskId = copyEntryResponse.getTaskId();
+        WaitUntilTaskEnds(taskId, Duration.ofMillis(100));
 
-        OperationProgress getOperationStatusAndProgressResponse = repositoryApiClient
+        TaskCollectionResponse response = repositoryApiClient
                 .getTasksClient()
-                .getOperationStatusAndProgress(new ParametersForGetOperationStatusAndProgress()
-                        .setRepoId(repositoryId)
-                        .setOperationToken(opToken));
+                .listTasks(new ParametersForListTasks()
+                        .setRepositoryId(repositoryId)
+                        .setTaskIds(new String[]{taskId}));
 
-        assertEquals(getOperationStatusAndProgressResponse.getStatus(), OperationStatus.COMPLETED);
+        assertEquals(1, response.getValue().size());
+        assertEquals(response.getValue().get(0).getStatus(), TaskStatus.COMPLETED);
     }
 
     @Test
@@ -123,37 +123,37 @@ public class CreateCopyEntryApiTest extends BaseTest {
         assertEquals(targetEntry.getEntryType(), EntryType.FOLDER);
 
         newEntryName = "RepositoryApiClientIntegrationTest Java CreateShortcut";
-        PostEntryChildrenRequest request = new PostEntryChildrenRequest();
-        request.setEntryType(PostEntryChildrenEntryType.SHORTCUT);
+        CreateEntryRequest request = new CreateEntryRequest();
+        request.setEntryType(CreateEntryRequestEntryType.SHORTCUT);
         request.setName(newEntryName);
         request.setTargetId(targetEntry.getId());
+        request.setAutoRename(true);
 
-        Entry createOrCopyEntryResponse = client.createOrCopyEntry(new ParametersForCreateOrCopyEntry()
-                .setRepoId(repositoryId)
+        Entry createOrCopyEntryResponse = client.createEntry(new ParametersForCreateEntry()
+                .setRepositoryId(repositoryId)
                 .setEntryId(testClassParentFolder.getId())
-                .setRequestBody(request)
-                .setAutoRename(true));
+                .setRequestBody(request));
 
         assertNotNull(createOrCopyEntryResponse);
         assertEquals(testClassParentFolder.getId(), createOrCopyEntryResponse.getParentId());
         assertEquals(createOrCopyEntryResponse.getEntryType(), EntryType.SHORTCUT);
 
-        request = new PostEntryChildrenRequest();
-        request.setName("RepositoryApiClientIntegrationTest Java CopiedEntry");
-        request.setSourceId(createOrCopyEntryResponse.getId());
-
-        Entry newEntryResponse = client.createOrCopyEntry(new ParametersForCreateOrCopyEntry()
-                .setRepoId(repositoryId)
+        CopyEntryRequest copyRequest = new CopyEntryRequest();
+        copyRequest.setName("RepositoryApiClientIntegrationTest Java CopiedEntry");
+        copyRequest.setSourceId(createOrCopyEntryResponse.getId());
+        copyRequest.setAutoRename(true);
+        Entry copyEntryResponse = client.copyEntry(new ParametersForCopyEntry()
+                .setRepositoryId(repositoryId)
                 .setEntryId(testClassParentFolder.getId())
-                .setRequestBody(request)
-                .setAutoRename(true));
+                .setRequestBody(copyRequest));
 
-        assertEquals(newEntryResponse.getParentId(), testClassParentFolder.getId());
-        assertEquals(newEntryResponse.getEntryType(), createOrCopyEntryResponse.getEntryType());
+        assertEquals(copyEntryResponse.getParentId(), testClassParentFolder.getId());
+        assertEquals(EntryType.SHORTCUT, copyEntryResponse.getEntryType());
+        assertEquals(copyEntryResponse.getEntryType(), createOrCopyEntryResponse.getEntryType());
     }
 
     @Test
-    void moveAndRenameEntry_ReturnEntry() {
+    void Copying_Folder_Not_Supported_By_Sync_Version() {
         Entry parentFolder = createEntry(
                 createEntryClient,
                 "RepositoryApiClientIntegrationTest Java ParentFolder",
@@ -166,20 +166,20 @@ public class CreateCopyEntryApiTest extends BaseTest {
                 testClassParentFolder.getId(),
                 true);
 
-        PatchEntryRequest request = new PatchEntryRequest();
-        request.setParentId(parentFolder.getId());
+        CopyEntryRequest request = new CopyEntryRequest();
+        request.setSourceId(parentFolder.getId());
         request.setName("RepositoryApiClientIntegrationTest Java MovedFolder");
+        request.setAutoRename(true);
 
-        Entry movedEntry = client.moveOrRenameEntry(new ParametersForMoveOrRenameEntry()
-                .setRepoId(repositoryId)
-                .setEntryId(childFolder.getId())
-                .setRequestBody(request)
-                .setAutoRename(true));
+        ApiException exception = assertThrows(ApiException.class, () -> {
+                    client.copyEntry(new ParametersForCopyEntry()
+                            .setRepositoryId(repositoryId)
+                            .setEntryId(childFolder.getId())
+                            .setRequestBody(request));
+                });
 
-        assertNotNull(movedEntry);
-        assertEquals(movedEntry.getId(), childFolder.getId());
-        assertEquals(movedEntry.getParentId(), parentFolder.getId());
-        assertEquals(movedEntry.getName(), request.getName());
+        assertEquals(400, exception.getStatusCode());
+        assertEquals(exception.getStatusCode(), exception.getProblemDetails().getStatus());
     }
 
     @Test
@@ -196,18 +196,18 @@ public class CreateCopyEntryApiTest extends BaseTest {
                 testClassParentFolder.getId(),
                 true);
 
-        PatchEntryRequest request = new PatchEntryRequest();
-        request.setParentId(parentFolder.getId());
+        CopyEntryRequest request = new CopyEntryRequest();
+        request.setSourceId(parentFolder.getId());
         request.setName("RepositoryApiClientIntegrationTest Java MovedFolder");
+        request.setAutoRename(true);
 
         String invalidRepoId = String.format("%s-%s", repositoryId, repositoryId);
         ApiException apiException = Assertions.assertThrows(
                 ApiException.class,
-                () -> client.moveOrRenameEntry(new ParametersForMoveOrRenameEntry()
-                        .setRepoId(invalidRepoId)
+                () -> client.copyEntry(new ParametersForCopyEntry()
+                        .setRepositoryId(invalidRepoId)
                         .setEntryId(childFolder.getId())
-                        .setRequestBody(request)
-                        .setAutoRename(true)));
+                        .setRequestBody(request)));
 
         assertNotNull(apiException);
         assertEquals(404, apiException.getStatusCode());

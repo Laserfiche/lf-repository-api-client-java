@@ -3,9 +3,9 @@ package com.laserfiche.repository.api.integration;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.laserfiche.repository.api.clients.SimpleSearchesClient;
-import com.laserfiche.repository.api.clients.impl.model.ODataValueOfIListOfEntry;
-import com.laserfiche.repository.api.clients.impl.model.SimpleSearchRequest;
-import com.laserfiche.repository.api.clients.params.ParametersForCreateSimpleSearchOperation;
+import com.laserfiche.repository.api.clients.impl.model.EntryCollectionResponse;
+import com.laserfiche.repository.api.clients.impl.model.SearchEntryRequest;
+import com.laserfiche.repository.api.clients.params.ParametersForSearchEntry;
 import org.junit.jupiter.api.Test;
 
 class SimpleSearchesApiTest extends BaseTest {
@@ -13,12 +13,12 @@ class SimpleSearchesApiTest extends BaseTest {
     void createSimpleSearch_ReturnSearchResults() {
         SimpleSearchesClient client = repositoryApiClient.getSimpleSearchesClient();
 
-        SimpleSearchRequest searchRequest = new SimpleSearchRequest();
+        SearchEntryRequest searchRequest = new SearchEntryRequest();
         searchRequest.setSearchCommand("({LF:Basic ~= \"Laserfiche\", option=\"NLT\"})");
 
-        ODataValueOfIListOfEntry entryList =
-                client.createSimpleSearchOperation(new ParametersForCreateSimpleSearchOperation()
-                        .setRepoId(repositoryId)
+        EntryCollectionResponse entryList =
+                client.searchEntry(new ParametersForSearchEntry()
+                        .setRepositoryId(repositoryId)
                         .setRequestBody(searchRequest));
 
         assertNotNull(entryList);

@@ -27,7 +27,7 @@ class RepositoryApiClientTest extends BaseTest {
             ApiException exception = assertThrows(ApiException.class, () -> finalInvalidClient
                     .getEntriesClient()
                     .getEntry(
-                            new ParametersForGetEntry().setRepoId(repositoryId).setEntryId(1)));
+                            new ParametersForGetEntry().setRepositoryId(repositoryId).setEntryId(1)));
 
             assertEquals(401, exception.getStatusCode());
             assertEquals(
@@ -58,7 +58,7 @@ class RepositoryApiClientTest extends BaseTest {
             int entryId = 1;
             Entry entry = client.getEntriesClient()
                     .getEntry(
-                            new ParametersForGetEntry().setRepoId(repositoryId).setEntryId(entryId));
+                            new ParametersForGetEntry().setRepositoryId(repositoryId).setEntryId(entryId));
             assertEquals(entryId, entry.getId());
         } finally {
             if (client != null) client.close();
@@ -83,7 +83,7 @@ class RepositoryApiClientTest extends BaseTest {
             ApiException exception = assertThrows(ApiException.class, () -> finalClient
                     .getEntriesClient()
                     .getEntry(
-                            new ParametersForGetEntry().setRepoId(repositoryId).setEntryId(entryId)));
+                            new ParametersForGetEntry().setRepositoryId(repositoryId).setEntryId(entryId)));
 
             assertEquals(403, exception.getStatusCode());
             assertEquals(

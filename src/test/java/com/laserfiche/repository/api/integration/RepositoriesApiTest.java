@@ -1,28 +1,29 @@
 package com.laserfiche.repository.api.integration;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import com.laserfiche.repository.api.clients.RepositoriesClient;
 import com.laserfiche.repository.api.clients.impl.RepositoriesClientImpl;
-import com.laserfiche.repository.api.clients.impl.model.RepositoryInfo;
+import com.laserfiche.repository.api.clients.impl.model.RepositoryCollectionResponse;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.DisabledIf;
+import com.laserfiche.repository.api.clients.impl.model.Repository;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class RepositoriesApiTest extends BaseTest {
     @Test
     void getRepositoryList_ReturnSuccessful() {
         RepositoriesClient client = repositoryApiClient.getRepositoryClient();
-        RepositoryInfo[] repositoryInfoList = client.getRepositoryList();
+        RepositoryCollectionResponse response = client.listRepositories();
         boolean foundRepo = false;
-        assertNotNull(repositoryInfoList);
-        for (RepositoryInfo repositoryInfo : repositoryInfoList) {
-            assertNotNull(repositoryInfo.getRepoId());
+        assertNotNull(response);
+        assertFalse(response.getValue().isEmpty());
+        for (Repository repository : response.getValue()) {
+            assertNotNull(repository.getId());
             if (!authorizationType.equals(AuthorizationType.API_SERVER_USERNAME_PASSWORD)) {
-                assertNotNull(repositoryInfo.getWebclientUrl());
-                assertTrue(repositoryInfo.getWebclientUrl().contains(repositoryInfo.getRepoId()));
+                assertNotNull(repository.getWebClientUrl());
+                assertTrue(repository.getWebClientUrl().contains(repository.getId()));
             }
-            if (repositoryInfo.getRepoId().equalsIgnoreCase(repositoryId)) {
+            if (repository.getId().equalsIgnoreCase(repositoryId)) {
                 foundRepo = true;
             }
         }
@@ -32,12 +33,12 @@ class RepositoriesApiTest extends BaseTest {
     @Test
     @DisabledIf("isCloudEnvironment")
     void getSelfHostedRepositoryList_WithNoAuthentication_ReturnSuccessful() {
-        RepositoryInfo[] repositoryInfoList = RepositoriesClientImpl.getSelfHostedRepositoryList(baseUrl);
+        Repository[] repositoryInfoList = RepositoriesClientImpl.getSelfHostedRepositoryList(baseUrl);
         assertNotNull(repositoryInfoList);
         boolean foundRepo = false;
-        for (RepositoryInfo repositoryInfo : repositoryInfoList) {
-            assertNotNull(repositoryInfo.getRepoId());
-            if (repositoryInfo.getRepoId().equalsIgnoreCase(repositoryId)) {
+        for (Repository repositoryInfo : repositoryInfoList) {
+            assertNotNull(repositoryInfo.getId());
+            if (repositoryInfo.getId().equalsIgnoreCase(repositoryId)) {
                 foundRepo = true;
             }
         }

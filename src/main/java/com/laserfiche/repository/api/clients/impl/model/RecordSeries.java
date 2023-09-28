@@ -1,7 +1,10 @@
 package com.laserfiche.repository.api.clients.impl.model;
 
-import com.fasterxml.jackson.annotation.*;
 import java.util.Objects;
+import java.util.Arrays;
+import java.util.List;
+import org.threeten.bp.OffsetDateTime;
+import com.fasterxml.jackson.annotation.*;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen")
 @JsonInclude(JsonInclude.Include.NON_NULL)

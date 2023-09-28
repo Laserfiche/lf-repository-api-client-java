@@ -4,10 +4,9 @@ import com.laserfiche.api.client.model.AccessKey;
 import com.laserfiche.repository.api.RepositoryApiClient;
 import com.laserfiche.repository.api.RepositoryApiClientImpl;
 import com.laserfiche.repository.api.clients.impl.model.*;
-import com.laserfiche.repository.api.clients.params.ParametersForCreateOrCopyEntry;
-import com.laserfiche.repository.api.clients.params.ParametersForDeleteEntryInfo;
-import com.laserfiche.repository.api.clients.params.ParametersForGetOperationStatusAndProgress;
-import com.laserfiche.repository.api.clients.params.ParametersForGetSearchStatus;
+import com.laserfiche.repository.api.clients.params.ParametersForCreateEntry;
+import com.laserfiche.repository.api.clients.params.ParametersForListTasks;
+import com.laserfiche.repository.api.clients.params.ParametersForStartDeleteEntry;
 import io.github.cdimascio.dotenv.Dotenv;
 import java.time.Duration;
 import java.util.HashMap;
@@ -108,52 +107,43 @@ public class BaseTest {
         return repositoryApiClient;
     }
 
-    public static Entry createEntry(
-            RepositoryApiClient client, String entryName, Integer parentEntryId, Boolean autoRename) {
-        PostEntryChildrenRequest request = new PostEntryChildrenRequest();
-        request.setEntryType(PostEntryChildrenEntryType.FOLDER);
+    public static Entry createEntry(RepositoryApiClient client, String entryName, Integer parentEntryId, Boolean autoRename) {
+        CreateEntryRequest request = new CreateEntryRequest();
+        request.setEntryType(CreateEntryRequestEntryType.FOLDER);
         request.setName(entryName);
+        request.setAutoRename(autoRename);
 
         return client.getEntriesClient()
-                .createOrCopyEntry(new ParametersForCreateOrCopyEntry()
-                        .setRepoId(repositoryId)
+                .createEntry(new ParametersForCreateEntry()
+                        .setRepositoryId(repositoryId)
                         .setEntryId(parentEntryId)
-                        .setRequestBody(request)
-                        .setAutoRename(autoRename));
+                        .setRequestBody(request));
     }
 
-    public static Boolean noRequiredFieldDefinitionsInTemplate(List<TemplateFieldInfo> arr) {
-        for (TemplateFieldInfo templateFieldInfo : arr) {
-            if (templateFieldInfo.isRequired()) {
-                return false;
-            }
-        }
-        return true;
+    public static Boolean noRequiredFieldDefinitionsInTemplate(List<TemplateFieldDefinition> templateFieldDefinitions) {
+        return templateFieldDefinitions.stream().noneMatch(FieldDefinition::isRequired);
     }
 
     public static boolean nullOrEmpty(String str) {
-        return str == null || str.length() == 0;
+        return str == null || str.isEmpty();
     }
 
-    public static void WaitUntilTaskEnds(AcceptedOperation task) throws InterruptedException {
-        WaitUntilTaskEnds(task, Duration.ofMillis(500), Duration.ofSeconds(30));
+    public static void WaitUntilTaskEnds(String taskId) throws InterruptedException {
+        WaitUntilTaskEnds(taskId, Duration.ofMillis(500));
     }
 
-    public static void WaitUntilSearchEnds(AcceptedOperation search) throws InterruptedException {
-        WaitUntilSearchEnds(search, Duration.ofMillis(500), Duration.ofSeconds(30));
-    }
-
-    public static void WaitUntilTaskEnds(AcceptedOperation task, Duration interval, Duration timeout)
+    public static void WaitUntilTaskEnds(String taskId, Duration interval)
             throws InterruptedException {
-        int maxIteration = (int) (timeout.toMillis() / interval.toMillis());
+        int maxIteration = 5;
         int count = 0;
         while (count < maxIteration) {
-            OperationProgress progress = repositoryApiClient
+            TaskCollectionResponse response = repositoryApiClient
                     .getTasksClient()
-                    .getOperationStatusAndProgress(new ParametersForGetOperationStatusAndProgress()
-                            .setRepoId(repositoryId)
-                            .setOperationToken(task.getToken()));
-            if (progress.getStatus() != OperationStatus.IN_PROGRESS) {
+                    .listTasks(new ParametersForListTasks()
+                            .setRepositoryId(repositoryId)
+                            .setTaskIds(new String[]{taskId}));
+            TaskProgress progress = response.getValue().get(0);
+            if (progress.getStatus() != TaskStatus.IN_PROGRESS) {
                 return;
             }
             TimeUnit.MILLISECONDS.sleep(interval.toMillis());
@@ -162,35 +152,15 @@ public class BaseTest {
         throw new RuntimeException("WaitUntilTaskEnds timeout");
     }
 
-    public static void WaitUntilSearchEnds(AcceptedOperation search, Duration interval, Duration timeout)
-            throws InterruptedException {
-        int maxIteration = (int) (timeout.toMillis() / interval.toMillis());
-        int count = 0;
-        while (count < maxIteration) {
-            OperationProgress progress = repositoryApiClient
-                    .getSearchesClient()
-                    .getSearchStatus(new ParametersForGetSearchStatus()
-                            .setRepoId(repositoryId)
-                            .setSearchToken(search.getToken()));
-            if (progress.getStatus() != OperationStatus.IN_PROGRESS) {
-                return;
-            }
-            TimeUnit.MILLISECONDS.sleep(interval.toMillis());
-            count++;
-        }
-        throw new RuntimeException("WaitUntilSearchEnds timeout");
-    }
-
     public static void deleteEntry(int entryId) throws InterruptedException {
         if (entryId != 0) {
-            DeleteEntryWithAuditReason body = new DeleteEntryWithAuditReason();
-            AcceptedOperation deleteEntryResponse = repositoryApiClient
+            StartTaskResponse startTaskResponse = repositoryApiClient
                     .getEntriesClient()
-                    .deleteEntryInfo(new ParametersForDeleteEntryInfo()
-                            .setRepoId(repositoryId)
+                    .startDeleteEntry(new ParametersForStartDeleteEntry()
+                            .setRepositoryId(repositoryId)
                             .setEntryId(entryId)
-                            .setRequestBody(body));
-            WaitUntilTaskEnds(deleteEntryResponse);
+                            .setRequestBody(new StartDeleteEntryRequest()));
+            WaitUntilTaskEnds(startTaskResponse.getTaskId());
         }
     }
 

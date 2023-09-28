@@ -1,11 +1,15 @@
 package com.laserfiche.repository.api.clients.impl.model;
 
+import java.util.Objects;
+import java.util.Arrays;
+import io.swagger.v3.oas.annotations.media.Schema;
 import com.fasterxml.jackson.annotation.*;
 
 /**
- * Gets or Sets WatermarkPosition
+ * An enumeration of possible positions on a page for watermarks.
  */
 public enum WatermarkPosition {
+
     TOP_LEFT("TopLeft"),
     TOP_CENTER("TopCenter"),
     TOP_RIGHT("TopRight"),

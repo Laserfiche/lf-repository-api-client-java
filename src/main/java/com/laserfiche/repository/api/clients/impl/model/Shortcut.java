@@ -1,8 +1,11 @@
 package com.laserfiche.repository.api.clients.impl.model;
 
-import com.fasterxml.jackson.annotation.*;
-import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Objects;
+import java.util.Arrays;
+import io.swagger.v3.oas.annotations.media.Schema;
+import java.util.List;
+import org.threeten.bp.OffsetDateTime;
+import com.fasterxml.jackson.annotation.*;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen")
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -80,10 +83,7 @@ public class Shortcut extends Entry {
             return false;
         }
         Shortcut shortcut = (Shortcut) o;
-        return Objects.equals(this.targetId, shortcut.targetId)
-                && Objects.equals(this.extension, shortcut.extension)
-                && Objects.equals(this.targetType, shortcut.targetType)
-                && super.equals(o);
+        return Objects.equals(this.targetId, shortcut.targetId) && Objects.equals(this.extension, shortcut.extension) && Objects.equals(this.targetType, shortcut.targetType) && super.equals(o);
     }
 
     @Override

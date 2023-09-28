@@ -46,7 +46,7 @@ class EntriesApiTest extends BaseTest {
     @Test
     void getEntry_ReturnRootFolder() {
         Entry entry = client.getEntry(
-                new ParametersForGetEntry().setRepoId(repositoryId).setEntryId(1));
+                new ParametersForGetEntry().setRepositoryId(repositoryId).setEntryId(1));
 
         assertNotNull(entry);
         assertTrue(entry instanceof Folder); // We know the root folder is of type Folder.
@@ -55,7 +55,7 @@ class EntriesApiTest extends BaseTest {
     @Test
     void getEntry_ReturnEntryWhenTypeInfoMissing() {
         Entry entry = client.getEntry(new ParametersForGetEntry()
-                .setRepoId(repositoryId)
+                .setRepositoryId(repositoryId)
                 .setEntryId(1)
                 .setSelect("name"));
 
@@ -68,8 +68,8 @@ class EntriesApiTest extends BaseTest {
 
     @Test
     void getEntryListing_ReturnEntries() {
-        ODataValueContextOfIListOfEntry entries = client.getEntryListing(new ParametersForGetEntryListing()
-                .setRepoId(repositoryId)
+        EntryCollectionResponse entries = client.listEntries(new ParametersForListEntries()
+                .setRepositoryId(repositoryId)
                 .setEntryId(1)
                 .setPrefer("maxpagesize=5"));
 
@@ -93,8 +93,8 @@ class EntriesApiTest extends BaseTest {
     @Test
     void getEntryListing_NextLink() throws InterruptedException {
         int maxPageSize = 1;
-        ODataValueContextOfIListOfEntry entryList = client.getEntryListing(new ParametersForGetEntryListing()
-                .setRepoId(repositoryId)
+        EntryCollectionResponse entryList = client.listEntries(new ParametersForListEntries()
+                .setRepositoryId(repositoryId)
                 .setEntryId(1)
                 .setPrefer(String.format("maxpagesize=%d", maxPageSize)));
 
@@ -104,7 +104,7 @@ class EntriesApiTest extends BaseTest {
         assertNotNull(nextLink);
         assertTrue(entryList.getValue().size() <= maxPageSize);
 
-        ODataValueContextOfIListOfEntry nextLinkResult = client.getEntryListingNextLink(nextLink, maxPageSize);
+        EntryCollectionResponse nextLinkResult = client.listEntriesNextLink(nextLink, maxPageSize);
 
         assertNotNull(nextLinkResult);
         assertTrue(nextLinkResult.getValue().size() <= maxPageSize);
@@ -115,7 +115,7 @@ class EntriesApiTest extends BaseTest {
         AtomicInteger pageCount = new AtomicInteger();
         int maxPages = 2;
         int maxPageSize = 3;
-        Function<ODataValueContextOfIListOfEntry, Boolean> callback = entries -> {
+        Function<EntryCollectionResponse, Boolean> callback = entries -> {
             if (pageCount.incrementAndGet() <= maxPages && entries.getOdataNextLink() != null) {
                 assertNotEquals(0, entries.getValue().size());
                 assertTrue(entries.getValue().size() <= maxPageSize);
@@ -124,26 +124,26 @@ class EntriesApiTest extends BaseTest {
                 return false;
             }
         };
-        client.getEntryListingForEach(
+        client.listEntriesForEach(
                 callback,
                 maxPageSize,
-                new ParametersForGetEntryListing().setRepoId(repositoryId).setEntryId(1));
+                new ParametersForListEntries().setRepositoryId(repositoryId).setEntryId(1));
         assertTrue(pageCount.get() > 1);
     }
 
     @Test
     void getFieldValues_ReturnFields() {
-        ODataValueContextOfIListOfFieldValue fieldValueList = client.getFieldValues(
-                new ParametersForGetFieldValues().setRepoId(repositoryId).setEntryId(1));
+        FieldCollectionResponse fieldValueList = client.listFields(
+                new ParametersForListFields().setRepositoryId(repositoryId).setEntryId(1));
 
         assertNotNull(fieldValueList);
     }
 
     @Test
     void getLinkValuesFromEntry_ReturnLinks() {
-        ODataValueContextOfIListOfWEntryLinkInfo linkInfoList =
-                client.getLinkValuesFromEntry(new ParametersForGetLinkValuesFromEntry()
-                        .setRepoId(repositoryId)
+        LinkCollectionResponse linkInfoList =
+                client.listLinks(new ParametersForListLinks()
+                        .setRepositoryId(repositoryId)
                         .setEntryId(1));
 
         assertNotNull(linkInfoList);
@@ -152,8 +152,8 @@ class EntriesApiTest extends BaseTest {
     @Test
     void getFieldValues_NextLink() throws InterruptedException {
         int maxPageSize = 1;
-        ODataValueContextOfIListOfFieldValue fieldValueList = client.getFieldValues(new ParametersForGetFieldValues()
-                .setRepoId(repositoryId)
+        FieldCollectionResponse fieldValueList = client.listFields(new ParametersForListFields()
+                .setRepositoryId(repositoryId)
                 .setEntryId(1)
                 .setPrefer(String.format("maxpagesize=%d", maxPageSize)));
 
@@ -164,7 +164,7 @@ class EntriesApiTest extends BaseTest {
 
         assertTrue(fieldValueList.getValue().size() <= maxPageSize);
 
-        ODataValueContextOfIListOfFieldValue nextLinkResult = client.getFieldValuesNextLink(nextLink, maxPageSize);
+        FieldCollectionResponse nextLinkResult = client.listFieldsNextLink(nextLink, maxPageSize);
 
         assertNotNull(nextLinkResult);
         assertTrue(nextLinkResult.getValue().size() <= maxPageSize);
@@ -175,7 +175,7 @@ class EntriesApiTest extends BaseTest {
         AtomicInteger pageCount = new AtomicInteger();
         int maxPages = 2;
         int maxPageSize = 1;
-        Function<ODataValueContextOfIListOfFieldValue, Boolean> callback = fieldValues -> {
+        Function<FieldCollectionResponse, Boolean> callback = fieldValues -> {
             if (pageCount.incrementAndGet() <= maxPages && fieldValues.getOdataNextLink() != null) {
                 assertNotEquals(0, fieldValues.getValue().size());
                 assertTrue(fieldValues.getValue().size() <= maxPageSize);
@@ -184,18 +184,18 @@ class EntriesApiTest extends BaseTest {
                 return false;
             }
         };
-        client.getFieldValuesForEach(
+        client.listFieldsForEach(
                 callback,
                 maxPageSize,
-                new ParametersForGetFieldValues().setRepoId(repositoryId).setEntryId(1));
+                new ParametersForListFields().setRepositoryId(repositoryId).setEntryId(1));
     }
 
     @Test
     void getLinkValuesFromEntry_NextLink() throws InterruptedException {
         int maxPageSize = 1;
-        ODataValueContextOfIListOfWEntryLinkInfo linkInfoList =
-                client.getLinkValuesFromEntry(new ParametersForGetLinkValuesFromEntry()
-                        .setRepoId(repositoryId)
+        LinkCollectionResponse linkInfoList =
+                client.listLinks(new ParametersForListLinks()
+                        .setRepositoryId(repositoryId)
                         .setEntryId(1)
                         .setPrefer(String.format("maxpagesize=%d", maxPageSize)));
 
@@ -209,8 +209,8 @@ class EntriesApiTest extends BaseTest {
 
         assertTrue(linkInfoList.getValue().size() <= maxPageSize);
 
-        ODataValueContextOfIListOfWEntryLinkInfo nextLinkResult =
-                client.getLinkValuesFromEntryNextLink(nextLink, maxPageSize);
+        LinkCollectionResponse nextLinkResult =
+                client.listLinksNextLink(nextLink, maxPageSize);
 
         assertNotNull(nextLinkResult);
         assertTrue(nextLinkResult.getValue().size() <= maxPageSize);
@@ -221,7 +221,7 @@ class EntriesApiTest extends BaseTest {
         AtomicInteger pageCount = new AtomicInteger();
         int maxPages = 2;
         int maxPageSize = 1;
-        Function<ODataValueContextOfIListOfWEntryLinkInfo, Boolean> callback = entryLinkIntoList -> {
+        Function<LinkCollectionResponse, Boolean> callback = entryLinkIntoList -> {
             if (pageCount.incrementAndGet() <= maxPages && entryLinkIntoList.getOdataNextLink() != null) {
                 assertNotEquals(0, entryLinkIntoList.getValue().size());
                 assertTrue(entryLinkIntoList.getValue().size() <= maxPageSize);
@@ -230,11 +230,11 @@ class EntriesApiTest extends BaseTest {
                 return false;
             }
         };
-        client.getLinkValuesFromEntryForEach(
+        client.listLinksForEach(
                 callback,
                 maxPageSize,
-                new ParametersForGetLinkValuesFromEntry()
-                        .setRepoId(repositoryId)
+                new ParametersForListLinks()
+                        .setRepositoryId(repositoryId)
                         .setEntryId(1));
     }
 
@@ -243,23 +243,21 @@ class EntriesApiTest extends BaseTest {
         Entry entryToDelete =
                 createEntry(createEntryClient, "RepositoryApiClientIntegrationTest Java DeleteFolder", 1, true);
 
-        AcceptedOperation deleteEntryResponse = client.deleteEntryInfo(new ParametersForDeleteEntryInfo()
-                .setRepoId(repositoryId)
+        StartTaskResponse deleteEntryResponse = client.startDeleteEntry(new ParametersForStartDeleteEntry()
+                .setRepositoryId(repositoryId)
                 .setEntryId(entryToDelete.getId())
-                .setRequestBody(new DeleteEntryWithAuditReason()));
-        WaitUntilTaskEnds(deleteEntryResponse, Duration.ofMillis(100), Duration.ofSeconds(30));
-
-        String token = deleteEntryResponse.getToken();
-
-        assertNotNull(token);
+                .setRequestBody(new StartDeleteEntryRequest()));
+        WaitUntilTaskEnds(deleteEntryResponse.getTaskId(), Duration.ofMillis(100));
+        String taskId = deleteEntryResponse.getTaskId();
+        assertNotNull(taskId);
     }
 
     @Test
     void getTagsAssignedToEntry_NextLink() throws InterruptedException {
         int maxPageSize = 1;
-        ODataValueContextOfIListOfWTagInfo tagInfoList =
-                client.getTagsAssignedToEntry(new ParametersForGetTagsAssignedToEntry()
-                        .setRepoId(repositoryId)
+        TagCollectionResponse tagInfoList =
+                client.listTags(new ParametersForListTags()
+                        .setRepositoryId(repositoryId)
                         .setEntryId(1)
                         .setPrefer(String.format("maxpagesize=%d", maxPageSize)));
 
@@ -273,8 +271,8 @@ class EntriesApiTest extends BaseTest {
 
         assertTrue(tagInfoList.getValue().size() <= maxPageSize);
 
-        ODataValueContextOfIListOfWTagInfo nextLinkResult =
-                client.getTagsAssignedToEntryNextLink(nextLink, maxPageSize);
+        TagCollectionResponse nextLinkResult =
+                client.listTagsNextLink(nextLink, maxPageSize);
 
         assertNotNull(nextLinkResult);
         assertTrue(nextLinkResult.getValue().size() <= maxPageSize);
@@ -285,7 +283,7 @@ class EntriesApiTest extends BaseTest {
         AtomicInteger pageCount = new AtomicInteger();
         int maxPages = 2;
         int maxPageSize = 1;
-        Function<ODataValueContextOfIListOfWTagInfo, Boolean> callback = tagInfoList -> {
+        Function<TagCollectionResponse, Boolean> callback = tagInfoList -> {
             if (pageCount.incrementAndGet() <= maxPages && tagInfoList.getOdataNextLink() != null) {
                 assertNotEquals(0, tagInfoList.getValue().size());
                 assertTrue(tagInfoList.getValue().size() <= maxPageSize);
@@ -294,19 +292,19 @@ class EntriesApiTest extends BaseTest {
                 return false;
             }
         };
-        client.getTagsAssignedToEntryForEach(
+        client.listTagsForEach(
                 callback,
                 maxPageSize,
-                new ParametersForGetTagsAssignedToEntry()
-                        .setRepoId(repositoryId)
+                new ParametersForListTags()
+                        .setRepositoryId(repositoryId)
                         .setEntryId(1));
     }
 
     @Test
     void getTagsAssignedToEntry_ReturnTags() {
-        ODataValueContextOfIListOfWTagInfo tagInfoList =
-                client.getTagsAssignedToEntry(new ParametersForGetTagsAssignedToEntry()
-                        .setRepoId(repositoryId)
+        TagCollectionResponse tagInfoList =
+                client.listTags(new ParametersForListTags()
+                        .setRepositoryId(repositoryId)
                         .setEntryId(1));
 
         assertNotNull(tagInfoList);
@@ -314,20 +312,20 @@ class EntriesApiTest extends BaseTest {
 
     @Test
     void getDynamicFieldsEntry_ReturnDynamicFields() {
-        ODataValueContextOfIListOfWTemplateInfo templateDefinitionsResponse = repositoryApiClient
+        TemplateDefinitionCollectionResponse templateDefinitionsResponse = repositoryApiClient
                 .getTemplateDefinitionClient()
-                .getTemplateDefinitions(new ParametersForGetTemplateDefinitions().setRepoId(repositoryId));
-        List<WTemplateInfo> templateDefinitions = templateDefinitionsResponse.getValue();
+                .listTemplateDefinitions(new ParametersForListTemplateDefinitions().setRepositoryId(repositoryId));
+        List<TemplateDefinition> templateDefinitions = templateDefinitionsResponse.getValue();
 
         assertNotNull(templateDefinitions);
         assertTrue(templateDefinitions.size() > 0);
 
-        GetDynamicFieldLogicValueRequest request = new GetDynamicFieldLogicValueRequest();
+        ListDynamicFieldValuesRequest request = new ListDynamicFieldValuesRequest();
         request.setTemplateId(templateDefinitions.get(0).getId());
 
         Map<String, String[]> dynamicFieldValueResponse =
-                client.getDynamicFieldValues(new ParametersForGetDynamicFieldValues()
-                        .setRepoId(repositoryId)
+                client.listDynamicFieldValues(new ParametersForListDynamicFieldValues()
+                        .setRepositoryId(repositoryId)
                         .setEntryId(1)
                         .setRequestBody(request));
         assertNotNull(dynamicFieldValueResponse);
@@ -335,10 +333,10 @@ class EntriesApiTest extends BaseTest {
 
     @Test
     void getEntryByFullPath_ReturnRootFolder() {
-        FindEntryResult entry = repositoryApiClient
+        GetEntryByPathResponse entry = repositoryApiClient
                 .getEntriesClient()
                 .getEntryByPath(new ParametersForGetEntryByPath()
-                        .setRepoId(repositoryId)
+                        .setRepositoryId(repositoryId)
                         .setFullPath(rootPath));
 
         assertNotNull(entry);
@@ -350,10 +348,10 @@ class EntriesApiTest extends BaseTest {
 
     @Test
     void getEntryByFullPath_ReturnAncestorRootFolder() {
-        FindEntryResult entry = repositoryApiClient
+        GetEntryByPathResponse entry = repositoryApiClient
                 .getEntriesClient()
                 .getEntryByPath(new ParametersForGetEntryByPath()
-                        .setRepoId(repositoryId)
+                        .setRepositoryId(repositoryId)
                         .setFullPath(nonExistingPath)
                         .setFallbackToClosestAncestor(true));
 
@@ -365,33 +363,10 @@ class EntriesApiTest extends BaseTest {
     }
 
     @Test
-    void getDocumentContentType_ReturnsExpectedHeaders() throws FileNotFoundException {
-        Entry parentFolder = createEntry(createEntryClient, "EntriesTest", 1, true);
-        createdEntries.add(parentFolder);
-
-        String fileName = "RepositoryApiClientIntegrationTest Java GetDocumentContentTypeTest.pdf";
-        File fileToImport = new File(TEST_FILE_PATH);
-        CreateEntryResult document = client.importDocument(new ParametersForImportDocument()
-                .setRepoId(repositoryId)
-                .setParentEntryId(parentFolder.getId())
-                .setFileName(fileName)
-                .setAutoRename(true)
-                .setInputStream(new FileInputStream(fileToImport))
-                .setContentType("application/pdf")
-                .setRequestBody(new PostEntryWithEdocMetadataRequest()));
-
-        Map<String, String> headers = client.getDocumentContentType(new ParametersForGetDocumentContentType()
-                .setRepoId(repositoryId)
-                .setEntryId(document.getOperations().getEntryCreate().getEntryId()));
-        assertNotNull(headers.get("Content-Type"));
-        assertNotNull(headers.get("Content-Length"));
-    }
-
-    @Test
     void getEntryListing_ProblemDetails_Fields_Are_Valid_When_Exception_Thrown() {
         ApiException apiException = Assertions.assertThrows(ApiException.class, () -> {
-            client.getEntryListing(new ParametersForGetEntryListing()
-                    .setRepoId(repositoryId)
+            client.listEntries(new ParametersForListEntries()
+                    .setRepositoryId(repositoryId)
                     .setEntryId(-1)
                     .setPrefer("maxpagesize=100"));
         });
@@ -407,40 +382,19 @@ class EntriesApiTest extends BaseTest {
     @Test
     void getEntryListing_WithFields_ReturnEntries() {
         String[] fieldNames = {"Sender", "Subject"};
-        ODataValueContextOfIListOfEntry entries = client.getEntryListing(new ParametersForGetEntryListing()
-                .setRepoId(repositoryId)
+        EntryCollectionResponse entries = client.listEntries(new ParametersForListEntries()
+                .setRepositoryId(repositoryId)
                 .setEntryId(1)
                 .setFields(fieldNames)
                 .setPrefer("maxpagesize=5"));
         assertNotNull(entries);
         for (Entry entry : entries.getValue()) {
             int numberOfReturnedFields = (int) entry.getFields().stream()
-                    .filter(entryFieldValue -> entryFieldValue.getFieldName().equalsIgnoreCase(fieldNames[0])
-                            || entryFieldValue.getFieldName().equalsIgnoreCase(fieldNames[1]))
+                    .filter(entryFieldValue -> entryFieldValue.getName().equalsIgnoreCase(fieldNames[0])
+                            || entryFieldValue.getName().equalsIgnoreCase(fieldNames[1]))
                     .count();
             assertEquals(fieldNames.length, numberOfReturnedFields);
         }
-    }
-
-    @Test
-    void getDocumentContentType_Returns_Valid_Error_Message_ForInvalidRepoId() {
-        String invalidRepoId = String.format("%s-%s", repositoryId, repositoryId);
-        ApiException apiException = Assertions.assertThrows(
-                ApiException.class,
-                () -> client.getDocumentContentType(new ParametersForGetDocumentContentType()
-                        .setRepoId(invalidRepoId)
-                        .setEntryId(1)));
-        assertNotNull(apiException);
-        assertEquals(404, apiException.getStatusCode());
-        assertEquals(
-                "Error: Repository with the given Id not found or no connection could be made.",
-                apiException.getMessage());
-        assertTrue(apiException.getHeaders().size() > 0);
-        ProblemDetails problemDetails = apiException.getProblemDetails();
-        assertNotNull(problemDetails);
-        assertEquals(apiException.getStatusCode(), problemDetails.getStatus());
-        assertEquals(apiException.getMessage(), problemDetails.getTitle());
-        assertNotNull(problemDetails.getOperationId());
     }
 
     @Test
@@ -448,12 +402,12 @@ class EntriesApiTest extends BaseTest {
         Entry parentFolder = createEntry(createEntryClient, "EntriesTest", 1, true);
         createdEntries.add(parentFolder);
 
-        PutTemplateRequest request = new PutTemplateRequest();
+        SetTemplateRequest request = new SetTemplateRequest();
         request.setTemplateName("fake_template");
         ApiException apiException = Assertions.assertThrows(
                 ApiException.class,
-                () -> client.writeTemplateValueToEntry(new ParametersForWriteTemplateValueToEntry()
-                        .setRepoId(repositoryId)
+                () -> client.setTemplate (new ParametersForSetTemplate()
+                        .setRepositoryId(repositoryId)
                         .setEntryId(parentFolder.getId())
                         .setRequestBody(request)));
         assertNotNull(apiException);

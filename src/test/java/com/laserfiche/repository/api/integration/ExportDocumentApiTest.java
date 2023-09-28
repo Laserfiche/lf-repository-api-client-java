@@ -4,16 +4,15 @@ import com.laserfiche.api.client.model.ApiException;
 import com.laserfiche.repository.api.clients.AuditReasonsClient;
 import com.laserfiche.repository.api.clients.EntriesClient;
 import com.laserfiche.repository.api.clients.impl.model.*;
-import com.laserfiche.repository.api.clients.params.ParametersForExportDocument;
-import com.laserfiche.repository.api.clients.params.ParametersForExportDocumentWithAuditReason;
-import com.laserfiche.repository.api.clients.params.ParametersForGetAuditReasons;
-import com.laserfiche.repository.api.clients.params.ParametersForImportDocument;
+import com.laserfiche.repository.api.clients.params.ParametersForExportEntry;
+import com.laserfiche.repository.api.clients.params.ParametersForImportEntry;
+import com.laserfiche.repository.api.clients.params.ParametersForListAuditReasons;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.DisabledIf;
 import org.junit.jupiter.api.condition.EnabledIf;
 
 import java.io.*;
-import java.util.function.Consumer;
+import java.net.URL;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -45,21 +44,19 @@ public class ExportDocumentApiTest extends BaseTest {
             String fileName = "RepositoryApiClientIntegrationTest Java ExportDocumentApiTest";
             File fileToImport = new File(TEST_FILE_PATH);
             testEntryFileSize = fileToImport.length();
-            CreateEntryResult result = repositoryApiClient
+            ImportEntryRequest request = new ImportEntryRequest();
+            request.setName(fileName);
+            request.setAutoRename(true);
+            Entry resultEntry = repositoryApiClient
                     .getEntriesClient()
-                    .importDocument(new ParametersForImportDocument()
-                            .setRepoId(repositoryId)
-                            .setParentEntryId(1)
-                            .setFileName(fileName)
-                            .setAutoRename(true)
+                    .importEntry(new ParametersForImportEntry()
+                            .setRepositoryId(repositoryId)
+                            .setEntryId(1)
                             .setInputStream(new FileInputStream(fileToImport))
                             .setContentType("application/pdf")
-                            .setRequestBody(new PostEntryWithEdocMetadataRequest()));
+                            .setRequestBody(request));
 
-            CreateEntryOperations operations = result.getOperations();
-            testEntryId = operations
-                    .getEntryCreate()
-                    .getEntryId();
+            testEntryId = resultEntry.getId();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -71,270 +68,102 @@ public class ExportDocumentApiTest extends BaseTest {
     }
 
     @Test
-    @EnabledIf("doAuditReasonsNotExist")
+    @DisabledIf("isThereAnyAuditReasonForExport")
     void exportDocument_Returns_Exported_File() {
         final String FILE_NAME = "exportDocument_temp_file.txt";
-        Consumer<InputStream> consumer = inputStream -> {
-            File exportedFile = new File(FILE_NAME);
-            try (FileOutputStream f = new FileOutputStream(exportedFile)) {
-                byte[] buffer = new byte[1024];
-                while (true) {
-                    int length = inputStream.read(buffer);
-                    if (length <= 0) {
-                        break;
-                    }
-                    f.write(buffer, 0, length);
-                }
-                inputStream.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        };
-        client.exportDocument(new ParametersForExportDocument()
-                .setRepoId(repositoryId)
-                .setEntryId(testEntryId)
-                .setInputStreamConsumer(consumer));
+        ExportEntryResponse response = client.exportEntry(new ParametersForExportEntry()
+                .setRepositoryId(repositoryId)
+                .setEntryId(testEntryId));
+        String uri = response.getValue();
+        assertNotNull(uri);
         exportedFile = new File(FILE_NAME);
+        boolean downloaded = downloadExportedEntry(uri, exportedFile);
+        assertTrue(downloaded);
         assertTrue(exportedFile.exists());
         assertEquals(testEntryFileSize, exportedFile.length());
     }
 
     @Test
-    @DisabledIf("doAuditReasonsNotExist")
+    @EnabledIf("isThereAnyAuditReasonForExport")
     void exportDocumentWithAuditReason_Returns_Exported_File() {
-        AuditReasons auditReasons =
-                auditReasonsClient.getAuditReasons(new ParametersForGetAuditReasons().setRepoId(repositoryId));
+        AuditReasonCollectionResponse auditReasons =
+                auditReasonsClient.listAuditReasons(new ParametersForListAuditReasons().setRepositoryId(repositoryId));
         final String FILE_NAME = "exportDocument_temp_file.txt";
-        Consumer<InputStream> consumer = inputStream -> {
-            File exportedFile = new File(FILE_NAME);
-            try (FileOutputStream f = new FileOutputStream(exportedFile)) {
-                byte[] buffer = new byte[1024];
-                while (true) {
-                    int length = inputStream.read(buffer);
-                    if (length <= 0) {
-                        break;
-                    }
-                    f.write(buffer, 0, length);
-                }
-                inputStream.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        };
-        GetEdocWithAuditReasonRequest requestBody = new GetEdocWithAuditReasonRequest();
-        requestBody.setAuditReasonId(auditReasons
-                .getExportDocument()
-                .get(0)
-                .getId());
-        requestBody.setComment(auditReasons
-                .getExportDocument()
-                .get(0)
-                .getName());
-        client.exportDocumentWithAuditReason(new ParametersForExportDocumentWithAuditReason()
-                .setRepoId(repositoryId)
+        exportedFile = new File(FILE_NAME);
+        ExportEntryRequest requestBody = new ExportEntryRequest();
+        AuditReason exportAuditReason = auditReasons.getValue().stream().filter(auditReason -> auditReason.getAuditEventType() == AuditEventType.EXPORT_DOCUMENT).findFirst().get();
+        requestBody.setAuditReasonId(exportAuditReason.getId());
+        requestBody.setAuditReasonComment(exportAuditReason.getName());
+        ExportEntryResponse response = client.exportEntry(new ParametersForExportEntry()
+                .setRepositoryId(repositoryId)
                 .setEntryId(testEntryId)
-                .setInputStreamConsumer(consumer)
                 .setRequestBody(requestBody));
+        String uri = response.getValue();
+        assertNotNull(uri);
         exportedFile = new File(FILE_NAME);
-        assertTrue(exportedFile.exists());
-        assertEquals(testEntryFileSize, exportedFile.length());
-    }
-
-    @Test
-    @EnabledIf("doAuditReasonsNotExist")
-    void exportDocumentAsStream_Returns_Exported_File() throws IOException {
-        final String FILE_NAME = "exportDocument_temp_file.txt";
-        Consumer<InputStream> consumer = inputStream -> {
-            File exportedFile = new File(FILE_NAME);
-            try (FileOutputStream f = new FileOutputStream(exportedFile)) {
-                byte[] buffer = new byte[1024];
-                while (true) {
-                    int length = inputStream.read(buffer);
-                    if (length <= 0) {
-                        break;
-                    }
-                    f.write(buffer, 0, length);
-                }
-                inputStream.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        };
-        ParametersForExportDocument input = new ParametersForExportDocument()
-                .setRepoId(repositoryId)
-                .setEntryId(testEntryId)
-                .setInputStreamConsumer(consumer);
-        InputStream inputStream = client.exportDocumentAsStream(input);
-        input
-                .getInputStreamConsumer()
-                .accept(inputStream);
-        inputStream.close();
-        exportedFile = new File(FILE_NAME);
-        assertTrue(exportedFile.exists());
-        assertEquals(testEntryFileSize, exportedFile.length());
-    }
-
-    @Test
-    @DisabledIf("doAuditReasonsNotExist")
-    void exportDocumentWithAuditReasonAsStream_Returns_Exported_File() throws IOException {
-        AuditReasons auditReasons =
-                auditReasonsClient.getAuditReasons(new ParametersForGetAuditReasons().setRepoId(repositoryId));
-        final String FILE_NAME = "exportDocument_temp_file.txt";
-        Consumer<InputStream> consumer = inputStream -> {
-            File exportedFile = new File(FILE_NAME);
-            try (FileOutputStream f = new FileOutputStream(exportedFile)) {
-                byte[] buffer = new byte[1024];
-                while (true) {
-                    int length = inputStream.read(buffer);
-                    if (length <= 0) {
-                        break;
-                    }
-                    f.write(buffer, 0, length);
-                }
-                inputStream.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        };
-        GetEdocWithAuditReasonRequest requestBody = new GetEdocWithAuditReasonRequest();
-        requestBody.setAuditReasonId(auditReasons
-                .getExportDocument()
-                .get(0)
-                .getId());
-        requestBody.setComment(auditReasons
-                .getExportDocument()
-                .get(0)
-                .getName());
-        ParametersForExportDocumentWithAuditReason input = new ParametersForExportDocumentWithAuditReason()
-                .setRepoId(repositoryId)
-                .setEntryId(testEntryId)
-                .setInputStreamConsumer(consumer)
-                .setRequestBody(requestBody);
-        InputStream inputStream = client.exportDocumentWithAuditReasonAsStream(input);
-        input
-                .getInputStreamConsumer()
-                .accept(inputStream);
-        inputStream.close();
-        exportedFile = new File(FILE_NAME);
+        boolean downloaded = downloadExportedEntry(uri, exportedFile);
+        assertTrue(downloaded);
         assertTrue(exportedFile.exists());
         assertEquals(testEntryFileSize, exportedFile.length());
     }
 
     @Test
     void exportDocument_Returns_Error_For_Invalid_EntryId() {
-        final String FILE_NAME = "exportDocument_temp_file.txt";
-        Consumer<InputStream> consumer = inputStream -> {
-            assertTrue(false, "Consumer should not have been called.");
-        };
         Exception thrown = Assertions.assertThrows(ApiException.class, () -> {
-            client.exportDocument(new ParametersForExportDocument()
-                    .setRepoId(repositoryId)
-                    .setEntryId(-1)
-                    .setInputStreamConsumer(consumer));
+            client.exportEntry(new ParametersForExportEntry()
+                    .setRepositoryId(repositoryId)
+                    .setEntryId(-1));
         });
         Assertions.assertEquals(
                 "Specified argument was out of the range of valid values. (Parameter 'entryId')", thrown.getMessage());
-        File exportedFile = new File(FILE_NAME);
-        assertNotNull(exportedFile);
-        assertFalse(exportedFile.exists());
     }
 
     @Test
-    @DisabledIf("doAuditReasonsNotExist")
+    @EnabledIf("isThereAnyAuditReasonForExport")
     void exportDocumentWithAuditReason_Returns_Error_For_Invalid_EntryId() {
-        AuditReasons auditReasons =
-                auditReasonsClient.getAuditReasons(new ParametersForGetAuditReasons().setRepoId(repositoryId));
+        AuditReasonCollectionResponse auditReasons =
+                auditReasonsClient.listAuditReasons(new ParametersForListAuditReasons().setRepositoryId(repositoryId));
         final String FILE_NAME = "exportDocument_temp_file.txt";
-        Consumer<InputStream> consumer = inputStream -> {
-            assertTrue(false, "Consumer should not have been called.");
-        };
-        GetEdocWithAuditReasonRequest requestBody = new GetEdocWithAuditReasonRequest();
-        requestBody.setAuditReasonId(auditReasons
-                .getExportDocument()
-                .get(0)
-                .getId());
-        requestBody.setComment(auditReasons
-                .getExportDocument()
-                .get(0)
-                .getName());
+        exportedFile = new File(FILE_NAME);
+        ExportEntryRequest requestBody = new ExportEntryRequest();
+        AuditReason exportAuditReason = auditReasons.getValue().stream().filter(auditReason -> auditReason.getAuditEventType() == AuditEventType.EXPORT_DOCUMENT).findFirst().get();
+        requestBody.setAuditReasonId(exportAuditReason.getId());
+        requestBody.setAuditReasonComment(exportAuditReason.getName());
         Exception thrown = Assertions.assertThrows(ApiException.class, () -> {
-            client.exportDocumentWithAuditReason(new ParametersForExportDocumentWithAuditReason()
-                    .setRepoId(repositoryId)
+            client.exportEntry(new ParametersForExportEntry()
+                    .setRepositoryId(repositoryId)
                     .setEntryId(-1)
-                    .setInputStreamConsumer(consumer)
                     .setRequestBody(requestBody));
         });
         Assertions.assertEquals(
                 "Specified argument was out of the range of valid values. (Parameter 'entryId')", thrown.getMessage());
-        File exportedFile = new File(FILE_NAME);
-        assertNotNull(exportedFile);
-        assertFalse(exportedFile.exists());
     }
 
-    @Test
-    void exportDocumentAsStream_Returns_Error_For_Invalid_EntryId() {
-        final String FILE_NAME = "exportDocument_temp_file.txt";
-        Consumer<InputStream> consumer = inputStream -> {
-            assertTrue(false, "Consumer should not have been called.");
-        };
-        Exception thrown = Assertions.assertThrows(ApiException.class, () -> {
-            client.exportDocumentAsStream(new ParametersForExportDocument()
-                    .setRepoId(repositoryId)
-                    .setEntryId(-1)
-                    .setInputStreamConsumer(consumer));
-        });
-        Assertions.assertEquals(
-                "Specified argument was out of the range of valid values. (Parameter 'entryId')", thrown.getMessage());
-        File exportedFile = new File(FILE_NAME);
-        assertNotNull(exportedFile);
-        assertFalse(exportedFile.exists());
-    }
-
-    @Test
-    @DisabledIf("doAuditReasonsNotExist")
-    void exportDocumentWithAuditReasonAsStream_Returns_Error_For_Invalid_EntryId() {
-        AuditReasons auditReasons =
-                auditReasonsClient.getAuditReasons(new ParametersForGetAuditReasons().setRepoId(repositoryId));
-        final String FILE_NAME = "exportDocument_temp_file.txt";
-        Consumer<InputStream> consumer = inputStream -> {
-            assertTrue(false, "Consumer should not have been called.");
-        };
-        GetEdocWithAuditReasonRequest requestBody = new GetEdocWithAuditReasonRequest();
-        requestBody.setAuditReasonId(auditReasons
-                .getExportDocument()
-                .get(0)
-                .getId());
-        requestBody.setComment(auditReasons
-                .getExportDocument()
-                .get(0)
-                .getName());
-        Exception thrown = Assertions.assertThrows(ApiException.class, () -> {
-            client.exportDocumentWithAuditReasonAsStream(new ParametersForExportDocumentWithAuditReason()
-                    .setRepoId(repositoryId)
-                    .setEntryId(-1)
-                    .setInputStreamConsumer(consumer)
-                    .setRequestBody(requestBody));
-        });
-        Assertions.assertEquals(
-                "Specified argument was out of the range of valid values. (Parameter 'entryId')", thrown.getMessage());
-        File exportedFile = new File(FILE_NAME);
-        assertNotNull(exportedFile);
-        assertFalse(exportedFile.exists());
-    }
-
-    boolean doAuditReasonsNotExist() {
+    boolean isThereAnyAuditReasonForExport() {
         try {
-            AuditReasons auditReasons = repositoryApiClient
+            AuditReasonCollectionResponse auditReasons = repositoryApiClient
                     .getAuditReasonsClient()
-                    .getAuditReasons(
-                            new ParametersForGetAuditReasons().setRepoId(repositoryId));
-            if (auditReasons
-                    .getExportDocument()
-                    .size() == 0) {
-                return true;
-            }
+                    .listAuditReasons(
+                            new ParametersForListAuditReasons().setRepositoryId(repositoryId));
+            long count = auditReasons.getValue().stream().filter(auditReason -> auditReason.getAuditEventType() == AuditEventType.EXPORT_DOCUMENT).count();
+            return count > 0;
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    private boolean downloadExportedEntry(String uri, File destinationFile) {
+        try (BufferedInputStream in = new BufferedInputStream(new URL(uri).openStream());
+             FileOutputStream fileOutputStream = new FileOutputStream(destinationFile)) {
+            byte[] dataBuffer = new byte[1024];
+            int bytesRead;
+            while ((bytesRead = in.read(dataBuffer, 0, 1024)) != -1) {
+                fileOutputStream.write(dataBuffer, 0, bytesRead);
+            }
             return true;
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return false;
     }

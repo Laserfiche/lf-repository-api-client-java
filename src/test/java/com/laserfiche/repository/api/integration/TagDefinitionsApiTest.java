@@ -3,12 +3,13 @@ package com.laserfiche.repository.api.integration;
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.laserfiche.repository.api.clients.TagDefinitionsClient;
-import com.laserfiche.repository.api.clients.impl.model.ODataValueContextOfIListOfWTagInfo;
-import com.laserfiche.repository.api.clients.impl.model.WTagInfo;
-import com.laserfiche.repository.api.clients.params.ParametersForGetTagDefinitionById;
-import com.laserfiche.repository.api.clients.params.ParametersForGetTagDefinitions;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
+
+import com.laserfiche.repository.api.clients.impl.model.TagDefinition;
+import com.laserfiche.repository.api.clients.impl.model.TagDefinitionCollectionResponse;
+import com.laserfiche.repository.api.clients.params.ParametersForGetTagDefinition;
+import com.laserfiche.repository.api.clients.params.ParametersForListTagDefinitions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -22,17 +23,18 @@ class TagDefinitionsApiTest extends BaseTest {
 
     @Test
     void getTagDefinitions_ReturnAllTags() {
-        ODataValueContextOfIListOfWTagInfo tagInfoList =
-                client.getTagDefinitions(new ParametersForGetTagDefinitions().setRepoId(repositoryId));
+        TagDefinitionCollectionResponse tagInfoList =
+                client.listTagDefinitions(new ParametersForListTagDefinitions().setRepositoryId(repositoryId));
 
         assertNotNull(tagInfoList);
+        assertFalse(tagInfoList.getValue().isEmpty());
     }
 
     @Test
     void getTagDefinitions_NextLink() throws InterruptedException {
         int maxPageSize = 1;
-        ODataValueContextOfIListOfWTagInfo tagInfoList = client.getTagDefinitions(new ParametersForGetTagDefinitions()
-                .setRepoId(repositoryId)
+        TagDefinitionCollectionResponse tagInfoList = client.listTagDefinitions(new ParametersForListTagDefinitions()
+                .setRepositoryId(repositoryId)
                 .setPrefer(String.format("maxpagesize=%d", maxPageSize)));
 
         assertNotNull(tagInfoList);
@@ -42,7 +44,7 @@ class TagDefinitionsApiTest extends BaseTest {
 
         assertTrue(tagInfoList.getValue().size() <= maxPageSize);
 
-        ODataValueContextOfIListOfWTagInfo nextLinkResponse = client.getTagDefinitionsNextLink(nextLink, maxPageSize);
+        TagDefinitionCollectionResponse nextLinkResponse = client.listTagDefinitionsNextLink(nextLink, maxPageSize);
         assertNotNull(nextLinkResponse);
         assertTrue(nextLinkResponse.getValue().size() <= maxPageSize);
     }
@@ -52,7 +54,7 @@ class TagDefinitionsApiTest extends BaseTest {
         AtomicInteger pageCount = new AtomicInteger();
         int maxPages = 2;
         int maxPageSize = 1;
-        Function<ODataValueContextOfIListOfWTagInfo, Boolean> callback = data -> {
+        Function<TagDefinitionCollectionResponse, Boolean> callback = data -> {
             if (pageCount.incrementAndGet() <= maxPages && data.getOdataNextLink() != null) {
                 assertNotEquals(0, data.getValue().size());
                 assertTrue(data.getValue().size() <= maxPageSize);
@@ -61,20 +63,20 @@ class TagDefinitionsApiTest extends BaseTest {
                 return false;
             }
         };
-        client.getTagDefinitionsForEach(
-                callback, maxPageSize, new ParametersForGetTagDefinitions().setRepoId(repositoryId));
+        client.listTagDefinitionsForEach(
+                callback, maxPageSize, new ParametersForListTagDefinitions().setRepositoryId(repositoryId));
         assertTrue(pageCount.get() > 1);
     }
 
     @Test
     void getTagDefinitionById_ReturnTag() {
-        ODataValueContextOfIListOfWTagInfo tagInfoList =
-                client.getTagDefinitions(new ParametersForGetTagDefinitions().setRepoId(repositoryId));
+        TagDefinitionCollectionResponse tagInfoList =
+                client.listTagDefinitions(new ParametersForListTagDefinitions().setRepositoryId(repositoryId));
 
         assertNotNull(tagInfoList);
 
-        WTagInfo tagInfo = client.getTagDefinitionById(new ParametersForGetTagDefinitionById()
-                .setRepoId(repositoryId)
+        TagDefinition tagInfo = client.getTagDefinition(new ParametersForGetTagDefinition()
+                .setRepositoryId(repositoryId)
                 .setTagId(tagInfoList.getValue().get(0).getId()));
 
         assertNotNull(tagInfo);

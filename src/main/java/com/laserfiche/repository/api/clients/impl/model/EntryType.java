@@ -1,15 +1,16 @@
 package com.laserfiche.repository.api.clients.impl.model;
 
+import java.util.Objects;
+import java.util.Arrays;
+import io.swagger.v3.oas.annotations.media.Schema;
 import com.fasterxml.jackson.annotation.*;
 
 /**
- * Gets or Sets EntryType
+ * Enumeration of entry types.
  */
 public enum EntryType {
-    FOLDER("Folder"),
-    RECORD_SERIES("RecordSeries"),
-    DOCUMENT("Document"),
-    SHORTCUT("Shortcut");
+
+    FOLDER("Folder"), RECORD_SERIES("RecordSeries"), DOCUMENT("Document"), SHORTCUT("Shortcut");
 
     private String value;
 

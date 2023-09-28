@@ -3,130 +3,140 @@ package com.laserfiche.repository.api.integration;
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.laserfiche.repository.api.clients.SearchesClient;
-import com.laserfiche.repository.api.clients.impl.model.*;
-import com.laserfiche.repository.api.clients.params.*;
+
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
+
+import com.laserfiche.repository.api.clients.TasksClient;
+import com.laserfiche.repository.api.clients.impl.model.*;
+import com.laserfiche.repository.api.clients.params.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class SearchApiTest extends BaseTest {
-    SearchesClient client;
-    private String searchToken = "";
+    SearchesClient searchesClient;
+    TasksClient tasksClient;
+
+    private String taskId = "";
 
     @BeforeEach
     void perTestSetup() {
-        client = repositoryApiClient.getSearchesClient();
+        searchesClient = repositoryApiClient.getSearchesClient();
+        tasksClient = repositoryApiClient.getTasksClient();
     }
 
     @AfterEach
     void cancelCloseSearch() {
-        if (searchToken != null) {
-            ODataValueOfBoolean result = client.cancelOrCloseSearch(new ParametersForCancelOrCloseSearch()
-                    .setRepoId(repositoryId)
-                    .setSearchToken(searchToken));
+        if (taskId != null) {
+            CancelTasksResponse result = tasksClient.cancelTasks(new ParametersForCancelTasks()
+                    .setRepositoryId(repositoryId)
+                    .setTaskIds(new String[]{taskId}));
         }
     }
 
     @Test
     void getSearchContextHits_ReturnContextHits() throws InterruptedException {
-        AdvancedSearchRequest request = new AdvancedSearchRequest();
+        StartSearchEntryRequest request = new StartSearchEntryRequest();
         request.setSearchCommand(
                 "{LF:Basic ~= \"Laserfiche\", option=\"DLT\"} & {LF:name=\"Laserfiche Cloud Overview\", Type=\"DFS\"}");
 
-        AcceptedOperation searchResponse = client.createSearchOperation(
-                new ParametersForCreateSearchOperation().setRepoId(repositoryId).setRequestBody(request));
-        searchToken = searchResponse.getToken();
+        StartTaskResponse searchResponse = searchesClient.startSearchEntry(
+                new ParametersForStartSearchEntry().setRepositoryId(repositoryId).setRequestBody(request));
+        taskId = searchResponse.getTaskId();
 
-        assertNotNull(searchToken);
+        assertNotNull(taskId);
 
-        WaitUntilSearchEnds(searchResponse);
+        WaitUntilTaskEnds(taskId);
 
-        ODataValueContextOfIListOfContextHit contextHitResponse =
-                client.getSearchContextHits(new ParametersForGetSearchContextHits()
-                        .setRepoId(repositoryId)
-                        .setSearchToken(searchToken)
+        SearchContextHitCollectionResponse contextHitResponse =
+                searchesClient.listSearchContextHits(new ParametersForListSearchContextHits()
+                        .setRepositoryId(repositoryId)
+                        .setTaskId(taskId)
                         .setRowNumber(1));
         assertNotNull(contextHitResponse);
     }
 
     @Test
     void getSearchResults_ReturnSearchResults() throws InterruptedException {
-        AdvancedSearchRequest request = new AdvancedSearchRequest();
+        StartSearchEntryRequest request = new StartSearchEntryRequest();
         request.setSearchCommand("({LF:Basic ~= \"Laserfiche\", option=\"NLT\"})");
 
-        AcceptedOperation searchResponse = client.createSearchOperation(
-                new ParametersForCreateSearchOperation().setRepoId(repositoryId).setRequestBody(request));
+        StartTaskResponse searchResponse = searchesClient.startSearchEntry(
+                new ParametersForStartSearchEntry().setRepositoryId(repositoryId).setRequestBody(request));
 
-        searchToken = searchResponse.getToken();
+        taskId = searchResponse.getTaskId();
 
-        assertNotNull(searchToken);
+        assertNotNull(taskId);
 
-        WaitUntilSearchEnds(searchResponse);
+        WaitUntilTaskEnds(taskId);
 
-        ODataValueContextOfIListOfEntry searchResultResponse = client.getSearchResults(
-                new ParametersForGetSearchResults().setRepoId(repositoryId).setSearchToken(searchToken));
+        EntryCollectionResponse searchResultResponse = searchesClient.listSearchResults(
+                new ParametersForListSearchResults().setRepositoryId(repositoryId).setTaskId(taskId));
         assertNotNull(searchResultResponse);
     }
 
     @Test
     void getSearchStatus_ReturnSearchStatus() throws InterruptedException {
-        AdvancedSearchRequest request = new AdvancedSearchRequest();
+        StartSearchEntryRequest request = new StartSearchEntryRequest();
         request.setSearchCommand("({LF:Basic ~= \"Laserfiche\", option=\"NLT\"})");
 
-        AcceptedOperation searchResponse = client.createSearchOperation(
-                new ParametersForCreateSearchOperation().setRepoId(repositoryId).setRequestBody(request));
-        searchToken = searchResponse.getToken();
+        StartTaskResponse searchResponse = searchesClient.startSearchEntry(
+                new ParametersForStartSearchEntry().setRepositoryId(repositoryId).setRequestBody(request));
+        taskId = searchResponse.getTaskId();
 
-        assertNotNull(searchToken);
+        assertNotNull(taskId);
 
-        WaitUntilSearchEnds(searchResponse);
+        WaitUntilTaskEnds(taskId);
 
-        OperationProgress searchStatusResponse = client.getSearchStatus(
-                new ParametersForGetSearchStatus().setRepoId(repositoryId).setSearchToken(searchToken));
+        TaskCollectionResponse searchStatusResponse = tasksClient.listTasks(
+                new ParametersForListTasks().setRepositoryId(repositoryId).setTaskIds(new String[] {taskId}));
 
         assertNotNull(searchStatusResponse);
     }
 
     @Test
     void closeSearchOperations_CloseSearch() throws InterruptedException {
-        AdvancedSearchRequest request = new AdvancedSearchRequest();
+        StartSearchEntryRequest request = new StartSearchEntryRequest();
         request.setSearchCommand("({LF:Basic ~= \"Laserfiche\", option=\"NLT\"})");
 
-        AcceptedOperation searchOperationResponse = client.createSearchOperation(
-                new ParametersForCreateSearchOperation().setRepoId(repositoryId).setRequestBody(request));
+        StartTaskResponse searchOperationResponse = searchesClient.startSearchEntry(
+                new ParametersForStartSearchEntry().setRepositoryId(repositoryId).setRequestBody(request));
 
-        searchToken = searchOperationResponse.getToken();
+        taskId = searchOperationResponse.getTaskId();
 
-        assertNotNull(searchToken);
+        assertNotNull(taskId);
 
-        ODataValueOfBoolean closeSearchResponse = client.cancelOrCloseSearch(
-                new ParametersForCancelOrCloseSearch().setRepoId(repositoryId).setSearchToken(searchToken));
+        CancelTasksResponse closeSearchResponse = tasksClient.cancelTasks(
+                new ParametersForCancelTasks().setRepositoryId(repositoryId).setTaskIds(new String[]{taskId}));
 
-        assertTrue(closeSearchResponse.isValue());
+        assertTrue(closeSearchResponse.getValue().get(0).isResult());
         TimeUnit.SECONDS.sleep(5);
     }
 
     @Test
     void getSearchResults_NextLink() throws InterruptedException {
-        int maxPageSize = 1;
+        int maxPageSize = 2;
 
-        AdvancedSearchRequest request = new AdvancedSearchRequest();
-        request.setSearchCommand("({LF:Basic ~= \"Laserfiche\", option=\"NLT\"})");
+        StartSearchEntryRequest request = new StartSearchEntryRequest();
+        request.setSearchCommand("({LF:Basic ~= \"test\", option=\"NLT\"})");
 
-        AcceptedOperation searchResponse = client.createSearchOperation(
-                new ParametersForCreateSearchOperation().setRepoId(repositoryId).setRequestBody(request));
+        StartTaskResponse searchResponse = searchesClient.startSearchEntry(
+                new ParametersForStartSearchEntry().setRepositoryId(repositoryId).setRequestBody(request));
 
-        searchToken = searchResponse.getToken();
-        assertTrue(searchToken != null && !searchToken.trim().isEmpty());
+        taskId = searchResponse.getTaskId();
+        assertTrue(taskId != null && !taskId.trim().isEmpty());
 
-        WaitUntilSearchEnds(searchResponse);
+        WaitUntilTaskEnds(taskId);
 
-        ODataValueContextOfIListOfEntry searchResults = client.getSearchResults(new ParametersForGetSearchResults()
-                .setRepoId(repositoryId)
-                .setSearchToken(searchToken)
+        EntryCollectionResponse searchResults1 = searchesClient.listSearchResults(new ParametersForListSearchResults()
+                        .setRepositoryId(repositoryId)
+                        .setTaskId(taskId));
+        System.out.println(searchResults1.getValue().size());
+                EntryCollectionResponse searchResults = searchesClient.listSearchResults(new ParametersForListSearchResults()
+                .setRepositoryId(repositoryId)
+                .setTaskId(taskId)
                 .setPrefer(String.format("maxpagesize=%d", maxPageSize)));
 
         assertNotNull(searchResults);
@@ -139,7 +149,7 @@ public class SearchApiTest extends BaseTest {
         assertTrue(searchResults.getValue().size() <= maxPageSize);
 
         // Paging request
-        searchResults = client.getSearchResultsNextLink(nextLink, maxPageSize);
+        searchResults = searchesClient.listSearchResultsNextLink(nextLink, maxPageSize);
         assertNotNull(searchResults);
         assertTrue(searchResults.getValue().size() <= maxPageSize);
     }
@@ -149,18 +159,18 @@ public class SearchApiTest extends BaseTest {
         AtomicInteger pageCount = new AtomicInteger();
         int maxPages = 2;
         int maxPageSize = 3;
-        AdvancedSearchRequest request = new AdvancedSearchRequest();
-        request.setSearchCommand("({LF:Basic ~= \"Laserfiche\", option=\"NLT\"})");
+        StartSearchEntryRequest request = new StartSearchEntryRequest();
+        request.setSearchCommand("({LF:Basic ~= \"test\", option=\"NLT\"})");
 
-        AcceptedOperation searchResponse = client.createSearchOperation(
-                new ParametersForCreateSearchOperation().setRepoId(repositoryId).setRequestBody(request));
+        StartTaskResponse searchResponse = searchesClient.startSearchEntry(
+                new ParametersForStartSearchEntry().setRepositoryId(repositoryId).setRequestBody(request));
 
-        searchToken = searchResponse.getToken();
-        assertTrue(searchToken != null && !searchToken.trim().isEmpty());
+        taskId = searchResponse.getTaskId();
+        assertTrue(taskId != null && !taskId.trim().isEmpty());
 
-        WaitUntilSearchEnds(searchResponse);
+        WaitUntilTaskEnds(taskId);
 
-        Function<ODataValueContextOfIListOfEntry, Boolean> callback = data -> {
+        Function<EntryCollectionResponse, Boolean> callback = data -> {
             if (pageCount.incrementAndGet() <= maxPages && data.getOdataNextLink() != null) {
                 assertNotEquals(0, data.getValue().size());
                 assertTrue(data.getValue().size() <= maxPageSize);
@@ -169,31 +179,31 @@ public class SearchApiTest extends BaseTest {
                 return false;
             }
         };
-        client.getSearchResultsForEach(
+        searchesClient.listSearchResultsForEach(
                 callback,
                 maxPageSize,
-                new ParametersForGetSearchResults().setRepoId(repositoryId).setSearchToken(searchToken));
+                new ParametersForListSearchResults().setRepositoryId(repositoryId).setTaskId(taskId));
         assertTrue(pageCount.get() > 1);
     }
 
     @Test
     void getSearchContextHits_NextLink() throws InterruptedException {
         int maxPageSize = 1;
-        AdvancedSearchRequest request = new AdvancedSearchRequest();
+        StartSearchEntryRequest request = new StartSearchEntryRequest();
         request.setSearchCommand(
                 "{LF:Basic ~= \"Laserfiche\", option=\"DLT\"} & {LF:name=\"Laserfiche Cloud Overview\", Type=\"DFS\"}");
 
-        AcceptedOperation searchResponse = client.createSearchOperation(
-                new ParametersForCreateSearchOperation().setRepoId(repositoryId).setRequestBody(request));
-        searchToken = searchResponse.getToken();
+        StartTaskResponse searchResponse = searchesClient.startSearchEntry(
+                new ParametersForStartSearchEntry().setRepositoryId(repositoryId).setRequestBody(request));
+        taskId = searchResponse.getTaskId();
 
-        assertNotNull(searchToken);
+        assertNotNull(taskId);
 
-        WaitUntilSearchEnds(searchResponse);
+        WaitUntilTaskEnds(taskId);
 
-        ODataValueContextOfIListOfEntry searchResults = client.getSearchResults(new ParametersForGetSearchResults()
-                .setRepoId(repositoryId)
-                .setSearchToken(searchToken)
+        EntryCollectionResponse searchResults = searchesClient.listSearchResults(new ParametersForListSearchResults()
+                .setRepositoryId(repositoryId)
+                .setTaskId(taskId)
                 .setPrefer(String.format("maxpagesize=%d", maxPageSize)));
 
         assertNotNull(searchResults);
@@ -201,10 +211,10 @@ public class SearchApiTest extends BaseTest {
 
         int rowNum = searchResults.getValue().get(0).getRowNumber();
 
-        ODataValueContextOfIListOfContextHit contextHitResponse =
-                client.getSearchContextHits(new ParametersForGetSearchContextHits()
-                        .setRepoId(repositoryId)
-                        .setSearchToken(searchToken)
+        SearchContextHitCollectionResponse contextHitResponse =
+                searchesClient.listSearchContextHits(new ParametersForListSearchContextHits()
+                        .setRepositoryId(repositoryId)
+                        .setTaskId(taskId)
                         .setRowNumber(rowNum)
                         .setPrefer(String.format("maxpagesize=%d", maxPageSize)));
 
@@ -215,8 +225,8 @@ public class SearchApiTest extends BaseTest {
         assertTrue(contextHitResponse.getValue().size() <= maxPageSize);
 
         // Paging request
-        ODataValueContextOfIListOfContextHit nextLinkResponse =
-                client.getSearchContextHitsNextLink(nextLink, maxPageSize);
+        SearchContextHitCollectionResponse nextLinkResponse =
+                searchesClient.listSearchContextHitsNextLink(nextLink, maxPageSize);
         assertNotNull(nextLinkResponse);
         assertTrue(nextLinkResponse.getValue().size() <= maxPageSize);
     }
@@ -226,21 +236,21 @@ public class SearchApiTest extends BaseTest {
         AtomicInteger pageCount = new AtomicInteger();
         int maxPages = 2;
         int maxPageSize = 1;
-        AdvancedSearchRequest request = new AdvancedSearchRequest();
+        StartSearchEntryRequest request = new StartSearchEntryRequest();
         request.setSearchCommand(
                 "{LF:Basic ~= \"Laserfiche\", option=\"DLT\"} & {LF:name=\"Laserfiche Cloud Overview\", Type=\"DFS\"}");
 
-        AcceptedOperation searchResponse = client.createSearchOperation(
-                new ParametersForCreateSearchOperation().setRepoId(repositoryId).setRequestBody(request));
-        searchToken = searchResponse.getToken();
-        assertNotNull(searchToken);
+        StartTaskResponse searchResponse = searchesClient.startSearchEntry(
+                new ParametersForStartSearchEntry().setRepositoryId(repositoryId).setRequestBody(request));
+        taskId = searchResponse.getTaskId();
+        assertNotNull(taskId);
 
-        WaitUntilSearchEnds(searchResponse);
+        WaitUntilTaskEnds(taskId);
 
-        ODataValueContextOfIListOfEntry searchResultResponse =
-                client.getSearchResults(new ParametersForGetSearchResults()
-                        .setRepoId(repositoryId)
-                        .setSearchToken(searchToken)
+        EntryCollectionResponse searchResultResponse =
+                searchesClient.listSearchResults(new ParametersForListSearchResults()
+                        .setRepositoryId(repositoryId)
+                        .setTaskId(taskId)
                         .setPrefer(String.format("maxpagesize=%d", maxPageSize)));
 
         assertNotNull(searchResultResponse);
@@ -248,7 +258,7 @@ public class SearchApiTest extends BaseTest {
 
         int rowNum = searchResultResponse.getValue().get(0).getRowNumber();
 
-        Function<ODataValueContextOfIListOfContextHit, Boolean> callback = data -> {
+        Function<SearchContextHitCollectionResponse, Boolean> callback = data -> {
             if (pageCount.incrementAndGet() <= maxPages && data.getOdataNextLink() != null) {
                 assertNotEquals(0, data.getValue().size());
                 assertTrue(data.getValue().size() <= maxPageSize);
@@ -257,12 +267,12 @@ public class SearchApiTest extends BaseTest {
                 return false;
             }
         };
-        client.getSearchContextHitsForEach(
+        searchesClient.listSearchContextHitsForEach(
                 callback,
                 maxPageSize,
-                new ParametersForGetSearchContextHits()
-                        .setRepoId(repositoryId)
-                        .setSearchToken(searchToken)
+                new ParametersForListSearchContextHits()
+                        .setRepositoryId(repositoryId)
+                        .setTaskId(taskId)
                         .setRowNumber(rowNum));
         assertTrue(pageCount.get() > 1);
     }

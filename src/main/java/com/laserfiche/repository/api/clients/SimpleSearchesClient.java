@@ -1,6 +1,37 @@
 package com.laserfiche.repository.api.clients;
 
+import java.util.Map;
+import java.util.List;
+import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Optional;
+import java.util.function.Function;
+import java.util.function.Consumer;
+import java.util.stream.Collectors;
+import kong.unirest.HttpResponse;
+import kong.unirest.HttpMethod;
+import kong.unirest.Unirest;
+import kong.unirest.Header;
+import kong.unirest.UnirestInstance;
+import kong.unirest.UnirestParsingException;
+import kong.unirest.ObjectMapper;
+import kong.unirest.json.JSONArray;
+import kong.unirest.json.JSONObject;
+import kong.unirest.ContentType;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.InputStream;
+import java.nio.file.StandardCopyOption;
+import java.util.concurrent.ExecutionException;
+import com.laserfiche.api.client.deserialization.ProblemDetailsDeserializer;
+import com.laserfiche.api.client.model.ApiException;
+import com.laserfiche.api.client.model.ProblemDetails;
 import com.laserfiche.repository.api.clients.impl.model.*;
+import com.laserfiche.api.client.httphandlers.HttpRequestHandler;
+import com.laserfiche.api.client.deserialization.TokenClientObjectMapper;
+import com.laserfiche.api.client.httphandlers.ResponseImpl;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.laserfiche.repository.api.clients.params.*;
 
 /**
@@ -9,10 +40,10 @@ import com.laserfiche.repository.api.clients.params.*;
 public interface SimpleSearchesClient {
 
     /**
-     * - Runs a &quot;simple&quot; search operation on the repository.<br>- Returns a truncated search result listing.<br>- Search result listing may be truncated, depending on number of results. Additionally, searches may time out if they take too long. Use the other search route to run full searches.<br>- Optionally returns field values for the entries in the search result listing. Each field name needs to be specified in the request. Maximum limit of 10 field names.<br>- If field values are requested, only the first value is returned if it is a multi value field.<br>- Null or Empty field values should not be used to determine if a field is assigned to the entry.
+     * - Runs a &quot;simple&quot; search operation on the repository.<br>- Returns a truncated search result listing.<br>- Search result listing may be truncated, depending on number of results. Additionally, searches may time out if they take too long. Use the other search route to run full searches.<br>- Optionally returns field values for the entries in the folder. Each field name needs to be specified in the request. Maximum limit of 10 field names. If field values are requested, only the first value is returned if it is a multi value field. The remaining field values can be retrieved via the GET fields route. Null or Empty field values should not be used to determine if a field is assigned to the entry.<br>- Required OAuth scope: repository.Read
      *
-     * @param parameters An object of type {@link ParametersForCreateSimpleSearchOperation} which encapsulates the parameters of {@link #createSimpleSearchOperation createSimpleSearchOperation} method.
-     * @return {@link ODataValueContextOfIListOfEntry} The return value
+     * @param parameters An object of type {@link ParametersForSearchEntry} which encapsulates the parameters of {@link #searchEntry searchEntry} method.
+     * @return {@link EntryCollectionResponse} The return value
      */
-    ODataValueContextOfIListOfEntry createSimpleSearchOperation(ParametersForCreateSimpleSearchOperation parameters);
+    EntryCollectionResponse searchEntry(ParametersForSearchEntry parameters);
 }

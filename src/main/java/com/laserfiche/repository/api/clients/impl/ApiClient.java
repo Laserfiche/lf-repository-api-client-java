@@ -1,9 +1,20 @@
 package com.laserfiche.repository.api.clients.impl;
 
-import com.laserfiche.api.client.httphandlers.HttpRequestHandler;
 import java.util.*;
+import java.util.stream.Collectors;
+import kong.unirest.Header;
+import kong.unirest.Headers;
+import kong.unirest.HttpResponse;
 import kong.unirest.ObjectMapper;
 import kong.unirest.UnirestInstance;
+import org.threeten.bp.OffsetDateTime;
+import com.fasterxml.jackson.databind.MapperFeature;
+import com.fasterxml.jackson.databind.json.JsonMapper;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.laserfiche.api.client.httphandlers.HttpRequestHandler;
+import com.laserfiche.api.client.model.ProblemDetails;
 
 /**
  * The base API client.
