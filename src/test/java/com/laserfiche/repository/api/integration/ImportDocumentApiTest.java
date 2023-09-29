@@ -62,7 +62,7 @@ public class ImportDocumentApiTest extends BaseTest {
         }
         assertNotNull(template);
 
-        String fileName = "RepositoryApiClientIntegrationTest Java ImportTest";
+        String fileName = "RepositoryApiClientIntegrationTest Java ImportTest.pdf";
         File fileToImport = new File(TEST_FILE_PATH);
         ImportEntryRequestMetadata metadata = new ImportEntryRequestMetadata();
         metadata.setTemplateName(template.getName());
@@ -81,6 +81,31 @@ public class ImportDocumentApiTest extends BaseTest {
         int createdEntryId = resultEntry.getId();
         assertTrue(createdEntryId > 0);
         assertEquals(template.getName(), resultEntry.getTemplateName());
+    }
+
+    @Test
+    void importDocument_DocumentCreated_FromFile_WithGeneratingPages()
+            throws FileNotFoundException {
+        String fileName = "RepositoryApiClientIntegrationTest Java ImportTest.pdf";
+        File fileToImport = new File(TEST_FILE_PATH);
+        ImportEntryRequest request = new ImportEntryRequest();
+        request.setName(fileName);
+        request.setAutoRename(true);
+        ImportEntryRequestPdfOptions pdfOptions = new ImportEntryRequestPdfOptions();
+        pdfOptions.setGeneratePages(true);
+        pdfOptions.setKeepPdfAfterImport(true);
+        pdfOptions.setGeneratePagesImageType(GeneratePagesImageType.STANDARD_COLOR);
+        request.setPdfOptions(pdfOptions);
+        Entry resultEntry = client.importEntry(new ParametersForImportEntry()
+                .setRepositoryId(repositoryId)
+                .setEntryId(testClassParentFolder.getId())
+                .setInputStream(new FileInputStream(fileToImport))
+                .setContentType("application/pdf")
+                .setRequestBody(request));
+
+        assertNotNull(resultEntry);
+        int createdEntryId = resultEntry.getId();
+        assertTrue(createdEntryId > 0);
     }
 
     @Test

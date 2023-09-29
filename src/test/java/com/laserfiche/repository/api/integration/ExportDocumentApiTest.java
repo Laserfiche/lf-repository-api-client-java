@@ -71,9 +71,12 @@ public class ExportDocumentApiTest extends BaseTest {
     @DisabledIf("isThereAnyAuditReasonForExport")
     void exportDocument_Returns_Exported_File() {
         final String FILE_NAME = "exportDocument_temp_file.txt";
+        ExportEntryRequest request = new ExportEntryRequest();
+        request.setPart(ExportEntryRequestPart.EDOC);
         ExportEntryResponse response = client.exportEntry(new ParametersForExportEntry()
                 .setRepositoryId(repositoryId)
-                .setEntryId(testEntryId));
+                .setEntryId(testEntryId)
+                .setRequestBody(request));
         String uri = response.getValue();
         assertNotNull(uri);
         exportedFile = new File(FILE_NAME);
@@ -94,6 +97,7 @@ public class ExportDocumentApiTest extends BaseTest {
         AuditReason exportAuditReason = auditReasons.getValue().stream().filter(auditReason -> auditReason.getAuditEventType() == AuditEventType.EXPORT_DOCUMENT).findFirst().get();
         requestBody.setAuditReasonId(exportAuditReason.getId());
         requestBody.setAuditReasonComment(exportAuditReason.getName());
+        requestBody.setPart(ExportEntryRequestPart.EDOC);
         ExportEntryResponse response = client.exportEntry(new ParametersForExportEntry()
                 .setRepositoryId(repositoryId)
                 .setEntryId(testEntryId)
@@ -112,10 +116,11 @@ public class ExportDocumentApiTest extends BaseTest {
         Exception thrown = Assertions.assertThrows(ApiException.class, () -> {
             client.exportEntry(new ParametersForExportEntry()
                     .setRepositoryId(repositoryId)
+                    .setRequestBody(new ExportEntryRequest())
                     .setEntryId(-1));
         });
         Assertions.assertEquals(
-                "Specified argument was out of the range of valid values. (Parameter 'entryId')", thrown.getMessage());
+                "Error: Invalid value for entryId.", thrown.getMessage());
     }
 
     @Test
@@ -129,6 +134,7 @@ public class ExportDocumentApiTest extends BaseTest {
         AuditReason exportAuditReason = auditReasons.getValue().stream().filter(auditReason -> auditReason.getAuditEventType() == AuditEventType.EXPORT_DOCUMENT).findFirst().get();
         requestBody.setAuditReasonId(exportAuditReason.getId());
         requestBody.setAuditReasonComment(exportAuditReason.getName());
+        requestBody.setPart(ExportEntryRequestPart.EDOC);
         Exception thrown = Assertions.assertThrows(ApiException.class, () -> {
             client.exportEntry(new ParametersForExportEntry()
                     .setRepositoryId(repositoryId)

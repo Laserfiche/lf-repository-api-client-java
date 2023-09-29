@@ -318,28 +318,82 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
     public Entry importEntry(ParametersForImportEntry parameters) {
         Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String" }, new String[] { "culture" }, new Object[] { parameters.getCulture() });
         Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String", "int" }, new String[] { "repositoryId", "entryId" }, new Object[] { parameters.getRepositoryId(), parameters.getEntryId() });
-        Function<HttpResponse<Object>, Entry> parseResponse = (HttpResponse<Object> httpResponse) -> {
-            Object body = httpResponse.getBody();
-            Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
-            if (httpResponse.getStatus() == 201) {
+        {
+            Map<String, String> headerParametersWithStringTypeValue = new HashMap<String, String>();
+            int retryCount = 0;
+            int maxRetries = 1;
+            boolean shouldRetry = true;
+            HttpResponse<Object> httpResponse = null;
+            while (retryCount <= maxRetries && shouldRetry) {
                 try {
-                    String responseJson = new JSONObject(body).toString();
-                    return objectMapper.readValue(responseJson, Entry.class);
-                } catch (Exception e) {
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+                    String url = baseUrl + "/v2/Repositories/{repositoryId}/Entries/{entryId}/Folder/Import";
+                    String requestUrl = ApiClientUtils.beforeSend(url, headerParametersWithStringTypeValue, httpRequestHandler);
+                    httpResponse = httpClient.post(requestUrl).field("file", parameters.getInputStream(), parameters.getContentType() == null ? ContentType.APPLICATION_OCTET_STREAM : ContentType.create(parameters.getContentType()), parameters.getRequestBody().getName()).field("request", toJson(parameters.getRequestBody())).queryString(queryParameters).headers(headerParametersWithStringTypeValue).routeParam(pathParameters).asObject(Object.class);
+                    Object body = httpResponse.getBody();
+                    Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
+                    HttpMethod httpMethod = HttpMethod.POST;
+                    int statusCode = httpResponse.getStatus();
+                    shouldRetry = httpRequestHandler.afterSend(new ResponseImpl((short) statusCode)) || ApiClientUtils.isRetryableStatusCode(statusCode, httpMethod);
+                    if (!shouldRetry) {
+                        if (httpResponse.getStatus() == 201) {
+                            try {
+                                String responseJson = new JSONObject(body).toString();
+                                return objectMapper.readValue(responseJson, Entry.class);
+                            } catch (Exception e) {
+                                throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+                            }
+                        } else {
+                            ProblemDetails problemDetails;
+                            if (httpResponse.getStatus() == 403 || httpResponse.getStatus() == 404 || httpResponse.getStatus() == 500 || httpResponse.getStatus() == 400 || httpResponse.getStatus() == 401 || httpResponse.getStatus() == 413 || httpResponse.getStatus() == 429) {
+                                try {
+                                    String jsonString = new JSONObject(body).toString();
+                                    if (httpResponse.getHeaders().getFirst("Content-Type").contains("application/problem+json")) {
+                                        problemDetails = ProblemDetailsDeserializer.deserialize(objectMapper, jsonString);
+                                    } else {
+                                        problemDetails = ProblemDetails.create(httpResponse.getStatus(), headersMap);
+                                        ProblemDetails result = objectMapper.readValue(jsonString, ProblemDetails.class);
+                                        if (result != null) {
+                                            problemDetails.getExtensions().put(ProblemDetails.class.getSimpleName(), result);
+                                            problemDetails.setTitle(result.getTitle());
+                                        }
+                                    }
+                                } catch (Exception e) {
+                                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+                                }
+                            } else {
+                                try {
+                                    String jsonString = new JSONObject(body).toString();
+                                    problemDetails = ProblemDetailsDeserializer.deserialize(objectMapper, jsonString);
+                                } catch (Exception e) {
+                                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+                                }
+                            }
+                            throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                        }
+                    } else {
+                        if (retryCount == maxRetries) {
+                            String jsonString = new JSONObject(body).toString();
+                            ProblemDetails problemDetails = ProblemDetailsDeserializer.deserialize(objectMapper, jsonString);
+                            throw ApiException.create(httpResponse.getStatus(), headersMap, problemDetails, null);
+                        }
+                    }
+                } catch (Exception err) {
+                    if (err instanceof ApiException) {
+                        if (httpResponse.getStatus() == 400 || httpResponse.getStatus() == 404 || httpResponse.getStatus() == 409 || httpResponse.getStatus() == 500 || retryCount == maxRetries) {
+                            throw err;
+                        }
+                        break;
+                    }
+                    if (retryCount >= maxRetries) {
+                        throw err;
+                    }
+                    shouldRetry = true;
+                } finally {
+                    retryCount++;
                 }
-            } else {
-                ProblemDetails problemDetails;
-                try {
-                    String jsonString = new JSONObject(body).toString();
-                    problemDetails = ProblemDetailsDeserializer.deserialize(objectMapper, jsonString);
-                } catch (Exception e) {
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
-                }
-                throw ApiClientUtils.createApiException(httpResponse, problemDetails);
             }
-        };
-        return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler, baseUrl + "/v2/Repositories/{repositoryId}/Entries/{entryId}/Folder/Import", "POST", "application/json", parameters.getRequestBody(), null, null, queryParameters, pathParameters, new HashMap<String, String>(), false, parseResponse);
+            throw new IllegalStateException("Undefined response, there is a bug");
+        }
     }
 
     @Override
