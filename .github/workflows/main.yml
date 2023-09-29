@@ -29,7 +29,7 @@ jobs:
         java-version: '8'
         distribution: 'temurin'
 
-    - name: Build with Maven
+    - name: Build project
       run: mvn -B package -Dmaven.test.skip=true --file pom.xml
 
     - name: Run unit tests
@@ -45,7 +45,7 @@ jobs:
     - name: Delete test reports
       run: rm -rf target/surefire-reports/*.xml
 
-    - name: Run integration tests on cloud
+    - name: Run integration tests against cloud
       id: integration-test-cloud
       env:
         ACCESS_KEY: ${{ secrets.DEV_CA_PUBLIC_USE_INTEGRATION_TEST_ACCESS_KEY }}
@@ -65,7 +65,7 @@ jobs:
     - name: Delete test reports
       run: rm -rf target/surefire-reports/*.xml
 
-    - name: Run integration tests on self-hosted
+    - name: Run integration tests against self-hosted
       id: integration-test-self-hosted
       if: always() && (steps.integration-test-cloud.outcome == 'success' || steps.integration-test-cloud.outcome == 'failure')
       env:
@@ -106,7 +106,7 @@ jobs:
     - name: Move javadoc files to temporary directory
       run: mv ${{ github.workspace }}/target/site/ ${{ github.workspace }}/docs_temp/${{ github.ref_name }}
 
-    - name: Upload a Build Artifact
+    - name: Upload a build artifact
       uses: actions/upload-artifact@v2.3.1
       with:
         name: documentation-artifact
@@ -132,10 +132,10 @@ jobs:
         java-version: '8'
         distribution: 'temurin'
 
-    - name: Build with Maven
+    - name: Build project
       run: mvn -B package -Dmaven.test.skip=true --file pom.xml
 
-    - name: Set up Apache Maven Central
+    - name: Set up OSSRH
       uses: actions/setup-java@v3
       with:
         java-version: '8'
@@ -146,13 +146,13 @@ jobs:
         gpg-private-key: ${{ secrets.OSSRH_GPG_SECRET_KEY }}
         gpg-passphrase: MAVEN_GPG_PASSPHRASE
 
-    - name: Set Java Package Version environment
+    - name: Generate PACKAGE_VERSION
       run: echo "PACKAGE_VERSION=${{ env.VERSION_PREFIX }}-preview-${{ github.run_id }}-SNAPSHOT" >> $GITHUB_ENV
 
-    - name: Set Java Package Version
+    - name: Set version
       run: mvn versions:set -DnewVersion=${{ env.PACKAGE_VERSION }}
 
-    - name: Publish to Sonatype
+    - name: Publish to OSSRH
       run: mvn clean deploy -Dmaven.test.skip=true -Dgpg.passphrase=${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }}
       env:
         MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
@@ -182,10 +182,10 @@ jobs:
         java-version: '8'
         distribution: 'temurin'
 
-    - name: Build with Maven
+    - name: Build project
       run: mvn -B package -Dmaven.test.skip=true --file pom.xml
 
-    - name: Set up Apache Maven Central
+    - name: Set up OSSRH
       uses: actions/setup-java@v3
       with:
         java-version: '8'
@@ -196,13 +196,13 @@ jobs:
         gpg-private-key: ${{ secrets.OSSRH_GPG_SECRET_KEY }}
         gpg-passphrase: MAVEN_GPG_PASSPHRASE
 
-    - name: Set Java Package Version environment
+    - name: Generate PACKAGE_VERSION
       run: echo "PACKAGE_VERSION=${{ env.VERSION_PREFIX }}" >> $GITHUB_ENV
 
-    - name: Set Java Package Version
+    - name: Set version
       run: mvn versions:set -DnewVersion=${{ env.PACKAGE_VERSION }}
 
-    - name: Publish to Maven Central
+    - name: Publish to OSSRH
       run: mvn clean deploy -P release -Dmaven.test.skip=true -Dgpg.passphrase=${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }}
       env:
         MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
