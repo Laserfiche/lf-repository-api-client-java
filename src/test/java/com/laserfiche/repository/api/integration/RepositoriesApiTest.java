@@ -33,10 +33,10 @@ class RepositoriesApiTest extends BaseTest {
     @Test
     @DisabledIf("isCloudEnvironment")
     void getSelfHostedRepositoryList_WithNoAuthentication_ReturnSuccessful() {
-        Repository[] repositoryInfoList = RepositoriesClientImpl.getSelfHostedRepositoryList(baseUrl);
-        assertNotNull(repositoryInfoList);
+        RepositoryCollectionResponse repositories = RepositoriesClientImpl.listRepositoriesForSelfHosted(baseUrl);
+        assertNotNull(repositories);
         boolean foundRepo = false;
-        for (Repository repositoryInfo : repositoryInfoList) {
+        for (Repository repositoryInfo : repositories.getValue()) {
             assertNotNull(repositoryInfo.getId());
             if (repositoryInfo.getId().equalsIgnoreCase(repositoryId)) {
                 foundRepo = true;
