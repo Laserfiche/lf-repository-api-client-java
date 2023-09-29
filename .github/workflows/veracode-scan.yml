@@ -22,7 +22,7 @@ jobs:
     - name: Build project
       run: mvn -B package -Dmaven.test.skip=true --file pom.xml
 
-    - name: Veracode upload and scan (SAST)
+    - name: Veracode upload and scan SAST (Static Application Security Testing)
       uses: veracode/veracode-uploadandscan-action@0.2.6
       with:
         appname: 'lf-repository-api-client-java'
@@ -31,7 +31,7 @@ jobs:
         vid: '${{ secrets.VERACODE_API_ID }}'
         vkey: '${{ secrets.VERACODE_API_KEY }}'
 
-    - name: Run Veracode software composition analysis (SCA)
+    - name: Run Veracode SCA (Software Composition Analysis)
       env:
         SRCCLR_API_TOKEN: ${{ secrets.SRCCLR_API_TOKEN }}
       uses: veracode/veracode-sca@v2.1.6
