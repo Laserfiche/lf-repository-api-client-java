@@ -11,6 +11,7 @@ on:
   workflow_dispatch:
 
 env:
+  API_VERSION: 'v1'
   VERSION_PREFIX: '2.0.3'
   GITHUB_PAGES_BRANCH: 'gh-pages'
 
@@ -161,7 +162,7 @@ jobs:
     - name: Tag commit
       uses: rickstaa/action-create-tag@v1
       with:
-        tag: ${{ env.PACKAGE_VERSION }}
+        tag: ${{ env.API_VERSION }}-${{ env.PACKAGE_VERSION }}
         commit_sha: ${{ github.sha }}
         message: Workflow run ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
@@ -211,7 +212,7 @@ jobs:
     - name: Tag commit
       uses: rickstaa/action-create-tag@v1
       with:
-        tag: ${{ env.PACKAGE_VERSION }}
+        tag: ${{ env.API_VERSION }}-${{ env.PACKAGE_VERSION }}
         commit_sha: ${{ github.sha }}
         message: Workflow run ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
