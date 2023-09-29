@@ -141,7 +141,7 @@ public class BaseTest {
                     .getTasksClient()
                     .listTasks(new ParametersForListTasks()
                             .setRepositoryId(repositoryId)
-                            .setTaskIds(new String[]{taskId}));
+                            .setTaskIds(taskId));
             TaskProgress progress = response.getValue().get(0);
             if (progress.getStatus() != TaskStatus.IN_PROGRESS) {
                 return;

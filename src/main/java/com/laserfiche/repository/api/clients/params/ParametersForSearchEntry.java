@@ -134,7 +134,7 @@ public class ParametersForSearchEntry {
      * @param fields Optional array of field names. Field values corresponding to the given field names will be returned for each search result.
      * @return {@link ParametersForSearchEntry} The return value
      */
-    public ParametersForSearchEntry setFields(String[] fields) {
+    public ParametersForSearchEntry setFields(String... fields) {
         this.fields = fields;
         return this;
     }

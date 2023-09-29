@@ -47,7 +47,7 @@ public class ParametersForListTasks {
      * @param taskIds An array of task IDs. Leave this parameter empty to get the list of all the tasks associated with the current access token.
      * @return {@link ParametersForListTasks} The return value
      */
-    public ParametersForListTasks setTaskIds(String[] taskIds) {
+    public ParametersForListTasks setTaskIds(String... taskIds) {
         this.taskIds = taskIds;
         return this;
     }

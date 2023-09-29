@@ -107,7 +107,7 @@ public class CreateCopyEntryApiTest extends BaseTest {
                 .getTasksClient()
                 .listTasks(new ParametersForListTasks()
                         .setRepositoryId(repositoryId)
-                        .setTaskIds(new String[]{taskId}));
+                        .setTaskIds(taskId));
 
         assertEquals(1, response.getValue().size());
         assertEquals(response.getValue().get(0).getStatus(), TaskStatus.COMPLETED);

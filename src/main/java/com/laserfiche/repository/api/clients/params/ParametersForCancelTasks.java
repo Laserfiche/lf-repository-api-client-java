@@ -47,7 +47,7 @@ public class ParametersForCancelTasks {
      * @param taskIds An array of task IDs. Leave this parameter empty to cancel the list of all the tasks associated with the current access token.
      * @return {@link ParametersForCancelTasks} The return value
      */
-    public ParametersForCancelTasks setTaskIds(String[] taskIds) {
+    public ParametersForCancelTasks setTaskIds(String... taskIds) {
         this.taskIds = taskIds;
         return this;
     }

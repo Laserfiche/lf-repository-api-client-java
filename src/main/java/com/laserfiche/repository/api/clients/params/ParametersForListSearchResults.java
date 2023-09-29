@@ -162,7 +162,7 @@ public class ParametersForListSearchResults {
      * @param fields Optional array of field names. Field values corresponding to the given field names will be returned for each search result.
      * @return {@link ParametersForListSearchResults} The return value
      */
-    public ParametersForListSearchResults setFields(String[] fields) {
+    public ParametersForListSearchResults setFields(String... fields) {
         this.fields = fields;
         return this;
     }

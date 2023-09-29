@@ -137,7 +137,7 @@ public class ParametersForListEntries {
      * @param fields Optional array of field names. Field values corresponding to the given field names will be returned for each entry.
      * @return {@link ParametersForListEntries} The return value
      */
-    public ParametersForListEntries setFields(String[] fields) {
+    public ParametersForListEntries setFields(String... fields) {
         this.fields = fields;
         return this;
     }

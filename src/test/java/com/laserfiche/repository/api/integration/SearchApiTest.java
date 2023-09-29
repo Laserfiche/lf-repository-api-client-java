@@ -32,7 +32,7 @@ public class SearchApiTest extends BaseTest {
         if (taskId != null) {
             CancelTasksResponse result = tasksClient.cancelTasks(new ParametersForCancelTasks()
                     .setRepositoryId(repositoryId)
-                    .setTaskIds(new String[]{taskId}));
+                    .setTaskIds(taskId));
         }
     }
 
@@ -91,7 +91,7 @@ public class SearchApiTest extends BaseTest {
         WaitUntilTaskEnds(taskId);
 
         TaskCollectionResponse searchStatusResponse = tasksClient.listTasks(
-                new ParametersForListTasks().setRepositoryId(repositoryId).setTaskIds(new String[] {taskId}));
+                new ParametersForListTasks().setRepositoryId(repositoryId).setTaskIds(taskId));
 
         assertNotNull(searchStatusResponse);
     }
@@ -109,7 +109,7 @@ public class SearchApiTest extends BaseTest {
         assertNotNull(taskId);
 
         CancelTasksResponse closeSearchResponse = tasksClient.cancelTasks(
-                new ParametersForCancelTasks().setRepositoryId(repositoryId).setTaskIds(new String[]{taskId}));
+                new ParametersForCancelTasks().setRepositoryId(repositoryId).setTaskIds(taskId));
 
         assertTrue(closeSearchResponse.getValue().get(0).isResult());
         TimeUnit.SECONDS.sleep(5);

@@ -44,7 +44,7 @@ public class TasksApiTest extends BaseTest {
 
         CancelTasksResponse response = client.cancelTasks(new ParametersForCancelTasks()
                     .setRepositoryId(repositoryId)
-                    .setTaskIds(new String[]{taskId}));
+                    .setTaskIds(taskId));
         assertNotNull(response);
         assertEquals(1, response.getValue().size());
         assertTrue(response.getValue().get(0).isResult());
@@ -66,7 +66,7 @@ public class TasksApiTest extends BaseTest {
         assertNotNull(taskId);
 
         CancelTasksResponse cancellationResult = client.cancelTasks(
-                new ParametersForCancelTasks().setRepositoryId(repositoryId).setTaskIds(new String[]{taskId}));
+                new ParametersForCancelTasks().setRepositoryId(repositoryId).setTaskIds(taskId));
         assertTrue(cancellationResult.getValue().get(0).isResult());
 
         TimeUnit.SECONDS.sleep(5);
@@ -94,7 +94,7 @@ public class TasksApiTest extends BaseTest {
         TaskCollectionResponse operationProgressResponse =
                 client.listTasks(new ParametersForListTasks()
                         .setRepositoryId(repositoryId)
-                        .setTaskIds(new String[]{taskId}));
+                        .setTaskIds(taskId));
 
         assertNotNull(operationProgressResponse);
         assertEquals(1, operationProgressResponse.getValue().size());
