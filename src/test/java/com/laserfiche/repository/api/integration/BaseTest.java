@@ -41,7 +41,8 @@ public class BaseTest {
     protected static final String AUTHORIZATION_TYPE = "AUTHORIZATION_TYPE";
     protected static AuthorizationType authorizationType;
     private static final boolean IS_NOT_GITHUB_ENVIRONMENT = nullOrEmpty(System.getenv("GITHUB_WORKSPACE"));
-    protected static final String TEST_FILE_PATH = "src/test/java/com/laserfiche/repository/api/integration/test.pdf";
+    protected static final String SMALL_PDF_FILE_PATH = "src/test/java/com/laserfiche/repository/api/integration/testFiles/test.pdf";
+    protected static final String LARGE_PDF_FILE_PATH = "src/test/java/com/laserfiche/repository/api/integration/testFiles/60MB.pdf";
 
     @BeforeAll
     public static void setUp() {

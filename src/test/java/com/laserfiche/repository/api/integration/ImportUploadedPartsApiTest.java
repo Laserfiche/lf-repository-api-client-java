@@ -1,0 +1,185 @@
+package com.laserfiche.repository.api.integration;
+
+import com.laserfiche.repository.api.clients.EntriesClient;
+import com.laserfiche.repository.api.clients.TasksClient;
+import com.laserfiche.repository.api.clients.impl.model.*;
+import com.laserfiche.repository.api.clients.params.ParametersForCreateMultipartUploadUrls;
+import com.laserfiche.repository.api.clients.params.ParametersForListTasks;
+import com.laserfiche.repository.api.clients.params.ParametersForStartImportUploadedParts;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.*;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+public class ImportUploadedPartsApiTest extends BaseTest {
+
+    private static Entry testClassParentFolder;
+
+    private EntriesClient client;
+    private TasksClient tasksClient;
+
+    @BeforeEach
+    public void perTestSetup() {
+        client = repositoryApiClient.getEntriesClient();
+        tasksClient = repositoryApiClient.getTasksClient();
+    }
+
+    @BeforeAll
+    static void classSetup() {
+        String name = "RepositoryApiClientIntegrationTest Java TestClassParentFolder";
+        testClassParentFolder = createEntry(repositoryApiClient, name, 1, true);
+    }
+
+    @AfterAll
+    static void classCleanUp() throws InterruptedException {
+        deleteEntry(testClassParentFolder.getId());
+    }
+
+    @Test
+    void importingLargeFileIsSuccessful() {
+        String fileName = "Sample.pdf";
+        String mimeType = "application/pdf";
+
+        // Step 1: Get upload URLs
+        int parts = 5;
+        CreateMultipartUploadUrlsRequest requestBody = new CreateMultipartUploadUrlsRequest();
+        requestBody.setFileName(fileName);
+        requestBody.setMimeType(mimeType);
+        requestBody.setNumberOfParts(parts);
+
+        CreateMultipartUploadUrlsResponse response = client.createMultipartUploadUrls(new ParametersForCreateMultipartUploadUrls()
+                .setRepositoryId(repositoryId).setRequestBody(requestBody));
+
+        assertNotNull(response);
+        String uploadId = response.getUploadId();
+        assertNotNull(uploadId);
+        assertEquals(parts, response.getUrls().size());
+
+        // Step 2: Write file part into upload URLs
+        List<String> eTags = writeFile(LARGE_PDF_FILE_PATH, response.getUrls());
+        assertEquals(parts, eTags.size());
+
+        // Step 3: Call ImportUploadedParts API
+        StartImportUploadedPartsRequest requestBody2 = new StartImportUploadedPartsRequest();
+        requestBody2.setUploadId(uploadId);
+        requestBody2.setAutoRename(true);
+        requestBody2.setPartETags(eTags);
+        requestBody2.setName(fileName);
+        StartTaskResponse response2 = client.startImportUploadedParts(new ParametersForStartImportUploadedParts()
+                .setRepositoryId(repositoryId)
+                .setEntryId(testClassParentFolder.getId())
+                .setRequestBody(requestBody2));
+
+        assertNotNull(response2);
+        String taskId = response2.getTaskId();
+        assertNotNull(taskId);
+
+        TaskCollectionResponse tasks = tasksClient.listTasks(new ParametersForListTasks().setRepositoryId(repositoryId).setTaskIds(taskId));
+        assertNotNull(tasks);
+        assertEquals(1, tasks.getValue().size());
+        TaskProgress taskProgress = tasks.getValue().get(0);
+        assertEquals(TaskStatus.COMPLETED, taskProgress.getStatus());
+        assertTrue(taskProgress.getErrors().isEmpty());
+        assertTrue(taskProgress.getResult().getEntryId() > 1);
+        String uri = taskProgress.getResult().getUri();
+        assertNotNull(uri);
+    }
+
+    @Test
+    void importingLargeFileIsSuccessful_WhenGeneratingPages() {
+        String fileName = "Sample.pdf";
+        String mimeType = "application/pdf";
+
+        // Step 1: Get upload URLs
+        int parts = 5;
+        CreateMultipartUploadUrlsRequest requestBody = new CreateMultipartUploadUrlsRequest();
+        requestBody.setFileName(fileName);
+        requestBody.setMimeType(mimeType);
+        requestBody.setNumberOfParts(parts);
+
+        CreateMultipartUploadUrlsResponse response = client.createMultipartUploadUrls(new ParametersForCreateMultipartUploadUrls()
+                .setRepositoryId(repositoryId).setRequestBody(requestBody));
+
+        assertNotNull(response);
+        String uploadId = response.getUploadId();
+        assertNotNull(uploadId);
+        assertEquals(parts, response.getUrls().size());
+
+        // Step 2: Write file part into upload URLs
+        List<String> eTags = writeFile(LARGE_PDF_FILE_PATH, response.getUrls());
+        assertEquals(parts, eTags.size());
+
+        // Step 3: Call ImportUploadedParts API
+        StartImportUploadedPartsRequest requestBody2 = new StartImportUploadedPartsRequest();
+        requestBody2.setUploadId(uploadId);
+        requestBody2.setAutoRename(true);
+        requestBody2.setPartETags(eTags);
+        requestBody2.setName(fileName);
+        ImportEntryRequestPdfOptions pdfOptions = new ImportEntryRequestPdfOptions();
+        pdfOptions.setGeneratePages(true);
+        pdfOptions.setKeepPdfAfterImport(true);
+        requestBody2.setPdfOptions(pdfOptions);
+        StartTaskResponse response2 = client.startImportUploadedParts(new ParametersForStartImportUploadedParts()
+                .setRepositoryId(repositoryId)
+                .setEntryId(testClassParentFolder.getId())
+                .setRequestBody(requestBody2));
+
+        assertNotNull(response2);
+        String taskId = response2.getTaskId();
+        assertNotNull(taskId);
+try {
+    Thread.sleep(50000);
+}catch (Exception e) {e.printStackTrace();}
+        TaskCollectionResponse tasks = tasksClient.listTasks(new ParametersForListTasks().setRepositoryId(repositoryId).setTaskIds(taskId));
+        assertNotNull(tasks);
+        assertEquals(1, tasks.getValue().size());
+        TaskProgress taskProgress = tasks.getValue().get(0);
+        assertEquals(TaskStatus.COMPLETED, taskProgress.getStatus());
+        assertTrue(taskProgress.getErrors().isEmpty());
+        assertTrue(taskProgress.getResult().getEntryId() > 1);
+        String uri = taskProgress.getResult().getUri();
+        assertNotNull(uri);
+    }
+
+    /*
+    NOTE: the following code is only for the purpose of the specific files used in the integration test. It doesn't work for any file of any scenario.
+     */
+    private List<String> writeFile(String filePath, List<String> urls) {
+        File file = new File(filePath);
+        int numberOfParts = urls.size();
+        int partSizeInMB = (int) Math.ceil((double)file.length() / numberOfParts / 1024 / 1024);
+        List<String> eTags = new ArrayList<>(urls.size());
+        try (FileInputStream inputStream = new FileInputStream(file)) {
+            for (String uploadUrl : urls) {
+                byte[] buffer = new byte[partSizeInMB * 1024 * 1024];
+                int numberOfBytesRead = inputStream.read(buffer);
+
+                URL url = new URL(uploadUrl);
+                HttpURLConnection httpCon = (HttpURLConnection) url.openConnection();
+                httpCon.setDoOutput(true);
+                httpCon.setRequestMethod("PUT");
+                httpCon.setRequestProperty("Content-Type", "application/octet-stream");
+
+                DataOutputStream outputStream = new DataOutputStream(
+                        httpCon.getOutputStream());
+                outputStream.write(buffer, 0, numberOfBytesRead);
+                outputStream.flush();
+                outputStream.close();
+                if (httpCon.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                    String eTag = httpCon.getHeaderField("ETag");
+                    eTags.add(eTag);
+                }
+                httpCon.disconnect();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return eTags;
+    }
+}

@@ -42,7 +42,7 @@ public class ExportDocumentApiTest extends BaseTest {
         try {
             // Import a document that will be exported by tests in this class
             String fileName = "RepositoryApiClientIntegrationTest Java ExportDocumentApiTest";
-            File fileToImport = new File(TEST_FILE_PATH);
+            File fileToImport = new File(SMALL_PDF_FILE_PATH);
             testEntryFileSize = fileToImport.length();
             ImportEntryRequest request = new ImportEntryRequest();
             request.setName(fileName);

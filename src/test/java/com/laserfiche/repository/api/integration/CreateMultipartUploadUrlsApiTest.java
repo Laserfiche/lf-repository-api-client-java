@@ -18,19 +18,11 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CreateMultipartUploadUrlsApiTest extends BaseTest {
-    EntriesClient client;
+    private EntriesClient client;
 
     @BeforeEach
     public void perTestSetup() {
         client = repositoryApiClient.getEntriesClient();
-    }
-
-    @BeforeAll
-    static void classSetup() {
-    }
-
-    @AfterAll
-    static void classCleanUp() throws InterruptedException {
     }
 
     @Test

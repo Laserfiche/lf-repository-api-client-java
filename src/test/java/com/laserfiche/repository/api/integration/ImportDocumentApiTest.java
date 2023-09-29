@@ -2,14 +2,11 @@ package com.laserfiche.repository.api.integration;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import com.laserfiche.api.client.model.ApiException;
 import com.laserfiche.repository.api.clients.EntriesClient;
 import com.laserfiche.repository.api.clients.impl.model.*;
 import java.io.*;
-import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import com.laserfiche.repository.api.clients.params.ParametersForImportEntry;
 import com.laserfiche.repository.api.clients.params.ParametersForListTemplateDefinitions;
@@ -63,7 +60,7 @@ public class ImportDocumentApiTest extends BaseTest {
         assertNotNull(template);
 
         String fileName = "RepositoryApiClientIntegrationTest Java ImportTest.pdf";
-        File fileToImport = new File(TEST_FILE_PATH);
+        File fileToImport = new File(SMALL_PDF_FILE_PATH);
         ImportEntryRequestMetadata metadata = new ImportEntryRequestMetadata();
         metadata.setTemplateName(template.getName());
         ImportEntryRequest request = new ImportEntryRequest();
@@ -87,7 +84,7 @@ public class ImportDocumentApiTest extends BaseTest {
     void importDocument_DocumentCreated_FromFile_WithGeneratingPages()
             throws FileNotFoundException {
         String fileName = "RepositoryApiClientIntegrationTest Java ImportTest.pdf";
-        File fileToImport = new File(TEST_FILE_PATH);
+        File fileToImport = new File(SMALL_PDF_FILE_PATH);
         ImportEntryRequest request = new ImportEntryRequest();
         request.setName(fileName);
         request.setAutoRename(true);
