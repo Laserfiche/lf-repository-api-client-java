@@ -217,19 +217,18 @@ jobs:
         message: Workflow run ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
   publish-documentation:
-
     runs-on: ubuntu-latest
     timeout-minutes: 10
     environment: github-pages
     needs: [ publish-production-package ]
     steps:
       - name: Set DOCUMENTATION_VERSION environment variable
-      run: |
-        version_prefix=${{ env.VERSION_PREFIX }}
-        major_version=${version_prefix%%.*}
-        documentation_version=$major_version.x
-        echo $documentation_version
-        echo DOCUMENTATION_VERSION=$documentation_version >> $GITHUB_ENV
+        run: |
+          version_prefix=${{ env.VERSION_PREFIX }}
+          major_version=${version_prefix%%.*}
+          documentation_version=$major_version.x
+          echo $documentation_version
+          echo DOCUMENTATION_VERSION=$documentation_version >> $GITHUB_ENV
       - name: Print DOCUMENTATION_VERSION environment variable
         run: |
           echo 'Publishing documentation to ${{ env.GITHUB_PAGES_BRANCH }} for ${{ env.API_VERSION }} ${{ env.DOCUMENTATION_VERSION }}.'
