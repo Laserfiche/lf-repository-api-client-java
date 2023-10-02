@@ -20,7 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class TemplateDefinitionsApiTest extends BaseTest {
+class TemplateDefinitionsClientTest extends BaseTest {
     private TemplateDefinitionsClient client;
 
     @BeforeEach

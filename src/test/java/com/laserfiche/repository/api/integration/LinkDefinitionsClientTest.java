@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class LinkDefinitionsApiTest extends BaseTest {
+public class LinkDefinitionsClientTest extends BaseTest {
     private LinkDefinitionsClient client;
 
     @BeforeEach
@@ -19,7 +19,7 @@ public class LinkDefinitionsApiTest extends BaseTest {
     }
 
     @Test
-    void getLinkDefinitions_ReturnAllLinks() {
+    void listLinkDefinitionsWorks() {
         LinkDefinitionCollectionResponse response =
                 client.listLinkDefinitions(new ParametersForListLinkDefinitions().setRepositoryId(repositoryId));
 
@@ -28,7 +28,7 @@ public class LinkDefinitionsApiTest extends BaseTest {
     }
 
     @Test
-    void getLinkDefinitionsById_ReturnLinkDefinition() {
+    void getLinkDefinitionWorks() {
         LinkDefinitionCollectionResponse allLinkDefinitionsResponse =
                 client.listLinkDefinitions(new ParametersForListLinkDefinitions().setRepositoryId(repositoryId));
 

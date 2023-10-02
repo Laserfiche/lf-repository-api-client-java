@@ -13,7 +13,7 @@ import com.laserfiche.repository.api.clients.params.ParametersForListFieldDefini
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class FieldDefinitionsApiTest extends BaseTest {
+class FieldDefinitionsClientTest extends BaseTest {
     private FieldDefinitionsClient client;
 
     @BeforeEach
@@ -22,7 +22,7 @@ class FieldDefinitionsApiTest extends BaseTest {
     }
 
     @Test
-    void getFieldDefinitionById_ReturnField() {
+    void getFieldDefinitionWorks() {
         FieldDefinition definition = client.getFieldDefinition(new ParametersForGetFieldDefinition()
                 .setRepositoryId(repositoryId)
                 .setFieldId(1));
@@ -32,7 +32,7 @@ class FieldDefinitionsApiTest extends BaseTest {
     }
 
     @Test
-    void getFieldDefinitions_ReturnAllFields() {
+    void listFieldDefinitionsWorks() {
         FieldDefinitionCollectionResponse definitions =
                 client.listFieldDefinitions(new ParametersForListFieldDefinitions()
                         .setRepositoryId(repositoryId));
@@ -42,7 +42,7 @@ class FieldDefinitionsApiTest extends BaseTest {
     }
 
     @Test
-    void getFieldDefinitions_NextLink() throws InterruptedException {
+    void listFieldDefinitionsNextLinkWorks() throws InterruptedException {
         int maxPageSize = 3;
         FieldDefinitionCollectionResponse definitions =
                 client.listFieldDefinitions(new ParametersForListFieldDefinitions()
@@ -60,9 +60,9 @@ class FieldDefinitionsApiTest extends BaseTest {
     }
 
     @Test
-    void getFieldDefinitions_ForEach() {
+    void listFieldDefinitionsForEachWorks() {
         AtomicInteger pageCount = new AtomicInteger();
-        int maxPages = 2;
+        int maxPages = 5;
         int maxPageSize = 3;
         Function<FieldDefinitionCollectionResponse, Boolean> callback = fieldInfoList -> {
             if (pageCount.incrementAndGet() <= maxPages) {

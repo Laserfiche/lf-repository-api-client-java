@@ -9,7 +9,7 @@ import com.laserfiche.repository.api.clients.params.ParametersForSearchEntry;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class SimpleSearchesApiTest extends BaseTest {
+class SimpleSearchesClientTest extends BaseTest {
 
     private SimpleSearchesClient client;
 

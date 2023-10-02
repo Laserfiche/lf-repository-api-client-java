@@ -85,7 +85,7 @@ public class ExportDocumentApiTest extends BaseTest {
     }
 
     @Test
-    void exportDocument_Returns_Exported_File_URI() {
+    void exportDocumentCanExportEDocPart() {
         final String FILE_NAME = "exportDocument_temp_file.pdf";
         ExportEntryRequest request = new ExportEntryRequest();
         request.setPart(ExportEntryRequestPart.EDOC);
@@ -107,7 +107,7 @@ public class ExportDocumentApiTest extends BaseTest {
     }
 
     @Test
-    void exportDocument_Returns_Error_For_Invalid_EntryId() {
+    void exportDocumentThrowsExceptionForInvalidEntryId() {
         Exception thrown = Assertions.assertThrows(ApiException.class, () -> {
             ExportEntryRequest requestBody = new ExportEntryRequest();
             requestBody.setPart(ExportEntryRequestPart.EDOC);

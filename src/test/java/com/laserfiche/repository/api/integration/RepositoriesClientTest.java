@@ -10,7 +10,7 @@ import com.laserfiche.repository.api.clients.impl.model.Repository;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class RepositoriesApiTest extends BaseTest {
+class RepositoriesClientTest extends BaseTest {
 
     private RepositoriesClient client;
 
@@ -20,7 +20,7 @@ class RepositoriesApiTest extends BaseTest {
     }
 
     @Test
-    void getRepositoryList_ReturnSuccessful() {
+    void listRepositoriesWorks() {
         RepositoryCollectionResponse response = client.listRepositories();
         boolean foundRepo = false;
         assertNotNull(response);
@@ -40,7 +40,7 @@ class RepositoriesApiTest extends BaseTest {
 
     @Test
     @DisabledIf("isCloudEnvironment")
-    void getSelfHostedRepositoryList_WithNoAuthentication_ReturnSuccessful() {
+    void listRepositoriesForSelfHostedWorksWithNoAuthentication() {
         RepositoryCollectionResponse repositories = RepositoriesClientImpl.listRepositoriesForSelfHosted(baseUrl);
         assertNotNull(repositories);
         boolean foundRepo = false;

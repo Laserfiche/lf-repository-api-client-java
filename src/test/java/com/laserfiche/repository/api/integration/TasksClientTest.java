@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class TasksApiTest extends BaseTest {
+public class TasksClientTest extends BaseTest {
     private TasksClient client;
     private RepositoryApiClient createEntryClient;
 

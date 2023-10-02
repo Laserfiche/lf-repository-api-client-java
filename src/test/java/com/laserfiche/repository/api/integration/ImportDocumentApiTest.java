@@ -36,7 +36,7 @@ public class ImportDocumentApiTest extends BaseTest {
     }
 
     @Test
-    void importDocument_DocumentCreated_FromFile_WithTemplate()
+    void importEntryCanImportFileAndAssignTemplate()
             throws FileNotFoundException {
         TemplateDefinition template = null;
         TemplateDefinitionCollectionResponse templateDefinitionResult = repositoryApiClient
@@ -82,7 +82,7 @@ public class ImportDocumentApiTest extends BaseTest {
     }
 
     @Test
-    void importDocument_DocumentCreated_FromFile_WithGeneratingPages()
+    void importEntryCanImportFileAndGeneratePages()
             throws FileNotFoundException {
         String fileName = "RepositoryApiClientIntegrationTest Java ImportTest.pdf";
         File fileToImport = new File(SMALL_PDF_FILE_PATH);
@@ -107,7 +107,7 @@ public class ImportDocumentApiTest extends BaseTest {
     }
 
     @Test
-    void importDocument_CanImportTextFilesAsEdoc()
+    void importEntryCanImportTextFileAsEDoc()
             throws FileNotFoundException {
         String fileName = "RepositoryApiClientIntegrationTest Java ImportTest.txt";
         File fileToImport = new File(SMALL_TEXT_FILE_PATH);
@@ -141,7 +141,7 @@ public class ImportDocumentApiTest extends BaseTest {
     }
 
     @Test
-    void importDocument_CanImportImageFilesAsEdoc()
+    void importEntryCanImportImageFileAsEDoc()
             throws FileNotFoundException {
         String fileName = "RepositoryApiClientIntegrationTest Java ImportTest.jpg";
         File fileToImport = new File(SMALL_JPEG_FILE_PATH);
@@ -175,7 +175,7 @@ public class ImportDocumentApiTest extends BaseTest {
     }
 
     @Test
-    void importDocument_ImportsTextFilesAsPages_ByDefault()
+    void importEntryImportsTextFileAsPagesByDefault()
             throws FileNotFoundException {
         String fileName = "RepositoryApiClientIntegrationTest Java ImportTest.txt";
         File fileToImport = new File(SMALL_TEXT_FILE_PATH);
@@ -205,7 +205,7 @@ public class ImportDocumentApiTest extends BaseTest {
     }
 
     @Test
-    void importDocument_ImportsImageFilesAsPages_ByDefault()
+    void importEntryImportsImageFileAsPagesByDefault()
             throws FileNotFoundException {
         String fileName = "RepositoryApiClientIntegrationTest Java ImportTest.jpg";
         File fileToImport = new File(SMALL_JPEG_FILE_PATH);
@@ -235,7 +235,7 @@ public class ImportDocumentApiTest extends BaseTest {
     }
 
     @Test
-    void importDocument_DocumentCreated_FromURL() throws IOException {
+    void importEntryCanImportFromURL() throws IOException {
         String fileName = "myFile";
         Entry resultEntry = null;
         URL googleLogoUrl =
@@ -259,7 +259,7 @@ public class ImportDocumentApiTest extends BaseTest {
     }
 
     @Test
-    void importDocument_DocumentCreated_FromString() {
+    void importEntryCanImportFromString() {
         String fileName = "myFile";
         Entry resultEntry = null;
         String fileContent = "This is the file content";

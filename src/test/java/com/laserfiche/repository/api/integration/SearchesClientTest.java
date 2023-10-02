@@ -15,7 +15,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class SearchApiTest extends BaseTest {
+public class SearchesClientTest extends BaseTest {
     private SearchesClient client;
     private TasksClient tasksClient;
 

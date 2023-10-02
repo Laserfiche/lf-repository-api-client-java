@@ -40,7 +40,7 @@ public class ImportUploadedPartsApiTest extends BaseTest {
     }
 
     @Test
-    void createUploadUrlsIsSuccessful() {
+    void createMultipartUploadUrlsCanBeCalledForSecondBatchOfURLs() {
         String fileName = "Sample.pdf";
         String mimeType = "application/pdf";
 
@@ -77,7 +77,7 @@ public class ImportUploadedPartsApiTest extends BaseTest {
 
 
     @Test
-    void importingLargeFileIsSuccessful() {
+    void startImportUploadedPartsCanImportLargeFile() {
         String fileName = "Sample.pdf";
         String mimeType = "application/pdf";
 
@@ -127,7 +127,7 @@ public class ImportUploadedPartsApiTest extends BaseTest {
     }
 
     @Test
-    void importingLargeFileIsSuccessful_WhenGeneratingPages() {
+    void startImportUploadedPartsCanImportLargeFileAndGeneratePages() {
         String fileName = "Sample.pdf";
         String mimeType = "application/pdf";
 

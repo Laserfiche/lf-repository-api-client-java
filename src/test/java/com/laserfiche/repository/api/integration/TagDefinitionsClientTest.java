@@ -13,7 +13,7 @@ import com.laserfiche.repository.api.clients.params.ParametersForListTagDefiniti
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class TagDefinitionsApiTest extends BaseTest {
+class TagDefinitionsClientTest extends BaseTest {
     private TagDefinitionsClient client;
 
     @BeforeEach
