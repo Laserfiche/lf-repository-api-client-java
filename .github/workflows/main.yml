@@ -11,6 +11,7 @@ on:
   workflow_dispatch:
 
 env:
+  API_VERSION: 'v2'
   VERSION_PREFIX: '2.0.3'
   GITHUB_PAGES_BRANCH: 'gh-pages'
 
