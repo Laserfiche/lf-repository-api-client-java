@@ -14,12 +14,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class SetLinksApiTest extends BaseTest {
-    RepositoryApiClient client;
-    Entry sourceEntry = null;
+    private RepositoryApiClient client;
+    private Entry sourceEntry = null;
 
-    Entry targetEntry = null;
+    private Entry targetEntry = null;
 
-    List<Entry> createdEntries;
+    private List<Entry> createdEntries;
 
     @BeforeEach
     void perTestSetup() {

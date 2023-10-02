@@ -21,7 +21,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class TemplateDefinitionsApiTest extends BaseTest {
-    TemplateDefinitionsClient client;
+    private TemplateDefinitionsClient client;
 
     @BeforeEach
     void perTestSetup() {
@@ -79,10 +79,10 @@ class TemplateDefinitionsApiTest extends BaseTest {
         int maxPages = 2;
         int maxPageSize = 1;
         Function<TemplateDefinitionCollectionResponse, Boolean> callback = listOfWTemplateInfo -> {
-            if (pageCount.incrementAndGet() <= maxPages && listOfWTemplateInfo.getOdataNextLink() != null) {
+            if (pageCount.incrementAndGet() <= maxPages) {
                 assertNotEquals(0, listOfWTemplateInfo.getValue().size());
                 assertTrue(listOfWTemplateInfo.getValue().size() <= maxPageSize);
-                return true;
+                return listOfWTemplateInfo.getOdataNextLink() != null;
             } else {
                 return false;
             }
@@ -136,10 +136,10 @@ class TemplateDefinitionsApiTest extends BaseTest {
         int maxPages = 2;
         int maxPageSize = 1;
         Function<TemplateFieldDefinitionCollectionResponse, Boolean> callback = fieldInfoList -> {
-            if (pageCount.incrementAndGet() <= maxPages && fieldInfoList.getOdataNextLink() != null) {
+            if (pageCount.incrementAndGet() <= maxPages) {
                 assertNotEquals(0, fieldInfoList.getValue().size());
                 assertTrue(fieldInfoList.getValue().size() <= maxPageSize);
-                return true;
+                return fieldInfoList.getOdataNextLink() != null;
             } else {
                 return false;
             }

@@ -18,9 +18,7 @@ import java.util.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ImportUploadedPartsApiTest extends BaseTest {
-
     private static Entry testClassParentFolder;
-
     private EntriesClient client;
     private TasksClient tasksClient;
 
@@ -40,6 +38,43 @@ public class ImportUploadedPartsApiTest extends BaseTest {
     static void classCleanUp() throws InterruptedException {
         deleteEntry(testClassParentFolder.getId());
     }
+
+    @Test
+    void createUploadUrlsIsSuccessful() {
+        String fileName = "Sample.pdf";
+        String mimeType = "application/pdf";
+
+        int parts = 10;
+        CreateMultipartUploadUrlsRequest requestBody = new CreateMultipartUploadUrlsRequest();
+        requestBody.setFileName(fileName);
+        requestBody.setMimeType(mimeType);
+        requestBody.setNumberOfParts(parts);
+
+        CreateMultipartUploadUrlsResponse response = client.createMultipartUploadUrls(new ParametersForCreateMultipartUploadUrls()
+                .setRepositoryId(repositoryId).setRequestBody(requestBody));
+
+        assertNotNull(response);
+        String uploadId = response.getUploadId();
+        assertNotNull(uploadId);
+        assertEquals(parts, response.getUrls().size());
+
+        // Get a second batch of URLs
+        requestBody.setUploadId(uploadId);
+        requestBody.setStartingPartNumber(parts + 1);
+        requestBody.setFileName(null);
+        requestBody.setMimeType(null);
+        requestBody.setNumberOfParts(parts);
+
+        response = client.createMultipartUploadUrls(new ParametersForCreateMultipartUploadUrls()
+                .setRepositoryId(repositoryId).setRequestBody(requestBody));
+
+        assertNotNull(response);
+        String uploadId2 = response.getUploadId();
+        assertNotNull(uploadId2);
+        assertEquals(uploadId, uploadId2);
+        assertEquals(parts, response.getUrls().size());
+    }
+
 
     @Test
     void importingLargeFileIsSuccessful() {

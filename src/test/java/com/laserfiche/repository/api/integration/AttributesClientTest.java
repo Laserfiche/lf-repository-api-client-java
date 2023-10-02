@@ -13,8 +13,8 @@ import com.laserfiche.repository.api.clients.params.ParametersForListAttributes;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class AttributesApiTest extends BaseTest {
-    AttributesClient client;
+class AttributesClientTest extends BaseTest {
+    private AttributesClient client;
 
     @BeforeEach
     void perTestSetup() {
@@ -22,7 +22,7 @@ class AttributesApiTest extends BaseTest {
     }
 
     @Test
-    void getTrusteeAttributeKeyValuePairs_ReturnAttributes() {
+    void listAttributesWorks() {
         AttributeCollectionResponse attributeList =
                 client.listAttributes(new ParametersForListAttributes()
                         .setRepositoryId(repositoryId)
@@ -33,7 +33,7 @@ class AttributesApiTest extends BaseTest {
     }
 
     @Test
-    void getAttributeValueByKey_ReturnAttribute() {
+    void getAttributeWorks() {
         AttributeCollectionResponse attributeList =
                 client.listAttributes(new ParametersForListAttributes()
                         .setRepositoryId(repositoryId)
@@ -48,7 +48,7 @@ class AttributesApiTest extends BaseTest {
     }
 
     @Test
-    void getAttributeValueByKey_NextLink() throws InterruptedException {
+    void listAttributesNextLinkWorks() throws InterruptedException {
         int maxPageSize = 3;
         AttributeCollectionResponse attributeList =
                 client.listAttributes(new ParametersForListAttributes()
@@ -68,15 +68,15 @@ class AttributesApiTest extends BaseTest {
     }
 
     @Test
-    void getAttributeValueByKey_ForEach() throws InterruptedException {
+    void listAttributesForEachWorks() throws InterruptedException {
         AtomicInteger pageCount = new AtomicInteger();
         int maxPages = 2;
         int maxPageSize = 3;
         Function<AttributeCollectionResponse, Boolean> callback = attributes -> {
-            if (pageCount.incrementAndGet() <= maxPages && attributes.getOdataNextLink() != null) {
+            if (pageCount.incrementAndGet() <= maxPages) {
                 assertNotEquals(0, attributes.getValue().size());
                 assertTrue(attributes.getValue().size() <= maxPageSize);
-                return true;
+                return attributes.getOdataNextLink() != null;
             } else {
                 return false;
             }

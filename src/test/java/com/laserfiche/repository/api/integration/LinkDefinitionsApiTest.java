@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class LinkDefinitionsApiTest extends BaseTest {
-    LinkDefinitionsClient client;
+    private LinkDefinitionsClient client;
 
     @BeforeEach
     void perTestSetup() {

@@ -15,20 +15,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
-class EntriesApiTest extends BaseTest {
-    EntriesClient client;
-    RepositoryApiClient createEntryClient;
+import kong.unirest.HttpStatus;
+import org.junit.jupiter.api.*;
 
-    String rootPath = "\\";
+class EntriesClientTest extends BaseTest {
+    private EntriesClient client;
 
-    String nonExistingPath = "\\Non Existing Path";
+    private static Entry testClassParentFolder;
+    private RepositoryApiClient createEntryClient;
 
-    List<Entry> createdEntries = new ArrayList<>();
+    private String rootPath = "\\";
+
+    private String nonExistingPath = "\\Non Existing Path";
+
+    private List<Entry> createdEntries = new ArrayList<>();
 
     @BeforeEach
     void perTestSetup() {
@@ -36,13 +37,209 @@ class EntriesApiTest extends BaseTest {
         createEntryClient = repositoryApiClient;
     }
 
+    @BeforeAll
+    static void classSetup() {
+        String name = "RepositoryApiClientIntegrationTest Java TestClassParentFolder";
+        testClassParentFolder = createEntry(repositoryApiClient, name, 1, true);
+    }
+
     @AfterEach
     void perTestCleanUp() throws InterruptedException {
         deleteEntries(createdEntries);
     }
 
+    @AfterAll
+    static void classCleanUp() throws InterruptedException {
+        deleteEntry(testClassParentFolder.getId());
+    }
+
     @Test
-    void getEntry_ReturnRootFolder() {
+    void createEntryCanCreateFolder() {
+        String newEntryName = "RepositoryApiClientIntegrationTest Java CreateFolder";
+
+        CreateEntryRequest request = new CreateEntryRequest();
+        request.setEntryType(CreateEntryRequestEntryType.FOLDER);
+        request.setName(newEntryName);
+        request.setAutoRename(true);
+
+        Entry createdEntry = client.createEntry(new ParametersForCreateEntry()
+                .setRepositoryId(repositoryId)
+                .setEntryId(testClassParentFolder.getId())
+                .setRequestBody(request));
+
+        assertNotNull(createdEntry);
+
+        assertEquals(testClassParentFolder.getId(), createdEntry.getParentId());
+        assertEquals(createdEntry.getEntryType(), EntryType.FOLDER);
+        assertEquals(Folder.class.getName(), createdEntry.getClass().getName());
+    }
+
+    @Test
+    void createEntryCanCreateShortcut() {
+        String newEntryName = "RepositoryApiClientIntegrationTest Java CreateFolder";
+
+        Entry targetEntry = createEntry(createEntryClient, newEntryName, testClassParentFolder.getId(), true);
+        assertNotNull(targetEntry);
+
+        assertEquals(targetEntry.getParentId(), testClassParentFolder.getId());
+        assertEquals(targetEntry.getEntryType(), EntryType.FOLDER);
+
+        newEntryName = "RepositoryApiClientIntegrationTest Java CreateShortcut";
+        CreateEntryRequest request = new CreateEntryRequest();
+        request.setEntryType(CreateEntryRequestEntryType.SHORTCUT);
+        request.setName(newEntryName);
+        request.setTargetId(targetEntry.getId());
+        request.setAutoRename(true);
+
+        Entry shortCut = client.createEntry(new ParametersForCreateEntry()
+                .setRepositoryId(repositoryId)
+                .setEntryId(testClassParentFolder.getId())
+                .setRequestBody(request));
+
+        assertNotNull(shortCut);
+        assertEquals(testClassParentFolder.getId(), shortCut.getParentId());
+        assertEquals(EntryType.SHORTCUT, shortCut.getEntryType());
+        assertEquals(shortCut.getClass().getName(), Shortcut.class.getName());
+    }
+
+    @Test
+    void startCopyEntryCanCopyFolder() throws InterruptedException {
+        String newEntryName = "RepositoryApiClientIntegrationTest Java CreateFolder";
+
+        Entry targetEntry = createEntry(createEntryClient, newEntryName, testClassParentFolder.getId(), true);
+        assertNotNull(targetEntry);
+        assertEquals(targetEntry.getParentId(), testClassParentFolder.getId());
+        assertEquals(targetEntry.getEntryType(), EntryType.FOLDER);
+
+        StartCopyEntryRequest copyAsyncRequest = new StartCopyEntryRequest();
+        copyAsyncRequest.setName("RepositoryApiClientIntegrationTest Java CopiedEntry");
+        copyAsyncRequest.setSourceId(targetEntry.getId());
+        copyAsyncRequest.setAutoRename(true);
+
+        StartTaskResponse copyEntryResponse = client.startCopyEntry(new ParametersForStartCopyEntry()
+                .setRepositoryId(repositoryId)
+                .setEntryId(testClassParentFolder.getId())
+                .setRequestBody(copyAsyncRequest));
+        String taskId = copyEntryResponse.getTaskId();
+        waitUntilTaskEnds(taskId, Duration.ofMillis(100));
+
+        TaskCollectionResponse response = repositoryApiClient
+                .getTasksClient()
+                .listTasks(new ParametersForListTasks()
+                        .setRepositoryId(repositoryId)
+                        .setTaskIds(taskId));
+
+        assertEquals(1, response.getValue().size());
+        assertEquals(response.getValue().get(0).getStatus(), TaskStatus.COMPLETED);
+    }
+
+    @Test
+    void copyEntryCanCreateShortcut() {
+        String newEntryName = "RepositoryApiClientIntegrationTest Java CreateFolder";
+
+        Entry targetEntry = createEntry(createEntryClient, newEntryName, testClassParentFolder.getId(), true);
+        assertNotNull(targetEntry);
+        assertEquals(targetEntry.getParentId(), testClassParentFolder.getId());
+        assertEquals(targetEntry.getEntryType(), EntryType.FOLDER);
+
+        newEntryName = "RepositoryApiClientIntegrationTest Java CreateShortcut";
+        CreateEntryRequest request = new CreateEntryRequest();
+        request.setEntryType(CreateEntryRequestEntryType.SHORTCUT);
+        request.setName(newEntryName);
+        request.setTargetId(targetEntry.getId());
+        request.setAutoRename(true);
+
+        Entry createOrCopyEntryResponse = client.createEntry(new ParametersForCreateEntry()
+                .setRepositoryId(repositoryId)
+                .setEntryId(testClassParentFolder.getId())
+                .setRequestBody(request));
+
+        assertNotNull(createOrCopyEntryResponse);
+        assertEquals(testClassParentFolder.getId(), createOrCopyEntryResponse.getParentId());
+        assertEquals(createOrCopyEntryResponse.getEntryType(), EntryType.SHORTCUT);
+
+        CopyEntryRequest copyRequest = new CopyEntryRequest();
+        copyRequest.setName("RepositoryApiClientIntegrationTest Java CopiedEntry");
+        copyRequest.setSourceId(createOrCopyEntryResponse.getId());
+        copyRequest.setAutoRename(true);
+        Entry copyEntryResponse = client.copyEntry(new ParametersForCopyEntry()
+                .setRepositoryId(repositoryId)
+                .setEntryId(testClassParentFolder.getId())
+                .setRequestBody(copyRequest));
+
+        assertEquals(copyEntryResponse.getParentId(), testClassParentFolder.getId());
+        assertEquals(EntryType.SHORTCUT, copyEntryResponse.getEntryType());
+        assertEquals(copyEntryResponse.getEntryType(), createOrCopyEntryResponse.getEntryType());
+    }
+
+    @Test
+    void copyEntryDoesNotSupportCopyingFolder() {
+        Entry parentFolder = createEntry(
+                createEntryClient,
+                "RepositoryApiClientIntegrationTest Java ParentFolder",
+                testClassParentFolder.getId(),
+                true);
+
+        Entry childFolder = createEntry(
+                createEntryClient,
+                "RepositoryApiClientIntegrationTest Java ChildFolder",
+                testClassParentFolder.getId(),
+                true);
+
+        CopyEntryRequest request = new CopyEntryRequest();
+        request.setSourceId(parentFolder.getId());
+        request.setName("RepositoryApiClientIntegrationTest Java MovedFolder");
+        request.setAutoRename(true);
+
+        ApiException exception = assertThrows(ApiException.class, () -> {
+            client.copyEntry(new ParametersForCopyEntry()
+                    .setRepositoryId(repositoryId)
+                    .setEntryId(childFolder.getId())
+                    .setRequestBody(request));
+        });
+
+        assertEquals(400, exception.getStatusCode());
+        assertEquals(exception.getStatusCode(), exception.getProblemDetails().getStatus());
+    }
+
+    @Test
+    void copyEntryThrowsExceptionForInvalidRepositoryId() {
+        Entry parentFolder = createEntry(
+                createEntryClient,
+                "RepositoryApiClientIntegrationTest Java ParentFolder",
+                testClassParentFolder.getId(),
+                true);
+
+        Entry childFolder = createEntry(
+                createEntryClient,
+                "RepositoryApiClientIntegrationTest Java ChildFolder",
+                testClassParentFolder.getId(),
+                true);
+
+        CopyEntryRequest request = new CopyEntryRequest();
+        request.setSourceId(parentFolder.getId());
+        request.setName("RepositoryApiClientIntegrationTest Java MovedFolder");
+        request.setAutoRename(true);
+
+        String invalidRepoId = String.format("%s-%s", repositoryId, repositoryId);
+        ApiException apiException = Assertions.assertThrows(
+                ApiException.class,
+                () -> client.copyEntry(new ParametersForCopyEntry()
+                        .setRepositoryId(invalidRepoId)
+                        .setEntryId(childFolder.getId())
+                        .setRequestBody(request)));
+
+        assertNotNull(apiException);
+        assertEquals(404, apiException.getStatusCode());
+        assertEquals(
+                "Error: Repository with the given Id not found or no connection could be made.",
+                apiException.getMessage());
+        ProblemDetails problemDetails = apiException.getProblemDetails();
+        assertNotNull(problemDetails);
+    }
+
+    @Test
+    void getEntryCanReturnRootFolder() {
         Entry entry = client.getEntry(
                 new ParametersForGetEntry().setRepositoryId(repositoryId).setEntryId(1));
 
@@ -51,27 +248,29 @@ class EntriesApiTest extends BaseTest {
     }
 
     @Test
-    void getEntry_ReturnEntryWhenTypeInfoMissing() {
+    void getEntryReturnsResultAsGenericEntryWhenEntryTypeNotSpecified() {
         Entry entry = client.getEntry(new ParametersForGetEntry()
                 .setRepositoryId(repositoryId)
                 .setEntryId(1)
                 .setSelect("name"));
 
         assertNotNull(entry);
-        assertFalse(entry instanceof Folder
-                || entry instanceof Shortcut
-                || entry instanceof Document
-                || entry instanceof RecordSeries); // When no type information, the data is deserialized to Entry.
+        // When no type information, the data is deserialized to Entry.
+        // Use separate assertions to know which one fails, if assertion fails.
+        assertFalse(entry instanceof Folder);
+        assertFalse(entry instanceof Shortcut);
+        assertFalse(entry instanceof Document);
+        assertFalse(entry instanceof RecordSeries);
     }
 
     @Test
-    void getEntryListing_ReturnEntries() {
+    void listEntriesWorksAndRespectsMaxPageSize() {
+        int maxPageSize = 10;
         EntryCollectionResponse entries = client.listEntries(new ParametersForListEntries()
                 .setRepositoryId(repositoryId)
                 .setEntryId(1)
-                .setPrefer("maxpagesize=5"));
-
-        assertNotNull(entries);
+                .setPrefer(String.format("maxpagesize=%d", maxPageSize)));
+        assertEquals(maxPageSize, entries.getValue().size());
 
         for (Entry entry : entries.getValue()) {
             switch (entry.getEntryType()) {
@@ -89,14 +288,14 @@ class EntriesApiTest extends BaseTest {
     }
 
     @Test
-    void getEntryListing_NextLink() throws InterruptedException {
-        int maxPageSize = 1;
+    void listEntriesNextLinkWorks() throws InterruptedException {
+        int maxPageSize = 10;
         EntryCollectionResponse entryList = client.listEntries(new ParametersForListEntries()
                 .setRepositoryId(repositoryId)
                 .setEntryId(1)
                 .setPrefer(String.format("maxpagesize=%d", maxPageSize)));
 
-        assertNotNull(entryList);
+        assertEquals(maxPageSize, entryList.getValue().size());
 
         String nextLink = entryList.getOdataNextLink();
         assertNotNull(nextLink);
@@ -109,15 +308,15 @@ class EntriesApiTest extends BaseTest {
     }
 
     @Test
-    void getEntryListing_ForEach() {
+    void listEntriesForEachWorks() {
         AtomicInteger pageCount = new AtomicInteger();
-        int maxPages = 2;
-        int maxPageSize = 3;
+        int maxPages = 20;
+        int maxPageSize = 5;
         Function<EntryCollectionResponse, Boolean> callback = entries -> {
-            if (pageCount.incrementAndGet() <= maxPages && entries.getOdataNextLink() != null) {
+            if (pageCount.incrementAndGet() <= maxPages) {
                 assertNotEquals(0, entries.getValue().size());
                 assertTrue(entries.getValue().size() <= maxPageSize);
-                return true;
+                return entries.getOdataNextLink() != null;
             } else {
                 return false;
             }
@@ -130,15 +329,16 @@ class EntriesApiTest extends BaseTest {
     }
 
     @Test
-    void getFieldValues_ReturnFields() {
+    void listFieldsWorks() {
         FieldCollectionResponse fieldValueList = client.listFields(
                 new ParametersForListFields().setRepositoryId(repositoryId).setEntryId(1));
 
         assertNotNull(fieldValueList);
+        assertFalse(fieldValueList.getValue().isEmpty());
     }
 
     @Test
-    void getLinkValuesFromEntry_ReturnLinks() {
+    void listLinksWorks() {
         LinkCollectionResponse linkInfoList =
                 client.listLinks(new ParametersForListLinks()
                         .setRepositoryId(repositoryId)
@@ -148,7 +348,7 @@ class EntriesApiTest extends BaseTest {
     }
 
     @Test
-    void getFieldValues_NextLink() throws InterruptedException {
+    void listFieldsNextLinkWorksAndRespectsMaxPageSize() throws InterruptedException {
         int maxPageSize = 1;
         FieldCollectionResponse fieldValueList = client.listFields(new ParametersForListFields()
                 .setRepositoryId(repositoryId)
@@ -169,15 +369,15 @@ class EntriesApiTest extends BaseTest {
     }
 
     @Test
-    void getFieldValues_ForEach() {
+    void listFieldsForEachWorks() {
         AtomicInteger pageCount = new AtomicInteger();
-        int maxPages = 2;
+        int maxPages = 5;
         int maxPageSize = 1;
         Function<FieldCollectionResponse, Boolean> callback = fieldValues -> {
-            if (pageCount.incrementAndGet() <= maxPages && fieldValues.getOdataNextLink() != null) {
+            if (pageCount.incrementAndGet() <= maxPages) {
                 assertNotEquals(0, fieldValues.getValue().size());
                 assertTrue(fieldValues.getValue().size() <= maxPageSize);
-                return true;
+                return fieldValues.getOdataNextLink() != null;
             } else {
                 return false;
             }
@@ -189,7 +389,7 @@ class EntriesApiTest extends BaseTest {
     }
 
     @Test
-    void getLinkValuesFromEntry_NextLink() throws InterruptedException {
+    void listLinksNextLinkWorks() throws InterruptedException {
         int maxPageSize = 1;
         LinkCollectionResponse linkInfoList =
                 client.listLinks(new ParametersForListLinks()
@@ -215,15 +415,15 @@ class EntriesApiTest extends BaseTest {
     }
 
     @Test
-    void getLinkValuesFromEntry_ForEach() {
+    void listLinksForEachWorks() {
         AtomicInteger pageCount = new AtomicInteger();
-        int maxPages = 2;
+        int maxPages = 5;
         int maxPageSize = 1;
         Function<LinkCollectionResponse, Boolean> callback = entryLinkIntoList -> {
-            if (pageCount.incrementAndGet() <= maxPages && entryLinkIntoList.getOdataNextLink() != null) {
+            if (pageCount.incrementAndGet() <= maxPages) {
                 assertNotEquals(0, entryLinkIntoList.getValue().size());
                 assertTrue(entryLinkIntoList.getValue().size() <= maxPageSize);
-                return true;
+                return entryLinkIntoList.getOdataNextLink() != null;
             } else {
                 return false;
             }
@@ -237,7 +437,7 @@ class EntriesApiTest extends BaseTest {
     }
 
     @Test
-    void deleteEntry_ReturnOperationToken() throws InterruptedException {
+    void startDeleteEntryCanDeleteFolder() throws InterruptedException {
         Entry entryToDelete =
                 createEntry(createEntryClient, "RepositoryApiClientIntegrationTest Java DeleteFolder", 1, true);
 
@@ -245,13 +445,22 @@ class EntriesApiTest extends BaseTest {
                 .setRepositoryId(repositoryId)
                 .setEntryId(entryToDelete.getId())
                 .setRequestBody(new StartDeleteEntryRequest()));
-        waitUntilTaskEnds(deleteEntryResponse.getTaskId(), Duration.ofMillis(100));
         String taskId = deleteEntryResponse.getTaskId();
         assertNotNull(taskId);
+
+        waitUntilTaskEnds(deleteEntryResponse.getTaskId(), Duration.ofMillis(100));
+
+        ApiException apiException = Assertions.assertThrows(
+                ApiException.class,
+                () -> client.getEntry(new ParametersForGetEntry().setRepositoryId(repositoryId)
+                        .setEntryId(entryToDelete.getId())));
+
+        assertNotNull(apiException);
+        assertEquals(HttpStatus.NOT_FOUND, apiException.getStatusCode());
     }
 
     @Test
-    void getTagsAssignedToEntry_NextLink() throws InterruptedException {
+    void listTagsNextLinkWorks() throws InterruptedException {
         int maxPageSize = 1;
         TagCollectionResponse tagInfoList =
                 client.listTags(new ParametersForListTags()
@@ -277,15 +486,15 @@ class EntriesApiTest extends BaseTest {
     }
 
     @Test
-    void getTagsAssignedToEntry_ForEach() {
+    void listTagsForEachWorks() {
         AtomicInteger pageCount = new AtomicInteger();
-        int maxPages = 2;
+        int maxPages = 5;
         int maxPageSize = 1;
         Function<TagCollectionResponse, Boolean> callback = tagInfoList -> {
-            if (pageCount.incrementAndGet() <= maxPages && tagInfoList.getOdataNextLink() != null) {
+            if (pageCount.incrementAndGet() <= maxPages) {
                 assertNotEquals(0, tagInfoList.getValue().size());
                 assertTrue(tagInfoList.getValue().size() <= maxPageSize);
-                return true;
+                return tagInfoList.getOdataNextLink() != null;
             } else {
                 return false;
             }
@@ -299,7 +508,7 @@ class EntriesApiTest extends BaseTest {
     }
 
     @Test
-    void getTagsAssignedToEntry_ReturnTags() {
+    void listTagsWorks() {
         TagCollectionResponse tagInfoList =
                 client.listTags(new ParametersForListTags()
                         .setRepositoryId(repositoryId)
@@ -309,14 +518,14 @@ class EntriesApiTest extends BaseTest {
     }
 
     @Test
-    void getDynamicFieldsEntry_ReturnDynamicFields() {
+    void listDynamicFieldValuesWorks() {
         TemplateDefinitionCollectionResponse templateDefinitionsResponse = repositoryApiClient
                 .getTemplateDefinitionClient()
                 .listTemplateDefinitions(new ParametersForListTemplateDefinitions().setRepositoryId(repositoryId));
         List<TemplateDefinition> templateDefinitions = templateDefinitionsResponse.getValue();
 
         assertNotNull(templateDefinitions);
-        assertTrue(templateDefinitions.size() > 0);
+        assertFalse(templateDefinitions.isEmpty());
 
         ListDynamicFieldValuesRequest request = new ListDynamicFieldValuesRequest();
         request.setTemplateId(templateDefinitions.get(0).getId());
@@ -330,7 +539,7 @@ class EntriesApiTest extends BaseTest {
     }
 
     @Test
-    void getEntryByFullPath_ReturnRootFolder() {
+    void getEntryByPathCanReturnRootFolder() {
         GetEntryByPathResponse entry = repositoryApiClient
                 .getEntriesClient()
                 .getEntryByPath(new ParametersForGetEntryByPath()
@@ -345,7 +554,7 @@ class EntriesApiTest extends BaseTest {
     }
 
     @Test
-    void getEntryByFullPath_ReturnAncestorRootFolder() {
+    void getEntryByPathReturnsRootFolderForInvalidPath() {
         GetEntryByPathResponse entry = repositoryApiClient
                 .getEntriesClient()
                 .getEntryByPath(new ParametersForGetEntryByPath()
@@ -361,7 +570,7 @@ class EntriesApiTest extends BaseTest {
     }
 
     @Test
-    void getEntryListing_ProblemDetails_Fields_Are_Valid_When_Exception_Thrown() {
+    void listEntriesReturnProblemDetailsWhenExceptionThrown() {
         ApiException apiException = Assertions.assertThrows(ApiException.class, () -> {
             client.listEntries(new ParametersForListEntries()
                     .setRepositoryId(repositoryId)
@@ -378,7 +587,7 @@ class EntriesApiTest extends BaseTest {
     }
 
     @Test
-    void getEntryListing_WithFields_ReturnEntries() {
+    void listEntriesWorksAndRespectsSpecifiedFields() {
         String[] fieldNames = {"Sender", "Subject"};
         EntryCollectionResponse entries = client.listEntries(new ParametersForListEntries()
                 .setRepositoryId(repositoryId)
@@ -396,7 +605,7 @@ class EntriesApiTest extends BaseTest {
     }
 
     @Test
-    void writeTemplateValueToEntry_ReturnsCorrectErrorMessage_For_Invalid_TemplateName() {
+    void setTemplateThrowsExceptionForInvalidTemplate() {
         Entry parentFolder = createEntry(createEntryClient, "EntriesTest", 1, true);
         createdEntries.add(parentFolder);
 
@@ -404,7 +613,7 @@ class EntriesApiTest extends BaseTest {
         request.setTemplateName("fake_template");
         ApiException apiException = Assertions.assertThrows(
                 ApiException.class,
-                () -> client.setTemplate (new ParametersForSetTemplate()
+                () -> client.setTemplate(new ParametersForSetTemplate()
                         .setRepositoryId(repositoryId)
                         .setEntryId(parentFolder.getId())
                         .setRequestBody(request)));

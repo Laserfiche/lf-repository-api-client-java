@@ -14,8 +14,8 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TasksApiTest extends BaseTest {
-    TasksClient client;
-    RepositoryApiClient createEntryClient;
+    private TasksClient client;
+    private RepositoryApiClient createEntryClient;
 
     @BeforeEach
     void perTestSetup() {

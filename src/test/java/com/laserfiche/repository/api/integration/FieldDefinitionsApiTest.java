@@ -14,7 +14,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class FieldDefinitionsApiTest extends BaseTest {
-    FieldDefinitionsClient client;
+    private FieldDefinitionsClient client;
 
     @BeforeEach
     void perTestSetup() {
@@ -65,10 +65,10 @@ class FieldDefinitionsApiTest extends BaseTest {
         int maxPages = 2;
         int maxPageSize = 3;
         Function<FieldDefinitionCollectionResponse, Boolean> callback = fieldInfoList -> {
-            if (pageCount.incrementAndGet() <= maxPages && fieldInfoList.getOdataNextLink() != null) {
+            if (pageCount.incrementAndGet() <= maxPages) {
                 assertNotEquals(0, fieldInfoList.getValue().size());
                 assertTrue(fieldInfoList.getValue().size() <= maxPageSize);
-                return true;
+                return fieldInfoList.getOdataNextLink() != null;
             } else {
                 return false;
             }

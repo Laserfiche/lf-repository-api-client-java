@@ -14,7 +14,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class TagDefinitionsApiTest extends BaseTest {
-    TagDefinitionsClient client;
+    private TagDefinitionsClient client;
 
     @BeforeEach
     void perTestSetup() {
@@ -55,10 +55,10 @@ class TagDefinitionsApiTest extends BaseTest {
         int maxPages = 2;
         int maxPageSize = 1;
         Function<TagDefinitionCollectionResponse, Boolean> callback = data -> {
-            if (pageCount.incrementAndGet() <= maxPages && data.getOdataNextLink() != null) {
+            if (pageCount.incrementAndGet() <= maxPages) {
                 assertNotEquals(0, data.getValue().size());
                 assertTrue(data.getValue().size() <= maxPageSize);
-                return true;
+                return data.getOdataNextLink() != null;
             } else {
                 return false;
             }

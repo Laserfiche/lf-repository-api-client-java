@@ -3,6 +3,7 @@ package com.laserfiche.repository.api.integration;
 import com.laserfiche.repository.api.clients.RepositoriesClient;
 import com.laserfiche.repository.api.clients.impl.RepositoriesClientImpl;
 import com.laserfiche.repository.api.clients.impl.model.RepositoryCollectionResponse;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.DisabledIf;
 import com.laserfiche.repository.api.clients.impl.model.Repository;
@@ -10,9 +11,16 @@ import com.laserfiche.repository.api.clients.impl.model.Repository;
 import static org.junit.jupiter.api.Assertions.*;
 
 class RepositoriesApiTest extends BaseTest {
+
+    private RepositoriesClient client;
+
+    @BeforeEach
+    void perTestSetup() {
+        client = repositoryApiClient.getRepositoryClient();
+    }
+
     @Test
     void getRepositoryList_ReturnSuccessful() {
-        RepositoriesClient client = repositoryApiClient.getRepositoryClient();
         RepositoryCollectionResponse response = client.listRepositories();
         boolean foundRepo = false;
         assertNotNull(response);

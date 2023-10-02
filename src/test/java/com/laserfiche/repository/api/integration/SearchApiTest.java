@@ -16,14 +16,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class SearchApiTest extends BaseTest {
-    SearchesClient searchesClient;
-    TasksClient tasksClient;
+    private SearchesClient client;
+    private TasksClient tasksClient;
 
     private String taskId = "";
 
     @BeforeEach
     void perTestSetup() {
-        searchesClient = repositoryApiClient.getSearchesClient();
+        client = repositoryApiClient.getSearchesClient();
         tasksClient = repositoryApiClient.getTasksClient();
     }
 
@@ -42,7 +42,7 @@ public class SearchApiTest extends BaseTest {
         request.setSearchCommand(
                 "{LF:Basic ~= \"Laserfiche\", option=\"DLT\"} & {LF:name=\"Laserfiche Cloud Overview\", Type=\"DFS\"}");
 
-        StartTaskResponse searchResponse = searchesClient.startSearchEntry(
+        StartTaskResponse searchResponse = client.startSearchEntry(
                 new ParametersForStartSearchEntry().setRepositoryId(repositoryId).setRequestBody(request));
         taskId = searchResponse.getTaskId();
 
@@ -51,7 +51,7 @@ public class SearchApiTest extends BaseTest {
         waitUntilTaskEnds(taskId);
 
         SearchContextHitCollectionResponse contextHitResponse =
-                searchesClient.listSearchContextHits(new ParametersForListSearchContextHits()
+                client.listSearchContextHits(new ParametersForListSearchContextHits()
                         .setRepositoryId(repositoryId)
                         .setTaskId(taskId)
                         .setRowNumber(1));
@@ -63,7 +63,7 @@ public class SearchApiTest extends BaseTest {
         StartSearchEntryRequest request = new StartSearchEntryRequest();
         request.setSearchCommand("({LF:Basic ~= \"Laserfiche\", option=\"NLT\"})");
 
-        StartTaskResponse searchResponse = searchesClient.startSearchEntry(
+        StartTaskResponse searchResponse = client.startSearchEntry(
                 new ParametersForStartSearchEntry().setRepositoryId(repositoryId).setRequestBody(request));
 
         taskId = searchResponse.getTaskId();
@@ -72,7 +72,7 @@ public class SearchApiTest extends BaseTest {
 
         waitUntilTaskEnds(taskId);
 
-        EntryCollectionResponse searchResultResponse = searchesClient.listSearchResults(
+        EntryCollectionResponse searchResultResponse = client.listSearchResults(
                 new ParametersForListSearchResults().setRepositoryId(repositoryId).setTaskId(taskId));
         assertNotNull(searchResultResponse);
     }
@@ -82,7 +82,7 @@ public class SearchApiTest extends BaseTest {
         StartSearchEntryRequest request = new StartSearchEntryRequest();
         request.setSearchCommand("({LF:Basic ~= \"Laserfiche\", option=\"NLT\"})");
 
-        StartTaskResponse searchResponse = searchesClient.startSearchEntry(
+        StartTaskResponse searchResponse = client.startSearchEntry(
                 new ParametersForStartSearchEntry().setRepositoryId(repositoryId).setRequestBody(request));
         taskId = searchResponse.getTaskId();
 
@@ -101,7 +101,7 @@ public class SearchApiTest extends BaseTest {
         StartSearchEntryRequest request = new StartSearchEntryRequest();
         request.setSearchCommand("({LF:Basic ~= \"Laserfiche\", option=\"NLT\"})");
 
-        StartTaskResponse searchOperationResponse = searchesClient.startSearchEntry(
+        StartTaskResponse searchOperationResponse = client.startSearchEntry(
                 new ParametersForStartSearchEntry().setRepositoryId(repositoryId).setRequestBody(request));
 
         taskId = searchOperationResponse.getTaskId();
@@ -122,7 +122,7 @@ public class SearchApiTest extends BaseTest {
         StartSearchEntryRequest request = new StartSearchEntryRequest();
         request.setSearchCommand("({LF:Basic ~= \"test\", option=\"NLT\"})");
 
-        StartTaskResponse searchResponse = searchesClient.startSearchEntry(
+        StartTaskResponse searchResponse = client.startSearchEntry(
                 new ParametersForStartSearchEntry().setRepositoryId(repositoryId).setRequestBody(request));
 
         taskId = searchResponse.getTaskId();
@@ -130,11 +130,11 @@ public class SearchApiTest extends BaseTest {
 
         waitUntilTaskEnds(taskId);
 
-        EntryCollectionResponse searchResults1 = searchesClient.listSearchResults(new ParametersForListSearchResults()
+        EntryCollectionResponse searchResults1 = client.listSearchResults(new ParametersForListSearchResults()
                         .setRepositoryId(repositoryId)
                         .setTaskId(taskId));
         System.out.println(searchResults1.getValue().size());
-                EntryCollectionResponse searchResults = searchesClient.listSearchResults(new ParametersForListSearchResults()
+                EntryCollectionResponse searchResults = client.listSearchResults(new ParametersForListSearchResults()
                 .setRepositoryId(repositoryId)
                 .setTaskId(taskId)
                 .setPrefer(String.format("maxpagesize=%d", maxPageSize)));
@@ -149,7 +149,7 @@ public class SearchApiTest extends BaseTest {
         assertTrue(searchResults.getValue().size() <= maxPageSize);
 
         // Paging request
-        searchResults = searchesClient.listSearchResultsNextLink(nextLink, maxPageSize);
+        searchResults = client.listSearchResultsNextLink(nextLink, maxPageSize);
         assertNotNull(searchResults);
         assertTrue(searchResults.getValue().size() <= maxPageSize);
     }
@@ -162,7 +162,7 @@ public class SearchApiTest extends BaseTest {
         StartSearchEntryRequest request = new StartSearchEntryRequest();
         request.setSearchCommand("({LF:Basic ~= \"test\", option=\"NLT\"})");
 
-        StartTaskResponse searchResponse = searchesClient.startSearchEntry(
+        StartTaskResponse searchResponse = client.startSearchEntry(
                 new ParametersForStartSearchEntry().setRepositoryId(repositoryId).setRequestBody(request));
 
         taskId = searchResponse.getTaskId();
@@ -171,15 +171,15 @@ public class SearchApiTest extends BaseTest {
         waitUntilTaskEnds(taskId);
 
         Function<EntryCollectionResponse, Boolean> callback = data -> {
-            if (pageCount.incrementAndGet() <= maxPages && data.getOdataNextLink() != null) {
+            if (pageCount.incrementAndGet() <= maxPages) {
                 assertNotEquals(0, data.getValue().size());
                 assertTrue(data.getValue().size() <= maxPageSize);
-                return true;
+                return data.getOdataNextLink() != null;
             } else {
                 return false;
             }
         };
-        searchesClient.listSearchResultsForEach(
+        client.listSearchResultsForEach(
                 callback,
                 maxPageSize,
                 new ParametersForListSearchResults().setRepositoryId(repositoryId).setTaskId(taskId));
@@ -193,7 +193,7 @@ public class SearchApiTest extends BaseTest {
         request.setSearchCommand(
                 "{LF:Basic ~= \"Laserfiche\", option=\"DLT\"} & {LF:name=\"Laserfiche Cloud Overview\", Type=\"DFS\"}");
 
-        StartTaskResponse searchResponse = searchesClient.startSearchEntry(
+        StartTaskResponse searchResponse = client.startSearchEntry(
                 new ParametersForStartSearchEntry().setRepositoryId(repositoryId).setRequestBody(request));
         taskId = searchResponse.getTaskId();
 
@@ -201,7 +201,7 @@ public class SearchApiTest extends BaseTest {
 
         waitUntilTaskEnds(taskId);
 
-        EntryCollectionResponse searchResults = searchesClient.listSearchResults(new ParametersForListSearchResults()
+        EntryCollectionResponse searchResults = client.listSearchResults(new ParametersForListSearchResults()
                 .setRepositoryId(repositoryId)
                 .setTaskId(taskId)
                 .setPrefer(String.format("maxpagesize=%d", maxPageSize)));
@@ -212,7 +212,7 @@ public class SearchApiTest extends BaseTest {
         int rowNum = searchResults.getValue().get(0).getRowNumber();
 
         SearchContextHitCollectionResponse contextHitResponse =
-                searchesClient.listSearchContextHits(new ParametersForListSearchContextHits()
+                client.listSearchContextHits(new ParametersForListSearchContextHits()
                         .setRepositoryId(repositoryId)
                         .setTaskId(taskId)
                         .setRowNumber(rowNum)
@@ -226,7 +226,7 @@ public class SearchApiTest extends BaseTest {
 
         // Paging request
         SearchContextHitCollectionResponse nextLinkResponse =
-                searchesClient.listSearchContextHitsNextLink(nextLink, maxPageSize);
+                client.listSearchContextHitsNextLink(nextLink, maxPageSize);
         assertNotNull(nextLinkResponse);
         assertTrue(nextLinkResponse.getValue().size() <= maxPageSize);
     }
@@ -240,7 +240,7 @@ public class SearchApiTest extends BaseTest {
         request.setSearchCommand(
                 "{LF:Basic ~= \"Laserfiche\", option=\"DLT\"} & {LF:name=\"Laserfiche Cloud Overview\", Type=\"DFS\"}");
 
-        StartTaskResponse searchResponse = searchesClient.startSearchEntry(
+        StartTaskResponse searchResponse = client.startSearchEntry(
                 new ParametersForStartSearchEntry().setRepositoryId(repositoryId).setRequestBody(request));
         taskId = searchResponse.getTaskId();
         assertNotNull(taskId);
@@ -248,7 +248,7 @@ public class SearchApiTest extends BaseTest {
         waitUntilTaskEnds(taskId);
 
         EntryCollectionResponse searchResultResponse =
-                searchesClient.listSearchResults(new ParametersForListSearchResults()
+                client.listSearchResults(new ParametersForListSearchResults()
                         .setRepositoryId(repositoryId)
                         .setTaskId(taskId)
                         .setPrefer(String.format("maxpagesize=%d", maxPageSize)));
@@ -259,15 +259,15 @@ public class SearchApiTest extends BaseTest {
         int rowNum = searchResultResponse.getValue().get(0).getRowNumber();
 
         Function<SearchContextHitCollectionResponse, Boolean> callback = data -> {
-            if (pageCount.incrementAndGet() <= maxPages && data.getOdataNextLink() != null) {
+            if (pageCount.incrementAndGet() <= maxPages) {
                 assertNotEquals(0, data.getValue().size());
                 assertTrue(data.getValue().size() <= maxPageSize);
-                return true;
+                return data.getOdataNextLink() != null;
             } else {
                 return false;
             }
         };
-        searchesClient.listSearchContextHitsForEach(
+        client.listSearchContextHitsForEach(
                 callback,
                 maxPageSize,
                 new ParametersForListSearchContextHits()

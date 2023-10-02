@@ -1,6 +1,5 @@
 package com.laserfiche.repository.api.integration;
 
-import com.laserfiche.repository.api.clients.AuditReasonsClient;
 import com.laserfiche.repository.api.clients.EntriesClient;
 import com.laserfiche.repository.api.clients.TasksClient;
 import com.laserfiche.repository.api.clients.impl.model.*;
@@ -8,13 +7,12 @@ import com.laserfiche.repository.api.clients.params.*;
 import org.junit.jupiter.api.*;
 
 import java.io.*;
-import java.net.URL;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class StartExportEntryApiTest extends BaseTest {
-    private EntriesClient entriesClient;
+    private EntriesClient client;
     private TasksClient tasksClient;
     private static int testEntryId;
     private static long testEntryFileSize;
@@ -25,7 +23,7 @@ public class StartExportEntryApiTest extends BaseTest {
 
     @BeforeEach
     public void perTestSetup() {
-        entriesClient = repositoryApiClient.getEntriesClient();
+        client = repositoryApiClient.getEntriesClient();
         tasksClient = repositoryApiClient.getTasksClient();
         exportedFile = null;
     }
@@ -96,7 +94,7 @@ public class StartExportEntryApiTest extends BaseTest {
             request.setAuditReasonComment(auditReasonComment);
         }
 
-        StartTaskResponse startTaskResponse = entriesClient.startExportEntry(new ParametersForStartExportEntry()
+        StartTaskResponse startTaskResponse = client.startExportEntry(new ParametersForStartExportEntry()
                 .setRepositoryId(repositoryId)
                 .setEntryId(testEntryId)
                 .setRequestBody(request));

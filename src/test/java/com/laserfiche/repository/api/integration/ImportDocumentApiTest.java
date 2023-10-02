@@ -17,7 +17,7 @@ import org.junit.jupiter.api.*;
 public class ImportDocumentApiTest extends BaseTest {
     static Entry testClassParentFolder;
 
-    EntriesClient client;
+    private EntriesClient client;
 
     @BeforeEach
     public void perTestSetup() {
