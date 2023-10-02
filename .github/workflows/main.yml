@@ -2,9 +2,11 @@ name: lf-repository-api-client-java-CI
 
 on:
   push:
-    branches: [ '\d+.x' ]
+    branches:
+      - v2
   pull_request:
-    branches: [ '\d+.x' ]
+    branches:
+      - v2
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -26,7 +28,7 @@ jobs:
         java-version: '8'
         distribution: 'temurin'
 
-    - name: Build with Maven
+    - name: Build project
       run: mvn -B package -Dmaven.test.skip=true --file pom.xml
 
     - name: Run unit tests
@@ -103,7 +105,7 @@ jobs:
     - name: Move javadoc files to temporary directory
       run: mv ${{ github.workspace }}/target/site/ ${{ github.workspace }}/docs_temp/${{ github.ref_name }}
 
-    - name: Upload a Build Artifact
+    - name: Upload a build artifact
       uses: actions/upload-artifact@v2.3.1
       with:
         name: documentation-artifact
@@ -129,10 +131,10 @@ jobs:
         java-version: '8'
         distribution: 'temurin'
 
-    - name: Build with Maven
+    - name: Build project
       run: mvn -B package -Dmaven.test.skip=true --file pom.xml
 
-    - name: Set up Apache Maven Central
+    - name: Set up OSSRH
       uses: actions/setup-java@v3
       with:
         java-version: '8'
@@ -143,13 +145,13 @@ jobs:
         gpg-private-key: ${{ secrets.OSSRH_GPG_SECRET_KEY }}
         gpg-passphrase: MAVEN_GPG_PASSPHRASE
 
-    - name: Set Java Package Version environment
+    - name: Generate package version
       run: echo "PACKAGE_VERSION=${{ env.VERSION_PREFIX }}-preview-${{ github.run_id }}-SNAPSHOT" >> $GITHUB_ENV
 
-    - name: Set Java Package Version
+    - name: Set package version
       run: mvn versions:set -DnewVersion=${{ env.PACKAGE_VERSION }}
 
-    - name: Publish to Sonatype
+    - name: Publish to OSSRH
       run: mvn clean deploy -Dmaven.test.skip=true -Dgpg.passphrase=${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }}
       env:
         MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
@@ -179,10 +181,10 @@ jobs:
         java-version: '8'
         distribution: 'temurin'
 
-    - name: Build with Maven
+    - name: Build project
       run: mvn -B package -Dmaven.test.skip=true --file pom.xml
 
-    - name: Set up Apache Maven Central
+    - name: Set up OSSRH
       uses: actions/setup-java@v3
       with:
         java-version: '8'
@@ -193,13 +195,13 @@ jobs:
         gpg-private-key: ${{ secrets.OSSRH_GPG_SECRET_KEY }}
         gpg-passphrase: MAVEN_GPG_PASSPHRASE
 
-    - name: Set Java Package Version environment
+    - name: Generate package version
       run: echo "PACKAGE_VERSION=${{ env.VERSION_PREFIX }}" >> $GITHUB_ENV
 
-    - name: Set Java Package Version
+    - name: Set package version
       run: mvn versions:set -DnewVersion=${{ env.PACKAGE_VERSION }}
 
-    - name: Publish to Maven Central
+    - name: Publish to OSSRH
       run: mvn clean deploy -P release -Dmaven.test.skip=true -Dgpg.passphrase=${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }}
       env:
         MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
@@ -251,7 +253,7 @@ jobs:
           name: documentation-artifact
           path: ./docs/${{ env.DOCUMENTATION_VERSION }}
 
-      - name: Create Pull Request
+      - name: Create pull request
         uses: peter-evans/create-pull-request@v4.2.3
         with:
           branch: ${{ env.GITHUB_PAGES_BRANCH }}-${{ env.DOCUMENTATION_VERSION }}-patch
