@@ -37,7 +37,7 @@ public class SearchesClientTest extends BaseTest {
     }
 
     @Test
-    void getSearchContextHits_ReturnContextHits() throws InterruptedException {
+    void listSearchContextHitsWorks() throws InterruptedException {
         StartSearchEntryRequest request = new StartSearchEntryRequest();
         request.setSearchCommand(
                 "{LF:Basic ~= \"Laserfiche\", option=\"DLT\"} & {LF:name=\"Laserfiche Cloud Overview\", Type=\"DFS\"}");
@@ -59,7 +59,7 @@ public class SearchesClientTest extends BaseTest {
     }
 
     @Test
-    void getSearchResults_ReturnSearchResults() throws InterruptedException {
+    void listSearchResultsWorks() throws InterruptedException {
         StartSearchEntryRequest request = new StartSearchEntryRequest();
         request.setSearchCommand("({LF:Basic ~= \"Laserfiche\", option=\"NLT\"})");
 
@@ -78,7 +78,7 @@ public class SearchesClientTest extends BaseTest {
     }
 
     @Test
-    void getSearchStatus_ReturnSearchStatus() throws InterruptedException {
+    void listTasksCanReturnSearchStatus() throws InterruptedException {
         StartSearchEntryRequest request = new StartSearchEntryRequest();
         request.setSearchCommand("({LF:Basic ~= \"Laserfiche\", option=\"NLT\"})");
 
@@ -97,7 +97,7 @@ public class SearchesClientTest extends BaseTest {
     }
 
     @Test
-    void closeSearchOperations_CloseSearch() throws InterruptedException {
+    void cancelTasksCanCloseSearch() throws InterruptedException {
         StartSearchEntryRequest request = new StartSearchEntryRequest();
         request.setSearchCommand("({LF:Basic ~= \"Laserfiche\", option=\"NLT\"})");
 
@@ -116,7 +116,7 @@ public class SearchesClientTest extends BaseTest {
     }
 
     @Test
-    void getSearchResults_NextLink() throws InterruptedException {
+    void listSearchResultsNextLinkWorks() throws InterruptedException {
         int maxPageSize = 2;
 
         StartSearchEntryRequest request = new StartSearchEntryRequest();
@@ -133,8 +133,7 @@ public class SearchesClientTest extends BaseTest {
         EntryCollectionResponse searchResults1 = client.listSearchResults(new ParametersForListSearchResults()
                         .setRepositoryId(repositoryId)
                         .setTaskId(taskId));
-        System.out.println(searchResults1.getValue().size());
-                EntryCollectionResponse searchResults = client.listSearchResults(new ParametersForListSearchResults()
+        EntryCollectionResponse searchResults = client.listSearchResults(new ParametersForListSearchResults()
                 .setRepositoryId(repositoryId)
                 .setTaskId(taskId)
                 .setPrefer(String.format("maxpagesize=%d", maxPageSize)));
@@ -155,7 +154,7 @@ public class SearchesClientTest extends BaseTest {
     }
 
     @Test
-    void getSearchResults_ForEach() throws InterruptedException {
+    void listSearchResultsForEachWorks() throws InterruptedException {
         AtomicInteger pageCount = new AtomicInteger();
         int maxPages = 2;
         int maxPageSize = 3;
@@ -187,7 +186,7 @@ public class SearchesClientTest extends BaseTest {
     }
 
     @Test
-    void getSearchContextHits_NextLink() throws InterruptedException {
+    void listSearchContextHitsNextLinkWorks() throws InterruptedException {
         int maxPageSize = 1;
         StartSearchEntryRequest request = new StartSearchEntryRequest();
         request.setSearchCommand(
@@ -232,7 +231,7 @@ public class SearchesClientTest extends BaseTest {
     }
 
     @Test
-    void getSearchContextHits_ForEach() throws InterruptedException {
+    void listSearchContextHitsForEachWorks() throws InterruptedException {
         AtomicInteger pageCount = new AtomicInteger();
         int maxPages = 2;
         int maxPageSize = 1;

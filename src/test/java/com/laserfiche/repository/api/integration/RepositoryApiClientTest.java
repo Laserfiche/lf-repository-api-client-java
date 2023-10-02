@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 
 class RepositoryApiClientTest extends BaseTest {
     @Test
-    void invalidCredentials_ThrowsApiExceptionWhenMakingApiCall() {
+    void callingApiWithInvalidCredentialsThrowsException() {
         RepositoryApiClient invalidClient = null;
         try {
             if (authorizationType.equals(AuthorizationType.CLOUD_ACCESS_KEY)) {
