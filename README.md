@@ -5,7 +5,7 @@ Use the Laserfiche Repository API to access data in a Laserfiche repository. Imp
 ## Documentation
 
 - [Laserfiche Developer Center](https://developer.laserfiche.com/)
-- [Java Doc for Laserfiche Repository API Client](https://laserfiche.github.io/lf-repository-api-client-java/docs/2.x/index.html)
+- [Java Doc for Laserfiche Repository API Client](https://laserfiche.github.io/lf-repository-api-client-java/docs/v2)
 
 ## Changelog
 
