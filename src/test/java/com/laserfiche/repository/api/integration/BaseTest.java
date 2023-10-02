@@ -8,6 +8,12 @@ import com.laserfiche.repository.api.clients.params.ParametersForCreateEntry;
 import com.laserfiche.repository.api.clients.params.ParametersForListTasks;
 import com.laserfiche.repository.api.clients.params.ParametersForStartDeleteEntry;
 import io.github.cdimascio.dotenv.Dotenv;
+
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.URL;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.List;
@@ -130,12 +136,11 @@ public class BaseTest {
         return str == null || str.isEmpty();
     }
 
-    public static void WaitUntilTaskEnds(String taskId) throws InterruptedException {
-        WaitUntilTaskEnds(taskId, Duration.ofMillis(500));
+    public static void waitUntilTaskEnds(String taskId) {
+        waitUntilTaskEnds(taskId, Duration.ofMillis(500));
     }
 
-    public static void WaitUntilTaskEnds(String taskId, Duration interval)
-            throws InterruptedException {
+    public static void waitUntilTaskEnds(String taskId, Duration interval) {
         int maxIteration = 5;
         int count = 0;
         while (count < maxIteration) {
@@ -148,7 +153,11 @@ public class BaseTest {
             if (progress.getStatus() != TaskStatus.IN_PROGRESS) {
                 return;
             }
-            TimeUnit.MILLISECONDS.sleep(interval.toMillis());
+            try {
+                TimeUnit.MILLISECONDS.sleep(interval.toMillis());
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             count++;
         }
         throw new RuntimeException("WaitUntilTaskEnds timeout");
@@ -162,7 +171,7 @@ public class BaseTest {
                             .setRepositoryId(repositoryId)
                             .setEntryId(entryId)
                             .setRequestBody(new StartDeleteEntryRequest()));
-            WaitUntilTaskEnds(startTaskResponse.getTaskId());
+            waitUntilTaskEnds(startTaskResponse.getTaskId());
         }
     }
 
@@ -173,4 +182,20 @@ public class BaseTest {
             }
         }
     }
+
+    protected boolean downloadFileFromURI(String uri, File destinationFile) {
+        try (BufferedInputStream in = new BufferedInputStream(new URL(uri).openStream());
+             FileOutputStream fileOutputStream = new FileOutputStream(destinationFile)) {
+            byte[] dataBuffer = new byte[1024];
+            int bytesRead;
+            while ((bytesRead = in.read(dataBuffer, 0, 1024)) != -1) {
+                fileOutputStream.write(dataBuffer, 0, bytesRead);
+            }
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
 }

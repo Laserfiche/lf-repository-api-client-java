@@ -1,6 +1,5 @@
 package com.laserfiche.repository.api.integration;
 
-import com.laserfiche.api.client.model.ApiException;
 import com.laserfiche.repository.api.RepositoryApiClient;
 import com.laserfiche.repository.api.clients.TasksClient;
 import com.laserfiche.repository.api.clients.impl.model.*;
@@ -9,7 +8,6 @@ import java.util.concurrent.TimeUnit;
 import com.laserfiche.repository.api.clients.params.ParametersForCancelTasks;
 import com.laserfiche.repository.api.clients.params.ParametersForListTasks;
 import com.laserfiche.repository.api.clients.params.ParametersForStartDeleteEntry;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -40,7 +38,7 @@ public class TasksApiTest extends BaseTest {
 
         assertNotNull(taskId);
 
-        WaitUntilTaskEnds(taskId);
+        waitUntilTaskEnds(taskId);
 
         CancelTasksResponse response = client.cancelTasks(new ParametersForCancelTasks()
                     .setRepositoryId(repositoryId)
@@ -89,7 +87,7 @@ public class TasksApiTest extends BaseTest {
 
         assertNotNull(taskId);
 
-        WaitUntilTaskEnds(taskId);
+        waitUntilTaskEnds(taskId);
 
         TaskCollectionResponse operationProgressResponse =
                 client.listTasks(new ParametersForListTasks()

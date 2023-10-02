@@ -48,7 +48,7 @@ public class SearchApiTest extends BaseTest {
 
         assertNotNull(taskId);
 
-        WaitUntilTaskEnds(taskId);
+        waitUntilTaskEnds(taskId);
 
         SearchContextHitCollectionResponse contextHitResponse =
                 searchesClient.listSearchContextHits(new ParametersForListSearchContextHits()
@@ -70,7 +70,7 @@ public class SearchApiTest extends BaseTest {
 
         assertNotNull(taskId);
 
-        WaitUntilTaskEnds(taskId);
+        waitUntilTaskEnds(taskId);
 
         EntryCollectionResponse searchResultResponse = searchesClient.listSearchResults(
                 new ParametersForListSearchResults().setRepositoryId(repositoryId).setTaskId(taskId));
@@ -88,7 +88,7 @@ public class SearchApiTest extends BaseTest {
 
         assertNotNull(taskId);
 
-        WaitUntilTaskEnds(taskId);
+        waitUntilTaskEnds(taskId);
 
         TaskCollectionResponse searchStatusResponse = tasksClient.listTasks(
                 new ParametersForListTasks().setRepositoryId(repositoryId).setTaskIds(taskId));
@@ -128,7 +128,7 @@ public class SearchApiTest extends BaseTest {
         taskId = searchResponse.getTaskId();
         assertTrue(taskId != null && !taskId.trim().isEmpty());
 
-        WaitUntilTaskEnds(taskId);
+        waitUntilTaskEnds(taskId);
 
         EntryCollectionResponse searchResults1 = searchesClient.listSearchResults(new ParametersForListSearchResults()
                         .setRepositoryId(repositoryId)
@@ -168,7 +168,7 @@ public class SearchApiTest extends BaseTest {
         taskId = searchResponse.getTaskId();
         assertTrue(taskId != null && !taskId.trim().isEmpty());
 
-        WaitUntilTaskEnds(taskId);
+        waitUntilTaskEnds(taskId);
 
         Function<EntryCollectionResponse, Boolean> callback = data -> {
             if (pageCount.incrementAndGet() <= maxPages && data.getOdataNextLink() != null) {
@@ -199,7 +199,7 @@ public class SearchApiTest extends BaseTest {
 
         assertNotNull(taskId);
 
-        WaitUntilTaskEnds(taskId);
+        waitUntilTaskEnds(taskId);
 
         EntryCollectionResponse searchResults = searchesClient.listSearchResults(new ParametersForListSearchResults()
                 .setRepositoryId(repositoryId)
@@ -245,7 +245,7 @@ public class SearchApiTest extends BaseTest {
         taskId = searchResponse.getTaskId();
         assertNotNull(taskId);
 
-        WaitUntilTaskEnds(taskId);
+        waitUntilTaskEnds(taskId);
 
         EntryCollectionResponse searchResultResponse =
                 searchesClient.listSearchResults(new ParametersForListSearchResults()

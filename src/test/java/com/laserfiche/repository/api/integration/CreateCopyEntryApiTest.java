@@ -101,7 +101,7 @@ public class CreateCopyEntryApiTest extends BaseTest {
                 .setEntryId(testClassParentFolder.getId())
                 .setRequestBody(copyAsyncRequest));
         String taskId = copyEntryResponse.getTaskId();
-        WaitUntilTaskEnds(taskId, Duration.ofMillis(100));
+        waitUntilTaskEnds(taskId, Duration.ofMillis(100));
 
         TaskCollectionResponse response = repositoryApiClient
                 .getTasksClient()

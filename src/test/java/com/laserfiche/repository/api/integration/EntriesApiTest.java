@@ -8,9 +8,7 @@ import com.laserfiche.repository.api.RepositoryApiClient;
 import com.laserfiche.repository.api.clients.EntriesClient;
 import com.laserfiche.repository.api.clients.impl.model.*;
 import com.laserfiche.repository.api.clients.params.*;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
@@ -247,7 +245,7 @@ class EntriesApiTest extends BaseTest {
                 .setRepositoryId(repositoryId)
                 .setEntryId(entryToDelete.getId())
                 .setRequestBody(new StartDeleteEntryRequest()));
-        WaitUntilTaskEnds(deleteEntryResponse.getTaskId(), Duration.ofMillis(100));
+        waitUntilTaskEnds(deleteEntryResponse.getTaskId(), Duration.ofMillis(100));
         String taskId = deleteEntryResponse.getTaskId();
         assertNotNull(taskId);
     }
