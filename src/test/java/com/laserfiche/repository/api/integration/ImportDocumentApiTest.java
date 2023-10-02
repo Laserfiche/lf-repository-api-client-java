@@ -8,6 +8,7 @@ import java.io.*;
 import java.net.URL;
 import java.util.List;
 
+import com.laserfiche.repository.api.clients.params.ParametersForGetEntry;
 import com.laserfiche.repository.api.clients.params.ParametersForImportEntry;
 import com.laserfiche.repository.api.clients.params.ParametersForListTemplateDefinitions;
 import com.laserfiche.repository.api.clients.params.ParametersForListTemplateFieldDefinitionsByTemplateId;
@@ -103,6 +104,134 @@ public class ImportDocumentApiTest extends BaseTest {
         assertNotNull(resultEntry);
         int createdEntryId = resultEntry.getId();
         assertTrue(createdEntryId > 0);
+    }
+
+    @Test
+    void importDocument_CanImportTextFilesAsEdoc()
+            throws FileNotFoundException {
+        String fileName = "RepositoryApiClientIntegrationTest Java ImportTest.txt";
+        File fileToImport = new File(SMALL_TEXT_FILE_PATH);
+        String mimeType = "text/plain";
+        String extension = "txt";
+        ImportEntryRequest request = new ImportEntryRequest();
+        request.setName(fileName);
+        request.setAutoRename(true);
+        request.setImportAsElectronicDocument(true);
+        Entry resultEntry = client.importEntry(new ParametersForImportEntry()
+                .setRepositoryId(repositoryId)
+                .setEntryId(testClassParentFolder.getId())
+                .setInputStream(new FileInputStream(fileToImport))
+                .setContentType(mimeType)
+                .setRequestBody(request));
+
+        assertNotNull(resultEntry);
+        int createdEntryId = resultEntry.getId();
+        assertTrue(createdEntryId > 0);
+
+        // Call GetEntry API to verify imported entry
+        Entry entry = client.getEntry(new ParametersForGetEntry().setRepositoryId(repositoryId).setEntryId(createdEntryId));
+        assertEquals(EntryType.DOCUMENT, entry.getEntryType());
+        assertTrue(entry instanceof Document);
+        Document document = (Document) entry;
+        assertEquals(extension, document.getExtension());
+        assertEquals(0, document.getPageCount());
+        assertEquals(new File(SMALL_TEXT_FILE_PATH).length(), document.getElectronicDocumentSize());
+        assertTrue(document.isElectronicDocument());
+        assertEquals(mimeType, document.getMimeType());
+    }
+
+    @Test
+    void importDocument_CanImportImageFilesAsEdoc()
+            throws FileNotFoundException {
+        String fileName = "RepositoryApiClientIntegrationTest Java ImportTest.jpg";
+        File fileToImport = new File(SMALL_JPEG_FILE_PATH);
+        String mimeType = "image/jpeg";
+        String extension = "jpg";
+        ImportEntryRequest request = new ImportEntryRequest();
+        request.setName(fileName);
+        request.setAutoRename(true);
+        request.setImportAsElectronicDocument(true);
+        Entry resultEntry = client.importEntry(new ParametersForImportEntry()
+                .setRepositoryId(repositoryId)
+                .setEntryId(testClassParentFolder.getId())
+                .setInputStream(new FileInputStream(fileToImport))
+                .setContentType(mimeType)
+                .setRequestBody(request));
+
+        assertNotNull(resultEntry);
+        int createdEntryId = resultEntry.getId();
+        assertTrue(createdEntryId > 0);
+
+        // Call GetEntry API to verify imported entry
+        Entry entry = client.getEntry(new ParametersForGetEntry().setRepositoryId(repositoryId).setEntryId(createdEntryId));
+        assertEquals(EntryType.DOCUMENT, entry.getEntryType());
+        assertTrue(entry instanceof Document);
+        Document document = (Document) entry;
+        assertEquals(extension, document.getExtension());
+        assertEquals(0, document.getPageCount());
+        assertEquals(new File(SMALL_JPEG_FILE_PATH).length(), document.getElectronicDocumentSize());
+        assertTrue(document.isElectronicDocument());
+        assertEquals(mimeType, document.getMimeType());
+    }
+
+    @Test
+    void importDocument_ImportsTextFilesAsPages_ByDefault()
+            throws FileNotFoundException {
+        String fileName = "RepositoryApiClientIntegrationTest Java ImportTest.txt";
+        File fileToImport = new File(SMALL_TEXT_FILE_PATH);
+        ImportEntryRequest request = new ImportEntryRequest();
+        request.setName(fileName);
+        request.setAutoRename(true);
+        Entry resultEntry = client.importEntry(new ParametersForImportEntry()
+                .setRepositoryId(repositoryId)
+                .setEntryId(testClassParentFolder.getId())
+                .setInputStream(new FileInputStream(fileToImport))
+                .setRequestBody(request));
+
+        assertNotNull(resultEntry);
+        int createdEntryId = resultEntry.getId();
+        assertTrue(createdEntryId > 0);
+
+        // Call GetEntry API to verify imported entry
+        Entry entry = client.getEntry(new ParametersForGetEntry().setRepositoryId(repositoryId).setEntryId(createdEntryId));
+        assertEquals(EntryType.DOCUMENT, entry.getEntryType());
+        assertTrue(entry instanceof Document);
+        Document document = (Document) entry;
+        assertEquals("", document.getExtension());
+        assertEquals(2, document.getPageCount());
+        assertEquals(0, document.getElectronicDocumentSize());
+        assertFalse(document.isElectronicDocument());
+        assertEquals("", document.getMimeType());
+    }
+
+    @Test
+    void importDocument_ImportsImageFilesAsPages_ByDefault()
+            throws FileNotFoundException {
+        String fileName = "RepositoryApiClientIntegrationTest Java ImportTest.jpg";
+        File fileToImport = new File(SMALL_JPEG_FILE_PATH);
+        ImportEntryRequest request = new ImportEntryRequest();
+        request.setName(fileName);
+        request.setAutoRename(true);
+        Entry resultEntry = client.importEntry(new ParametersForImportEntry()
+                .setRepositoryId(repositoryId)
+                .setEntryId(testClassParentFolder.getId())
+                .setInputStream(new FileInputStream(fileToImport))
+                .setRequestBody(request));
+
+        assertNotNull(resultEntry);
+        int createdEntryId = resultEntry.getId();
+        assertTrue(createdEntryId > 0);
+
+        // Call GetEntry API to verify imported entry
+        Entry entry = client.getEntry(new ParametersForGetEntry().setRepositoryId(repositoryId).setEntryId(createdEntryId));
+        assertEquals(EntryType.DOCUMENT, entry.getEntryType());
+        assertTrue(entry instanceof Document);
+        Document document = (Document) entry;
+        assertEquals("", document.getExtension());
+        assertEquals(1, document.getPageCount());
+        assertEquals(0, document.getElectronicDocumentSize());
+        assertFalse(document.isElectronicDocument());
+        assertEquals("", document.getMimeType());
     }
 
     @Test

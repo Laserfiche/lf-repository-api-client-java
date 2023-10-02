@@ -3,9 +3,7 @@ package com.laserfiche.repository.api.integration;
 import com.laserfiche.repository.api.clients.EntriesClient;
 import com.laserfiche.repository.api.clients.TasksClient;
 import com.laserfiche.repository.api.clients.impl.model.*;
-import com.laserfiche.repository.api.clients.params.ParametersForCreateMultipartUploadUrls;
-import com.laserfiche.repository.api.clients.params.ParametersForListTasks;
-import com.laserfiche.repository.api.clients.params.ParametersForStartImportUploadedParts;
+import com.laserfiche.repository.api.clients.params.*;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,6 +11,8 @@ import org.junit.jupiter.api.Test;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.channels.Channels;
+import java.nio.channels.ReadableByteChannel;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -133,9 +133,7 @@ public class ImportUploadedPartsApiTest extends BaseTest {
         assertNotNull(response2);
         String taskId = response2.getTaskId();
         assertNotNull(taskId);
-try {
-    Thread.sleep(50000);
-}catch (Exception e) {e.printStackTrace();}
+
         TaskCollectionResponse tasks = tasksClient.listTasks(new ParametersForListTasks().setRepositoryId(repositoryId).setTaskIds(taskId));
         assertNotNull(tasks);
         assertEquals(1, tasks.getValue().size());
@@ -145,6 +143,75 @@ try {
         assertTrue(taskProgress.getResult().getEntryId() > 1);
         String uri = taskProgress.getResult().getUri();
         assertNotNull(uri);
+
+        // Export the imported entry to check the imported file size
+        int createdEntryId = taskProgress.getResult().getEntryId();
+        StartExportEntryRequest exportRequestBody = new StartExportEntryRequest();
+        exportRequestBody.setPart(ExportEntryRequestPart.EDOC);
+        StartTaskResponse exportResponse = client.startExportEntry(new ParametersForStartExportEntry()
+                .setRepositoryId(repositoryId)
+                .setEntryId(createdEntryId)
+                .setRequestBody(exportRequestBody));
+
+        assertNotNull(exportResponse);
+        taskId = exportResponse.getTaskId();
+        assertNotNull(taskId);
+
+        tasks = tasksClient.listTasks(new ParametersForListTasks().setRepositoryId(repositoryId).setTaskIds(taskId));
+        assertNotNull(tasks);
+        assertEquals(1, tasks.getValue().size());
+        taskProgress = tasks.getValue().get(0);
+        assertEquals(TaskStatus.COMPLETED, taskProgress.getStatus());
+        assertTrue(taskProgress.getErrors().isEmpty());
+        uri = taskProgress.getResult().getUri();
+        assertNotNull(uri);
+
+        File exportedFile = download(uri, fileName);
+        assertNotNull(exportedFile);
+        assertTrue(exportedFile.isFile());
+        assertEquals(new File(LARGE_PDF_FILE_PATH).length(), exportedFile.length());
+
+        exportedFile.deleteOnExit();
+
+        // Call GetEntry api to check the imported entry
+        Entry entry = client.getEntry(new ParametersForGetEntry().setRepositoryId(repositoryId).setEntryId(createdEntryId));
+        assertEquals(EntryType.DOCUMENT, entry.getEntryType());
+        assertTrue(entry instanceof Document);
+        Document document = (Document) entry;
+        assertEquals("pdf", document.getExtension());
+        assertEquals(85, document.getPageCount());
+        assertEquals(new File(LARGE_PDF_FILE_PATH).length(), document.getElectronicDocumentSize());
+        assertTrue(document.isElectronicDocument());
+        assertEquals(mimeType, document.getMimeType());
+    }
+
+    private File download(String uri, String fileName) {
+        File file = new File(fileName);
+        FileOutputStream outputStream = null;
+        ReadableByteChannel readableByteChannel = null;
+        try {
+             readableByteChannel = Channels.newChannel(new URL(uri).openStream());
+             outputStream = new FileOutputStream(file);
+             outputStream.getChannel().transferFrom(readableByteChannel, 0, Long.MAX_VALUE);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (outputStream != null) {
+                try {
+                    outputStream.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (readableByteChannel != null) {
+                try {
+                    readableByteChannel.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return file;
     }
 
     /*

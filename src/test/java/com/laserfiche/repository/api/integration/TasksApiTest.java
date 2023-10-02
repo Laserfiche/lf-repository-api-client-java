@@ -101,4 +101,85 @@ public class TasksApiTest extends BaseTest {
         assertEquals(TaskStatus.COMPLETED, operationProgressResponse.getValue().get(0).getStatus());
         assertEquals(100, operationProgressResponse.getValue().get(0).getPercentComplete());
     }
+
+    @Test
+    void listTasks_AcceptsMultipleTaskIds() throws InterruptedException {
+        // Create N tasks
+        final int TASK_COUNT = 5;
+        String[] taskIds = new String[TASK_COUNT];
+
+        for (int i = 0; i < TASK_COUNT; i++) {
+            Entry entry =
+                    createEntry(createEntryClient, String.format("RepositoryApiClientIntegrationTest Java ListTasks_%d", i), 1, true);
+            StartTaskResponse startTaskResponse = repositoryApiClient
+                    .getEntriesClient()
+                    .startDeleteEntry(new ParametersForStartDeleteEntry()
+                            .setRepositoryId(repositoryId)
+                            .setEntryId(entry.getId())
+                            .setRequestBody(new StartDeleteEntryRequest()));
+            assertNotNull(startTaskResponse);
+            taskIds[i] = startTaskResponse.getTaskId();
+        }
+
+        // Call listTasks API to get the status of the tasks
+        TaskCollectionResponse taskCollectionResponse =
+                client.listTasks(new ParametersForListTasks()
+                        .setRepositoryId(repositoryId)
+                        .setTaskIds(taskIds));
+
+        assertNotNull(taskCollectionResponse);
+        assertEquals(TASK_COUNT, taskCollectionResponse.getValue().size());
+
+        // Verify all the original taskIds are in the returned response
+        for (String taskId : taskIds) {
+            assertTrue(taskCollectionResponse.getValue().stream().anyMatch(taskProgress -> taskProgress.getId().equals(taskId)));
+        }
+    }
+
+    @Test
+    void listTasks_AcceptsEmptyTaskIds() throws InterruptedException {
+        // Create N tasks
+        final int TASK_COUNT = 5;
+        String[] taskIds = new String[TASK_COUNT];
+
+        for (int i = 0; i < TASK_COUNT; i++) {
+            Entry entry =
+                    createEntry(createEntryClient, String.format("RepositoryApiClientIntegrationTest Java ListTasks_%d", i), 1, true);
+            StartTaskResponse startTaskResponse = repositoryApiClient
+                    .getEntriesClient()
+                    .startDeleteEntry(new ParametersForStartDeleteEntry()
+                            .setRepositoryId(repositoryId)
+                            .setEntryId(entry.getId())
+                            .setRequestBody(new StartDeleteEntryRequest()));
+            assertNotNull(startTaskResponse);
+            taskIds[i] = startTaskResponse.getTaskId();
+        }
+
+        // Call listTasks API to get the status of the tasks
+        TaskCollectionResponse taskCollectionResponse =
+                client.listTasks(new ParametersForListTasks()
+                        .setRepositoryId(repositoryId)
+                        .setTaskIds());
+
+        assertNotNull(taskCollectionResponse);
+        assertTrue(TASK_COUNT <= taskCollectionResponse.getValue().size());
+
+        // Verify all the original taskIds are in the returned response
+        for (String taskId : taskIds) {
+            assertTrue(taskCollectionResponse.getValue().stream().anyMatch(taskProgress -> taskProgress.getId().equals(taskId)));
+        }
+    }
+
+    @Test
+    void listTasks_Ignores_InvalidTaskIds() throws InterruptedException {
+        String invalidTaskId = "ThisIsAnInvalidTaskId";
+
+        TaskCollectionResponse taskCollectionResponse =
+                client.listTasks(new ParametersForListTasks()
+                        .setRepositoryId(repositoryId)
+                        .setTaskIds(invalidTaskId));
+
+        assertNotNull(taskCollectionResponse);
+        assertEquals(0, taskCollectionResponse.getValue().size());
+    }
 }
