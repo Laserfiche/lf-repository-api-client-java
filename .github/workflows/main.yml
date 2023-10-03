@@ -2,14 +2,17 @@ name: lf-repository-api-client-java-CI
 
 on:
   push:
-    branches: [ '\d+.x' ]
+    branches:
+      - v2
   pull_request:
-    branches: [ '\d+.x' ]
+    branches:
+      - v2
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 env:
-  VERSION_PREFIX: '2.0.3'
+  API_VERSION: 'v2'
+  VERSION_PREFIX: '1.0.0'
   GITHUB_PAGES_BRANCH: 'gh-pages'
 
 jobs:
@@ -26,7 +29,7 @@ jobs:
         java-version: '8'
         distribution: 'temurin'
 
-    - name: Build with Maven
+    - name: Build project
       run: mvn -B package -Dmaven.test.skip=true --file pom.xml
 
     - name: Run unit tests
@@ -103,7 +106,7 @@ jobs:
     - name: Move javadoc files to temporary directory
       run: mv ${{ github.workspace }}/target/site/ ${{ github.workspace }}/docs_temp/${{ github.ref_name }}
 
-    - name: Upload a Build Artifact
+    - name: Upload a build artifact
       uses: actions/upload-artifact@v2.3.1
       with:
         name: documentation-artifact
@@ -129,10 +132,10 @@ jobs:
         java-version: '8'
         distribution: 'temurin'
 
-    - name: Build with Maven
+    - name: Build project
       run: mvn -B package -Dmaven.test.skip=true --file pom.xml
 
-    - name: Set up Apache Maven Central
+    - name: Set up OSSRH
       uses: actions/setup-java@v3
       with:
         java-version: '8'
@@ -143,13 +146,13 @@ jobs:
         gpg-private-key: ${{ secrets.OSSRH_GPG_SECRET_KEY }}
         gpg-passphrase: MAVEN_GPG_PASSPHRASE
 
-    - name: Set Java Package Version environment
+    - name: Generate package version
       run: echo "PACKAGE_VERSION=${{ env.VERSION_PREFIX }}-preview-${{ github.run_id }}-SNAPSHOT" >> $GITHUB_ENV
 
-    - name: Set Java Package Version
+    - name: Set package version
       run: mvn versions:set -DnewVersion=${{ env.PACKAGE_VERSION }}
 
-    - name: Publish to Sonatype
+    - name: Publish to OSSRH
       run: mvn clean deploy -Dmaven.test.skip=true -Dgpg.passphrase=${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }}
       env:
         MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
@@ -159,7 +162,7 @@ jobs:
     - name: Tag commit
       uses: rickstaa/action-create-tag@v1
       with:
-        tag: ${{ env.PACKAGE_VERSION }}
+        tag: ${{ env.API_VERSION }}-${{ env.PACKAGE_VERSION }}
         commit_sha: ${{ github.sha }}
         message: Workflow run ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
@@ -179,10 +182,10 @@ jobs:
         java-version: '8'
         distribution: 'temurin'
 
-    - name: Build with Maven
+    - name: Build project
       run: mvn -B package -Dmaven.test.skip=true --file pom.xml
 
-    - name: Set up Apache Maven Central
+    - name: Set up OSSRH
       uses: actions/setup-java@v3
       with:
         java-version: '8'
@@ -193,13 +196,13 @@ jobs:
         gpg-private-key: ${{ secrets.OSSRH_GPG_SECRET_KEY }}
         gpg-passphrase: MAVEN_GPG_PASSPHRASE
 
-    - name: Set Java Package Version environment
+    - name: Generate package version
       run: echo "PACKAGE_VERSION=${{ env.VERSION_PREFIX }}" >> $GITHUB_ENV
 
-    - name: Set Java Package Version
+    - name: Set package version
       run: mvn versions:set -DnewVersion=${{ env.PACKAGE_VERSION }}
 
-    - name: Publish to Maven Central
+    - name: Publish to OSSRH
       run: mvn clean deploy -P release -Dmaven.test.skip=true -Dgpg.passphrase=${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }}
       env:
         MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
@@ -209,12 +212,11 @@ jobs:
     - name: Tag commit
       uses: rickstaa/action-create-tag@v1
       with:
-        tag: ${{ env.PACKAGE_VERSION }}
+        tag: ${{ env.API_VERSION }}-${{ env.PACKAGE_VERSION }}
         commit_sha: ${{ github.sha }}
         message: Workflow run ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
   publish-documentation:
-
     runs-on: ubuntu-latest
     timeout-minutes: 10
     environment: github-pages
@@ -222,41 +224,36 @@ jobs:
     steps:
       - name: Set DOCUMENTATION_VERSION environment variable
         run: |
-          if [[ '${{ github.event_name }}' == 'pull_request' ]]; then
-            echo 'DOCUMENTATION_VERSION=${{ github.base_ref }}' >> $GITHUB_ENV
-          elif [[ '${{ github.ref_protected }}' == 'true' && '${{ github.ref_type }}' == 'branch' ]]; then
-            echo 'DOCUMENTATION_VERSION=${{ github.ref_name }}' >> $GITHUB_ENV
-          else
-            echo '::error::Unable to publish documentation for the current branch.'
-            exit 1
-          fi
-
+          version_prefix=${{ env.VERSION_PREFIX }}
+          major_version=${version_prefix%%.*}
+          documentation_version=$major_version.x
+          echo $documentation_version
+          echo DOCUMENTATION_VERSION=$documentation_version >> $GITHUB_ENV
       - name: Print DOCUMENTATION_VERSION environment variable
         run: |
-          echo 'Publishing documentation to ${{ env.GITHUB_PAGES_BRANCH }} for ${{ env.DOCUMENTATION_VERSION }}.'
-
+          echo 'Publishing documentation to ${{ env.GITHUB_PAGES_BRANCH }} for ${{ env.API_VERSION }} ${{ env.DOCUMENTATION_VERSION }}.'
       - uses: actions/checkout@v3
         with:
           ref: ${{ env.GITHUB_PAGES_BRANCH }}
 
       - name: Delete documentation directory
-        run: rm -f -r ./docs/${{ env.DOCUMENTATION_VERSION }}
+        run: rm -f -r ./docs/${{ env.API_VERSION }}/${{ env.DOCUMENTATION_VERSION }}
 
       - name: Create documentation directory
-        run: mkdir -p ./docs/${{ env.DOCUMENTATION_VERSION }}
+        run: mkdir -p ./docs/${{ env.API_VERSION }}/${{ env.DOCUMENTATION_VERSION }}
 
       - name: Download documentation build artifact
         uses: actions/download-artifact@v3.0.0
         with:
           name: documentation-artifact
-          path: ./docs/${{ env.DOCUMENTATION_VERSION }}
+          path: ./docs/${{ env.API_VERSION }}/${{ env.DOCUMENTATION_VERSION }}
 
-      - name: Create Pull Request
+      - name: Create a pull request
         uses: peter-evans/create-pull-request@v4.2.3
         with:
-          branch: ${{ env.GITHUB_PAGES_BRANCH }}-${{ env.DOCUMENTATION_VERSION }}-patch
+          branch: ${{ env.GITHUB_PAGES_BRANCH }}-${{ env.API_VERSION }}-${{ env.DOCUMENTATION_VERSION }}-patch
           delete-branch: true
-          title: "Automated documentation update for ${{ env.DOCUMENTATION_VERSION }} by action ${{ github.run_id }}"
-          commit-message: "Automated documentation update for ${{ env.DOCUMENTATION_VERSION }} by action ${{ github.run_id }}"
-          body: "Automated documentation update for ${{ env.DOCUMENTATION_VERSION }} by action ${{ github.run_id }}"
+          title: "Automated documentation update for ${{ env.API_VERSION }} ${{ env.DOCUMENTATION_VERSION }} by action ${{ github.run_id }}"
+          commit-message: "Automated documentation update for ${{ env.API_VERSION }} ${{ env.DOCUMENTATION_VERSION }} by action ${{ github.run_id }}"
+          body: "Automated documentation update for ${{ env.API_VERSION }} ${{ env.DOCUMENTATION_VERSION }} by action ${{ github.run_id }}"
           assignees: ${{ github.actor }}
