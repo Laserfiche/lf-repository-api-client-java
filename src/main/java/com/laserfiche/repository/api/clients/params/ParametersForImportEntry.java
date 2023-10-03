@@ -99,6 +99,7 @@ public class ParametersForImportEntry {
     /**
      * Sets the value of the contentType parameter and returns the current object, to enable chaining further setters.
      *
+     * @param contentType The given content type.
      * @return {@link ParametersForImportEntry} The return value
      */
     public ParametersForImportEntry setContentType(String contentType) {
@@ -118,6 +119,7 @@ public class ParametersForImportEntry {
     /**
      * Sets the value of the inputStream parameter and returns the current object, to enable chaining further setters.
      *
+     * @param inputStream The given input stream.
      * @return {@link ParametersForImportEntry} The return value
      */
     public ParametersForImportEntry setInputStream(InputStream inputStream) {
