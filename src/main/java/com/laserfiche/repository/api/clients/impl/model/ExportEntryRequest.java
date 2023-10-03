@@ -36,6 +36,7 @@ public class ExportEntryRequest {
 
     /**
      * Returns the reason id for this audit event.
+     *
      * @return auditReasonId
      */
     @Schema(description = "The reason id for this audit event.")
@@ -54,6 +55,7 @@ public class ExportEntryRequest {
 
     /**
      * Returns the comment for this audit event.
+     *
      * @return auditReasonComment
      */
     @Schema(description = "The comment for this audit event.")
@@ -72,6 +74,7 @@ public class ExportEntryRequest {
 
     /**
      * Returns part
+     *
      * @return part
      */
     @Schema(required = true, description = "")
@@ -90,6 +93,7 @@ public class ExportEntryRequest {
 
     /**
      * Returns imageOptions
+     *
      * @return imageOptions
      */
     @Schema(description = "")
@@ -108,6 +112,7 @@ public class ExportEntryRequest {
 
     /**
      * Returns textOptions
+     *
      * @return textOptions
      */
     @Schema(description = "")

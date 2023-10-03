@@ -27,6 +27,7 @@ public class GetEntryByPathResponse {
 
     /**
      * Returns entry
+     *
      * @return entry
      */
     @Schema(description = "")
@@ -45,6 +46,7 @@ public class GetEntryByPathResponse {
 
     /**
      * Returns ancestorEntry
+     *
      * @return ancestorEntry
      */
     @Schema(description = "")

@@ -21,7 +21,7 @@ public interface AuditReasonsClient {
     /**
      * Returns the next subset of the requested collection, using a nextlink url.
      *
-     * @param nextLink A url that allows retrieving the next subset of the requested collection.
+     * @param nextLink    A url that allows retrieving the next subset of the requested collection.
      * @param maxPageSize Optionally specify the maximum number of items to retrieve.
      * @return {@link AuditReasonCollectionResponse} The return value
      */
@@ -30,9 +30,9 @@ public interface AuditReasonsClient {
     /**
      * Provides the functionality to iteratively (i.e. through paging) call {@link #listAuditReasons listAuditReasons}, and apply a function on the response of each iteration.
      *
-     * @param callback A delegate that will be called each time new data is retrieved. Returns false to stop receiving more data; returns true to be called again if there's more data.
+     * @param callback    A delegate that will be called each time new data is retrieved. Returns false to stop receiving more data; returns true to be called again if there's more data.
      * @param maxPageSize Optionally specify the maximum number of items to retrieve.
-     * @param parameters An object of type {@link ParametersForListAuditReasons} which encapsulates the parameters of {@link #listAuditReasons listAuditReasons} method.
+     * @param parameters  An object of type {@link ParametersForListAuditReasons} which encapsulates the parameters of {@link #listAuditReasons listAuditReasons} method.
      */
     void listAuditReasonsForEach(Function<AuditReasonCollectionResponse, Boolean> callback, Integer maxPageSize, ParametersForListAuditReasons parameters);
 }

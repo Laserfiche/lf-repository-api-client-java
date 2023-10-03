@@ -34,6 +34,7 @@ public class Rule {
 
     /**
      * Returns the IDs of the parent fields in the template according to the form logic rule.
+     *
      * @return ancestors
      */
     @Schema(description = "The IDs of the parent fields in the template according to the form logic rule.")

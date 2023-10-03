@@ -34,6 +34,7 @@ public class SetFieldsRequest {
 
     /**
      * Returns the fields that will be assigned to the entry.
+     *
      * @return fields
      */
     @Schema(description = "The fields that will be assigned to the entry.")

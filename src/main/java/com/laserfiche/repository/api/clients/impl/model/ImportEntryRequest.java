@@ -39,6 +39,7 @@ public class ImportEntryRequest {
 
     /**
      * Returns the name for the imported entry.
+     *
      * @return name
      */
     @Schema(required = true, description = "The name for the imported entry.")
@@ -57,6 +58,7 @@ public class ImportEntryRequest {
 
     /**
      * Returns indicates if the entry should be automatically renamed if an entry already exists with the given name in the folder. The default value is false.
+     *
      * @return autoRename
      */
     @Schema(description = "Indicates if the entry should be automatically renamed if an entry already exists with the given name in the folder. The default value is false.")
@@ -75,6 +77,7 @@ public class ImportEntryRequest {
 
     /**
      * Returns pdfOptions
+     *
      * @return pdfOptions
      */
     @Schema(description = "")
@@ -93,6 +96,7 @@ public class ImportEntryRequest {
 
     /**
      * Returns indicates if the document should be imported as an electronic document (true) or as image pages (false). The default value is false. This option is only applicable when importing the following document types: txt, tif, tiff, bmp, pcx, jpg, jpeg, gif, png.
+     *
      * @return importAsElectronicDocument
      */
     @Schema(description = "Indicates if the document should be imported as an electronic document (true) or as image pages (false). The default value is false. This option is only applicable when importing the following document types: txt, tif, tiff, bmp, pcx, jpg, jpeg, gif, png.")
@@ -111,6 +115,7 @@ public class ImportEntryRequest {
 
     /**
      * Returns metadata
+     *
      * @return metadata
      */
     @Schema(description = "")
@@ -129,6 +134,7 @@ public class ImportEntryRequest {
 
     /**
      * Returns the name of the volume to use. Will use the default parent entry volume if not specified. This is ignored in Laserfiche Cloud.
+     *
      * @return volumeName
      */
     @Schema(description = "The name of the volume to use. Will use the default parent entry volume if not specified. This is ignored in Laserfiche Cloud.")

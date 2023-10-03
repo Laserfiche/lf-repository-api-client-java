@@ -30,6 +30,7 @@ public class AuditReason {
 
     /**
      * Returns the audit reason id.
+     *
      * @return id
      */
     @Schema(description = "The audit reason id.")
@@ -48,6 +49,7 @@ public class AuditReason {
 
     /**
      * Returns the audit reason text.
+     *
      * @return name
      */
     @Schema(description = "The audit reason text.")
@@ -66,6 +68,7 @@ public class AuditReason {
 
     /**
      * Returns auditEventType
+     *
      * @return auditEventType
      */
     @Schema(description = "")

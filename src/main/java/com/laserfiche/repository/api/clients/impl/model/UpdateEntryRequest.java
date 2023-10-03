@@ -30,6 +30,7 @@ public class UpdateEntryRequest {
 
     /**
      * Returns the ID of the parent entry that the entry will be moved to.
+     *
      * @return parentId
      */
     @Schema(description = "The ID of the parent entry that the entry will be moved to.")
@@ -48,6 +49,7 @@ public class UpdateEntryRequest {
 
     /**
      * Returns the name that will be assigned to the entry.
+     *
      * @return name
      */
     @Schema(description = "The name that will be assigned to the entry.")
@@ -66,6 +68,7 @@ public class UpdateEntryRequest {
 
     /**
      * Returns indicates if the entry should be automatically renamed if an entry already exists with the given name in the folder. The default value is false.
+     *
      * @return autoRename
      */
     @Schema(description = "Indicates if the entry should be automatically renamed if an entry already exists with the given name in the folder. The default value is false.")

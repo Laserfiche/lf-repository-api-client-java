@@ -33,6 +33,7 @@ public class LFColor {
 
     /**
      * Returns the alpha channel component, from 0-255.
+     *
      * @return a
      */
     @Schema(description = "The alpha channel component, from 0-255.")
@@ -51,6 +52,7 @@ public class LFColor {
 
     /**
      * Returns the red channel component, from 0-255.
+     *
      * @return r
      */
     @Schema(description = "The red channel component, from 0-255.")
@@ -69,6 +71,7 @@ public class LFColor {
 
     /**
      * Returns the green channel component, from 0-255.
+     *
      * @return g
      */
     @Schema(description = "The green channel component, from 0-255.")
@@ -87,6 +90,7 @@ public class LFColor {
 
     /**
      * Returns the blue channel component from 0-255.
+     *
      * @return b
      */
     @Schema(description = "The blue channel component from 0-255.")

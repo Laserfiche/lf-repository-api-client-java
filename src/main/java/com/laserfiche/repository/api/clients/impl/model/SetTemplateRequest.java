@@ -29,6 +29,7 @@ public class SetTemplateRequest {
 
     /**
      * Returns the template that will be assigned to the entry.
+     *
      * @return templateName
      */
     @Schema(required = true, description = "The template that will be assigned to the entry.")
@@ -55,6 +56,7 @@ public class SetTemplateRequest {
 
     /**
      * Returns the template fields that will be assigned to the entry.
+     *
      * @return fields
      */
     @Schema(description = "The template fields that will be assigned to the entry.")

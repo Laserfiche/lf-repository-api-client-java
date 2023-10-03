@@ -29,6 +29,7 @@ public class CreateMultipartUploadUrlsResponse {
 
     /**
      * Returns a unique identifier for the whole upload process.
+     *
      * @return uploadId
      */
     @Schema(description = "A unique identifier for the whole upload process.")
@@ -55,6 +56,7 @@ public class CreateMultipartUploadUrlsResponse {
 
     /**
      * Returns a list of URLs to which the file chunk should be written.
+     *
      * @return urls
      */
     @Schema(description = "A list of URLs to which the file chunk should be written.")

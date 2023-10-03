@@ -30,6 +30,7 @@ public class StartSearchEntryRequest {
 
     /**
      * Returns the search command to run. The search command should follow the Laserfiche search syntax. https://doc.laserfiche.com/laserfiche.documentation/en-us/Default.htm#Search_Syntax.htm
+     *
      * @return searchCommand
      */
     @Schema(required = true, description = "The search command to run. The search command should follow the Laserfiche search syntax. https://doc.laserfiche.com/laserfiche.documentation/en-us/Default.htm#Search_Syntax.htm")
@@ -48,6 +49,7 @@ public class StartSearchEntryRequest {
 
     /**
      * Returns fuzzyType
+     *
      * @return fuzzyType
      */
     @Schema(description = "")
@@ -66,6 +68,7 @@ public class StartSearchEntryRequest {
 
     /**
      * Returns fuzzy factor (percentage as int or int value).
+     *
      * @return fuzzyFactor
      */
     @Schema(description = "Fuzzy factor (percentage as int or int value).")

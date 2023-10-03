@@ -21,7 +21,7 @@ public enum FieldFormat {
     SCIENTIFIC("Scientific"),
     CUSTOM("Custom");
 
-    private String value;
+    private final String value;
 
     FieldFormat(String value) {
         this.value = value;

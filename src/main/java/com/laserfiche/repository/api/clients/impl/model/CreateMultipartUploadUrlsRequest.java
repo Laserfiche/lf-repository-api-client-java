@@ -36,6 +36,7 @@ public class CreateMultipartUploadUrlsRequest {
 
     /**
      * Returns a unique identifier for the whole upload process.
+     *
      * @return uploadId
      */
     @Schema(description = "A unique identifier for the whole upload process.")
@@ -54,6 +55,7 @@ public class CreateMultipartUploadUrlsRequest {
 
     /**
      * Returns determines the starting position of the requested parts among all the parts associated with this upload. The default value is 1.
+     *
      * @return startingPartNumber
      */
     @Schema(description = "Determines the starting position of the requested parts among all the parts associated with this upload. The default value is 1.")
@@ -72,6 +74,7 @@ public class CreateMultipartUploadUrlsRequest {
 
     /**
      * Returns the value must be in the range [1, 100], meaning that in each call to the CreateMultipartUploadUrls api, a maximum of 100 Upload URLs can be requested. Further, each file chunk written to an Upload URL should be at least 5 MB. There is no minimum size limit for the last chunk.
+     *
      * @return numberOfParts
      */
     @Schema(required = true, description = "The value must be in the range [1, 100], meaning that in each call to the CreateMultipartUploadUrls api, a maximum of 100 Upload URLs can be requested. Further, each file chunk written to an Upload URL should be at least 5 MB. There is no minimum size limit for the last chunk.")
@@ -90,6 +93,7 @@ public class CreateMultipartUploadUrlsRequest {
 
     /**
      * Returns the name of the file to be uploaded. The file extension in the name will be used as the extension of the imported entry.
+     *
      * @return fileName
      */
     @Schema(description = "The name of the file to be uploaded. The file extension in the name will be used as the extension of the imported entry.")
@@ -108,6 +112,7 @@ public class CreateMultipartUploadUrlsRequest {
 
     /**
      * Returns the mime-type of the file to be uploaded.
+     *
      * @return mimeType
      */
     @Schema(description = "The mime-type of the file to be uploaded.")

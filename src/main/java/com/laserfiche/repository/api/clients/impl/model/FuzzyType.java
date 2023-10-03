@@ -10,7 +10,7 @@ public enum FuzzyType {
 
     NONE("None"), PERCENTAGE("Percentage"), NUMBER_OF_LETTERS("NumberOfLetters");
 
-    private String value;
+    private final String value;
 
     FuzzyType(String value) {
         this.value = value;

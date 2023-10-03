@@ -25,7 +25,7 @@ public enum HitType {
     ANNOTATION_COMMENT("AnnotationComment"),
     ATTACHMENT("Attachment");
 
-    private String value;
+    private final String value;
 
     HitType(String value) {
         this.value = value;

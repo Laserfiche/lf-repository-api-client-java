@@ -26,7 +26,7 @@ public interface TemplateDefinitionsClient {
     /**
      * Returns the next subset of the requested collection, using a nextlink url.
      *
-     * @param nextLink A url that allows retrieving the next subset of the requested collection.
+     * @param nextLink    A url that allows retrieving the next subset of the requested collection.
      * @param maxPageSize Optionally specify the maximum number of items to retrieve.
      * @return {@link TemplateDefinitionCollectionResponse} The return value
      */
@@ -35,9 +35,9 @@ public interface TemplateDefinitionsClient {
     /**
      * Provides the functionality to iteratively (i.e. through paging) call {@link #listTemplateDefinitions listTemplateDefinitions}, and apply a function on the response of each iteration.
      *
-     * @param callback A delegate that will be called each time new data is retrieved. Returns false to stop receiving more data; returns true to be called again if there's more data.
+     * @param callback    A delegate that will be called each time new data is retrieved. Returns false to stop receiving more data; returns true to be called again if there's more data.
      * @param maxPageSize Optionally specify the maximum number of items to retrieve.
-     * @param parameters An object of type {@link ParametersForListTemplateDefinitions} which encapsulates the parameters of {@link #listTemplateDefinitions listTemplateDefinitions} method.
+     * @param parameters  An object of type {@link ParametersForListTemplateDefinitions} which encapsulates the parameters of {@link #listTemplateDefinitions listTemplateDefinitions} method.
      */
     void listTemplateDefinitionsForEach(Function<TemplateDefinitionCollectionResponse, Boolean> callback, Integer maxPageSize, ParametersForListTemplateDefinitions parameters);
 
@@ -52,7 +52,7 @@ public interface TemplateDefinitionsClient {
     /**
      * Returns the next subset of the requested collection, using a nextlink url.
      *
-     * @param nextLink A url that allows retrieving the next subset of the requested collection.
+     * @param nextLink    A url that allows retrieving the next subset of the requested collection.
      * @param maxPageSize Optionally specify the maximum number of items to retrieve.
      * @return {@link TemplateFieldDefinitionCollectionResponse} The return value
      */
@@ -61,9 +61,9 @@ public interface TemplateDefinitionsClient {
     /**
      * Provides the functionality to iteratively (i.e. through paging) call {@link #listTemplateFieldDefinitionsByTemplateName listTemplateFieldDefinitionsByTemplateName}, and apply a function on the response of each iteration.
      *
-     * @param callback A delegate that will be called each time new data is retrieved. Returns false to stop receiving more data; returns true to be called again if there's more data.
+     * @param callback    A delegate that will be called each time new data is retrieved. Returns false to stop receiving more data; returns true to be called again if there's more data.
      * @param maxPageSize Optionally specify the maximum number of items to retrieve.
-     * @param parameters An object of type {@link ParametersForListTemplateFieldDefinitionsByTemplateName} which encapsulates the parameters of {@link #listTemplateFieldDefinitionsByTemplateName listTemplateFieldDefinitionsByTemplateName} method.
+     * @param parameters  An object of type {@link ParametersForListTemplateFieldDefinitionsByTemplateName} which encapsulates the parameters of {@link #listTemplateFieldDefinitionsByTemplateName listTemplateFieldDefinitionsByTemplateName} method.
      */
     void listTemplateFieldDefinitionsByTemplateNameForEach(Function<TemplateFieldDefinitionCollectionResponse, Boolean> callback, Integer maxPageSize, ParametersForListTemplateFieldDefinitionsByTemplateName parameters);
 
@@ -86,7 +86,7 @@ public interface TemplateDefinitionsClient {
     /**
      * Returns the next subset of the requested collection, using a nextlink url.
      *
-     * @param nextLink A url that allows retrieving the next subset of the requested collection.
+     * @param nextLink    A url that allows retrieving the next subset of the requested collection.
      * @param maxPageSize Optionally specify the maximum number of items to retrieve.
      * @return {@link TemplateFieldDefinitionCollectionResponse} The return value
      */
@@ -95,9 +95,9 @@ public interface TemplateDefinitionsClient {
     /**
      * Provides the functionality to iteratively (i.e. through paging) call {@link #listTemplateFieldDefinitionsByTemplateId listTemplateFieldDefinitionsByTemplateId}, and apply a function on the response of each iteration.
      *
-     * @param callback A delegate that will be called each time new data is retrieved. Returns false to stop receiving more data; returns true to be called again if there's more data.
+     * @param callback    A delegate that will be called each time new data is retrieved. Returns false to stop receiving more data; returns true to be called again if there's more data.
      * @param maxPageSize Optionally specify the maximum number of items to retrieve.
-     * @param parameters An object of type {@link ParametersForListTemplateFieldDefinitionsByTemplateId} which encapsulates the parameters of {@link #listTemplateFieldDefinitionsByTemplateId listTemplateFieldDefinitionsByTemplateId} method.
+     * @param parameters  An object of type {@link ParametersForListTemplateFieldDefinitionsByTemplateId} which encapsulates the parameters of {@link #listTemplateFieldDefinitionsByTemplateId listTemplateFieldDefinitionsByTemplateId} method.
      */
     void listTemplateFieldDefinitionsByTemplateIdForEach(Function<TemplateFieldDefinitionCollectionResponse, Boolean> callback, Integer maxPageSize, ParametersForListTemplateFieldDefinitionsByTemplateId parameters);
 }

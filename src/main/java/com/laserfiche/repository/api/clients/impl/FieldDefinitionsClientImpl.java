@@ -33,9 +33,9 @@ public class FieldDefinitionsClientImpl extends ApiClient implements FieldDefini
     }
 
     private FieldDefinitionCollectionResponse doListFieldDefinitions(String url, ParametersForListFieldDefinitions parameters) {
-        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String", "String", "String", "int", "int", "boolean" }, new String[] { "culture", "$select", "$orderby", "$top", "$skip", "$count" }, new Object[] { parameters.getCulture(), parameters.getSelect(), parameters.getOrderby(), parameters.getTop(), parameters.getSkip(), parameters.isCount() });
-        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String" }, new String[] { "repositoryId" }, new Object[] { parameters.getRepositoryId() });
-        Map<String, Object> headerParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String" }, new String[] { "prefer" }, new Object[] { parameters.getPrefer() });
+        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "String", "String", "int", "int", "boolean"}, new String[]{"culture", "$select", "$orderby", "$top", "$skip", "$count"}, new Object[]{parameters.getCulture(), parameters.getSelect(), parameters.getOrderby(), parameters.getTop(), parameters.getSkip(), parameters.isCount()});
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"}, new String[]{"repositoryId"}, new Object[]{parameters.getRepositoryId()});
+        Map<String, Object> headerParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"}, new String[]{"prefer"}, new Object[]{parameters.getPrefer()});
         Map<String, String> headerParametersWithStringTypeValue = headerParameters.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, e -> (String) e.getValue()));
         Function<HttpResponse<Object>, FieldDefinitionCollectionResponse> parseResponse = (HttpResponse<Object> httpResponse) -> {
             Object body = httpResponse.getBody();
@@ -78,8 +78,8 @@ public class FieldDefinitionsClientImpl extends ApiClient implements FieldDefini
 
     @Override
     public FieldDefinition getFieldDefinition(ParametersForGetFieldDefinition parameters) {
-        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String", "String" }, new String[] { "culture", "$select" }, new Object[] { parameters.getCulture(), parameters.getSelect() });
-        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String", "int" }, new String[] { "repositoryId", "fieldId" }, new Object[] { parameters.getRepositoryId(), parameters.getFieldId() });
+        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "String"}, new String[]{"culture", "$select"}, new Object[]{parameters.getCulture(), parameters.getSelect()});
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int"}, new String[]{"repositoryId", "fieldId"}, new Object[]{parameters.getRepositoryId(), parameters.getFieldId()});
         Function<HttpResponse<Object>, FieldDefinition> parseResponse = (HttpResponse<Object> httpResponse) -> {
             Object body = httpResponse.getBody();
             Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());

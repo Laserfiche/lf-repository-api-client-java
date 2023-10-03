@@ -34,6 +34,7 @@ public class CancelTasksResponse {
 
     /**
      * Returns value
+     *
      * @return value
      */
     @Schema(description = "")

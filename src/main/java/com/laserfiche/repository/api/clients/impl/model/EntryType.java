@@ -10,7 +10,7 @@ public enum EntryType {
 
     FOLDER("Folder"), RECORD_SERIES("RecordSeries"), DOCUMENT("Document"), SHORTCUT("Shortcut");
 
-    private String value;
+    private final String value;
 
     EntryType(String value) {
         this.value = value;

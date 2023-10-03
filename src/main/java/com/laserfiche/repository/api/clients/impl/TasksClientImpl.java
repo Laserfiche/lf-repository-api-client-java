@@ -27,8 +27,8 @@ public class TasksClientImpl extends ApiClient implements TasksClient {
 
     @Override
     public TaskCollectionResponse listTasks(ParametersForListTasks parameters) {
-        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String[]" }, new String[] { "taskIds" }, new Object[] { parameters.getTaskIds() });
-        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String" }, new String[] { "repositoryId" }, new Object[] { parameters.getRepositoryId() });
+        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String[]"}, new String[]{"taskIds"}, new Object[]{parameters.getTaskIds()});
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"}, new String[]{"repositoryId"}, new Object[]{parameters.getRepositoryId()});
         Function<HttpResponse<Object>, TaskCollectionResponse> parseResponse = (HttpResponse<Object> httpResponse) -> {
             Object body = httpResponse.getBody();
             Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
@@ -50,13 +50,13 @@ public class TasksClientImpl extends ApiClient implements TasksClient {
                 throw ApiClientUtils.createApiException(httpResponse, problemDetails);
             }
         };
-        return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler, baseUrl + "/v2/Repositories/{repositoryId}/Tasks", "GET", null, null, "taskIds", (queryParameters.get("taskIds") != null) ? (queryParameters.get("taskIds") instanceof String ? Arrays.asList(queryParameters.remove("taskIds")) : (List) queryParameters.remove("taskIds")) : new ArrayList(), queryParameters, pathParameters, new HashMap<String, String>(), false, parseResponse);
+        return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler, baseUrl + "/v2/Repositories/{repositoryId}/Tasks", "GET", null, null, "taskIds", (queryParameters.get("taskIds") != null) ? (queryParameters.get("taskIds") instanceof String ? Collections.singletonList(queryParameters.remove("taskIds")) : (List) queryParameters.remove("taskIds")) : new ArrayList(), queryParameters, pathParameters, new HashMap<String, String>(), false, parseResponse);
     }
 
     @Override
     public CancelTasksResponse cancelTasks(ParametersForCancelTasks parameters) {
-        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String[]" }, new String[] { "taskIds" }, new Object[] { parameters.getTaskIds() });
-        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String" }, new String[] { "repositoryId" }, new Object[] { parameters.getRepositoryId() });
+        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String[]"}, new String[]{"taskIds"}, new Object[]{parameters.getTaskIds()});
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"}, new String[]{"repositoryId"}, new Object[]{parameters.getRepositoryId()});
         Function<HttpResponse<Object>, CancelTasksResponse> parseResponse = (HttpResponse<Object> httpResponse) -> {
             Object body = httpResponse.getBody();
             Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
@@ -78,6 +78,6 @@ public class TasksClientImpl extends ApiClient implements TasksClient {
                 throw ApiClientUtils.createApiException(httpResponse, problemDetails);
             }
         };
-        return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler, baseUrl + "/v2/Repositories/{repositoryId}/Tasks", "DELETE", null, null, "taskIds", (queryParameters.get("taskIds") != null) ? (queryParameters.get("taskIds") instanceof String ? Arrays.asList(queryParameters.remove("taskIds")) : (List) queryParameters.remove("taskIds")) : new ArrayList(), queryParameters, pathParameters, new HashMap<String, String>(), false, parseResponse);
+        return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler, baseUrl + "/v2/Repositories/{repositoryId}/Tasks", "DELETE", null, null, "taskIds", (queryParameters.get("taskIds") != null) ? (queryParameters.get("taskIds") instanceof String ? Collections.singletonList(queryParameters.remove("taskIds")) : (List) queryParameters.remove("taskIds")) : new ArrayList(), queryParameters, pathParameters, new HashMap<String, String>(), false, parseResponse);
     }
 }

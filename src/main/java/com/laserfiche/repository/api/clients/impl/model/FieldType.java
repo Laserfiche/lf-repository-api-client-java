@@ -18,7 +18,7 @@ public enum FieldType {
     STRING("String"),
     TIME("Time");
 
-    private String value;
+    private final String value;
 
     FieldType(String value) {
         this.value = value;

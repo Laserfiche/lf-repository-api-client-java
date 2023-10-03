@@ -32,6 +32,7 @@ public class AttributeCollectionResponse {
 
     /**
      * Returns a URL to retrieve the next page of the requested collection.
+     *
      * @return _atOdataNextLink
      */
     @Schema(description = "A URL to retrieve the next page of the requested collection.")
@@ -50,6 +51,7 @@ public class AttributeCollectionResponse {
 
     /**
      * Returns the total count of items within a collection.
+     *
      * @return _atOdataCount
      */
     @Schema(description = "The total count of items within a collection.")
@@ -76,6 +78,7 @@ public class AttributeCollectionResponse {
 
     /**
      * Returns value
+     *
      * @return value
      */
     @Schema(description = "")

@@ -50,6 +50,7 @@ public class BaseTest {
     protected static final String LARGE_PDF_FILE_PATH = "src/test/java/com/laserfiche/repository/api/integration/testFiles/60MB.pdf";
     protected static final String SMALL_TEXT_FILE_PATH = "src/test/java/com/laserfiche/repository/api/integration/testFiles/test.txt";
     protected static final String SMALL_JPEG_FILE_PATH = "src/test/java/com/laserfiche/repository/api/integration/testFiles/test.jpg";
+
     @BeforeAll
     public static void setUp() {
         Dotenv.configure()
@@ -103,11 +104,11 @@ public class BaseTest {
         if (repositoryApiClient == null) {
             if (authorizationType.equals(AuthorizationType.CLOUD_ACCESS_KEY)) {
                 if (!nullOrEmpty(servicePrincipalKey) && accessKey != null)
-                repositoryApiClient = RepositoryApiClientImpl.createFromAccessKey(servicePrincipalKey, accessKey);
+                    repositoryApiClient = RepositoryApiClientImpl.createFromAccessKey(servicePrincipalKey, accessKey);
             } else if (authorizationType.equals(AuthorizationType.API_SERVER_USERNAME_PASSWORD)) {
                 if (!nullOrEmpty(repositoryId) && !nullOrEmpty(username) && !nullOrEmpty(password) && !nullOrEmpty(baseUrl))
                     repositoryApiClient =
-                        RepositoryApiClientImpl.createFromUsernamePassword(repositoryId, username, password, baseUrl);
+                            RepositoryApiClientImpl.createFromUsernamePassword(repositoryId, username, password, baseUrl);
             }
             repositoryApiClient.setDefaultRequestHeaders(testHeaders);
         }

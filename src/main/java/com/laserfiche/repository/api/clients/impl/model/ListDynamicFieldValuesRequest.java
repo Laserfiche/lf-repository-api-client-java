@@ -29,6 +29,7 @@ public class ListDynamicFieldValuesRequest {
 
     /**
      * Returns the template id.
+     *
      * @return templateId
      */
     @Schema(required = true, description = "The template id.")
@@ -55,6 +56,7 @@ public class ListDynamicFieldValuesRequest {
 
     /**
      * Returns the dynamic fields.
+     *
      * @return fieldValues
      */
     @Schema(description = "The dynamic fields.")

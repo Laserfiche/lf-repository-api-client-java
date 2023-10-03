@@ -36,6 +36,7 @@ public class CreateEntryRequest {
 
     /**
      * Returns the name of the entry.
+     *
      * @return name
      */
     @Schema(required = true, description = "The name of the entry.")
@@ -54,6 +55,7 @@ public class CreateEntryRequest {
 
     /**
      * Returns indicates if the entry should be automatically renamed if an entry already exists with the given name in the folder. The default value is false.
+     *
      * @return autoRename
      */
     @Schema(description = "Indicates if the entry should be automatically renamed if an entry already exists with the given name in the folder. The default value is false.")
@@ -72,6 +74,7 @@ public class CreateEntryRequest {
 
     /**
      * Returns entryType
+     *
      * @return entryType
      */
     @Schema(required = true, description = "")
@@ -90,6 +93,7 @@ public class CreateEntryRequest {
 
     /**
      * Returns the TargetId is only needed for creating a shortcut. This will be the entry ID of the shortcut target.
+     *
      * @return targetId
      */
     @Schema(description = "The TargetId is only needed for creating a shortcut. This will be the entry ID of the shortcut target.")
@@ -108,6 +112,7 @@ public class CreateEntryRequest {
 
     /**
      * Returns the name of the volume to use. Will use the default parent entry volume if not specified. This is ignored in Laserfiche Cloud.
+     *
      * @return volumeName
      */
     @Schema(description = "The name of the volume to use. Will use the default parent entry volume if not specified. This is ignored in Laserfiche Cloud.")

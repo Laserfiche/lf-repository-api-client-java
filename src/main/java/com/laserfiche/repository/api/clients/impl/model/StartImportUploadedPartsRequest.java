@@ -47,6 +47,7 @@ public class StartImportUploadedPartsRequest {
 
     /**
      * Returns the UploadId received when calling the CreateMultipartUploadUrls API to request upload URLs.
+     *
      * @return uploadId
      */
     @Schema(required = true, description = "The UploadId received when calling the CreateMultipartUploadUrls API to request upload URLs.")
@@ -70,6 +71,7 @@ public class StartImportUploadedPartsRequest {
 
     /**
      * Returns the array of the ETag values received when writing the file chunks into the upload URLs. The ETag values should be in the order of their associated upload URLs, i.e. {eTag received when writing to the first URL}, {eTag received when writing to the second URL}, ...
+     *
      * @return partETags
      */
     @Schema(required = true, description = "The array of the ETag values received when writing the file chunks into the upload URLs. The ETag values should be in the order of their associated upload URLs, i.e. {eTag received when writing to the first URL}, {eTag received when writing to the second URL}, ...")
@@ -88,6 +90,7 @@ public class StartImportUploadedPartsRequest {
 
     /**
      * Returns the name for the imported entry.
+     *
      * @return name
      */
     @Schema(required = true, description = "The name for the imported entry.")
@@ -106,6 +109,7 @@ public class StartImportUploadedPartsRequest {
 
     /**
      * Returns indicates if the entry should be automatically renamed if an entry already exists with the given name in the folder. The default value is false.
+     *
      * @return autoRename
      */
     @Schema(description = "Indicates if the entry should be automatically renamed if an entry already exists with the given name in the folder. The default value is false.")
@@ -124,6 +128,7 @@ public class StartImportUploadedPartsRequest {
 
     /**
      * Returns pdfOptions
+     *
      * @return pdfOptions
      */
     @Schema(description = "")
@@ -142,6 +147,7 @@ public class StartImportUploadedPartsRequest {
 
     /**
      * Returns indicates if the document should be imported as an electronic document (true) or as image pages (false). The default value is false. This option is only applicable when importing the following document types: txt, tif, tiff, bmp, pcx, jpg, jpeg, gif, png.
+     *
      * @return importAsElectronicDocument
      */
     @Schema(description = "Indicates if the document should be imported as an electronic document (true) or as image pages (false). The default value is false. This option is only applicable when importing the following document types: txt, tif, tiff, bmp, pcx, jpg, jpeg, gif, png.")
@@ -160,6 +166,7 @@ public class StartImportUploadedPartsRequest {
 
     /**
      * Returns metadata
+     *
      * @return metadata
      */
     @Schema(description = "")
@@ -178,6 +185,7 @@ public class StartImportUploadedPartsRequest {
 
     /**
      * Returns the name of the volume to use. Will use the default parent entry volume if not specified. This is ignored in Laserfiche Cloud.
+     *
      * @return volumeName
      */
     @Schema(description = "The name of the volume to use. Will use the default parent entry volume if not specified. This is ignored in Laserfiche Cloud.")

@@ -42,6 +42,7 @@ public class ExportEntryRequestImageOptions {
 
     /**
      * Returns format
+     *
      * @return format
      */
     @Schema(description = "")
@@ -60,6 +61,7 @@ public class ExportEntryRequestImageOptions {
 
     /**
      * Returns the quality level for JPEG compression when exporting images. The value must be between 0 and 100 (inclusive). The default value is 70.
+     *
      * @return jpegCompressionLevel
      */
     @Schema(description = "The quality level for JPEG compression when exporting images. The value must be between 0 and 100 (inclusive). The default value is 70.")
@@ -78,6 +80,7 @@ public class ExportEntryRequestImageOptions {
 
     /**
      * Returns indicates if the annotations need to be included. The default value is true.
+     *
      * @return includeAnnotations
      */
     @Schema(description = "Indicates if the annotations need to be included. The default value is true.")
@@ -96,6 +99,7 @@ public class ExportEntryRequestImageOptions {
 
     /**
      * Returns indicates if the annotations on the image need to be converted to PDF annotations when exporting to PDF format. The default value is true. This option is only applicable when exporting to PDF format and IncludeAnnotations is true.
+     *
      * @return convertPdfAnnotations
      */
     @Schema(description = "Indicates if the annotations on the image need to be converted to PDF annotations when exporting to PDF format. The default value is true. This option is only applicable when exporting to PDF format and IncludeAnnotations is true.")
@@ -114,6 +118,7 @@ public class ExportEntryRequestImageOptions {
 
     /**
      * Returns the page prefix of the individual files, when exporting to multi-file format (e.g.zip). The value must have a length of at most 10 characters and only valid characters that can be included in file names are allowed. The default value is \&quot;, Page \&quot;.
+     *
      * @return pagePrefix
      */
     @Schema(description = "The page prefix of the individual files, when exporting to multi-file format (e.g.zip). The value must have a length of at most 10 characters and only valid characters that can be included in file names are allowed. The default value is \", Page \".")
@@ -132,6 +137,7 @@ public class ExportEntryRequestImageOptions {
 
     /**
      * Returns indicates if redactions are included. The default value is true.
+     *
      * @return includeRedactions
      */
     @Schema(description = "Indicates if redactions are included. The default value is true.")
@@ -150,6 +156,7 @@ public class ExportEntryRequestImageOptions {
 
     /**
      * Returns watermark
+     *
      * @return watermark
      */
     @Schema(description = "")

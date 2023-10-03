@@ -34,6 +34,7 @@ public class SetLinksRequest {
 
     /**
      * Returns the links that will be assigned to the entry.
+     *
      * @return links
      */
     @Schema(description = "The links that will be assigned to the entry.")

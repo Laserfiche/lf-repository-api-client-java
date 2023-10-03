@@ -35,6 +35,7 @@ public class LinkToUpdate {
 
     /**
      * Returns the id of the link definition to be assigned to the entry.
+     *
      * @return linkDefinitionId
      */
     @Schema(required = true, description = "The id of the link definition to be assigned to the entry.")
@@ -53,6 +54,7 @@ public class LinkToUpdate {
 
     /**
      * Returns the id of the other entry to be linked to the entry.
+     *
      * @return otherEntryId
      */
     @Schema(required = true, description = "The id of the other entry to be linked to the entry.")
@@ -71,6 +73,7 @@ public class LinkToUpdate {
 
     /**
      * Returns whether the entry is the source for the link. The default value is true.
+     *
      * @return isSource
      */
     @Schema(description = "Whether the entry is the source for the link. The default value is true.")
@@ -98,6 +101,7 @@ public class LinkToUpdate {
 
     /**
      * Returns custom properties (key, value pairs) to be added to the link.
+     *
      * @return customProperties
      */
     @Schema(description = "Custom properties (key, value pairs) to be added to the link.")

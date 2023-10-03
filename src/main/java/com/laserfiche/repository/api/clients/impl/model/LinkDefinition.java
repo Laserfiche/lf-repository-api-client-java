@@ -33,6 +33,7 @@ public class LinkDefinition {
 
     /**
      * Returns the ID of the link definition.
+     *
      * @return id
      */
     @Schema(description = "The ID of the link definition.")
@@ -51,6 +52,7 @@ public class LinkDefinition {
 
     /**
      * Returns the label for the source entry in the link definition.
+     *
      * @return sourceLabel
      */
     @Schema(description = "The label for the source entry in the link definition.")
@@ -69,6 +71,7 @@ public class LinkDefinition {
 
     /**
      * Returns the label for the target entry in the link definition.
+     *
      * @return targetLabel
      */
     @Schema(description = "The label for the target entry in the link definition.")
@@ -87,6 +90,7 @@ public class LinkDefinition {
 
     /**
      * Returns the description of the link definition.
+     *
      * @return description
      */
     @Schema(description = "The description of the link definition.")

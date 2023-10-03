@@ -10,7 +10,7 @@ public enum ExportEntryRequestImageFormat {
 
     MULTI_PAGE_TIFF("MultiPageTIFF"), SINGLE_PAGE_TIFF("SinglePageTIFF"), PNG("PNG"), PDF("PDF"), JPEG("JPEG");
 
-    private String value;
+    private final String value;
 
     ExportEntryRequestImageFormat(String value) {
         this.value = value;

@@ -10,7 +10,7 @@ public enum ExportEntryRequestPart {
 
     IMAGE("Image"), TEXT("Text"), EDOC("Edoc");
 
-    private String value;
+    private final String value;
 
     ExportEntryRequestPart(String value) {
         this.value = value;

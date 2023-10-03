@@ -33,9 +33,9 @@ public class AttributesClientImpl extends ApiClient implements AttributesClient 
     }
 
     private AttributeCollectionResponse doListAttributes(String url, ParametersForListAttributes parameters) {
-        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "boolean", "String", "String", "int", "int", "boolean" }, new String[] { "everyone", "$select", "$orderby", "$top", "$skip", "$count" }, new Object[] { parameters.isEveryone(), parameters.getSelect(), parameters.getOrderby(), parameters.getTop(), parameters.getSkip(), parameters.isCount() });
-        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String" }, new String[] { "repositoryId" }, new Object[] { parameters.getRepositoryId() });
-        Map<String, Object> headerParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String" }, new String[] { "prefer" }, new Object[] { parameters.getPrefer() });
+        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"boolean", "String", "String", "int", "int", "boolean"}, new String[]{"everyone", "$select", "$orderby", "$top", "$skip", "$count"}, new Object[]{parameters.isEveryone(), parameters.getSelect(), parameters.getOrderby(), parameters.getTop(), parameters.getSkip(), parameters.isCount()});
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"}, new String[]{"repositoryId"}, new Object[]{parameters.getRepositoryId()});
+        Map<String, Object> headerParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"}, new String[]{"prefer"}, new Object[]{parameters.getPrefer()});
         Map<String, String> headerParametersWithStringTypeValue = headerParameters.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, e -> (String) e.getValue()));
         Function<HttpResponse<Object>, AttributeCollectionResponse> parseResponse = (HttpResponse<Object> httpResponse) -> {
             Object body = httpResponse.getBody();
@@ -78,8 +78,8 @@ public class AttributesClientImpl extends ApiClient implements AttributesClient 
 
     @Override
     public Attribute getAttribute(ParametersForGetAttribute parameters) {
-        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "boolean" }, new String[] { "everyone" }, new Object[] { parameters.isEveryone() });
-        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String", "String" }, new String[] { "repositoryId", "attributeKey" }, new Object[] { parameters.getRepositoryId(), parameters.getAttributeKey() });
+        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"boolean"}, new String[]{"everyone"}, new Object[]{parameters.isEveryone()});
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "String"}, new String[]{"repositoryId", "attributeKey"}, new Object[]{parameters.getRepositoryId(), parameters.getAttributeKey()});
         Function<HttpResponse<Object>, Attribute> parseResponse = (HttpResponse<Object> httpResponse) -> {
             Object body = httpResponse.getBody();
             Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());

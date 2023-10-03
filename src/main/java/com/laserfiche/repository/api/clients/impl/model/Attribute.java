@@ -27,6 +27,7 @@ public class Attribute {
 
     /**
      * Returns the attribute key.
+     *
      * @return key
      */
     @Schema(description = "The attribute key.")
@@ -45,6 +46,7 @@ public class Attribute {
 
     /**
      * Returns the attribute value.
+     *
      * @return value
      */
     @Schema(description = "The attribute value.")

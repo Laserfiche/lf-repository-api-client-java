@@ -10,7 +10,7 @@ public enum TaskStatus {
 
     NOT_STARTED("NotStarted"), IN_PROGRESS("InProgress"), COMPLETED("Completed"), FAILED("Failed"), CANCELLED("Cancelled");
 
-    private String value;
+    private final String value;
 
     TaskStatus(String value) {
         this.value = value;

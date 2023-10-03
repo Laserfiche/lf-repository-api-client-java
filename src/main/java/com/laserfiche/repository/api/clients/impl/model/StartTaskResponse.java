@@ -24,6 +24,7 @@ public class StartTaskResponse {
 
     /**
      * Returns a task ID that can be used to check on the status of the task.
+     *
      * @return taskId
      */
     @Schema(description = "A task ID that can be used to check on the status of the task.")

@@ -27,6 +27,7 @@ public class StartDeleteEntryRequest {
 
     /**
      * Returns the reason id for this audit event.
+     *
      * @return auditReasonId
      */
     @Schema(description = "The reason id for this audit event.")
@@ -45,6 +46,7 @@ public class StartDeleteEntryRequest {
 
     /**
      * Returns the comment for this audit event.
+     *
      * @return auditReasonComment
      */
     @Schema(description = "The comment for this audit event.")

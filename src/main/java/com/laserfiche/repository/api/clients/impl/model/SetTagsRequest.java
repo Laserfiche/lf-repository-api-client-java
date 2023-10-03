@@ -34,6 +34,7 @@ public class SetTagsRequest {
 
     /**
      * Returns the tag names to assign to the entry.
+     *
      * @return tags
      */
     @Schema(description = "The tag names to assign to the entry.")

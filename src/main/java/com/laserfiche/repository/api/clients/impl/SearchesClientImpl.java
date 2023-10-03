@@ -30,7 +30,7 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
 
     @Override
     public StartTaskResponse startSearchEntry(ParametersForStartSearchEntry parameters) {
-        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String" }, new String[] { "repositoryId" }, new Object[] { parameters.getRepositoryId() });
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"}, new String[]{"repositoryId"}, new Object[]{parameters.getRepositoryId()});
         Function<HttpResponse<Object>, StartTaskResponse> parseResponse = (HttpResponse<Object> httpResponse) -> {
             Object body = httpResponse.getBody();
             Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
@@ -61,9 +61,9 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
     }
 
     private SearchContextHitCollectionResponse doListSearchContextHits(String url, ParametersForListSearchContextHits parameters) {
-        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String", "String", "int", "int", "boolean" }, new String[] { "$select", "$orderby", "$top", "$skip", "$count" }, new Object[] { parameters.getSelect(), parameters.getOrderby(), parameters.getTop(), parameters.getSkip(), parameters.isCount() });
-        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String", "String", "int" }, new String[] { "repositoryId", "taskId", "rowNumber" }, new Object[] { parameters.getRepositoryId(), parameters.getTaskId(), parameters.getRowNumber() });
-        Map<String, Object> headerParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String" }, new String[] { "prefer" }, new Object[] { parameters.getPrefer() });
+        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "String", "int", "int", "boolean"}, new String[]{"$select", "$orderby", "$top", "$skip", "$count"}, new Object[]{parameters.getSelect(), parameters.getOrderby(), parameters.getTop(), parameters.getSkip(), parameters.isCount()});
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "String", "int"}, new String[]{"repositoryId", "taskId", "rowNumber"}, new Object[]{parameters.getRepositoryId(), parameters.getTaskId(), parameters.getRowNumber()});
+        Map<String, Object> headerParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"}, new String[]{"prefer"}, new Object[]{parameters.getPrefer()});
         Map<String, String> headerParametersWithStringTypeValue = headerParameters.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, e -> (String) e.getValue()));
         Function<HttpResponse<Object>, SearchContextHitCollectionResponse> parseResponse = (HttpResponse<Object> httpResponse) -> {
             Object body = httpResponse.getBody();
@@ -110,9 +110,9 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
     }
 
     private EntryCollectionResponse doListSearchResults(String url, ParametersForListSearchResults parameters) {
-        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "boolean", "boolean", "String[]", "boolean", "String", "String", "String", "int", "int", "boolean" }, new String[] { "groupByEntryType", "refresh", "fields", "formatFieldValues", "culture", "$select", "$orderby", "$top", "$skip", "$count" }, new Object[] { parameters.isGroupByEntryType(), parameters.isRefresh(), parameters.getFields(), parameters.isFormatFieldValues(), parameters.getCulture(), parameters.getSelect(), parameters.getOrderby(), parameters.getTop(), parameters.getSkip(), parameters.isCount() });
-        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String", "String" }, new String[] { "repositoryId", "taskId" }, new Object[] { parameters.getRepositoryId(), parameters.getTaskId() });
-        Map<String, Object> headerParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String" }, new String[] { "prefer" }, new Object[] { parameters.getPrefer() });
+        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"boolean", "boolean", "String[]", "boolean", "String", "String", "String", "int", "int", "boolean"}, new String[]{"groupByEntryType", "refresh", "fields", "formatFieldValues", "culture", "$select", "$orderby", "$top", "$skip", "$count"}, new Object[]{parameters.isGroupByEntryType(), parameters.isRefresh(), parameters.getFields(), parameters.isFormatFieldValues(), parameters.getCulture(), parameters.getSelect(), parameters.getOrderby(), parameters.getTop(), parameters.getSkip(), parameters.isCount()});
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "String"}, new String[]{"repositoryId", "taskId"}, new Object[]{parameters.getRepositoryId(), parameters.getTaskId()});
+        Map<String, Object> headerParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"}, new String[]{"prefer"}, new Object[]{parameters.getPrefer()});
         Map<String, String> headerParametersWithStringTypeValue = headerParameters.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, e -> (String) e.getValue()));
         Function<HttpResponse<Object>, EntryCollectionResponse> parseResponse = (HttpResponse<Object> httpResponse) -> {
             Object body = httpResponse.getBody();
@@ -135,7 +135,7 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
                 throw ApiClientUtils.createApiException(httpResponse, problemDetails);
             }
         };
-        return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler, url, "GET", null, null, "fields", (queryParameters.get("fields") != null) ? (queryParameters.get("fields") instanceof String ? Arrays.asList(queryParameters.remove("fields")) : (List) queryParameters.remove("fields")) : new ArrayList(), queryParameters, pathParameters, headerParametersWithStringTypeValue, false, parseResponse);
+        return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler, url, "GET", null, null, "fields", (queryParameters.get("fields") != null) ? (queryParameters.get("fields") instanceof String ? Collections.singletonList(queryParameters.remove("fields")) : (List) queryParameters.remove("fields")) : new ArrayList(), queryParameters, pathParameters, headerParametersWithStringTypeValue, false, parseResponse);
     }
 
     @Override

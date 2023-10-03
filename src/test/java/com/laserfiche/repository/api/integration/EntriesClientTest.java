@@ -25,11 +25,11 @@ class EntriesClientTest extends BaseTest {
 
     private static Entry testClassParentFolder;
 
-    private String rootPath = "\\";
+    private final String rootPath = "\\";
 
-    private String nonExistingPath = "\\Non Existing Path";
+    private final String nonExistingPath = "\\Non Existing Path";
 
-    private List<Entry> createdEntries = new ArrayList<>();
+    private final List<Entry> createdEntries = new ArrayList<>();
 
     @BeforeEach
     void perTestSetup() {
@@ -824,6 +824,7 @@ class EntriesClientTest extends BaseTest {
         assertEquals(0, entry.getTemplateId());
         assertEquals("", entry.getTemplateName());
     }
+
     @Test
     void setLinksWorks() {
         Entry sourceEntry = createEntry(repositoryApiClient, "RepositoryApiClientIntegrationTest Java SetLinks Source", 1, true);

@@ -33,6 +33,7 @@ public class ImportEntryRequestPdfOptions {
 
     /**
      * Returns indicates if the import operation should generate text. The default value is false.
+     *
      * @return generateText
      */
     @Schema(description = "Indicates if the import operation should generate text. The default value is false.")
@@ -51,6 +52,7 @@ public class ImportEntryRequestPdfOptions {
 
     /**
      * Returns indicates if the import operation should generate image pages. The default value is false.
+     *
      * @return generatePages
      */
     @Schema(description = "Indicates if the import operation should generate image pages. The default value is false.")
@@ -69,6 +71,7 @@ public class ImportEntryRequestPdfOptions {
 
     /**
      * Returns generatePagesImageType
+     *
      * @return generatePagesImageType
      */
     @Schema(description = "")
@@ -87,6 +90,7 @@ public class ImportEntryRequestPdfOptions {
 
     /**
      * Returns indicates if the PDF file should be retained as an electronic document after generating image pages. The default value is true. This option is only applicable when GeneratePages is true.
+     *
      * @return keepPdfAfterImport
      */
     @Schema(description = "Indicates if the PDF file should be retained as an electronic document after generating image pages. The default value is true. This option is only applicable when GeneratePages is true.")

@@ -18,7 +18,7 @@ public enum WatermarkPosition {
     BOTTOM_CENTER("BottomCenter"),
     BOTTOM_RIGHT("BottomRight");
 
-    private String value;
+    private final String value;
 
     WatermarkPosition(String value) {
         this.value = value;

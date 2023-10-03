@@ -47,6 +47,7 @@ public class Field {
 
     /**
      * Returns the name of the field.
+     *
      * @return name
      */
     @Schema(description = "The name of the field.")
@@ -65,6 +66,7 @@ public class Field {
 
     /**
      * Returns fieldType
+     *
      * @return fieldType
      */
     @Schema(description = "")
@@ -83,6 +85,7 @@ public class Field {
 
     /**
      * Returns the ID of the field.
+     *
      * @return id
      */
     @Schema(description = "The ID of the field.")
@@ -101,6 +104,7 @@ public class Field {
 
     /**
      * Returns a boolean indicating if the represented field supports multiple values.
+     *
      * @return isMultiValue
      */
     @Schema(description = "A boolean indicating if the represented field supports multiple values.")
@@ -120,6 +124,7 @@ public class Field {
 
     /**
      * Returns a boolean indicating if the represented field must have a value set on entries assigned to a template that the field is a member of.
+     *
      * @return isRequired
      */
     @Schema(description = "A boolean indicating if the represented field must have a value set on entries assigned to a template that the field is a member of.")
@@ -139,6 +144,7 @@ public class Field {
 
     /**
      * Returns a boolean indicating if there are more field values.
+     *
      * @return hasMoreValues
      */
     @Schema(description = "A boolean indicating if there are more field values.")
@@ -157,6 +163,7 @@ public class Field {
 
     /**
      * Returns the group id of the multi value field group. If the field is not a part of a multi value field group, then there is no group id.
+     *
      * @return groupId
      */
     @Schema(description = "The group id of the multi value field group. If the field is not a part of a multi value field group, then there is no group id.")
@@ -183,6 +190,7 @@ public class Field {
 
     /**
      * Returns the values assigned to the field.
+     *
      * @return values
      */
     @Schema(description = "The values assigned to the field.")

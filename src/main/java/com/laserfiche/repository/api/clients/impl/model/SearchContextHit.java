@@ -66,6 +66,7 @@ public class SearchContextHit {
 
     /**
      * Returns hitType
+     *
      * @return hitType
      */
     @Schema(description = "")
@@ -84,6 +85,7 @@ public class SearchContextHit {
 
     /**
      * Returns a boolean indicating if this context hit occurs on an annotation.
+     *
      * @return isAnnotationHit
      */
     @Schema(description = "A boolean indicating if this context hit occurs on an annotation.")
@@ -103,6 +105,7 @@ public class SearchContextHit {
 
     /**
      * Returns the ID of the annotation that the context hit is in.
+     *
      * @return annotationId
      */
     @Schema(description = "The ID of the annotation that the context hit is in.")
@@ -121,6 +124,7 @@ public class SearchContextHit {
 
     /**
      * Returns the page number in the document of the search hit&#x27;s context.
+     *
      * @return pageNumber
      */
     @Schema(description = "The page number in the document of the search hit's context.")
@@ -139,6 +143,7 @@ public class SearchContextHit {
 
     /**
      * Returns the offset from the beginning of the page of the starting character of the search hit&#x27;s context line.
+     *
      * @return pageOffset
      */
     @Schema(description = "The offset from the beginning of the page of the starting character of the search hit's context line.")
@@ -157,6 +162,7 @@ public class SearchContextHit {
 
     /**
      * Returns the line of context for the search hit.
+     *
      * @return context
      */
     @Schema(description = "The line of context for the search hit.")
@@ -175,6 +181,7 @@ public class SearchContextHit {
 
     /**
      * Returns the character offset from the beginning of the context line of the start of the first highlight.
+     *
      * @return highlight1Offset
      */
     @Schema(description = "The character offset from the beginning of the context line of the start of the first highlight.")
@@ -193,6 +200,7 @@ public class SearchContextHit {
 
     /**
      * Returns the length of the first highlight in characters.
+     *
      * @return highlight1Length
      */
     @Schema(description = "The length of the first highlight in characters.")
@@ -211,6 +219,7 @@ public class SearchContextHit {
 
     /**
      * Returns the character offset from the beginning of the context line of the start of the second highlight.
+     *
      * @return highlight2Offset
      */
     @Schema(description = "The character offset from the beginning of the context line of the start of the second highlight.")
@@ -229,6 +238,7 @@ public class SearchContextHit {
 
     /**
      * Returns the length of the second highlight in characters.
+     *
      * @return highlight2Length
      */
     @Schema(description = "The length of the second highlight in characters.")
@@ -247,6 +257,7 @@ public class SearchContextHit {
 
     /**
      * Returns the number of words in the context hit.
+     *
      * @return hitWidth
      */
     @Schema(description = "The number of words in the context hit.")
@@ -265,6 +276,7 @@ public class SearchContextHit {
 
     /**
      * Returns the number of hits in the electronic document.
+     *
      * @return edocHitCount
      */
     @Schema(description = "The number of hits in the electronic document.")
@@ -283,6 +295,7 @@ public class SearchContextHit {
 
     /**
      * Returns the number of hits in the template.
+     *
      * @return fieldHitCount
      */
     @Schema(description = "The number of hits in the template.")
@@ -301,6 +314,7 @@ public class SearchContextHit {
 
     /**
      * Returns the name of a template field containing the hit.
+     *
      * @return fieldName
      */
     @Schema(description = "The name of a template field containing the hit.")
@@ -319,6 +333,7 @@ public class SearchContextHit {
 
     /**
      * Returns the hit number.
+     *
      * @return hitNumber
      */
     @Schema(description = "The hit number.")

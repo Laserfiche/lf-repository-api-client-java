@@ -56,7 +56,7 @@ public class RepositoriesClientImpl extends ApiClient implements RepositoriesCli
      * Returns the repository resource list that current user has access to given the API server base URL. Only available in Laserfiche Self-Hosted.
      *
      * @param url API server base URL e.g., https://{APIServerName}/LFRepositoryAPI
-     * @return  Get the repository resource list successfully.
+     * @return Get the repository resource list successfully.
      */
     public static RepositoryCollectionResponse listRepositoriesForSelfHosted(String url) {
         Map<String, String> headerKeyValuePairs = new HashMap<>();

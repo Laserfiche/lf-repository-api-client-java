@@ -10,7 +10,7 @@ public enum AuditEventType {
 
     DELETE_ENTRY("DeleteEntry"), EXPORT_DOCUMENT("ExportDocument");
 
-    private String value;
+    private final String value;
 
     AuditEventType(String value) {
         this.value = value;

@@ -227,9 +227,9 @@ public class ImportUploadedPartsApiTest extends BaseTest {
         FileOutputStream outputStream = null;
         ReadableByteChannel readableByteChannel = null;
         try {
-             readableByteChannel = Channels.newChannel(new URL(uri).openStream());
-             outputStream = new FileOutputStream(file);
-             outputStream.getChannel().transferFrom(readableByteChannel, 0, Long.MAX_VALUE);
+            readableByteChannel = Channels.newChannel(new URL(uri).openStream());
+            outputStream = new FileOutputStream(file);
+            outputStream.getChannel().transferFrom(readableByteChannel, 0, Long.MAX_VALUE);
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -257,7 +257,7 @@ public class ImportUploadedPartsApiTest extends BaseTest {
     private List<String> writeFile(String filePath, List<String> urls) {
         File file = new File(filePath);
         int numberOfParts = urls.size();
-        int partSizeInMB = (int) Math.ceil((double)file.length() / numberOfParts / 1024 / 1024);
+        int partSizeInMB = (int) Math.ceil((double) file.length() / numberOfParts / 1024 / 1024);
         List<String> eTags = new ArrayList<>(urls.size());
         try (FileInputStream inputStream = new FileInputStream(file)) {
             for (String uploadUrl : urls) {

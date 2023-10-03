@@ -62,6 +62,7 @@ public class Link {
 
     /**
      * Returns the ID of the represented link.
+     *
      * @return id
      */
     @Schema(description = "The ID of the represented link.")
@@ -80,6 +81,7 @@ public class Link {
 
     /**
      * Returns the description for the represented link.
+     *
      * @return description
      */
     @Schema(description = "The description for the represented link.")
@@ -98,6 +100,7 @@ public class Link {
 
     /**
      * Returns the ID of the source entry of the represented link.
+     *
      * @return sourceId
      */
     @Schema(description = "The ID of the source entry of the represented link.")
@@ -116,6 +119,7 @@ public class Link {
 
     /**
      * Returns the full path to the source entry of the represented link.
+     *
      * @return sourceFullPath
      */
     @Schema(description = "The full path to the source entry of the represented link.")
@@ -134,6 +138,7 @@ public class Link {
 
     /**
      * Returns the label for the source entry in the link definition.
+     *
      * @return sourceLabel
      */
     @Schema(description = "The label for the source entry in the link definition.")
@@ -152,6 +157,7 @@ public class Link {
 
     /**
      * Returns the navigation link to the source entry.
+     *
      * @return sourceLink
      */
     @Schema(description = "The navigation link to the source entry.")
@@ -170,6 +176,7 @@ public class Link {
 
     /**
      * Returns the ID of the target entry of the represented link.
+     *
      * @return targetId
      */
     @Schema(description = "The ID of the target entry of the represented link.")
@@ -188,6 +195,7 @@ public class Link {
 
     /**
      * Returns the full path to the target entry of the represented link.
+     *
      * @return targetFullPath
      */
     @Schema(description = "The full path to the target entry of the represented link.")
@@ -206,6 +214,7 @@ public class Link {
 
     /**
      * Returns the label for the target entry in the link definition.
+     *
      * @return targetLabel
      */
     @Schema(description = "The label for the target entry in the link definition.")
@@ -224,6 +233,7 @@ public class Link {
 
     /**
      * Returns the navigation link to the target entry.
+     *
      * @return targetLink
      */
     @Schema(description = "The navigation link to the target entry.")
@@ -242,6 +252,7 @@ public class Link {
 
     /**
      * Returns the ID of the link definition.
+     *
      * @return linkDefinitionId
      */
     @Schema(description = "The ID of the link definition.")
@@ -260,6 +271,7 @@ public class Link {
 
     /**
      * Returns the description of the link definition.
+     *
      * @return linkDefinitionDescription
      */
     @Schema(description = "The description of the link definition.")
@@ -286,6 +298,7 @@ public class Link {
 
     /**
      * Returns the custom properties for the represented link.
+     *
      * @return customProperties
      */
     @Schema(description = "The custom properties for the represented link.")

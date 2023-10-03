@@ -27,6 +27,7 @@ public class ExportEntryRequestTextOptions {
 
     /**
      * Returns indicates if redactions are included. The default value is true.
+     *
      * @return includeRedactions
      */
     @Schema(description = "Indicates if redactions are included. The default value is true.")
@@ -45,6 +46,7 @@ public class ExportEntryRequestTextOptions {
 
     /**
      * Returns the character that replaces the original character in a redacted text. The value must be a string of length 1 and must not be a whitespace character. The default value is &#x27;X&#x27;.
+     *
      * @return redactionCharacter
      */
     @Schema(description = "The character that replaces the original character in a redacted text. The value must be a string of length 1 and must not be a whitespace character. The default value is 'X'.")

@@ -138,36 +138,36 @@ public class ImportDocumentApiTest extends BaseTest {
             throws FileNotFoundException {
         FileInputStream fileInputStream = null;
         try {
-        String fileName = "RepositoryApiClientIntegrationTest Java ImportTest.txt";
-        File fileToImport = new File(SMALL_TEXT_FILE_PATH);
-        fileInputStream = new FileInputStream(fileToImport);
-        String mimeType = "text/plain";
-        String extension = "txt";
-        ImportEntryRequest request = new ImportEntryRequest();
-        request.setName(fileName);
-        request.setAutoRename(true);
-        request.setImportAsElectronicDocument(true);
-        Entry resultEntry = client.importEntry(new ParametersForImportEntry()
-                .setRepositoryId(repositoryId)
-                .setEntryId(testClassParentFolder.getId())
-                .setInputStream(fileInputStream)
-                .setContentType(mimeType)
-                .setRequestBody(request));
+            String fileName = "RepositoryApiClientIntegrationTest Java ImportTest.txt";
+            File fileToImport = new File(SMALL_TEXT_FILE_PATH);
+            fileInputStream = new FileInputStream(fileToImport);
+            String mimeType = "text/plain";
+            String extension = "txt";
+            ImportEntryRequest request = new ImportEntryRequest();
+            request.setName(fileName);
+            request.setAutoRename(true);
+            request.setImportAsElectronicDocument(true);
+            Entry resultEntry = client.importEntry(new ParametersForImportEntry()
+                    .setRepositoryId(repositoryId)
+                    .setEntryId(testClassParentFolder.getId())
+                    .setInputStream(fileInputStream)
+                    .setContentType(mimeType)
+                    .setRequestBody(request));
 
-        assertNotNull(resultEntry);
-        int createdEntryId = resultEntry.getId();
-        assertTrue(createdEntryId > 0);
+            assertNotNull(resultEntry);
+            int createdEntryId = resultEntry.getId();
+            assertTrue(createdEntryId > 0);
 
-        // Call GetEntry API to verify imported entry
-        Entry entry = client.getEntry(new ParametersForGetEntry().setRepositoryId(repositoryId).setEntryId(createdEntryId));
-        assertEquals(EntryType.DOCUMENT, entry.getEntryType());
-        assertTrue(entry instanceof Document);
-        Document document = (Document) entry;
-        assertEquals(extension, document.getExtension());
-        assertEquals(0, document.getPageCount());
-        assertEquals(new File(SMALL_TEXT_FILE_PATH).length(), document.getElectronicDocumentSize());
-        assertTrue(document.isElectronicDocument());
-        assertEquals(mimeType, document.getMimeType());
+            // Call GetEntry API to verify imported entry
+            Entry entry = client.getEntry(new ParametersForGetEntry().setRepositoryId(repositoryId).setEntryId(createdEntryId));
+            assertEquals(EntryType.DOCUMENT, entry.getEntryType());
+            assertTrue(entry instanceof Document);
+            Document document = (Document) entry;
+            assertEquals(extension, document.getExtension());
+            assertEquals(0, document.getPageCount());
+            assertEquals(new File(SMALL_TEXT_FILE_PATH).length(), document.getElectronicDocumentSize());
+            assertTrue(document.isElectronicDocument());
+            assertEquals(mimeType, document.getMimeType());
         } finally {
             if (fileInputStream != null) {
                 try {

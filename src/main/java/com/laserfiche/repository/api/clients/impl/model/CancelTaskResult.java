@@ -30,6 +30,7 @@ public class CancelTaskResult {
 
     /**
      * Returns the ID of the task which has been subject to cancellation.
+     *
      * @return id
      */
     @Schema(description = "The ID of the task which has been subject to cancellation.")
@@ -48,6 +49,7 @@ public class CancelTaskResult {
 
     /**
      * Returns taskType
+     *
      * @return taskType
      */
     @Schema(description = "")
@@ -66,6 +68,7 @@ public class CancelTaskResult {
 
     /**
      * Returns indicates if the request to cancel the task has been received.
+     *
      * @return result
      */
     @Schema(description = "Indicates if the request to cancel the task has been received.")

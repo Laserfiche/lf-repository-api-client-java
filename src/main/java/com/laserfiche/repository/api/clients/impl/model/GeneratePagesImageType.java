@@ -10,7 +10,7 @@ public enum GeneratePagesImageType {
 
     BLACK_AND_WHITE("BlackAndWhite"), STANDARD_COLOR("StandardColor"), HIGH_QUALITY_COLOR("HighQualityColor");
 
-    private String value;
+    private final String value;
 
     GeneratePagesImageType(String value) {
         this.value = value;

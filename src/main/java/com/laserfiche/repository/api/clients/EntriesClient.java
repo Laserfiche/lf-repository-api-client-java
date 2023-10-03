@@ -30,7 +30,7 @@ public interface EntriesClient {
     /**
      * Returns the next subset of the requested collection, using a nextlink url.
      *
-     * @param nextLink A url that allows retrieving the next subset of the requested collection.
+     * @param nextLink    A url that allows retrieving the next subset of the requested collection.
      * @param maxPageSize Optionally specify the maximum number of items to retrieve.
      * @return {@link FieldCollectionResponse} The return value
      */
@@ -39,9 +39,9 @@ public interface EntriesClient {
     /**
      * Provides the functionality to iteratively (i.e. through paging) call {@link #listFields listFields}, and apply a function on the response of each iteration.
      *
-     * @param callback A delegate that will be called each time new data is retrieved. Returns false to stop receiving more data; returns true to be called again if there's more data.
+     * @param callback    A delegate that will be called each time new data is retrieved. Returns false to stop receiving more data; returns true to be called again if there's more data.
      * @param maxPageSize Optionally specify the maximum number of items to retrieve.
-     * @param parameters An object of type {@link ParametersForListFields} which encapsulates the parameters of {@link #listFields listFields} method.
+     * @param parameters  An object of type {@link ParametersForListFields} which encapsulates the parameters of {@link #listFields listFields} method.
      */
     void listFieldsForEach(Function<FieldCollectionResponse, Boolean> callback, Integer maxPageSize, ParametersForListFields parameters);
 
@@ -136,7 +136,7 @@ public interface EntriesClient {
     /**
      * Returns the next subset of the requested collection, using a nextlink url.
      *
-     * @param nextLink A url that allows retrieving the next subset of the requested collection.
+     * @param nextLink    A url that allows retrieving the next subset of the requested collection.
      * @param maxPageSize Optionally specify the maximum number of items to retrieve.
      * @return {@link LinkCollectionResponse} The return value
      */
@@ -145,9 +145,9 @@ public interface EntriesClient {
     /**
      * Provides the functionality to iteratively (i.e. through paging) call {@link #listLinks listLinks}, and apply a function on the response of each iteration.
      *
-     * @param callback A delegate that will be called each time new data is retrieved. Returns false to stop receiving more data; returns true to be called again if there's more data.
+     * @param callback    A delegate that will be called each time new data is retrieved. Returns false to stop receiving more data; returns true to be called again if there's more data.
      * @param maxPageSize Optionally specify the maximum number of items to retrieve.
-     * @param parameters An object of type {@link ParametersForListLinks} which encapsulates the parameters of {@link #listLinks listLinks} method.
+     * @param parameters  An object of type {@link ParametersForListLinks} which encapsulates the parameters of {@link #listLinks listLinks} method.
      */
     void listLinksForEach(Function<LinkCollectionResponse, Boolean> callback, Integer maxPageSize, ParametersForListLinks parameters);
 
@@ -170,7 +170,7 @@ public interface EntriesClient {
     /**
      * Returns the next subset of the requested collection, using a nextlink url.
      *
-     * @param nextLink A url that allows retrieving the next subset of the requested collection.
+     * @param nextLink    A url that allows retrieving the next subset of the requested collection.
      * @param maxPageSize Optionally specify the maximum number of items to retrieve.
      * @return {@link TagCollectionResponse} The return value
      */
@@ -179,9 +179,9 @@ public interface EntriesClient {
     /**
      * Provides the functionality to iteratively (i.e. through paging) call {@link #listTags listTags}, and apply a function on the response of each iteration.
      *
-     * @param callback A delegate that will be called each time new data is retrieved. Returns false to stop receiving more data; returns true to be called again if there's more data.
+     * @param callback    A delegate that will be called each time new data is retrieved. Returns false to stop receiving more data; returns true to be called again if there's more data.
      * @param maxPageSize Optionally specify the maximum number of items to retrieve.
-     * @param parameters An object of type {@link ParametersForListTags} which encapsulates the parameters of {@link #listTags listTags} method.
+     * @param parameters  An object of type {@link ParametersForListTags} which encapsulates the parameters of {@link #listTags listTags} method.
      */
     void listTagsForEach(Function<TagCollectionResponse, Boolean> callback, Integer maxPageSize, ParametersForListTags parameters);
 
@@ -244,7 +244,7 @@ public interface EntriesClient {
     /**
      * Returns the next subset of the requested collection, using a nextlink url.
      *
-     * @param nextLink A url that allows retrieving the next subset of the requested collection.
+     * @param nextLink    A url that allows retrieving the next subset of the requested collection.
      * @param maxPageSize Optionally specify the maximum number of items to retrieve.
      * @return {@link EntryCollectionResponse} The return value
      */
@@ -253,9 +253,9 @@ public interface EntriesClient {
     /**
      * Provides the functionality to iteratively (i.e. through paging) call {@link #listEntries listEntries}, and apply a function on the response of each iteration.
      *
-     * @param callback A delegate that will be called each time new data is retrieved. Returns false to stop receiving more data; returns true to be called again if there's more data.
+     * @param callback    A delegate that will be called each time new data is retrieved. Returns false to stop receiving more data; returns true to be called again if there's more data.
      * @param maxPageSize Optionally specify the maximum number of items to retrieve.
-     * @param parameters An object of type {@link ParametersForListEntries} which encapsulates the parameters of {@link #listEntries listEntries} method.
+     * @param parameters  An object of type {@link ParametersForListEntries} which encapsulates the parameters of {@link #listEntries listEntries} method.
      */
     void listEntriesForEach(Function<EntryCollectionResponse, Boolean> callback, Integer maxPageSize, ParametersForListEntries parameters);
 

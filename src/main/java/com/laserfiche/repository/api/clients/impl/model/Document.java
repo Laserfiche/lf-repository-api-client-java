@@ -41,6 +41,7 @@ public class Document extends Entry {
 
     /**
      * Returns the size of the electronic document attached to the represented document, if there is one, in bytes.
+     *
      * @return electronicDocumentSize
      */
     @Schema(description = "The size of the electronic document attached to the represented document, if there is one, in bytes.")
@@ -59,6 +60,7 @@ public class Document extends Entry {
 
     /**
      * Returns the extension for the document.
+     *
      * @return extension
      */
     @Schema(description = "The extension for the document.")
@@ -77,6 +79,7 @@ public class Document extends Entry {
 
     /**
      * Returns a boolean indicating if there is an electronic document attached to the represented document.
+     *
      * @return isElectronicDocument
      */
     @Schema(description = "A boolean indicating if there is an electronic document attached to the represented document.")
@@ -96,6 +99,7 @@ public class Document extends Entry {
 
     /**
      * Returns a boolean indicating if the represented document is a record.
+     *
      * @return isRecord
      */
     @Schema(description = "A boolean indicating if the represented document is a record.")
@@ -115,6 +119,7 @@ public class Document extends Entry {
 
     /**
      * Returns the MIME type of the electronic document.
+     *
      * @return mimeType
      */
     @Schema(description = "The MIME type of the electronic document.")
@@ -133,6 +138,7 @@ public class Document extends Entry {
 
     /**
      * Returns the page count of the represented document.
+     *
      * @return pageCount
      */
     @Schema(description = "The page count of the represented document.")
@@ -151,6 +157,7 @@ public class Document extends Entry {
 
     /**
      * Returns a boolean indicating if the represented document is checked out.
+     *
      * @return isCheckedOut
      */
     @Schema(description = "A boolean indicating if the represented document is checked out.")
@@ -170,6 +177,7 @@ public class Document extends Entry {
 
     /**
      * Returns a boolean indicating if the represented document is under version control.
+     *
      * @return isUnderVersionControl
      */
     @Schema(description = "A boolean indicating if the represented document is under version control.")

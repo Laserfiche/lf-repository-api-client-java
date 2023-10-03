@@ -10,7 +10,7 @@ public enum CreateEntryRequestEntryType {
 
     FOLDER("Folder"), SHORTCUT("Shortcut");
 
-    private String value;
+    private final String value;
 
     CreateEntryRequestEntryType(String value) {
         this.value = value;

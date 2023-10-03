@@ -26,6 +26,7 @@ public class Shortcut extends Entry {
 
     /**
      * Returns the entry ID of the shortcut target.
+     *
      * @return targetId
      */
     @Schema(description = "The entry ID of the shortcut target.")
@@ -44,6 +45,7 @@ public class Shortcut extends Entry {
 
     /**
      * Returns the extension of the shortcut target.
+     *
      * @return extension
      */
     @Schema(description = "The extension of the shortcut target.")
@@ -62,6 +64,7 @@ public class Shortcut extends Entry {
 
     /**
      * Returns targetType
+     *
      * @return targetType
      */
     @Schema(description = "")

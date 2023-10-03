@@ -31,7 +31,7 @@ public interface TagDefinitionsClient {
     /**
      * Returns the next subset of the requested collection, using a nextlink url.
      *
-     * @param nextLink A url that allows retrieving the next subset of the requested collection.
+     * @param nextLink    A url that allows retrieving the next subset of the requested collection.
      * @param maxPageSize Optionally specify the maximum number of items to retrieve.
      * @return {@link TagDefinitionCollectionResponse} The return value
      */
@@ -40,9 +40,9 @@ public interface TagDefinitionsClient {
     /**
      * Provides the functionality to iteratively (i.e. through paging) call {@link #listTagDefinitions listTagDefinitions}, and apply a function on the response of each iteration.
      *
-     * @param callback A delegate that will be called each time new data is retrieved. Returns false to stop receiving more data; returns true to be called again if there's more data.
+     * @param callback    A delegate that will be called each time new data is retrieved. Returns false to stop receiving more data; returns true to be called again if there's more data.
      * @param maxPageSize Optionally specify the maximum number of items to retrieve.
-     * @param parameters An object of type {@link ParametersForListTagDefinitions} which encapsulates the parameters of {@link #listTagDefinitions listTagDefinitions} method.
+     * @param parameters  An object of type {@link ParametersForListTagDefinitions} which encapsulates the parameters of {@link #listTagDefinitions listTagDefinitions} method.
      */
     void listTagDefinitionsForEach(Function<TagDefinitionCollectionResponse, Boolean> callback, Integer maxPageSize, ParametersForListTagDefinitions parameters);
 }

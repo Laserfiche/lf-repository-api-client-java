@@ -33,6 +33,7 @@ public class StartCopyEntryRequest {
 
     /**
      * Returns the name of the entry.
+     *
      * @return name
      */
     @Schema(required = true, description = "The name of the entry.")
@@ -51,6 +52,7 @@ public class StartCopyEntryRequest {
 
     /**
      * Returns indicates if the entry should be automatically renamed if an entry already exists with the given name in the folder. The default value is false.
+     *
      * @return autoRename
      */
     @Schema(description = "Indicates if the entry should be automatically renamed if an entry already exists with the given name in the folder. The default value is false.")
@@ -69,6 +71,7 @@ public class StartCopyEntryRequest {
 
     /**
      * Returns the source entry Id to copy.
+     *
      * @return sourceId
      */
     @Schema(required = true, description = "The source entry Id to copy.")
@@ -87,6 +90,7 @@ public class StartCopyEntryRequest {
 
     /**
      * Returns the name of the volume to use. Will use the default parent entry volume if not specified. This is ignored in Laserfiche Cloud.
+     *
      * @return volumeName
      */
     @Schema(description = "The name of the volume to use. Will use the default parent entry volume if not specified. This is ignored in Laserfiche Cloud.")

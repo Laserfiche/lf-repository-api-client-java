@@ -29,8 +29,8 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override
     public StartTaskResponse startExportEntry(ParametersForStartExportEntry parameters) {
-        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String" }, new String[] { "pageRange" }, new Object[] { parameters.getPageRange() });
-        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String", "int" }, new String[] { "repositoryId", "entryId" }, new Object[] { parameters.getRepositoryId(), parameters.getEntryId() });
+        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"}, new String[]{"pageRange"}, new Object[]{parameters.getPageRange()});
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int"}, new String[]{"repositoryId", "entryId"}, new Object[]{parameters.getRepositoryId(), parameters.getEntryId()});
         Function<HttpResponse<Object>, StartTaskResponse> parseResponse = (HttpResponse<Object> httpResponse) -> {
             Object body = httpResponse.getBody();
             Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
@@ -61,9 +61,9 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
     }
 
     private FieldCollectionResponse doListFields(String url, ParametersForListFields parameters) {
-        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "boolean", "String", "String", "String", "int", "int", "boolean" }, new String[] { "formatFieldValues", "culture", "$select", "$orderby", "$top", "$skip", "$count" }, new Object[] { parameters.isFormatFieldValues(), parameters.getCulture(), parameters.getSelect(), parameters.getOrderby(), parameters.getTop(), parameters.getSkip(), parameters.isCount() });
-        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String", "int" }, new String[] { "repositoryId", "entryId" }, new Object[] { parameters.getRepositoryId(), parameters.getEntryId() });
-        Map<String, Object> headerParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String" }, new String[] { "prefer" }, new Object[] { parameters.getPrefer() });
+        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"boolean", "String", "String", "String", "int", "int", "boolean"}, new String[]{"formatFieldValues", "culture", "$select", "$orderby", "$top", "$skip", "$count"}, new Object[]{parameters.isFormatFieldValues(), parameters.getCulture(), parameters.getSelect(), parameters.getOrderby(), parameters.getTop(), parameters.getSkip(), parameters.isCount()});
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int"}, new String[]{"repositoryId", "entryId"}, new Object[]{parameters.getRepositoryId(), parameters.getEntryId()});
+        Map<String, Object> headerParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"}, new String[]{"prefer"}, new Object[]{parameters.getPrefer()});
         Map<String, String> headerParametersWithStringTypeValue = headerParameters.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, e -> (String) e.getValue()));
         Function<HttpResponse<Object>, FieldCollectionResponse> parseResponse = (HttpResponse<Object> httpResponse) -> {
             Object body = httpResponse.getBody();
@@ -106,8 +106,8 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override
     public FieldCollectionResponse setFields(ParametersForSetFields parameters) {
-        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String" }, new String[] { "culture" }, new Object[] { parameters.getCulture() });
-        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String", "int" }, new String[] { "repositoryId", "entryId" }, new Object[] { parameters.getRepositoryId(), parameters.getEntryId() });
+        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"}, new String[]{"culture"}, new Object[]{parameters.getCulture()});
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int"}, new String[]{"repositoryId", "entryId"}, new Object[]{parameters.getRepositoryId(), parameters.getEntryId()});
         Function<HttpResponse<Object>, FieldCollectionResponse> parseResponse = (HttpResponse<Object> httpResponse) -> {
             Object body = httpResponse.getBody();
             Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
@@ -134,8 +134,8 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override
     public Entry setTemplate(ParametersForSetTemplate parameters) {
-        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String" }, new String[] { "culture" }, new Object[] { parameters.getCulture() });
-        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String", "int" }, new String[] { "repositoryId", "entryId" }, new Object[] { parameters.getRepositoryId(), parameters.getEntryId() });
+        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"}, new String[]{"culture"}, new Object[]{parameters.getCulture()});
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int"}, new String[]{"repositoryId", "entryId"}, new Object[]{parameters.getRepositoryId(), parameters.getEntryId()});
         Function<HttpResponse<Object>, Entry> parseResponse = (HttpResponse<Object> httpResponse) -> {
             Object body = httpResponse.getBody();
             Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
@@ -162,7 +162,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override
     public Entry removeTemplate(ParametersForRemoveTemplate parameters) {
-        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String", "int" }, new String[] { "repositoryId", "entryId" }, new Object[] { parameters.getRepositoryId(), parameters.getEntryId() });
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int"}, new String[]{"repositoryId", "entryId"}, new Object[]{parameters.getRepositoryId(), parameters.getEntryId()});
         Function<HttpResponse<Object>, Entry> parseResponse = (HttpResponse<Object> httpResponse) -> {
             Object body = httpResponse.getBody();
             Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
@@ -189,8 +189,8 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override
     public Entry getEntry(ParametersForGetEntry parameters) {
-        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String" }, new String[] { "$select" }, new Object[] { parameters.getSelect() });
-        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String", "int" }, new String[] { "repositoryId", "entryId" }, new Object[] { parameters.getRepositoryId(), parameters.getEntryId() });
+        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"}, new String[]{"$select"}, new Object[]{parameters.getSelect()});
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int"}, new String[]{"repositoryId", "entryId"}, new Object[]{parameters.getRepositoryId(), parameters.getEntryId()});
         Function<HttpResponse<Object>, Entry> parseResponse = (HttpResponse<Object> httpResponse) -> {
             Object body = httpResponse.getBody();
             Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
@@ -217,8 +217,8 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override
     public Entry updateEntry(ParametersForUpdateEntry parameters) {
-        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String" }, new String[] { "culture" }, new Object[] { parameters.getCulture() });
-        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String", "int" }, new String[] { "repositoryId", "entryId" }, new Object[] { parameters.getRepositoryId(), parameters.getEntryId() });
+        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"}, new String[]{"culture"}, new Object[]{parameters.getCulture()});
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int"}, new String[]{"repositoryId", "entryId"}, new Object[]{parameters.getRepositoryId(), parameters.getEntryId()});
         Function<HttpResponse<Object>, Entry> parseResponse = (HttpResponse<Object> httpResponse) -> {
             Object body = httpResponse.getBody();
             Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
@@ -245,7 +245,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override
     public StartTaskResponse startDeleteEntry(ParametersForStartDeleteEntry parameters) {
-        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String", "int" }, new String[] { "repositoryId", "entryId" }, new Object[] { parameters.getRepositoryId(), parameters.getEntryId() });
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int"}, new String[]{"repositoryId", "entryId"}, new Object[]{parameters.getRepositoryId(), parameters.getEntryId()});
         Function<HttpResponse<Object>, StartTaskResponse> parseResponse = (HttpResponse<Object> httpResponse) -> {
             Object body = httpResponse.getBody();
             Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
@@ -272,7 +272,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override
     public CreateMultipartUploadUrlsResponse createMultipartUploadUrls(ParametersForCreateMultipartUploadUrls parameters) {
-        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String" }, new String[] { "repositoryId" }, new Object[] { parameters.getRepositoryId() });
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"}, new String[]{"repositoryId"}, new Object[]{parameters.getRepositoryId()});
         Function<HttpResponse<Object>, CreateMultipartUploadUrlsResponse> parseResponse = (HttpResponse<Object> httpResponse) -> {
             Object body = httpResponse.getBody();
             Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
@@ -299,8 +299,8 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override
     public Entry importEntry(ParametersForImportEntry parameters) {
-        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String" }, new String[] { "culture" }, new Object[] { parameters.getCulture() });
-        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String", "int" }, new String[] { "repositoryId", "entryId" }, new Object[] { parameters.getRepositoryId(), parameters.getEntryId() });
+        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"}, new String[]{"culture"}, new Object[]{parameters.getCulture()});
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int"}, new String[]{"repositoryId", "entryId"}, new Object[]{parameters.getRepositoryId(), parameters.getEntryId()});
         {
             Map<String, String> headerParametersWithStringTypeValue = new HashMap<String, String>();
             int retryCount = 0;
@@ -381,8 +381,8 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override
     public GetEntryByPathResponse getEntryByPath(ParametersForGetEntryByPath parameters) {
-        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String", "boolean" }, new String[] { "fullPath", "fallbackToClosestAncestor" }, new Object[] { parameters.getFullPath(), parameters.isFallbackToClosestAncestor() });
-        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String" }, new String[] { "repositoryId" }, new Object[] { parameters.getRepositoryId() });
+        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "boolean"}, new String[]{"fullPath", "fallbackToClosestAncestor"}, new Object[]{parameters.getFullPath(), parameters.isFallbackToClosestAncestor()});
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"}, new String[]{"repositoryId"}, new Object[]{parameters.getRepositoryId()});
         Function<HttpResponse<Object>, GetEntryByPathResponse> parseResponse = (HttpResponse<Object> httpResponse) -> {
             Object body = httpResponse.getBody();
             Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
@@ -409,8 +409,8 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override
     public ExportEntryResponse exportEntry(ParametersForExportEntry parameters) {
-        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String" }, new String[] { "pageRange" }, new Object[] { parameters.getPageRange() });
-        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String", "int" }, new String[] { "repositoryId", "entryId" }, new Object[] { parameters.getRepositoryId(), parameters.getEntryId() });
+        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"}, new String[]{"pageRange"}, new Object[]{parameters.getPageRange()});
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int"}, new String[]{"repositoryId", "entryId"}, new Object[]{parameters.getRepositoryId(), parameters.getEntryId()});
         Function<HttpResponse<Object>, ExportEntryResponse> parseResponse = (HttpResponse<Object> httpResponse) -> {
             Object body = httpResponse.getBody();
             Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
@@ -441,9 +441,9 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
     }
 
     private LinkCollectionResponse doListLinks(String url, ParametersForListLinks parameters) {
-        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String", "String", "int", "int", "boolean" }, new String[] { "$select", "$orderby", "$top", "$skip", "$count" }, new Object[] { parameters.getSelect(), parameters.getOrderby(), parameters.getTop(), parameters.getSkip(), parameters.isCount() });
-        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String", "int" }, new String[] { "repositoryId", "entryId" }, new Object[] { parameters.getRepositoryId(), parameters.getEntryId() });
-        Map<String, Object> headerParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String" }, new String[] { "prefer" }, new Object[] { parameters.getPrefer() });
+        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "String", "int", "int", "boolean"}, new String[]{"$select", "$orderby", "$top", "$skip", "$count"}, new Object[]{parameters.getSelect(), parameters.getOrderby(), parameters.getTop(), parameters.getSkip(), parameters.isCount()});
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int"}, new String[]{"repositoryId", "entryId"}, new Object[]{parameters.getRepositoryId(), parameters.getEntryId()});
+        Map<String, Object> headerParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"}, new String[]{"prefer"}, new Object[]{parameters.getPrefer()});
         Map<String, String> headerParametersWithStringTypeValue = headerParameters.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, e -> (String) e.getValue()));
         Function<HttpResponse<Object>, LinkCollectionResponse> parseResponse = (HttpResponse<Object> httpResponse) -> {
             Object body = httpResponse.getBody();
@@ -486,7 +486,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override
     public LinkCollectionResponse setLinks(ParametersForSetLinks parameters) {
-        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String", "int" }, new String[] { "repositoryId", "entryId" }, new Object[] { parameters.getRepositoryId(), parameters.getEntryId() });
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int"}, new String[]{"repositoryId", "entryId"}, new Object[]{parameters.getRepositoryId(), parameters.getEntryId()});
         Function<HttpResponse<Object>, LinkCollectionResponse> parseResponse = (HttpResponse<Object> httpResponse) -> {
             Object body = httpResponse.getBody();
             Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
@@ -517,9 +517,9 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
     }
 
     private TagCollectionResponse doListTags(String url, ParametersForListTags parameters) {
-        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String", "String", "int", "int", "boolean" }, new String[] { "$select", "$orderby", "$top", "$skip", "$count" }, new Object[] { parameters.getSelect(), parameters.getOrderby(), parameters.getTop(), parameters.getSkip(), parameters.isCount() });
-        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String", "int" }, new String[] { "repositoryId", "entryId" }, new Object[] { parameters.getRepositoryId(), parameters.getEntryId() });
-        Map<String, Object> headerParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String" }, new String[] { "prefer" }, new Object[] { parameters.getPrefer() });
+        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "String", "int", "int", "boolean"}, new String[]{"$select", "$orderby", "$top", "$skip", "$count"}, new Object[]{parameters.getSelect(), parameters.getOrderby(), parameters.getTop(), parameters.getSkip(), parameters.isCount()});
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int"}, new String[]{"repositoryId", "entryId"}, new Object[]{parameters.getRepositoryId(), parameters.getEntryId()});
+        Map<String, Object> headerParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"}, new String[]{"prefer"}, new Object[]{parameters.getPrefer()});
         Map<String, String> headerParametersWithStringTypeValue = headerParameters.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, e -> (String) e.getValue()));
         Function<HttpResponse<Object>, TagCollectionResponse> parseResponse = (HttpResponse<Object> httpResponse) -> {
             Object body = httpResponse.getBody();
@@ -562,7 +562,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override
     public TagCollectionResponse setTags(ParametersForSetTags parameters) {
-        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String", "int" }, new String[] { "repositoryId", "entryId" }, new Object[] { parameters.getRepositoryId(), parameters.getEntryId() });
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int"}, new String[]{"repositoryId", "entryId"}, new Object[]{parameters.getRepositoryId(), parameters.getEntryId()});
         Function<HttpResponse<Object>, TagCollectionResponse> parseResponse = (HttpResponse<Object> httpResponse) -> {
             Object body = httpResponse.getBody();
             Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
@@ -589,8 +589,8 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override
     public StartTaskResponse startCopyEntry(ParametersForStartCopyEntry parameters) {
-        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String" }, new String[] { "culture" }, new Object[] { parameters.getCulture() });
-        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String", "int" }, new String[] { "repositoryId", "entryId" }, new Object[] { parameters.getRepositoryId(), parameters.getEntryId() });
+        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"}, new String[]{"culture"}, new Object[]{parameters.getCulture()});
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int"}, new String[]{"repositoryId", "entryId"}, new Object[]{parameters.getRepositoryId(), parameters.getEntryId()});
         Function<HttpResponse<Object>, StartTaskResponse> parseResponse = (HttpResponse<Object> httpResponse) -> {
             Object body = httpResponse.getBody();
             Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
@@ -617,7 +617,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override
     public Entry deleteElectronicDocument(ParametersForDeleteElectronicDocument parameters) {
-        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String", "int" }, new String[] { "repositoryId", "entryId" }, new Object[] { parameters.getRepositoryId(), parameters.getEntryId() });
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int"}, new String[]{"repositoryId", "entryId"}, new Object[]{parameters.getRepositoryId(), parameters.getEntryId()});
         Function<HttpResponse<Object>, Entry> parseResponse = (HttpResponse<Object> httpResponse) -> {
             Object body = httpResponse.getBody();
             Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
@@ -644,8 +644,8 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override
     public Entry deletePages(ParametersForDeletePages parameters) {
-        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String" }, new String[] { "pageRange" }, new Object[] { parameters.getPageRange() });
-        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String", "int" }, new String[] { "repositoryId", "entryId" }, new Object[] { parameters.getRepositoryId(), parameters.getEntryId() });
+        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"}, new String[]{"pageRange"}, new Object[]{parameters.getPageRange()});
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int"}, new String[]{"repositoryId", "entryId"}, new Object[]{parameters.getRepositoryId(), parameters.getEntryId()});
         Function<HttpResponse<Object>, Entry> parseResponse = (HttpResponse<Object> httpResponse) -> {
             Object body = httpResponse.getBody();
             Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
@@ -672,7 +672,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override
     public Map<String, String[]> listDynamicFieldValues(ParametersForListDynamicFieldValues parameters) {
-        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String", "int" }, new String[] { "repositoryId", "entryId" }, new Object[] { parameters.getRepositoryId(), parameters.getEntryId() });
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int"}, new String[]{"repositoryId", "entryId"}, new Object[]{parameters.getRepositoryId(), parameters.getEntryId()});
         Function<HttpResponse<Object>, Map<String, String[]>> parseResponse = (HttpResponse<Object> httpResponse) -> {
             Object body = httpResponse.getBody();
             Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
@@ -699,8 +699,8 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override
     public StartTaskResponse startImportUploadedParts(ParametersForStartImportUploadedParts parameters) {
-        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String" }, new String[] { "culture" }, new Object[] { parameters.getCulture() });
-        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String", "int" }, new String[] { "repositoryId", "entryId" }, new Object[] { parameters.getRepositoryId(), parameters.getEntryId() });
+        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"}, new String[]{"culture"}, new Object[]{parameters.getCulture()});
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int"}, new String[]{"repositoryId", "entryId"}, new Object[]{parameters.getRepositoryId(), parameters.getEntryId()});
         Function<HttpResponse<Object>, StartTaskResponse> parseResponse = (HttpResponse<Object> httpResponse) -> {
             Object body = httpResponse.getBody();
             Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
@@ -731,9 +731,9 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
     }
 
     private EntryCollectionResponse doListEntries(String url, ParametersForListEntries parameters) {
-        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "boolean", "String[]", "boolean", "String", "String", "String", "int", "int", "boolean" }, new String[] { "groupByEntryType", "fields", "formatFieldValues", "culture", "$select", "$orderby", "$top", "$skip", "$count" }, new Object[] { parameters.isGroupByEntryType(), parameters.getFields(), parameters.isFormatFieldValues(), parameters.getCulture(), parameters.getSelect(), parameters.getOrderby(), parameters.getTop(), parameters.getSkip(), parameters.isCount() });
-        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String", "int" }, new String[] { "repositoryId", "entryId" }, new Object[] { parameters.getRepositoryId(), parameters.getEntryId() });
-        Map<String, Object> headerParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String" }, new String[] { "prefer" }, new Object[] { parameters.getPrefer() });
+        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"boolean", "String[]", "boolean", "String", "String", "String", "int", "int", "boolean"}, new String[]{"groupByEntryType", "fields", "formatFieldValues", "culture", "$select", "$orderby", "$top", "$skip", "$count"}, new Object[]{parameters.isGroupByEntryType(), parameters.getFields(), parameters.isFormatFieldValues(), parameters.getCulture(), parameters.getSelect(), parameters.getOrderby(), parameters.getTop(), parameters.getSkip(), parameters.isCount()});
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int"}, new String[]{"repositoryId", "entryId"}, new Object[]{parameters.getRepositoryId(), parameters.getEntryId()});
+        Map<String, Object> headerParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"}, new String[]{"prefer"}, new Object[]{parameters.getPrefer()});
         Map<String, String> headerParametersWithStringTypeValue = headerParameters.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, e -> (String) e.getValue()));
         Function<HttpResponse<Object>, EntryCollectionResponse> parseResponse = (HttpResponse<Object> httpResponse) -> {
             Object body = httpResponse.getBody();
@@ -756,7 +756,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
                 throw ApiClientUtils.createApiException(httpResponse, problemDetails);
             }
         };
-        return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler, url, "GET", null, null, "fields", (queryParameters.get("fields") != null) ? (queryParameters.get("fields") instanceof String ? Arrays.asList(queryParameters.remove("fields")) : (List) queryParameters.remove("fields")) : new ArrayList(), queryParameters, pathParameters, headerParametersWithStringTypeValue, false, parseResponse);
+        return ApiClientUtils.sendRequestWithRetry(httpClient, httpRequestHandler, url, "GET", null, null, "fields", (queryParameters.get("fields") != null) ? (queryParameters.get("fields") instanceof String ? Collections.singletonList(queryParameters.remove("fields")) : (List) queryParameters.remove("fields")) : new ArrayList(), queryParameters, pathParameters, headerParametersWithStringTypeValue, false, parseResponse);
     }
 
     @Override
@@ -776,8 +776,8 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override
     public Entry createEntry(ParametersForCreateEntry parameters) {
-        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String" }, new String[] { "culture" }, new Object[] { parameters.getCulture() });
-        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String", "int" }, new String[] { "repositoryId", "entryId" }, new Object[] { parameters.getRepositoryId(), parameters.getEntryId() });
+        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"}, new String[]{"culture"}, new Object[]{parameters.getCulture()});
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int"}, new String[]{"repositoryId", "entryId"}, new Object[]{parameters.getRepositoryId(), parameters.getEntryId()});
         Function<HttpResponse<Object>, Entry> parseResponse = (HttpResponse<Object> httpResponse) -> {
             Object body = httpResponse.getBody();
             Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
@@ -804,8 +804,8 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
 
     @Override
     public Entry copyEntry(ParametersForCopyEntry parameters) {
-        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String" }, new String[] { "culture" }, new Object[] { parameters.getCulture() });
-        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String", "int" }, new String[] { "repositoryId", "entryId" }, new Object[] { parameters.getRepositoryId(), parameters.getEntryId() });
+        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"}, new String[]{"culture"}, new Object[]{parameters.getCulture()});
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int"}, new String[]{"repositoryId", "entryId"}, new Object[]{parameters.getRepositoryId(), parameters.getEntryId()});
         Function<HttpResponse<Object>, Entry> parseResponse = (HttpResponse<Object> httpResponse) -> {
             Object body = httpResponse.getBody();
             Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());

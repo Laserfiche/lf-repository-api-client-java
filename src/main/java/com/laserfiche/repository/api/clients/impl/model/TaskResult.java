@@ -27,6 +27,7 @@ public class TaskResult {
 
     /**
      * Returns the ID of the entry which is affected (e.g. created or modified) by the execution of the associated task.
+     *
      * @return entryId
      */
     @Schema(description = "The ID of the entry which is affected (e.g. created or modified) by the execution of the associated task.")
@@ -45,6 +46,7 @@ public class TaskResult {
 
     /**
      * Returns the URI which can be used (via api call) to access the result(s) of the associated task.
+     *
      * @return uri
      */
     @Schema(description = "The URI which can be used (via api call) to access the result(s) of the associated task.")

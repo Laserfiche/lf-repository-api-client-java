@@ -55,9 +55,6 @@ class RepositoriesClientTest extends BaseTest {
 
     boolean isCloudEnvironment() {
         AuthorizationType AuthType = AuthorizationType.valueOf(getEnvironmentVariable(AUTHORIZATION_TYPE));
-        if (AuthType == AuthorizationType.API_SERVER_USERNAME_PASSWORD) {
-            return false;
-        }
-        return true;
+        return AuthType != AuthorizationType.API_SERVER_USERNAME_PASSWORD;
     }
 }

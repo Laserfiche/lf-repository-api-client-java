@@ -35,6 +35,7 @@ public class ImportEntryRequestMetadata {
 
     /**
      * Returns the name of the template assigned to the entry.
+     *
      * @return templateName
      */
     @Schema(description = "The name of the template assigned to the entry.")
@@ -61,6 +62,7 @@ public class ImportEntryRequestMetadata {
 
     /**
      * Returns the fields that will be assigned to the entry.
+     *
      * @return fields
      */
     @Schema(description = "The fields that will be assigned to the entry.")
@@ -87,6 +89,7 @@ public class ImportEntryRequestMetadata {
 
     /**
      * Returns the tags that will be assigned to the entry.
+     *
      * @return tags
      */
     @Schema(description = "The tags that will be assigned to the entry.")
@@ -113,6 +116,7 @@ public class ImportEntryRequestMetadata {
 
     /**
      * Returns the links that will be assigned to the entry.
+     *
      * @return links
      */
     @Schema(description = "The links that will be assigned to the entry.")

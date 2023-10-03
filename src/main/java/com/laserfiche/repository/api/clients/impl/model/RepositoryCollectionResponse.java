@@ -34,6 +34,7 @@ public class RepositoryCollectionResponse {
 
     /**
      * Returns value
+     *
      * @return value
      */
     @Schema(description = "")

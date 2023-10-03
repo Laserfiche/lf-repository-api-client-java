@@ -10,7 +10,7 @@ public enum TaskType {
 
     COPY_ENTRY("CopyEntry"), DELETE_ENTRY("DeleteEntry"), EXPORT_ENTRY("ExportEntry"), IMPORT_UPLOADED_PARTS("ImportUploadedParts"), SEARCH_ENTRY("SearchEntry");
 
-    private String value;
+    private final String value;
 
     TaskType(String value) {
         this.value = value;

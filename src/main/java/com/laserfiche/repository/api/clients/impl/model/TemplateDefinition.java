@@ -39,6 +39,7 @@ public class TemplateDefinition {
 
     /**
      * Returns the ID of the template definition.
+     *
      * @return id
      */
     @Schema(description = "The ID of the template definition.")
@@ -57,6 +58,7 @@ public class TemplateDefinition {
 
     /**
      * Returns the name of the template definition.
+     *
      * @return name
      */
     @Schema(description = "The name of the template definition.")
@@ -75,6 +77,7 @@ public class TemplateDefinition {
 
     /**
      * Returns the localized name of the template definition.
+     *
      * @return displayName
      */
     @Schema(description = "The localized name of the template definition.")
@@ -93,6 +96,7 @@ public class TemplateDefinition {
 
     /**
      * Returns the description of the template definition.
+     *
      * @return description
      */
     @Schema(description = "The description of the template definition.")
@@ -111,6 +115,7 @@ public class TemplateDefinition {
 
     /**
      * Returns color
+     *
      * @return color
      */
     @Schema(description = "")
@@ -129,6 +134,7 @@ public class TemplateDefinition {
 
     /**
      * Returns the number of field definitions assigned to the template definition.
+     *
      * @return fieldCount
      */
     @Schema(description = "The number of field definitions assigned to the template definition.")

@@ -24,6 +24,7 @@ public class FolderImportBody {
 
     /**
      * Returns file
+     *
      * @return file
      */
     @Schema(required = true, description = "")
@@ -42,6 +43,7 @@ public class FolderImportBody {
 
     /**
      * Returns request
+     *
      * @return request
      */
     @Schema(required = true, description = "")

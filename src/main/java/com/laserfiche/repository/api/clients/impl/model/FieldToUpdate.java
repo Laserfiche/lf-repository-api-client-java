@@ -29,6 +29,7 @@ public class FieldToUpdate {
 
     /**
      * Returns the name of the field that will be assigned to the entry.
+     *
      * @return name
      */
     @Schema(required = true, description = "The name of the field that will be assigned to the entry.")
@@ -55,6 +56,7 @@ public class FieldToUpdate {
 
     /**
      * Returns the field values that will be assigned to the field.
+     *
      * @return values
      */
     @Schema(description = "The field values that will be assigned to the field.")

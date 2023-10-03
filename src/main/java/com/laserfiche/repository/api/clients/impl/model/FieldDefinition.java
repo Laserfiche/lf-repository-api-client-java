@@ -68,6 +68,7 @@ public class FieldDefinition {
 
     /**
      * Returns the name of the field.
+     *
      * @return name
      */
     @Schema(description = "The name of the field.")
@@ -86,6 +87,7 @@ public class FieldDefinition {
 
     /**
      * Returns the localized name of the field.
+     *
      * @return displayName
      */
     @Schema(description = "The localized name of the field.")
@@ -104,6 +106,7 @@ public class FieldDefinition {
 
     /**
      * Returns the ID of the field.
+     *
      * @return id
      */
     @Schema(description = "The ID of the field.")
@@ -122,6 +125,7 @@ public class FieldDefinition {
 
     /**
      * Returns the description of the field.
+     *
      * @return description
      */
     @Schema(description = "The description of the field.")
@@ -140,6 +144,7 @@ public class FieldDefinition {
 
     /**
      * Returns fieldType
+     *
      * @return fieldType
      */
     @Schema(description = "")
@@ -158,6 +163,7 @@ public class FieldDefinition {
 
     /**
      * Returns the length of the field for variable length data types.
+     *
      * @return length
      */
     @Schema(description = "The length of the field for variable length data types.")
@@ -176,6 +182,7 @@ public class FieldDefinition {
 
     /**
      * Returns the default value of the field for new entries that are assigned to a template the represented field is a member of.
+     *
      * @return defaultValue
      */
     @Schema(description = "The default value of the field for new entries that are assigned to a template the represented field is a member of.")
@@ -194,6 +201,7 @@ public class FieldDefinition {
 
     /**
      * Returns a boolean indicating if the represented template field supports multiple values.
+     *
      * @return isMultiValue
      */
     @Schema(description = "A boolean indicating if the represented template field supports multiple values.")
@@ -213,6 +221,7 @@ public class FieldDefinition {
 
     /**
      * Returns a boolean indicating if the represented field must have a value set on entries assigned to a template that the field is a member of.
+     *
      * @return isRequired
      */
     @Schema(description = "A boolean indicating if the represented field must have a value set on entries assigned to a template that the field is a member of.")
@@ -232,6 +241,7 @@ public class FieldDefinition {
 
     /**
      * Returns the constraint for values stored in the represented field.
+     *
      * @return constraint
      */
     @Schema(description = "The constraint for values stored in the represented field.")
@@ -250,6 +260,7 @@ public class FieldDefinition {
 
     /**
      * Returns the error string that will be returned when the field constraint is violated when setting a value for this field.
+     *
      * @return constraintError
      */
     @Schema(description = "The error string that will be returned when the field constraint is violated when setting a value for this field.")
@@ -276,6 +287,7 @@ public class FieldDefinition {
 
     /**
      * Returns the list of items assigned to the represented field.
+     *
      * @return listValues
      */
     @Schema(description = "The list of items assigned to the represented field.")
@@ -294,6 +306,7 @@ public class FieldDefinition {
 
     /**
      * Returns format
+     *
      * @return format
      */
     @Schema(description = "")
@@ -312,6 +325,7 @@ public class FieldDefinition {
 
     /**
      * Returns the name of the currency that will be using when formatting the represented field when the Format property is set to the Currency member of the WFieldFormat enumeration.
+     *
      * @return currency
      */
     @Schema(description = "The name of the currency that will be using when formatting the represented field when the Format property is set to the Currency member of the WFieldFormat enumeration.")
@@ -330,6 +344,7 @@ public class FieldDefinition {
 
     /**
      * Returns the custom format pattern for fields that are configured to use a custom format.
+     *
      * @return formatPattern
      */
     @Schema(description = "The custom format pattern for fields that are configured to use a custom format.")

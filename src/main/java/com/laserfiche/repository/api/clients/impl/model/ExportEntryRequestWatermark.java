@@ -33,6 +33,7 @@ public class ExportEntryRequestWatermark {
 
     /**
      * Returns the text of the watermark. The value must be a string with a length of at most 100 characters and must not be all whitespace characters.
+     *
      * @return text
      */
     @Schema(description = "The text of the watermark. The value must be a string with a length of at most 100 characters and must not be all whitespace characters.")
@@ -51,6 +52,7 @@ public class ExportEntryRequestWatermark {
 
     /**
      * Returns position
+     *
      * @return position
      */
     @Schema(description = "")
@@ -69,6 +71,7 @@ public class ExportEntryRequestWatermark {
 
     /**
      * Returns the rotation angle of the watermark. The value must be between 0 and 360 (inclusive). The default value is 0.
+     *
      * @return rotationAngle
      */
     @Schema(description = "The rotation angle of the watermark. The value must be between 0 and 360 (inclusive). The default value is 0.")
@@ -87,6 +90,7 @@ public class ExportEntryRequestWatermark {
 
     /**
      * Returns the percentage of the page that the watermark spans on. The value must be between 1 and 100 (inclusive). The default value is 50.
+     *
      * @return pageSpanPercentage
      */
     @Schema(description = "The percentage of the page that the watermark spans on. The value must be between 1 and 100 (inclusive). The default value is 50.")

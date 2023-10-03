@@ -23,6 +23,7 @@ public class Folder extends Entry {
 
     /**
      * Returns a boolean indicating if the folder that this instance represents is known to be a record folder.
+     *
      * @return isRecordFolder
      */
     @Schema(description = "A boolean indicating if the folder that this instance represents is known to be a record folder.")
@@ -42,6 +43,7 @@ public class Folder extends Entry {
 
     /**
      * Returns a boolean indicating if the folder that this instance represents is known to directly or indirectly under a record series in the repository.
+     *
      * @return isUnderRecordSeries
      */
     @Schema(description = "A boolean indicating if the folder that this instance represents is known to directly or indirectly under a record series in the repository.")

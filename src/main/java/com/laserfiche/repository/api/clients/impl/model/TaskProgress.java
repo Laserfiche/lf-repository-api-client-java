@@ -49,6 +49,7 @@ public class TaskProgress {
 
     /**
      * Returns the task ID of the task associated with this TaskProgress.
+     *
      * @return id
      */
     @Schema(description = "The task ID of the task associated with this TaskProgress.")
@@ -67,6 +68,7 @@ public class TaskProgress {
 
     /**
      * Returns taskType
+     *
      * @return taskType
      */
     @Schema(description = "")
@@ -85,6 +87,7 @@ public class TaskProgress {
 
     /**
      * Returns determines what percentage of the execution of the associated task is completed.
+     *
      * @return percentComplete
      */
     @Schema(description = "Determines what percentage of the execution of the associated task is completed.")
@@ -103,6 +106,7 @@ public class TaskProgress {
 
     /**
      * Returns status
+     *
      * @return status
      */
     @Schema(description = "")
@@ -129,6 +133,7 @@ public class TaskProgress {
 
     /**
      * Returns the list of errors occurred during the execution of the associated task.
+     *
      * @return errors
      */
     @Schema(description = "The list of errors occurred during the execution of the associated task.")
@@ -147,6 +152,7 @@ public class TaskProgress {
 
     /**
      * Returns result
+     *
      * @return result
      */
     @Schema(description = "")
@@ -165,6 +171,7 @@ public class TaskProgress {
 
     /**
      * Returns the time representing when the associated task&#x27;s execution started.
+     *
      * @return startTime
      */
     @Schema(description = "The time representing when the associated task's execution started.")
@@ -183,6 +190,7 @@ public class TaskProgress {
 
     /**
      * Returns the time representing when the associated task&#x27;s status last changed.
+     *
      * @return lastUpdateTime
      */
     @Schema(description = "The time representing when the associated task's status last changed.")

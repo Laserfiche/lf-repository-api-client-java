@@ -7,7 +7,7 @@ public enum ErrorSource {
     ACCOUNT_CONTROL_SYSTEM("Account Control System"),
     RWS("RWS");
 
-    private String name;
+    private final String name;
 
     ErrorSource(String name) {
         this.name = name;

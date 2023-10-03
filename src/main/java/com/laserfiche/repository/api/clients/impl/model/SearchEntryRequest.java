@@ -24,6 +24,7 @@ public class SearchEntryRequest {
 
     /**
      * Returns the search command to run. The search command should follow the Laserfiche search syntax. https://doc.laserfiche.com/laserfiche.documentation/en-us/Default.htm#Search_Syntax.htm
+     *
      * @return searchCommand
      */
     @Schema(required = true, description = "The search command to run. The search command should follow the Laserfiche search syntax. https://doc.laserfiche.com/laserfiche.documentation/en-us/Default.htm#Search_Syntax.htm")

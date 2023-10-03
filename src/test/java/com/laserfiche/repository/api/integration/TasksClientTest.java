@@ -37,8 +37,8 @@ public class TasksClientTest extends BaseTest {
         waitUntilTaskEnds(taskId);
 
         CancelTasksResponse response = client.cancelTasks(new ParametersForCancelTasks()
-                    .setRepositoryId(repositoryId)
-                    .setTaskIds(taskId));
+                .setRepositoryId(repositoryId)
+                .setTaskIds(taskId));
         assertNotNull(response);
         assertEquals(1, response.getValue().size());
         assertTrue(response.getValue().get(0).isResult());

@@ -39,6 +39,7 @@ public class TagDefinitionWatermark {
 
     /**
      * Returns the watermark text associated with the tag defintion.
+     *
      * @return text
      */
     @Schema(description = "The watermark text associated with the tag defintion.")
@@ -57,6 +58,7 @@ public class TagDefinitionWatermark {
 
     /**
      * Returns the percentage of the page that the watermark associated with the tag definition spans on.
+     *
      * @return pageSpanPercentage
      */
     @Schema(description = "The percentage of the page that the watermark associated with the tag definition spans on.")
@@ -75,6 +77,7 @@ public class TagDefinitionWatermark {
 
     /**
      * Returns position
+     *
      * @return position
      */
     @Schema(description = "")
@@ -93,6 +96,7 @@ public class TagDefinitionWatermark {
 
     /**
      * Returns the rotation angle, in degrees, of the watermark associated with the tag definition.
+     *
      * @return rotationAngle
      */
     @Schema(description = "The rotation angle, in degrees, of the watermark associated with the tag definition.")
@@ -111,6 +115,7 @@ public class TagDefinitionWatermark {
 
     /**
      * Returns a boolean indicating whether or not the watermark associated with the tag is mandatory.
+     *
      * @return isMandatory
      */
     @Schema(description = "A boolean indicating whether or not the watermark associated with the tag is mandatory.")
@@ -130,6 +135,7 @@ public class TagDefinitionWatermark {
 
     /**
      * Returns the opacity of the watermark associated with the tag definition. Valid value ranges from 0 to 100, with -1 as the default values.
+     *
      * @return opacity
      */
     @Schema(description = "The opacity of the watermark associated with the tag definition. Valid value ranges from 0 to 100, with -1 as the default values.")

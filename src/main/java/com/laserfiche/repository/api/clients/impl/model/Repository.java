@@ -30,6 +30,7 @@ public class Repository {
 
     /**
      * Returns the repository id.
+     *
      * @return id
      */
     @Schema(description = "The repository id.")
@@ -48,6 +49,7 @@ public class Repository {
 
     /**
      * Returns the repository name.
+     *
      * @return name
      */
     @Schema(description = "The repository name.")
@@ -66,6 +68,7 @@ public class Repository {
 
     /**
      * Returns the corresponding repository Web Client url.
+     *
      * @return webClientUrl
      */
     @Schema(description = "The corresponding repository Web Client url.")

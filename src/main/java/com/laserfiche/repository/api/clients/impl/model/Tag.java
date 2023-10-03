@@ -39,6 +39,7 @@ public class Tag {
 
     /**
      * Returns the ID of the tag definition.
+     *
      * @return id
      */
     @Schema(description = "The ID of the tag definition.")
@@ -57,6 +58,7 @@ public class Tag {
 
     /**
      * Returns the name of the tag definition.
+     *
      * @return name
      */
     @Schema(description = "The name of the tag definition.")
@@ -75,6 +77,7 @@ public class Tag {
 
     /**
      * Returns the localized name of the tag definition.
+     *
      * @return displayName
      */
     @Schema(description = "The localized name of the tag definition.")
@@ -93,6 +96,7 @@ public class Tag {
 
     /**
      * Returns the description of the tag definition.
+     *
      * @return description
      */
     @Schema(description = "The description of the tag definition.")
@@ -111,6 +115,7 @@ public class Tag {
 
     /**
      * Returns a boolean indicating whether or not the tag definition is classified as a security tag (true) or an informational tag (false).
+     *
      * @return isSecure
      */
     @Schema(description = "A boolean indicating whether or not the tag definition is classified as a security tag (true) or an informational tag (false).")
@@ -130,6 +135,7 @@ public class Tag {
 
     /**
      * Returns watermark
+     *
      * @return watermark
      */
     @Schema(description = "")

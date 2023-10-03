@@ -26,6 +26,7 @@ public class TemplateFieldDefinition extends FieldDefinition {
 
     /**
      * Returns rule
+     *
      * @return rule
      */
     @Schema(description = "")
@@ -44,6 +45,7 @@ public class TemplateFieldDefinition extends FieldDefinition {
 
     /**
      * Returns the group id of the field in the template.
+     *
      * @return groupId
      */
     @Schema(description = "The group id of the field in the template.")
@@ -62,6 +64,7 @@ public class TemplateFieldDefinition extends FieldDefinition {
 
     /**
      * Returns the name of field group.
+     *
      * @return groupName
      */
     @Schema(description = "The name of field group.")

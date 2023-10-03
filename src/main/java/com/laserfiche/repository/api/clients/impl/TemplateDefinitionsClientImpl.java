@@ -36,9 +36,9 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
     }
 
     private TemplateDefinitionCollectionResponse doListTemplateDefinitions(String url, ParametersForListTemplateDefinitions parameters) {
-        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String", "String", "String", "String", "int", "int", "boolean" }, new String[] { "templateName", "culture", "$select", "$orderby", "$top", "$skip", "$count" }, new Object[] { parameters.getTemplateName(), parameters.getCulture(), parameters.getSelect(), parameters.getOrderby(), parameters.getTop(), parameters.getSkip(), parameters.isCount() });
-        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String" }, new String[] { "repositoryId" }, new Object[] { parameters.getRepositoryId() });
-        Map<String, Object> headerParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String" }, new String[] { "prefer" }, new Object[] { parameters.getPrefer() });
+        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "String", "String", "String", "int", "int", "boolean"}, new String[]{"templateName", "culture", "$select", "$orderby", "$top", "$skip", "$count"}, new Object[]{parameters.getTemplateName(), parameters.getCulture(), parameters.getSelect(), parameters.getOrderby(), parameters.getTop(), parameters.getSkip(), parameters.isCount()});
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"}, new String[]{"repositoryId"}, new Object[]{parameters.getRepositoryId()});
+        Map<String, Object> headerParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"}, new String[]{"prefer"}, new Object[]{parameters.getPrefer()});
         Map<String, String> headerParametersWithStringTypeValue = headerParameters.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, e -> (String) e.getValue()));
         Function<HttpResponse<Object>, TemplateDefinitionCollectionResponse> parseResponse = (HttpResponse<Object> httpResponse) -> {
             Object body = httpResponse.getBody();
@@ -85,9 +85,9 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
     }
 
     private TemplateFieldDefinitionCollectionResponse doListTemplateFieldDefinitionsByTemplateName(String url, ParametersForListTemplateFieldDefinitionsByTemplateName parameters) {
-        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String", "String", "String", "String", "int", "int", "boolean" }, new String[] { "templateName", "culture", "$select", "$orderby", "$top", "$skip", "$count" }, new Object[] { parameters.getTemplateName(), parameters.getCulture(), parameters.getSelect(), parameters.getOrderby(), parameters.getTop(), parameters.getSkip(), parameters.isCount() });
-        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String" }, new String[] { "repositoryId" }, new Object[] { parameters.getRepositoryId() });
-        Map<String, Object> headerParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String" }, new String[] { "prefer" }, new Object[] { parameters.getPrefer() });
+        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "String", "String", "String", "int", "int", "boolean"}, new String[]{"templateName", "culture", "$select", "$orderby", "$top", "$skip", "$count"}, new Object[]{parameters.getTemplateName(), parameters.getCulture(), parameters.getSelect(), parameters.getOrderby(), parameters.getTop(), parameters.getSkip(), parameters.isCount()});
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"}, new String[]{"repositoryId"}, new Object[]{parameters.getRepositoryId()});
+        Map<String, Object> headerParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"}, new String[]{"prefer"}, new Object[]{parameters.getPrefer()});
         Map<String, String> headerParametersWithStringTypeValue = headerParameters.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, e -> (String) e.getValue()));
         Function<HttpResponse<Object>, TemplateFieldDefinitionCollectionResponse> parseResponse = (HttpResponse<Object> httpResponse) -> {
             Object body = httpResponse.getBody();
@@ -130,8 +130,8 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
 
     @Override
     public TemplateDefinition getTemplateDefinition(ParametersForGetTemplateDefinition parameters) {
-        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String", "String" }, new String[] { "culture", "$select" }, new Object[] { parameters.getCulture(), parameters.getSelect() });
-        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String", "int" }, new String[] { "repositoryId", "templateId" }, new Object[] { parameters.getRepositoryId(), parameters.getTemplateId() });
+        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "String"}, new String[]{"culture", "$select"}, new Object[]{parameters.getCulture(), parameters.getSelect()});
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int"}, new String[]{"repositoryId", "templateId"}, new Object[]{parameters.getRepositoryId(), parameters.getTemplateId()});
         Function<HttpResponse<Object>, TemplateDefinition> parseResponse = (HttpResponse<Object> httpResponse) -> {
             Object body = httpResponse.getBody();
             Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
@@ -162,9 +162,9 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
     }
 
     private TemplateFieldDefinitionCollectionResponse doListTemplateFieldDefinitionsByTemplateId(String url, ParametersForListTemplateFieldDefinitionsByTemplateId parameters) {
-        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String", "String", "String", "int", "int", "boolean" }, new String[] { "culture", "$select", "$orderby", "$top", "$skip", "$count" }, new Object[] { parameters.getCulture(), parameters.getSelect(), parameters.getOrderby(), parameters.getTop(), parameters.getSkip(), parameters.isCount() });
-        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String", "int" }, new String[] { "repositoryId", "templateId" }, new Object[] { parameters.getRepositoryId(), parameters.getTemplateId() });
-        Map<String, Object> headerParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[] { "String" }, new String[] { "prefer" }, new Object[] { parameters.getPrefer() });
+        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "String", "String", "int", "int", "boolean"}, new String[]{"culture", "$select", "$orderby", "$top", "$skip", "$count"}, new Object[]{parameters.getCulture(), parameters.getSelect(), parameters.getOrderby(), parameters.getTop(), parameters.getSkip(), parameters.isCount()});
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String", "int"}, new String[]{"repositoryId", "templateId"}, new Object[]{parameters.getRepositoryId(), parameters.getTemplateId()});
+        Map<String, Object> headerParameters = ApiClientUtils.getParametersWithNonDefaultValue(new String[]{"String"}, new String[]{"prefer"}, new Object[]{parameters.getPrefer()});
         Map<String, String> headerParametersWithStringTypeValue = headerParameters.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, e -> (String) e.getValue()));
         Function<HttpResponse<Object>, TemplateFieldDefinitionCollectionResponse> parseResponse = (HttpResponse<Object> httpResponse) -> {
             Object body = httpResponse.getBody();
