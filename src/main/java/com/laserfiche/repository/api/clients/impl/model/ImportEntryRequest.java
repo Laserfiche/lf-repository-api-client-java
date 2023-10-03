@@ -1,0 +1,191 @@
+package com.laserfiche.repository.api.clients.impl.model;
+
+import com.fasterxml.jackson.annotation.*;
+import io.swagger.v3.oas.annotations.media.Schema;
+import java.util.Objects;
+
+/**
+ * Request body for importing an entry.
+ */
+@Schema(description = "Request body for importing an entry.")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen")
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class ImportEntryRequest {
+
+    @JsonProperty("name")
+    private String name = null;
+
+    @JsonProperty("autoRename")
+    private Boolean autoRename = false;
+
+    @JsonProperty("pdfOptions")
+    private ImportEntryRequestPdfOptions pdfOptions = null;
+
+    @JsonProperty("importAsElectronicDocument")
+    private Boolean importAsElectronicDocument = false;
+
+    @JsonProperty("metadata")
+    private ImportEntryRequestMetadata metadata = null;
+
+    @JsonProperty("volumeName")
+    private String volumeName = null;
+
+    public ImportEntryRequest name(String name) {
+        this.name = name;
+        return this;
+    }
+
+    /**
+     * Returns the name for the imported entry.
+     * @return name
+     */
+    @Schema(required = true, description = "The name for the imported entry.")
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public ImportEntryRequest autoRename(Boolean autoRename) {
+        this.autoRename = autoRename;
+        return this;
+    }
+
+    /**
+     * Returns indicates if the entry should be automatically renamed if an entry already exists with the given name in the folder. The default value is false.
+     * @return autoRename
+     */
+    @Schema(
+            description =
+                    "Indicates if the entry should be automatically renamed if an entry already exists with the given name in the folder. The default value is false.")
+    public Boolean isAutoRename() {
+        return autoRename;
+    }
+
+    public void setAutoRename(Boolean autoRename) {
+        this.autoRename = autoRename;
+    }
+
+    public ImportEntryRequest pdfOptions(ImportEntryRequestPdfOptions pdfOptions) {
+        this.pdfOptions = pdfOptions;
+        return this;
+    }
+
+    /**
+     * Returns pdfOptions
+     * @return pdfOptions
+     */
+    @Schema(description = "")
+    public ImportEntryRequestPdfOptions getPdfOptions() {
+        return pdfOptions;
+    }
+
+    public void setPdfOptions(ImportEntryRequestPdfOptions pdfOptions) {
+        this.pdfOptions = pdfOptions;
+    }
+
+    public ImportEntryRequest importAsElectronicDocument(Boolean importAsElectronicDocument) {
+        this.importAsElectronicDocument = importAsElectronicDocument;
+        return this;
+    }
+
+    /**
+     * Returns indicates if the document should be imported as an electronic document (true) or as image pages (false). The default value is false. This option is only applicable when importing the following document types: txt, tif, tiff, bmp, pcx, jpg, jpeg, gif, png.
+     * @return importAsElectronicDocument
+     */
+    @Schema(
+            description =
+                    "Indicates if the document should be imported as an electronic document (true) or as image pages (false). The default value is false. This option is only applicable when importing the following document types: txt, tif, tiff, bmp, pcx, jpg, jpeg, gif, png.")
+    public Boolean isImportAsElectronicDocument() {
+        return importAsElectronicDocument;
+    }
+
+    public void setImportAsElectronicDocument(Boolean importAsElectronicDocument) {
+        this.importAsElectronicDocument = importAsElectronicDocument;
+    }
+
+    public ImportEntryRequest metadata(ImportEntryRequestMetadata metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    /**
+     * Returns metadata
+     * @return metadata
+     */
+    @Schema(description = "")
+    public ImportEntryRequestMetadata getMetadata() {
+        return metadata;
+    }
+
+    public void setMetadata(ImportEntryRequestMetadata metadata) {
+        this.metadata = metadata;
+    }
+
+    public ImportEntryRequest volumeName(String volumeName) {
+        this.volumeName = volumeName;
+        return this;
+    }
+
+    /**
+     * Returns the name of the volume to use. Will use the default parent entry volume if not specified. This is ignored in Laserfiche Cloud.
+     * @return volumeName
+     */
+    @Schema(
+            description =
+                    "The name of the volume to use. Will use the default parent entry volume if not specified. This is ignored in Laserfiche Cloud.")
+    public String getVolumeName() {
+        return volumeName;
+    }
+
+    public void setVolumeName(String volumeName) {
+        this.volumeName = volumeName;
+    }
+
+    @Override
+    public boolean equals(java.lang.Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        ImportEntryRequest importEntryRequest = (ImportEntryRequest) o;
+        return Objects.equals(this.name, importEntryRequest.name)
+                && Objects.equals(this.autoRename, importEntryRequest.autoRename)
+                && Objects.equals(this.pdfOptions, importEntryRequest.pdfOptions)
+                && Objects.equals(this.importAsElectronicDocument, importEntryRequest.importAsElectronicDocument)
+                && Objects.equals(this.metadata, importEntryRequest.metadata)
+                && Objects.equals(this.volumeName, importEntryRequest.volumeName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, autoRename, pdfOptions, importAsElectronicDocument, metadata, volumeName);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("class ImportEntryRequest {\n");
+        sb.append("    name: ").append(toIndentedString(name)).append("\n");
+        sb.append("    autoRename: ").append(toIndentedString(autoRename)).append("\n");
+        sb.append("    pdfOptions: ").append(toIndentedString(pdfOptions)).append("\n");
+        sb.append("    importAsElectronicDocument: ")
+                .append(toIndentedString(importAsElectronicDocument))
+                .append("\n");
+        sb.append("    metadata: ").append(toIndentedString(metadata)).append("\n");
+        sb.append("    volumeName: ").append(toIndentedString(volumeName)).append("\n");
+        sb.append("}");
+        return sb.toString();
+    }
+
+    private String toIndentedString(java.lang.Object o) {
+        if (o == null) {
+            return "null";
+        }
+        return o.toString().replace("\n", "\n    ");
+    }
+}

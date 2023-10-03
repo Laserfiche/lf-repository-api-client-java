@@ -3,7 +3,7 @@ package com.laserfiche.repository.api.clients.impl.model;
 import com.fasterxml.jackson.annotation.*;
 
 /**
- * Gets or Sets WatermarkPosition
+ * An enumeration of possible positions on a page for watermarks.
  */
 public enum WatermarkPosition {
     TOP_LEFT("TopLeft"),

@@ -6,6 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Represents a form logic rule associated with a Laserfiche template and field definition.
+ */
+@Schema(description = "Represents a form logic rule associated with a Laserfiche template and field definition.")
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Rule {

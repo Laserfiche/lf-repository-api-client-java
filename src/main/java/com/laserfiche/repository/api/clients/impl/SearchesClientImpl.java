@@ -28,18 +28,16 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
     }
 
     @Override
-    public OperationProgress getSearchStatus(ParametersForGetSearchStatus parameters) {
+    public StartTaskResponse startSearchEntry(ParametersForStartSearchEntry parameters) {
         Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(
-                new String[] {"String", "String"},
-                new String[] {"repoId", "searchToken"},
-                new Object[] {parameters.getRepoId(), parameters.getSearchToken()});
-        Function<HttpResponse<Object>, OperationProgress> parseResponse = (HttpResponse<Object> httpResponse) -> {
+                new String[] {"String"}, new String[] {"repositoryId"}, new Object[] {parameters.getRepositoryId()});
+        Function<HttpResponse<Object>, StartTaskResponse> parseResponse = (HttpResponse<Object> httpResponse) -> {
             Object body = httpResponse.getBody();
             Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
-            if (httpResponse.getStatus() == 200 || httpResponse.getStatus() == 201 || httpResponse.getStatus() == 202) {
+            if (httpResponse.getStatus() == 202) {
                 try {
                     String responseJson = new JSONObject(body).toString();
-                    return objectMapper.readValue(responseJson, OperationProgress.class);
+                    return objectMapper.readValue(responseJson, StartTaskResponse.class);
                 } catch (Exception e) {
                     throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
                 }
@@ -57,53 +55,10 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
         return ApiClientUtils.sendRequestWithRetry(
                 httpClient,
                 httpRequestHandler,
-                baseUrl + "/v1/Repositories/{repoId}/Searches/{searchToken}",
-                "GET",
-                null,
-                null,
-                null,
-                null,
-                null,
-                pathParameters,
-                new HashMap<String, String>(),
-                false,
-                parseResponse);
-    }
-
-    @Override
-    public ODataValueOfBoolean cancelOrCloseSearch(ParametersForCancelOrCloseSearch parameters) {
-        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(
-                new String[] {"String", "String"},
-                new String[] {"repoId", "searchToken"},
-                new Object[] {parameters.getRepoId(), parameters.getSearchToken()});
-        Function<HttpResponse<Object>, ODataValueOfBoolean> parseResponse = (HttpResponse<Object> httpResponse) -> {
-            Object body = httpResponse.getBody();
-            Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
-            if (httpResponse.getStatus() == 200) {
-                try {
-                    String responseJson = new JSONObject(body).toString();
-                    return objectMapper.readValue(responseJson, ODataValueOfBoolean.class);
-                } catch (Exception e) {
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
-                }
-            } else {
-                ProblemDetails problemDetails;
-                try {
-                    String jsonString = new JSONObject(body).toString();
-                    problemDetails = ProblemDetailsDeserializer.deserialize(objectMapper, jsonString);
-                } catch (Exception e) {
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
-                }
-                throw ApiClientUtils.createApiException(httpResponse, problemDetails);
-            }
-        };
-        return ApiClientUtils.sendRequestWithRetry(
-                httpClient,
-                httpRequestHandler,
-                baseUrl + "/v1/Repositories/{repoId}/Searches/{searchToken}",
-                "DELETE",
-                null,
-                null,
+                baseUrl + "/v2/Repositories/{repositoryId}/Searches/SearchAsync",
+                "POST",
+                "application/json",
+                parameters.getRequestBody(),
                 null,
                 null,
                 null,
@@ -114,14 +69,14 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
     }
 
     @Override
-    public ODataValueContextOfIListOfContextHit getSearchContextHits(ParametersForGetSearchContextHits parameters) {
-        return doGetSearchContextHits(
-                baseUrl + "/v1/Repositories/{repoId}/Searches/{searchToken}/Results/{rowNumber}/ContextHits",
+    public SearchContextHitCollectionResponse listSearchContextHits(ParametersForListSearchContextHits parameters) {
+        return doListSearchContextHits(
+                baseUrl + "/v2/Repositories/{repositoryId}/Searches/{taskId}/Results/{rowNumber}/ContextHits",
                 parameters);
     }
 
-    private ODataValueContextOfIListOfContextHit doGetSearchContextHits(
-            String url, ParametersForGetSearchContextHits parameters) {
+    private SearchContextHitCollectionResponse doListSearchContextHits(
+            String url, ParametersForListSearchContextHits parameters) {
         Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(
                 new String[] {"String", "String", "int", "int", "boolean"},
                 new String[] {"$select", "$orderby", "$top", "$skip", "$count"},
@@ -134,20 +89,20 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
                 });
         Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(
                 new String[] {"String", "String", "int"},
-                new String[] {"repoId", "searchToken", "rowNumber"},
-                new Object[] {parameters.getRepoId(), parameters.getSearchToken(), parameters.getRowNumber()});
+                new String[] {"repositoryId", "taskId", "rowNumber"},
+                new Object[] {parameters.getRepositoryId(), parameters.getTaskId(), parameters.getRowNumber()});
         Map<String, Object> headerParameters = ApiClientUtils.getParametersWithNonDefaultValue(
                 new String[] {"String"}, new String[] {"prefer"}, new Object[] {parameters.getPrefer()});
         Map<String, String> headerParametersWithStringTypeValue = headerParameters.entrySet().stream()
                 .collect(Collectors.toMap(Map.Entry::getKey, e -> (String) e.getValue()));
-        Function<HttpResponse<Object>, ODataValueContextOfIListOfContextHit> parseResponse =
+        Function<HttpResponse<Object>, SearchContextHitCollectionResponse> parseResponse =
                 (HttpResponse<Object> httpResponse) -> {
                     Object body = httpResponse.getBody();
                     Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
                     if (httpResponse.getStatus() == 200) {
                         try {
                             String responseJson = new JSONObject(body).toString();
-                            return objectMapper.readValue(responseJson, ODataValueContextOfIListOfContextHit.class);
+                            return objectMapper.readValue(responseJson, SearchContextHitCollectionResponse.class);
                         } catch (Exception e) {
                             throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
                         }
@@ -179,37 +134,75 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
     }
 
     @Override
-    public ODataValueContextOfIListOfContextHit getSearchContextHitsNextLink(String nextLink, int maxPageSize) {
-        return doGetSearchContextHits(
+    public SearchContextHitCollectionResponse listSearchContextHitsNextLink(String nextLink, int maxPageSize) {
+        return doListSearchContextHits(
                 nextLink,
-                new ParametersForGetSearchContextHits()
+                new ParametersForListSearchContextHits()
                         .setPrefer(ApiClientUtils.mergeMaxSizeIntoPrefer(maxPageSize, null)));
     }
 
     @Override
-    public void getSearchContextHitsForEach(
-            Function<ODataValueContextOfIListOfContextHit, Boolean> callback,
+    public void listSearchContextHitsForEach(
+            Function<SearchContextHitCollectionResponse, Boolean> callback,
             Integer maxPageSize,
-            ParametersForGetSearchContextHits parameters) {
+            ParametersForListSearchContextHits parameters) {
         parameters.setPrefer(ApiClientUtils.mergeMaxSizeIntoPrefer(maxPageSize, parameters.getPrefer()));
-        ODataValueContextOfIListOfContextHit response = getSearchContextHits(parameters);
+        SearchContextHitCollectionResponse response = listSearchContextHits(parameters);
         while (response != null && callback.apply(response)) {
             String nextLink = response.getOdataNextLink();
-            response = getSearchContextHitsNextLink(nextLink, maxPageSize);
+            response = listSearchContextHitsNextLink(nextLink, maxPageSize);
         }
     }
 
     @Override
-    public AcceptedOperation createSearchOperation(ParametersForCreateSearchOperation parameters) {
+    public EntryCollectionResponse listSearchResults(ParametersForListSearchResults parameters) {
+        return doListSearchResults(baseUrl + "/v2/Repositories/{repositoryId}/Searches/{taskId}/Results", parameters);
+    }
+
+    private EntryCollectionResponse doListSearchResults(String url, ParametersForListSearchResults parameters) {
+        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(
+                new String[] {
+                    "boolean", "boolean", "String[]", "boolean", "String", "String", "String", "int", "int", "boolean"
+                },
+                new String[] {
+                    "groupByEntryType",
+                    "refresh",
+                    "fields",
+                    "formatFieldValues",
+                    "culture",
+                    "$select",
+                    "$orderby",
+                    "$top",
+                    "$skip",
+                    "$count"
+                },
+                new Object[] {
+                    parameters.isGroupByEntryType(),
+                    parameters.isRefresh(),
+                    parameters.getFields(),
+                    parameters.isFormatFieldValues(),
+                    parameters.getCulture(),
+                    parameters.getSelect(),
+                    parameters.getOrderby(),
+                    parameters.getTop(),
+                    parameters.getSkip(),
+                    parameters.isCount()
+                });
         Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(
-                new String[] {"String"}, new String[] {"repoId"}, new Object[] {parameters.getRepoId()});
-        Function<HttpResponse<Object>, AcceptedOperation> parseResponse = (HttpResponse<Object> httpResponse) -> {
+                new String[] {"String", "String"},
+                new String[] {"repositoryId", "taskId"},
+                new Object[] {parameters.getRepositoryId(), parameters.getTaskId()});
+        Map<String, Object> headerParameters = ApiClientUtils.getParametersWithNonDefaultValue(
+                new String[] {"String"}, new String[] {"prefer"}, new Object[] {parameters.getPrefer()});
+        Map<String, String> headerParametersWithStringTypeValue = headerParameters.entrySet().stream()
+                .collect(Collectors.toMap(Map.Entry::getKey, e -> (String) e.getValue()));
+        Function<HttpResponse<Object>, EntryCollectionResponse> parseResponse = (HttpResponse<Object> httpResponse) -> {
             Object body = httpResponse.getBody();
             Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
-            if (httpResponse.getStatus() == 201) {
+            if (httpResponse.getStatus() == 200) {
                 try {
                     String responseJson = new JSONObject(body).toString();
-                    return objectMapper.readValue(responseJson, AcceptedOperation.class);
+                    return objectMapper.readValue(responseJson, EntryCollectionResponse.class);
                 } catch (Exception e) {
                     throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
                 }
@@ -224,86 +217,6 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
                 throw ApiClientUtils.createApiException(httpResponse, problemDetails);
             }
         };
-        return ApiClientUtils.sendRequestWithRetry(
-                httpClient,
-                httpRequestHandler,
-                baseUrl + "/v1/Repositories/{repoId}/Searches",
-                "POST",
-                "application/json",
-                parameters.getRequestBody(),
-                null,
-                null,
-                null,
-                pathParameters,
-                new HashMap<String, String>(),
-                false,
-                parseResponse);
-    }
-
-    @Override
-    public ODataValueContextOfIListOfEntry getSearchResults(ParametersForGetSearchResults parameters) {
-        return doGetSearchResults(baseUrl + "/v1/Repositories/{repoId}/Searches/{searchToken}/Results", parameters);
-    }
-
-    private ODataValueContextOfIListOfEntry doGetSearchResults(String url, ParametersForGetSearchResults parameters) {
-        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(
-                new String[] {
-                    "boolean", "boolean", "String[]", "boolean", "String", "String", "String", "int", "int", "boolean"
-                },
-                new String[] {
-                    "groupByEntryType",
-                    "refresh",
-                    "fields",
-                    "formatFields",
-                    "culture",
-                    "$select",
-                    "$orderby",
-                    "$top",
-                    "$skip",
-                    "$count"
-                },
-                new Object[] {
-                    parameters.isGroupByEntryType(),
-                    parameters.isRefresh(),
-                    parameters.getFields(),
-                    parameters.isFormatFields(),
-                    parameters.getCulture(),
-                    parameters.getSelect(),
-                    parameters.getOrderby(),
-                    parameters.getTop(),
-                    parameters.getSkip(),
-                    parameters.isCount()
-                });
-        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(
-                new String[] {"String", "String"},
-                new String[] {"repoId", "searchToken"},
-                new Object[] {parameters.getRepoId(), parameters.getSearchToken()});
-        Map<String, Object> headerParameters = ApiClientUtils.getParametersWithNonDefaultValue(
-                new String[] {"String"}, new String[] {"prefer"}, new Object[] {parameters.getPrefer()});
-        Map<String, String> headerParametersWithStringTypeValue = headerParameters.entrySet().stream()
-                .collect(Collectors.toMap(Map.Entry::getKey, e -> (String) e.getValue()));
-        Function<HttpResponse<Object>, ODataValueContextOfIListOfEntry> parseResponse =
-                (HttpResponse<Object> httpResponse) -> {
-                    Object body = httpResponse.getBody();
-                    Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
-                    if (httpResponse.getStatus() == 200) {
-                        try {
-                            String responseJson = new JSONObject(body).toString();
-                            return objectMapper.readValue(responseJson, ODataValueContextOfIListOfEntry.class);
-                        } catch (Exception e) {
-                            throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
-                        }
-                    } else {
-                        ProblemDetails problemDetails;
-                        try {
-                            String jsonString = new JSONObject(body).toString();
-                            problemDetails = ProblemDetailsDeserializer.deserialize(objectMapper, jsonString);
-                        } catch (Exception e) {
-                            throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
-                        }
-                        throw ApiClientUtils.createApiException(httpResponse, problemDetails);
-                    }
-                };
         return ApiClientUtils.sendRequestWithRetry(
                 httpClient,
                 httpRequestHandler,
@@ -325,23 +238,23 @@ public class SearchesClientImpl extends ApiClient implements SearchesClient {
     }
 
     @Override
-    public ODataValueContextOfIListOfEntry getSearchResultsNextLink(String nextLink, int maxPageSize) {
-        return doGetSearchResults(
+    public EntryCollectionResponse listSearchResultsNextLink(String nextLink, int maxPageSize) {
+        return doListSearchResults(
                 nextLink,
-                new ParametersForGetSearchResults()
+                new ParametersForListSearchResults()
                         .setPrefer(ApiClientUtils.mergeMaxSizeIntoPrefer(maxPageSize, null)));
     }
 
     @Override
-    public void getSearchResultsForEach(
-            Function<ODataValueContextOfIListOfEntry, Boolean> callback,
+    public void listSearchResultsForEach(
+            Function<EntryCollectionResponse, Boolean> callback,
             Integer maxPageSize,
-            ParametersForGetSearchResults parameters) {
+            ParametersForListSearchResults parameters) {
         parameters.setPrefer(ApiClientUtils.mergeMaxSizeIntoPrefer(maxPageSize, parameters.getPrefer()));
-        ODataValueContextOfIListOfEntry response = getSearchResults(parameters);
+        EntryCollectionResponse response = listSearchResults(parameters);
         while (response != null && callback.apply(response)) {
             String nextLink = response.getOdataNextLink();
-            response = getSearchResultsNextLink(nextLink, maxPageSize);
+            response = listSearchResultsNextLink(nextLink, maxPageSize);
         }
     }
 }
