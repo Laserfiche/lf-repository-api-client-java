@@ -72,11 +72,11 @@ class AttributesClientTest extends BaseTest {
         AtomicInteger pageCount = new AtomicInteger();
         int maxPages = 2;
         int maxPageSize = 3;
-        Function<AttributeCollectionResponse, Boolean> callback = attributes -> {
+        Function<AttributeCollectionResponse, Boolean> callback = collectionResponse -> {
             if (pageCount.incrementAndGet() <= maxPages) {
-                assertFalse(attributes.getValue().isEmpty());
-                assertTrue(attributes.getValue().size() <= maxPageSize);
-                return attributes.getOdataNextLink() != null;
+                assertFalse(collectionResponse.getValue().isEmpty());
+                assertTrue(collectionResponse.getValue().size() <= maxPageSize);
+                return collectionResponse.getOdataNextLink() != null;
             } else {
                 return false;
             }

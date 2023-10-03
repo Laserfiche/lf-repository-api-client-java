@@ -169,11 +169,11 @@ public class SearchesClientTest extends BaseTest {
 
         waitUntilTaskEnds(taskId);
 
-        Function<EntryCollectionResponse, Boolean> callback = data -> {
+        Function<EntryCollectionResponse, Boolean> callback = collectionResponse -> {
             if (pageCount.incrementAndGet() <= maxPages) {
-                assertFalse(data.getValue().isEmpty());
-                assertTrue(data.getValue().size() <= maxPageSize);
-                return data.getOdataNextLink() != null;
+                assertFalse(collectionResponse.getValue().isEmpty());
+                assertTrue(collectionResponse.getValue().size() <= maxPageSize);
+                return collectionResponse.getOdataNextLink() != null;
             } else {
                 return false;
             }
@@ -257,11 +257,11 @@ public class SearchesClientTest extends BaseTest {
 
         int rowNum = searchResultResponse.getValue().get(0).getRowNumber();
 
-        Function<SearchContextHitCollectionResponse, Boolean> callback = data -> {
+        Function<SearchContextHitCollectionResponse, Boolean> callback = collectionResponse -> {
             if (pageCount.incrementAndGet() <= maxPages) {
-                assertFalse(data.getValue().isEmpty());
-                assertTrue(data.getValue().size() <= maxPageSize);
-                return data.getOdataNextLink() != null;
+                assertFalse(collectionResponse.getValue().isEmpty());
+                assertTrue(collectionResponse.getValue().size() <= maxPageSize);
+                return collectionResponse.getOdataNextLink() != null;
             } else {
                 return false;
             }

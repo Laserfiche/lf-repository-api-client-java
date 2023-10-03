@@ -54,11 +54,11 @@ class TagDefinitionsClientTest extends BaseTest {
         AtomicInteger pageCount = new AtomicInteger();
         int maxPages = 2;
         int maxPageSize = 1;
-        Function<TagDefinitionCollectionResponse, Boolean> callback = data -> {
+        Function<TagDefinitionCollectionResponse, Boolean> callback = collectionResponse -> {
             if (pageCount.incrementAndGet() <= maxPages) {
-                assertFalse(data.getValue().isEmpty());
-                assertTrue(data.getValue().size() <= maxPageSize);
-                return data.getOdataNextLink() != null;
+                assertFalse(collectionResponse.getValue().isEmpty());
+                assertTrue(collectionResponse.getValue().size() <= maxPageSize);
+                return collectionResponse.getOdataNextLink() != null;
             } else {
                 return false;
             }

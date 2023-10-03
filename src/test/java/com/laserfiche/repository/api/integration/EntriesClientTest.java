@@ -314,11 +314,11 @@ class EntriesClientTest extends BaseTest {
         AtomicInteger pageCount = new AtomicInteger();
         int maxPages = 20;
         int maxPageSize = 5;
-        Function<EntryCollectionResponse, Boolean> callback = entries -> {
+        Function<EntryCollectionResponse, Boolean> callback = collectionResponse -> {
             if (pageCount.incrementAndGet() <= maxPages) {
-                assertFalse(entries.getValue().isEmpty());
-                assertTrue(entries.getValue().size() <= maxPageSize);
-                return entries.getOdataNextLink() != null;
+                assertFalse(collectionResponse.getValue().isEmpty());
+                assertTrue(collectionResponse.getValue().size() <= maxPageSize);
+                return collectionResponse.getOdataNextLink() != null;
             } else {
                 return false;
             }
@@ -375,11 +375,11 @@ class EntriesClientTest extends BaseTest {
         AtomicInteger pageCount = new AtomicInteger();
         int maxPages = 5;
         int maxPageSize = 1;
-        Function<FieldCollectionResponse, Boolean> callback = fieldValues -> {
+        Function<FieldCollectionResponse, Boolean> callback = collectionResponse -> {
             if (pageCount.incrementAndGet() <= maxPages) {
-                assertFalse(fieldValues.getValue().isEmpty());
-                assertTrue(fieldValues.getValue().size() <= maxPageSize);
-                return fieldValues.getOdataNextLink() != null;
+                assertFalse(collectionResponse.getValue().isEmpty());
+                assertTrue(collectionResponse.getValue().size() <= maxPageSize);
+                return collectionResponse.getOdataNextLink() != null;
             } else {
                 return false;
             }
@@ -421,11 +421,11 @@ class EntriesClientTest extends BaseTest {
         AtomicInteger pageCount = new AtomicInteger();
         int maxPages = 5;
         int maxPageSize = 1;
-        Function<LinkCollectionResponse, Boolean> callback = entryLinkIntoList -> {
+        Function<LinkCollectionResponse, Boolean> callback = collectionResponse -> {
             if (pageCount.incrementAndGet() <= maxPages) {
-                assertFalse(entryLinkIntoList.getValue().isEmpty());
-                assertTrue(entryLinkIntoList.getValue().size() <= maxPageSize);
-                return entryLinkIntoList.getOdataNextLink() != null;
+                assertFalse(collectionResponse.getValue().isEmpty());
+                assertTrue(collectionResponse.getValue().size() <= maxPageSize);
+                return collectionResponse.getOdataNextLink() != null;
             } else {
                 return false;
             }
@@ -495,11 +495,11 @@ class EntriesClientTest extends BaseTest {
             AtomicInteger pageCount = new AtomicInteger();
             int maxPages = 5;
             int maxPageSize = 1;
-            Function<TagCollectionResponse, Boolean> callback = tagInfoList -> {
+            Function<TagCollectionResponse, Boolean> callback = collectionResponse -> {
                 if (pageCount.incrementAndGet() <= maxPages) {
-                    assertFalse(tagInfoList.getValue().isEmpty());
-                    assertTrue(tagInfoList.getValue().size() <= maxPageSize);
-                    return tagInfoList.getOdataNextLink() != null;
+                    assertFalse(collectionResponse.getValue().isEmpty());
+                    assertTrue(collectionResponse.getValue().size() <= maxPageSize);
+                    return collectionResponse.getOdataNextLink() != null;
                 } else {
                     return false;
                 }

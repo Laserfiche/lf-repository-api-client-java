@@ -64,11 +64,11 @@ class FieldDefinitionsClientTest extends BaseTest {
         AtomicInteger pageCount = new AtomicInteger();
         int maxPages = 5;
         int maxPageSize = 3;
-        Function<FieldDefinitionCollectionResponse, Boolean> callback = fieldInfoList -> {
+        Function<FieldDefinitionCollectionResponse, Boolean> callback = collectionResponse -> {
             if (pageCount.incrementAndGet() <= maxPages) {
-                assertFalse(fieldInfoList.getValue().isEmpty());
-                assertTrue(fieldInfoList.getValue().size() <= maxPageSize);
-                return fieldInfoList.getOdataNextLink() != null;
+                assertFalse(collectionResponse.getValue().isEmpty());
+                assertTrue(collectionResponse.getValue().size() <= maxPageSize);
+                return collectionResponse.getOdataNextLink() != null;
             } else {
                 return false;
             }

@@ -78,11 +78,11 @@ class TemplateDefinitionsClientTest extends BaseTest {
         AtomicInteger pageCount = new AtomicInteger();
         int maxPages = 2;
         int maxPageSize = 1;
-        Function<TemplateDefinitionCollectionResponse, Boolean> callback = listOfWTemplateInfo -> {
+        Function<TemplateDefinitionCollectionResponse, Boolean> callback = collectionResponse -> {
             if (pageCount.incrementAndGet() <= maxPages) {
-                assertFalse(listOfWTemplateInfo.getValue().isEmpty());
-                assertTrue(listOfWTemplateInfo.getValue().size() <= maxPageSize);
-                return listOfWTemplateInfo.getOdataNextLink() != null;
+                assertFalse(collectionResponse.getValue().isEmpty());
+                assertTrue(collectionResponse.getValue().size() <= maxPageSize);
+                return collectionResponse.getOdataNextLink() != null;
             } else {
                 return false;
             }
@@ -135,11 +135,11 @@ class TemplateDefinitionsClientTest extends BaseTest {
         AtomicInteger pageCount = new AtomicInteger();
         int maxPages = 2;
         int maxPageSize = 1;
-        Function<TemplateFieldDefinitionCollectionResponse, Boolean> callback = fieldInfoList -> {
+        Function<TemplateFieldDefinitionCollectionResponse, Boolean> callback = collectionResponse -> {
             if (pageCount.incrementAndGet() <= maxPages) {
-                assertFalse(fieldInfoList.getValue().isEmpty());
-                assertTrue(fieldInfoList.getValue().size() <= maxPageSize);
-                return fieldInfoList.getOdataNextLink() != null;
+                assertFalse(collectionResponse.getValue().isEmpty());
+                assertTrue(collectionResponse.getValue().size() <= maxPageSize);
+                return collectionResponse.getOdataNextLink() != null;
             } else {
                 return false;
             }
