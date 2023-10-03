@@ -162,6 +162,7 @@ public class ExportDocumentApiTest extends BaseTest {
         request.setPart(ExportEntryRequestPart.IMAGE);
         ExportEntryRequestImageOptions imageOptions = new ExportEntryRequestImageOptions();
         imageOptions.setFormat(ExportEntryRequestImageFormat.SINGLE_PAGE_TIFF);
+        imageOptions.setPagePrefix("_PAGE_");
         request.setImageOptions(imageOptions);
         if (auditReasonId != -1) {
             request.setAuditReasonId(auditReasonId);
@@ -188,6 +189,9 @@ public class ExportDocumentApiTest extends BaseTest {
         request.setPart(ExportEntryRequestPart.IMAGE);
         ExportEntryRequestImageOptions imageOptions = new ExportEntryRequestImageOptions();
         imageOptions.setFormat(ExportEntryRequestImageFormat.MULTI_PAGE_TIFF);
+        imageOptions.setIncludeAnnotations(true);
+        imageOptions.setConvertPdfAnnotations(true);
+        imageOptions.setIncludeRedactions(true);
         request.setImageOptions(imageOptions);
         if (auditReasonId != -1) {
             request.setAuditReasonId(auditReasonId);
@@ -214,6 +218,7 @@ public class ExportDocumentApiTest extends BaseTest {
         request.setPart(ExportEntryRequestPart.IMAGE);
         ExportEntryRequestImageOptions imageOptions = new ExportEntryRequestImageOptions();
         imageOptions.setFormat(ExportEntryRequestImageFormat.JPEG);
+        imageOptions.setJpegCompressionLevel(90);
         request.setImageOptions(imageOptions);
         if (auditReasonId != -1) {
             request.setAuditReasonId(auditReasonId);
