@@ -37,4 +37,24 @@ class RepositoriesClientTest extends BaseTest {
         }
         assertTrue(foundRepo);
     }
+
+    @Test
+    @DisabledIf("isCloudEnvironment")
+    void listRepositoriesForSelfHostedWorksWithNoAuthentication() {
+        RepositoryCollectionResponse repositories = RepositoriesClientImpl.listRepositoriesForSelfHosted(baseUrl);
+        assertNotNull(repositories);
+        boolean foundRepo = false;
+        for (Repository repositoryInfo : repositories.getValue()) {
+            assertNotNull(repositoryInfo.getId());
+            if (repositoryInfo.getId().equalsIgnoreCase(repositoryId)) {
+                foundRepo = true;
+            }
+        }
+        assertTrue(foundRepo);
+    }
+
+    boolean isCloudEnvironment() {
+        AuthorizationType AuthType = AuthorizationType.valueOf(getEnvironmentVariable(AUTHORIZATION_TYPE));
+        return AuthType != AuthorizationType.API_SERVER_USERNAME_PASSWORD;
+    }
 }
