@@ -56,7 +56,7 @@ class TagDefinitionsClientTest extends BaseTest {
         int maxPageSize = 1;
         Function<TagDefinitionCollectionResponse, Boolean> callback = data -> {
             if (pageCount.incrementAndGet() <= maxPages) {
-                assertNotEquals(0, data.getValue().size());
+                assertFalse(data.getValue().isEmpty());
                 assertTrue(data.getValue().size() <= maxPageSize);
                 return data.getOdataNextLink() != null;
             } else {

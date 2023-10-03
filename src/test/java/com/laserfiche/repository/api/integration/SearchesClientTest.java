@@ -171,7 +171,7 @@ public class SearchesClientTest extends BaseTest {
 
         Function<EntryCollectionResponse, Boolean> callback = data -> {
             if (pageCount.incrementAndGet() <= maxPages) {
-                assertNotEquals(0, data.getValue().size());
+                assertFalse(data.getValue().isEmpty());
                 assertTrue(data.getValue().size() <= maxPageSize);
                 return data.getOdataNextLink() != null;
             } else {
@@ -259,7 +259,7 @@ public class SearchesClientTest extends BaseTest {
 
         Function<SearchContextHitCollectionResponse, Boolean> callback = data -> {
             if (pageCount.incrementAndGet() <= maxPages) {
-                assertNotEquals(0, data.getValue().size());
+                assertFalse(data.getValue().isEmpty());
                 assertTrue(data.getValue().size() <= maxPageSize);
                 return data.getOdataNextLink() != null;
             } else {

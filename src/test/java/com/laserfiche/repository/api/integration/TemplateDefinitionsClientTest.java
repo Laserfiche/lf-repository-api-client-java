@@ -80,7 +80,7 @@ class TemplateDefinitionsClientTest extends BaseTest {
         int maxPageSize = 1;
         Function<TemplateDefinitionCollectionResponse, Boolean> callback = listOfWTemplateInfo -> {
             if (pageCount.incrementAndGet() <= maxPages) {
-                assertNotEquals(0, listOfWTemplateInfo.getValue().size());
+                assertFalse(listOfWTemplateInfo.getValue().isEmpty());
                 assertTrue(listOfWTemplateInfo.getValue().size() <= maxPageSize);
                 return listOfWTemplateInfo.getOdataNextLink() != null;
             } else {
@@ -137,7 +137,7 @@ class TemplateDefinitionsClientTest extends BaseTest {
         int maxPageSize = 1;
         Function<TemplateFieldDefinitionCollectionResponse, Boolean> callback = fieldInfoList -> {
             if (pageCount.incrementAndGet() <= maxPages) {
-                assertNotEquals(0, fieldInfoList.getValue().size());
+                assertFalse(fieldInfoList.getValue().isEmpty());
                 assertTrue(fieldInfoList.getValue().size() <= maxPageSize);
                 return fieldInfoList.getOdataNextLink() != null;
             } else {

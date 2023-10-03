@@ -6,6 +6,7 @@ import com.laserfiche.api.client.model.ApiException;
 import com.laserfiche.api.client.model.ProblemDetails;
 import com.laserfiche.repository.api.RepositoryApiClient;
 import com.laserfiche.repository.api.clients.EntriesClient;
+import com.laserfiche.repository.api.clients.TagDefinitionsClient;
 import com.laserfiche.repository.api.clients.impl.model.*;
 import com.laserfiche.repository.api.clients.impl.model.Tag;
 import com.laserfiche.repository.api.clients.params.*;
@@ -20,12 +21,12 @@ import java.util.function.Function;
 
 import kong.unirest.HttpStatus;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.EnabledIf;
 
 class EntriesClientTest extends BaseTest {
     private EntriesClient client;
 
     private static Entry testClassParentFolder;
-    private RepositoryApiClient createEntryClient;
 
     private String rootPath = "\\";
 
@@ -36,7 +37,6 @@ class EntriesClientTest extends BaseTest {
     @BeforeEach
     void perTestSetup() {
         client = repositoryApiClient.getEntriesClient();
-        createEntryClient = repositoryApiClient;
     }
 
     @BeforeAll
@@ -80,7 +80,7 @@ class EntriesClientTest extends BaseTest {
     void createEntryCanCreateShortcut() {
         String newEntryName = "RepositoryApiClientIntegrationTest Java CreateFolder";
 
-        Entry targetEntry = createEntry(createEntryClient, newEntryName, testClassParentFolder.getId(), true);
+        Entry targetEntry = createEntry(repositoryApiClient, newEntryName, testClassParentFolder.getId(), true);
         assertNotNull(targetEntry);
 
         assertEquals(targetEntry.getParentId(), testClassParentFolder.getId());
@@ -108,7 +108,7 @@ class EntriesClientTest extends BaseTest {
     void startCopyEntryCanCopyFolder() throws InterruptedException {
         String newEntryName = "RepositoryApiClientIntegrationTest Java CreateFolder";
 
-        Entry targetEntry = createEntry(createEntryClient, newEntryName, testClassParentFolder.getId(), true);
+        Entry targetEntry = createEntry(repositoryApiClient, newEntryName, testClassParentFolder.getId(), true);
         assertNotNull(targetEntry);
         assertEquals(targetEntry.getParentId(), testClassParentFolder.getId());
         assertEquals(targetEntry.getEntryType(), EntryType.FOLDER);
@@ -139,7 +139,7 @@ class EntriesClientTest extends BaseTest {
     void copyEntryCanCreateShortcut() {
         String newEntryName = "RepositoryApiClientIntegrationTest Java CreateFolder";
 
-        Entry targetEntry = createEntry(createEntryClient, newEntryName, testClassParentFolder.getId(), true);
+        Entry targetEntry = createEntry(repositoryApiClient, newEntryName, testClassParentFolder.getId(), true);
         assertNotNull(targetEntry);
         assertEquals(targetEntry.getParentId(), testClassParentFolder.getId());
         assertEquals(targetEntry.getEntryType(), EntryType.FOLDER);
@@ -177,13 +177,13 @@ class EntriesClientTest extends BaseTest {
     @Test
     void copyEntryDoesNotSupportCopyingFolder() {
         Entry parentFolder = createEntry(
-                createEntryClient,
+                repositoryApiClient,
                 "RepositoryApiClientIntegrationTest Java ParentFolder",
                 testClassParentFolder.getId(),
                 true);
 
         Entry childFolder = createEntry(
-                createEntryClient,
+                repositoryApiClient,
                 "RepositoryApiClientIntegrationTest Java ChildFolder",
                 testClassParentFolder.getId(),
                 true);
@@ -207,13 +207,13 @@ class EntriesClientTest extends BaseTest {
     @Test
     void copyEntryThrowsExceptionForInvalidRepositoryId() {
         Entry parentFolder = createEntry(
-                createEntryClient,
+                repositoryApiClient,
                 "RepositoryApiClientIntegrationTest Java ParentFolder",
                 testClassParentFolder.getId(),
                 true);
 
         Entry childFolder = createEntry(
-                createEntryClient,
+                repositoryApiClient,
                 "RepositoryApiClientIntegrationTest Java ChildFolder",
                 testClassParentFolder.getId(),
                 true);
@@ -316,7 +316,7 @@ class EntriesClientTest extends BaseTest {
         int maxPageSize = 5;
         Function<EntryCollectionResponse, Boolean> callback = entries -> {
             if (pageCount.incrementAndGet() <= maxPages) {
-                assertNotEquals(0, entries.getValue().size());
+                assertFalse(entries.getValue().isEmpty());
                 assertTrue(entries.getValue().size() <= maxPageSize);
                 return entries.getOdataNextLink() != null;
             } else {
@@ -377,7 +377,7 @@ class EntriesClientTest extends BaseTest {
         int maxPageSize = 1;
         Function<FieldCollectionResponse, Boolean> callback = fieldValues -> {
             if (pageCount.incrementAndGet() <= maxPages) {
-                assertNotEquals(0, fieldValues.getValue().size());
+                assertFalse(fieldValues.getValue().isEmpty());
                 assertTrue(fieldValues.getValue().size() <= maxPageSize);
                 return fieldValues.getOdataNextLink() != null;
             } else {
@@ -423,7 +423,7 @@ class EntriesClientTest extends BaseTest {
         int maxPageSize = 1;
         Function<LinkCollectionResponse, Boolean> callback = entryLinkIntoList -> {
             if (pageCount.incrementAndGet() <= maxPages) {
-                assertNotEquals(0, entryLinkIntoList.getValue().size());
+                assertFalse(entryLinkIntoList.getValue().isEmpty());
                 assertTrue(entryLinkIntoList.getValue().size() <= maxPageSize);
                 return entryLinkIntoList.getOdataNextLink() != null;
             } else {
@@ -441,7 +441,7 @@ class EntriesClientTest extends BaseTest {
     @Test
     void startDeleteEntryCanDeleteFolder() throws InterruptedException {
         Entry entryToDelete =
-                createEntry(createEntryClient, "RepositoryApiClientIntegrationTest Java DeleteFolder", 1, true);
+                createEntry(repositoryApiClient, "RepositoryApiClientIntegrationTest Java DeleteFolder", 1, true);
 
         StartTaskResponse deleteEntryResponse = client.startDeleteEntry(new ParametersForStartDeleteEntry()
                 .setRepositoryId(repositoryId)
@@ -489,24 +489,56 @@ class EntriesClientTest extends BaseTest {
 
     @Test
     void listTagsForEachWorks() {
-        AtomicInteger pageCount = new AtomicInteger();
-        int maxPages = 5;
-        int maxPageSize = 1;
-        Function<TagCollectionResponse, Boolean> callback = tagInfoList -> {
-            if (pageCount.incrementAndGet() <= maxPages) {
-                assertNotEquals(0, tagInfoList.getValue().size());
-                assertTrue(tagInfoList.getValue().size() <= maxPageSize);
-                return tagInfoList.getOdataNextLink() != null;
-            } else {
-                return false;
-            }
-        };
-        client.listTagsForEach(
-                callback,
-                maxPageSize,
-                new ParametersForListTags()
-                        .setRepositoryId(repositoryId)
-                        .setEntryId(1));
+        int assignedTags = assignTagsToEntry(1);
+        assertTrue(assignedTags > 0);
+        try {
+            AtomicInteger pageCount = new AtomicInteger();
+            int maxPages = 5;
+            int maxPageSize = 1;
+            Function<TagCollectionResponse, Boolean> callback = tagInfoList -> {
+                if (pageCount.incrementAndGet() <= maxPages) {
+                    assertFalse(tagInfoList.getValue().isEmpty());
+                    assertTrue(tagInfoList.getValue().size() <= maxPageSize);
+                    return tagInfoList.getOdataNextLink() != null;
+                } else {
+                    return false;
+                }
+            };
+            client.listTagsForEach(
+                    callback,
+                    maxPageSize,
+                    new ParametersForListTags()
+                            .setRepositoryId(repositoryId)
+                            .setEntryId(1));
+        } finally {
+            removeTagsFromEntry(1);
+        }
+    }
+
+    private void removeTagsFromEntry(int entryId) {
+        SetTagsRequest requestBody = new SetTagsRequest();
+        requestBody.setTags(new ArrayList<>());
+        TagCollectionResponse tagCollectionResponse = client.setTags(new ParametersForSetTags()
+                .setRepositoryId(repositoryId).setEntryId(entryId)
+                .setRequestBody(requestBody));
+        assertTrue(tagCollectionResponse.getValue().isEmpty());
+    }
+
+    private int assignTagsToEntry(int entryId) {
+        TagDefinitionsClient tagDefinitionsClient = repositoryApiClient.getTagDefinitionsClient();
+        TagDefinitionCollectionResponse tagDefinitions = tagDefinitionsClient.listTagDefinitions(new ParametersForListTagDefinitions()
+                .setRepositoryId(repositoryId).setTop(100));
+
+        List<String> tags = new ArrayList<>();
+        for (TagDefinition tagDefinition : tagDefinitions.getValue()) {
+            tags.add(tagDefinition.getName());
+        }
+        SetTagsRequest requestBody = new SetTagsRequest();
+        requestBody.setTags(tags);
+        TagCollectionResponse tagCollectionResponse = client.setTags(new ParametersForSetTags()
+                .setRepositoryId(repositoryId).setEntryId(entryId)
+                .setRequestBody(requestBody));
+        return tagCollectionResponse.getValue().size();
     }
 
     @Test
@@ -606,7 +638,7 @@ class EntriesClientTest extends BaseTest {
 
     @Test
     void setTemplateThrowsExceptionForInvalidTemplate() {
-        Entry parentFolder = createEntry(createEntryClient, "EntriesTest", 1, true);
+        Entry parentFolder = createEntry(repositoryApiClient, "EntriesTest", 1, true);
         createdEntries.add(parentFolder);
 
         SetTemplateRequest request = new SetTemplateRequest();
@@ -639,7 +671,7 @@ class EntriesClientTest extends BaseTest {
         request.setTags(new ArrayList<>());
         request.getTags().add(tag);
         Entry entry = createEntry(
-                createEntryClient, "RepositoryApiClientIntegrationTest Java SetTags", testClassParentFolder.getId(), true);
+                repositoryApiClient, "RepositoryApiClientIntegrationTest Java SetTags", testClassParentFolder.getId(), true);
         Integer num = entry.getId();
 
         TagCollectionResponse assignTagsResponse = client
@@ -682,7 +714,7 @@ class EntriesClientTest extends BaseTest {
         SetTemplateRequest request = new SetTemplateRequest();
         request.setTemplateName(template.getName());
         Entry entry = createEntry(
-                createEntryClient, "RepositoryApiClientIntegrationTest Java DeleteTemplate", testClassParentFolder.getId(), true);
+                repositoryApiClient, "RepositoryApiClientIntegrationTest Java DeleteTemplate", testClassParentFolder.getId(), true);
 
         Entry setTemplateResponse = client
                 .setTemplate(new ParametersForSetTemplate()
@@ -727,7 +759,7 @@ class EntriesClientTest extends BaseTest {
         SetFieldsRequest request = new SetFieldsRequest();
         request.setFields(fieldsToUpdate);
         Entry entry = createEntry(
-                createEntryClient, "RepositoryApiClientIntegrationTest Java SetFields", testClassParentFolder.getId(), true);
+                repositoryApiClient, "RepositoryApiClientIntegrationTest Java SetFields", testClassParentFolder.getId(), true);
         Integer entryId = entry.getId();
 
         FieldCollectionResponse assignFieldValuesResponse = client
@@ -746,7 +778,7 @@ class EntriesClientTest extends BaseTest {
     void removeTemplateWorks() throws ExecutionException, InterruptedException {
         TemplateDefinition template = null;
 
-        TemplateDefinitionCollectionResponse templateDefinitionsResponse = createEntryClient.getTemplateDefinitionClient()
+        TemplateDefinitionCollectionResponse templateDefinitionsResponse = repositoryApiClient.getTemplateDefinitionClient()
                 .listTemplateDefinitions(new ParametersForListTemplateDefinitions().setRepositoryId(repositoryId));
         List<TemplateDefinition> templateDefinitions = templateDefinitionsResponse.getValue();
 
@@ -755,7 +787,7 @@ class EntriesClientTest extends BaseTest {
 
         for (TemplateDefinition templateDefinition : templateDefinitions) {
             TemplateFieldDefinitionCollectionResponse templateDefinitionsFieldsResponse =
-                    createEntryClient.getTemplateDefinitionClient()
+                    repositoryApiClient.getTemplateDefinitionClient()
                             .listTemplateFieldDefinitionsByTemplateId(new ParametersForListTemplateFieldDefinitionsByTemplateId()
                                     .setRepositoryId(repositoryId)
                                     .setTemplateId(templateDefinition.getId()));
@@ -772,7 +804,7 @@ class EntriesClientTest extends BaseTest {
         request.setTemplateName(template.getName());
 
         Entry entry = createEntry(
-                createEntryClient, "RepositoryApiClientIntegrationTest Java DeleteTemplate", testClassParentFolder.getId(), true);
+                repositoryApiClient, "RepositoryApiClientIntegrationTest Java DeleteTemplate", testClassParentFolder.getId(), true);
 
         entry = client
                 .setTemplate(new ParametersForSetTemplate()
@@ -792,9 +824,9 @@ class EntriesClientTest extends BaseTest {
     }
     @Test
     void setLinksWorks() {
-        Entry sourceEntry = createEntry(createEntryClient, "RepositoryApiClientIntegrationTest Java SetLinks Source", 1, true);
+        Entry sourceEntry = createEntry(repositoryApiClient, "RepositoryApiClientIntegrationTest Java SetLinks Source", 1, true);
         createdEntries.add(sourceEntry);
-        Entry targetEntry = createEntry(createEntryClient, "RepositoryApiClientIntegrationTest .Net SetLinks Target", 1, true);
+        Entry targetEntry = createEntry(repositoryApiClient, "RepositoryApiClientIntegrationTest .Net SetLinks Target", 1, true);
         createdEntries.add(targetEntry);
 
         LinkToUpdate link = new LinkToUpdate();

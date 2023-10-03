@@ -66,7 +66,7 @@ class FieldDefinitionsClientTest extends BaseTest {
         int maxPageSize = 3;
         Function<FieldDefinitionCollectionResponse, Boolean> callback = fieldInfoList -> {
             if (pageCount.incrementAndGet() <= maxPages) {
-                assertNotEquals(0, fieldInfoList.getValue().size());
+                assertFalse(fieldInfoList.getValue().isEmpty());
                 assertTrue(fieldInfoList.getValue().size() <= maxPageSize);
                 return fieldInfoList.getOdataNextLink() != null;
             } else {

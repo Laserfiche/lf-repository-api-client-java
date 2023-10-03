@@ -74,7 +74,7 @@ class AttributesClientTest extends BaseTest {
         int maxPageSize = 3;
         Function<AttributeCollectionResponse, Boolean> callback = attributes -> {
             if (pageCount.incrementAndGet() <= maxPages) {
-                assertNotEquals(0, attributes.getValue().size());
+                assertFalse(attributes.getValue().isEmpty());
                 assertTrue(attributes.getValue().size() <= maxPageSize);
                 return attributes.getOdataNextLink() != null;
             } else {
