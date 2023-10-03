@@ -163,6 +163,12 @@ public class ExportDocumentApiTest extends BaseTest {
         ExportEntryRequestImageOptions imageOptions = new ExportEntryRequestImageOptions();
         imageOptions.setFormat(ExportEntryRequestImageFormat.SINGLE_PAGE_TIFF);
         imageOptions.setPagePrefix("_PAGE_");
+        ExportEntryRequestWatermark watermark = new ExportEntryRequestWatermark();
+        watermark.setPosition(WatermarkPosition.BOTTOM_LEFT);
+        watermark.setText("WatermarkText");
+        watermark.setPageSpanPercentage(80);
+        watermark.setRotationAngle(45);
+        imageOptions.setWatermark(watermark);
         request.setImageOptions(imageOptions);
         if (auditReasonId != -1) {
             request.setAuditReasonId(auditReasonId);
