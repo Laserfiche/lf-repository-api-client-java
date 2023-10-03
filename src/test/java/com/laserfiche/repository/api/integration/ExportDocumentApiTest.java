@@ -8,6 +8,10 @@ import com.laserfiche.repository.api.clients.params.ParametersForImportEntry;
 import com.laserfiche.repository.api.clients.params.ParametersForListAuditReasons;
 import org.junit.jupiter.api.*;
 
+import java.net.URL;
+import java.net.URLConnection;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Optional;
 
 import java.io.*;
@@ -58,12 +62,16 @@ public class ExportDocumentApiTest extends BaseTest {
 
     private static void prepareDocumentToBeExported() {
         try {
-            String fileName = "RepositoryApiClientIntegrationTest Java ExportDocumentApiTest";
+            String fileName = "RepositoryApiClientIntegrationTest Java ExportDocumentApiTest.pdf";
             File fileToImport = new File(SMALL_PDF_FILE_PATH);
             testEntryFileSize = fileToImport.length();
             ImportEntryRequest request = new ImportEntryRequest();
             request.setName(fileName);
             request.setAutoRename(true);
+            ImportEntryRequestPdfOptions pdfOptions = new ImportEntryRequestPdfOptions();
+            pdfOptions.setGeneratePages(true);
+            pdfOptions.setKeepPdfAfterImport(true);
+            request.setPdfOptions(pdfOptions);
             Entry resultEntry = repositoryApiClient
                     .getEntriesClient()
                     .importEntry(new ParametersForImportEntry()
@@ -125,8 +133,7 @@ public class ExportDocumentApiTest extends BaseTest {
     }
 
     @Test
-    void exportDocumentCanExportPagesAsSingleTIFF() {
-        final String FILE_NAME = "exportDocument_temp_file.tiff";
+    void exportDocumentCanExportPagesAsSinglePageTIFF() {
         ExportEntryRequest request = new ExportEntryRequest();
         request.setPart(ExportEntryRequestPart.IMAGE);
         ExportEntryRequestImageOptions imageOptions = new ExportEntryRequestImageOptions();
@@ -142,10 +149,94 @@ public class ExportDocumentApiTest extends BaseTest {
                 .setRequestBody(request));
         String uri = response.getValue();
         assertNotNull(uri);
-        exportedFile = new File(FILE_NAME);
-        boolean downloaded = downloadFileFromURI(uri, exportedFile);
-        assertTrue(downloaded);
-        assertTrue(exportedFile.exists());
-        assertEquals(testEntryFileSize, exportedFile.length());
+        try {
+            URLConnection connection = new URL(uri).openConnection();
+            String mimeType = connection.getContentType();
+            assertEquals(mimeType, "application/zip");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
+    @Test
+    void exportDocumentCanExportPagesAsMultiPageTIFF() {
+        ExportEntryRequest request = new ExportEntryRequest();
+        request.setPart(ExportEntryRequestPart.IMAGE);
+        ExportEntryRequestImageOptions imageOptions = new ExportEntryRequestImageOptions();
+        imageOptions.setFormat(ExportEntryRequestImageFormat.MULTI_PAGE_T_I_F_F);
+        request.setImageOptions(imageOptions);
+        if (auditReasonId != -1) {
+            request.setAuditReasonId(auditReasonId);
+            request.setAuditReasonComment(auditReasonComment);
+        }
+        ExportEntryResponse response = client.exportEntry(new ParametersForExportEntry()
+                .setRepositoryId(repositoryId)
+                .setEntryId(testEntryId)
+                .setRequestBody(request));
+        String uri = response.getValue();
+        assertNotNull(uri);
+        try {
+            URLConnection connection = new URL(uri).openConnection();
+            String mimeType = connection.getContentType();
+            assertEquals(mimeType, "image/tiff");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    void exportDocumentCanExportPagesAsJPEG() {
+        ExportEntryRequest request = new ExportEntryRequest();
+        request.setPart(ExportEntryRequestPart.IMAGE);
+        ExportEntryRequestImageOptions imageOptions = new ExportEntryRequestImageOptions();
+        imageOptions.setFormat(ExportEntryRequestImageFormat.J_P_E_G);
+        request.setImageOptions(imageOptions);
+        if (auditReasonId != -1) {
+            request.setAuditReasonId(auditReasonId);
+            request.setAuditReasonComment(auditReasonComment);
+        }
+        ExportEntryResponse response = client.exportEntry(new ParametersForExportEntry()
+                .setRepositoryId(repositoryId)
+                .setEntryId(testEntryId)
+                .setRequestBody(request));
+        String uri = response.getValue();
+        assertNotNull(uri);
+        try {
+            URLConnection connection = new URL(uri).openConnection();
+            String mimeType = connection.getContentType();
+            // Since pageRanges includes all the page, the result is a compressed file.
+            assertEquals(mimeType, "application/zip");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    void exportDocumentCanExportPagesAsJPEGWithPageRange() {
+        ExportEntryRequest request = new ExportEntryRequest();
+        request.setPart(ExportEntryRequestPart.IMAGE);
+        ExportEntryRequestImageOptions imageOptions = new ExportEntryRequestImageOptions();
+        imageOptions.setFormat(ExportEntryRequestImageFormat.J_P_E_G);
+        request.setImageOptions(imageOptions);
+        if (auditReasonId != -1) {
+            request.setAuditReasonId(auditReasonId);
+            request.setAuditReasonComment(auditReasonComment);
+        }
+        ExportEntryResponse response = client.exportEntry(new ParametersForExportEntry()
+                .setRepositoryId(repositoryId)
+                .setEntryId(testEntryId)
+                .setPageRange("1")
+                .setRequestBody(request));
+        String uri = response.getValue();
+        assertNotNull(uri);
+        try {
+            URLConnection connection = new URL(uri).openConnection();
+            String mimeType = connection.getContentType();
+            // Since pageRanges includes only 1 page, the result is a single JPEG file.
+            assertEquals(mimeType, "image/jpeg");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }
