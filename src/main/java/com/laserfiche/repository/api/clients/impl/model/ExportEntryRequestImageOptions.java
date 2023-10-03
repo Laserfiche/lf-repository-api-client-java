@@ -16,8 +16,8 @@ public class ExportEntryRequestImageOptions {
     @JsonProperty("format")
     private ExportEntryRequestImageFormat format = null;
 
-    @JsonProperty("jPEGCompressionLevel")
-    private Integer jPEGCompressionLevel = 70;
+    @JsonProperty("jpegCompressionLevel")
+    private Integer jpegCompressionLevel = 70;
 
     @JsonProperty("includeAnnotations")
     private Boolean includeAnnotations = true;
@@ -52,22 +52,22 @@ public class ExportEntryRequestImageOptions {
         this.format = format;
     }
 
-    public ExportEntryRequestImageOptions jPEGCompressionLevel(Integer jPEGCompressionLevel) {
-        this.jPEGCompressionLevel = jPEGCompressionLevel;
+    public ExportEntryRequestImageOptions jpegCompressionLevel(Integer jpegCompressionLevel) {
+        this.jpegCompressionLevel = jpegCompressionLevel;
         return this;
     }
 
     /**
      * Returns the quality level for JPEG compression when exporting images. The value must be between 0 and 100 (inclusive). The default value is 70.
-     * @return jPEGCompressionLevel
+     * @return jpegCompressionLevel
      */
     @Schema(description = "The quality level for JPEG compression when exporting images. The value must be between 0 and 100 (inclusive). The default value is 70.")
-    public Integer getJPEGCompressionLevel() {
-        return jPEGCompressionLevel;
+    public Integer getJpegCompressionLevel() {
+        return jpegCompressionLevel;
     }
 
-    public void setJPEGCompressionLevel(Integer jPEGCompressionLevel) {
-        this.jPEGCompressionLevel = jPEGCompressionLevel;
+    public void setJpegCompressionLevel(Integer jpegCompressionLevel) {
+        this.jpegCompressionLevel = jpegCompressionLevel;
     }
 
     public ExportEntryRequestImageOptions includeAnnotations(Boolean includeAnnotations) {
@@ -169,12 +169,12 @@ public class ExportEntryRequestImageOptions {
             return false;
         }
         ExportEntryRequestImageOptions exportEntryRequestImageOptions = (ExportEntryRequestImageOptions) o;
-        return Objects.equals(this.format, exportEntryRequestImageOptions.format) && Objects.equals(this.jPEGCompressionLevel, exportEntryRequestImageOptions.jPEGCompressionLevel) && Objects.equals(this.includeAnnotations, exportEntryRequestImageOptions.includeAnnotations) && Objects.equals(this.convertPdfAnnotations, exportEntryRequestImageOptions.convertPdfAnnotations) && Objects.equals(this.pagePrefix, exportEntryRequestImageOptions.pagePrefix) && Objects.equals(this.includeRedactions, exportEntryRequestImageOptions.includeRedactions) && Objects.equals(this.watermark, exportEntryRequestImageOptions.watermark);
+        return Objects.equals(this.format, exportEntryRequestImageOptions.format) && Objects.equals(this.jpegCompressionLevel, exportEntryRequestImageOptions.jpegCompressionLevel) && Objects.equals(this.includeAnnotations, exportEntryRequestImageOptions.includeAnnotations) && Objects.equals(this.convertPdfAnnotations, exportEntryRequestImageOptions.convertPdfAnnotations) && Objects.equals(this.pagePrefix, exportEntryRequestImageOptions.pagePrefix) && Objects.equals(this.includeRedactions, exportEntryRequestImageOptions.includeRedactions) && Objects.equals(this.watermark, exportEntryRequestImageOptions.watermark);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(format, jPEGCompressionLevel, includeAnnotations, convertPdfAnnotations, pagePrefix, includeRedactions, watermark);
+        return Objects.hash(format, jpegCompressionLevel, includeAnnotations, convertPdfAnnotations, pagePrefix, includeRedactions, watermark);
     }
 
     @Override
@@ -182,7 +182,7 @@ public class ExportEntryRequestImageOptions {
         StringBuilder sb = new StringBuilder();
         sb.append("class ExportEntryRequestImageOptions {\n");
         sb.append("    format: ").append(toIndentedString(format)).append("\n");
-        sb.append("    jPEGCompressionLevel: ").append(toIndentedString(jPEGCompressionLevel)).append("\n");
+        sb.append("    jpegCompressionLevel: ").append(toIndentedString(jpegCompressionLevel)).append("\n");
         sb.append("    includeAnnotations: ").append(toIndentedString(includeAnnotations)).append("\n");
         sb.append("    convertPdfAnnotations: ").append(toIndentedString(convertPdfAnnotations)).append("\n");
         sb.append("    pagePrefix: ").append(toIndentedString(pagePrefix)).append("\n");
