@@ -1,11 +1,17 @@
 package com.laserfiche.repository.api.clients.impl.model;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Represents a form logic rule associated with a Laserfiche template and field definition.
+ */
+@Schema(description = "Represents a form logic rule associated with a Laserfiche template and field definition.")
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Rule {
@@ -28,6 +34,7 @@ public class Rule {
 
     /**
      * Returns the IDs of the parent fields in the template according to the form logic rule.
+     *
      * @return ancestors
      */
     @Schema(description = "The IDs of the parent fields in the template according to the form logic rule.")

@@ -1,7 +1,9 @@
 package com.laserfiche.repository.api.clients.impl.model;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.Objects;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen")
@@ -24,6 +26,7 @@ public class Shortcut extends Entry {
 
     /**
      * Returns the entry ID of the shortcut target.
+     *
      * @return targetId
      */
     @Schema(description = "The entry ID of the shortcut target.")
@@ -42,6 +45,7 @@ public class Shortcut extends Entry {
 
     /**
      * Returns the extension of the shortcut target.
+     *
      * @return extension
      */
     @Schema(description = "The extension of the shortcut target.")
@@ -60,6 +64,7 @@ public class Shortcut extends Entry {
 
     /**
      * Returns targetType
+     *
      * @return targetType
      */
     @Schema(description = "")
@@ -80,10 +85,7 @@ public class Shortcut extends Entry {
             return false;
         }
         Shortcut shortcut = (Shortcut) o;
-        return Objects.equals(this.targetId, shortcut.targetId)
-                && Objects.equals(this.extension, shortcut.extension)
-                && Objects.equals(this.targetType, shortcut.targetType)
-                && super.equals(o);
+        return Objects.equals(this.targetId, shortcut.targetId) && Objects.equals(this.extension, shortcut.extension) && Objects.equals(this.targetType, shortcut.targetType) && super.equals(o);
     }
 
     @Override

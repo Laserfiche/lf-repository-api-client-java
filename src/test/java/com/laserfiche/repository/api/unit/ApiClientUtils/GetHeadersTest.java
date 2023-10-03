@@ -1,16 +1,17 @@
 package com.laserfiche.repository.api.unit.ApiClientUtils;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
 import com.laserfiche.repository.api.clients.impl.ApiClientUtils;
-import java.util.HashMap;
-import java.util.Map;
 import kong.unirest.Headers;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class GetHeadersTest {
     private final Map<String, String> headerParametersWithStringTypeValue = new HashMap<String, String>();
@@ -109,7 +110,7 @@ public class GetHeadersTest {
         assertNotNull(headerParametersWithStringTypeValue);
         assertEquals(result, headerParametersWithStringTypeValue);
         header.clear();
-        headerParametersWithStringTypeValue.remove(1);
+        headerParametersWithStringTypeValue.remove(Integer.toString(1));
         header.add(headerParametersWithStringTypeValue);
         result = ApiClientUtils.getHeadersMap(header);
         assertNotNull(headerParametersWithStringTypeValue);

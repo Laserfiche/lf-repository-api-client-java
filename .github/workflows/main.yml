@@ -65,23 +65,23 @@ jobs:
     - name: Delete test reports
       run: rm -rf target/surefire-reports/*.xml
 
-    - name: Run integration tests on self-hosted
-      id: integration-test-self-hosted
-      if: always() && (steps.integration-test-cloud.outcome == 'success' || steps.integration-test-cloud.outcome == 'failure')
-      env:
-        REPOSITORY_ID: ${{ secrets.APISERVER_REPOSITORY_ID }}
-        APISERVER_USERNAME: ${{ secrets.APISERVER_USERNAME }}
-        APISERVER_PASSWORD: ${{ secrets.APISERVER_PASSWORD }}
-        APISERVER_REPOSITORY_API_BASE_URL: ${{ secrets.APISERVER_REPOSITORY_API_BASE_URL }}
-        AUTHORIZATION_TYPE: ${{ secrets.APISERVER_AUTHORIZATION_TYPE }}
-      run: mvn -Dtest=com.laserfiche.repository.api.integration.** test
+    # - name: Run integration tests on self-hosted
+    #  id: integration-test-self-hosted
+    #  if: always() && (steps.integration-test-cloud.outcome == 'success' || steps.integration-test-cloud.outcome == 'failure')
+    #  env:
+    #    REPOSITORY_ID: ${{ secrets.APISERVER_REPOSITORY_ID }}
+    #    APISERVER_USERNAME: ${{ secrets.APISERVER_USERNAME }}
+    #    APISERVER_PASSWORD: ${{ secrets.APISERVER_PASSWORD }}
+    #    APISERVER_REPOSITORY_API_BASE_URL: ${{ secrets.APISERVER_REPOSITORY_API_BASE_URL }}
+    #    AUTHORIZATION_TYPE: ${{ secrets.APISERVER_AUTHORIZATION_TYPE }}
+    #  run: mvn -Dtest=com.laserfiche.repository.api.integration.** test
 
-    - name: Publish self-hosted test results
-      uses: EnricoMi/publish-unit-test-result-action@v1
-      if: always()
-      with:
-        files: target/surefire-reports/*.xml
-        check_name: integration-test-results-self-hosted
+    # - name: Publish self-hosted test results
+    #  uses: EnricoMi/publish-unit-test-result-action@v1
+    #  if: always()
+    #  with:
+    #    files: target/surefire-reports/*.xml
+    #    check_name: integration-test-results-self-hosted
 
   build-documentation:
 

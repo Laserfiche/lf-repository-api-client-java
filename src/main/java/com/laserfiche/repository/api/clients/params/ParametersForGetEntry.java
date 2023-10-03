@@ -1,7 +1,5 @@
 package com.laserfiche.repository.api.clients.params;
 
-import com.laserfiche.repository.api.clients.impl.model.*;
-
 /**
  * The encapsulated parameters for {@link com.laserfiche.repository.api.clients.impl.EntriesClientImpl#getEntry(ParametersForGetEntry) getEntry}.
  */
@@ -10,7 +8,7 @@ public class ParametersForGetEntry {
     /**
      * The requested repository ID.
      */
-    private String repoId;
+    private String repositoryId;
 
     /**
      * The requested entry ID.
@@ -23,13 +21,13 @@ public class ParametersForGetEntry {
     private String select;
 
     /**
-     * Sets the value of the repoId parameter and returns the current object, to enable chaining further setters.
+     * Sets the value of the repositoryId parameter and returns the current object, to enable chaining further setters.
      *
-     * @param repoId The requested repository ID.
+     * @param repositoryId The requested repository ID.
      * @return {@link ParametersForGetEntry} The return value
      */
-    public ParametersForGetEntry setRepoId(String repoId) {
-        this.repoId = repoId;
+    public ParametersForGetEntry setRepositoryId(String repositoryId) {
+        this.repositoryId = repositoryId;
         return this;
     }
 
@@ -38,8 +36,8 @@ public class ParametersForGetEntry {
      *
      * @return {@link String} The return value
      */
-    public String getRepoId() {
-        return this.repoId;
+    public String getRepositoryId() {
+        return this.repositoryId;
     }
 
     /**

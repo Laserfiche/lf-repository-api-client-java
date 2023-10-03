@@ -1,7 +1,13 @@
 package com.laserfiche.repository.api.clients;
 
-import com.laserfiche.repository.api.clients.impl.model.*;
-import com.laserfiche.repository.api.clients.params.*;
+import com.laserfiche.repository.api.clients.impl.model.TemplateDefinition;
+import com.laserfiche.repository.api.clients.impl.model.TemplateDefinitionCollectionResponse;
+import com.laserfiche.repository.api.clients.impl.model.TemplateFieldDefinitionCollectionResponse;
+import com.laserfiche.repository.api.clients.params.ParametersForGetTemplateDefinition;
+import com.laserfiche.repository.api.clients.params.ParametersForListTemplateDefinitions;
+import com.laserfiche.repository.api.clients.params.ParametersForListTemplateFieldDefinitionsByTemplateId;
+import com.laserfiche.repository.api.clients.params.ParametersForListTemplateFieldDefinitionsByTemplateName;
+
 import java.util.function.Function;
 
 /**
@@ -10,100 +16,88 @@ import java.util.function.Function;
 public interface TemplateDefinitionsClient {
 
     /**
-     * - Returns all template definitions (including field definitions) in the repository. If a template name query parameter is given, then a single template definition is returned.<br>- Provide a repository ID, and get a paged listing of template definitions available in the repository. Useful when trying to find a list of all template definitions available, rather than a specific one.<br>- Default page size: 100. Allowed OData query options: Select | Count | OrderBy | Skip | Top | SkipToken | Prefer.
+     * - Returns all template definitions (including field definitions) in the repository. If a template name query parameter is given, then a single template definition is returned.<br>- Provide a repository ID, and get a paged listing of template definitions available in the repository. Useful when trying to find a list of all template definitions available, rather than a specific one.<br>- Default page size: 100. Allowed OData query options: Select | Count | OrderBy | Skip | Top | SkipToken | Prefer.<br>- Required OAuth scope: repository.Read
      *
-     * @param parameters An object of type {@link ParametersForGetTemplateDefinitions} which encapsulates the parameters of {@link #getTemplateDefinitions getTemplateDefinitions} method.
-     * @return {@link ODataValueContextOfIListOfWTemplateInfo} The return value
+     * @param parameters An object of type {@link ParametersForListTemplateDefinitions} which encapsulates the parameters of {@link #listTemplateDefinitions listTemplateDefinitions} method.
+     * @return {@link TemplateDefinitionCollectionResponse} The return value
      */
-    ODataValueContextOfIListOfWTemplateInfo getTemplateDefinitions(ParametersForGetTemplateDefinitions parameters);
+    TemplateDefinitionCollectionResponse listTemplateDefinitions(ParametersForListTemplateDefinitions parameters);
 
     /**
      * Returns the next subset of the requested collection, using a nextlink url.
      *
-     * @param nextLink A url that allows retrieving the next subset of the requested collection.
+     * @param nextLink    A url that allows retrieving the next subset of the requested collection.
      * @param maxPageSize Optionally specify the maximum number of items to retrieve.
-     * @return {@link ODataValueContextOfIListOfWTemplateInfo} The return value
+     * @return {@link TemplateDefinitionCollectionResponse} The return value
      */
-    ODataValueContextOfIListOfWTemplateInfo getTemplateDefinitionsNextLink(String nextLink, int maxPageSize);
+    TemplateDefinitionCollectionResponse listTemplateDefinitionsNextLink(String nextLink, int maxPageSize);
 
     /**
-     * Provides the functionality to iteratively (i.e. through paging) call {@link #getTemplateDefinitions getTemplateDefinitions}, and apply a function on the response of each iteration.
+     * Provides the functionality to iteratively (i.e. through paging) call {@link #listTemplateDefinitions listTemplateDefinitions}, and apply a function on the response of each iteration.
      *
-     * @param callback A delegate that will be called each time new data is retrieved. Returns false to stop receiving more data; returns true to be called again if there's more data.
+     * @param callback    A delegate that will be called each time new data is retrieved. Returns false to stop receiving more data; returns true to be called again if there's more data.
      * @param maxPageSize Optionally specify the maximum number of items to retrieve.
-     * @param parameters An object of type {@link ParametersForGetTemplateDefinitions} which encapsulates the parameters of {@link #getTemplateDefinitions getTemplateDefinitions} method.
+     * @param parameters  An object of type {@link ParametersForListTemplateDefinitions} which encapsulates the parameters of {@link #listTemplateDefinitions listTemplateDefinitions} method.
      */
-    void getTemplateDefinitionsForEach(
-            Function<ODataValueContextOfIListOfWTemplateInfo, Boolean> callback,
-            Integer maxPageSize,
-            ParametersForGetTemplateDefinitions parameters);
+    void listTemplateDefinitionsForEach(Function<TemplateDefinitionCollectionResponse, Boolean> callback, Integer maxPageSize, ParametersForListTemplateDefinitions parameters);
 
     /**
-     * - Returns the field definitions assigned to a template definition.<br>- Provide a template definition name, and get a paged listing of the field definitions assigned to that template. <br>- Default page size: 100. Allowed OData query options: Select | Count | OrderBy | Skip | Top | SkipToken | Prefer.
+     * - Returns the field definitions assigned to a template definition.<br>- Provide a template definition name, and get a paged listing of the field definitions assigned to that template. <br>- Default page size: 100. Allowed OData query options: Select | Count | OrderBy | Skip | Top | SkipToken | Prefer.<br>- Required OAuth scope: repository.Read
      *
-     * @param parameters An object of type {@link ParametersForGetTemplateFieldDefinitionsByTemplateName} which encapsulates the parameters of {@link #getTemplateFieldDefinitionsByTemplateName getTemplateFieldDefinitionsByTemplateName} method.
-     * @return {@link ODataValueContextOfIListOfTemplateFieldInfo} The return value
+     * @param parameters An object of type {@link ParametersForListTemplateFieldDefinitionsByTemplateName} which encapsulates the parameters of {@link #listTemplateFieldDefinitionsByTemplateName listTemplateFieldDefinitionsByTemplateName} method.
+     * @return {@link TemplateFieldDefinitionCollectionResponse} The return value
      */
-    ODataValueContextOfIListOfTemplateFieldInfo getTemplateFieldDefinitionsByTemplateName(
-            ParametersForGetTemplateFieldDefinitionsByTemplateName parameters);
+    TemplateFieldDefinitionCollectionResponse listTemplateFieldDefinitionsByTemplateName(ParametersForListTemplateFieldDefinitionsByTemplateName parameters);
 
     /**
      * Returns the next subset of the requested collection, using a nextlink url.
      *
-     * @param nextLink A url that allows retrieving the next subset of the requested collection.
+     * @param nextLink    A url that allows retrieving the next subset of the requested collection.
      * @param maxPageSize Optionally specify the maximum number of items to retrieve.
-     * @return {@link ODataValueContextOfIListOfTemplateFieldInfo} The return value
+     * @return {@link TemplateFieldDefinitionCollectionResponse} The return value
      */
-    ODataValueContextOfIListOfTemplateFieldInfo getTemplateFieldDefinitionsByTemplateNameNextLink(
-            String nextLink, int maxPageSize);
+    TemplateFieldDefinitionCollectionResponse listTemplateFieldDefinitionsByTemplateNameNextLink(String nextLink, int maxPageSize);
 
     /**
-     * Provides the functionality to iteratively (i.e. through paging) call {@link #getTemplateFieldDefinitionsByTemplateName getTemplateFieldDefinitionsByTemplateName}, and apply a function on the response of each iteration.
+     * Provides the functionality to iteratively (i.e. through paging) call {@link #listTemplateFieldDefinitionsByTemplateName listTemplateFieldDefinitionsByTemplateName}, and apply a function on the response of each iteration.
      *
-     * @param callback A delegate that will be called each time new data is retrieved. Returns false to stop receiving more data; returns true to be called again if there's more data.
+     * @param callback    A delegate that will be called each time new data is retrieved. Returns false to stop receiving more data; returns true to be called again if there's more data.
      * @param maxPageSize Optionally specify the maximum number of items to retrieve.
-     * @param parameters An object of type {@link ParametersForGetTemplateFieldDefinitionsByTemplateName} which encapsulates the parameters of {@link #getTemplateFieldDefinitionsByTemplateName getTemplateFieldDefinitionsByTemplateName} method.
+     * @param parameters  An object of type {@link ParametersForListTemplateFieldDefinitionsByTemplateName} which encapsulates the parameters of {@link #listTemplateFieldDefinitionsByTemplateName listTemplateFieldDefinitionsByTemplateName} method.
      */
-    void getTemplateFieldDefinitionsByTemplateNameForEach(
-            Function<ODataValueContextOfIListOfTemplateFieldInfo, Boolean> callback,
-            Integer maxPageSize,
-            ParametersForGetTemplateFieldDefinitionsByTemplateName parameters);
+    void listTemplateFieldDefinitionsByTemplateNameForEach(Function<TemplateFieldDefinitionCollectionResponse, Boolean> callback, Integer maxPageSize, ParametersForListTemplateFieldDefinitionsByTemplateName parameters);
 
     /**
-     * - Returns the field definitions assigned to a template definition.<br>- Provide a template definition ID, and get a paged listing of the field definitions assigned to that template. <br>- Default page size: 100. Allowed OData query options: Select | Count | OrderBy | Skip | Top | SkipToken | Prefer.
+     * - Returns a single template definition (including field definitions, if relevant).<br>- Provide a template definition ID, and get the single template definition associated with that ID. Useful when a route provides a minimal amount of details, and more information about the specific template is needed.<br>- Allowed OData query options: Select<br>- Required OAuth scope: repository.Read
      *
-     * @param parameters An object of type {@link ParametersForGetTemplateFieldDefinitions} which encapsulates the parameters of {@link #getTemplateFieldDefinitions getTemplateFieldDefinitions} method.
-     * @return {@link ODataValueContextOfIListOfTemplateFieldInfo} The return value
+     * @param parameters An object of type {@link ParametersForGetTemplateDefinition} which encapsulates the parameters of {@link #getTemplateDefinition getTemplateDefinition} method.
+     * @return {@link TemplateDefinition} The return value
      */
-    ODataValueContextOfIListOfTemplateFieldInfo getTemplateFieldDefinitions(
-            ParametersForGetTemplateFieldDefinitions parameters);
+    TemplateDefinition getTemplateDefinition(ParametersForGetTemplateDefinition parameters);
+
+    /**
+     * - Returns the field definitions assigned to a template definition.<br>- Provide a template definition ID, and get a paged listing of the field definitions assigned to that template. <br>- Default page size: 100. Allowed OData query options: Select | Count | OrderBy | Skip | Top | SkipToken | Prefer.<br>- Required OAuth scope: repository.Read
+     *
+     * @param parameters An object of type {@link ParametersForListTemplateFieldDefinitionsByTemplateId} which encapsulates the parameters of {@link #listTemplateFieldDefinitionsByTemplateId listTemplateFieldDefinitionsByTemplateId} method.
+     * @return {@link TemplateFieldDefinitionCollectionResponse} The return value
+     */
+    TemplateFieldDefinitionCollectionResponse listTemplateFieldDefinitionsByTemplateId(ParametersForListTemplateFieldDefinitionsByTemplateId parameters);
 
     /**
      * Returns the next subset of the requested collection, using a nextlink url.
      *
-     * @param nextLink A url that allows retrieving the next subset of the requested collection.
+     * @param nextLink    A url that allows retrieving the next subset of the requested collection.
      * @param maxPageSize Optionally specify the maximum number of items to retrieve.
-     * @return {@link ODataValueContextOfIListOfTemplateFieldInfo} The return value
+     * @return {@link TemplateFieldDefinitionCollectionResponse} The return value
      */
-    ODataValueContextOfIListOfTemplateFieldInfo getTemplateFieldDefinitionsNextLink(String nextLink, int maxPageSize);
+    TemplateFieldDefinitionCollectionResponse listTemplateFieldDefinitionsByTemplateIdNextLink(String nextLink, int maxPageSize);
 
     /**
-     * Provides the functionality to iteratively (i.e. through paging) call {@link #getTemplateFieldDefinitions getTemplateFieldDefinitions}, and apply a function on the response of each iteration.
+     * Provides the functionality to iteratively (i.e. through paging) call {@link #listTemplateFieldDefinitionsByTemplateId listTemplateFieldDefinitionsByTemplateId}, and apply a function on the response of each iteration.
      *
-     * @param callback A delegate that will be called each time new data is retrieved. Returns false to stop receiving more data; returns true to be called again if there's more data.
+     * @param callback    A delegate that will be called each time new data is retrieved. Returns false to stop receiving more data; returns true to be called again if there's more data.
      * @param maxPageSize Optionally specify the maximum number of items to retrieve.
-     * @param parameters An object of type {@link ParametersForGetTemplateFieldDefinitions} which encapsulates the parameters of {@link #getTemplateFieldDefinitions getTemplateFieldDefinitions} method.
+     * @param parameters  An object of type {@link ParametersForListTemplateFieldDefinitionsByTemplateId} which encapsulates the parameters of {@link #listTemplateFieldDefinitionsByTemplateId listTemplateFieldDefinitionsByTemplateId} method.
      */
-    void getTemplateFieldDefinitionsForEach(
-            Function<ODataValueContextOfIListOfTemplateFieldInfo, Boolean> callback,
-            Integer maxPageSize,
-            ParametersForGetTemplateFieldDefinitions parameters);
-
-    /**
-     * - Returns a single template definition (including field definitions, if relevant).<br>- Provide a template definition ID, and get the single template definition associated with that ID. Useful when a route provides a minimal amount of details, and more information about the specific template is needed.<br>- Allowed OData query options: Select
-     *
-     * @param parameters An object of type {@link ParametersForGetTemplateDefinitionById} which encapsulates the parameters of {@link #getTemplateDefinitionById getTemplateDefinitionById} method.
-     * @return {@link WTemplateInfo} The return value
-     */
-    WTemplateInfo getTemplateDefinitionById(ParametersForGetTemplateDefinitionById parameters);
+    void listTemplateFieldDefinitionsByTemplateIdForEach(Function<TemplateFieldDefinitionCollectionResponse, Boolean> callback, Integer maxPageSize, ParametersForListTemplateFieldDefinitionsByTemplateId parameters);
 }

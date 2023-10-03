@@ -1,9 +1,9 @@
 package com.laserfiche.repository.api.clients.impl.model;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
-import java.util.ArrayList;
-import java.util.List;
+
 import java.util.Objects;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen")
@@ -16,9 +16,6 @@ public class Folder extends Entry {
     @JsonProperty("isUnderRecordSeries")
     private Boolean isUnderRecordSeries = null;
 
-    @JsonProperty("children")
-    private List<Entry> children = null;
-
     public Folder isRecordFolder(Boolean isRecordFolder) {
         this.isRecordFolder = isRecordFolder;
         return this;
@@ -26,11 +23,10 @@ public class Folder extends Entry {
 
     /**
      * Returns a boolean indicating if the folder that this instance represents is known to be a record folder.
+     *
      * @return isRecordFolder
      */
-    @Schema(
-            description =
-                    "A boolean indicating if the folder that this instance represents is known to be a record folder.")
+    @Schema(description = "A boolean indicating if the folder that this instance represents is known to be a record folder.")
     @JsonProperty("isRecordFolder")
     public Boolean isRecordFolder() {
         return isRecordFolder;
@@ -47,11 +43,10 @@ public class Folder extends Entry {
 
     /**
      * Returns a boolean indicating if the folder that this instance represents is known to directly or indirectly under a record series in the repository.
+     *
      * @return isUnderRecordSeries
      */
-    @Schema(
-            description =
-                    "A boolean indicating if the folder that this instance represents is known to directly or indirectly under a record series in the repository.")
+    @Schema(description = "A boolean indicating if the folder that this instance represents is known to directly or indirectly under a record series in the repository.")
     @JsonProperty("isUnderRecordSeries")
     public Boolean isUnderRecordSeries() {
         return isUnderRecordSeries;
@@ -59,32 +54,6 @@ public class Folder extends Entry {
 
     public void setIsUnderRecordSeries(Boolean isUnderRecordSeries) {
         this.isUnderRecordSeries = isUnderRecordSeries;
-    }
-
-    public Folder children(List<Entry> children) {
-        this.children = children;
-        return this;
-    }
-
-    public Folder addChildrenItem(Entry childrenItem) {
-        if (this.children == null) {
-            this.children = new ArrayList<Entry>();
-        }
-        this.children.add(childrenItem);
-        return this;
-    }
-
-    /**
-     * Returns the entries in this folder.
-     * @return children
-     */
-    @Schema(description = "The entries in this folder.")
-    public List<Entry> getChildren() {
-        return children;
-    }
-
-    public void setChildren(List<Entry> children) {
-        this.children = children;
     }
 
     @Override
@@ -96,15 +65,12 @@ public class Folder extends Entry {
             return false;
         }
         Folder folder = (Folder) o;
-        return Objects.equals(this.isRecordFolder, folder.isRecordFolder)
-                && Objects.equals(this.isUnderRecordSeries, folder.isUnderRecordSeries)
-                && Objects.equals(this.children, folder.children)
-                && super.equals(o);
+        return Objects.equals(this.isRecordFolder, folder.isRecordFolder) && Objects.equals(this.isUnderRecordSeries, folder.isUnderRecordSeries) && super.equals(o);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(isRecordFolder, isUnderRecordSeries, children, super.hashCode());
+        return Objects.hash(isRecordFolder, isUnderRecordSeries, super.hashCode());
     }
 
     @Override
@@ -112,13 +78,8 @@ public class Folder extends Entry {
         StringBuilder sb = new StringBuilder();
         sb.append("class Folder {\n");
         sb.append("    ").append(toIndentedString(super.toString())).append("\n");
-        sb.append("    isRecordFolder: ")
-                .append(toIndentedString(isRecordFolder))
-                .append("\n");
-        sb.append("    isUnderRecordSeries: ")
-                .append(toIndentedString(isUnderRecordSeries))
-                .append("\n");
-        sb.append("    children: ").append(toIndentedString(children)).append("\n");
+        sb.append("    isRecordFolder: ").append(toIndentedString(isRecordFolder)).append("\n");
+        sb.append("    isUnderRecordSeries: ").append(toIndentedString(isUnderRecordSeries)).append("\n");
         sb.append("}");
         return sb.toString();
     }

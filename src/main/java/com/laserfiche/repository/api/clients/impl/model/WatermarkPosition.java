@@ -1,11 +1,13 @@
 package com.laserfiche.repository.api.clients.impl.model;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
- * Gets or Sets WatermarkPosition
+ * An enumeration of possible positions on a page for watermarks.
  */
 public enum WatermarkPosition {
+
     TOP_LEFT("TopLeft"),
     TOP_CENTER("TopCenter"),
     TOP_RIGHT("TopRight"),
@@ -16,7 +18,7 @@ public enum WatermarkPosition {
     BOTTOM_CENTER("BottomCenter"),
     BOTTOM_RIGHT("BottomRight");
 
-    private String value;
+    private final String value;
 
     WatermarkPosition(String value) {
         this.value = value;

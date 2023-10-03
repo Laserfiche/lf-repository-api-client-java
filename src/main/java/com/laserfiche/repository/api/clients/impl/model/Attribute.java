@@ -1,9 +1,15 @@
 package com.laserfiche.repository.api.clients.impl.model;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.Objects;
 
+/**
+ * Represents a trustee attribute.
+ */
+@Schema(description = "Represents a trustee attribute.")
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Attribute {
@@ -20,10 +26,11 @@ public class Attribute {
     }
 
     /**
-     * Returns key
+     * Returns the attribute key.
+     *
      * @return key
      */
-    @Schema(description = "")
+    @Schema(description = "The attribute key.")
     public String getKey() {
         return key;
     }
@@ -38,10 +45,11 @@ public class Attribute {
     }
 
     /**
-     * Returns value
+     * Returns the attribute value.
+     *
      * @return value
      */
-    @Schema(description = "")
+    @Schema(description = "The attribute value.")
     public String getValue() {
         return value;
     }

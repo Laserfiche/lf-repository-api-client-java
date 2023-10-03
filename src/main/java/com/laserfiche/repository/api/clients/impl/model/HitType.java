@@ -1,11 +1,13 @@
 package com.laserfiche.repository.api.clients.impl.model;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
  * The type of context hit.
  */
 public enum HitType {
+
     PAGE_CONTENT("PageContent"),
     NOTE("Note"),
     CALLOUT("Callout"),
@@ -23,7 +25,7 @@ public enum HitType {
     ANNOTATION_COMMENT("AnnotationComment"),
     ATTACHMENT("Attachment");
 
-    private String value;
+    private final String value;
 
     HitType(String value) {
         this.value = value;

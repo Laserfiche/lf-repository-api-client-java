@@ -1,25 +1,23 @@
 package com.laserfiche.repository.api.clients.impl.model;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import io.swagger.v3.oas.annotations.media.Schema;
+import org.threeten.bp.OffsetDateTime;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import org.threeten.bp.OffsetDateTime;
 
+/**
+ * Base type for all types which represent entry objects in a Laserfiche repository.
+ */
+@Schema(description = "Base type for all types which represent entry objects in a Laserfiche repository.")
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen")
-@JsonTypeInfo(
-        use = JsonTypeInfo.Id.NAME,
-        include = JsonTypeInfo.As.EXISTING_PROPERTY,
-        property = "entryType",
-        visible = true,
-        defaultImpl = Entry.class)
-@JsonSubTypes({
-    @JsonSubTypes.Type(value = Document.class, name = "Document"),
-    @JsonSubTypes.Type(value = Folder.class, name = "Folder"),
-    @JsonSubTypes.Type(value = Shortcut.class, name = "Shortcut"),
-    @JsonSubTypes.Type(value = RecordSeries.class, name = "RecordSeries")
-})
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "entryType", visible = true, defaultImpl = Entry.class)
+@JsonSubTypes({@JsonSubTypes.Type(value = Document.class, name = "Document"), @JsonSubTypes.Type(value = Folder.class, name = "Folder"), @JsonSubTypes.Type(value = Shortcut.class, name = "Shortcut"), @JsonSubTypes.Type(value = RecordSeries.class, name = "RecordSeries")})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Entry {
 
@@ -72,7 +70,7 @@ public class Entry {
     private Integer rowNumber = null;
 
     @JsonProperty("fields")
-    private List<EntryFieldValue> fields = null;
+    private List<Field> fields = null;
 
     public Entry id(Integer id) {
         this.id = id;
@@ -81,6 +79,7 @@ public class Entry {
 
     /**
      * Returns the ID of the entry.
+     *
      * @return id
      */
     @Schema(description = "The ID of the entry.")
@@ -99,6 +98,7 @@ public class Entry {
 
     /**
      * Returns the name of the entry.
+     *
      * @return name
      */
     @Schema(description = "The name of the entry.")
@@ -117,6 +117,7 @@ public class Entry {
 
     /**
      * Returns the ID of the parent entry.
+     *
      * @return parentId
      */
     @Schema(description = "The ID of the parent entry.")
@@ -135,6 +136,7 @@ public class Entry {
 
     /**
      * Returns the full path in the Laserfiche repository to the entry.
+     *
      * @return fullPath
      */
     @Schema(description = "The full path in the Laserfiche repository to the entry.")
@@ -153,6 +155,7 @@ public class Entry {
 
     /**
      * Returns the path in the Laserfiche repository to the parent folder.
+     *
      * @return folderPath
      */
     @Schema(description = "The path in the Laserfiche repository to the parent folder.")
@@ -171,6 +174,7 @@ public class Entry {
 
     /**
      * Returns the name of the user that created this entry.
+     *
      * @return creator
      */
     @Schema(description = "The name of the user that created this entry.")
@@ -189,6 +193,7 @@ public class Entry {
 
     /**
      * Returns the creation time of the entry.
+     *
      * @return creationTime
      */
     @Schema(description = "The creation time of the entry.")
@@ -207,6 +212,7 @@ public class Entry {
 
     /**
      * Returns the last modification time of the entry.
+     *
      * @return lastModifiedTime
      */
     @Schema(description = "The last modification time of the entry.")
@@ -225,6 +231,7 @@ public class Entry {
 
     /**
      * Returns entryType
+     *
      * @return entryType
      */
     @Schema(description = "")
@@ -243,11 +250,10 @@ public class Entry {
 
     /**
      * Returns a boolean indicating if this entry is a container object; it can have other entries as children.
+     *
      * @return isContainer
      */
-    @Schema(
-            description =
-                    "A boolean indicating if this entry is a container object; it can have other entries as children.")
+    @Schema(description = "A boolean indicating if this entry is a container object; it can have other entries as children.")
     @JsonProperty("isContainer")
     public Boolean isContainer() {
         return isContainer;
@@ -264,11 +270,10 @@ public class Entry {
 
     /**
      * Returns a boolean indicating if this entry is a leaf object; it cannot have other entries as children.
+     *
      * @return isLeaf
      */
-    @Schema(
-            description =
-                    "A boolean indicating if this entry is a leaf object; it cannot have other entries as children.")
+    @Schema(description = "A boolean indicating if this entry is a leaf object; it cannot have other entries as children.")
     @JsonProperty("isLeaf")
     public Boolean isLeaf() {
         return isLeaf;
@@ -285,6 +290,7 @@ public class Entry {
 
     /**
      * Returns the name of the template assigned to this entry.
+     *
      * @return templateName
      */
     @Schema(description = "The name of the template assigned to this entry.")
@@ -303,6 +309,7 @@ public class Entry {
 
     /**
      * Returns the id of the template assigned to this entry.
+     *
      * @return templateId
      */
     @Schema(description = "The id of the template assigned to this entry.")
@@ -329,6 +336,7 @@ public class Entry {
 
     /**
      * Returns the names of the fields assigned to the template assigned to this entry.
+     *
      * @return templateFieldNames
      */
     @Schema(description = "The names of the fields assigned to the template assigned to this entry.")
@@ -347,6 +355,7 @@ public class Entry {
 
     /**
      * Returns the name of the volume that this entry is associated with.
+     *
      * @return volumeName
      */
     @Schema(description = "The name of the volume that this entry is associated with.")
@@ -365,6 +374,7 @@ public class Entry {
 
     /**
      * Returns row number assigned to this entry in the listing.
+     *
      * @return rowNumber
      */
     @Schema(description = "Row number assigned to this entry in the listing.")
@@ -376,14 +386,14 @@ public class Entry {
         this.rowNumber = rowNumber;
     }
 
-    public Entry fields(List<EntryFieldValue> fields) {
+    public Entry fields(List<Field> fields) {
         this.fields = fields;
         return this;
     }
 
-    public Entry addFieldsItem(EntryFieldValue fieldsItem) {
+    public Entry addFieldsItem(Field fieldsItem) {
         if (this.fields == null) {
-            this.fields = new ArrayList<EntryFieldValue>();
+            this.fields = new ArrayList<Field>();
         }
         this.fields.add(fieldsItem);
         return this;
@@ -391,14 +401,15 @@ public class Entry {
 
     /**
      * Returns the fields assigned to this entry.
+     *
      * @return fields
      */
     @Schema(description = "The fields assigned to this entry.")
-    public List<EntryFieldValue> getFields() {
+    public List<Field> getFields() {
         return fields;
     }
 
-    public void setFields(List<EntryFieldValue> fields) {
+    public void setFields(List<Field> fields) {
         this.fields = fields;
     }
 
@@ -411,45 +422,12 @@ public class Entry {
             return false;
         }
         Entry entry = (Entry) o;
-        return Objects.equals(this.id, entry.id)
-                && Objects.equals(this.name, entry.name)
-                && Objects.equals(this.parentId, entry.parentId)
-                && Objects.equals(this.fullPath, entry.fullPath)
-                && Objects.equals(this.folderPath, entry.folderPath)
-                && Objects.equals(this.creator, entry.creator)
-                && Objects.equals(this.creationTime, entry.creationTime)
-                && Objects.equals(this.lastModifiedTime, entry.lastModifiedTime)
-                && Objects.equals(this.entryType, entry.entryType)
-                && Objects.equals(this.isContainer, entry.isContainer)
-                && Objects.equals(this.isLeaf, entry.isLeaf)
-                && Objects.equals(this.templateName, entry.templateName)
-                && Objects.equals(this.templateId, entry.templateId)
-                && Objects.equals(this.templateFieldNames, entry.templateFieldNames)
-                && Objects.equals(this.volumeName, entry.volumeName)
-                && Objects.equals(this.rowNumber, entry.rowNumber)
-                && Objects.equals(this.fields, entry.fields);
+        return Objects.equals(this.id, entry.id) && Objects.equals(this.name, entry.name) && Objects.equals(this.parentId, entry.parentId) && Objects.equals(this.fullPath, entry.fullPath) && Objects.equals(this.folderPath, entry.folderPath) && Objects.equals(this.creator, entry.creator) && Objects.equals(this.creationTime, entry.creationTime) && Objects.equals(this.lastModifiedTime, entry.lastModifiedTime) && Objects.equals(this.entryType, entry.entryType) && Objects.equals(this.isContainer, entry.isContainer) && Objects.equals(this.isLeaf, entry.isLeaf) && Objects.equals(this.templateName, entry.templateName) && Objects.equals(this.templateId, entry.templateId) && Objects.equals(this.templateFieldNames, entry.templateFieldNames) && Objects.equals(this.volumeName, entry.volumeName) && Objects.equals(this.rowNumber, entry.rowNumber) && Objects.equals(this.fields, entry.fields);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(
-                id,
-                name,
-                parentId,
-                fullPath,
-                folderPath,
-                creator,
-                creationTime,
-                lastModifiedTime,
-                entryType,
-                isContainer,
-                isLeaf,
-                templateName,
-                templateId,
-                templateFieldNames,
-                volumeName,
-                rowNumber,
-                fields);
+        return Objects.hash(id, name, parentId, fullPath, folderPath, creator, creationTime, lastModifiedTime, entryType, isContainer, isLeaf, templateName, templateId, templateFieldNames, volumeName, rowNumber, fields);
     }
 
     @Override
@@ -463,17 +441,13 @@ public class Entry {
         sb.append("    folderPath: ").append(toIndentedString(folderPath)).append("\n");
         sb.append("    creator: ").append(toIndentedString(creator)).append("\n");
         sb.append("    creationTime: ").append(toIndentedString(creationTime)).append("\n");
-        sb.append("    lastModifiedTime: ")
-                .append(toIndentedString(lastModifiedTime))
-                .append("\n");
+        sb.append("    lastModifiedTime: ").append(toIndentedString(lastModifiedTime)).append("\n");
         sb.append("    entryType: ").append(toIndentedString(entryType)).append("\n");
         sb.append("    isContainer: ").append(toIndentedString(isContainer)).append("\n");
         sb.append("    isLeaf: ").append(toIndentedString(isLeaf)).append("\n");
         sb.append("    templateName: ").append(toIndentedString(templateName)).append("\n");
         sb.append("    templateId: ").append(toIndentedString(templateId)).append("\n");
-        sb.append("    templateFieldNames: ")
-                .append(toIndentedString(templateFieldNames))
-                .append("\n");
+        sb.append("    templateFieldNames: ").append(toIndentedString(templateFieldNames)).append("\n");
         sb.append("    volumeName: ").append(toIndentedString(volumeName)).append("\n");
         sb.append("    rowNumber: ").append(toIndentedString(rowNumber)).append("\n");
         sb.append("    fields: ").append(toIndentedString(fields)).append("\n");

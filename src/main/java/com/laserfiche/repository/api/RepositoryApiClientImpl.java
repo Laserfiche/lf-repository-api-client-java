@@ -7,11 +7,12 @@ import com.laserfiche.api.client.httphandlers.UsernamePasswordHandler;
 import com.laserfiche.api.client.model.AccessKey;
 import com.laserfiche.repository.api.clients.*;
 import com.laserfiche.repository.api.clients.impl.*;
-import java.util.HashMap;
-import java.util.Map;
 import kong.unirest.ObjectMapper;
 import kong.unirest.Unirest;
 import kong.unirest.UnirestInstance;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * The Laserfiche Repository API client.
@@ -26,7 +27,6 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
     private final LinkDefinitionsClient linkDefinitionsClient;
     private final RepositoriesClient repositoriesClient;
     private final SearchesClient searchesClient;
-    private final ServerSessionClient serverSessionClient;
     private final SimpleSearchesClient simpleSearchesClient;
     private final TagDefinitionsClient tagDefinitionsClient;
     private final TasksClient tasksClient;
@@ -44,12 +44,10 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
         httpClient = Unirest.spawnInstance();
         httpClient.config().setObjectMapper(objectMapper);
 
-        // Add compression header if a client is created
-        if (httpClient != null) {
-            Map<String, String> gzipCompressionHeaders = new HashMap<>();
-            gzipCompressionHeaders.put("Accept-Encoding", "gzip");
-            setDefaultRequestHeaders(gzipCompressionHeaders);
-        }
+        // Add compression header
+        Map<String, String> gzipCompressionHeaders = new HashMap<>();
+        gzipCompressionHeaders.put("Accept-Encoding", "gzip");
+        setDefaultRequestHeaders(gzipCompressionHeaders);
 
         // Initialize repository API clients
         attributesClient = new AttributesClientImpl(baseUrl, httpClient, httpHandler);
@@ -59,7 +57,6 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
         linkDefinitionsClient = new LinkDefinitionsClientImpl(baseUrl, httpClient, httpHandler);
         repositoriesClient = new RepositoriesClientImpl(baseUrl, httpClient, httpHandler);
         searchesClient = new SearchesClientImpl(baseUrl, httpClient, httpHandler);
-        serverSessionClient = new ServerSessionClientImpl(baseUrl, httpClient, httpHandler);
         simpleSearchesClient = new SimpleSearchesClientImpl(baseUrl, httpClient, httpHandler);
         tagDefinitionsClient = new TagDefinitionsClientImpl(baseUrl, httpClient, httpHandler);
         tasksClient = new TasksClientImpl(baseUrl, httpClient, httpHandler);
@@ -104,7 +101,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
      * @return {@link RepositoryApiClient}
      */
     public static RepositoryApiClient createFromAccessKey(String servicePrincipalKey, AccessKey accessKey) {
-        return createFromAccessKey(servicePrincipalKey, accessKey, null);
+        return createFromAccessKey(servicePrincipalKey, accessKey, "repository.Read repository.Write");
     }
 
     /**
