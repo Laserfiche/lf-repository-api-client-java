@@ -70,6 +70,7 @@ public class ExportDocumentApiTest extends BaseTest {
             request.setAutoRename(true);
             ImportEntryRequestPdfOptions pdfOptions = new ImportEntryRequestPdfOptions();
             pdfOptions.setGeneratePages(true);
+            pdfOptions.setGenerateText(true);
             pdfOptions.setKeepPdfAfterImport(true);
             request.setPdfOptions(pdfOptions);
             Entry resultEntry = repositoryApiClient
@@ -112,6 +113,29 @@ public class ExportDocumentApiTest extends BaseTest {
         assertTrue(downloaded);
         assertTrue(exportedFile.exists());
         assertEquals(testEntryFileSize, exportedFile.length());
+    }
+
+    @Test
+    void exportDocumentCanExportTextPart() {
+        ExportEntryRequest request = new ExportEntryRequest();
+        request.setPart(ExportEntryRequestPart.TEXT);
+        if (auditReasonId != -1) {
+            request.setAuditReasonId(auditReasonId);
+            request.setAuditReasonComment(auditReasonComment);
+        }
+        ExportEntryResponse response = client.exportEntry(new ParametersForExportEntry()
+                .setRepositoryId(repositoryId)
+                .setEntryId(testEntryId)
+                .setRequestBody(request));
+        String uri = response.getValue();
+        assertNotNull(uri);
+        try {
+            URLConnection connection = new URL(uri).openConnection();
+            String mimeType = connection.getContentType();
+            assertEquals(mimeType, "text/plain");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
