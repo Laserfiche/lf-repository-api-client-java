@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.*;
  */
 public enum ExportEntryRequestImageFormat {
 
-    MULTI_PAGE_T_I_F_F("MultiPageTIFF"), SINGLE_PAGE_T_I_F_F("SinglePageTIFF"), P_N_G("PNG"), P_D_F("PDF"), J_P_E_G("JPEG");
+    MULTI_PAGE_TIFF("MultiPageTIFF"), SINGLE_PAGE_TIFF("SinglePageTIFF"), PNG("PNG"), PDF("PDF"), JPEG("JPEG");
 
     private String value;
 

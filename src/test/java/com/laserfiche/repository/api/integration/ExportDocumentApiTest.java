@@ -137,7 +137,7 @@ public class ExportDocumentApiTest extends BaseTest {
         ExportEntryRequest request = new ExportEntryRequest();
         request.setPart(ExportEntryRequestPart.IMAGE);
         ExportEntryRequestImageOptions imageOptions = new ExportEntryRequestImageOptions();
-        imageOptions.setFormat(ExportEntryRequestImageFormat.SINGLE_PAGE_T_I_F_F);
+        imageOptions.setFormat(ExportEntryRequestImageFormat.SINGLE_PAGE_TIFF);
         request.setImageOptions(imageOptions);
         if (auditReasonId != -1) {
             request.setAuditReasonId(auditReasonId);
@@ -163,7 +163,7 @@ public class ExportDocumentApiTest extends BaseTest {
         ExportEntryRequest request = new ExportEntryRequest();
         request.setPart(ExportEntryRequestPart.IMAGE);
         ExportEntryRequestImageOptions imageOptions = new ExportEntryRequestImageOptions();
-        imageOptions.setFormat(ExportEntryRequestImageFormat.MULTI_PAGE_T_I_F_F);
+        imageOptions.setFormat(ExportEntryRequestImageFormat.MULTI_PAGE_TIFF);
         request.setImageOptions(imageOptions);
         if (auditReasonId != -1) {
             request.setAuditReasonId(auditReasonId);
@@ -189,7 +189,7 @@ public class ExportDocumentApiTest extends BaseTest {
         ExportEntryRequest request = new ExportEntryRequest();
         request.setPart(ExportEntryRequestPart.IMAGE);
         ExportEntryRequestImageOptions imageOptions = new ExportEntryRequestImageOptions();
-        imageOptions.setFormat(ExportEntryRequestImageFormat.J_P_E_G);
+        imageOptions.setFormat(ExportEntryRequestImageFormat.JPEG);
         request.setImageOptions(imageOptions);
         if (auditReasonId != -1) {
             request.setAuditReasonId(auditReasonId);
@@ -216,7 +216,7 @@ public class ExportDocumentApiTest extends BaseTest {
         ExportEntryRequest request = new ExportEntryRequest();
         request.setPart(ExportEntryRequestPart.IMAGE);
         ExportEntryRequestImageOptions imageOptions = new ExportEntryRequestImageOptions();
-        imageOptions.setFormat(ExportEntryRequestImageFormat.J_P_E_G);
+        imageOptions.setFormat(ExportEntryRequestImageFormat.JPEG);
         request.setImageOptions(imageOptions);
         if (auditReasonId != -1) {
             request.setAuditReasonId(auditReasonId);
