@@ -5,7 +5,6 @@ import com.laserfiche.api.client.model.ProblemDetails;
 import com.laserfiche.repository.api.clients.SimpleSearchesClient;
 import com.laserfiche.repository.api.clients.impl.model.EntryCollectionResponse;
 import com.laserfiche.repository.api.clients.impl.model.SearchEntryRequest;
-import com.laserfiche.repository.api.clients.params.ParametersForCopyEntry;
 import com.laserfiche.repository.api.clients.params.ParametersForSearchEntry;
 import kong.unirest.HttpStatus;
 import org.junit.jupiter.api.Assertions;
@@ -13,7 +12,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class SimpleSearchesClientTest extends BaseTest {
 

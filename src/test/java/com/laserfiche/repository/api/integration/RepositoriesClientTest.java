@@ -2,11 +2,11 @@ package com.laserfiche.repository.api.integration;
 
 import com.laserfiche.repository.api.clients.RepositoriesClient;
 import com.laserfiche.repository.api.clients.impl.RepositoriesClientImpl;
+import com.laserfiche.repository.api.clients.impl.model.Repository;
 import com.laserfiche.repository.api.clients.impl.model.RepositoryCollectionResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.DisabledIf;
-import com.laserfiche.repository.api.clients.impl.model.Repository;
 
 import static org.junit.jupiter.api.Assertions.*;
 

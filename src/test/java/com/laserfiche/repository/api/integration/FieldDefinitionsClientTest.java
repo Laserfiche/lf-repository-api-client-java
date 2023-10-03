@@ -1,17 +1,17 @@
 package com.laserfiche.repository.api.integration;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import com.laserfiche.repository.api.clients.FieldDefinitionsClient;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.function.Function;
-
 import com.laserfiche.repository.api.clients.impl.model.FieldDefinition;
 import com.laserfiche.repository.api.clients.impl.model.FieldDefinitionCollectionResponse;
 import com.laserfiche.repository.api.clients.params.ParametersForGetFieldDefinition;
 import com.laserfiche.repository.api.clients.params.ParametersForListFieldDefinitions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Function;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class FieldDefinitionsClientTest extends BaseTest {
     private FieldDefinitionsClient client;

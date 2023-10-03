@@ -1,13 +1,6 @@
 package com.laserfiche.repository.api.integration;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import com.laserfiche.repository.api.clients.TemplateDefinitionsClient;
-
-import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.function.Function;
-
 import com.laserfiche.repository.api.clients.impl.model.TemplateDefinition;
 import com.laserfiche.repository.api.clients.impl.model.TemplateDefinitionCollectionResponse;
 import com.laserfiche.repository.api.clients.impl.model.TemplateFieldDefinition;
@@ -19,6 +12,12 @@ import com.laserfiche.repository.api.clients.params.ParametersForListTemplateFie
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Function;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class TemplateDefinitionsClientTest extends BaseTest {
     private TemplateDefinitionsClient client;

@@ -1,13 +1,14 @@
 package com.laserfiche.repository.api.clients.impl.model;
 
-import java.util.Objects;
-import java.util.Arrays;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.laserfiche.api.client.model.ProblemDetails;
 import io.swagger.v3.oas.annotations.media.Schema;
+import org.threeten.bp.OffsetDateTime;
+
 import java.util.ArrayList;
 import java.util.List;
-import org.threeten.bp.OffsetDateTime;
-import com.fasterxml.jackson.annotation.*;
+import java.util.Objects;
 
 /**
  * Represents the progress of a long operation task.

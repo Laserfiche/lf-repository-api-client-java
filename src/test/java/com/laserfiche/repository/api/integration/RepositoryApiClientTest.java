@@ -1,14 +1,13 @@
 package com.laserfiche.repository.api.integration;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import com.laserfiche.api.client.model.ApiException;
 import com.laserfiche.repository.api.RepositoryApiClient;
 import com.laserfiche.repository.api.RepositoryApiClientImpl;
-import com.laserfiche.repository.api.clients.EntriesClient;
 import com.laserfiche.repository.api.clients.impl.model.Entry;
 import com.laserfiche.repository.api.clients.params.ParametersForGetEntry;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class RepositoryApiClientTest extends BaseTest {
     @Test

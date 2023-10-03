@@ -1,18 +1,21 @@
 package com.laserfiche.repository.api.integration;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import com.laserfiche.repository.api.clients.EntriesClient;
 import com.laserfiche.repository.api.clients.impl.model.*;
-import java.io.*;
-import java.net.URL;
-import java.util.List;
-
 import com.laserfiche.repository.api.clients.params.ParametersForGetEntry;
 import com.laserfiche.repository.api.clients.params.ParametersForImportEntry;
 import com.laserfiche.repository.api.clients.params.ParametersForListTemplateDefinitions;
 import com.laserfiche.repository.api.clients.params.ParametersForListTemplateFieldDefinitionsByTemplateId;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import java.io.*;
+import java.net.URL;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ImportDocumentApiTest extends BaseTest {
     static Entry testClassParentFolder;

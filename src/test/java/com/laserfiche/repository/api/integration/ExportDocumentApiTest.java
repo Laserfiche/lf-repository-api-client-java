@@ -8,13 +8,12 @@ import com.laserfiche.repository.api.clients.params.ParametersForImportEntry;
 import com.laserfiche.repository.api.clients.params.ParametersForListAuditReasons;
 import org.junit.jupiter.api.*;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.Optional;
-
-import java.io.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 

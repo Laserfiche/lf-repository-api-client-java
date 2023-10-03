@@ -3,11 +3,12 @@ package com.laserfiche.repository.api.clients.impl;
 import com.laserfiche.api.client.httphandlers.*;
 import com.laserfiche.api.client.model.ApiException;
 import com.laserfiche.api.client.model.ProblemDetails;
+import kong.unirest.Headers;
+import kong.unirest.*;
+
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import kong.unirest.*;
-import kong.unirest.Headers;
 
 /**
  * Internal helper class containing utility functions for the RepositoryApiClient.

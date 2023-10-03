@@ -1,17 +1,17 @@
 package com.laserfiche.repository.api.integration;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import com.laserfiche.repository.api.clients.AttributesClient;
 import com.laserfiche.repository.api.clients.impl.model.Attribute;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.function.Function;
-
 import com.laserfiche.repository.api.clients.impl.model.AttributeCollectionResponse;
 import com.laserfiche.repository.api.clients.params.ParametersForGetAttribute;
 import com.laserfiche.repository.api.clients.params.ParametersForListAttributes;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Function;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class AttributesClientTest extends BaseTest {
     private AttributesClient client;

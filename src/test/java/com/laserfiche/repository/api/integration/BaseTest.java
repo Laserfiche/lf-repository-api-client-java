@@ -8,6 +8,8 @@ import com.laserfiche.repository.api.clients.params.ParametersForCreateEntry;
 import com.laserfiche.repository.api.clients.params.ParametersForListTasks;
 import com.laserfiche.repository.api.clients.params.ParametersForStartDeleteEntry;
 import io.github.cdimascio.dotenv.Dotenv;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -19,8 +21,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
 
 enum AuthorizationType {
     CLOUD_ACCESS_KEY,

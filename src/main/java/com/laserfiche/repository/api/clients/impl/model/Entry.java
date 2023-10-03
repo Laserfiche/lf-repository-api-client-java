@@ -1,12 +1,15 @@
 package com.laserfiche.repository.api.clients.impl.model;
 
-import java.util.Objects;
-import java.util.Arrays;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import io.swagger.v3.oas.annotations.media.Schema;
+import org.threeten.bp.OffsetDateTime;
+
 import java.util.ArrayList;
 import java.util.List;
-import org.threeten.bp.OffsetDateTime;
-import com.fasterxml.jackson.annotation.*;
+import java.util.Objects;
 
 /**
  * Base type for all types which represent entry objects in a Laserfiche repository.

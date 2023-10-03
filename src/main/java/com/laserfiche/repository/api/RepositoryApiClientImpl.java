@@ -7,11 +7,12 @@ import com.laserfiche.api.client.httphandlers.UsernamePasswordHandler;
 import com.laserfiche.api.client.model.AccessKey;
 import com.laserfiche.repository.api.clients.*;
 import com.laserfiche.repository.api.clients.impl.*;
-import java.util.HashMap;
-import java.util.Map;
 import kong.unirest.ObjectMapper;
 import kong.unirest.Unirest;
 import kong.unirest.UnirestInstance;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * The Laserfiche Repository API client.

@@ -1,17 +1,17 @@
 package com.laserfiche.repository.api.integration;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import com.laserfiche.repository.api.clients.TagDefinitionsClient;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.function.Function;
-
 import com.laserfiche.repository.api.clients.impl.model.TagDefinition;
 import com.laserfiche.repository.api.clients.impl.model.TagDefinitionCollectionResponse;
 import com.laserfiche.repository.api.clients.params.ParametersForGetTagDefinition;
 import com.laserfiche.repository.api.clients.params.ParametersForListTagDefinitions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Function;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class TagDefinitionsClientTest extends BaseTest {
     private TagDefinitionsClient client;

@@ -1,15 +1,14 @@
 package com.laserfiche.repository.api.integration;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import com.laserfiche.api.client.model.ApiException;
 import com.laserfiche.api.client.model.ProblemDetails;
-import com.laserfiche.repository.api.RepositoryApiClient;
 import com.laserfiche.repository.api.clients.EntriesClient;
 import com.laserfiche.repository.api.clients.TagDefinitionsClient;
-import com.laserfiche.repository.api.clients.impl.model.*;
 import com.laserfiche.repository.api.clients.impl.model.Tag;
+import com.laserfiche.repository.api.clients.impl.model.*;
 import com.laserfiche.repository.api.clients.params.*;
+import kong.unirest.HttpStatus;
+import org.junit.jupiter.api.*;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -19,9 +18,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 
-import kong.unirest.HttpStatus;
-import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.EnabledIf;
+import static org.junit.jupiter.api.Assertions.*;
 
 class EntriesClientTest extends BaseTest {
     private EntriesClient client;
