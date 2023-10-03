@@ -7,12 +7,14 @@ import com.laserfiche.api.client.model.ProblemDetails;
 import com.laserfiche.repository.api.RepositoryApiClient;
 import com.laserfiche.repository.api.clients.EntriesClient;
 import com.laserfiche.repository.api.clients.impl.model.*;
+import com.laserfiche.repository.api.clients.impl.model.Tag;
 import com.laserfiche.repository.api.clients.params.*;
 
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 
@@ -540,8 +542,7 @@ class EntriesClientTest extends BaseTest {
 
     @Test
     void getEntryByPathCanReturnRootFolder() {
-        GetEntryByPathResponse entry = repositoryApiClient
-                .getEntriesClient()
+        GetEntryByPathResponse entry = client
                 .getEntryByPath(new ParametersForGetEntryByPath()
                         .setRepositoryId(repositoryId)
                         .setFullPath(rootPath));
@@ -555,8 +556,7 @@ class EntriesClientTest extends BaseTest {
 
     @Test
     void getEntryByPathReturnsRootFolderForInvalidPath() {
-        GetEntryByPathResponse entry = repositoryApiClient
-                .getEntriesClient()
+        GetEntryByPathResponse entry = client
                 .getEntryByPath(new ParametersForGetEntryByPath()
                         .setRepositoryId(repositoryId)
                         .setFullPath(nonExistingPath)
@@ -622,5 +622,197 @@ class EntriesClientTest extends BaseTest {
         assertTrue(apiException.getMessage().startsWith("Template not found."), apiException.getMessage());
         ProblemDetails problemDetails = apiException.getProblemDetails();
         assertNotNull(problemDetails);
+    }
+
+    @Test
+    void setTagsWorks() {
+        TagDefinitionCollectionResponse tagDefinitionsResponse = repositoryApiClient
+                .getTagDefinitionsClient()
+                .listTagDefinitions(new ParametersForListTagDefinitions().setRepositoryId(repositoryId));
+        List<TagDefinition> tagDefinitions = tagDefinitionsResponse.getValue();
+
+        assertNotNull(tagDefinitions);
+        assertTrue(tagDefinitions.size() > 0);
+
+        String tag = tagDefinitions.get(0).getName();
+        SetTagsRequest request = new SetTagsRequest();
+        request.setTags(new ArrayList<>());
+        request.getTags().add(tag);
+        Entry entry = createEntry(
+                createEntryClient, "RepositoryApiClientIntegrationTest Java SetTags", testClassParentFolder.getId(), true);
+        Integer num = entry.getId();
+
+        TagCollectionResponse assignTagsResponse = client
+                .setTags(new ParametersForSetTags()
+                        .setRepositoryId(repositoryId)
+                        .setEntryId(num)
+                        .setRequestBody(request));
+        List<Tag> tags = assignTagsResponse.getValue();
+
+        assertNotNull(tags);
+        assertEquals(tags.get(0).getName(), tag);
+    }
+
+    @Test
+    void setTemplateWorks() {
+        TemplateDefinition template = null;
+        TemplateDefinitionCollectionResponse templateDefinitionsResponse = repositoryApiClient
+                .getTemplateDefinitionClient()
+                .listTemplateDefinitions(new ParametersForListTemplateDefinitions().setRepositoryId(repositoryId));
+        List<TemplateDefinition> templateDefinitions = templateDefinitionsResponse.getValue();
+
+        assertNotNull(templateDefinitions);
+        assertTrue(templateDefinitions.size() > 0);
+
+        for (TemplateDefinition templateDefinition : templateDefinitions) {
+            TemplateFieldDefinitionCollectionResponse templateDefinitionsFieldsResponse = repositoryApiClient
+                    .getTemplateDefinitionClient()
+                    .listTemplateFieldDefinitionsByTemplateId(new ParametersForListTemplateFieldDefinitionsByTemplateId()
+                            .setRepositoryId(repositoryId)
+                            .setTemplateId(templateDefinition.getId()));
+            if (templateDefinitionsFieldsResponse.getValue() != null
+                    && noRequiredFieldDefinitionsInTemplate(templateDefinitionsFieldsResponse.getValue())) {
+                template = templateDefinition;
+                break;
+            }
+        }
+
+        assertNotNull(template);
+
+        SetTemplateRequest request = new SetTemplateRequest();
+        request.setTemplateName(template.getName());
+        Entry entry = createEntry(
+                createEntryClient, "RepositoryApiClientIntegrationTest Java DeleteTemplate", testClassParentFolder.getId(), true);
+
+        Entry setTemplateResponse = client
+                .setTemplate(new ParametersForSetTemplate()
+                        .setRepositoryId(repositoryId)
+                        .setEntryId(entry.getId())
+                        .setRequestBody(request));
+
+        assertNotNull(setTemplateResponse);
+        assertEquals(setTemplateResponse.getTemplateName(), template.getName());
+    }
+
+    @Test
+    void setFieldsWorks() {
+        FieldDefinition field = null;
+        String fieldValue = "a";
+
+        // Find a field definition that accepts String and has no constraint.
+        FieldDefinitionCollectionResponse fieldDefinitionsResponse = repositoryApiClient
+                .getFieldDefinitionsClient()
+                .listFieldDefinitions(new ParametersForListFieldDefinitions().setRepositoryId(repositoryId));
+        List<FieldDefinition> fieldDefinitions = fieldDefinitionsResponse.getValue();
+        for (FieldDefinition fieldDefinition : fieldDefinitions) {
+            if (fieldDefinition.getFieldType().equals(FieldType.STRING)
+                    && nullOrEmpty(fieldDefinition.getConstraint())
+                    && fieldDefinition.getLength() != null
+                    && fieldDefinition.getLength() >= 1) {
+                field = fieldDefinition;
+                break;
+            }
+        }
+
+        assertNotNull(field);
+
+        // Create an entry and set a field using the definition we found earlier.
+        FieldToUpdate fieldToUpdate = new FieldToUpdate();
+        fieldToUpdate.setName(field.getName());
+        List<String> values = new ArrayList<>();
+        values.add(fieldValue);
+        fieldToUpdate.setValues(values);
+        List<FieldToUpdate> fieldsToUpdate = new ArrayList<>();
+        fieldsToUpdate.add(fieldToUpdate);
+        SetFieldsRequest request = new SetFieldsRequest();
+        request.setFields(fieldsToUpdate);
+        Entry entry = createEntry(
+                createEntryClient, "RepositoryApiClientIntegrationTest Java SetFields", testClassParentFolder.getId(), true);
+        Integer entryId = entry.getId();
+
+        FieldCollectionResponse assignFieldValuesResponse = client
+                .setFields(new ParametersForSetFields()
+                        .setRepositoryId(repositoryId)
+                        .setEntryId(entryId)
+                        .setRequestBody(request));
+        List<Field> fields = assignFieldValuesResponse.getValue();
+
+        assertNotNull(fields);
+        assertEquals(1, fields.size());
+        assertEquals(fields.get(0).getName(), field.getName());
+    }
+
+    @Test
+    void removeTemplateWorks() throws ExecutionException, InterruptedException {
+        TemplateDefinition template = null;
+
+        TemplateDefinitionCollectionResponse templateDefinitionsResponse = createEntryClient.getTemplateDefinitionClient()
+                .listTemplateDefinitions(new ParametersForListTemplateDefinitions().setRepositoryId(repositoryId));
+        List<TemplateDefinition> templateDefinitions = templateDefinitionsResponse.getValue();
+
+        assertNotNull(templateDefinitions);
+        assertFalse(templateDefinitions.isEmpty());
+
+        for (TemplateDefinition templateDefinition : templateDefinitions) {
+            TemplateFieldDefinitionCollectionResponse templateDefinitionsFieldsResponse =
+                    createEntryClient.getTemplateDefinitionClient()
+                            .listTemplateFieldDefinitionsByTemplateId(new ParametersForListTemplateFieldDefinitionsByTemplateId()
+                                    .setRepositoryId(repositoryId)
+                                    .setTemplateId(templateDefinition.getId()));
+            if (templateDefinitionsFieldsResponse.getValue() != null
+                    && noRequiredFieldDefinitionsInTemplate(templateDefinitionsFieldsResponse.getValue())) {
+                template = templateDefinition;
+                break;
+            }
+        }
+
+        assertNotNull(template);
+
+        SetTemplateRequest request = new SetTemplateRequest();
+        request.setTemplateName(template.getName());
+
+        Entry entry = createEntry(
+                createEntryClient, "RepositoryApiClientIntegrationTest Java DeleteTemplate", testClassParentFolder.getId(), true);
+
+        entry = client
+                .setTemplate(new ParametersForSetTemplate()
+                        .setRepositoryId(repositoryId)
+                        .setEntryId(entry.getId())
+                        .setRequestBody(request));
+
+        assertEquals(template.getName(), entry.getTemplateName());
+
+        entry = client
+                .removeTemplate(new ParametersForRemoveTemplate()
+                        .setRepositoryId(repositoryId)
+                        .setEntryId(entry.getId()));
+
+        assertEquals(0, entry.getTemplateId());
+        assertEquals("", entry.getTemplateName());
+    }
+    @Test
+    void setLinksWorks() {
+        Entry sourceEntry = createEntry(createEntryClient, "RepositoryApiClientIntegrationTest Java SetLinks Source", 1, true);
+        createdEntries.add(sourceEntry);
+        Entry targetEntry = createEntry(createEntryClient, "RepositoryApiClientIntegrationTest .Net SetLinks Target", 1, true);
+        createdEntries.add(targetEntry);
+
+        LinkToUpdate link = new LinkToUpdate();
+        link.setOtherEntryId(targetEntry.getId());
+        link.setLinkDefinitionId(1);
+        List<LinkToUpdate> links = new ArrayList<LinkToUpdate>();
+        links.add(link);
+        SetLinksRequest request = new SetLinksRequest();
+        request.setLinks(links);
+        LinkCollectionResponse result = client
+                .setLinks(new ParametersForSetLinks()
+                        .setRepositoryId(repositoryId)
+                        .setEntryId(sourceEntry.getId())
+                        .setRequestBody(request));
+        List<Link> resultLinks = result.getValue();
+        assertNotNull(resultLinks);
+        assertEquals(links.size(), resultLinks.size());
+        assertEquals(sourceEntry.getId(), resultLinks.get(0).getSourceId());
+        assertEquals(targetEntry.getId(), resultLinks.get(0).getTargetId());
     }
 }

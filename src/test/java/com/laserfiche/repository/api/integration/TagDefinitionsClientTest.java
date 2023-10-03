@@ -22,7 +22,7 @@ class TagDefinitionsClientTest extends BaseTest {
     }
 
     @Test
-    void getTagDefinitions_ReturnAllTags() {
+    void listTagDefinitionsWorks() {
         TagDefinitionCollectionResponse tagInfoList =
                 client.listTagDefinitions(new ParametersForListTagDefinitions().setRepositoryId(repositoryId));
 
@@ -31,7 +31,7 @@ class TagDefinitionsClientTest extends BaseTest {
     }
 
     @Test
-    void getTagDefinitions_NextLink() throws InterruptedException {
+    void listTagDefinitionsNextLinkWorks() throws InterruptedException {
         int maxPageSize = 1;
         TagDefinitionCollectionResponse tagInfoList = client.listTagDefinitions(new ParametersForListTagDefinitions()
                 .setRepositoryId(repositoryId)
@@ -50,7 +50,7 @@ class TagDefinitionsClientTest extends BaseTest {
     }
 
     @Test
-    void getTagDefinitions_ForEach() throws InterruptedException {
+    void listTagDefinitionsForEachWorks() throws InterruptedException {
         AtomicInteger pageCount = new AtomicInteger();
         int maxPages = 2;
         int maxPageSize = 1;
@@ -69,7 +69,7 @@ class TagDefinitionsClientTest extends BaseTest {
     }
 
     @Test
-    void getTagDefinitionById_ReturnTag() {
+    void getTagDefinitionWorks() {
         TagDefinitionCollectionResponse tagInfoList =
                 client.listTagDefinitions(new ParametersForListTagDefinitions().setRepositoryId(repositoryId));
 

@@ -16,7 +16,6 @@ import static org.junit.jupiter.api.Assertions.*;
 public class TasksClientTest extends BaseTest {
     private TasksClient client;
     private RepositoryApiClient createEntryClient;
-
     @BeforeEach
     void perTestSetup() {
         client = repositoryApiClient.getTasksClient();
@@ -24,7 +23,7 @@ public class TasksClientTest extends BaseTest {
     }
 
     @Test
-    void cancelOperation_OperationEndedBeforeCancel() throws InterruptedException {
+    void cancelTasksDoesNotReturnErrorWhenCancellingACompletedTask() {
         Entry deleteEntry =
                 createEntry(createEntryClient, "RepositoryApiClientIntegrationTest Java CancelOperation", 1, true);
 
@@ -35,7 +34,6 @@ public class TasksClientTest extends BaseTest {
                         .setEntryId(deleteEntry.getId())
                         .setRequestBody(new StartDeleteEntryRequest()));
         String taskId = result.getTaskId();
-
         assertNotNull(taskId);
 
         waitUntilTaskEnds(taskId);
@@ -49,7 +47,7 @@ public class TasksClientTest extends BaseTest {
     }
 
     @Test
-    void cancelOperation_OperationCancelledSuccessfully() throws InterruptedException {
+    void cancelTasksCanCancelAnInProgressTask() throws InterruptedException {
         Entry deleteEntry =
                 createEntry(createEntryClient, "RepositoryApiClientIntegrationTest Java CancelOperation", 1, true);
 
@@ -72,7 +70,7 @@ public class TasksClientTest extends BaseTest {
     }
 
     @Test
-    void getOperationStatus_ReturnStatus() throws InterruptedException {
+    void listTasksWorks() throws InterruptedException {
         Entry deleteEntry =
                 createEntry(createEntryClient, "RepositoryApiClientIntegrationTest Java GetOperationStatus", 1, true);
 
@@ -84,7 +82,6 @@ public class TasksClientTest extends BaseTest {
                         .setRequestBody(new StartDeleteEntryRequest()));
 
         String taskId = result.getTaskId();
-
         assertNotNull(taskId);
 
         waitUntilTaskEnds(taskId);
@@ -101,7 +98,7 @@ public class TasksClientTest extends BaseTest {
     }
 
     @Test
-    void listTasks_AcceptsMultipleTaskIds() throws InterruptedException {
+    void listTasksAcceptsMultipleTaskIds() throws InterruptedException {
         // Create N tasks
         final int TASK_COUNT = 5;
         String[] taskIds = new String[TASK_COUNT];
@@ -135,7 +132,7 @@ public class TasksClientTest extends BaseTest {
     }
 
     @Test
-    void listTasks_AcceptsEmptyTaskIds() throws InterruptedException {
+    void listTasksCanBeCalledWithNoTaskIds() throws InterruptedException {
         // Create N tasks
         final int TASK_COUNT = 5;
         String[] taskIds = new String[TASK_COUNT];
@@ -169,7 +166,7 @@ public class TasksClientTest extends BaseTest {
     }
 
     @Test
-    void listTasks_Ignores_InvalidTaskIds() throws InterruptedException {
+    void listTasksIgnoresInvalidTaskIds() throws InterruptedException {
         String invalidTaskId = "ThisIsAnInvalidTaskId";
 
         TaskCollectionResponse taskCollectionResponse =
@@ -180,4 +177,29 @@ public class TasksClientTest extends BaseTest {
         assertNotNull(taskCollectionResponse);
         assertEquals(0, taskCollectionResponse.getValue().size());
     }
+
+    @Test
+    void listTasksIgnoresDuplicateTaskIds() {
+        Entry deleteEntry =
+                createEntry(createEntryClient, "RepositoryApiClientIntegrationTest Java GetOperationStatus", 1, true);
+
+        StartTaskResponse result = repositoryApiClient
+                .getEntriesClient()
+                .startDeleteEntry(new ParametersForStartDeleteEntry()
+                        .setRepositoryId(repositoryId)
+                        .setEntryId(deleteEntry.getId())
+                        .setRequestBody(new StartDeleteEntryRequest()));
+
+        String taskId = result.getTaskId();
+        assertNotNull(taskId);
+
+        TaskCollectionResponse operationProgressResponse =
+                client.listTasks(new ParametersForListTasks()
+                        .setRepositoryId(repositoryId)
+                        .setTaskIds(taskId, taskId, taskId, taskId));
+
+        assertEquals(1, operationProgressResponse.getValue().size());
+        assertEquals(taskId, operationProgressResponse.getValue().get(0).getId());
+    }
+
 }

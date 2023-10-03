@@ -123,4 +123,29 @@ public class ExportDocumentApiTest extends BaseTest {
         Assertions.assertEquals(
                 "Error: Invalid value for entryId.", thrown.getMessage());
     }
+
+    @Test
+    void exportDocumentCanExportPagesAsSingleTIFF() {
+        final String FILE_NAME = "exportDocument_temp_file.tiff";
+        ExportEntryRequest request = new ExportEntryRequest();
+        request.setPart(ExportEntryRequestPart.IMAGE);
+        ExportEntryRequestImageOptions imageOptions = new ExportEntryRequestImageOptions();
+        imageOptions.setFormat(ExportEntryRequestImageFormat.SINGLE_PAGE_T_I_F_F);
+        request.setImageOptions(imageOptions);
+        if (auditReasonId != -1) {
+            request.setAuditReasonId(auditReasonId);
+            request.setAuditReasonComment(auditReasonComment);
+        }
+        ExportEntryResponse response = client.exportEntry(new ParametersForExportEntry()
+                .setRepositoryId(repositoryId)
+                .setEntryId(testEntryId)
+                .setRequestBody(request));
+        String uri = response.getValue();
+        assertNotNull(uri);
+        exportedFile = new File(FILE_NAME);
+        boolean downloaded = downloadFileFromURI(uri, exportedFile);
+        assertTrue(downloaded);
+        assertTrue(exportedFile.exists());
+        assertEquals(testEntryFileSize, exportedFile.length());
+    }
 }

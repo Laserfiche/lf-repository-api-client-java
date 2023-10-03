@@ -17,7 +17,6 @@ public class StartExportEntryApiTest extends BaseTest {
     private static int testEntryId;
     private static long testEntryFileSize;
     private static File exportedFile;
-
     private static int auditReasonId = -1;
     private static String auditReasonComment;
 
@@ -85,7 +84,7 @@ public class StartExportEntryApiTest extends BaseTest {
     }
 
     @Test
-    void startExportEntry_Successfully_Export_PDF_File() {
+    void startExportEntryCanExportEDocPart() {
         final String FILE_NAME = "startExportEntry_temp_file.pdf";
         StartExportEntryRequest request = new StartExportEntryRequest();
         request.setPart(ExportEntryRequestPart.EDOC);

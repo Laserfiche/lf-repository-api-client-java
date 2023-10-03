@@ -29,7 +29,7 @@ class TemplateDefinitionsClientTest extends BaseTest {
     }
 
     @Test
-    void getTemplateDefinitions_ReturnAllTemplates() {
+    void listTemplateDefinitionsWorks() {
         TemplateDefinitionCollectionResponse templateInfoList =
                 client.listTemplateDefinitions(new ParametersForListTemplateDefinitions().setRepositoryId(repositoryId));
 
@@ -38,7 +38,7 @@ class TemplateDefinitionsClientTest extends BaseTest {
     }
 
     @Test
-    void getTemplateDefinitionsFields_ReturnTemplateFields() {
+    void listTemplateFieldDefinitionsByTemplateIdWorks() {
         TemplateDefinitionCollectionResponse templateInfoList =
                 client.listTemplateDefinitions(new ParametersForListTemplateDefinitions().setRepositoryId(repositoryId));
         assertNotNull(templateInfoList);
@@ -54,7 +54,7 @@ class TemplateDefinitionsClientTest extends BaseTest {
     }
 
     @Test
-    void getTemplateDefinitions_NextLink() throws InterruptedException {
+    void listTemplateDefinitionsNextLinkWorks() throws InterruptedException {
         int maxPageSize = 1;
         TemplateDefinitionCollectionResponse templateInfoList =
                 client.listTemplateDefinitions(new ParametersForListTemplateDefinitions()
@@ -74,7 +74,7 @@ class TemplateDefinitionsClientTest extends BaseTest {
     }
 
     @Test
-    void getTemplateDefinitions_ForEach() throws InterruptedException {
+    void listTemplateDefinitionsForEachWorks() throws InterruptedException {
         AtomicInteger pageCount = new AtomicInteger();
         int maxPages = 2;
         int maxPageSize = 1;
@@ -93,7 +93,7 @@ class TemplateDefinitionsClientTest extends BaseTest {
     }
 
     @Test
-    void getTemplateDefinitionsFields_NextLink() throws InterruptedException {
+    void listTemplateFieldDefinitionsByTemplateIdNextLinkWorks() throws InterruptedException {
         int maxPageSize = 1;
         TemplateDefinitionCollectionResponse templateInfoList =
                 client.listTemplateDefinitions(new ParametersForListTemplateDefinitions()
@@ -124,7 +124,7 @@ class TemplateDefinitionsClientTest extends BaseTest {
     }
 
     @Test
-    void getTemplateDefinitionsFields_ForEach() throws InterruptedException {
+    void listTemplateFieldDefinitionsByTemplateIdForEachWorks() throws InterruptedException {
         TemplateDefinitionCollectionResponse templateInfoList =
                 client.listTemplateDefinitions(new ParametersForListTemplateDefinitions().setRepositoryId(repositoryId));
 
@@ -154,7 +154,7 @@ class TemplateDefinitionsClientTest extends BaseTest {
     }
 
     @Test
-    void getTemplateDefinitionById_ReturnTemplate() {
+    void getTemplateDefinitionWorks() {
         TemplateDefinitionCollectionResponse templateInfoList =
                 client.listTemplateDefinitions(new ParametersForListTemplateDefinitions().setRepositoryId(repositoryId));
 
@@ -171,7 +171,7 @@ class TemplateDefinitionsClientTest extends BaseTest {
     }
 
     @Test
-    void getTemplateDefinitionsByTemplateName_TemplateNameQueryParameter_ReturnSingleTemplate() {
+    void listTemplateDefinitionsCanBeUsedToRetrieveASingleTemplate() {
         TemplateDefinitionCollectionResponse templateInfoList =
                 client.listTemplateDefinitions(new ParametersForListTemplateDefinitions().setRepositoryId(repositoryId));
 
@@ -190,7 +190,7 @@ class TemplateDefinitionsClientTest extends BaseTest {
     }
 
     @Test
-    void getTemplateDefinitionsFieldByTemplateName_ReturnTemplateFields() {
+    void listTemplateFieldDefinitionsByTemplateNameWorks() {
         TemplateDefinitionCollectionResponse allTemplateDefinitionsFuture =
                 client.listTemplateDefinitions(new ParametersForListTemplateDefinitions().setRepositoryId(repositoryId));
         TemplateDefinition firstTemplateDefinitions =
