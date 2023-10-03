@@ -9,9 +9,9 @@ import com.laserfiche.repository.api.clients.params.*;
 public interface RepositoriesClient {
 
     /**
-     * - Returns the repository resource list that current user has access to.
+     * - Returns the repository resource list that current user has access to.<br>- Required OAuth scope: repository.Read
      *
-     * @return {@link RepositoryInfo[]} The return value
+     * @return {@link RepositoryCollectionResponse} The return value
      */
-    RepositoryInfo[] getRepositoryList();
+    RepositoryCollectionResponse listRepositories();
 }

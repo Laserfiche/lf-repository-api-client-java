@@ -8,7 +8,6 @@ import com.laserfiche.api.client.model.ProblemDetails;
 import com.laserfiche.repository.api.clients.RepositoriesClient;
 import com.laserfiche.repository.api.clients.impl.model.*;
 import com.laserfiche.repository.api.clients.params.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
@@ -16,7 +15,6 @@ import kong.unirest.HttpResponse;
 import kong.unirest.ObjectMapper;
 import kong.unirest.Unirest;
 import kong.unirest.UnirestInstance;
-import kong.unirest.json.JSONArray;
 import kong.unirest.json.JSONObject;
 
 /**
@@ -29,32 +27,33 @@ public class RepositoriesClientImpl extends ApiClient implements RepositoriesCli
     }
 
     @Override
-    public RepositoryInfo[] getRepositoryList() {
-        Function<HttpResponse<Object>, RepositoryInfo[]> parseResponse = (HttpResponse<Object> httpResponse) -> {
-            Object body = httpResponse.getBody();
-            Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
-            if (httpResponse.getStatus() == 200) {
-                try {
-                    String responseJson = new JSONArray(((ArrayList) body).toArray()).toString();
-                    return objectMapper.readValue(responseJson, RepositoryInfo[].class);
-                } catch (Exception e) {
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
-                }
-            } else {
-                ProblemDetails problemDetails;
-                try {
-                    String jsonString = new JSONObject(body).toString();
-                    problemDetails = ProblemDetailsDeserializer.deserialize(objectMapper, jsonString);
-                } catch (Exception e) {
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
-                }
-                throw ApiClientUtils.createApiException(httpResponse, problemDetails);
-            }
-        };
+    public RepositoryCollectionResponse listRepositories() {
+        Function<HttpResponse<Object>, RepositoryCollectionResponse> parseResponse =
+                (HttpResponse<Object> httpResponse) -> {
+                    Object body = httpResponse.getBody();
+                    Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
+                    if (httpResponse.getStatus() == 200) {
+                        try {
+                            String responseJson = new JSONObject(body).toString();
+                            return objectMapper.readValue(responseJson, RepositoryCollectionResponse.class);
+                        } catch (Exception e) {
+                            throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+                        }
+                    } else {
+                        ProblemDetails problemDetails;
+                        try {
+                            String jsonString = new JSONObject(body).toString();
+                            problemDetails = ProblemDetailsDeserializer.deserialize(objectMapper, jsonString);
+                        } catch (Exception e) {
+                            throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+                        }
+                        throw ApiClientUtils.createApiException(httpResponse, problemDetails);
+                    }
+                };
         return ApiClientUtils.sendRequestWithRetry(
                 httpClient,
                 httpRequestHandler,
-                baseUrl + "/v1/Repositories",
+                baseUrl + "/v2/Repositories",
                 "GET",
                 null,
                 null,
@@ -73,7 +72,7 @@ public class RepositoriesClientImpl extends ApiClient implements RepositoriesCli
      * @param url API server base URL e.g., https://{APIServerName}/LFRepositoryAPI
      * @return  Get the repository resource list successfully.
      */
-    public static RepositoryInfo[] getSelfHostedRepositoryList(String url) {
+    public static RepositoryCollectionResponse listRepositoriesForSelfHosted(String url) {
         Map<String, String> headerKeyValuePairs = new HashMap<>();
         headerKeyValuePairs.put("accept", "application/json");
         HttpResponse<Object> httpResponse = null;
@@ -81,7 +80,7 @@ public class RepositoriesClientImpl extends ApiClient implements RepositoriesCli
         if (url.endsWith("/")) {
             url = url.substring(0, url.length() - 1);
         }
-        String baseUrl = url + "/v1/Repositories";
+        String baseUrl = url + "/v2/Repositories";
         ObjectMapper objectMapper = new TokenClientObjectMapper();
         try (UnirestInstance httpClient = Unirest.spawnInstance()) {
             httpClient.config().setObjectMapper(objectMapper);
@@ -90,8 +89,8 @@ public class RepositoriesClientImpl extends ApiClient implements RepositoriesCli
             Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
             if (httpResponse.getStatus() == 200) {
                 try {
-                    responseJson = new JSONArray(((ArrayList) body).toArray()).toString();
-                    return objectMapper.readValue(responseJson, RepositoryInfo[].class);
+                    responseJson = new JSONObject(body).toString();
+                    return objectMapper.readValue(responseJson, RepositoryCollectionResponse.class);
                 } catch (Exception e) {
                     throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
                 }

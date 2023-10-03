@@ -1,5 +1,7 @@
 package com.laserfiche.repository.api.integration;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import com.laserfiche.api.client.model.ApiException;
 import com.laserfiche.repository.api.clients.AuditReasonsClient;
 import com.laserfiche.repository.api.clients.EntriesClient;
@@ -8,14 +10,11 @@ import com.laserfiche.repository.api.clients.params.ParametersForExportDocument;
 import com.laserfiche.repository.api.clients.params.ParametersForExportDocumentWithAuditReason;
 import com.laserfiche.repository.api.clients.params.ParametersForGetAuditReasons;
 import com.laserfiche.repository.api.clients.params.ParametersForImportDocument;
+import java.io.*;
+import java.util.function.Consumer;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.DisabledIf;
 import org.junit.jupiter.api.condition.EnabledIf;
-
-import java.io.*;
-import java.util.function.Consumer;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 public class ExportDocumentApiTest extends BaseTest {
     private EntriesClient client;
@@ -57,9 +56,7 @@ public class ExportDocumentApiTest extends BaseTest {
                             .setRequestBody(new PostEntryWithEdocMetadataRequest()));
 
             CreateEntryOperations operations = result.getOperations();
-            testEntryId = operations
-                    .getEntryCreate()
-                    .getEntryId();
+            testEntryId = operations.getEntryCreate().getEntryId();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -122,14 +119,8 @@ public class ExportDocumentApiTest extends BaseTest {
             }
         };
         GetEdocWithAuditReasonRequest requestBody = new GetEdocWithAuditReasonRequest();
-        requestBody.setAuditReasonId(auditReasons
-                .getExportDocument()
-                .get(0)
-                .getId());
-        requestBody.setComment(auditReasons
-                .getExportDocument()
-                .get(0)
-                .getName());
+        requestBody.setAuditReasonId(auditReasons.getExportDocument().get(0).getId());
+        requestBody.setComment(auditReasons.getExportDocument().get(0).getName());
         client.exportDocumentWithAuditReason(new ParametersForExportDocumentWithAuditReason()
                 .setRepoId(repositoryId)
                 .setEntryId(testEntryId)
@@ -165,9 +156,7 @@ public class ExportDocumentApiTest extends BaseTest {
                 .setEntryId(testEntryId)
                 .setInputStreamConsumer(consumer);
         InputStream inputStream = client.exportDocumentAsStream(input);
-        input
-                .getInputStreamConsumer()
-                .accept(inputStream);
+        input.getInputStreamConsumer().accept(inputStream);
         inputStream.close();
         exportedFile = new File(FILE_NAME);
         assertTrue(exportedFile.exists());
@@ -197,23 +186,15 @@ public class ExportDocumentApiTest extends BaseTest {
             }
         };
         GetEdocWithAuditReasonRequest requestBody = new GetEdocWithAuditReasonRequest();
-        requestBody.setAuditReasonId(auditReasons
-                .getExportDocument()
-                .get(0)
-                .getId());
-        requestBody.setComment(auditReasons
-                .getExportDocument()
-                .get(0)
-                .getName());
+        requestBody.setAuditReasonId(auditReasons.getExportDocument().get(0).getId());
+        requestBody.setComment(auditReasons.getExportDocument().get(0).getName());
         ParametersForExportDocumentWithAuditReason input = new ParametersForExportDocumentWithAuditReason()
                 .setRepoId(repositoryId)
                 .setEntryId(testEntryId)
                 .setInputStreamConsumer(consumer)
                 .setRequestBody(requestBody);
         InputStream inputStream = client.exportDocumentWithAuditReasonAsStream(input);
-        input
-                .getInputStreamConsumer()
-                .accept(inputStream);
+        input.getInputStreamConsumer().accept(inputStream);
         inputStream.close();
         exportedFile = new File(FILE_NAME);
         assertTrue(exportedFile.exists());
@@ -249,14 +230,8 @@ public class ExportDocumentApiTest extends BaseTest {
             assertTrue(false, "Consumer should not have been called.");
         };
         GetEdocWithAuditReasonRequest requestBody = new GetEdocWithAuditReasonRequest();
-        requestBody.setAuditReasonId(auditReasons
-                .getExportDocument()
-                .get(0)
-                .getId());
-        requestBody.setComment(auditReasons
-                .getExportDocument()
-                .get(0)
-                .getName());
+        requestBody.setAuditReasonId(auditReasons.getExportDocument().get(0).getId());
+        requestBody.setComment(auditReasons.getExportDocument().get(0).getName());
         Exception thrown = Assertions.assertThrows(ApiException.class, () -> {
             client.exportDocumentWithAuditReason(new ParametersForExportDocumentWithAuditReason()
                     .setRepoId(repositoryId)
@@ -300,14 +275,8 @@ public class ExportDocumentApiTest extends BaseTest {
             assertTrue(false, "Consumer should not have been called.");
         };
         GetEdocWithAuditReasonRequest requestBody = new GetEdocWithAuditReasonRequest();
-        requestBody.setAuditReasonId(auditReasons
-                .getExportDocument()
-                .get(0)
-                .getId());
-        requestBody.setComment(auditReasons
-                .getExportDocument()
-                .get(0)
-                .getName());
+        requestBody.setAuditReasonId(auditReasons.getExportDocument().get(0).getId());
+        requestBody.setComment(auditReasons.getExportDocument().get(0).getName());
         Exception thrown = Assertions.assertThrows(ApiException.class, () -> {
             client.exportDocumentWithAuditReasonAsStream(new ParametersForExportDocumentWithAuditReason()
                     .setRepoId(repositoryId)
@@ -326,11 +295,8 @@ public class ExportDocumentApiTest extends BaseTest {
         try {
             AuditReasons auditReasons = repositoryApiClient
                     .getAuditReasonsClient()
-                    .getAuditReasons(
-                            new ParametersForGetAuditReasons().setRepoId(repositoryId));
-            if (auditReasons
-                    .getExportDocument()
-                    .size() == 0) {
+                    .getAuditReasons(new ParametersForGetAuditReasons().setRepoId(repositoryId));
+            if (auditReasons.getExportDocument().size() == 0) {
                 return true;
             }
         } catch (Exception e) {

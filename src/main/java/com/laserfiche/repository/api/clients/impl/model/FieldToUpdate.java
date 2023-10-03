@@ -7,24 +7,45 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * The request body containing fields that will be assigned to the entry.
+ * Represents a field that will be assigned to the entry.
  */
-@Schema(description = "The request body containing fields that will be assigned to the entry.")
+@Schema(description = "Represents a field that will be assigned to the entry.")
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class FieldToUpdate {
 
-    @JsonProperty("values")
-    private List<ValueToUpdate> values = null;
+    @JsonProperty("name")
+    private String name = null;
 
-    public FieldToUpdate values(List<ValueToUpdate> values) {
+    @JsonProperty("values")
+    private List<String> values = null;
+
+    public FieldToUpdate name(String name) {
+        this.name = name;
+        return this;
+    }
+
+    /**
+     * Returns the name of the field that will be assigned to the entry.
+     * @return name
+     */
+    @Schema(required = true, description = "The name of the field that will be assigned to the entry.")
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public FieldToUpdate values(List<String> values) {
         this.values = values;
         return this;
     }
 
-    public FieldToUpdate addValuesItem(ValueToUpdate valuesItem) {
+    public FieldToUpdate addValuesItem(String valuesItem) {
         if (this.values == null) {
-            this.values = new ArrayList<ValueToUpdate>();
+            this.values = new ArrayList<String>();
         }
         this.values.add(valuesItem);
         return this;
@@ -35,11 +56,11 @@ public class FieldToUpdate {
      * @return values
      */
     @Schema(description = "The field values that will be assigned to the field.")
-    public List<ValueToUpdate> getValues() {
+    public List<String> getValues() {
         return values;
     }
 
-    public void setValues(List<ValueToUpdate> values) {
+    public void setValues(List<String> values) {
         this.values = values;
     }
 
@@ -52,18 +73,19 @@ public class FieldToUpdate {
             return false;
         }
         FieldToUpdate fieldToUpdate = (FieldToUpdate) o;
-        return Objects.equals(this.values, fieldToUpdate.values);
+        return Objects.equals(this.name, fieldToUpdate.name) && Objects.equals(this.values, fieldToUpdate.values);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(values);
+        return Objects.hash(name, values);
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class FieldToUpdate {\n");
+        sb.append("    name: ").append(toIndentedString(name)).append("\n");
         sb.append("    values: ").append(toIndentedString(values)).append("\n");
         sb.append("}");
         return sb.toString();

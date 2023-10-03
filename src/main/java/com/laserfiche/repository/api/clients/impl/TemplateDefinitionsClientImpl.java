@@ -26,13 +26,13 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
     }
 
     @Override
-    public ODataValueContextOfIListOfWTemplateInfo getTemplateDefinitions(
-            ParametersForGetTemplateDefinitions parameters) {
-        return doGetTemplateDefinitions(baseUrl + "/v1/Repositories/{repoId}/TemplateDefinitions", parameters);
+    public TemplateDefinitionCollectionResponse listTemplateDefinitions(
+            ParametersForListTemplateDefinitions parameters) {
+        return doListTemplateDefinitions(baseUrl + "/v2/Repositories/{repositoryId}/TemplateDefinitions", parameters);
     }
 
-    private ODataValueContextOfIListOfWTemplateInfo doGetTemplateDefinitions(
-            String url, ParametersForGetTemplateDefinitions parameters) {
+    private TemplateDefinitionCollectionResponse doListTemplateDefinitions(
+            String url, ParametersForListTemplateDefinitions parameters) {
         Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(
                 new String[] {"String", "String", "String", "String", "int", "int", "boolean"},
                 new String[] {"templateName", "culture", "$select", "$orderby", "$top", "$skip", "$count"},
@@ -46,19 +46,19 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
                     parameters.isCount()
                 });
         Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(
-                new String[] {"String"}, new String[] {"repoId"}, new Object[] {parameters.getRepoId()});
+                new String[] {"String"}, new String[] {"repositoryId"}, new Object[] {parameters.getRepositoryId()});
         Map<String, Object> headerParameters = ApiClientUtils.getParametersWithNonDefaultValue(
                 new String[] {"String"}, new String[] {"prefer"}, new Object[] {parameters.getPrefer()});
         Map<String, String> headerParametersWithStringTypeValue = headerParameters.entrySet().stream()
                 .collect(Collectors.toMap(Map.Entry::getKey, e -> (String) e.getValue()));
-        Function<HttpResponse<Object>, ODataValueContextOfIListOfWTemplateInfo> parseResponse =
+        Function<HttpResponse<Object>, TemplateDefinitionCollectionResponse> parseResponse =
                 (HttpResponse<Object> httpResponse) -> {
                     Object body = httpResponse.getBody();
                     Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
                     if (httpResponse.getStatus() == 200) {
                         try {
                             String responseJson = new JSONObject(body).toString();
-                            return objectMapper.readValue(responseJson, ODataValueContextOfIListOfWTemplateInfo.class);
+                            return objectMapper.readValue(responseJson, TemplateDefinitionCollectionResponse.class);
                         } catch (Exception e) {
                             throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
                         }
@@ -90,35 +90,35 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
     }
 
     @Override
-    public ODataValueContextOfIListOfWTemplateInfo getTemplateDefinitionsNextLink(String nextLink, int maxPageSize) {
-        return doGetTemplateDefinitions(
+    public TemplateDefinitionCollectionResponse listTemplateDefinitionsNextLink(String nextLink, int maxPageSize) {
+        return doListTemplateDefinitions(
                 nextLink,
-                new ParametersForGetTemplateDefinitions()
+                new ParametersForListTemplateDefinitions()
                         .setPrefer(ApiClientUtils.mergeMaxSizeIntoPrefer(maxPageSize, null)));
     }
 
     @Override
-    public void getTemplateDefinitionsForEach(
-            Function<ODataValueContextOfIListOfWTemplateInfo, Boolean> callback,
+    public void listTemplateDefinitionsForEach(
+            Function<TemplateDefinitionCollectionResponse, Boolean> callback,
             Integer maxPageSize,
-            ParametersForGetTemplateDefinitions parameters) {
+            ParametersForListTemplateDefinitions parameters) {
         parameters.setPrefer(ApiClientUtils.mergeMaxSizeIntoPrefer(maxPageSize, parameters.getPrefer()));
-        ODataValueContextOfIListOfWTemplateInfo response = getTemplateDefinitions(parameters);
+        TemplateDefinitionCollectionResponse response = listTemplateDefinitions(parameters);
         while (response != null && callback.apply(response)) {
             String nextLink = response.getOdataNextLink();
-            response = getTemplateDefinitionsNextLink(nextLink, maxPageSize);
+            response = listTemplateDefinitionsNextLink(nextLink, maxPageSize);
         }
     }
 
     @Override
-    public ODataValueContextOfIListOfTemplateFieldInfo getTemplateFieldDefinitionsByTemplateName(
-            ParametersForGetTemplateFieldDefinitionsByTemplateName parameters) {
-        return doGetTemplateFieldDefinitionsByTemplateName(
-                baseUrl + "/v1/Repositories/{repoId}/TemplateDefinitions/Fields", parameters);
+    public TemplateFieldDefinitionCollectionResponse listTemplateFieldDefinitionsByTemplateName(
+            ParametersForListTemplateFieldDefinitionsByTemplateName parameters) {
+        return doListTemplateFieldDefinitionsByTemplateName(
+                baseUrl + "/v2/Repositories/{repositoryId}/TemplateDefinitions/FieldDefinitions", parameters);
     }
 
-    private ODataValueContextOfIListOfTemplateFieldInfo doGetTemplateFieldDefinitionsByTemplateName(
-            String url, ParametersForGetTemplateFieldDefinitionsByTemplateName parameters) {
+    private TemplateFieldDefinitionCollectionResponse doListTemplateFieldDefinitionsByTemplateName(
+            String url, ParametersForListTemplateFieldDefinitionsByTemplateName parameters) {
         Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(
                 new String[] {"String", "String", "String", "String", "int", "int", "boolean"},
                 new String[] {"templateName", "culture", "$select", "$orderby", "$top", "$skip", "$count"},
@@ -132,12 +132,12 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
                     parameters.isCount()
                 });
         Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(
-                new String[] {"String"}, new String[] {"repoId"}, new Object[] {parameters.getRepoId()});
+                new String[] {"String"}, new String[] {"repositoryId"}, new Object[] {parameters.getRepositoryId()});
         Map<String, Object> headerParameters = ApiClientUtils.getParametersWithNonDefaultValue(
                 new String[] {"String"}, new String[] {"prefer"}, new Object[] {parameters.getPrefer()});
         Map<String, String> headerParametersWithStringTypeValue = headerParameters.entrySet().stream()
                 .collect(Collectors.toMap(Map.Entry::getKey, e -> (String) e.getValue()));
-        Function<HttpResponse<Object>, ODataValueContextOfIListOfTemplateFieldInfo> parseResponse =
+        Function<HttpResponse<Object>, TemplateFieldDefinitionCollectionResponse> parseResponse =
                 (HttpResponse<Object> httpResponse) -> {
                     Object body = httpResponse.getBody();
                     Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
@@ -145,7 +145,7 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
                         try {
                             String responseJson = new JSONObject(body).toString();
                             return objectMapper.readValue(
-                                    responseJson, ODataValueContextOfIListOfTemplateFieldInfo.class);
+                                    responseJson, TemplateFieldDefinitionCollectionResponse.class);
                         } catch (Exception e) {
                             throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
                         }
@@ -177,133 +177,44 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
     }
 
     @Override
-    public ODataValueContextOfIListOfTemplateFieldInfo getTemplateFieldDefinitionsByTemplateNameNextLink(
+    public TemplateFieldDefinitionCollectionResponse listTemplateFieldDefinitionsByTemplateNameNextLink(
             String nextLink, int maxPageSize) {
-        return doGetTemplateFieldDefinitionsByTemplateName(
+        return doListTemplateFieldDefinitionsByTemplateName(
                 nextLink,
-                new ParametersForGetTemplateFieldDefinitionsByTemplateName()
+                new ParametersForListTemplateFieldDefinitionsByTemplateName()
                         .setPrefer(ApiClientUtils.mergeMaxSizeIntoPrefer(maxPageSize, null)));
     }
 
     @Override
-    public void getTemplateFieldDefinitionsByTemplateNameForEach(
-            Function<ODataValueContextOfIListOfTemplateFieldInfo, Boolean> callback,
+    public void listTemplateFieldDefinitionsByTemplateNameForEach(
+            Function<TemplateFieldDefinitionCollectionResponse, Boolean> callback,
             Integer maxPageSize,
-            ParametersForGetTemplateFieldDefinitionsByTemplateName parameters) {
+            ParametersForListTemplateFieldDefinitionsByTemplateName parameters) {
         parameters.setPrefer(ApiClientUtils.mergeMaxSizeIntoPrefer(maxPageSize, parameters.getPrefer()));
-        ODataValueContextOfIListOfTemplateFieldInfo response = getTemplateFieldDefinitionsByTemplateName(parameters);
+        TemplateFieldDefinitionCollectionResponse response = listTemplateFieldDefinitionsByTemplateName(parameters);
         while (response != null && callback.apply(response)) {
             String nextLink = response.getOdataNextLink();
-            response = getTemplateFieldDefinitionsByTemplateNameNextLink(nextLink, maxPageSize);
+            response = listTemplateFieldDefinitionsByTemplateNameNextLink(nextLink, maxPageSize);
         }
     }
 
     @Override
-    public ODataValueContextOfIListOfTemplateFieldInfo getTemplateFieldDefinitions(
-            ParametersForGetTemplateFieldDefinitions parameters) {
-        return doGetTemplateFieldDefinitions(
-                baseUrl + "/v1/Repositories/{repoId}/TemplateDefinitions/{templateId}/Fields", parameters);
-    }
-
-    private ODataValueContextOfIListOfTemplateFieldInfo doGetTemplateFieldDefinitions(
-            String url, ParametersForGetTemplateFieldDefinitions parameters) {
-        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(
-                new String[] {"String", "String", "String", "int", "int", "boolean"},
-                new String[] {"culture", "$select", "$orderby", "$top", "$skip", "$count"},
-                new Object[] {
-                    parameters.getCulture(),
-                    parameters.getSelect(),
-                    parameters.getOrderby(),
-                    parameters.getTop(),
-                    parameters.getSkip(),
-                    parameters.isCount()
-                });
-        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(
-                new String[] {"String", "int"},
-                new String[] {"repoId", "templateId"},
-                new Object[] {parameters.getRepoId(), parameters.getTemplateId()});
-        Map<String, Object> headerParameters = ApiClientUtils.getParametersWithNonDefaultValue(
-                new String[] {"String"}, new String[] {"prefer"}, new Object[] {parameters.getPrefer()});
-        Map<String, String> headerParametersWithStringTypeValue = headerParameters.entrySet().stream()
-                .collect(Collectors.toMap(Map.Entry::getKey, e -> (String) e.getValue()));
-        Function<HttpResponse<Object>, ODataValueContextOfIListOfTemplateFieldInfo> parseResponse =
-                (HttpResponse<Object> httpResponse) -> {
-                    Object body = httpResponse.getBody();
-                    Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
-                    if (httpResponse.getStatus() == 200) {
-                        try {
-                            String responseJson = new JSONObject(body).toString();
-                            return objectMapper.readValue(
-                                    responseJson, ODataValueContextOfIListOfTemplateFieldInfo.class);
-                        } catch (Exception e) {
-                            throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
-                        }
-                    } else {
-                        ProblemDetails problemDetails;
-                        try {
-                            String jsonString = new JSONObject(body).toString();
-                            problemDetails = ProblemDetailsDeserializer.deserialize(objectMapper, jsonString);
-                        } catch (Exception e) {
-                            throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
-                        }
-                        throw ApiClientUtils.createApiException(httpResponse, problemDetails);
-                    }
-                };
-        return ApiClientUtils.sendRequestWithRetry(
-                httpClient,
-                httpRequestHandler,
-                url,
-                "GET",
-                null,
-                null,
-                null,
-                null,
-                queryParameters,
-                pathParameters,
-                headerParametersWithStringTypeValue,
-                false,
-                parseResponse);
-    }
-
-    @Override
-    public ODataValueContextOfIListOfTemplateFieldInfo getTemplateFieldDefinitionsNextLink(
-            String nextLink, int maxPageSize) {
-        return doGetTemplateFieldDefinitions(
-                nextLink,
-                new ParametersForGetTemplateFieldDefinitions()
-                        .setPrefer(ApiClientUtils.mergeMaxSizeIntoPrefer(maxPageSize, null)));
-    }
-
-    @Override
-    public void getTemplateFieldDefinitionsForEach(
-            Function<ODataValueContextOfIListOfTemplateFieldInfo, Boolean> callback,
-            Integer maxPageSize,
-            ParametersForGetTemplateFieldDefinitions parameters) {
-        parameters.setPrefer(ApiClientUtils.mergeMaxSizeIntoPrefer(maxPageSize, parameters.getPrefer()));
-        ODataValueContextOfIListOfTemplateFieldInfo response = getTemplateFieldDefinitions(parameters);
-        while (response != null && callback.apply(response)) {
-            String nextLink = response.getOdataNextLink();
-            response = getTemplateFieldDefinitionsNextLink(nextLink, maxPageSize);
-        }
-    }
-
-    @Override
-    public WTemplateInfo getTemplateDefinitionById(ParametersForGetTemplateDefinitionById parameters) {
+    public TemplateDefinition getTemplateDefinition(ParametersForGetTemplateDefinition parameters) {
         Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(
                 new String[] {"String", "String"},
                 new String[] {"culture", "$select"},
                 new Object[] {parameters.getCulture(), parameters.getSelect()});
         Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(
                 new String[] {"String", "int"},
-                new String[] {"repoId", "templateId"},
-                new Object[] {parameters.getRepoId(), parameters.getTemplateId()});
-        Function<HttpResponse<Object>, WTemplateInfo> parseResponse = (HttpResponse<Object> httpResponse) -> {
+                new String[] {"repositoryId", "templateId"},
+                new Object[] {parameters.getRepositoryId(), parameters.getTemplateId()});
+        Function<HttpResponse<Object>, TemplateDefinition> parseResponse = (HttpResponse<Object> httpResponse) -> {
             Object body = httpResponse.getBody();
             Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
             if (httpResponse.getStatus() == 200) {
                 try {
                     String responseJson = new JSONObject(body).toString();
-                    return objectMapper.readValue(responseJson, WTemplateInfo.class);
+                    return objectMapper.readValue(responseJson, TemplateDefinition.class);
                 } catch (Exception e) {
                     throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
                 }
@@ -321,7 +232,7 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
         return ApiClientUtils.sendRequestWithRetry(
                 httpClient,
                 httpRequestHandler,
-                baseUrl + "/v1/Repositories/{repoId}/TemplateDefinitions/{templateId}",
+                baseUrl + "/v2/Repositories/{repositoryId}/TemplateDefinitions/{templateId}",
                 "GET",
                 null,
                 null,
@@ -332,5 +243,95 @@ public class TemplateDefinitionsClientImpl extends ApiClient implements Template
                 new HashMap<String, String>(),
                 false,
                 parseResponse);
+    }
+
+    @Override
+    public TemplateFieldDefinitionCollectionResponse listTemplateFieldDefinitionsByTemplateId(
+            ParametersForListTemplateFieldDefinitionsByTemplateId parameters) {
+        return doListTemplateFieldDefinitionsByTemplateId(
+                baseUrl + "/v2/Repositories/{repositoryId}/TemplateDefinitions/{templateId}/FieldDefinitions",
+                parameters);
+    }
+
+    private TemplateFieldDefinitionCollectionResponse doListTemplateFieldDefinitionsByTemplateId(
+            String url, ParametersForListTemplateFieldDefinitionsByTemplateId parameters) {
+        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(
+                new String[] {"String", "String", "String", "int", "int", "boolean"},
+                new String[] {"culture", "$select", "$orderby", "$top", "$skip", "$count"},
+                new Object[] {
+                    parameters.getCulture(),
+                    parameters.getSelect(),
+                    parameters.getOrderby(),
+                    parameters.getTop(),
+                    parameters.getSkip(),
+                    parameters.isCount()
+                });
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(
+                new String[] {"String", "int"},
+                new String[] {"repositoryId", "templateId"},
+                new Object[] {parameters.getRepositoryId(), parameters.getTemplateId()});
+        Map<String, Object> headerParameters = ApiClientUtils.getParametersWithNonDefaultValue(
+                new String[] {"String"}, new String[] {"prefer"}, new Object[] {parameters.getPrefer()});
+        Map<String, String> headerParametersWithStringTypeValue = headerParameters.entrySet().stream()
+                .collect(Collectors.toMap(Map.Entry::getKey, e -> (String) e.getValue()));
+        Function<HttpResponse<Object>, TemplateFieldDefinitionCollectionResponse> parseResponse =
+                (HttpResponse<Object> httpResponse) -> {
+                    Object body = httpResponse.getBody();
+                    Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
+                    if (httpResponse.getStatus() == 200) {
+                        try {
+                            String responseJson = new JSONObject(body).toString();
+                            return objectMapper.readValue(
+                                    responseJson, TemplateFieldDefinitionCollectionResponse.class);
+                        } catch (Exception e) {
+                            throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+                        }
+                    } else {
+                        ProblemDetails problemDetails;
+                        try {
+                            String jsonString = new JSONObject(body).toString();
+                            problemDetails = ProblemDetailsDeserializer.deserialize(objectMapper, jsonString);
+                        } catch (Exception e) {
+                            throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+                        }
+                        throw ApiClientUtils.createApiException(httpResponse, problemDetails);
+                    }
+                };
+        return ApiClientUtils.sendRequestWithRetry(
+                httpClient,
+                httpRequestHandler,
+                url,
+                "GET",
+                null,
+                null,
+                null,
+                null,
+                queryParameters,
+                pathParameters,
+                headerParametersWithStringTypeValue,
+                false,
+                parseResponse);
+    }
+
+    @Override
+    public TemplateFieldDefinitionCollectionResponse listTemplateFieldDefinitionsByTemplateIdNextLink(
+            String nextLink, int maxPageSize) {
+        return doListTemplateFieldDefinitionsByTemplateId(
+                nextLink,
+                new ParametersForListTemplateFieldDefinitionsByTemplateId()
+                        .setPrefer(ApiClientUtils.mergeMaxSizeIntoPrefer(maxPageSize, null)));
+    }
+
+    @Override
+    public void listTemplateFieldDefinitionsByTemplateIdForEach(
+            Function<TemplateFieldDefinitionCollectionResponse, Boolean> callback,
+            Integer maxPageSize,
+            ParametersForListTemplateFieldDefinitionsByTemplateId parameters) {
+        parameters.setPrefer(ApiClientUtils.mergeMaxSizeIntoPrefer(maxPageSize, parameters.getPrefer()));
+        TemplateFieldDefinitionCollectionResponse response = listTemplateFieldDefinitionsByTemplateId(parameters);
+        while (response != null && callback.apply(response)) {
+            String nextLink = response.getOdataNextLink();
+            response = listTemplateFieldDefinitionsByTemplateIdNextLink(nextLink, maxPageSize);
+        }
     }
 }

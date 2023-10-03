@@ -25,58 +25,11 @@ public class AttributesClientImpl extends ApiClient implements AttributesClient 
     }
 
     @Override
-    public Attribute getTrusteeAttributeValueByKey(ParametersForGetTrusteeAttributeValueByKey parameters) {
-        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(
-                new String[] {"boolean"}, new String[] {"everyone"}, new Object[] {parameters.isEveryone()});
-        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(
-                new String[] {"String", "String"},
-                new String[] {"repoId", "attributeKey"},
-                new Object[] {parameters.getRepoId(), parameters.getAttributeKey()});
-        Function<HttpResponse<Object>, Attribute> parseResponse = (HttpResponse<Object> httpResponse) -> {
-            Object body = httpResponse.getBody();
-            Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
-            if (httpResponse.getStatus() == 200) {
-                try {
-                    String responseJson = new JSONObject(body).toString();
-                    return objectMapper.readValue(responseJson, Attribute.class);
-                } catch (Exception e) {
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
-                }
-            } else {
-                ProblemDetails problemDetails;
-                try {
-                    String jsonString = new JSONObject(body).toString();
-                    problemDetails = ProblemDetailsDeserializer.deserialize(objectMapper, jsonString);
-                } catch (Exception e) {
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
-                }
-                throw ApiClientUtils.createApiException(httpResponse, problemDetails);
-            }
-        };
-        return ApiClientUtils.sendRequestWithRetry(
-                httpClient,
-                httpRequestHandler,
-                baseUrl + "/v1/Repositories/{repoId}/Attributes/{attributeKey}",
-                "GET",
-                null,
-                null,
-                null,
-                null,
-                queryParameters,
-                pathParameters,
-                new HashMap<String, String>(),
-                false,
-                parseResponse);
+    public AttributeCollectionResponse listAttributes(ParametersForListAttributes parameters) {
+        return doListAttributes(baseUrl + "/v2/Repositories/{repositoryId}/Attributes", parameters);
     }
 
-    @Override
-    public ODataValueContextOfListOfAttribute getTrusteeAttributeKeyValuePairs(
-            ParametersForGetTrusteeAttributeKeyValuePairs parameters) {
-        return doGetTrusteeAttributeKeyValuePairs(baseUrl + "/v1/Repositories/{repoId}/Attributes", parameters);
-    }
-
-    private ODataValueContextOfListOfAttribute doGetTrusteeAttributeKeyValuePairs(
-            String url, ParametersForGetTrusteeAttributeKeyValuePairs parameters) {
+    private AttributeCollectionResponse doListAttributes(String url, ParametersForListAttributes parameters) {
         Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(
                 new String[] {"boolean", "String", "String", "int", "int", "boolean"},
                 new String[] {"everyone", "$select", "$orderby", "$top", "$skip", "$count"},
@@ -89,19 +42,19 @@ public class AttributesClientImpl extends ApiClient implements AttributesClient 
                     parameters.isCount()
                 });
         Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(
-                new String[] {"String"}, new String[] {"repoId"}, new Object[] {parameters.getRepoId()});
+                new String[] {"String"}, new String[] {"repositoryId"}, new Object[] {parameters.getRepositoryId()});
         Map<String, Object> headerParameters = ApiClientUtils.getParametersWithNonDefaultValue(
                 new String[] {"String"}, new String[] {"prefer"}, new Object[] {parameters.getPrefer()});
         Map<String, String> headerParametersWithStringTypeValue = headerParameters.entrySet().stream()
                 .collect(Collectors.toMap(Map.Entry::getKey, e -> (String) e.getValue()));
-        Function<HttpResponse<Object>, ODataValueContextOfListOfAttribute> parseResponse =
+        Function<HttpResponse<Object>, AttributeCollectionResponse> parseResponse =
                 (HttpResponse<Object> httpResponse) -> {
                     Object body = httpResponse.getBody();
                     Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
                     if (httpResponse.getStatus() == 200) {
                         try {
                             String responseJson = new JSONObject(body).toString();
-                            return objectMapper.readValue(responseJson, ODataValueContextOfListOfAttribute.class);
+                            return objectMapper.readValue(responseJson, AttributeCollectionResponse.class);
                         } catch (Exception e) {
                             throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
                         }
@@ -133,24 +86,67 @@ public class AttributesClientImpl extends ApiClient implements AttributesClient 
     }
 
     @Override
-    public ODataValueContextOfListOfAttribute getTrusteeAttributeKeyValuePairsNextLink(
-            String nextLink, int maxPageSize) {
-        return doGetTrusteeAttributeKeyValuePairs(
+    public AttributeCollectionResponse listAttributesNextLink(String nextLink, int maxPageSize) {
+        return doListAttributes(
                 nextLink,
-                new ParametersForGetTrusteeAttributeKeyValuePairs()
-                        .setPrefer(ApiClientUtils.mergeMaxSizeIntoPrefer(maxPageSize, null)));
+                new ParametersForListAttributes().setPrefer(ApiClientUtils.mergeMaxSizeIntoPrefer(maxPageSize, null)));
     }
 
     @Override
-    public void getTrusteeAttributeKeyValuePairsForEach(
-            Function<ODataValueContextOfListOfAttribute, Boolean> callback,
+    public void listAttributesForEach(
+            Function<AttributeCollectionResponse, Boolean> callback,
             Integer maxPageSize,
-            ParametersForGetTrusteeAttributeKeyValuePairs parameters) {
+            ParametersForListAttributes parameters) {
         parameters.setPrefer(ApiClientUtils.mergeMaxSizeIntoPrefer(maxPageSize, parameters.getPrefer()));
-        ODataValueContextOfListOfAttribute response = getTrusteeAttributeKeyValuePairs(parameters);
+        AttributeCollectionResponse response = listAttributes(parameters);
         while (response != null && callback.apply(response)) {
             String nextLink = response.getOdataNextLink();
-            response = getTrusteeAttributeKeyValuePairsNextLink(nextLink, maxPageSize);
+            response = listAttributesNextLink(nextLink, maxPageSize);
         }
+    }
+
+    @Override
+    public Attribute getAttribute(ParametersForGetAttribute parameters) {
+        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(
+                new String[] {"boolean"}, new String[] {"everyone"}, new Object[] {parameters.isEveryone()});
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(
+                new String[] {"String", "String"},
+                new String[] {"repositoryId", "attributeKey"},
+                new Object[] {parameters.getRepositoryId(), parameters.getAttributeKey()});
+        Function<HttpResponse<Object>, Attribute> parseResponse = (HttpResponse<Object> httpResponse) -> {
+            Object body = httpResponse.getBody();
+            Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
+            if (httpResponse.getStatus() == 200) {
+                try {
+                    String responseJson = new JSONObject(body).toString();
+                    return objectMapper.readValue(responseJson, Attribute.class);
+                } catch (Exception e) {
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+                }
+            } else {
+                ProblemDetails problemDetails;
+                try {
+                    String jsonString = new JSONObject(body).toString();
+                    problemDetails = ProblemDetailsDeserializer.deserialize(objectMapper, jsonString);
+                } catch (Exception e) {
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+                }
+                throw ApiClientUtils.createApiException(httpResponse, problemDetails);
+            }
+        };
+        return ApiClientUtils.sendRequestWithRetry(
+                httpClient,
+                httpRequestHandler,
+                baseUrl + "/v2/Repositories/{repositoryId}/Attributes/{attributeKey}",
+                "GET",
+                null,
+                null,
+                null,
+                null,
+                queryParameters,
+                pathParameters,
+                new HashMap<String, String>(),
+                false,
+                parseResponse);
     }
 }

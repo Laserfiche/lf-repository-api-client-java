@@ -27,49 +27,45 @@ public class SimpleSearchesClientImpl extends ApiClient implements SimpleSearche
     }
 
     @Override
-    public ODataValueContextOfIListOfEntry createSimpleSearchOperation(
-            ParametersForCreateSimpleSearchOperation parameters) {
+    public EntryCollectionResponse searchEntry(ParametersForSearchEntry parameters) {
         Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(
                 new String[] {"String[]", "boolean", "String", "String", "String", "boolean"},
-                new String[] {"fields", "formatFields", "culture", "$select", "$orderby", "$count"},
+                new String[] {"fields", "formatFieldValues", "culture", "$select", "$orderby", "$count"},
                 new Object[] {
                     parameters.getFields(),
-                    parameters.isFormatFields(),
+                    parameters.isFormatFieldValues(),
                     parameters.getCulture(),
                     parameters.getSelect(),
                     parameters.getOrderby(),
                     parameters.isCount()
                 });
         Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(
-                new String[] {"String"}, new String[] {"repoId"}, new Object[] {parameters.getRepoId()});
-        Function<HttpResponse<Object>, ODataValueContextOfIListOfEntry> parseResponse =
-                (HttpResponse<Object> httpResponse) -> {
-                    Object body = httpResponse.getBody();
-                    Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
-                    if (httpResponse.getStatus() == 200
-                            || httpResponse.getStatus() == 204
-                            || httpResponse.getStatus() == 206) {
-                        try {
-                            String responseJson = new JSONObject(body).toString();
-                            return objectMapper.readValue(responseJson, ODataValueContextOfIListOfEntry.class);
-                        } catch (Exception e) {
-                            throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
-                        }
-                    } else {
-                        ProblemDetails problemDetails;
-                        try {
-                            String jsonString = new JSONObject(body).toString();
-                            problemDetails = ProblemDetailsDeserializer.deserialize(objectMapper, jsonString);
-                        } catch (Exception e) {
-                            throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
-                        }
-                        throw ApiClientUtils.createApiException(httpResponse, problemDetails);
-                    }
-                };
+                new String[] {"String"}, new String[] {"repositoryId"}, new Object[] {parameters.getRepositoryId()});
+        Function<HttpResponse<Object>, EntryCollectionResponse> parseResponse = (HttpResponse<Object> httpResponse) -> {
+            Object body = httpResponse.getBody();
+            Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
+            if (httpResponse.getStatus() == 200 || httpResponse.getStatus() == 206) {
+                try {
+                    String responseJson = new JSONObject(body).toString();
+                    return objectMapper.readValue(responseJson, EntryCollectionResponse.class);
+                } catch (Exception e) {
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+                }
+            } else {
+                ProblemDetails problemDetails;
+                try {
+                    String jsonString = new JSONObject(body).toString();
+                    problemDetails = ProblemDetailsDeserializer.deserialize(objectMapper, jsonString);
+                } catch (Exception e) {
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+                }
+                throw ApiClientUtils.createApiException(httpResponse, problemDetails);
+            }
+        };
         return ApiClientUtils.sendRequestWithRetry(
                 httpClient,
                 httpRequestHandler,
-                baseUrl + "/v1/Repositories/{repoId}/SimpleSearches",
+                baseUrl + "/v2/Repositories/{repositoryId}/SimpleSearches",
                 "POST",
                 "application/json",
                 parameters.getRequestBody(),

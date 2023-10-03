@@ -2,8 +2,6 @@ package com.laserfiche.repository.api.clients.impl.model;
 
 import com.fasterxml.jackson.annotation.*;
 import io.swagger.v3.oas.annotations.media.Schema;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen")
@@ -15,9 +13,6 @@ public class Folder extends Entry {
 
     @JsonProperty("isUnderRecordSeries")
     private Boolean isUnderRecordSeries = null;
-
-    @JsonProperty("children")
-    private List<Entry> children = null;
 
     public Folder isRecordFolder(Boolean isRecordFolder) {
         this.isRecordFolder = isRecordFolder;
@@ -61,32 +56,6 @@ public class Folder extends Entry {
         this.isUnderRecordSeries = isUnderRecordSeries;
     }
 
-    public Folder children(List<Entry> children) {
-        this.children = children;
-        return this;
-    }
-
-    public Folder addChildrenItem(Entry childrenItem) {
-        if (this.children == null) {
-            this.children = new ArrayList<Entry>();
-        }
-        this.children.add(childrenItem);
-        return this;
-    }
-
-    /**
-     * Returns the entries in this folder.
-     * @return children
-     */
-    @Schema(description = "The entries in this folder.")
-    public List<Entry> getChildren() {
-        return children;
-    }
-
-    public void setChildren(List<Entry> children) {
-        this.children = children;
-    }
-
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -98,13 +67,12 @@ public class Folder extends Entry {
         Folder folder = (Folder) o;
         return Objects.equals(this.isRecordFolder, folder.isRecordFolder)
                 && Objects.equals(this.isUnderRecordSeries, folder.isUnderRecordSeries)
-                && Objects.equals(this.children, folder.children)
                 && super.equals(o);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(isRecordFolder, isUnderRecordSeries, children, super.hashCode());
+        return Objects.hash(isRecordFolder, isUnderRecordSeries, super.hashCode());
     }
 
     @Override
@@ -118,7 +86,6 @@ public class Folder extends Entry {
         sb.append("    isUnderRecordSeries: ")
                 .append(toIndentedString(isUnderRecordSeries))
                 .append("\n");
-        sb.append("    children: ").append(toIndentedString(children)).append("\n");
         sb.append("}");
         return sb.toString();
     }

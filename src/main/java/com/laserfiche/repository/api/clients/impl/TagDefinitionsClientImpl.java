@@ -25,12 +25,59 @@ public class TagDefinitionsClientImpl extends ApiClient implements TagDefinition
     }
 
     @Override
-    public ODataValueContextOfIListOfWTagInfo getTagDefinitions(ParametersForGetTagDefinitions parameters) {
-        return doGetTagDefinitions(baseUrl + "/v1/Repositories/{repoId}/TagDefinitions", parameters);
+    public TagDefinition getTagDefinition(ParametersForGetTagDefinition parameters) {
+        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(
+                new String[] {"String", "String"},
+                new String[] {"culture", "$select"},
+                new Object[] {parameters.getCulture(), parameters.getSelect()});
+        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(
+                new String[] {"String", "int"},
+                new String[] {"repositoryId", "tagId"},
+                new Object[] {parameters.getRepositoryId(), parameters.getTagId()});
+        Function<HttpResponse<Object>, TagDefinition> parseResponse = (HttpResponse<Object> httpResponse) -> {
+            Object body = httpResponse.getBody();
+            Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
+            if (httpResponse.getStatus() == 200) {
+                try {
+                    String responseJson = new JSONObject(body).toString();
+                    return objectMapper.readValue(responseJson, TagDefinition.class);
+                } catch (Exception e) {
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+                }
+            } else {
+                ProblemDetails problemDetails;
+                try {
+                    String jsonString = new JSONObject(body).toString();
+                    problemDetails = ProblemDetailsDeserializer.deserialize(objectMapper, jsonString);
+                } catch (Exception e) {
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+                }
+                throw ApiClientUtils.createApiException(httpResponse, problemDetails);
+            }
+        };
+        return ApiClientUtils.sendRequestWithRetry(
+                httpClient,
+                httpRequestHandler,
+                baseUrl + "/v2/Repositories/{repositoryId}/TagDefinitions/{tagId}",
+                "GET",
+                null,
+                null,
+                null,
+                null,
+                queryParameters,
+                pathParameters,
+                new HashMap<String, String>(),
+                false,
+                parseResponse);
     }
 
-    private ODataValueContextOfIListOfWTagInfo doGetTagDefinitions(
-            String url, ParametersForGetTagDefinitions parameters) {
+    @Override
+    public TagDefinitionCollectionResponse listTagDefinitions(ParametersForListTagDefinitions parameters) {
+        return doListTagDefinitions(baseUrl + "/v2/Repositories/{repositoryId}/TagDefinitions", parameters);
+    }
+
+    private TagDefinitionCollectionResponse doListTagDefinitions(
+            String url, ParametersForListTagDefinitions parameters) {
         Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(
                 new String[] {"String", "String", "String", "int", "int", "boolean"},
                 new String[] {"culture", "$select", "$orderby", "$top", "$skip", "$count"},
@@ -43,19 +90,19 @@ public class TagDefinitionsClientImpl extends ApiClient implements TagDefinition
                     parameters.isCount()
                 });
         Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(
-                new String[] {"String"}, new String[] {"repoId"}, new Object[] {parameters.getRepoId()});
+                new String[] {"String"}, new String[] {"repositoryId"}, new Object[] {parameters.getRepositoryId()});
         Map<String, Object> headerParameters = ApiClientUtils.getParametersWithNonDefaultValue(
                 new String[] {"String"}, new String[] {"prefer"}, new Object[] {parameters.getPrefer()});
         Map<String, String> headerParametersWithStringTypeValue = headerParameters.entrySet().stream()
                 .collect(Collectors.toMap(Map.Entry::getKey, e -> (String) e.getValue()));
-        Function<HttpResponse<Object>, ODataValueContextOfIListOfWTagInfo> parseResponse =
+        Function<HttpResponse<Object>, TagDefinitionCollectionResponse> parseResponse =
                 (HttpResponse<Object> httpResponse) -> {
                     Object body = httpResponse.getBody();
                     Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
                     if (httpResponse.getStatus() == 200) {
                         try {
                             String responseJson = new JSONObject(body).toString();
-                            return objectMapper.readValue(responseJson, ODataValueContextOfIListOfWTagInfo.class);
+                            return objectMapper.readValue(responseJson, TagDefinitionCollectionResponse.class);
                         } catch (Exception e) {
                             throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
                         }
@@ -87,70 +134,23 @@ public class TagDefinitionsClientImpl extends ApiClient implements TagDefinition
     }
 
     @Override
-    public ODataValueContextOfIListOfWTagInfo getTagDefinitionsNextLink(String nextLink, int maxPageSize) {
-        return doGetTagDefinitions(
+    public TagDefinitionCollectionResponse listTagDefinitionsNextLink(String nextLink, int maxPageSize) {
+        return doListTagDefinitions(
                 nextLink,
-                new ParametersForGetTagDefinitions()
+                new ParametersForListTagDefinitions()
                         .setPrefer(ApiClientUtils.mergeMaxSizeIntoPrefer(maxPageSize, null)));
     }
 
     @Override
-    public void getTagDefinitionsForEach(
-            Function<ODataValueContextOfIListOfWTagInfo, Boolean> callback,
+    public void listTagDefinitionsForEach(
+            Function<TagDefinitionCollectionResponse, Boolean> callback,
             Integer maxPageSize,
-            ParametersForGetTagDefinitions parameters) {
+            ParametersForListTagDefinitions parameters) {
         parameters.setPrefer(ApiClientUtils.mergeMaxSizeIntoPrefer(maxPageSize, parameters.getPrefer()));
-        ODataValueContextOfIListOfWTagInfo response = getTagDefinitions(parameters);
+        TagDefinitionCollectionResponse response = listTagDefinitions(parameters);
         while (response != null && callback.apply(response)) {
             String nextLink = response.getOdataNextLink();
-            response = getTagDefinitionsNextLink(nextLink, maxPageSize);
+            response = listTagDefinitionsNextLink(nextLink, maxPageSize);
         }
-    }
-
-    @Override
-    public WTagInfo getTagDefinitionById(ParametersForGetTagDefinitionById parameters) {
-        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(
-                new String[] {"String", "String"},
-                new String[] {"culture", "$select"},
-                new Object[] {parameters.getCulture(), parameters.getSelect()});
-        Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(
-                new String[] {"String", "int"},
-                new String[] {"repoId", "tagId"},
-                new Object[] {parameters.getRepoId(), parameters.getTagId()});
-        Function<HttpResponse<Object>, WTagInfo> parseResponse = (HttpResponse<Object> httpResponse) -> {
-            Object body = httpResponse.getBody();
-            Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
-            if (httpResponse.getStatus() == 200) {
-                try {
-                    String responseJson = new JSONObject(body).toString();
-                    return objectMapper.readValue(responseJson, WTagInfo.class);
-                } catch (Exception e) {
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
-                }
-            } else {
-                ProblemDetails problemDetails;
-                try {
-                    String jsonString = new JSONObject(body).toString();
-                    problemDetails = ProblemDetailsDeserializer.deserialize(objectMapper, jsonString);
-                } catch (Exception e) {
-                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
-                }
-                throw ApiClientUtils.createApiException(httpResponse, problemDetails);
-            }
-        };
-        return ApiClientUtils.sendRequestWithRetry(
-                httpClient,
-                httpRequestHandler,
-                baseUrl + "/v1/Repositories/{repoId}/TagDefinitions/{tagId}",
-                "GET",
-                null,
-                null,
-                null,
-                null,
-                queryParameters,
-                pathParameters,
-                new HashMap<String, String>(),
-                false,
-                parseResponse);
     }
 }

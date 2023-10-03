@@ -3,7 +3,7 @@ package com.laserfiche.repository.api.clients.impl.model;
 import com.fasterxml.jackson.annotation.*;
 
 /**
- * Gets or Sets EntryType
+ * Enumeration of entry types.
  */
 public enum EntryType {
     FOLDER("Folder"),

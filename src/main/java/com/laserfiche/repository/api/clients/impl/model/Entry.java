@@ -7,6 +7,10 @@ import java.util.List;
 import java.util.Objects;
 import org.threeten.bp.OffsetDateTime;
 
+/**
+ * Base type for all types which represent entry objects in a Laserfiche repository.
+ */
+@Schema(description = "Base type for all types which represent entry objects in a Laserfiche repository.")
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen")
 @JsonTypeInfo(
         use = JsonTypeInfo.Id.NAME,
@@ -72,7 +76,7 @@ public class Entry {
     private Integer rowNumber = null;
 
     @JsonProperty("fields")
-    private List<EntryFieldValue> fields = null;
+    private List<Field> fields = null;
 
     public Entry id(Integer id) {
         this.id = id;
@@ -376,14 +380,14 @@ public class Entry {
         this.rowNumber = rowNumber;
     }
 
-    public Entry fields(List<EntryFieldValue> fields) {
+    public Entry fields(List<Field> fields) {
         this.fields = fields;
         return this;
     }
 
-    public Entry addFieldsItem(EntryFieldValue fieldsItem) {
+    public Entry addFieldsItem(Field fieldsItem) {
         if (this.fields == null) {
-            this.fields = new ArrayList<EntryFieldValue>();
+            this.fields = new ArrayList<Field>();
         }
         this.fields.add(fieldsItem);
         return this;
@@ -394,11 +398,11 @@ public class Entry {
      * @return fields
      */
     @Schema(description = "The fields assigned to this entry.")
-    public List<EntryFieldValue> getFields() {
+    public List<Field> getFields() {
         return fields;
     }
 
-    public void setFields(List<EntryFieldValue> fields) {
+    public void setFields(List<Field> fields) {
         this.fields = fields;
     }
 

@@ -7,7 +7,10 @@ import com.laserfiche.api.client.model.ProblemDetails;
 import com.laserfiche.repository.api.clients.TasksClient;
 import com.laserfiche.repository.api.clients.impl.model.*;
 import com.laserfiche.repository.api.clients.params.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import kong.unirest.HttpResponse;
@@ -24,18 +27,18 @@ public class TasksClientImpl extends ApiClient implements TasksClient {
     }
 
     @Override
-    public OperationProgress getOperationStatusAndProgress(ParametersForGetOperationStatusAndProgress parameters) {
+    public TaskCollectionResponse listTasks(ParametersForListTasks parameters) {
+        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(
+                new String[] {"String[]"}, new String[] {"taskIds"}, new Object[] {parameters.getTaskIds()});
         Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(
-                new String[] {"String", "String"},
-                new String[] {"repoId", "operationToken"},
-                new Object[] {parameters.getRepoId(), parameters.getOperationToken()});
-        Function<HttpResponse<Object>, OperationProgress> parseResponse = (HttpResponse<Object> httpResponse) -> {
+                new String[] {"String"}, new String[] {"repositoryId"}, new Object[] {parameters.getRepositoryId()});
+        Function<HttpResponse<Object>, TaskCollectionResponse> parseResponse = (HttpResponse<Object> httpResponse) -> {
             Object body = httpResponse.getBody();
             Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
-            if (httpResponse.getStatus() == 200 || httpResponse.getStatus() == 201 || httpResponse.getStatus() == 202) {
+            if (httpResponse.getStatus() == 200) {
                 try {
                     String responseJson = new JSONObject(body).toString();
-                    return objectMapper.readValue(responseJson, OperationProgress.class);
+                    return objectMapper.readValue(responseJson, TaskCollectionResponse.class);
                 } catch (Exception e) {
                     throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
                 }
@@ -53,13 +56,17 @@ public class TasksClientImpl extends ApiClient implements TasksClient {
         return ApiClientUtils.sendRequestWithRetry(
                 httpClient,
                 httpRequestHandler,
-                baseUrl + "/v1/Repositories/{repoId}/Tasks/{operationToken}",
+                baseUrl + "/v2/Repositories/{repositoryId}/Tasks",
                 "GET",
                 null,
                 null,
-                null,
-                null,
-                null,
+                "taskIds",
+                (queryParameters.get("taskIds") != null)
+                        ? (queryParameters.get("taskIds") instanceof String
+                                ? Arrays.asList(queryParameters.remove("taskIds"))
+                                : (List) queryParameters.remove("taskIds"))
+                        : new ArrayList(),
+                queryParameters,
                 pathParameters,
                 new HashMap<String, String>(),
                 false,
@@ -67,16 +74,21 @@ public class TasksClientImpl extends ApiClient implements TasksClient {
     }
 
     @Override
-    public boolean cancelOperation(ParametersForCancelOperation parameters) {
+    public CancelTasksResponse cancelTasks(ParametersForCancelTasks parameters) {
+        Map<String, Object> queryParameters = ApiClientUtils.getParametersWithNonDefaultValue(
+                new String[] {"String[]"}, new String[] {"taskIds"}, new Object[] {parameters.getTaskIds()});
         Map<String, Object> pathParameters = ApiClientUtils.getParametersWithNonDefaultValue(
-                new String[] {"String", "String"},
-                new String[] {"repoId", "operationToken"},
-                new Object[] {parameters.getRepoId(), parameters.getOperationToken()});
-        Function<HttpResponse<Object>, Boolean> parseResponse = (HttpResponse<Object> httpResponse) -> {
+                new String[] {"String"}, new String[] {"repositoryId"}, new Object[] {parameters.getRepositoryId()});
+        Function<HttpResponse<Object>, CancelTasksResponse> parseResponse = (HttpResponse<Object> httpResponse) -> {
             Object body = httpResponse.getBody();
             Map<String, String> headersMap = ApiClientUtils.getHeadersMap(httpResponse.getHeaders());
-            if (httpResponse.getStatus() == 204) {
-                return true;
+            if (httpResponse.getStatus() == 200) {
+                try {
+                    String responseJson = new JSONObject(body).toString();
+                    return objectMapper.readValue(responseJson, CancelTasksResponse.class);
+                } catch (Exception e) {
+                    throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
+                }
             } else {
                 ProblemDetails problemDetails;
                 try {
@@ -91,13 +103,17 @@ public class TasksClientImpl extends ApiClient implements TasksClient {
         return ApiClientUtils.sendRequestWithRetry(
                 httpClient,
                 httpRequestHandler,
-                baseUrl + "/v1/Repositories/{repoId}/Tasks/{operationToken}",
+                baseUrl + "/v2/Repositories/{repositoryId}/Tasks",
                 "DELETE",
                 null,
                 null,
-                null,
-                null,
-                null,
+                "taskIds",
+                (queryParameters.get("taskIds") != null)
+                        ? (queryParameters.get("taskIds") instanceof String
+                                ? Arrays.asList(queryParameters.remove("taskIds"))
+                                : (List) queryParameters.remove("taskIds"))
+                        : new ArrayList(),
+                queryParameters,
                 pathParameters,
                 new HashMap<String, String>(),
                 false,

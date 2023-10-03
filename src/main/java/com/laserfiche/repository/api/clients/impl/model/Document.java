@@ -8,8 +8,8 @@ import java.util.Objects;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Document extends Entry {
 
-    @JsonProperty("elecDocumentSize")
-    private Long elecDocumentSize = null;
+    @JsonProperty("electronicDocumentSize")
+    private Long electronicDocumentSize = null;
 
     @JsonProperty("extension")
     private String extension = null;
@@ -32,27 +32,24 @@ public class Document extends Entry {
     @JsonProperty("isUnderVersionControl")
     private Boolean isUnderVersionControl = null;
 
-    @JsonProperty("edoc")
-    private Edoc edoc = null;
-
-    public Document elecDocumentSize(Long elecDocumentSize) {
-        this.elecDocumentSize = elecDocumentSize;
+    public Document electronicDocumentSize(Long electronicDocumentSize) {
+        this.electronicDocumentSize = electronicDocumentSize;
         return this;
     }
 
     /**
      * Returns the size of the electronic document attached to the represented document, if there is one, in bytes.
-     * @return elecDocumentSize
+     * @return electronicDocumentSize
      */
     @Schema(
             description =
                     "The size of the electronic document attached to the represented document, if there is one, in bytes.")
-    public Long getElecDocumentSize() {
-        return elecDocumentSize;
+    public Long getElectronicDocumentSize() {
+        return electronicDocumentSize;
     }
 
-    public void setElecDocumentSize(Long elecDocumentSize) {
-        this.elecDocumentSize = elecDocumentSize;
+    public void setElectronicDocumentSize(Long electronicDocumentSize) {
+        this.electronicDocumentSize = electronicDocumentSize;
     }
 
     public Document extension(String extension) {
@@ -187,24 +184,6 @@ public class Document extends Entry {
         this.isUnderVersionControl = isUnderVersionControl;
     }
 
-    public Document edoc(Edoc edoc) {
-        this.edoc = edoc;
-        return this;
-    }
-
-    /**
-     * Returns edoc
-     * @return edoc
-     */
-    @Schema(description = "")
-    public Edoc getEdoc() {
-        return edoc;
-    }
-
-    public void setEdoc(Edoc edoc) {
-        this.edoc = edoc;
-    }
-
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -214,7 +193,7 @@ public class Document extends Entry {
             return false;
         }
         Document document = (Document) o;
-        return Objects.equals(this.elecDocumentSize, document.elecDocumentSize)
+        return Objects.equals(this.electronicDocumentSize, document.electronicDocumentSize)
                 && Objects.equals(this.extension, document.extension)
                 && Objects.equals(this.isElectronicDocument, document.isElectronicDocument)
                 && Objects.equals(this.isRecord, document.isRecord)
@@ -222,14 +201,13 @@ public class Document extends Entry {
                 && Objects.equals(this.pageCount, document.pageCount)
                 && Objects.equals(this.isCheckedOut, document.isCheckedOut)
                 && Objects.equals(this.isUnderVersionControl, document.isUnderVersionControl)
-                && Objects.equals(this.edoc, document.edoc)
                 && super.equals(o);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(
-                elecDocumentSize,
+                electronicDocumentSize,
                 extension,
                 isElectronicDocument,
                 isRecord,
@@ -237,7 +215,6 @@ public class Document extends Entry {
                 pageCount,
                 isCheckedOut,
                 isUnderVersionControl,
-                edoc,
                 super.hashCode());
     }
 
@@ -246,8 +223,8 @@ public class Document extends Entry {
         StringBuilder sb = new StringBuilder();
         sb.append("class Document {\n");
         sb.append("    ").append(toIndentedString(super.toString())).append("\n");
-        sb.append("    elecDocumentSize: ")
-                .append(toIndentedString(elecDocumentSize))
+        sb.append("    electronicDocumentSize: ")
+                .append(toIndentedString(electronicDocumentSize))
                 .append("\n");
         sb.append("    extension: ").append(toIndentedString(extension)).append("\n");
         sb.append("    isElectronicDocument: ")
@@ -260,7 +237,6 @@ public class Document extends Entry {
         sb.append("    isUnderVersionControl: ")
                 .append(toIndentedString(isUnderVersionControl))
                 .append("\n");
-        sb.append("    edoc: ").append(toIndentedString(edoc)).append("\n");
         sb.append("}");
         return sb.toString();
     }
