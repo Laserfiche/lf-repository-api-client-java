@@ -46,12 +46,12 @@ class EntriesClientTest extends BaseTest {
     }
 
     @AfterEach
-    void perTestCleanUp() throws InterruptedException {
+    void perTestCleanUp() {
         deleteEntries(createdEntries);
     }
 
     @AfterAll
-    static void classCleanUp() throws InterruptedException {
+    static void classCleanUp() {
         deleteEntry(testClassParentFolder.getId());
     }
 
@@ -105,7 +105,7 @@ class EntriesClientTest extends BaseTest {
     }
 
     @Test
-    void startCopyEntryCanCopyFolder() throws InterruptedException {
+    void startCopyEntryCanCopyFolder() {
         String newEntryName = "RepositoryApiClientIntegrationTest Java CreateFolder";
 
         Entry targetEntry = createEntry(repositoryApiClient, newEntryName, testClassParentFolder.getId(), true);
@@ -285,12 +285,17 @@ class EntriesClientTest extends BaseTest {
                 case DOCUMENT:
                     assertTrue(entry instanceof Document);
                     break;
+                case RECORD_SERIES:
+                    assertTrue(entry instanceof RecordSeries);
+                    break;
+                default:
+                    fail("This should not happen.");
             }
         }
     }
 
     @Test
-    void listEntriesNextLinkWorks() throws InterruptedException {
+    void listEntriesNextLinkWorks() {
         int maxPageSize = 10;
         EntryCollectionResponse entryList = client.listEntries(new ParametersForListEntries()
                 .setRepositoryId(repositoryId)
@@ -350,7 +355,7 @@ class EntriesClientTest extends BaseTest {
     }
 
     @Test
-    void listFieldsNextLinkWorksAndRespectsMaxPageSize() throws InterruptedException {
+    void listFieldsNextLinkWorksAndRespectsMaxPageSize() {
         int maxPageSize = 1;
         FieldCollectionResponse fieldValueList = client.listFields(new ParametersForListFields()
                 .setRepositoryId(repositoryId)
@@ -391,7 +396,7 @@ class EntriesClientTest extends BaseTest {
     }
 
     @Test
-    void listLinksNextLinkWorks() throws InterruptedException {
+    void listLinksNextLinkWorks() {
         int maxPageSize = 1;
         LinkCollectionResponse linkInfoList =
                 client.listLinks(new ParametersForListLinks()
@@ -439,7 +444,7 @@ class EntriesClientTest extends BaseTest {
     }
 
     @Test
-    void startDeleteEntryCanDeleteFolder() throws InterruptedException {
+    void startDeleteEntryCanDeleteFolder() {
         Entry entryToDelete =
                 createEntry(repositoryApiClient, "RepositoryApiClientIntegrationTest Java DeleteFolder", 1, true);
 
@@ -462,7 +467,7 @@ class EntriesClientTest extends BaseTest {
     }
 
     @Test
-    void listTagsNextLinkWorks() throws InterruptedException {
+    void listTagsNextLinkWorks() {
         int maxPageSize = 1;
         TagCollectionResponse tagInfoList =
                 client.listTags(new ParametersForListTags()

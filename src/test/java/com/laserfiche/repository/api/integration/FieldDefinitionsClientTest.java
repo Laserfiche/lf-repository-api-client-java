@@ -42,7 +42,7 @@ class FieldDefinitionsClientTest extends BaseTest {
     }
 
     @Test
-    void listFieldDefinitionsNextLinkWorks() throws InterruptedException {
+    void listFieldDefinitionsNextLinkWorks() {
         int maxPageSize = 3;
         FieldDefinitionCollectionResponse definitions =
                 client.listFieldDefinitions(new ParametersForListFieldDefinitions()

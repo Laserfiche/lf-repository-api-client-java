@@ -7,9 +7,9 @@ import com.laserfiche.repository.api.clients.impl.ApiClientUtils;
 import org.junit.jupiter.api.Test;
 
 public class MergeMaxSizeIntoPreferTest {
-    private final int maxSize = 1;
-    private final String prefer = "maxpagesize";
-    private final int negativeMaxSize = -1;
+    private final static int maxSize = 1;
+    private final static String prefer = "maxpagesize";
+    private final static int negativeMaxSize = -1;
 
     @Test
     void mergeMaxSizeIntoPrefer_ZeroMaxSize_NullPrefer() {

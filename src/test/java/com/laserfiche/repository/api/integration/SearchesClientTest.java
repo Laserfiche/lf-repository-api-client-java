@@ -30,14 +30,14 @@ public class SearchesClientTest extends BaseTest {
     @AfterEach
     void cancelCloseSearch() {
         if (taskId != null) {
-            CancelTasksResponse result = tasksClient.cancelTasks(new ParametersForCancelTasks()
+            tasksClient.cancelTasks(new ParametersForCancelTasks()
                     .setRepositoryId(repositoryId)
                     .setTaskIds(taskId));
         }
     }
 
     @Test
-    void listSearchContextHitsWorks() throws InterruptedException {
+    void listSearchContextHitsWorks() {
         StartSearchEntryRequest request = new StartSearchEntryRequest();
         request.setSearchCommand(
                 "{LF:Basic ~= \"Laserfiche\", option=\"DLT\"} & {LF:name=\"Laserfiche Cloud Overview\", Type=\"DFS\"}");
@@ -59,7 +59,7 @@ public class SearchesClientTest extends BaseTest {
     }
 
     @Test
-    void listSearchResultsWorks() throws InterruptedException {
+    void listSearchResultsWorks() {
         StartSearchEntryRequest request = new StartSearchEntryRequest();
         request.setSearchCommand("({LF:Basic ~= \"Laserfiche\", option=\"NLT\"})");
 
@@ -78,7 +78,7 @@ public class SearchesClientTest extends BaseTest {
     }
 
     @Test
-    void listTasksCanReturnSearchStatus() throws InterruptedException {
+    void listTasksCanReturnSearchStatus() {
         StartSearchEntryRequest request = new StartSearchEntryRequest();
         request.setSearchCommand("({LF:Basic ~= \"Laserfiche\", option=\"NLT\"})");
 
@@ -116,7 +116,7 @@ public class SearchesClientTest extends BaseTest {
     }
 
     @Test
-    void listSearchResultsNextLinkWorks() throws InterruptedException {
+    void listSearchResultsNextLinkWorks() {
         int maxPageSize = 2;
 
         StartSearchEntryRequest request = new StartSearchEntryRequest();
@@ -130,9 +130,6 @@ public class SearchesClientTest extends BaseTest {
 
         waitUntilTaskEnds(taskId);
 
-        EntryCollectionResponse searchResults1 = client.listSearchResults(new ParametersForListSearchResults()
-                        .setRepositoryId(repositoryId)
-                        .setTaskId(taskId));
         EntryCollectionResponse searchResults = client.listSearchResults(new ParametersForListSearchResults()
                 .setRepositoryId(repositoryId)
                 .setTaskId(taskId)
@@ -154,7 +151,7 @@ public class SearchesClientTest extends BaseTest {
     }
 
     @Test
-    void listSearchResultsForEachWorks() throws InterruptedException {
+    void listSearchResultsForEachWorks() {
         AtomicInteger pageCount = new AtomicInteger();
         int maxPages = 2;
         int maxPageSize = 3;
@@ -186,7 +183,7 @@ public class SearchesClientTest extends BaseTest {
     }
 
     @Test
-    void listSearchContextHitsNextLinkWorks() throws InterruptedException {
+    void listSearchContextHitsNextLinkWorks() {
         int maxPageSize = 1;
         StartSearchEntryRequest request = new StartSearchEntryRequest();
         request.setSearchCommand(
@@ -231,7 +228,7 @@ public class SearchesClientTest extends BaseTest {
     }
 
     @Test
-    void listSearchContextHitsForEachWorks() throws InterruptedException {
+    void listSearchContextHitsForEachWorks() {
         AtomicInteger pageCount = new AtomicInteger();
         int maxPages = 2;
         int maxPageSize = 1;

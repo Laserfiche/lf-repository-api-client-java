@@ -28,15 +28,14 @@ enum AuthorizationType {
 }
 
 public class BaseTest {
-    protected static String servicePrincipalKey;
-    protected static AccessKey accessKey;
-    protected static String repositoryId;
+    static String servicePrincipalKey;
+    static AccessKey accessKey;
+    static String repositoryId;
     private static Map<String, String> testHeaders;
-    protected static RepositoryApiClient repositoryApiClient;
-    private static String testHeaderValue;
-    protected static String username;
-    protected static String password;
-    protected static String baseUrl;
+    static volatile RepositoryApiClient repositoryApiClient;
+    static String username;
+    static String password;
+    static String baseUrl;
     private static final String TEST_HEADER = "TEST_HEADER";
     private static final String ACCESS_KEY = "ACCESS_KEY";
     private static final String SERVICE_PRINCIPAL_KEY = "SERVICE_PRINCIPAL_KEY";
@@ -45,7 +44,7 @@ public class BaseTest {
     private static final String PASSWORD = "APISERVER_PASSWORD";
     private static final String BASE_URL = "APISERVER_REPOSITORY_API_BASE_URL";
     protected static final String AUTHORIZATION_TYPE = "AUTHORIZATION_TYPE";
-    protected static AuthorizationType authorizationType;
+    static AuthorizationType authorizationType;
     private static final boolean IS_NOT_GITHUB_ENVIRONMENT = nullOrEmpty(System.getenv("GITHUB_WORKSPACE"));
     protected static final String SMALL_PDF_FILE_PATH = "src/test/java/com/laserfiche/repository/api/integration/testFiles/test.pdf";
     protected static final String LARGE_PDF_FILE_PATH = "src/test/java/com/laserfiche/repository/api/integration/testFiles/60MB.pdf";
@@ -53,14 +52,15 @@ public class BaseTest {
     protected static final String SMALL_JPEG_FILE_PATH = "src/test/java/com/laserfiche/repository/api/integration/testFiles/test.jpg";
     @BeforeAll
     public static void setUp() {
-        Dotenv dotenv = Dotenv.configure()
+        Dotenv.configure()
                 .filename(".env")
                 .systemProperties()
                 .ignoreIfMissing()
                 .load();
+        String testHeaderName;
         try {
             authorizationType = AuthorizationType.valueOf(getEnvironmentVariable(AUTHORIZATION_TYPE));
-            testHeaderValue = getEnvironmentVariable(TEST_HEADER);
+            testHeaderName = getEnvironmentVariable(TEST_HEADER);
         } catch (EnumConstantNotPresentException e) {
             throw new EnumConstantNotPresentException(
                     AuthorizationType.class, getEnvironmentVariable(AUTHORIZATION_TYPE));
@@ -78,8 +78,8 @@ public class BaseTest {
             throw new IllegalStateException("Invalid Authorization Type Value");
         }
         testHeaders = new HashMap<>();
-        testHeaders.put(testHeaderValue, "true");
-        repositoryApiClient = createClient();
+        testHeaders.put(testHeaderName, "true");
+        createRepositoryApiClient();
     }
 
     protected static String getEnvironmentVariable(String environmentVariableName) {
@@ -99,20 +99,18 @@ public class BaseTest {
         repositoryApiClient = null;
     }
 
-    public static RepositoryApiClient createClient() {
+    public static void createRepositoryApiClient() {
         if (repositoryApiClient == null) {
             if (authorizationType.equals(AuthorizationType.CLOUD_ACCESS_KEY)) {
-                if (nullOrEmpty(servicePrincipalKey) || accessKey == null) return null;
+                if (!nullOrEmpty(servicePrincipalKey) && accessKey != null)
                 repositoryApiClient = RepositoryApiClientImpl.createFromAccessKey(servicePrincipalKey, accessKey);
             } else if (authorizationType.equals(AuthorizationType.API_SERVER_USERNAME_PASSWORD)) {
-                if (nullOrEmpty(repositoryId) || nullOrEmpty(username) || nullOrEmpty(password) || nullOrEmpty(baseUrl))
-                    return null;
-                repositoryApiClient =
+                if (!nullOrEmpty(repositoryId) && !nullOrEmpty(username) && !nullOrEmpty(password) && !nullOrEmpty(baseUrl))
+                    repositoryApiClient =
                         RepositoryApiClientImpl.createFromUsernamePassword(repositoryId, username, password, baseUrl);
             }
             repositoryApiClient.setDefaultRequestHeaders(testHeaders);
         }
-        return repositoryApiClient;
     }
 
     public static Entry createEntry(RepositoryApiClient client, String entryName, Integer parentEntryId, Boolean autoRename) {
@@ -163,7 +161,7 @@ public class BaseTest {
         throw new RuntimeException("WaitUntilTaskEnds timeout");
     }
 
-    public static void deleteEntry(int entryId) throws InterruptedException {
+    public static void deleteEntry(int entryId) {
         if (entryId != 0) {
             StartTaskResponse startTaskResponse = repositoryApiClient
                     .getEntriesClient()
@@ -175,7 +173,7 @@ public class BaseTest {
         }
     }
 
-    public static void deleteEntries(List<Entry> entries) throws InterruptedException {
+    public static void deleteEntries(List<Entry> entries) {
         for (Entry entry : entries) {
             if (entry != null) {
                 deleteEntry(entry.getId());

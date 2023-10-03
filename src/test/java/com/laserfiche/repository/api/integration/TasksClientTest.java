@@ -15,17 +15,16 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class TasksClientTest extends BaseTest {
     private TasksClient client;
-    private RepositoryApiClient createEntryClient;
+
     @BeforeEach
     void perTestSetup() {
         client = repositoryApiClient.getTasksClient();
-        createEntryClient = repositoryApiClient;
     }
 
     @Test
     void cancelTasksDoesNotReturnErrorWhenCancellingACompletedTask() {
         Entry deleteEntry =
-                createEntry(createEntryClient, "RepositoryApiClientIntegrationTest Java CancelOperation", 1, true);
+                createEntry(repositoryApiClient, "RepositoryApiClientIntegrationTest Java CancelOperation", 1, true);
 
         StartTaskResponse result = repositoryApiClient
                 .getEntriesClient()
@@ -49,7 +48,7 @@ public class TasksClientTest extends BaseTest {
     @Test
     void cancelTasksCanCancelAnInProgressTask() throws InterruptedException {
         Entry deleteEntry =
-                createEntry(createEntryClient, "RepositoryApiClientIntegrationTest Java CancelOperation", 1, true);
+                createEntry(repositoryApiClient, "RepositoryApiClientIntegrationTest Java CancelOperation", 1, true);
 
         StartTaskResponse result = repositoryApiClient
                 .getEntriesClient()
@@ -70,9 +69,9 @@ public class TasksClientTest extends BaseTest {
     }
 
     @Test
-    void listTasksWorks() throws InterruptedException {
+    void listTasksWorks() {
         Entry deleteEntry =
-                createEntry(createEntryClient, "RepositoryApiClientIntegrationTest Java GetOperationStatus", 1, true);
+                createEntry(repositoryApiClient, "RepositoryApiClientIntegrationTest Java GetOperationStatus", 1, true);
 
         StartTaskResponse result = repositoryApiClient
                 .getEntriesClient()
@@ -98,14 +97,14 @@ public class TasksClientTest extends BaseTest {
     }
 
     @Test
-    void listTasksAcceptsMultipleTaskIds() throws InterruptedException {
+    void listTasksAcceptsMultipleTaskIds() {
         // Create N tasks
         final int TASK_COUNT = 5;
         String[] taskIds = new String[TASK_COUNT];
 
         for (int i = 0; i < TASK_COUNT; i++) {
             Entry entry =
-                    createEntry(createEntryClient, String.format("RepositoryApiClientIntegrationTest Java ListTasks_%d", i), 1, true);
+                    createEntry(repositoryApiClient, String.format("RepositoryApiClientIntegrationTest Java ListTasks_%d", i), 1, true);
             StartTaskResponse startTaskResponse = repositoryApiClient
                     .getEntriesClient()
                     .startDeleteEntry(new ParametersForStartDeleteEntry()
@@ -132,14 +131,14 @@ public class TasksClientTest extends BaseTest {
     }
 
     @Test
-    void listTasksCanBeCalledWithNoTaskIds() throws InterruptedException {
+    void listTasksCanBeCalledWithNoTaskIds() {
         // Create N tasks
         final int TASK_COUNT = 5;
         String[] taskIds = new String[TASK_COUNT];
 
         for (int i = 0; i < TASK_COUNT; i++) {
             Entry entry =
-                    createEntry(createEntryClient, String.format("RepositoryApiClientIntegrationTest Java ListTasks_%d", i), 1, true);
+                    createEntry(repositoryApiClient, String.format("RepositoryApiClientIntegrationTest Java ListTasks_%d", i), 1, true);
             StartTaskResponse startTaskResponse = repositoryApiClient
                     .getEntriesClient()
                     .startDeleteEntry(new ParametersForStartDeleteEntry()
@@ -166,7 +165,7 @@ public class TasksClientTest extends BaseTest {
     }
 
     @Test
-    void listTasksIgnoresInvalidTaskIds() throws InterruptedException {
+    void listTasksIgnoresInvalidTaskIds() {
         String invalidTaskId = "ThisIsAnInvalidTaskId";
 
         TaskCollectionResponse taskCollectionResponse =
@@ -181,7 +180,7 @@ public class TasksClientTest extends BaseTest {
     @Test
     void listTasksIgnoresDuplicateTaskIds() {
         Entry deleteEntry =
-                createEntry(createEntryClient, "RepositoryApiClientIntegrationTest Java GetOperationStatus", 1, true);
+                createEntry(repositoryApiClient, "RepositoryApiClientIntegrationTest Java GetOperationStatus", 1, true);
 
         StartTaskResponse result = repositoryApiClient
                 .getEntriesClient()

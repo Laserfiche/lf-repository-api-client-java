@@ -50,11 +50,11 @@ class TemplateDefinitionsClientTest extends BaseTest {
                         .setTemplateId(tempDef.getId()));
 
         assertNotNull(result);
-        Assertions.assertSame(tempDef.getFieldCount(), result.getValue().size());
+        Assertions.assertEquals(tempDef.getFieldCount(), result.getValue().size());
     }
 
     @Test
-    void listTemplateDefinitionsNextLinkWorks() throws InterruptedException {
+    void listTemplateDefinitionsNextLinkWorks() {
         int maxPageSize = 1;
         TemplateDefinitionCollectionResponse templateInfoList =
                 client.listTemplateDefinitions(new ParametersForListTemplateDefinitions()
@@ -74,7 +74,7 @@ class TemplateDefinitionsClientTest extends BaseTest {
     }
 
     @Test
-    void listTemplateDefinitionsForEachWorks() throws InterruptedException {
+    void listTemplateDefinitionsForEachWorks() {
         AtomicInteger pageCount = new AtomicInteger();
         int maxPages = 2;
         int maxPageSize = 1;
@@ -93,7 +93,7 @@ class TemplateDefinitionsClientTest extends BaseTest {
     }
 
     @Test
-    void listTemplateFieldDefinitionsByTemplateIdNextLinkWorks() throws InterruptedException {
+    void listTemplateFieldDefinitionsByTemplateIdNextLinkWorks() {
         int maxPageSize = 1;
         TemplateDefinitionCollectionResponse templateInfoList =
                 client.listTemplateDefinitions(new ParametersForListTemplateDefinitions()
@@ -111,7 +111,7 @@ class TemplateDefinitionsClientTest extends BaseTest {
                         .setPrefer(String.format("maxpagesize=%d", maxPageSize)));
 
         assertNotNull(result);
-        Assertions.assertSame(maxPageSize, result.getValue().size());
+        Assertions.assertEquals(maxPageSize, result.getValue().size());
 
         String nextLink = result.getOdataNextLink();
         assertNotNull(nextLink);
@@ -124,7 +124,7 @@ class TemplateDefinitionsClientTest extends BaseTest {
     }
 
     @Test
-    void listTemplateFieldDefinitionsByTemplateIdForEachWorks() throws InterruptedException {
+    void listTemplateFieldDefinitionsByTemplateIdForEachWorks() {
         TemplateDefinitionCollectionResponse templateInfoList =
                 client.listTemplateDefinitions(new ParametersForListTemplateDefinitions().setRepositoryId(repositoryId));
 
@@ -167,7 +167,7 @@ class TemplateDefinitionsClientTest extends BaseTest {
                 .setTemplateId(tempDef.getId()));
 
         assertNotNull(result);
-        Assertions.assertSame(result.getId(), tempDef.getId());
+        Assertions.assertEquals(result.getId(), tempDef.getId());
     }
 
     @Test

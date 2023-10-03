@@ -34,9 +34,12 @@ public class ExportDocumentApiTest extends BaseTest {
     }
 
     @AfterEach
-    void perTestCleanUp() throws InterruptedException {
+    void perTestCleanUp() {
         if (exportedFile != null) {
-            exportedFile.delete();
+            boolean deleted = exportedFile.delete();
+            if (!deleted) {
+                exportedFile.deleteOnExit();
+            }
         }
     }
 
@@ -61,9 +64,11 @@ public class ExportDocumentApiTest extends BaseTest {
     }
 
     private static void prepareDocumentToBeExported() {
+        FileInputStream fileInputStream = null;
         try {
             String fileName = "RepositoryApiClientIntegrationTest Java ExportDocumentApiTest.pdf";
             File fileToImport = new File(SMALL_PDF_FILE_PATH);
+            fileInputStream = new FileInputStream(fileToImport);
             testEntryFileSize = fileToImport.length();
             ImportEntryRequest request = new ImportEntryRequest();
             request.setName(fileName);
@@ -78,18 +83,26 @@ public class ExportDocumentApiTest extends BaseTest {
                     .importEntry(new ParametersForImportEntry()
                             .setRepositoryId(repositoryId)
                             .setEntryId(1)
-                            .setInputStream(new FileInputStream(fileToImport))
+                            .setInputStream(fileInputStream)
                             .setContentType("application/pdf")
                             .setRequestBody(request));
 
             testEntryId = resultEntry.getId();
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            if (fileInputStream != null) {
+                try {
+                    fileInputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
     @AfterAll
-    static void classCleanUp() throws InterruptedException {
+    static void classCleanUp() {
         deleteEntry(testEntryId);
     }
 
@@ -149,7 +162,7 @@ public class ExportDocumentApiTest extends BaseTest {
             }
             client.exportEntry(new ParametersForExportEntry()
                     .setRepositoryId(repositoryId)
-                    .setRequestBody(new ExportEntryRequest())
+                    .setRequestBody(requestBody)
                     .setEntryId(-1));
         });
         Assertions.assertEquals(

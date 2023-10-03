@@ -35,7 +35,7 @@ public class ImportUploadedPartsApiTest extends BaseTest {
     }
 
     @AfterAll
-    static void classCleanUp() throws InterruptedException {
+    static void classCleanUp() {
         deleteEntry(testClassParentFolder.getId());
     }
 

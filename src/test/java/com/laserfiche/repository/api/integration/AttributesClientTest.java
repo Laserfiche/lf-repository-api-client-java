@@ -48,7 +48,7 @@ class AttributesClientTest extends BaseTest {
     }
 
     @Test
-    void listAttributesNextLinkWorks() throws InterruptedException {
+    void listAttributesNextLinkWorks() {
         int maxPageSize = 3;
         AttributeCollectionResponse attributeList =
                 client.listAttributes(new ParametersForListAttributes()
@@ -68,7 +68,7 @@ class AttributesClientTest extends BaseTest {
     }
 
     @Test
-    void listAttributesForEachWorks() throws InterruptedException {
+    void listAttributesForEachWorks() {
         AtomicInteger pageCount = new AtomicInteger();
         int maxPages = 2;
         int maxPageSize = 3;

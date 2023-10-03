@@ -191,16 +191,16 @@ public class ApiClientUtils {
                     httpRequestWithBody.contentType(contentType);
                 }
                 if (requestBody != null) {
-                    if (isDynamicFieldValues || requestMethod.equals("HEAD")) {
+                    if (isDynamicFieldValues) {
                         httpResponse = httpRequestWithBody
                                 .body(requestBody)
-                                .asObject(new HashMap<String, String[]>().getClass());
+                                .asObject(HashMap.class);
                     } else {
                         httpResponse = httpRequestWithBody.body(requestBody).asObject(Object.class);
                     }
                 } else {
-                    if (isDynamicFieldValues || requestMethod.equals("HEAD")) {
-                        httpResponse = httpRequest.asObject(new HashMap<String, String[]>().getClass());
+                    if (isDynamicFieldValues) {
+                        httpResponse = httpRequest.asObject(HashMap.class);
                     } else {
                         httpResponse = httpRequest.asObject(Object.class);
                     }
@@ -209,7 +209,7 @@ public class ApiClientUtils {
                 int statusCode = httpResponse.getStatus();
                 shouldRetry = httpRequestHandler.afterSend(new ResponseImpl((short) statusCode))
                         || ApiClientUtils.isRetryableStatusCode(statusCode, httpMethod);
-                if (!shouldRetry || requestMethod.equals("HEAD")) {
+                if (!shouldRetry) {
                     return parseResponse.apply(httpResponse);
                 }
             } catch (Exception err) {

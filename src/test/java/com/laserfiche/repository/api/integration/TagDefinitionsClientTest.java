@@ -31,7 +31,7 @@ class TagDefinitionsClientTest extends BaseTest {
     }
 
     @Test
-    void listTagDefinitionsNextLinkWorks() throws InterruptedException {
+    void listTagDefinitionsNextLinkWorks() {
         int maxPageSize = 1;
         TagDefinitionCollectionResponse tagInfoList = client.listTagDefinitions(new ParametersForListTagDefinitions()
                 .setRepositoryId(repositoryId)
@@ -50,7 +50,7 @@ class TagDefinitionsClientTest extends BaseTest {
     }
 
     @Test
-    void listTagDefinitionsForEachWorks() throws InterruptedException {
+    void listTagDefinitionsForEachWorks() {
         AtomicInteger pageCount = new AtomicInteger();
         int maxPages = 2;
         int maxPageSize = 1;

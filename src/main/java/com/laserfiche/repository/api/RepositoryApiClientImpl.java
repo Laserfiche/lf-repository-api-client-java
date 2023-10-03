@@ -43,12 +43,10 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
         httpClient = Unirest.spawnInstance();
         httpClient.config().setObjectMapper(objectMapper);
 
-        // Add compression header if a client is created
-        if (httpClient != null) {
-            Map<String, String> gzipCompressionHeaders = new HashMap<>();
-            gzipCompressionHeaders.put("Accept-Encoding", "gzip");
-            setDefaultRequestHeaders(gzipCompressionHeaders);
-        }
+        // Add compression header
+        Map<String, String> gzipCompressionHeaders = new HashMap<>();
+        gzipCompressionHeaders.put("Accept-Encoding", "gzip");
+        setDefaultRequestHeaders(gzipCompressionHeaders);
 
         // Initialize repository API clients
         attributesClient = new AttributesClientImpl(baseUrl, httpClient, httpHandler);

@@ -696,7 +696,7 @@ public class EntriesClientImpl extends ApiClient implements EntriesClient {
             if (httpResponse.getStatus() == 200) {
                 try {
                     String responseJson = new JSONObject(body).toString();
-                    return objectMapper.readValue(responseJson, new HashMap<String, String[]>().getClass());
+                    return objectMapper.readValue(responseJson, HashMap.class);
                 } catch (Exception e) {
                     throw ApiException.create(httpResponse.getStatus(), headersMap, null, e);
                 }

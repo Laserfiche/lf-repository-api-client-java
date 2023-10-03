@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import com.laserfiche.api.client.model.ApiException;
 import com.laserfiche.repository.api.RepositoryApiClient;
 import com.laserfiche.repository.api.RepositoryApiClientImpl;
+import com.laserfiche.repository.api.clients.EntriesClient;
 import com.laserfiche.repository.api.clients.impl.model.Entry;
 import com.laserfiche.repository.api.clients.params.ParametersForGetEntry;
 import org.junit.jupiter.api.Test;
@@ -56,6 +57,7 @@ class RepositoryApiClientTest extends BaseTest {
             }
 
             int entryId = 1;
+            assertNotNull(client);
             Entry entry = client.getEntriesClient()
                     .getEntry(
                             new ParametersForGetEntry().setRepositoryId(repositoryId).setEntryId(entryId));

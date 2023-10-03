@@ -109,7 +109,7 @@ public class GetHeadersTest {
         assertNotNull(headerParametersWithStringTypeValue);
         assertEquals(result, headerParametersWithStringTypeValue);
         header.clear();
-        headerParametersWithStringTypeValue.remove(1);
+        headerParametersWithStringTypeValue.remove(Integer.toString(1));
         header.add(headerParametersWithStringTypeValue);
         result = ApiClientUtils.getHeadersMap(header);
         assertNotNull(headerParametersWithStringTypeValue);
