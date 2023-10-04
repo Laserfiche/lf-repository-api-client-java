@@ -71,6 +71,7 @@ public class RepositoryApiClientImpl implements RepositoryApiClient, AutoCloseab
      *
      * @param servicePrincipalKey The service principal key created for the service principal from the Laserfiche Account Administration.
      * @param accessKey           The access key exported from the Laserfiche Developer Console.
+     * @param scope               The requested space-delimited scopes for the access token.
      * @param baseUrlDebug        Optional override for the Laserfiche repository API base url.
      * @return {@link RepositoryApiClient}
      */
