@@ -4,18 +4,23 @@ import com.laserfiche.api.client.model.AccessKey;
 import com.laserfiche.repository.api.RepositoryApiClient;
 import com.laserfiche.repository.api.RepositoryApiClientImpl;
 import com.laserfiche.repository.api.clients.impl.model.*;
-import com.laserfiche.repository.api.clients.params.ParametersForCreateOrCopyEntry;
-import com.laserfiche.repository.api.clients.params.ParametersForDeleteEntryInfo;
-import com.laserfiche.repository.api.clients.params.ParametersForGetOperationStatusAndProgress;
-import com.laserfiche.repository.api.clients.params.ParametersForGetSearchStatus;
+import com.laserfiche.repository.api.clients.params.ParametersForCreateEntry;
+import com.laserfiche.repository.api.clients.params.ParametersForListTasks;
+import com.laserfiche.repository.api.clients.params.ParametersForStartDeleteEntry;
 import io.github.cdimascio.dotenv.Dotenv;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.URL;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
 
 enum AuthorizationType {
     CLOUD_ACCESS_KEY,
@@ -23,15 +28,14 @@ enum AuthorizationType {
 }
 
 public class BaseTest {
-    protected static String servicePrincipalKey;
-    protected static AccessKey accessKey;
-    protected static String repositoryId;
+    static String servicePrincipalKey;
+    static AccessKey accessKey;
+    static String repositoryId;
     private static Map<String, String> testHeaders;
-    protected static RepositoryApiClient repositoryApiClient;
-    private static String testHeaderValue;
-    protected static String username;
-    protected static String password;
-    protected static String baseUrl;
+    static volatile RepositoryApiClient repositoryApiClient;
+    static String username;
+    static String password;
+    static String baseUrl;
     private static final String TEST_HEADER = "TEST_HEADER";
     private static final String ACCESS_KEY = "ACCESS_KEY";
     private static final String SERVICE_PRINCIPAL_KEY = "SERVICE_PRINCIPAL_KEY";
@@ -40,20 +44,24 @@ public class BaseTest {
     private static final String PASSWORD = "APISERVER_PASSWORD";
     private static final String BASE_URL = "APISERVER_REPOSITORY_API_BASE_URL";
     protected static final String AUTHORIZATION_TYPE = "AUTHORIZATION_TYPE";
-    protected static AuthorizationType authorizationType;
+    static AuthorizationType authorizationType;
     private static final boolean IS_NOT_GITHUB_ENVIRONMENT = nullOrEmpty(System.getenv("GITHUB_WORKSPACE"));
-    protected static final String TEST_FILE_PATH = "src/test/java/com/laserfiche/repository/api/integration/test.pdf";
+    protected static final String SMALL_PDF_FILE_PATH = "src/test/java/com/laserfiche/repository/api/integration/testFiles/test.pdf";
+    protected static final String LARGE_PDF_FILE_PATH = "src/test/java/com/laserfiche/repository/api/integration/testFiles/60MB.pdf";
+    protected static final String SMALL_TEXT_FILE_PATH = "src/test/java/com/laserfiche/repository/api/integration/testFiles/test.txt";
+    protected static final String SMALL_JPEG_FILE_PATH = "src/test/java/com/laserfiche/repository/api/integration/testFiles/test.jpg";
 
     @BeforeAll
     public static void setUp() {
-        Dotenv dotenv = Dotenv.configure()
+        Dotenv.configure()
                 .filename(".env")
                 .systemProperties()
                 .ignoreIfMissing()
                 .load();
+        String testHeaderName;
         try {
             authorizationType = AuthorizationType.valueOf(getEnvironmentVariable(AUTHORIZATION_TYPE));
-            testHeaderValue = getEnvironmentVariable(TEST_HEADER);
+            testHeaderName = getEnvironmentVariable(TEST_HEADER);
         } catch (EnumConstantNotPresentException e) {
             throw new EnumConstantNotPresentException(
                     AuthorizationType.class, getEnvironmentVariable(AUTHORIZATION_TYPE));
@@ -71,8 +79,8 @@ public class BaseTest {
             throw new IllegalStateException("Invalid Authorization Type Value");
         }
         testHeaders = new HashMap<>();
-        testHeaders.put(testHeaderValue, "true");
-        repositoryApiClient = createClient();
+        testHeaders.put(testHeaderName, "true");
+        createRepositoryApiClient();
     }
 
     protected static String getEnvironmentVariable(String environmentVariableName) {
@@ -92,113 +100,101 @@ public class BaseTest {
         repositoryApiClient = null;
     }
 
-    public static RepositoryApiClient createClient() {
+    public static void createRepositoryApiClient() {
         if (repositoryApiClient == null) {
             if (authorizationType.equals(AuthorizationType.CLOUD_ACCESS_KEY)) {
-                if (nullOrEmpty(servicePrincipalKey) || accessKey == null) return null;
-                repositoryApiClient = RepositoryApiClientImpl.createFromAccessKey(servicePrincipalKey, accessKey);
+                if (!nullOrEmpty(servicePrincipalKey) && accessKey != null)
+                    repositoryApiClient = RepositoryApiClientImpl.createFromAccessKey(servicePrincipalKey, accessKey);
             } else if (authorizationType.equals(AuthorizationType.API_SERVER_USERNAME_PASSWORD)) {
-                if (nullOrEmpty(repositoryId) || nullOrEmpty(username) || nullOrEmpty(password) || nullOrEmpty(baseUrl))
-                    return null;
-                repositoryApiClient =
-                        RepositoryApiClientImpl.createFromUsernamePassword(repositoryId, username, password, baseUrl);
+                if (!nullOrEmpty(repositoryId) && !nullOrEmpty(username) && !nullOrEmpty(password) && !nullOrEmpty(baseUrl))
+                    repositoryApiClient =
+                            RepositoryApiClientImpl.createFromUsernamePassword(repositoryId, username, password, baseUrl);
             }
             repositoryApiClient.setDefaultRequestHeaders(testHeaders);
         }
-        return repositoryApiClient;
     }
 
-    public static Entry createEntry(
-            RepositoryApiClient client, String entryName, Integer parentEntryId, Boolean autoRename) {
-        PostEntryChildrenRequest request = new PostEntryChildrenRequest();
-        request.setEntryType(PostEntryChildrenEntryType.FOLDER);
+    public static Entry createEntry(RepositoryApiClient client, String entryName, Integer parentEntryId, Boolean autoRename) {
+        CreateEntryRequest request = new CreateEntryRequest();
+        request.setEntryType(CreateEntryRequestEntryType.FOLDER);
         request.setName(entryName);
+        request.setAutoRename(autoRename);
 
         return client.getEntriesClient()
-                .createOrCopyEntry(new ParametersForCreateOrCopyEntry()
-                        .setRepoId(repositoryId)
+                .createEntry(new ParametersForCreateEntry()
+                        .setRepositoryId(repositoryId)
                         .setEntryId(parentEntryId)
-                        .setRequestBody(request)
-                        .setAutoRename(autoRename));
+                        .setRequestBody(request));
     }
 
-    public static Boolean noRequiredFieldDefinitionsInTemplate(List<TemplateFieldInfo> arr) {
-        for (TemplateFieldInfo templateFieldInfo : arr) {
-            if (templateFieldInfo.isRequired()) {
-                return false;
-            }
-        }
-        return true;
+    public static Boolean noRequiredFieldDefinitionsInTemplate(List<TemplateFieldDefinition> templateFieldDefinitions) {
+        return templateFieldDefinitions.stream().noneMatch(FieldDefinition::isRequired);
     }
 
     public static boolean nullOrEmpty(String str) {
-        return str == null || str.length() == 0;
+        return str == null || str.isEmpty();
     }
 
-    public static void WaitUntilTaskEnds(AcceptedOperation task) throws InterruptedException {
-        WaitUntilTaskEnds(task, Duration.ofMillis(500), Duration.ofSeconds(30));
+    public static void waitUntilTaskEnds(String taskId) {
+        waitUntilTaskEnds(taskId, Duration.ofMillis(500));
     }
 
-    public static void WaitUntilSearchEnds(AcceptedOperation search) throws InterruptedException {
-        WaitUntilSearchEnds(search, Duration.ofMillis(500), Duration.ofSeconds(30));
-    }
-
-    public static void WaitUntilTaskEnds(AcceptedOperation task, Duration interval, Duration timeout)
-            throws InterruptedException {
-        int maxIteration = (int) (timeout.toMillis() / interval.toMillis());
+    public static void waitUntilTaskEnds(String taskId, Duration interval) {
+        int maxIteration = 5;
         int count = 0;
         while (count < maxIteration) {
-            OperationProgress progress = repositoryApiClient
+            TaskCollectionResponse response = repositoryApiClient
                     .getTasksClient()
-                    .getOperationStatusAndProgress(new ParametersForGetOperationStatusAndProgress()
-                            .setRepoId(repositoryId)
-                            .setOperationToken(task.getToken()));
-            if (progress.getStatus() != OperationStatus.IN_PROGRESS) {
+                    .listTasks(new ParametersForListTasks()
+                            .setRepositoryId(repositoryId)
+                            .setTaskIds(taskId));
+            TaskProgress progress = response.getValue().get(0);
+            if (progress.getStatus() != TaskStatus.IN_PROGRESS) {
                 return;
             }
-            TimeUnit.MILLISECONDS.sleep(interval.toMillis());
+            try {
+                TimeUnit.MILLISECONDS.sleep(interval.toMillis());
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             count++;
         }
         throw new RuntimeException("WaitUntilTaskEnds timeout");
     }
 
-    public static void WaitUntilSearchEnds(AcceptedOperation search, Duration interval, Duration timeout)
-            throws InterruptedException {
-        int maxIteration = (int) (timeout.toMillis() / interval.toMillis());
-        int count = 0;
-        while (count < maxIteration) {
-            OperationProgress progress = repositoryApiClient
-                    .getSearchesClient()
-                    .getSearchStatus(new ParametersForGetSearchStatus()
-                            .setRepoId(repositoryId)
-                            .setSearchToken(search.getToken()));
-            if (progress.getStatus() != OperationStatus.IN_PROGRESS) {
-                return;
-            }
-            TimeUnit.MILLISECONDS.sleep(interval.toMillis());
-            count++;
-        }
-        throw new RuntimeException("WaitUntilSearchEnds timeout");
-    }
-
-    public static void deleteEntry(int entryId) throws InterruptedException {
+    public static void deleteEntry(int entryId) {
         if (entryId != 0) {
-            DeleteEntryWithAuditReason body = new DeleteEntryWithAuditReason();
-            AcceptedOperation deleteEntryResponse = repositoryApiClient
+            StartTaskResponse startTaskResponse = repositoryApiClient
                     .getEntriesClient()
-                    .deleteEntryInfo(new ParametersForDeleteEntryInfo()
-                            .setRepoId(repositoryId)
+                    .startDeleteEntry(new ParametersForStartDeleteEntry()
+                            .setRepositoryId(repositoryId)
                             .setEntryId(entryId)
-                            .setRequestBody(body));
-            WaitUntilTaskEnds(deleteEntryResponse);
+                            .setRequestBody(new StartDeleteEntryRequest()));
+            waitUntilTaskEnds(startTaskResponse.getTaskId());
         }
     }
 
-    public static void deleteEntries(List<Entry> entries) throws InterruptedException {
+    public static void deleteEntries(List<Entry> entries) {
         for (Entry entry : entries) {
             if (entry != null) {
                 deleteEntry(entry.getId());
             }
         }
     }
+
+    protected boolean downloadFileFromURI(String uri, File destinationFile) {
+        try (BufferedInputStream in = new BufferedInputStream(new URL(uri).openStream());
+             FileOutputStream fileOutputStream = new FileOutputStream(destinationFile)) {
+            byte[] dataBuffer = new byte[1024];
+            int bytesRead;
+            while ((bytesRead = in.read(dataBuffer, 0, 1024)) != -1) {
+                fileOutputStream.write(dataBuffer, 0, bytesRead);
+            }
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
 }

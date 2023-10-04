@@ -1,9 +1,15 @@
 package com.laserfiche.repository.api.clients.impl.model;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.Objects;
 
+/**
+ * Represents an RGB color value with alpha channel.
+ */
+@Schema(description = "Represents an RGB color value with alpha channel.")
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class LFColor {
@@ -26,10 +32,11 @@ public class LFColor {
     }
 
     /**
-     * Returns a
+     * Returns the alpha channel component, from 0-255.
+     *
      * @return a
      */
-    @Schema(description = "")
+    @Schema(description = "The alpha channel component, from 0-255.")
     public Integer getA() {
         return a;
     }
@@ -44,10 +51,11 @@ public class LFColor {
     }
 
     /**
-     * Returns r
+     * Returns the red channel component, from 0-255.
+     *
      * @return r
      */
-    @Schema(description = "")
+    @Schema(description = "The red channel component, from 0-255.")
     public Integer getR() {
         return r;
     }
@@ -62,10 +70,11 @@ public class LFColor {
     }
 
     /**
-     * Returns g
+     * Returns the green channel component, from 0-255.
+     *
      * @return g
      */
-    @Schema(description = "")
+    @Schema(description = "The green channel component, from 0-255.")
     public Integer getG() {
         return g;
     }
@@ -80,10 +89,11 @@ public class LFColor {
     }
 
     /**
-     * Returns b
+     * Returns the blue channel component from 0-255.
+     *
      * @return b
      */
-    @Schema(description = "")
+    @Schema(description = "The blue channel component from 0-255.")
     public Integer getB() {
         return b;
     }
@@ -101,10 +111,7 @@ public class LFColor {
             return false;
         }
         LFColor lfColor = (LFColor) o;
-        return Objects.equals(this.a, lfColor.a)
-                && Objects.equals(this.r, lfColor.r)
-                && Objects.equals(this.g, lfColor.g)
-                && Objects.equals(this.b, lfColor.b);
+        return Objects.equals(this.a, lfColor.a) && Objects.equals(this.r, lfColor.r) && Objects.equals(this.g, lfColor.g) && Objects.equals(this.b, lfColor.b);
     }
 
     @Override

@@ -1,16 +1,16 @@
 package com.laserfiche.repository.api.clients.impl.model;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
  * Gets or Sets FuzzyType
  */
 public enum FuzzyType {
-    NONE("None"),
-    PERCENTAGE("Percentage"),
-    NUMBER_OF_LETTERS("NumberOfLetters");
 
-    private String value;
+    NONE("None"), PERCENTAGE("Percentage"), NUMBER_OF_LETTERS("NumberOfLetters");
+
+    private final String value;
 
     FuzzyType(String value) {
         this.value = value;
