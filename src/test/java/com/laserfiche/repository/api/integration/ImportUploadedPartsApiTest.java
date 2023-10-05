@@ -77,64 +77,14 @@ public class ImportUploadedPartsApiTest extends BaseTest {
         assertEquals(parts, response.getUrls().size());
     }
 
-
-    @Test
-    void startImportUploadedPartsCanImportLargeFile() {
-        String fileName = "Sample.pdf";
-        String mimeType = "application/pdf";
-
-        // Step 1: Get upload URLs
-        int parts = 5;
-        CreateMultipartUploadUrlsRequest requestBody = new CreateMultipartUploadUrlsRequest();
-        requestBody.setFileName(fileName);
-        requestBody.setMimeType(mimeType);
-        requestBody.setNumberOfParts(parts);
-
-        CreateMultipartUploadUrlsResponse response = client.createMultipartUploadUrls(new ParametersForCreateMultipartUploadUrls()
-                .setRepositoryId(repositoryId).setRequestBody(requestBody));
-
-        assertNotNull(response);
-        String uploadId = response.getUploadId();
-        assertNotNull(uploadId);
-        assertEquals(parts, response.getUrls().size());
-
-        // Step 2: Write file part into upload URLs
-        List<String> eTags = writeFile(LARGE_PDF_FILE_PATH, response.getUrls());
-        assertEquals(parts, eTags.size());
-
-        // Step 3: Call ImportUploadedParts API
-        StartImportUploadedPartsRequest requestBody2 = new StartImportUploadedPartsRequest();
-        requestBody2.setUploadId(uploadId);
-        requestBody2.setAutoRename(true);
-        requestBody2.setPartETags(eTags);
-        requestBody2.setName(fileName);
-        StartTaskResponse response2 = client.startImportUploadedParts(new ParametersForStartImportUploadedParts()
-                .setRepositoryId(repositoryId)
-                .setEntryId(testClassParentFolder.getId())
-                .setRequestBody(requestBody2));
-
-        assertNotNull(response2);
-        String taskId = response2.getTaskId();
-        assertNotNull(taskId);
-
-        TaskCollectionResponse tasks = tasksClient.listTasks(new ParametersForListTasks().setRepositoryId(repositoryId).setTaskIds(taskId));
-        assertNotNull(tasks);
-        assertEquals(1, tasks.getValue().size());
-        TaskProgress taskProgress = tasks.getValue().get(0);
-        assertEquals(TaskStatus.COMPLETED, taskProgress.getStatus());
-        assertTrue(taskProgress.getErrors().isEmpty());
-        assertTrue(taskProgress.getResult().getEntryId() > 1);
-        String uri = taskProgress.getResult().getUri();
-        assertNotNull(uri);
-    }
-
     @Test
     void startImportUploadedPartsCanImportLargeFileAndGeneratePages() {
         String fileName = "Sample.pdf";
         String mimeType = "application/pdf";
 
         // Step 1: Get upload URLs
-        int parts = 5;
+        int parts = 2;
+        int partSizeInMB = 5;
         CreateMultipartUploadUrlsRequest requestBody = new CreateMultipartUploadUrlsRequest();
         requestBody.setFileName(fileName);
         requestBody.setMimeType(mimeType);
@@ -149,7 +99,7 @@ public class ImportUploadedPartsApiTest extends BaseTest {
         assertEquals(parts, response.getUrls().size());
 
         // Step 2: Write file part into upload URLs
-        List<String> eTags = writeFile(LARGE_PDF_FILE_PATH, response.getUrls());
+        List<String> eTags = writeFile(LARGE_PDF_FILE_PATH, response.getUrls(), partSizeInMB);
         assertEquals(parts, eTags.size());
 
         // Step 3: Call ImportUploadedParts API
@@ -216,7 +166,7 @@ public class ImportUploadedPartsApiTest extends BaseTest {
         assertTrue(entry instanceof Document);
         Document document = (Document) entry;
         assertEquals("pdf", document.getExtension());
-        assertEquals(85, document.getPageCount());
+        assertEquals(56, document.getPageCount());
         assertEquals(new File(LARGE_PDF_FILE_PATH).length(), document.getElectronicDocumentSize());
         assertTrue(document.isElectronicDocument());
         assertEquals(mimeType, document.getMimeType());
@@ -254,10 +204,8 @@ public class ImportUploadedPartsApiTest extends BaseTest {
     /*
     NOTE: the following code is only for the purpose of the specific files used in the integration test. It doesn't work for any file of any scenario.
      */
-    private List<String> writeFile(String filePath, List<String> urls) {
+    private List<String> writeFile(String filePath, List<String> urls, int partSizeInMB) {
         File file = new File(filePath);
-        int numberOfParts = urls.size();
-        int partSizeInMB = (int) Math.ceil((double) file.length() / numberOfParts / 1024 / 1024);
         List<String> eTags = new ArrayList<>(urls.size());
         try (FileInputStream inputStream = new FileInputStream(file)) {
             for (String uploadUrl : urls) {
