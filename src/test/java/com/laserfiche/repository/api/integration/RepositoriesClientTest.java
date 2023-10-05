@@ -21,11 +21,11 @@ class RepositoriesClientTest extends BaseTest {
 
     @Test
     void listRepositoriesWorks() {
-        RepositoryCollectionResponse response = client.listRepositories();
+        RepositoryCollectionResponse collectionResponse = client.listRepositories();
         boolean foundRepo = false;
-        assertNotNull(response);
-        assertFalse(response.getValue().isEmpty());
-        for (Repository repository : response.getValue()) {
+        assertNotNull(collectionResponse);
+        assertFalse(collectionResponse.getValue().isEmpty());
+        for (Repository repository : collectionResponse.getValue()) {
             assertNotNull(repository.getId());
             if (!authorizationType.equals(AuthorizationType.API_SERVER_USERNAME_PASSWORD)) {
                 assertNotNull(repository.getWebClientUrl());
@@ -41,10 +41,10 @@ class RepositoriesClientTest extends BaseTest {
     @Test
     @DisabledIf("isCloudEnvironment")
     void listRepositoriesForSelfHostedWorksWithNoAuthentication() {
-        RepositoryCollectionResponse repositories = RepositoriesClientImpl.listRepositoriesForSelfHosted(baseUrl);
-        assertNotNull(repositories);
+        RepositoryCollectionResponse collectionResponse = RepositoriesClientImpl.listRepositoriesForSelfHosted(baseUrl);
+        assertNotNull(collectionResponse);
         boolean foundRepo = false;
-        for (Repository repositoryInfo : repositories.getValue()) {
+        for (Repository repositoryInfo : collectionResponse.getValue()) {
             assertNotNull(repositoryInfo.getId());
             if (repositoryInfo.getId().equalsIgnoreCase(repositoryId)) {
                 foundRepo = true;

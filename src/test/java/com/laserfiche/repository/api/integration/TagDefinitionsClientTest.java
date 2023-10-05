@@ -22,38 +22,40 @@ class TagDefinitionsClientTest extends BaseTest {
     }
 
     @Test
-    void listTagDefinitionsWorks() {
-        TagDefinitionCollectionResponse tagInfoList =
-                client.listTagDefinitions(new ParametersForListTagDefinitions().setRepositoryId(repositoryId));
-
-        assertNotNull(tagInfoList);
-        assertFalse(tagInfoList.getValue().isEmpty());
-    }
-
-    @Test
-    void listTagDefinitionsNextLinkWorks() {
-        int maxPageSize = 1;
-        TagDefinitionCollectionResponse tagInfoList = client.listTagDefinitions(new ParametersForListTagDefinitions()
+    void GetTagDefinitionAndListTagDefinitionsNextLinkWork() {
+        int maxPageSize = 2;
+        TagDefinitionCollectionResponse collectionResponse = client.listTagDefinitions(new ParametersForListTagDefinitions()
                 .setRepositoryId(repositoryId)
                 .setPrefer(String.format("maxpagesize=%d", maxPageSize)));
 
-        assertNotNull(tagInfoList);
+        assertNotNull(collectionResponse);
+        assertFalse(collectionResponse.getValue().isEmpty());
 
-        String nextLink = tagInfoList.getOdataNextLink();
+        TagDefinition firstTagDefinition = collectionResponse.getValue().get(0);
+
+        TagDefinition tagDefinition = client.getTagDefinition(new ParametersForGetTagDefinition()
+                .setRepositoryId(repositoryId)
+                .setTagId(firstTagDefinition.getId()));
+
+        assertNotNull(tagDefinition);
+        assertEquals(firstTagDefinition.getId(), tagDefinition.getId());
+        assertEquals(firstTagDefinition.getName(), tagDefinition.getName());
+
+        String nextLink = collectionResponse.getOdataNextLink();
         assertNotNull(nextLink);
 
-        assertTrue(tagInfoList.getValue().size() <= maxPageSize);
+        assertTrue(collectionResponse.getValue().size() <= maxPageSize);
 
-        TagDefinitionCollectionResponse nextLinkResponse = client.listTagDefinitionsNextLink(nextLink, maxPageSize);
-        assertNotNull(nextLinkResponse);
-        assertTrue(nextLinkResponse.getValue().size() <= maxPageSize);
+        TagDefinitionCollectionResponse nextLinkCollectionResponse = client.listTagDefinitionsNextLink(nextLink, maxPageSize);
+        assertNotNull(nextLinkCollectionResponse);
+        assertTrue(nextLinkCollectionResponse.getValue().size() <= maxPageSize);
     }
 
     @Test
     void listTagDefinitionsForEachWorks() {
         AtomicInteger pageCount = new AtomicInteger();
         int maxPages = 2;
-        int maxPageSize = 1;
+        int maxPageSize = 2;
         Function<TagDefinitionCollectionResponse, Boolean> callback = collectionResponse -> {
             if (pageCount.incrementAndGet() <= maxPages) {
                 assertFalse(collectionResponse.getValue().isEmpty());
@@ -66,19 +68,5 @@ class TagDefinitionsClientTest extends BaseTest {
         client.listTagDefinitionsForEach(
                 callback, maxPageSize, new ParametersForListTagDefinitions().setRepositoryId(repositoryId));
         assertTrue(pageCount.get() > 1);
-    }
-
-    @Test
-    void getTagDefinitionWorks() {
-        TagDefinitionCollectionResponse tagInfoList =
-                client.listTagDefinitions(new ParametersForListTagDefinitions().setRepositoryId(repositoryId));
-
-        assertNotNull(tagInfoList);
-
-        TagDefinition tagInfo = client.getTagDefinition(new ParametersForGetTagDefinition()
-                .setRepositoryId(repositoryId)
-                .setTagId(tagInfoList.getValue().get(0).getId()));
-
-        assertNotNull(tagInfo);
     }
 }

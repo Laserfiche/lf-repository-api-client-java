@@ -51,6 +51,8 @@ public class BaseTest {
     protected static final String SMALL_TEXT_FILE_PATH = "src/test/java/com/laserfiche/repository/api/integration/testFiles/test.txt";
     protected static final String SMALL_JPEG_FILE_PATH = "src/test/java/com/laserfiche/repository/api/integration/testFiles/test.jpg";
 
+    protected static int testFolderEntryId = -1;
+
     @BeforeAll
     public static void setUp() {
         Dotenv.configure()
@@ -67,6 +69,7 @@ public class BaseTest {
                     AuthorizationType.class, getEnvironmentVariable(AUTHORIZATION_TYPE));
         }
         repositoryId = getEnvironmentVariable(REPOSITORY_ID);
+        testFolderEntryId = Integer.parseInt(getEnvironmentVariable("TEST_FOLDER_ENTRY_ID"));
         if (authorizationType == AuthorizationType.CLOUD_ACCESS_KEY) {
             servicePrincipalKey = getEnvironmentVariable(SERVICE_PRINCIPAL_KEY);
             String accessKeyBase64 = getEnvironmentVariable(ACCESS_KEY);
@@ -136,19 +139,19 @@ public class BaseTest {
     }
 
     public static void waitUntilTaskEnds(String taskId) {
-        waitUntilTaskEnds(taskId, Duration.ofMillis(500));
+        waitUntilTaskEnds(taskId, Duration.ofMillis(1000));
     }
 
-    public static void waitUntilTaskEnds(String taskId, Duration interval) {
+    private static void waitUntilTaskEnds(String taskId, Duration interval) {
         int maxIteration = 5;
         int count = 0;
         while (count < maxIteration) {
-            TaskCollectionResponse response = repositoryApiClient
+            TaskCollectionResponse collectionResponse = repositoryApiClient
                     .getTasksClient()
                     .listTasks(new ParametersForListTasks()
                             .setRepositoryId(repositoryId)
                             .setTaskIds(taskId));
-            TaskProgress progress = response.getValue().get(0);
+            TaskProgress progress = collectionResponse.getValue().get(0);
             if (progress.getStatus() != TaskStatus.IN_PROGRESS) {
                 return;
             }

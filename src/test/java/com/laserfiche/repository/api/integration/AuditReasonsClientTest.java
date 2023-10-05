@@ -6,12 +6,11 @@ import com.laserfiche.repository.api.clients.params.ParametersForListAuditReason
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class AuditReasonsClientTest extends BaseTest {
-
     private AuditReasonsClient client;
-
     @BeforeEach
     void perTestSetup() {
         client = repositoryApiClient.getAuditReasonsClient();
@@ -19,9 +18,12 @@ class AuditReasonsClientTest extends BaseTest {
 
     @Test
     void listAuditReasonsWorks() {
-        AuditReasonCollectionResponse reasons = client.listAuditReasons(
+        int maxPageSize = 2;
+        AuditReasonCollectionResponse collectionResponse = client.listAuditReasons(
                 new ParametersForListAuditReasons()
+                        .setPrefer(String.format("maxpagesize=%d", maxPageSize))
                         .setRepositoryId(repositoryId));
-        assertNotNull(reasons);
+        assertNotNull(collectionResponse);
+        assertNotNull(collectionResponse.getValue());
     }
 }

@@ -10,7 +10,6 @@ import com.laserfiche.repository.api.clients.params.*;
 import kong.unirest.HttpStatus;
 import org.junit.jupiter.api.*;
 
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -115,12 +114,12 @@ class EntriesClientTest extends BaseTest {
         copyAsyncRequest.setSourceId(targetEntry.getId());
         copyAsyncRequest.setAutoRename(true);
 
-        StartTaskResponse copyEntryResponse = client.startCopyEntry(new ParametersForStartCopyEntry()
+        StartTaskResponse taskResponse = client.startCopyEntry(new ParametersForStartCopyEntry()
                 .setRepositoryId(repositoryId)
                 .setEntryId(testClassParentFolder.getId())
                 .setRequestBody(copyAsyncRequest));
-        String taskId = copyEntryResponse.getTaskId();
-        waitUntilTaskEnds(taskId, Duration.ofMillis(100));
+        String taskId = taskResponse.getTaskId();
+        waitUntilTaskEnds(taskId);
 
         TaskCollectionResponse response = repositoryApiClient
                 .getTasksClient()
@@ -203,20 +202,11 @@ class EntriesClientTest extends BaseTest {
 
     @Test
     void copyEntryThrowsExceptionForInvalidRepositoryId() {
-        Entry parentFolder = createEntry(
-                repositoryApiClient,
-                "RepositoryApiClientIntegrationTest Java ParentFolder",
-                testClassParentFolder.getId(),
-                true);
-
-        Entry childFolder = createEntry(
-                repositoryApiClient,
-                "RepositoryApiClientIntegrationTest Java ChildFolder",
-                testClassParentFolder.getId(),
-                true);
-
         CopyEntryRequest request = new CopyEntryRequest();
-        request.setSourceId(parentFolder.getId());
+        // Since repositoryId is invalid, the entryId values are not used. So, we can use fake entryIds.
+        int fakeParentId = -1;
+        int fakeChildId = -2;
+        request.setSourceId(fakeParentId);
         request.setName("RepositoryApiClientIntegrationTest Java MovedFolder");
         request.setAutoRename(true);
 
@@ -225,7 +215,7 @@ class EntriesClientTest extends BaseTest {
                 ApiException.class,
                 () -> client.copyEntry(new ParametersForCopyEntry()
                         .setRepositoryId(invalidRepoId)
-                        .setEntryId(childFolder.getId())
+                        .setEntryId(fakeChildId)
                         .setRequestBody(request)));
 
         assertNotNull(apiException);
@@ -263,15 +253,17 @@ class EntriesClientTest extends BaseTest {
     }
 
     @Test
-    void listEntriesWorksAndRespectsMaxPageSize() {
-        int maxPageSize = 10;
-        EntryCollectionResponse entries = client.listEntries(new ParametersForListEntries()
+    void listEntriesWorksAndRespectsMaxPageSizeAndRespectsSpecifiedFields() {
+        int maxPageSize = 2;
+        String[] fieldNames = {"Sender", "Subject"};
+        EntryCollectionResponse collectionResponse = client.listEntries(new ParametersForListEntries()
                 .setRepositoryId(repositoryId)
                 .setEntryId(1)
+                .setFields(fieldNames)
                 .setPrefer(String.format("maxpagesize=%d", maxPageSize)));
-        assertEquals(maxPageSize, entries.getValue().size());
+        assertEquals(maxPageSize, collectionResponse.getValue().size());
 
-        for (Entry entry : entries.getValue()) {
+        for (Entry entry : collectionResponse.getValue()) {
             switch (entry.getEntryType()) {
                 case FOLDER:
                     assertTrue(entry instanceof Folder);
@@ -286,36 +278,43 @@ class EntriesClientTest extends BaseTest {
                     assertTrue(entry instanceof RecordSeries);
                     break;
                 default:
-                    fail("This should not happen.");
+                    fail("This should not be reached.");
             }
+
+            // Verify that the passed fieldNames is respected
+            int numberOfReturnedFields = (int) entry.getFields().stream()
+                    .filter(entryFieldValue -> entryFieldValue.getName().equalsIgnoreCase(fieldNames[0])
+                            || entryFieldValue.getName().equalsIgnoreCase(fieldNames[1]))
+                    .count();
+            assertEquals(fieldNames.length, numberOfReturnedFields);
         }
     }
 
     @Test
     void listEntriesNextLinkWorks() {
-        int maxPageSize = 10;
-        EntryCollectionResponse entryList = client.listEntries(new ParametersForListEntries()
+        int maxPageSize = 2;
+        EntryCollectionResponse collectionResponse = client.listEntries(new ParametersForListEntries()
                 .setRepositoryId(repositoryId)
                 .setEntryId(1)
                 .setPrefer(String.format("maxpagesize=%d", maxPageSize)));
 
-        assertEquals(maxPageSize, entryList.getValue().size());
+        assertEquals(maxPageSize, collectionResponse.getValue().size());
 
-        String nextLink = entryList.getOdataNextLink();
+        String nextLink = collectionResponse.getOdataNextLink();
         assertNotNull(nextLink);
-        assertTrue(entryList.getValue().size() <= maxPageSize);
+        assertTrue(collectionResponse.getValue().size() <= maxPageSize);
 
-        EntryCollectionResponse nextLinkResult = client.listEntriesNextLink(nextLink, maxPageSize);
+        EntryCollectionResponse nextLinkCollectionResponse = client.listEntriesNextLink(nextLink, maxPageSize);
 
-        assertNotNull(nextLinkResult);
-        assertTrue(nextLinkResult.getValue().size() <= maxPageSize);
+        assertNotNull(nextLinkCollectionResponse);
+        assertTrue(nextLinkCollectionResponse.getValue().size() <= maxPageSize);
     }
 
     @Test
     void listEntriesForEachWorks() {
         AtomicInteger pageCount = new AtomicInteger();
-        int maxPages = 20;
-        int maxPageSize = 5;
+        int maxPages = 2;
+        int maxPageSize = 2;
         Function<EntryCollectionResponse, Boolean> callback = collectionResponse -> {
             if (pageCount.incrementAndGet() <= maxPages) {
                 assertFalse(collectionResponse.getValue().isEmpty());
@@ -333,50 +332,31 @@ class EntriesClientTest extends BaseTest {
     }
 
     @Test
-    void listFieldsWorks() {
-        FieldCollectionResponse fieldValueList = client.listFields(
-                new ParametersForListFields().setRepositoryId(repositoryId).setEntryId(1));
-
-        assertNotNull(fieldValueList);
-        assertFalse(fieldValueList.getValue().isEmpty());
-    }
-
-    @Test
-    void listLinksWorks() {
-        LinkCollectionResponse linkInfoList =
-                client.listLinks(new ParametersForListLinks()
-                        .setRepositoryId(repositoryId)
-                        .setEntryId(1));
-
-        assertNotNull(linkInfoList);
-    }
-
-    @Test
     void listFieldsNextLinkWorksAndRespectsMaxPageSize() {
-        int maxPageSize = 1;
-        FieldCollectionResponse fieldValueList = client.listFields(new ParametersForListFields()
+        int maxPageSize = 2;
+        FieldCollectionResponse collectionResponse = client.listFields(new ParametersForListFields()
                 .setRepositoryId(repositoryId)
-                .setEntryId(1)
+                .setEntryId(testFolderEntryId)
                 .setPrefer(String.format("maxpagesize=%d", maxPageSize)));
 
-        assertNotNull(fieldValueList);
+        assertNotNull(collectionResponse);
 
-        String nextLink = fieldValueList.getOdataNextLink();
+        String nextLink = collectionResponse.getOdataNextLink();
         assertNotNull(nextLink);
 
-        assertTrue(fieldValueList.getValue().size() <= maxPageSize);
+        assertTrue(collectionResponse.getValue().size() <= maxPageSize);
 
-        FieldCollectionResponse nextLinkResult = client.listFieldsNextLink(nextLink, maxPageSize);
+        FieldCollectionResponse nextLinkCollectionResponse = client.listFieldsNextLink(nextLink, maxPageSize);
 
-        assertNotNull(nextLinkResult);
-        assertTrue(nextLinkResult.getValue().size() <= maxPageSize);
+        assertNotNull(nextLinkCollectionResponse);
+        assertTrue(nextLinkCollectionResponse.getValue().size() <= maxPageSize);
     }
 
     @Test
     void listFieldsForEachWorks() {
         AtomicInteger pageCount = new AtomicInteger();
-        int maxPages = 5;
-        int maxPageSize = 1;
+        int maxPages = 2;
+        int maxPageSize = 2;
         Function<FieldCollectionResponse, Boolean> callback = collectionResponse -> {
             if (pageCount.incrementAndGet() <= maxPages) {
                 assertFalse(collectionResponse.getValue().isEmpty());
@@ -389,40 +369,40 @@ class EntriesClientTest extends BaseTest {
         client.listFieldsForEach(
                 callback,
                 maxPageSize,
-                new ParametersForListFields().setRepositoryId(repositoryId).setEntryId(1));
+                new ParametersForListFields().setRepositoryId(repositoryId).setEntryId(testFolderEntryId));
     }
 
     @Test
     void listLinksNextLinkWorks() {
-        int maxPageSize = 1;
-        LinkCollectionResponse linkInfoList =
+        int maxPageSize = 2;
+        LinkCollectionResponse collectionResponse =
                 client.listLinks(new ParametersForListLinks()
                         .setRepositoryId(repositoryId)
-                        .setEntryId(1)
+                        .setEntryId(testFolderEntryId)
                         .setPrefer(String.format("maxpagesize=%d", maxPageSize)));
 
-        assertNotNull(linkInfoList);
+        assertNotNull(collectionResponse);
 
-        if (linkInfoList.getValue().isEmpty()) {
+        if (collectionResponse.getValue().isEmpty()) {
             return; // There's no point testing if we don't have any such item.
         }
-        String nextLink = linkInfoList.getOdataNextLink();
+        String nextLink = collectionResponse.getOdataNextLink();
         assertNotNull(nextLink);
 
-        assertTrue(linkInfoList.getValue().size() <= maxPageSize);
+        assertTrue(collectionResponse.getValue().size() <= maxPageSize);
 
-        LinkCollectionResponse nextLinkResult =
+        LinkCollectionResponse nextLinkCollectionResponse =
                 client.listLinksNextLink(nextLink, maxPageSize);
 
-        assertNotNull(nextLinkResult);
-        assertTrue(nextLinkResult.getValue().size() <= maxPageSize);
+        assertNotNull(nextLinkCollectionResponse);
+        assertTrue(nextLinkCollectionResponse.getValue().size() <= maxPageSize);
     }
 
     @Test
     void listLinksForEachWorks() {
         AtomicInteger pageCount = new AtomicInteger();
-        int maxPages = 5;
-        int maxPageSize = 1;
+        int maxPages = 2;
+        int maxPageSize = 2;
         Function<LinkCollectionResponse, Boolean> callback = collectionResponse -> {
             if (pageCount.incrementAndGet() <= maxPages) {
                 assertFalse(collectionResponse.getValue().isEmpty());
@@ -437,7 +417,7 @@ class EntriesClientTest extends BaseTest {
                 maxPageSize,
                 new ParametersForListLinks()
                         .setRepositoryId(repositoryId)
-                        .setEntryId(1));
+                        .setEntryId(testFolderEntryId));
     }
 
     @Test
@@ -452,7 +432,7 @@ class EntriesClientTest extends BaseTest {
         String taskId = deleteEntryResponse.getTaskId();
         assertNotNull(taskId);
 
-        waitUntilTaskEnds(deleteEntryResponse.getTaskId(), Duration.ofMillis(100));
+        waitUntilTaskEnds(deleteEntryResponse.getTaskId());
 
         ApiException apiException = Assertions.assertThrows(
                 ApiException.class,
@@ -465,92 +445,48 @@ class EntriesClientTest extends BaseTest {
 
     @Test
     void listTagsNextLinkWorks() {
-        int maxPageSize = 1;
-        TagCollectionResponse tagInfoList =
+        int maxPageSize = 2;
+        TagCollectionResponse collectionResponse =
                 client.listTags(new ParametersForListTags()
                         .setRepositoryId(repositoryId)
-                        .setEntryId(1)
+                        .setEntryId(testFolderEntryId)
                         .setPrefer(String.format("maxpagesize=%d", maxPageSize)));
 
-        assertNotNull(tagInfoList);
+        assertNotNull(collectionResponse);
+        assertFalse(collectionResponse.getValue().isEmpty());
 
-        if (tagInfoList.getValue().isEmpty()) {
-            return; // There's no point testing if we don't have any such item.
-        }
-        String nextLink = tagInfoList.getOdataNextLink();
+        String nextLink = collectionResponse.getOdataNextLink();
         assertNotNull(nextLink);
 
-        assertTrue(tagInfoList.getValue().size() <= maxPageSize);
+        assertTrue(collectionResponse.getValue().size() <= maxPageSize);
 
-        TagCollectionResponse nextLinkResult =
+        TagCollectionResponse nextLinkCollectionResponse =
                 client.listTagsNextLink(nextLink, maxPageSize);
 
-        assertNotNull(nextLinkResult);
-        assertTrue(nextLinkResult.getValue().size() <= maxPageSize);
+        assertNotNull(nextLinkCollectionResponse);
+        assertTrue(nextLinkCollectionResponse.getValue().size() <= maxPageSize);
     }
 
     @Test
     void listTagsForEachWorks() {
-        int assignedTags = assignTagsToEntry(1);
-        assertTrue(assignedTags > 0);
-        try {
-            AtomicInteger pageCount = new AtomicInteger();
-            int maxPages = 5;
-            int maxPageSize = 1;
-            Function<TagCollectionResponse, Boolean> callback = collectionResponse -> {
-                if (pageCount.incrementAndGet() <= maxPages) {
-                    assertFalse(collectionResponse.getValue().isEmpty());
-                    assertTrue(collectionResponse.getValue().size() <= maxPageSize);
-                    return collectionResponse.getOdataNextLink() != null;
-                } else {
-                    return false;
-                }
-            };
-            client.listTagsForEach(
-                    callback,
-                    maxPageSize,
-                    new ParametersForListTags()
-                            .setRepositoryId(repositoryId)
-                            .setEntryId(1));
-        } finally {
-            removeTagsFromEntry(1);
-        }
-    }
-
-    private void removeTagsFromEntry(int entryId) {
-        SetTagsRequest requestBody = new SetTagsRequest();
-        requestBody.setTags(new ArrayList<>());
-        TagCollectionResponse tagCollectionResponse = client.setTags(new ParametersForSetTags()
-                .setRepositoryId(repositoryId).setEntryId(entryId)
-                .setRequestBody(requestBody));
-        assertTrue(tagCollectionResponse.getValue().isEmpty());
-    }
-
-    private int assignTagsToEntry(int entryId) {
-        TagDefinitionsClient tagDefinitionsClient = repositoryApiClient.getTagDefinitionsClient();
-        TagDefinitionCollectionResponse tagDefinitions = tagDefinitionsClient.listTagDefinitions(new ParametersForListTagDefinitions()
-                .setRepositoryId(repositoryId).setTop(100));
-
-        List<String> tags = new ArrayList<>();
-        for (TagDefinition tagDefinition : tagDefinitions.getValue()) {
-            tags.add(tagDefinition.getName());
-        }
-        SetTagsRequest requestBody = new SetTagsRequest();
-        requestBody.setTags(tags);
-        TagCollectionResponse tagCollectionResponse = client.setTags(new ParametersForSetTags()
-                .setRepositoryId(repositoryId).setEntryId(entryId)
-                .setRequestBody(requestBody));
-        return tagCollectionResponse.getValue().size();
-    }
-
-    @Test
-    void listTagsWorks() {
-        TagCollectionResponse tagInfoList =
-                client.listTags(new ParametersForListTags()
+        AtomicInteger pageCount = new AtomicInteger();
+        int maxPages = 2;
+        int maxPageSize = 2;
+        Function<TagCollectionResponse, Boolean> callback = collectionResponse -> {
+            if (pageCount.incrementAndGet() <= maxPages) {
+                assertFalse(collectionResponse.getValue().isEmpty());
+                assertTrue(collectionResponse.getValue().size() <= maxPageSize);
+                return collectionResponse.getOdataNextLink() != null;
+            } else {
+                return false;
+            }
+        };
+        client.listTagsForEach(
+                callback,
+                maxPageSize,
+                new ParametersForListTags()
                         .setRepositoryId(repositoryId)
-                        .setEntryId(1));
-
-        assertNotNull(tagInfoList);
+                        .setEntryId(testFolderEntryId));
     }
 
     @Test
@@ -621,35 +557,16 @@ class EntriesClientTest extends BaseTest {
     }
 
     @Test
-    void listEntriesWorksAndRespectsSpecifiedFields() {
-        String[] fieldNames = {"Sender", "Subject"};
-        EntryCollectionResponse entries = client.listEntries(new ParametersForListEntries()
-                .setRepositoryId(repositoryId)
-                .setEntryId(1)
-                .setFields(fieldNames)
-                .setPrefer("maxpagesize=5"));
-        assertNotNull(entries);
-        for (Entry entry : entries.getValue()) {
-            int numberOfReturnedFields = (int) entry.getFields().stream()
-                    .filter(entryFieldValue -> entryFieldValue.getName().equalsIgnoreCase(fieldNames[0])
-                            || entryFieldValue.getName().equalsIgnoreCase(fieldNames[1]))
-                    .count();
-            assertEquals(fieldNames.length, numberOfReturnedFields);
-        }
-    }
-
-    @Test
     void setTemplateThrowsExceptionForInvalidTemplate() {
-        Entry parentFolder = createEntry(repositoryApiClient, "EntriesTest", 1, true);
-        createdEntries.add(parentFolder);
-
+        // Since template is not actually set, it's safe to use root folder for the test.
+        int parentFolderId = 1;
         SetTemplateRequest request = new SetTemplateRequest();
         request.setTemplateName("fake_template");
         ApiException apiException = Assertions.assertThrows(
                 ApiException.class,
                 () -> client.setTemplate(new ParametersForSetTemplate()
                         .setRepositoryId(repositoryId)
-                        .setEntryId(parentFolder.getId())
+                        .setEntryId(parentFolderId)
                         .setRequestBody(request)));
         assertNotNull(apiException);
         assertEquals(404, apiException.getStatusCode());
@@ -659,44 +576,15 @@ class EntriesClientTest extends BaseTest {
     }
 
     @Test
-    void setTagsWorks() {
-        TagDefinitionCollectionResponse tagDefinitionsResponse = repositoryApiClient
-                .getTagDefinitionsClient()
-                .listTagDefinitions(new ParametersForListTagDefinitions().setRepositoryId(repositoryId));
-        List<TagDefinition> tagDefinitions = tagDefinitionsResponse.getValue();
-
-        assertNotNull(tagDefinitions);
-        assertTrue(tagDefinitions.size() > 0);
-
-        String tag = tagDefinitions.get(0).getName();
-        SetTagsRequest request = new SetTagsRequest();
-        request.setTags(new ArrayList<>());
-        request.getTags().add(tag);
-        Entry entry = createEntry(
-                repositoryApiClient, "RepositoryApiClientIntegrationTest Java SetTags", testClassParentFolder.getId(), true);
-        Integer num = entry.getId();
-
-        TagCollectionResponse assignTagsResponse = client
-                .setTags(new ParametersForSetTags()
-                        .setRepositoryId(repositoryId)
-                        .setEntryId(num)
-                        .setRequestBody(request));
-        List<Tag> tags = assignTagsResponse.getValue();
-
-        assertNotNull(tags);
-        assertEquals(tags.get(0).getName(), tag);
-    }
-
-    @Test
     void setTemplateWorks() {
         TemplateDefinition template = null;
-        TemplateDefinitionCollectionResponse templateDefinitionsResponse = repositoryApiClient
+        TemplateDefinitionCollectionResponse collectionResponse = repositoryApiClient
                 .getTemplateDefinitionClient()
                 .listTemplateDefinitions(new ParametersForListTemplateDefinitions().setRepositoryId(repositoryId));
-        List<TemplateDefinition> templateDefinitions = templateDefinitionsResponse.getValue();
+        List<TemplateDefinition> templateDefinitions = collectionResponse.getValue();
 
         assertNotNull(templateDefinitions);
-        assertTrue(templateDefinitions.size() > 0);
+        assertFalse(templateDefinitions.isEmpty());
 
         for (TemplateDefinition templateDefinition : templateDefinitions) {
             TemplateFieldDefinitionCollectionResponse templateDefinitionsFieldsResponse = repositoryApiClient
@@ -734,10 +622,10 @@ class EntriesClientTest extends BaseTest {
         String fieldValue = "a";
 
         // Find a field definition that accepts String and has no constraint.
-        FieldDefinitionCollectionResponse fieldDefinitionsResponse = repositoryApiClient
+        FieldDefinitionCollectionResponse collectionResponse = repositoryApiClient
                 .getFieldDefinitionsClient()
                 .listFieldDefinitions(new ParametersForListFieldDefinitions().setRepositoryId(repositoryId));
-        List<FieldDefinition> fieldDefinitions = fieldDefinitionsResponse.getValue();
+        List<FieldDefinition> fieldDefinitions = collectionResponse.getValue();
         for (FieldDefinition fieldDefinition : fieldDefinitions) {
             if (fieldDefinition.getFieldType().equals(FieldType.STRING)
                     && nullOrEmpty(fieldDefinition.getConstraint())
@@ -762,14 +650,15 @@ class EntriesClientTest extends BaseTest {
         request.setFields(fieldsToUpdate);
         Entry entry = createEntry(
                 repositoryApiClient, "RepositoryApiClientIntegrationTest Java SetFields", testClassParentFolder.getId(), true);
+        createdEntries.add(entry);
         Integer entryId = entry.getId();
 
-        FieldCollectionResponse assignFieldValuesResponse = client
+        FieldCollectionResponse fieldCollectionResponse = client
                 .setFields(new ParametersForSetFields()
                         .setRepositoryId(repositoryId)
                         .setEntryId(entryId)
                         .setRequestBody(request));
-        List<Field> fields = assignFieldValuesResponse.getValue();
+        List<Field> fields = fieldCollectionResponse.getValue();
 
         assertNotNull(fields);
         assertEquals(1, fields.size());
@@ -777,24 +666,24 @@ class EntriesClientTest extends BaseTest {
     }
 
     @Test
-    void removeTemplateWorks() throws ExecutionException, InterruptedException {
+    void removeTemplateWorks() {
         TemplateDefinition template = null;
 
-        TemplateDefinitionCollectionResponse templateDefinitionsResponse = repositoryApiClient.getTemplateDefinitionClient()
+        TemplateDefinitionCollectionResponse collectionResponse = repositoryApiClient.getTemplateDefinitionClient()
                 .listTemplateDefinitions(new ParametersForListTemplateDefinitions().setRepositoryId(repositoryId));
-        List<TemplateDefinition> templateDefinitions = templateDefinitionsResponse.getValue();
+        List<TemplateDefinition> templateDefinitions = collectionResponse.getValue();
 
         assertNotNull(templateDefinitions);
         assertFalse(templateDefinitions.isEmpty());
 
         for (TemplateDefinition templateDefinition : templateDefinitions) {
-            TemplateFieldDefinitionCollectionResponse templateDefinitionsFieldsResponse =
+            TemplateFieldDefinitionCollectionResponse fieldCollectionResponse =
                     repositoryApiClient.getTemplateDefinitionClient()
                             .listTemplateFieldDefinitionsByTemplateId(new ParametersForListTemplateFieldDefinitionsByTemplateId()
                                     .setRepositoryId(repositoryId)
                                     .setTemplateId(templateDefinition.getId()));
-            if (templateDefinitionsFieldsResponse.getValue() != null
-                    && noRequiredFieldDefinitionsInTemplate(templateDefinitionsFieldsResponse.getValue())) {
+            if (fieldCollectionResponse.getValue() != null
+                    && noRequiredFieldDefinitionsInTemplate(fieldCollectionResponse.getValue())) {
                 template = templateDefinition;
                 break;
             }
@@ -807,7 +696,7 @@ class EntriesClientTest extends BaseTest {
 
         Entry entry = createEntry(
                 repositoryApiClient, "RepositoryApiClientIntegrationTest Java DeleteTemplate", testClassParentFolder.getId(), true);
-
+        createdEntries.add(entry);
         entry = client
                 .setTemplate(new ParametersForSetTemplate()
                         .setRepositoryId(repositoryId)
@@ -839,12 +728,12 @@ class EntriesClientTest extends BaseTest {
         links.add(link);
         SetLinksRequest request = new SetLinksRequest();
         request.setLinks(links);
-        LinkCollectionResponse result = client
+        LinkCollectionResponse collectionResponse = client
                 .setLinks(new ParametersForSetLinks()
                         .setRepositoryId(repositoryId)
                         .setEntryId(sourceEntry.getId())
                         .setRequestBody(request));
-        List<Link> resultLinks = result.getValue();
+        List<Link> resultLinks = collectionResponse.getValue();
         assertNotNull(resultLinks);
         assertEquals(links.size(), resultLinks.size());
         assertEquals(sourceEntry.getId(), resultLinks.get(0).getSourceId());

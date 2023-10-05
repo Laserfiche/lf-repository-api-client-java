@@ -19,27 +19,23 @@ public class LinkDefinitionsClientTest extends BaseTest {
     }
 
     @Test
-    void listLinkDefinitionsWorks() {
-        LinkDefinitionCollectionResponse response =
+    void listLinkDefinitionsAndGetLinkDefinitionWork() {
+        LinkDefinitionCollectionResponse collectionResponse =
                 client.listLinkDefinitions(new ParametersForListLinkDefinitions().setRepositoryId(repositoryId));
 
-        assertNotNull(response.getValue());
-        assertFalse(response.getValue().isEmpty());
-    }
+        assertNotNull(collectionResponse.getValue());
+        assertFalse(collectionResponse.getValue().isEmpty());
 
-    @Test
-    void getLinkDefinitionWorks() {
-        LinkDefinitionCollectionResponse allLinkDefinitionsResponse =
-                client.listLinkDefinitions(new ParametersForListLinkDefinitions().setRepositoryId(repositoryId));
+        LinkDefinition firstLinkDefinition = collectionResponse.getValue().get(0);
 
-        LinkDefinition firstLinkDefinition = allLinkDefinitionsResponse.getValue().get(0);
-        assertNotNull(firstLinkDefinition);
-
+        // Verify that getLinkDefinition works
         LinkDefinition linkDefinition = client.getLinkDefinition(new ParametersForGetLinkDefinition()
                 .setRepositoryId(repositoryId)
                 .setLinkDefinitionId(firstLinkDefinition.getId()));
 
         assertNotNull(linkDefinition);
         assertEquals(firstLinkDefinition.getId(), linkDefinition.getId());
+        assertEquals(firstLinkDefinition.getSourceLabel(), linkDefinition.getSourceLabel());
+        assertEquals(firstLinkDefinition.getTargetLabel(), linkDefinition.getTargetLabel());
     }
 }
