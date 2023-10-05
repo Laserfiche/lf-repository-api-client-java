@@ -5,7 +5,8 @@ Use the Laserfiche Repository API to access data in a Laserfiche repository. Imp
 ## Documentation
 
 - [Laserfiche Developer Center](https://developer.laserfiche.com/)
-- [Java Doc for Laserfiche Repository API Client](https://laserfiche.github.io/lf-repository-api-client-java/docs/v2)
+- [Documentation](https://laserfiche.github.io/lf-repository-api-client-java/docs/v2/index.html) for the [com.laserfiche/lf-repository-api-client-v2](https://central.sonatype.com/artifact/com.laserfiche/lf-repository-api-client-v2) maven package used to access the v2 Laserfiche Repository APIs.
+- [Documentation](https://laserfiche.github.io/lf-repository-api-client-java/docs/v1/index.html) for the [com.laserfiche/lf-repository-api-client](https://central.sonatype.com/artifact/com.laserfiche/lf-repository-api-client) maven package used to access the v1 Laserfiche Repository APIs.
 
 ## Changelog
 
