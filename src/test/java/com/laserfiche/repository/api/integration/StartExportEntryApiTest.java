@@ -1,5 +1,6 @@
 package com.laserfiche.repository.api.integration;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.laserfiche.repository.api.clients.EntriesClient;
 import com.laserfiche.repository.api.clients.TasksClient;
 import com.laserfiche.repository.api.clients.impl.model.*;
@@ -126,6 +127,9 @@ public class StartExportEntryApiTest extends BaseTest {
         assertEquals(1, taskCollectionResponse.getValue().size());
 
         TaskProgress taskProgress = taskCollectionResponse.getValue().get(0);
+        if (taskProgress.getStatus() == TaskStatus.FAILED) {
+            printProblemDetails(taskProgress.getErrors().get(0));
+        }
         assertEquals(TaskStatus.COMPLETED, taskProgress.getStatus());
         assertTrue(taskProgress.getErrors().isEmpty());
         assertEquals(testEntryId, taskProgress.getResult().getEntryId());

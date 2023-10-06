@@ -1,6 +1,7 @@
 package com.laserfiche.repository.api.integration;
 
 import com.laserfiche.api.client.model.AccessKey;
+import com.laserfiche.api.client.model.ProblemDetails;
 import com.laserfiche.repository.api.RepositoryApiClient;
 import com.laserfiche.repository.api.RepositoryApiClientImpl;
 import com.laserfiche.repository.api.clients.impl.model.*;
@@ -198,6 +199,17 @@ public class BaseTest {
             e.printStackTrace();
         }
         return false;
+    }
+
+    protected void printProblemDetails(ProblemDetails problemDetails) {
+        System.out.printf("ProblemDetails: (Title: %s, Status: %d, Detail: %s, Type: %s, Instance: %s, ErrorCode: %d, ErrorSource: %s)%n",
+                problemDetails.getTitle(),
+                problemDetails.getStatus(),
+                problemDetails.getDetail(),
+                problemDetails.getType(),
+                problemDetails.getInstance(),
+                problemDetails.getErrorCode(),
+                problemDetails.getErrorSource());
     }
 
 }

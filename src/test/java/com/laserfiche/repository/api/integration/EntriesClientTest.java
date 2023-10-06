@@ -121,7 +121,11 @@ class EntriesClientTest extends BaseTest {
                         .setTaskIds(taskId));
 
         assertEquals(1, response.getValue().size());
-        assertEquals(response.getValue().get(0).getStatus(), TaskStatus.COMPLETED);
+        TaskProgress taskProgress = response.getValue().get(0);
+        if (taskProgress.getStatus() == TaskStatus.FAILED) {
+            printProblemDetails(taskProgress.getErrors().get(0));
+        }
+        assertEquals(TaskStatus.COMPLETED, taskProgress.getStatus());
     }
 
     @Test

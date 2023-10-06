@@ -125,6 +125,9 @@ public class ImportUploadedPartsApiTest extends BaseTest {
         assertNotNull(tasks);
         assertEquals(1, tasks.getValue().size());
         TaskProgress taskProgress = tasks.getValue().get(0);
+        if (taskProgress.getStatus() == TaskStatus.FAILED) {
+            printProblemDetails(taskProgress.getErrors().get(0));
+        }
         assertEquals(TaskStatus.COMPLETED, taskProgress.getStatus());
         assertTrue(taskProgress.getErrors().isEmpty());
         assertTrue(taskProgress.getResult().getEntryId() > 1);
@@ -148,6 +151,9 @@ public class ImportUploadedPartsApiTest extends BaseTest {
         assertNotNull(tasks);
         assertEquals(1, tasks.getValue().size());
         taskProgress = tasks.getValue().get(0);
+        if (taskProgress.getStatus() == TaskStatus.FAILED) {
+            printProblemDetails(taskProgress.getErrors().get(0));
+        }
         assertEquals(TaskStatus.COMPLETED, taskProgress.getStatus());
         assertTrue(taskProgress.getErrors().isEmpty());
         uri = taskProgress.getResult().getUri();
