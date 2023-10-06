@@ -3,8 +3,6 @@ package com.laserfiche.repository.api.integration;
 import com.laserfiche.api.client.model.ApiException;
 import com.laserfiche.api.client.model.ProblemDetails;
 import com.laserfiche.repository.api.clients.EntriesClient;
-import com.laserfiche.repository.api.clients.TagDefinitionsClient;
-import com.laserfiche.repository.api.clients.impl.model.Tag;
 import com.laserfiche.repository.api.clients.impl.model.*;
 import com.laserfiche.repository.api.clients.params.*;
 import kong.unirest.HttpStatus;
@@ -13,7 +11,6 @@ import org.junit.jupiter.api.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 
@@ -333,7 +330,7 @@ class EntriesClientTest extends BaseTest {
         int maxPageSize = 2;
         FieldCollectionResponse collectionResponse = client.listFields(new ParametersForListFields()
                 .setRepositoryId(repositoryId)
-                .setEntryId(testFolderEntryId)
+                .setEntryId(readonlyTestFolderId)
                 .setPrefer(String.format("maxpagesize=%d", maxPageSize)));
 
         assertNotNull(collectionResponse);
@@ -366,7 +363,7 @@ class EntriesClientTest extends BaseTest {
         client.listFieldsForEach(
                 callback,
                 maxPageSize,
-                new ParametersForListFields().setRepositoryId(repositoryId).setEntryId(testFolderEntryId));
+                new ParametersForListFields().setRepositoryId(repositoryId).setEntryId(readonlyTestFolderId));
     }
 
     @Test
@@ -375,7 +372,7 @@ class EntriesClientTest extends BaseTest {
         LinkCollectionResponse collectionResponse =
                 client.listLinks(new ParametersForListLinks()
                         .setRepositoryId(repositoryId)
-                        .setEntryId(testFolderEntryId)
+                        .setEntryId(readonlyTestFolderId)
                         .setPrefer(String.format("maxpagesize=%d", maxPageSize)));
 
         assertNotNull(collectionResponse);
@@ -414,7 +411,7 @@ class EntriesClientTest extends BaseTest {
                 maxPageSize,
                 new ParametersForListLinks()
                         .setRepositoryId(repositoryId)
-                        .setEntryId(testFolderEntryId));
+                        .setEntryId(readonlyTestFolderId));
     }
 
     @Test
@@ -446,7 +443,7 @@ class EntriesClientTest extends BaseTest {
         TagCollectionResponse collectionResponse =
                 client.listTags(new ParametersForListTags()
                         .setRepositoryId(repositoryId)
-                        .setEntryId(testFolderEntryId)
+                        .setEntryId(readonlyTestFolderId)
                         .setPrefer(String.format("maxpagesize=%d", maxPageSize)));
 
         assertNotNull(collectionResponse);
@@ -483,7 +480,7 @@ class EntriesClientTest extends BaseTest {
                 maxPageSize,
                 new ParametersForListTags()
                         .setRepositoryId(repositoryId)
-                        .setEntryId(testFolderEntryId));
+                        .setEntryId(readonlyTestFolderId));
     }
 
     @Test

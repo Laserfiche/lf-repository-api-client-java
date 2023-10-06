@@ -53,7 +53,7 @@ jobs:
         REPOSITORY_ID: ${{ secrets.DEV_CA_PUBLIC_USE_REPOSITORY_ID_1 }}
         AUTHORIZATION_TYPE: ${{ secrets.AUTHORIZATION_TYPE }}
         TEST_HEADER: ${{ secrets.TEST_HEADER }}
-        TEST_FOLDER_ENTRY_ID: ${{ secrets.DEV_CA_TEST_FOLDER_ENTRY_ID }}
+        READONLY_TEST_FOLDER_ID: ${{ secrets.DEV_CA_READONLY_TEST_FOLDER_ID }}
       run: mvn -Dtest=com.laserfiche.repository.api.integration.** test
 
     - name: Publish cloud test results

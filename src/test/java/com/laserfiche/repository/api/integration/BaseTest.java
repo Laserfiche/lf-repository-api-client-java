@@ -52,7 +52,7 @@ public class BaseTest {
     protected static final String SMALL_TEXT_FILE_PATH = "src/test/java/com/laserfiche/repository/api/integration/testFiles/test.txt";
     protected static final String SMALL_JPEG_FILE_PATH = "src/test/java/com/laserfiche/repository/api/integration/testFiles/test.jpg";
 
-    protected static int testFolderEntryId = -1;
+    protected static int readonlyTestFolderId = -1;
 
     @BeforeAll
     public static void setUp() {
@@ -70,7 +70,7 @@ public class BaseTest {
                     AuthorizationType.class, getEnvironmentVariable(AUTHORIZATION_TYPE));
         }
         repositoryId = getEnvironmentVariable(REPOSITORY_ID);
-        testFolderEntryId = Integer.parseInt(getEnvironmentVariable("TEST_FOLDER_ENTRY_ID"));
+        readonlyTestFolderId = Integer.parseInt(getEnvironmentVariable("READONLY_TEST_FOLDER_ID"));
         if (authorizationType == AuthorizationType.CLOUD_ACCESS_KEY) {
             servicePrincipalKey = getEnvironmentVariable(SERVICE_PRINCIPAL_KEY);
             String accessKeyBase64 = getEnvironmentVariable(ACCESS_KEY);
