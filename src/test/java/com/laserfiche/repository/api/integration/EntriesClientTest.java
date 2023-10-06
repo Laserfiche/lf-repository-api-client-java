@@ -28,8 +28,6 @@ class EntriesClientTest extends BaseTest {
 
     private final String nonExistingPath = "\\Non Existing Path";
 
-    private final List<Entry> createdEntries = new ArrayList<>();
-
     @BeforeEach
     void perTestSetup() {
         client = repositoryApiClient.getEntriesClient();
@@ -39,11 +37,6 @@ class EntriesClientTest extends BaseTest {
     static void classSetup() {
         String name = "RepositoryApiClientIntegrationTest Java TestClassParentFolder";
         testClassParentFolder = createEntry(repositoryApiClient, name, 1, true);
-    }
-
-    @AfterEach
-    void perTestCleanUp() {
-        deleteEntries(createdEntries);
     }
 
     @AfterAll
@@ -650,7 +643,6 @@ class EntriesClientTest extends BaseTest {
         request.setFields(fieldsToUpdate);
         Entry entry = createEntry(
                 repositoryApiClient, "RepositoryApiClientIntegrationTest Java SetFields", testClassParentFolder.getId(), true);
-        createdEntries.add(entry);
         Integer entryId = entry.getId();
 
         FieldCollectionResponse fieldCollectionResponse = client
@@ -696,7 +688,6 @@ class EntriesClientTest extends BaseTest {
 
         Entry entry = createEntry(
                 repositoryApiClient, "RepositoryApiClientIntegrationTest Java DeleteTemplate", testClassParentFolder.getId(), true);
-        createdEntries.add(entry);
         entry = client
                 .setTemplate(new ParametersForSetTemplate()
                         .setRepositoryId(repositoryId)
@@ -716,10 +707,8 @@ class EntriesClientTest extends BaseTest {
 
     @Test
     void setLinksWorks() {
-        Entry sourceEntry = createEntry(repositoryApiClient, "RepositoryApiClientIntegrationTest Java SetLinks Source", 1, true);
-        createdEntries.add(sourceEntry);
-        Entry targetEntry = createEntry(repositoryApiClient, "RepositoryApiClientIntegrationTest .Net SetLinks Target", 1, true);
-        createdEntries.add(targetEntry);
+        Entry sourceEntry = createEntry(repositoryApiClient, "RepositoryApiClientIntegrationTest Java SetLinks Source", testClassParentFolder.getId(), true);
+        Entry targetEntry = createEntry(repositoryApiClient, "RepositoryApiClientIntegrationTest Java SetLinks Target", testClassParentFolder.getId(), true);
 
         LinkToUpdate link = new LinkToUpdate();
         link.setOtherEntryId(targetEntry.getId());
