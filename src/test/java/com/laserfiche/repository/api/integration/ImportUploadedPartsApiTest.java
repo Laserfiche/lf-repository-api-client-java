@@ -16,6 +16,7 @@ import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -23,6 +24,8 @@ public class ImportUploadedPartsApiTest extends BaseTest {
     private static Entry testClassParentFolder;
     private EntriesClient client;
     private TasksClient tasksClient;
+    private static int auditReasonId = -1;
+    private static String auditReasonComment;
 
     @BeforeEach
     public void perTestSetup() {
@@ -34,6 +37,19 @@ public class ImportUploadedPartsApiTest extends BaseTest {
     static void classSetup() {
         String name = "RepositoryApiClientIntegrationTest Java TestClassParentFolder";
         testClassParentFolder = createEntry(repositoryApiClient, name, 1, true);
+        findAuditReasonForExport();
+    }
+
+    private static void findAuditReasonForExport() {
+        AuditReasonCollectionResponse auditReasons = repositoryApiClient
+                .getAuditReasonsClient()
+                .listAuditReasons(
+                        new ParametersForListAuditReasons().setRepositoryId(repositoryId));
+        Optional<AuditReason> exportAuditReason = auditReasons.getValue().stream().filter(auditReason -> auditReason.getAuditEventType() == AuditEventType.EXPORT_DOCUMENT).findFirst();
+        if (exportAuditReason.isPresent()) {
+            auditReasonId = exportAuditReason.get().getId();
+            auditReasonComment = exportAuditReason.get().getName();
+        }
     }
 
     @AfterAll
@@ -138,6 +154,10 @@ public class ImportUploadedPartsApiTest extends BaseTest {
         int createdEntryId = taskProgress.getResult().getEntryId();
         StartExportEntryRequest exportRequestBody = new StartExportEntryRequest();
         exportRequestBody.setPart(ExportEntryRequestPart.EDOC);
+        if (auditReasonId != -1) {
+            exportRequestBody.setAuditReasonId(auditReasonId);
+            exportRequestBody.setAuditReasonComment(auditReasonComment);
+        }
         StartTaskResponse exportResponse = client.startExportEntry(new ParametersForStartExportEntry()
                 .setRepositoryId(repositoryId)
                 .setEntryId(createdEntryId)
