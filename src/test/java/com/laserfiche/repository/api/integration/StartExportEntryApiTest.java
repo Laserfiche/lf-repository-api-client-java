@@ -126,6 +126,9 @@ public class StartExportEntryApiTest extends BaseTest {
         assertEquals(1, taskCollectionResponse.getValue().size());
 
         TaskProgress taskProgress = taskCollectionResponse.getValue().get(0);
+        if (taskProgress.getStatus() == TaskStatus.FAILED) {
+            printProblemDetails(taskProgress.getErrors().get(0));
+        }
         assertEquals(TaskStatus.COMPLETED, taskProgress.getStatus());
         assertTrue(taskProgress.getErrors().isEmpty());
         assertEquals(testEntryId, taskProgress.getResult().getEntryId());

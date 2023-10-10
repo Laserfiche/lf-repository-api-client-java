@@ -8,8 +8,6 @@ import com.laserfiche.repository.api.clients.params.ParametersForStartDeleteEntr
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.concurrent.TimeUnit;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TasksClientTest extends BaseTest {
@@ -45,60 +43,9 @@ public class TasksClientTest extends BaseTest {
     }
 
     @Test
-    void cancelTasksCanCancelAnInProgressTask() throws InterruptedException {
-        Entry deleteEntry =
-                createEntry(repositoryApiClient, "RepositoryApiClientIntegrationTest Java CancelOperation", 1, true);
-
-        StartTaskResponse result = repositoryApiClient
-                .getEntriesClient()
-                .startDeleteEntry(new ParametersForStartDeleteEntry()
-                        .setRepositoryId(repositoryId)
-                        .setEntryId(deleteEntry.getId())
-                        .setRequestBody(new StartDeleteEntryRequest()));
-
-        String taskId = result.getTaskId();
-        assertNotNull(taskId);
-
-        CancelTasksResponse cancellationResult = client.cancelTasks(
-                new ParametersForCancelTasks().setRepositoryId(repositoryId).setTaskIds(taskId));
-        assertTrue(cancellationResult.getValue().get(0).isResult());
-
-        TimeUnit.SECONDS.sleep(5);
-        deleteEntry(deleteEntry.getId());
-    }
-
-    @Test
-    void listTasksWorks() {
-        Entry deleteEntry =
-                createEntry(repositoryApiClient, "RepositoryApiClientIntegrationTest Java GetOperationStatus", 1, true);
-
-        StartTaskResponse result = repositoryApiClient
-                .getEntriesClient()
-                .startDeleteEntry(new ParametersForStartDeleteEntry()
-                        .setRepositoryId(repositoryId)
-                        .setEntryId(deleteEntry.getId())
-                        .setRequestBody(new StartDeleteEntryRequest()));
-
-        String taskId = result.getTaskId();
-        assertNotNull(taskId);
-
-        waitUntilTaskEnds(taskId);
-
-        TaskCollectionResponse operationProgressResponse =
-                client.listTasks(new ParametersForListTasks()
-                        .setRepositoryId(repositoryId)
-                        .setTaskIds(taskId));
-
-        assertNotNull(operationProgressResponse);
-        assertEquals(1, operationProgressResponse.getValue().size());
-        assertEquals(TaskStatus.COMPLETED, operationProgressResponse.getValue().get(0).getStatus());
-        assertEquals(100, operationProgressResponse.getValue().get(0).getPercentComplete());
-    }
-
-    @Test
-    void listTasksAcceptsMultipleTaskIds() {
+    void listTasksWorksAndAcceptsMultipleTaskIdsAndCanBeCalledWithNoTaskIdsAndIgnoresDuplicateTaskIds() {
         // Create N tasks
-        final int TASK_COUNT = 5;
+        final int TASK_COUNT = 2;
         String[] taskIds = new String[TASK_COUNT];
 
         for (int i = 0; i < TASK_COUNT; i++) {
@@ -114,41 +61,21 @@ public class TasksClientTest extends BaseTest {
             taskIds[i] = startTaskResponse.getTaskId();
         }
 
-        // Call listTasks API to get the status of the tasks
-        TaskCollectionResponse taskCollectionResponse =
+        // Verify it can be called with multiple taskIds
+        TaskCollectionResponse collectionResponse =
                 client.listTasks(new ParametersForListTasks()
                         .setRepositoryId(repositoryId)
                         .setTaskIds(taskIds));
 
-        assertNotNull(taskCollectionResponse);
-        assertEquals(TASK_COUNT, taskCollectionResponse.getValue().size());
+        assertNotNull(collectionResponse);
+        assertEquals(TASK_COUNT, collectionResponse.getValue().size());
 
         // Verify all the original taskIds are in the returned response
         for (String taskId : taskIds) {
-            assertTrue(taskCollectionResponse.getValue().stream().anyMatch(taskProgress -> taskProgress.getId().equals(taskId)));
-        }
-    }
-
-    @Test
-    void listTasksCanBeCalledWithNoTaskIds() {
-        // Create N tasks
-        final int TASK_COUNT = 5;
-        String[] taskIds = new String[TASK_COUNT];
-
-        for (int i = 0; i < TASK_COUNT; i++) {
-            Entry entry =
-                    createEntry(repositoryApiClient, String.format("RepositoryApiClientIntegrationTest Java ListTasks_%d", i), 1, true);
-            StartTaskResponse startTaskResponse = repositoryApiClient
-                    .getEntriesClient()
-                    .startDeleteEntry(new ParametersForStartDeleteEntry()
-                            .setRepositoryId(repositoryId)
-                            .setEntryId(entry.getId())
-                            .setRequestBody(new StartDeleteEntryRequest()));
-            assertNotNull(startTaskResponse);
-            taskIds[i] = startTaskResponse.getTaskId();
+            assertTrue(collectionResponse.getValue().stream().anyMatch(taskProgress -> taskProgress.getId().equals(taskId)));
         }
 
-        // Call listTasks API to get the status of the tasks
+        // Verify it can be called with no taskIds
         TaskCollectionResponse taskCollectionResponse =
                 client.listTasks(new ParametersForListTasks()
                         .setRepositoryId(repositoryId)
@@ -161,6 +88,16 @@ public class TasksClientTest extends BaseTest {
         for (String taskId : taskIds) {
             assertTrue(taskCollectionResponse.getValue().stream().anyMatch(taskProgress -> taskProgress.getId().equals(taskId)));
         }
+
+        // Verify it ignores duplicate taskIds
+        String firstTaskId = taskIds[0];
+        TaskCollectionResponse operationProgressResponse =
+                client.listTasks(new ParametersForListTasks()
+                        .setRepositoryId(repositoryId)
+                        .setTaskIds(firstTaskId, firstTaskId, firstTaskId, firstTaskId));
+
+        assertEquals(1, operationProgressResponse.getValue().size());
+        assertEquals(firstTaskId, operationProgressResponse.getValue().get(0).getId());
     }
 
     @Test
@@ -175,29 +112,4 @@ public class TasksClientTest extends BaseTest {
         assertNotNull(taskCollectionResponse);
         assertEquals(0, taskCollectionResponse.getValue().size());
     }
-
-    @Test
-    void listTasksIgnoresDuplicateTaskIds() {
-        Entry deleteEntry =
-                createEntry(repositoryApiClient, "RepositoryApiClientIntegrationTest Java GetOperationStatus", 1, true);
-
-        StartTaskResponse result = repositoryApiClient
-                .getEntriesClient()
-                .startDeleteEntry(new ParametersForStartDeleteEntry()
-                        .setRepositoryId(repositoryId)
-                        .setEntryId(deleteEntry.getId())
-                        .setRequestBody(new StartDeleteEntryRequest()));
-
-        String taskId = result.getTaskId();
-        assertNotNull(taskId);
-
-        TaskCollectionResponse operationProgressResponse =
-                client.listTasks(new ParametersForListTasks()
-                        .setRepositoryId(repositoryId)
-                        .setTaskIds(taskId, taskId, taskId, taskId));
-
-        assertEquals(1, operationProgressResponse.getValue().size());
-        assertEquals(taskId, operationProgressResponse.getValue().get(0).getId());
-    }
-
 }

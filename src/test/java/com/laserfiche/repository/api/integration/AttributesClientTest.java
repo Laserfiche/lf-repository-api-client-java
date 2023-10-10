@@ -22,44 +22,45 @@ class AttributesClientTest extends BaseTest {
     }
 
     @Test
-    void listAttributesWorks() {
-        AttributeCollectionResponse attributeList =
+    void listAttributesAndGetAttributeWork() {
+        int maxPageSize = 2;
+        AttributeCollectionResponse collectionResponse =
                 client.listAttributes(new ParametersForListAttributes()
                         .setRepositoryId(repositoryId)
+                        .setPrefer(String.format("maxpagesize=%d", maxPageSize))
                         .setEveryone(true));
 
-        assertNotNull(attributeList);
-        assertNotNull(attributeList.getValue());
-    }
+        assertNotNull(collectionResponse);
+        assertNotNull(collectionResponse.getValue());
+        assertFalse(collectionResponse.getValue().isEmpty());
 
-    @Test
-    void getAttributeWorks() {
-        AttributeCollectionResponse attributeList =
-                client.listAttributes(new ParametersForListAttributes()
-                        .setRepositoryId(repositoryId)
-                        .setEveryone(true));
-        assertNotNull(attributeList);
+        Attribute firstAttribute = collectionResponse.getValue().get(0);
 
+        // Test getAttribute
         Attribute attribute = client.getAttribute(new ParametersForGetAttribute()
                 .setRepositoryId(repositoryId)
-                .setAttributeKey(attributeList.getValue().get(0).getKey())
+                .setAttributeKey(firstAttribute.getKey())
                 .setEveryone(true));
         assertNotNull(attribute);
+        assertEquals(firstAttribute.getKey(), attribute.getKey());
+        assertEquals(firstAttribute.getValue(), attribute.getValue());
     }
 
     @Test
     void listAttributesNextLinkWorks() {
-        int maxPageSize = 3;
-        AttributeCollectionResponse attributeList =
+        int maxPageSize = 2;
+        AttributeCollectionResponse collectionResponse =
                 client.listAttributes(new ParametersForListAttributes()
                         .setRepositoryId(repositoryId)
                         .setEveryone(true)
                         .setPrefer(String.format("maxpagesize=%d", maxPageSize)));
-        assertNotNull(attributeList);
+        assertNotNull(collectionResponse);
+        assertNotNull(collectionResponse.getValue());
+        assertFalse(collectionResponse.getValue().isEmpty());
 
-        String nextLink = attributeList.getOdataNextLink();
+        String nextLink = collectionResponse.getOdataNextLink();
         assertNotNull(nextLink);
-        assertTrue(attributeList.getValue().size() <= maxPageSize);
+        assertTrue(collectionResponse.getValue().size() <= maxPageSize);
 
         AttributeCollectionResponse nextLinkResult =
                 client.listAttributesNextLink(nextLink, maxPageSize);
@@ -71,7 +72,7 @@ class AttributesClientTest extends BaseTest {
     void listAttributesForEachWorks() {
         AtomicInteger pageCount = new AtomicInteger();
         int maxPages = 2;
-        int maxPageSize = 3;
+        int maxPageSize = 2;
         Function<AttributeCollectionResponse, Boolean> callback = collectionResponse -> {
             if (pageCount.incrementAndGet() <= maxPages) {
                 assertFalse(collectionResponse.getValue().isEmpty());

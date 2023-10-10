@@ -36,48 +36,34 @@ public class SearchesClientTest extends BaseTest {
     }
 
     @Test
-    void listSearchContextHitsWorks() {
+    void listSearchResultsAndListSearchContextHitsWork() {
         StartSearchEntryRequest request = new StartSearchEntryRequest();
         request.setSearchCommand(
                 "{LF:Basic ~= \"Laserfiche\", option=\"DLT\"} & {LF:name=\"Laserfiche Cloud Overview\", Type=\"DFS\"}");
 
         StartTaskResponse searchResponse = client.startSearchEntry(
                 new ParametersForStartSearchEntry().setRepositoryId(repositoryId).setRequestBody(request));
+
         taskId = searchResponse.getTaskId();
 
         assertNotNull(taskId);
 
         waitUntilTaskEnds(taskId);
 
-        SearchContextHitCollectionResponse contextHitResponse =
+        EntryCollectionResponse collectionResponse = client.listSearchResults(
+                new ParametersForListSearchResults().setRepositoryId(repositoryId).setTaskId(taskId));
+        assertNotNull(collectionResponse);
+
+        SearchContextHitCollectionResponse contextHitCollectionResponse =
                 client.listSearchContextHits(new ParametersForListSearchContextHits()
                         .setRepositoryId(repositoryId)
                         .setTaskId(taskId)
                         .setRowNumber(1));
-        assertNotNull(contextHitResponse);
+        assertNotNull(contextHitCollectionResponse);
     }
 
     @Test
-    void listSearchResultsWorks() {
-        StartSearchEntryRequest request = new StartSearchEntryRequest();
-        request.setSearchCommand("({LF:Basic ~= \"Laserfiche\", option=\"NLT\"})");
-
-        StartTaskResponse searchResponse = client.startSearchEntry(
-                new ParametersForStartSearchEntry().setRepositoryId(repositoryId).setRequestBody(request));
-
-        taskId = searchResponse.getTaskId();
-
-        assertNotNull(taskId);
-
-        waitUntilTaskEnds(taskId);
-
-        EntryCollectionResponse searchResultResponse = client.listSearchResults(
-                new ParametersForListSearchResults().setRepositoryId(repositoryId).setTaskId(taskId));
-        assertNotNull(searchResultResponse);
-    }
-
-    @Test
-    void listTasksCanReturnSearchStatus() {
+    void listTasksCanReturnSearchStatusAndCanCloseSearch() throws InterruptedException {
         StartSearchEntryRequest request = new StartSearchEntryRequest();
         request.setSearchCommand("({LF:Basic ~= \"Laserfiche\", option=\"NLT\"})");
 
@@ -89,28 +75,17 @@ public class SearchesClientTest extends BaseTest {
 
         waitUntilTaskEnds(taskId);
 
-        TaskCollectionResponse searchStatusResponse = tasksClient.listTasks(
+        TaskCollectionResponse collectionResponse = tasksClient.listTasks(
                 new ParametersForListTasks().setRepositoryId(repositoryId).setTaskIds(taskId));
 
-        assertNotNull(searchStatusResponse);
-    }
+        assertNotNull(collectionResponse);
+        assertFalse(collectionResponse.getValue().isEmpty());
+        assertEquals(taskId, collectionResponse.getValue().get(0).getId());
 
-    @Test
-    void cancelTasksCanCloseSearch() throws InterruptedException {
-        StartSearchEntryRequest request = new StartSearchEntryRequest();
-        request.setSearchCommand("({LF:Basic ~= \"Laserfiche\", option=\"NLT\"})");
-
-        StartTaskResponse searchOperationResponse = client.startSearchEntry(
-                new ParametersForStartSearchEntry().setRepositoryId(repositoryId).setRequestBody(request));
-
-        taskId = searchOperationResponse.getTaskId();
-
-        assertNotNull(taskId);
-
-        CancelTasksResponse closeSearchResponse = tasksClient.cancelTasks(
+        CancelTasksResponse cancelTasksResponse = tasksClient.cancelTasks(
                 new ParametersForCancelTasks().setRepositoryId(repositoryId).setTaskIds(taskId));
-
-        assertTrue(closeSearchResponse.getValue().get(0).isResult());
+        assertEquals(taskId, cancelTasksResponse.getValue().get(0).getId());
+        assertTrue(cancelTasksResponse.getValue().get(0).isResult());
         TimeUnit.SECONDS.sleep(5);
     }
 
@@ -119,7 +94,7 @@ public class SearchesClientTest extends BaseTest {
         int maxPageSize = 2;
 
         StartSearchEntryRequest request = new StartSearchEntryRequest();
-        request.setSearchCommand("({LF:Basic ~= \"test\", option=\"NLT\"})");
+        request.setSearchCommand("({LF:Basic ~= \"Java Client Library\", option=\"DFANLT\"})");
 
         StartTaskResponse searchResponse = client.startSearchEntry(
                 new ParametersForStartSearchEntry().setRepositoryId(repositoryId).setRequestBody(request));
@@ -153,9 +128,9 @@ public class SearchesClientTest extends BaseTest {
     void listSearchResultsForEachWorks() {
         AtomicInteger pageCount = new AtomicInteger();
         int maxPages = 2;
-        int maxPageSize = 3;
+        int maxPageSize = 2;
         StartSearchEntryRequest request = new StartSearchEntryRequest();
-        request.setSearchCommand("({LF:Basic ~= \"test\", option=\"NLT\"})");
+        request.setSearchCommand("({LF:Basic ~= \"Java Client Library\", option=\"DFANLT\"})");
 
         StartTaskResponse searchResponse = client.startSearchEntry(
                 new ParametersForStartSearchEntry().setRepositoryId(repositoryId).setRequestBody(request));
@@ -183,10 +158,9 @@ public class SearchesClientTest extends BaseTest {
 
     @Test
     void listSearchContextHitsNextLinkWorks() {
-        int maxPageSize = 1;
+        int maxPageSize = 2;
         StartSearchEntryRequest request = new StartSearchEntryRequest();
-        request.setSearchCommand(
-                "{LF:Basic ~= \"Laserfiche\", option=\"DLT\"} & {LF:name=\"Laserfiche Cloud Overview\", Type=\"DFS\"}");
+        request.setSearchCommand("({LF:Basic ~= \"Java Client Library\", option=\"DFANLT\"})");
 
         StartTaskResponse searchResponse = client.startSearchEntry(
                 new ParametersForStartSearchEntry().setRepositoryId(repositoryId).setRequestBody(request));
@@ -202,7 +176,7 @@ public class SearchesClientTest extends BaseTest {
                 .setPrefer(String.format("maxpagesize=%d", maxPageSize)));
 
         assertNotNull(searchResults);
-        assertTrue(searchResults.getValue().size() > 0);
+        assertFalse(searchResults.getValue().isEmpty());
 
         int rowNum = searchResults.getValue().get(0).getRowNumber();
 
@@ -230,10 +204,9 @@ public class SearchesClientTest extends BaseTest {
     void listSearchContextHitsForEachWorks() {
         AtomicInteger pageCount = new AtomicInteger();
         int maxPages = 2;
-        int maxPageSize = 1;
+        int maxPageSize = 2;
         StartSearchEntryRequest request = new StartSearchEntryRequest();
-        request.setSearchCommand(
-                "{LF:Basic ~= \"Laserfiche\", option=\"DLT\"} & {LF:name=\"Laserfiche Cloud Overview\", Type=\"DFS\"}");
+        request.setSearchCommand("({LF:Basic ~= \"Java Client Library\", option=\"DFANLT\"})");
 
         StartTaskResponse searchResponse = client.startSearchEntry(
                 new ParametersForStartSearchEntry().setRepositoryId(repositoryId).setRequestBody(request));
@@ -249,7 +222,7 @@ public class SearchesClientTest extends BaseTest {
                         .setPrefer(String.format("maxpagesize=%d", maxPageSize)));
 
         assertNotNull(searchResultResponse);
-        assertTrue(searchResultResponse.getValue().size() > 0);
+        assertFalse(searchResultResponse.getValue().isEmpty());
 
         int rowNum = searchResultResponse.getValue().get(0).getRowNumber();
 

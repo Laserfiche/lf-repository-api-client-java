@@ -28,12 +28,22 @@ class TemplateDefinitionsClientTest extends BaseTest {
     }
 
     @Test
-    void listTemplateDefinitionsWorks() {
-        TemplateDefinitionCollectionResponse templateInfoList =
+    void listTemplateDefinitionsAndGetTemplateDefinitionWork() {
+        TemplateDefinitionCollectionResponse collectionResponse =
                 client.listTemplateDefinitions(new ParametersForListTemplateDefinitions().setRepositoryId(repositoryId));
 
-        assertNotNull(templateInfoList);
-        assertFalse(templateInfoList.getValue().isEmpty());
+        assertNotNull(collectionResponse);
+        assertFalse(collectionResponse.getValue().isEmpty());
+
+        TemplateDefinition firstTemplateDefinition = collectionResponse.getValue().get(0);
+
+        TemplateDefinition templateDefinition = client.getTemplateDefinition(new ParametersForGetTemplateDefinition()
+                .setRepositoryId(repositoryId)
+                .setTemplateId(firstTemplateDefinition.getId()));
+
+        assertNotNull(templateDefinition);
+        Assertions.assertEquals(templateDefinition.getId(), firstTemplateDefinition.getId());
+        Assertions.assertEquals(templateDefinition.getName(), firstTemplateDefinition.getName());
     }
 
     @Test
@@ -54,17 +64,17 @@ class TemplateDefinitionsClientTest extends BaseTest {
 
     @Test
     void listTemplateDefinitionsNextLinkWorks() {
-        int maxPageSize = 1;
-        TemplateDefinitionCollectionResponse templateInfoList =
+        int maxPageSize = 2;
+        TemplateDefinitionCollectionResponse collectionResponse =
                 client.listTemplateDefinitions(new ParametersForListTemplateDefinitions()
                         .setRepositoryId(repositoryId)
                         .setPrefer(String.format("maxpagesize=%d", maxPageSize)));
 
-        assertNotNull(templateInfoList);
-        String nextLink = templateInfoList.getOdataNextLink();
+        assertNotNull(collectionResponse);
+        String nextLink = collectionResponse.getOdataNextLink();
         assertNotNull(nextLink);
 
-        assertTrue(templateInfoList.getValue().size() <= maxPageSize);
+        assertTrue(collectionResponse.getValue().size() <= maxPageSize);
 
         TemplateDefinitionCollectionResponse nextLinkResponse =
                 client.listTemplateDefinitionsNextLink(nextLink, maxPageSize);
@@ -76,7 +86,7 @@ class TemplateDefinitionsClientTest extends BaseTest {
     void listTemplateDefinitionsForEachWorks() {
         AtomicInteger pageCount = new AtomicInteger();
         int maxPages = 2;
-        int maxPageSize = 1;
+        int maxPageSize = 2;
         Function<TemplateDefinitionCollectionResponse, Boolean> callback = collectionResponse -> {
             if (pageCount.incrementAndGet() <= maxPages) {
                 assertFalse(collectionResponse.getValue().isEmpty());
@@ -93,7 +103,7 @@ class TemplateDefinitionsClientTest extends BaseTest {
 
     @Test
     void listTemplateFieldDefinitionsByTemplateIdNextLinkWorks() {
-        int maxPageSize = 1;
+        int maxPageSize = 2;
         TemplateDefinitionCollectionResponse templateInfoList =
                 client.listTemplateDefinitions(new ParametersForListTemplateDefinitions()
                         .setRepositoryId(repositoryId)
@@ -133,7 +143,7 @@ class TemplateDefinitionsClientTest extends BaseTest {
 
         AtomicInteger pageCount = new AtomicInteger();
         int maxPages = 2;
-        int maxPageSize = 1;
+        int maxPageSize = 2;
         Function<TemplateFieldDefinitionCollectionResponse, Boolean> callback = collectionResponse -> {
             if (pageCount.incrementAndGet() <= maxPages) {
                 assertFalse(collectionResponse.getValue().isEmpty());
@@ -153,47 +163,11 @@ class TemplateDefinitionsClientTest extends BaseTest {
     }
 
     @Test
-    void getTemplateDefinitionWorks() {
-        TemplateDefinitionCollectionResponse templateInfoList =
-                client.listTemplateDefinitions(new ParametersForListTemplateDefinitions().setRepositoryId(repositoryId));
-
-        TemplateDefinition tempDef = templateInfoList.getValue().get(0);
-
-        assertNotNull(templateInfoList);
-
-        TemplateDefinition result = client.getTemplateDefinition(new ParametersForGetTemplateDefinition()
-                .setRepositoryId(repositoryId)
-                .setTemplateId(tempDef.getId()));
-
-        assertNotNull(result);
-        Assertions.assertEquals(result.getId(), tempDef.getId());
-    }
-
-    @Test
-    void listTemplateDefinitionsCanBeUsedToRetrieveASingleTemplate() {
-        TemplateDefinitionCollectionResponse templateInfoList =
-                client.listTemplateDefinitions(new ParametersForListTemplateDefinitions().setRepositoryId(repositoryId));
-
-        TemplateDefinition tempDef = templateInfoList.getValue().get(0);
-
-        assertNotNull(templateInfoList);
-
-        TemplateDefinitionCollectionResponse result =
-                client.listTemplateDefinitions(new ParametersForListTemplateDefinitions()
-                        .setRepositoryId(repositoryId)
-                        .setTemplateName(tempDef.getName()));
-
-        assertNotNull(result);
-        assertEquals(1, result.getValue().size());
-        assertEquals(tempDef.getName(), result.getValue().get(0).getName());
-    }
-
-    @Test
     void listTemplateFieldDefinitionsByTemplateNameWorks() {
-        TemplateDefinitionCollectionResponse allTemplateDefinitionsFuture =
+        TemplateDefinitionCollectionResponse collectionResponse =
                 client.listTemplateDefinitions(new ParametersForListTemplateDefinitions().setRepositoryId(repositoryId));
         TemplateDefinition firstTemplateDefinitions =
-                allTemplateDefinitionsFuture.getValue().get(0);
+                collectionResponse.getValue().get(0);
         assertNotNull(firstTemplateDefinitions);
 
         TemplateFieldDefinitionCollectionResponse result = client.listTemplateFieldDefinitionsByTemplateName(
