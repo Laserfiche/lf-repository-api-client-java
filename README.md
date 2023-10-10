@@ -14,7 +14,7 @@ See CHANGELOG [here](https://github.com/Laserfiche/lf-repository-api-client-java
 
 ## Installation
 
-To install, [see here](https://central.sonatype.com/artifact/com.laserfiche/lf-repository-api-client/)
+To install, [see here](https://central.sonatype.com/artifact/com.laserfiche/lf-repository-api-client-v2/)
 
 ### Build, test, and package
 
