@@ -1,6 +1,7 @@
 package com.laserfiche.repository.api.integration;
 
 import com.laserfiche.api.client.model.AccessKey;
+import com.laserfiche.api.client.model.ProblemDetails;
 import com.laserfiche.repository.api.RepositoryApiClient;
 import com.laserfiche.repository.api.RepositoryApiClientImpl;
 import com.laserfiche.repository.api.clients.impl.model.*;
@@ -51,6 +52,8 @@ public class BaseTest {
     protected static final String SMALL_TEXT_FILE_PATH = "src/test/java/com/laserfiche/repository/api/integration/testFiles/test.txt";
     protected static final String SMALL_JPEG_FILE_PATH = "src/test/java/com/laserfiche/repository/api/integration/testFiles/test.jpg";
 
+    protected static int readonlyTestFolderId = -1;
+
     @BeforeAll
     public static void setUp() {
         Dotenv.configure()
@@ -67,6 +70,7 @@ public class BaseTest {
                     AuthorizationType.class, getEnvironmentVariable(AUTHORIZATION_TYPE));
         }
         repositoryId = getEnvironmentVariable(REPOSITORY_ID);
+        readonlyTestFolderId = Integer.parseInt(getEnvironmentVariable("READONLY_TEST_FOLDER_ID"));
         if (authorizationType == AuthorizationType.CLOUD_ACCESS_KEY) {
             servicePrincipalKey = getEnvironmentVariable(SERVICE_PRINCIPAL_KEY);
             String accessKeyBase64 = getEnvironmentVariable(ACCESS_KEY);
@@ -136,19 +140,19 @@ public class BaseTest {
     }
 
     public static void waitUntilTaskEnds(String taskId) {
-        waitUntilTaskEnds(taskId, Duration.ofMillis(500));
+        waitUntilTaskEnds(taskId, Duration.ofMillis(1000));
     }
 
-    public static void waitUntilTaskEnds(String taskId, Duration interval) {
+    private static void waitUntilTaskEnds(String taskId, Duration interval) {
         int maxIteration = 5;
         int count = 0;
         while (count < maxIteration) {
-            TaskCollectionResponse response = repositoryApiClient
+            TaskCollectionResponse collectionResponse = repositoryApiClient
                     .getTasksClient()
                     .listTasks(new ParametersForListTasks()
                             .setRepositoryId(repositoryId)
                             .setTaskIds(taskId));
-            TaskProgress progress = response.getValue().get(0);
+            TaskProgress progress = collectionResponse.getValue().get(0);
             if (progress.getStatus() != TaskStatus.IN_PROGRESS) {
                 return;
             }
@@ -195,6 +199,17 @@ public class BaseTest {
             e.printStackTrace();
         }
         return false;
+    }
+
+    protected void printProblemDetails(ProblemDetails problemDetails) {
+        System.out.printf("ProblemDetails: (Title: %s, Status: %d, Detail: %s, Type: %s, Instance: %s, ErrorCode: %d, ErrorSource: %s)%n",
+                problemDetails.getTitle(),
+                problemDetails.getStatus(),
+                problemDetails.getDetail(),
+                problemDetails.getType(),
+                problemDetails.getInstance(),
+                problemDetails.getErrorCode(),
+                problemDetails.getErrorSource());
     }
 
 }

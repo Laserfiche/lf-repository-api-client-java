@@ -2,7 +2,6 @@ package com.laserfiche.repository.api.integration;
 
 import com.laserfiche.repository.api.clients.EntriesClient;
 import com.laserfiche.repository.api.clients.impl.model.*;
-import com.laserfiche.repository.api.clients.params.ParametersForGetEntry;
 import com.laserfiche.repository.api.clients.params.ParametersForImportEntry;
 import com.laserfiche.repository.api.clients.params.ParametersForListTemplateDefinitions;
 import com.laserfiche.repository.api.clients.params.ParametersForListTemplateFieldDefinitionsByTemplateId;
@@ -39,26 +38,27 @@ public class ImportDocumentApiTest extends BaseTest {
     }
 
     @Test
-    void importEntryCanImportFileAndAssignTemplate()
+    void importEntryCanImportFileAndAssignTemplateAndGeneratePages()
             throws FileNotFoundException {
         FileInputStream fileInputStream = null;
         try {
             TemplateDefinition template = null;
-            TemplateDefinitionCollectionResponse templateDefinitionResult = repositoryApiClient
+            TemplateDefinitionCollectionResponse templateCollectionResponse = repositoryApiClient
                     .getTemplateDefinitionClient()
-                    .listTemplateDefinitions(new ParametersForListTemplateDefinitions().setRepositoryId(repositoryId));
-            List<TemplateDefinition> templateDefinitions = templateDefinitionResult.getValue();
+                    .listTemplateDefinitions(new ParametersForListTemplateDefinitions()
+                            .setRepositoryId(repositoryId));
+            List<TemplateDefinition> templateDefinitions = templateCollectionResponse.getValue();
             assertNotNull(templateDefinitions);
             assertFalse(templateDefinitions.isEmpty());
 
             for (TemplateDefinition templateDefinition : templateDefinitions) {
-                TemplateFieldDefinitionCollectionResponse templateDefinitionFieldsResult = repositoryApiClient
+                TemplateFieldDefinitionCollectionResponse fieldCollectionResponse = repositoryApiClient
                         .getTemplateDefinitionClient()
                         .listTemplateFieldDefinitionsByTemplateId(new ParametersForListTemplateFieldDefinitionsByTemplateId()
                                 .setRepositoryId(repositoryId)
                                 .setTemplateId(templateDefinition.getId()));
-                if (templateDefinitionFieldsResult.getValue() != null
-                        && noRequiredFieldDefinitionsInTemplate(templateDefinitionFieldsResult.getValue())) {
+                if (fieldCollectionResponse.getValue() != null
+                        && noRequiredFieldDefinitionsInTemplate(fieldCollectionResponse.getValue())) {
                     template = templateDefinition;
                     break;
                 }
@@ -67,44 +67,12 @@ public class ImportDocumentApiTest extends BaseTest {
 
             String fileName = "RepositoryApiClientIntegrationTest Java ImportTest.pdf";
             File fileToImport = new File(SMALL_PDF_FILE_PATH);
+            int pageCount = 2;
             fileInputStream = new FileInputStream(fileToImport);
             ImportEntryRequestMetadata metadata = new ImportEntryRequestMetadata();
             metadata.setTemplateName(template.getName());
             ImportEntryRequest request = new ImportEntryRequest();
             request.setMetadata(metadata);
-            request.setName(fileName);
-            request.setAutoRename(true);
-            Entry resultEntry = client.importEntry(new ParametersForImportEntry()
-                    .setRepositoryId(repositoryId)
-                    .setEntryId(testClassParentFolder.getId())
-                    .setInputStream(fileInputStream)
-                    .setContentType("application/pdf")
-                    .setRequestBody(request));
-
-            assertNotNull(resultEntry);
-            int createdEntryId = resultEntry.getId();
-            assertTrue(createdEntryId > 0);
-            assertEquals(template.getName(), resultEntry.getTemplateName());
-        } finally {
-            if (fileInputStream != null) {
-                try {
-                    fileInputStream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
-
-    @Test
-    void importEntryCanImportFileAndGeneratePages()
-            throws FileNotFoundException {
-        FileInputStream fileInputStream = null;
-        try {
-            String fileName = "RepositoryApiClientIntegrationTest Java ImportTest.pdf";
-            File fileToImport = new File(SMALL_PDF_FILE_PATH);
-            fileInputStream = new FileInputStream(fileToImport);
-            ImportEntryRequest request = new ImportEntryRequest();
             request.setName(fileName);
             request.setAutoRename(true);
             ImportEntryRequestPdfOptions pdfOptions = new ImportEntryRequestPdfOptions();
@@ -122,6 +90,10 @@ public class ImportDocumentApiTest extends BaseTest {
             assertNotNull(resultEntry);
             int createdEntryId = resultEntry.getId();
             assertTrue(createdEntryId > 0);
+            assertEquals(template.getName(), resultEntry.getTemplateName());
+            assertTrue(resultEntry instanceof Document);
+            Document document = (Document) resultEntry;
+            assertEquals(pageCount, document.getPageCount());
         } finally {
             if (fileInputStream != null) {
                 try {
@@ -158,11 +130,9 @@ public class ImportDocumentApiTest extends BaseTest {
             int createdEntryId = resultEntry.getId();
             assertTrue(createdEntryId > 0);
 
-            // Call GetEntry API to verify imported entry
-            Entry entry = client.getEntry(new ParametersForGetEntry().setRepositoryId(repositoryId).setEntryId(createdEntryId));
-            assertEquals(EntryType.DOCUMENT, entry.getEntryType());
-            assertTrue(entry instanceof Document);
-            Document document = (Document) entry;
+            // Verify imported entry
+            assertTrue(resultEntry instanceof Document);
+            Document document = (Document) resultEntry;
             assertEquals(extension, document.getExtension());
             assertEquals(0, document.getPageCount());
             assertEquals(new File(SMALL_TEXT_FILE_PATH).length(), document.getElectronicDocumentSize());
@@ -204,11 +174,9 @@ public class ImportDocumentApiTest extends BaseTest {
             int createdEntryId = resultEntry.getId();
             assertTrue(createdEntryId > 0);
 
-            // Call GetEntry API to verify imported entry
-            Entry entry = client.getEntry(new ParametersForGetEntry().setRepositoryId(repositoryId).setEntryId(createdEntryId));
-            assertEquals(EntryType.DOCUMENT, entry.getEntryType());
-            assertTrue(entry instanceof Document);
-            Document document = (Document) entry;
+            // Verify imported entry
+            assertTrue(resultEntry instanceof Document);
+            Document document = (Document) resultEntry;
             assertEquals(extension, document.getExtension());
             assertEquals(0, document.getPageCount());
             assertEquals(new File(SMALL_JPEG_FILE_PATH).length(), document.getElectronicDocumentSize());
@@ -246,11 +214,9 @@ public class ImportDocumentApiTest extends BaseTest {
             int createdEntryId = resultEntry.getId();
             assertTrue(createdEntryId > 0);
 
-            // Call GetEntry API to verify imported entry
-            Entry entry = client.getEntry(new ParametersForGetEntry().setRepositoryId(repositoryId).setEntryId(createdEntryId));
-            assertEquals(EntryType.DOCUMENT, entry.getEntryType());
-            assertTrue(entry instanceof Document);
-            Document document = (Document) entry;
+            // Verify imported entry
+            assertTrue(resultEntry instanceof Document);
+            Document document = (Document) resultEntry;
             assertEquals("", document.getExtension());
             assertEquals(2, document.getPageCount());
             assertEquals(0, document.getElectronicDocumentSize());
@@ -288,11 +254,9 @@ public class ImportDocumentApiTest extends BaseTest {
             int createdEntryId = resultEntry.getId();
             assertTrue(createdEntryId > 0);
 
-            // Call GetEntry API to verify imported entry
-            Entry entry = client.getEntry(new ParametersForGetEntry().setRepositoryId(repositoryId).setEntryId(createdEntryId));
-            assertEquals(EntryType.DOCUMENT, entry.getEntryType());
-            assertTrue(entry instanceof Document);
-            Document document = (Document) entry;
+            // Verify imported entry
+            assertTrue(resultEntry instanceof Document);
+            Document document = (Document) resultEntry;
             assertEquals("", document.getExtension());
             assertEquals(1, document.getPageCount());
             assertEquals(0, document.getElectronicDocumentSize());

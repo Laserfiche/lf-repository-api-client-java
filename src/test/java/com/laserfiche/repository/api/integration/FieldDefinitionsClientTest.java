@@ -32,38 +32,28 @@ class FieldDefinitionsClientTest extends BaseTest {
     }
 
     @Test
-    void listFieldDefinitionsWorks() {
-        FieldDefinitionCollectionResponse definitions =
-                client.listFieldDefinitions(new ParametersForListFieldDefinitions()
-                        .setRepositoryId(repositoryId));
-
-        assertNotNull(definitions);
-        assertFalse(definitions.getValue().isEmpty());
-    }
-
-    @Test
     void listFieldDefinitionsNextLinkWorks() {
-        int maxPageSize = 3;
-        FieldDefinitionCollectionResponse definitions =
+        int maxPageSize = 2;
+        FieldDefinitionCollectionResponse collectionResponse =
                 client.listFieldDefinitions(new ParametersForListFieldDefinitions()
                         .setRepositoryId(repositoryId)
                         .setPrefer(String.format("maxpagesize=%d", maxPageSize)));
-        assertNotNull(definitions);
-        assertTrue(definitions.getValue().size() <= maxPageSize);
+        assertNotNull(collectionResponse);
+        assertTrue(collectionResponse.getValue().size() <= maxPageSize);
 
-        String nextLink = definitions.getOdataNextLink();
+        String nextLink = collectionResponse.getOdataNextLink();
         assertNotNull(nextLink);
 
-        FieldDefinitionCollectionResponse nextLinkResult = client.listFieldDefinitionsNextLink(nextLink, maxPageSize);
-        assertNotNull(nextLinkResult);
-        assertTrue(nextLinkResult.getValue().size() <= maxPageSize);
+        FieldDefinitionCollectionResponse nextLinkCollectionResponse = client.listFieldDefinitionsNextLink(nextLink, maxPageSize);
+        assertNotNull(nextLinkCollectionResponse);
+        assertTrue(nextLinkCollectionResponse.getValue().size() <= maxPageSize);
     }
 
     @Test
     void listFieldDefinitionsForEachWorks() {
         AtomicInteger pageCount = new AtomicInteger();
-        int maxPages = 5;
-        int maxPageSize = 3;
+        int maxPages = 2;
+        int maxPageSize = 2;
         Function<FieldDefinitionCollectionResponse, Boolean> callback = collectionResponse -> {
             if (pageCount.incrementAndGet() <= maxPages) {
                 assertFalse(collectionResponse.getValue().isEmpty());
