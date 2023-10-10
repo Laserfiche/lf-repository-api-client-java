@@ -1,6 +1,5 @@
 package com.laserfiche.repository.api.integration;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.laserfiche.repository.api.clients.EntriesClient;
 import com.laserfiche.repository.api.clients.TasksClient;
 import com.laserfiche.repository.api.clients.impl.model.*;
