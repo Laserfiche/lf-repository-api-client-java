@@ -72,7 +72,7 @@ class EntriesApiTest extends BaseTest {
             assertFalse(entry instanceof Folder
                     || entry instanceof Shortcut
                     || entry instanceof Document
-                    || entry instanceof RecordSeries); //
+                    || entry instanceof RecordSeries);
         }
     }
 
