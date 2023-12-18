@@ -62,10 +62,8 @@ class EntriesApiTest extends BaseTest {
                 .setSelect("name"));
 
         assertNotNull(entry);
-        assertFalse(entry instanceof Folder
-                || entry instanceof Shortcut
-                || entry instanceof Document
-                || entry instanceof RecordSeries); // When no type information, the data is deserialized to Entry.
+		// When OData $select is used, the entryType is always returned. So, data is deserialized to the correct type.
+        assertTrue(entry instanceof Folder);
     }
 
     @Test
