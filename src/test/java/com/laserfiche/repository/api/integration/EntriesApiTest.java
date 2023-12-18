@@ -55,7 +55,7 @@ class EntriesApiTest extends BaseTest {
     }
 
     @Test
-    void getEntry_ReturnEntryWhenTypeInfoMissing() {
+    void getEntry_AlwaysReturnsEntryTypeWhenSelectIsUsed() {
         Entry entry = client.getEntry(new ParametersForGetEntry()
                 .setRepoId(repositoryId)
                 .setEntryId(1)
