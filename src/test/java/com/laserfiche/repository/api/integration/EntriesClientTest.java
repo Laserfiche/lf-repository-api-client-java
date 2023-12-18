@@ -240,7 +240,7 @@ class EntriesClientTest extends BaseTest {
                 .setSelect("name"));
 
         assertNotNull(entry);
-		// When OData $select is used, the entryType is always returned. So, data is deserialized to the correct type.
+        // When OData $select is used, the entryType is always returned. So, data is deserialized to the correct type.
         assertTrue(entry instanceof Folder);
     }
 
