@@ -62,8 +62,17 @@ class EntriesApiTest extends BaseTest {
                 .setSelect("name"));
 
         assertNotNull(entry);
-        // When OData $select is used, the entryType is always returned. So, data is deserialized to the correct type.
-        assertTrue(entry instanceof Folder);
+        boolean cloud = authorizationType == AuthorizationType.CLOUD_ACCESS_KEY;
+        if (cloud) {
+            // For cloud, when OData $select is used, the entryType is always returned. So, data is deserialized to the correct type.
+            assertTrue(entry instanceof Folder);
+        } else {
+            // For self-hosted, this feature is not yet released.
+            assertFalse(entry instanceof Folder
+                    || entry instanceof Shortcut
+                    || entry instanceof Document
+                    || entry instanceof RecordSeries); // When no type information, the data is deserialized to Entry.
+        }
     }
 
     @Test
