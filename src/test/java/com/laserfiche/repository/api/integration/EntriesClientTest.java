@@ -240,12 +240,8 @@ class EntriesClientTest extends BaseTest {
                 .setSelect("name"));
 
         assertNotNull(entry);
-        // When no type information, the data is deserialized to Entry.
-        // Use separate assertions to know which one fails, if assertion fails.
-        assertFalse(entry instanceof Folder);
-        assertFalse(entry instanceof Shortcut);
-        assertFalse(entry instanceof Document);
-        assertFalse(entry instanceof RecordSeries);
+		// When OData $select is used, the entryType is always returned. So, data is deserialized to the correct type.
+        assertTrue(entry instanceof Folder);
     }
 
     @Test
