@@ -233,7 +233,7 @@ class EntriesClientTest extends BaseTest {
     }
 
     @Test
-    void getEntryReturnsResultAsGenericEntryWhenEntryTypeNotSpecified() {
+    void getEntryAlwaysReturnsEntryTypeWhenSelectIsUsed() {
         Entry entry = client.getEntry(new ParametersForGetEntry()
                 .setRepositoryId(repositoryId)
                 .setEntryId(1)
