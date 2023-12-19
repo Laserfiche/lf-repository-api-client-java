@@ -138,6 +138,7 @@ public class ImportUploadedPartsApiTest extends BaseTest {
         assertNotNull(response2);
         String taskId = response2.getTaskId();
         assertNotNull(taskId);
+        waitUntilTaskEnds(taskId);
 
         TaskCollectionResponse tasks = tasksClient.listTasks(new ParametersForListTasks().setRepositoryId(repositoryId).setTaskIds(taskId));
         assertNotNull(tasks);
