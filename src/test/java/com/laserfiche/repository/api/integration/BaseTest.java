@@ -146,7 +146,7 @@ public class BaseTest {
     }
 
     private static void waitUntilTaskEnds(String taskId, Duration interval) {
-        int maxIteration = 5;
+        int maxIteration = 30;
         int count = 0;
         while (count < maxIteration) {
             TaskCollectionResponse collectionResponse = repositoryApiClient
