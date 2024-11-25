@@ -1,4 +1,4 @@
-## 2.0.3 Pre-release
+## 2.0.3
 
 ### Features
 
@@ -6,7 +6,12 @@
 - Added the gzip compression header which will compress every API response to improve performance
 
 ### Fixes
+
 - Fixed a bug in `EntriesClient.importDocument` where imported documents have an incorrect mime type. Clients will need to use the `ParametersForImportDocument.setContentType()` method to set the mime type of the imported document. 
+
+### Chore & Maintenance
+
+- Updated dependency versions of `lf-api-client-core` and `nimbus-jose-jwt` due to vulnerabilities
 
 ## 2.0.2
 
@@ -29,6 +34,7 @@
 - Added both `exportDocumentAsStream` and `exportDocumentWithAuditReasonAsStream` API methods in the `EntriesClientImpl` object along with the `EntriesClient` interface
 
 ### Fixes
+
 - The ApiClient class is now abstract.
 - Only throw the `ApiException` type when error API responses occur.
 - **[BREAKING]** `EntriesClient.importDocument` API v1 can succeed in creating a document, but fail in setting some or all of its metadata components. To retrieve errors in the case of a partial success, inspect the content of the `ProblemDetails.getExtensions()`. See example below.
