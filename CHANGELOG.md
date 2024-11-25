@@ -1,6 +1,13 @@
 # Changelog
 
-## 1.0.0 
+## 1.0.1
+
+### Chore & Maintenance
+
+- Update version of `lf-api-client-core` and `nimbus-jose-jwt` due to dependency vulnerabilities
+
+## 1.0.0
 
 ### Features
+
 - Initial release of the [com.laserfiche/lf-repository-api-client-v2](https://central.sonatype.com/artifact/com.laserfiche/lf-repository-api-client-v2) maven package. See the [migration guide](MIGRATION_GUIDE.md) for details on upgrading from the [com.laserfiche/lf-repository-api-client](https://central.sonatype.com/artifact/com.laserfiche/lf-repository-api-client) maven package.
