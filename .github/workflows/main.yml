@@ -116,10 +116,10 @@ jobs:
     - name: Delete temporary directory
       run: rm -r ./docs_temp
 
-  publish-preview-package:
+  publish-production-package:
 
     runs-on: ubuntu-latest
-    environment: preview
+    environment: production
     if: ${{ github.run_attempt != 1 }}
     needs: [ build-n-test, build-documentation ] # wait for build to finish
 
