@@ -136,6 +136,10 @@ jobs:
         server-password: MAVEN_PASSWORD
         gpg-passphrase: MAVEN_GPG_PASSPHRASE
 
+    - name: Import GPG Key
+      run: |
+          echo "${{ secrets.MAVEN_GPG_SECRET_KEY }}" | gpg --batch --import
+
     - name: Generate PACKAGE_VERSION
       run: echo "PACKAGE_VERSION=${{ env.VERSION_PREFIX }}" >> $GITHUB_ENV
 
