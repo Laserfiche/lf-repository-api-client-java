@@ -10,32 +10,28 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Set up JDK 8
-      uses: actions/setup-java@v4
-      with:
-        java-version: '8'
-        distribution: 'temurin'
+      - name: Set up JDK 8
+        uses: actions/setup-java@v4
+        with:
+          java-version: '8'
+          distribution: 'temurin'
 
-    - name: Build project
-      run: mvn -B package -Dmaven.test.skip=true --file pom.xml
+      - name: Build project
+        run: mvn -B package -Dmaven.test.skip=true --file pom.xml
 
-    - name: Veracode upload and scan SAST (Static Application Security Testing)
-      uses: veracode/veracode-uploadandscan-action@0.2.6
-      with:
-        appname: 'lf-repository-api-client-java'
-        createprofile: true
-        filepath: 'target'
-        vid: '${{ secrets.VERACODE_API_ID }}'
-        vkey: '${{ secrets.VERACODE_API_KEY }}'
+      - name: Veracode upload and scan SAST (Static Application Security Testing)
+        uses: veracode/veracode-uploadandscan-action@0.2.6
+        with:
+          appname: 'lf-repository-api-client-java'
+          createprofile: true
+          filepath: 'target'
+          vid: '${{ secrets.VERACODE_API_ID }}'
+          vkey: '${{ secrets.VERACODE_API_KEY }}'
 
-    - name: Run Veracode SCA (Software Composition Analysis)
-      env:
-        SRCCLR_API_TOKEN: ${{ secrets.SRCCLR_API_TOKEN }}
-      uses: veracode/veracode-sca@v2.1.6
-      with:
-        create-issues: false
-        allow-dirty: true
-        recursive: true
+      - name: Run Veracode Software Composition Analysis (SCA)
+        env:
+          SRCCLR_API_TOKEN: ${{ secrets.SRCCLR_API_TOKEN }}
+        run: curl --silent --show-error --location https://download.sourceclear.com/ci.sh | sh -s -- scan ./ --update-advisor --allow-dirty
