@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.2
+
+### Chore & Maintenance
+
+- Update version of `lf-api-client-core` and `com.fasterxml.jackson.core` due to dependency vulnerabilities
+
 ## 1.0.1
 
 ### Chore & Maintenance
