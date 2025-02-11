@@ -1,3 +1,9 @@
+## 2.0.4
+
+### Chore & Maintenance
+
+- Updated dependency versions of `lf-api-client-core` and `com.fasterxml.jackson.core` due to vulnerabilities
+
 ## 2.0.3
 
 ### Features
