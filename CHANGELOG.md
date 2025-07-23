@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.3
+
+### Chore & Maintenance
+
+- Update version of `lf-api-client-core` and `nimbus-jose-jwt` due to dependency vulnerabilities
+
 ## 1.0.2
 
 ### Chore & Maintenance
