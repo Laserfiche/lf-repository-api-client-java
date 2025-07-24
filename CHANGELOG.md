@@ -1,3 +1,9 @@
+## 2.0.5
+
+### Chore & Maintenance
+
+- Updated dependency versions of `lf-api-client-core` and `nimbus-jose-jwt` due to vulnerabilities
+
 ## 2.0.4
 
 ### Chore & Maintenance
