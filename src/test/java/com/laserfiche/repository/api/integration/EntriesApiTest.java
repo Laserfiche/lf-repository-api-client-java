@@ -169,10 +169,10 @@ class EntriesApiTest extends BaseTest {
 
         assertNotNull(fieldValueList);
 
-        assertTrue(fieldValueList.getValue().size() <= maxPageSize);
-
         String nextLink = fieldValueList.getOdataNextLink();
         assertNotNull(nextLink);
+
+        assertTrue(fieldValueList.getValue().size() <= maxPageSize);
 
         ODataValueContextOfIListOfFieldValue nextLinkResult = client.getFieldValuesNextLink(nextLink, maxPageSize);
 
