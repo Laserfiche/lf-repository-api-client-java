@@ -23,7 +23,7 @@ jobs:
       run: mvn -B package -Dmaven.test.skip=true --file pom.xml
 
     - name: Veracode static application security testing (SAST)
-      uses: veracode/veracode-uploadandscan-action@0.2.6
+      uses: veracode/veracode-uploadandscan-action@0.2.10
       with:
         appname: 'lf-repository-api-client-java'
         createprofile: true
