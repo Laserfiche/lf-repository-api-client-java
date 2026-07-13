@@ -107,6 +107,19 @@ public class ExportDocumentApiTest extends BaseTest {
         deleteEntry(testEntryId);
     }
 
+    // Wraps exportEntry so a failure's ApiException status code/headers/problem details
+    // (not just its message) show up in the surefire report, since we can't get the raw
+    // job log from this environment to see the actual HTTP response otherwise.
+    private ExportEntryResponse exportEntry(ParametersForExportEntry parameters) {
+        try {
+            return client.exportEntry(parameters);
+        } catch (ApiException e) {
+            throw new AssertionError(String.format(
+                    "exportEntry failed: statusCode=%d, headers=%s, problemDetails=%s",
+                    e.getStatusCode(), e.getHeaders(), e.getProblemDetails()), e);
+        }
+    }
+
     @Test
     void exportDocumentCanExportEDocPart() {
         final String FILE_NAME = "exportDocument_temp_file.pdf";
@@ -116,7 +129,7 @@ public class ExportDocumentApiTest extends BaseTest {
             request.setAuditReasonId(auditReasonId);
             request.setAuditReasonComment(auditReasonComment);
         }
-        ExportEntryResponse response = client.exportEntry(new ParametersForExportEntry()
+        ExportEntryResponse response = exportEntry(new ParametersForExportEntry()
                 .setRepositoryId(repositoryId)
                 .setEntryId(testEntryId)
                 .setRequestBody(request));
@@ -137,7 +150,7 @@ public class ExportDocumentApiTest extends BaseTest {
             request.setAuditReasonId(auditReasonId);
             request.setAuditReasonComment(auditReasonComment);
         }
-        ExportEntryResponse response = client.exportEntry(new ParametersForExportEntry()
+        ExportEntryResponse response = exportEntry(new ParametersForExportEntry()
                 .setRepositoryId(repositoryId)
                 .setEntryId(testEntryId)
                 .setRequestBody(request));
@@ -188,7 +201,7 @@ public class ExportDocumentApiTest extends BaseTest {
             request.setAuditReasonId(auditReasonId);
             request.setAuditReasonComment(auditReasonComment);
         }
-        ExportEntryResponse response = client.exportEntry(new ParametersForExportEntry()
+        ExportEntryResponse response = exportEntry(new ParametersForExportEntry()
                 .setRepositoryId(repositoryId)
                 .setEntryId(testEntryId)
                 .setRequestBody(request));
@@ -217,7 +230,7 @@ public class ExportDocumentApiTest extends BaseTest {
             request.setAuditReasonId(auditReasonId);
             request.setAuditReasonComment(auditReasonComment);
         }
-        ExportEntryResponse response = client.exportEntry(new ParametersForExportEntry()
+        ExportEntryResponse response = exportEntry(new ParametersForExportEntry()
                 .setRepositoryId(repositoryId)
                 .setEntryId(testEntryId)
                 .setRequestBody(request));
@@ -244,7 +257,7 @@ public class ExportDocumentApiTest extends BaseTest {
             request.setAuditReasonId(auditReasonId);
             request.setAuditReasonComment(auditReasonComment);
         }
-        ExportEntryResponse response = client.exportEntry(new ParametersForExportEntry()
+        ExportEntryResponse response = exportEntry(new ParametersForExportEntry()
                 .setRepositoryId(repositoryId)
                 .setEntryId(testEntryId)
                 .setRequestBody(request));
@@ -271,7 +284,7 @@ public class ExportDocumentApiTest extends BaseTest {
             request.setAuditReasonId(auditReasonId);
             request.setAuditReasonComment(auditReasonComment);
         }
-        ExportEntryResponse response = client.exportEntry(new ParametersForExportEntry()
+        ExportEntryResponse response = exportEntry(new ParametersForExportEntry()
                 .setRepositoryId(repositoryId)
                 .setEntryId(testEntryId)
                 .setPageRange("1")

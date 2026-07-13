@@ -156,6 +156,11 @@ public class BaseTest {
                             .setTaskIds(taskId));
             TaskProgress progress = collectionResponse.getValue().get(0);
             if (progress.getStatus() != TaskStatus.IN_PROGRESS) {
+                if (progress.getStatus() != TaskStatus.COMPLETED) {
+                    throw new RuntimeException(String.format(
+                            "Task %s ended with status %s instead of COMPLETED. Errors: %s",
+                            taskId, progress.getStatus(), progress.getErrors()));
+                }
                 return;
             }
             try {
