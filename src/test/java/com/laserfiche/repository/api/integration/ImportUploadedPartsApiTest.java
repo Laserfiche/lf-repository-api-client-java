@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 package com.laserfiche.repository.api.integration;
 
+import com.laserfiche.api.client.model.ApiException;
 import com.laserfiche.repository.api.clients.EntriesClient;
 import com.laserfiche.repository.api.clients.TasksClient;
 import com.laserfiche.repository.api.clients.impl.model.*;
@@ -59,6 +60,19 @@ public class ImportUploadedPartsApiTest extends BaseTest {
         deleteEntry(testClassParentFolder.getId());
     }
 
+    // Surfaces the real HTTP status code/headers on failure instead of just the generic
+    // message, so an "Invalid or expired access token" error tells us whether it was
+    // actually a 401 (and thus in principle retryable) or something else entirely.
+    private static <T> T call(String callName, java.util.function.Supplier<T> apiCall) {
+        try {
+            return apiCall.get();
+        } catch (ApiException e) {
+            throw new AssertionError(String.format(
+                    "%s failed: statusCode=%d, headers=%s, problemDetails=%s",
+                    callName, e.getStatusCode(), e.getHeaders(), e.getProblemDetails()), e);
+        }
+    }
+
     @Test
     void createMultipartUploadUrlsCanBeCalledForSecondBatchOfURLs() {
         String fileName = "Sample.pdf";
@@ -108,8 +122,8 @@ public class ImportUploadedPartsApiTest extends BaseTest {
         requestBody.setMimeType(mimeType);
         requestBody.setNumberOfParts(parts);
 
-        CreateMultipartUploadUrlsResponse response = client.createMultipartUploadUrls(new ParametersForCreateMultipartUploadUrls()
-                .setRepositoryId(repositoryId).setRequestBody(requestBody));
+        CreateMultipartUploadUrlsResponse response = call("createMultipartUploadUrls", () -> client.createMultipartUploadUrls(new ParametersForCreateMultipartUploadUrls()
+                .setRepositoryId(repositoryId).setRequestBody(requestBody)));
 
         assertNotNull(response);
         String uploadId = response.getUploadId();
@@ -130,17 +144,17 @@ public class ImportUploadedPartsApiTest extends BaseTest {
         pdfOptions.setGeneratePages(true);
         pdfOptions.setKeepPdfAfterImport(true);
         requestBody2.setPdfOptions(pdfOptions);
-        StartTaskResponse response2 = client.startImportUploadedParts(new ParametersForStartImportUploadedParts()
+        StartTaskResponse response2 = call("startImportUploadedParts", () -> client.startImportUploadedParts(new ParametersForStartImportUploadedParts()
                 .setRepositoryId(repositoryId)
                 .setEntryId(testClassParentFolder.getId())
-                .setRequestBody(requestBody2));
+                .setRequestBody(requestBody2)));
 
         assertNotNull(response2);
         String taskId = response2.getTaskId();
         assertNotNull(taskId);
         waitUntilTaskEnds(taskId);
 
-        TaskCollectionResponse tasks = tasksClient.listTasks(new ParametersForListTasks().setRepositoryId(repositoryId).setTaskIds(taskId));
+        TaskCollectionResponse tasks = call("listTasks(import)", () -> tasksClient.listTasks(new ParametersForListTasks().setRepositoryId(repositoryId).setTaskIds(taskId)));
         assertNotNull(tasks);
         assertEquals(1, tasks.getValue().size());
         TaskProgress taskProgress = tasks.getValue().get(0);
@@ -161,16 +175,16 @@ public class ImportUploadedPartsApiTest extends BaseTest {
             exportRequestBody.setAuditReasonId(auditReasonId);
             exportRequestBody.setAuditReasonComment(auditReasonComment);
         }
-        StartTaskResponse exportResponse = client.startExportEntry(new ParametersForStartExportEntry()
+        StartTaskResponse exportResponse = call("startExportEntry", () -> client.startExportEntry(new ParametersForStartExportEntry()
                 .setRepositoryId(repositoryId)
                 .setEntryId(createdEntryId)
-                .setRequestBody(exportRequestBody));
+                .setRequestBody(exportRequestBody)));
 
         assertNotNull(exportResponse);
-        taskId = exportResponse.getTaskId();
-        assertNotNull(taskId);
+        String exportTaskId = exportResponse.getTaskId();
+        assertNotNull(exportTaskId);
 
-        tasks = tasksClient.listTasks(new ParametersForListTasks().setRepositoryId(repositoryId).setTaskIds(taskId));
+        tasks = call("listTasks(export)", () -> tasksClient.listTasks(new ParametersForListTasks().setRepositoryId(repositoryId).setTaskIds(exportTaskId)));
         assertNotNull(tasks);
         assertEquals(1, tasks.getValue().size());
         taskProgress = tasks.getValue().get(0);
