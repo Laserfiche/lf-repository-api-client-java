@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 enum AuthorizationType {
     CLOUD_ACCESS_KEY,
@@ -159,7 +160,7 @@ public class BaseTest {
                 if (progress.getStatus() != TaskStatus.COMPLETED) {
                     throw new RuntimeException(String.format(
                             "Task %s ended with status %s instead of COMPLETED. Errors: %s",
-                            taskId, progress.getStatus(), progress.getErrors()));
+                            taskId, progress.getStatus(), formatErrors(progress.getErrors())));
                 }
                 return;
             }
@@ -171,6 +172,19 @@ public class BaseTest {
             count++;
         }
         throw new RuntimeException("WaitUntilTaskEnds timeout");
+    }
+
+    // ProblemDetails doesn't override toString(), so printing the list directly just
+    // shows "ProblemDetails@<hash>" with none of the actual server-provided error info.
+    private static String formatErrors(List<ProblemDetails> errors) {
+        if (errors == null || errors.isEmpty()) {
+            return "none";
+        }
+        return errors.stream()
+                .map(e -> String.format(
+                        "[title=%s, detail=%s, status=%s, errorCode=%s, errorSource=%s]",
+                        e.getTitle(), e.getDetail(), e.getStatus(), e.getErrorCode(), e.getErrorSource()))
+                .collect(Collectors.joining(", "));
     }
 
     public static void deleteEntry(int entryId) {
