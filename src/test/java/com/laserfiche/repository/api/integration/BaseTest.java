@@ -8,6 +8,7 @@ import com.laserfiche.repository.api.RepositoryApiClient;
 import com.laserfiche.repository.api.RepositoryApiClientImpl;
 import com.laserfiche.repository.api.clients.impl.model.*;
 import com.laserfiche.repository.api.clients.params.ParametersForCreateEntry;
+import com.laserfiche.repository.api.clients.params.ParametersForListAuditReasons;
 import com.laserfiche.repository.api.clients.params.ParametersForListTasks;
 import com.laserfiche.repository.api.clients.params.ParametersForStartDeleteEntry;
 import io.github.cdimascio.dotenv.Dotenv;
@@ -187,6 +188,36 @@ public class BaseTest {
                 .collect(Collectors.joining(", "));
     }
 
+    private static Integer deleteAuditReasonId;
+    private static boolean deleteAuditReasonResolved = false;
+
+    // This repository requires an audit reason for DeleteEntry (errorCode 216: "Need to
+    // provide correct audit reason for DeleteEntry"), unlike the old dedicated test repo.
+    // Resolved once and reused, mirroring ExportDocumentApiTest.findAuditReasonForExport.
+    protected static Integer getDeleteAuditReasonId() {
+        if (!deleteAuditReasonResolved) {
+            deleteAuditReasonResolved = true;
+            AuditReasonCollectionResponse auditReasons = repositoryApiClient
+                    .getAuditReasonsClient()
+                    .listAuditReasons(new ParametersForListAuditReasons().setRepositoryId(repositoryId));
+            deleteAuditReasonId = auditReasons.getValue().stream()
+                    .filter(reason -> reason.getAuditEventType() == AuditEventType.DELETE_ENTRY)
+                    .map(AuditReason::getId)
+                    .findFirst()
+                    .orElse(null);
+        }
+        return deleteAuditReasonId;
+    }
+
+    protected static StartDeleteEntryRequest newDeleteEntryRequest() {
+        StartDeleteEntryRequest request = new StartDeleteEntryRequest();
+        Integer auditReasonId = getDeleteAuditReasonId();
+        if (auditReasonId != null) {
+            request.setAuditReasonId(auditReasonId);
+        }
+        return request;
+    }
+
     public static void deleteEntry(int entryId) {
         if (entryId != 0) {
             StartTaskResponse startTaskResponse = repositoryApiClient
@@ -194,7 +225,7 @@ public class BaseTest {
                     .startDeleteEntry(new ParametersForStartDeleteEntry()
                             .setRepositoryId(repositoryId)
                             .setEntryId(entryId)
-                            .setRequestBody(new StartDeleteEntryRequest()));
+                            .setRequestBody(newDeleteEntryRequest()));
             waitUntilTaskEnds(startTaskResponse.getTaskId());
         }
     }
