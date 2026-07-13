@@ -3,6 +3,7 @@
 package com.laserfiche.repository.api.integration;
 
 import com.laserfiche.api.client.model.AccessKey;
+import com.laserfiche.api.client.model.ApiException;
 import com.laserfiche.api.client.model.ProblemDetails;
 import com.laserfiche.repository.api.RepositoryApiClient;
 import com.laserfiche.repository.api.RepositoryApiClientImpl;
@@ -196,15 +197,26 @@ public class BaseTest {
     // Resolved once and reused, mirroring ExportDocumentApiTest.findAuditReasonForExport.
     protected static Integer getDeleteAuditReasonId() {
         if (!deleteAuditReasonResolved) {
-            deleteAuditReasonResolved = true;
-            AuditReasonCollectionResponse auditReasons = repositoryApiClient
-                    .getAuditReasonsClient()
-                    .listAuditReasons(new ParametersForListAuditReasons().setRepositoryId(repositoryId));
+            AuditReasonCollectionResponse auditReasons;
+            try {
+                auditReasons = repositoryApiClient
+                        .getAuditReasonsClient()
+                        .listAuditReasons(new ParametersForListAuditReasons().setRepositoryId(repositoryId));
+            } catch (ApiException e) {
+                // Don't cache "resolved" on failure — a transient hiccup here would otherwise
+                // permanently strand every later delete in the run with no audit reason, silently
+                // re-triggering "Need to provide correct audit reason for DeleteEntry" for the rest
+                // of the suite instead of just this one call.
+                throw new RuntimeException(String.format(
+                        "listAuditReasons failed while resolving delete audit reason: statusCode=%d, headers=%s, problemDetails=%s",
+                        e.getStatusCode(), e.getHeaders(), e.getProblemDetails()), e);
+            }
             deleteAuditReasonId = auditReasons.getValue().stream()
                     .filter(reason -> reason.getAuditEventType() == AuditEventType.DELETE_ENTRY)
                     .map(AuditReason::getId)
                     .findFirst()
                     .orElse(null);
+            deleteAuditReasonResolved = true;
         }
         return deleteAuditReasonId;
     }
