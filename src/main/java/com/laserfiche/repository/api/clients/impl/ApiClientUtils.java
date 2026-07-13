@@ -174,8 +174,12 @@ public class ApiClientUtils {
         HttpResponse<Object> httpResponse = null;
         while (retryCount <= maxRetries && shouldRetry) {
             try {
+                if (retryCount > 0) {
+                    System.out.println("[RETRY-DEBUG] attempt " + (retryCount + 1) + " starting for " + requestMethod + " " + url);
+                }
                 String requestUrl =
                         ApiClientUtils.beforeSend(url, headerParametersWithStringTypeValue, httpRequestHandler);
+                String authFingerprint = tokenFingerprint(headerParametersWithStringTypeValue);
                 final HttpRequestWithBody httpRequestWithBody = httpClient.request(requestMethod, requestUrl);
                 HttpRequest<?> httpRequest = httpRequestWithBody;
                 if (queryParameters != null) {
@@ -212,10 +216,17 @@ public class ApiClientUtils {
                 int statusCode = httpResponse.getStatus();
                 shouldRetry = httpRequestHandler.afterSend(new ResponseImpl((short) statusCode))
                         || ApiClientUtils.isRetryableStatusCode(statusCode, httpMethod);
+                if (statusCode == 401 || retryCount > 0 || shouldRetry) {
+                    System.out.println("[RETRY-DEBUG] attempt " + (retryCount + 1) + " " + requestMethod + " " + url
+                            + " -> status=" + statusCode + " shouldRetry=" + shouldRetry + " authToken=" + authFingerprint);
+                }
                 if (!shouldRetry) {
                     return parseResponse.apply(httpResponse);
                 }
             } catch (Exception err) {
+                if (retryCount > 0 || err instanceof ApiException) {
+                    System.out.println("[RETRY-DEBUG] attempt " + (retryCount + 1) + " threw " + err.getClass().getName() + ": " + err.getMessage());
+                }
                 if (err instanceof ApiException || retryCount >= maxRetries) {
                     throw err;
                 }
@@ -228,5 +239,20 @@ public class ApiClientUtils {
             throw new IllegalStateException("Undefined response, there is a bug");
         }
         return parseResponse.apply(httpResponse);
+    }
+
+    // TEMPORARY debug aid — prints the last 8 characters of whatever bearer token was actually
+    // attached for this attempt, so repeated log lines across retries can be compared to prove
+    // whether a retry after a 401 is really presenting a freshly-fetched token. Never logs the
+    // full token. Remove once the retry behavior is confirmed.
+    private static String tokenFingerprint(Map<String, String> headerParametersWithStringTypeValue) {
+        if (headerParametersWithStringTypeValue == null) {
+            return "n/a";
+        }
+        String auth = headerParametersWithStringTypeValue.get("Authorization");
+        if (auth == null || auth.length() < 8) {
+            return "n/a";
+        }
+        return "..." + auth.substring(auth.length() - 8);
     }
 }
