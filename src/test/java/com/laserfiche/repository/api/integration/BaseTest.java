@@ -3,11 +3,13 @@
 package com.laserfiche.repository.api.integration;
 
 import com.laserfiche.api.client.model.AccessKey;
+import com.laserfiche.api.client.model.ApiException;
 import com.laserfiche.api.client.model.ProblemDetails;
 import com.laserfiche.repository.api.RepositoryApiClient;
 import com.laserfiche.repository.api.RepositoryApiClientImpl;
 import com.laserfiche.repository.api.clients.impl.model.*;
 import com.laserfiche.repository.api.clients.params.ParametersForCreateEntry;
+import com.laserfiche.repository.api.clients.params.ParametersForListAuditReasons;
 import com.laserfiche.repository.api.clients.params.ParametersForListTasks;
 import com.laserfiche.repository.api.clients.params.ParametersForStartDeleteEntry;
 import io.github.cdimascio.dotenv.Dotenv;
@@ -24,6 +26,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 enum AuthorizationType {
     CLOUD_ACCESS_KEY,
@@ -156,6 +159,11 @@ public class BaseTest {
                             .setTaskIds(taskId));
             TaskProgress progress = collectionResponse.getValue().get(0);
             if (progress.getStatus() != TaskStatus.IN_PROGRESS) {
+                if (progress.getStatus() != TaskStatus.COMPLETED) {
+                    throw new RuntimeException(String.format(
+                            "Task %s ended with status %s instead of COMPLETED. Errors: %s",
+                            taskId, progress.getStatus(), formatErrors(progress.getErrors())));
+                }
                 return;
             }
             try {
@@ -168,6 +176,60 @@ public class BaseTest {
         throw new RuntimeException("WaitUntilTaskEnds timeout");
     }
 
+    // ProblemDetails doesn't override toString(), so printing the list directly just
+    // shows "ProblemDetails@<hash>" with none of the actual server-provided error info.
+    private static String formatErrors(List<ProblemDetails> errors) {
+        if (errors == null || errors.isEmpty()) {
+            return "none";
+        }
+        return errors.stream()
+                .map(e -> String.format(
+                        "[title=%s, detail=%s, status=%s, errorCode=%s, errorSource=%s]",
+                        e.getTitle(), e.getDetail(), e.getStatus(), e.getErrorCode(), e.getErrorSource()))
+                .collect(Collectors.joining(", "));
+    }
+
+    private static Integer deleteAuditReasonId;
+    private static boolean deleteAuditReasonResolved = false;
+
+    // This repository requires an audit reason for DeleteEntry (errorCode 216: "Need to
+    // provide correct audit reason for DeleteEntry"), unlike the old dedicated test repo.
+    // Resolved once and reused, mirroring ExportDocumentApiTest.findAuditReasonForExport.
+    protected static Integer getDeleteAuditReasonId() {
+        if (!deleteAuditReasonResolved) {
+            AuditReasonCollectionResponse auditReasons;
+            try {
+                auditReasons = repositoryApiClient
+                        .getAuditReasonsClient()
+                        .listAuditReasons(new ParametersForListAuditReasons().setRepositoryId(repositoryId));
+            } catch (ApiException e) {
+                // Don't cache "resolved" on failure — a transient hiccup here would otherwise
+                // permanently strand every later delete in the run with no audit reason, silently
+                // re-triggering "Need to provide correct audit reason for DeleteEntry" for the rest
+                // of the suite instead of just this one call.
+                throw new RuntimeException(String.format(
+                        "listAuditReasons failed while resolving delete audit reason: statusCode=%d, headers=%s, problemDetails=%s",
+                        e.getStatusCode(), e.getHeaders(), e.getProblemDetails()), e);
+            }
+            deleteAuditReasonId = auditReasons.getValue().stream()
+                    .filter(reason -> reason.getAuditEventType() == AuditEventType.DELETE_ENTRY)
+                    .map(AuditReason::getId)
+                    .findFirst()
+                    .orElse(null);
+            deleteAuditReasonResolved = true;
+        }
+        return deleteAuditReasonId;
+    }
+
+    protected static StartDeleteEntryRequest newDeleteEntryRequest() {
+        StartDeleteEntryRequest request = new StartDeleteEntryRequest();
+        Integer auditReasonId = getDeleteAuditReasonId();
+        if (auditReasonId != null) {
+            request.setAuditReasonId(auditReasonId);
+        }
+        return request;
+    }
+
     public static void deleteEntry(int entryId) {
         if (entryId != 0) {
             StartTaskResponse startTaskResponse = repositoryApiClient
@@ -175,7 +237,7 @@ public class BaseTest {
                     .startDeleteEntry(new ParametersForStartDeleteEntry()
                             .setRepositoryId(repositoryId)
                             .setEntryId(entryId)
-                            .setRequestBody(new StartDeleteEntryRequest()));
+                            .setRequestBody(newDeleteEntryRequest()));
             waitUntilTaskEnds(startTaskResponse.getTaskId());
         }
     }

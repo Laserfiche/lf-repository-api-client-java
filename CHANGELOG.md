@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.4
+
+### Chore & Maintenance
+
+- Update `jackson-databind` dependency due to vulnerability
+
 ## 1.0.3
 
 ### Chore & Maintenance

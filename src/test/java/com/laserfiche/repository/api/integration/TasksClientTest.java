@@ -30,7 +30,7 @@ public class TasksClientTest extends BaseTest {
                 .startDeleteEntry(new ParametersForStartDeleteEntry()
                         .setRepositoryId(repositoryId)
                         .setEntryId(deleteEntry.getId())
-                        .setRequestBody(new StartDeleteEntryRequest()));
+                        .setRequestBody(newDeleteEntryRequest()));
         String taskId = result.getTaskId();
         assertNotNull(taskId);
 
@@ -58,7 +58,7 @@ public class TasksClientTest extends BaseTest {
                     .startDeleteEntry(new ParametersForStartDeleteEntry()
                             .setRepositoryId(repositoryId)
                             .setEntryId(entry.getId())
-                            .setRequestBody(new StartDeleteEntryRequest()));
+                            .setRequestBody(newDeleteEntryRequest()));
             assertNotNull(startTaskResponse);
             taskIds[i] = startTaskResponse.getTaskId();
         }
