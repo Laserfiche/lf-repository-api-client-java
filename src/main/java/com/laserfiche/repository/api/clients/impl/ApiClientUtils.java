@@ -174,9 +174,6 @@ public class ApiClientUtils {
         HttpResponse<Object> httpResponse = null;
         while (retryCount <= maxRetries && shouldRetry) {
             try {
-                if (retryCount > 0) {
-                    System.out.println("[RETRY-DEBUG] attempt " + (retryCount + 1) + " starting for " + requestMethod + " " + url);
-                }
                 String requestUrl =
                         ApiClientUtils.beforeSend(url, headerParametersWithStringTypeValue, httpRequestHandler);
                 final HttpRequestWithBody httpRequestWithBody = httpClient.request(requestMethod, requestUrl);
@@ -215,17 +212,10 @@ public class ApiClientUtils {
                 int statusCode = httpResponse.getStatus();
                 shouldRetry = httpRequestHandler.afterSend(new ResponseImpl((short) statusCode))
                         || ApiClientUtils.isRetryableStatusCode(statusCode, httpMethod);
-                if (statusCode == 401 || retryCount > 0 || shouldRetry) {
-                    System.out.println("[RETRY-DEBUG] attempt " + (retryCount + 1) + " " + requestMethod + " " + url
-                            + " -> status=" + statusCode + " shouldRetry=" + shouldRetry);
-                }
                 if (!shouldRetry) {
                     return parseResponse.apply(httpResponse);
                 }
             } catch (Exception err) {
-                if (retryCount > 0 || err instanceof ApiException) {
-                    System.out.println("[RETRY-DEBUG] attempt " + (retryCount + 1) + " threw " + err.getClass().getName() + ": " + err.getMessage());
-                }
                 if (err instanceof ApiException || retryCount >= maxRetries) {
                     throw err;
                 }
