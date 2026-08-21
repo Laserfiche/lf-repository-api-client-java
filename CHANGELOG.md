@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.4
+
+### Chore & Maintenance
+
+- Update `jackson-databind`, `jackson-core`, and `jackson-annotations` dependencies to the 2.21 LTS line due to vulnerability
+
 ## 1.0.3
 
 ### Chore & Maintenance
