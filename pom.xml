@@ -5,7 +5,7 @@
   <artifactId>lf-repository-api-client-v2</artifactId>
   <packaging>jar</packaging>
   <name>Laserfiche Repository API Client V2</name>
-  <version>1.0.4</version>
+  <version>1.0.0</version>
   <url>https://github.com/Laserfiche/lf-repository-api-client-java</url>
   <description>The Java Laserfiche Repository API Client library for accessing the v2 Laserfiche Repository APIs.</description>
   <scm>
