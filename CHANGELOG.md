@@ -5,6 +5,7 @@
 ### Chore & Maintenance
 
 - Update `jackson-databind`, `jackson-core`, and `jackson-annotations` dependencies to the 2.21 LTS line due to vulnerability
+- Update `lf-api-client-core` dependency to 2.2.5
 
 ## 1.0.3
 
