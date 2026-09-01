@@ -426,6 +426,15 @@ class EntriesClientTest extends BaseTest {
 
         waitUntilTaskEnds(deleteEntryResponse.getTaskId());
 
+        TaskCollectionResponse tasks = repositoryApiClient
+                .getTasksClient()
+                .listTasks(new ParametersForListTasks().setRepositoryId(repositoryId).setTaskIds(taskId));
+        TaskProgress taskProgress = tasks.getValue().get(0);
+        if (taskProgress.getStatus() == TaskStatus.FAILED) {
+            printProblemDetails(taskProgress.getErrors().get(0));
+        }
+        assertEquals(TaskStatus.COMPLETED, taskProgress.getStatus());
+
         ApiException apiException = Assertions.assertThrows(
                 ApiException.class,
                 () -> client.getEntry(new ParametersForGetEntry().setRepositoryId(repositoryId)
