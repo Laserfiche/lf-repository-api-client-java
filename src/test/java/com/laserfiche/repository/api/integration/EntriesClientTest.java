@@ -420,7 +420,7 @@ class EntriesClientTest extends BaseTest {
         StartTaskResponse deleteEntryResponse = client.startDeleteEntry(new ParametersForStartDeleteEntry()
                 .setRepositoryId(repositoryId)
                 .setEntryId(entryToDelete.getId())
-                .setRequestBody(new StartDeleteEntryRequest()));
+                .setRequestBody(newDeleteEntryRequest()));
         String taskId = deleteEntryResponse.getTaskId();
         assertNotNull(taskId);
 
