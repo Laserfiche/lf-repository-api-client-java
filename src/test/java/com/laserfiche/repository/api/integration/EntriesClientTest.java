@@ -420,11 +420,20 @@ class EntriesClientTest extends BaseTest {
         StartTaskResponse deleteEntryResponse = client.startDeleteEntry(new ParametersForStartDeleteEntry()
                 .setRepositoryId(repositoryId)
                 .setEntryId(entryToDelete.getId())
-                .setRequestBody(new StartDeleteEntryRequest()));
+                .setRequestBody(newDeleteEntryRequest()));
         String taskId = deleteEntryResponse.getTaskId();
         assertNotNull(taskId);
 
         waitUntilTaskEnds(deleteEntryResponse.getTaskId());
+
+        TaskCollectionResponse tasks = repositoryApiClient
+                .getTasksClient()
+                .listTasks(new ParametersForListTasks().setRepositoryId(repositoryId).setTaskIds(taskId));
+        TaskProgress taskProgress = tasks.getValue().get(0);
+        if (taskProgress.getStatus() == TaskStatus.FAILED) {
+            printProblemDetails(taskProgress.getErrors().get(0));
+        }
+        assertEquals(TaskStatus.COMPLETED, taskProgress.getStatus());
 
         ApiException apiException = Assertions.assertThrows(
                 ApiException.class,

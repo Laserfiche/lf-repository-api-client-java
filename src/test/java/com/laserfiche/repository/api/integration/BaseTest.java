@@ -8,6 +8,7 @@ import com.laserfiche.repository.api.RepositoryApiClient;
 import com.laserfiche.repository.api.RepositoryApiClientImpl;
 import com.laserfiche.repository.api.clients.impl.model.*;
 import com.laserfiche.repository.api.clients.params.ParametersForCreateEntry;
+import com.laserfiche.repository.api.clients.params.ParametersForListAuditReasons;
 import com.laserfiche.repository.api.clients.params.ParametersForListTasks;
 import com.laserfiche.repository.api.clients.params.ParametersForStartDeleteEntry;
 import io.github.cdimascio.dotenv.Dotenv;
@@ -23,6 +24,7 @@ import java.time.Duration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 enum AuthorizationType {
@@ -55,6 +57,8 @@ public class BaseTest {
     protected static final String SMALL_JPEG_FILE_PATH = "src/test/java/com/laserfiche/repository/api/integration/testFiles/test.jpg";
 
     protected static int readonlyTestFolderId = -1;
+    protected static int deleteAuditReasonId = -1;
+    protected static String deleteAuditReasonComment;
 
     @BeforeAll
     public static void setUp() {
@@ -87,6 +91,29 @@ public class BaseTest {
         testHeaders = new HashMap<>();
         testHeaders.put(testHeaderName, "true");
         createRepositoryApiClient();
+        findAuditReasonForDelete();
+    }
+
+    private static void findAuditReasonForDelete() {
+        AuditReasonCollectionResponse auditReasons = repositoryApiClient
+                .getAuditReasonsClient()
+                .listAuditReasons(new ParametersForListAuditReasons().setRepositoryId(repositoryId));
+        Optional<AuditReason> deleteAuditReason = auditReasons.getValue().stream()
+                .filter(auditReason -> auditReason.getAuditEventType() == AuditEventType.DELETE_ENTRY)
+                .findFirst();
+        if (deleteAuditReason.isPresent()) {
+            deleteAuditReasonId = deleteAuditReason.get().getId();
+            deleteAuditReasonComment = deleteAuditReason.get().getName();
+        }
+    }
+
+    protected static StartDeleteEntryRequest newDeleteEntryRequest() {
+        StartDeleteEntryRequest request = new StartDeleteEntryRequest();
+        if (deleteAuditReasonId != -1) {
+            request.setAuditReasonId(deleteAuditReasonId);
+            request.setAuditReasonComment(deleteAuditReasonComment);
+        }
+        return request;
     }
 
     protected static String getEnvironmentVariable(String environmentVariableName) {
@@ -175,7 +202,7 @@ public class BaseTest {
                     .startDeleteEntry(new ParametersForStartDeleteEntry()
                             .setRepositoryId(repositoryId)
                             .setEntryId(entryId)
-                            .setRequestBody(new StartDeleteEntryRequest()));
+                            .setRequestBody(newDeleteEntryRequest()));
             waitUntilTaskEnds(startTaskResponse.getTaskId());
         }
     }
