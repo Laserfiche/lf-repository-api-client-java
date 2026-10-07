@@ -1,11 +1,16 @@
 # Changelog
 
+## 1.0.5
+
+### Chore & Maintenance
+
+- Update `jackson-databind` and `jackson-core` to 2.21.7 to fix CVE-2026-91776 and CVE-2026-91777
+
 ## 1.0.4
 
 ### Chore & Maintenance
 
 - Update `jackson-databind`, `jackson-core`, and `jackson-annotations` dependencies to the 2.21 LTS line due to vulnerability
-- Update `jackson-databind` and `jackson-core` to 2.21.7 to fix CVE-2026-91776
 - Update `lf-api-client-core` dependency to 2.2.5
 
 ## 1.0.3
